@@ -1,0 +1,13 @@
+MANIFEST.in
+README.rst
+requirements.txt
+setup.cfg
+setup.py
+dartbrains/__init__.py
+dartbrains/datasets.py
+dartbrains/version.py
+dartbrains.egg-info/PKG-INFO
+dartbrains.egg-info/SOURCES.txt
+dartbrains.egg-info/dependency_links.txt
+dartbrains.egg-info/requires.txt
+dartbrains.egg-info/top_level.txt

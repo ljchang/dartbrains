@@ -1,13 +1,26 @@
 # !/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup, find_packages
+
+version = {}
+with open("dartbrains/version.py") as f:
+    exec(f.read(), version)
+
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
+extra_setuptools_args = dict(
+    tests_require=['pytest']
+)
+
 setup(
     name='dartbrains',
-    packages=[],
-    version='0.0.1',
+    install_requires = requirements,
+    packages = find_packages(exclude=['dartbrains/tests']),
+    version = version['__version__'],
     description='Toolbox for Dartmouth Neuroimaging Analysis Course',
     author='Luke Chang',
-    license='MIT',
+    license = 'LICENSE.txt',
     author_email='luke.j.chang@dartmouth.edu',
     url='https://github.com/ljchang/dartbrains',
     keywords=['neuroimaging', 'analysis', 'package', ],
@@ -24,4 +37,5 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development',
     ],
+    **extra_setuptools_args
 )

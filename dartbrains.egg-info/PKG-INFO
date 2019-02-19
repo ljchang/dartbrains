@@ -1,0 +1,22 @@
+Metadata-Version: 1.1
+Name: dartbrains
+Version: 0.0.1
+Summary: Toolbox for Dartmouth Neuroimaging Analysis Course
+Home-page: https://github.com/ljchang/dartbrains
+Author: Luke Chang
+Author-email: luke.j.chang@dartmouth.edu
+License: LICENSE.txt
+Description: UNKNOWN
+Keywords: neuroimaging,analysis,package
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Software Development
