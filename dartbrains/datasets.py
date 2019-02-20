@@ -10,8 +10,8 @@ functions to help download datasets
 
 import os
 import numpy as np
+import pandas as pd
 from sklearn.datasets.base import Bunch
-import numbers
 from nilearn.datasets.utils import (_get_dataset_dir, _fetch_files, _get_dataset_descr)
 from nilearn._utils.compat import _urllib
 
