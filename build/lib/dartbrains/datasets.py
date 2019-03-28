@@ -10,12 +10,13 @@ functions to help download datasets
 
 import os
 import numpy as np
+import pandas as pd
 from sklearn.datasets.base import Bunch
-import numbers
 from nilearn.datasets.utils import (_get_dataset_dir, _fetch_files, _get_dataset_descr)
 from nilearn._utils.compat import _urllib
 
-def fetch_localizer_raw(n_subjects=None, get_anats=False, data_dir=None, url=None, resume=True, verbose=1):
+
+def fetch_localizer(subject_ids=None, get_anats=False, data_type='raw', data_dir=None, url=None, resume=True, verbose=1):
     """Download and load Brainomics Localizer dataset (94 subjects).
     "The Functional Localizer is a simple and fast acquisition
     procedure based on a 5-minute functional magnetic resonance
@@ -34,15 +35,18 @@ def fetch_localizer_raw(n_subjects=None, get_anats=False, data_dir=None, url=Non
     Notes:
     It is better to perform several small requests than a big one because the
     Brainomics server has no cache (can lead to timeout while the archive
-    is generated on the remote server).  For example, download n_subjects=10, then n_subjects=20, etc.
+    is generated on the remote server).  For example, download
+    n_subjects=np.array(1,10), then n_subjects=np.array(10,20), etc.
 
     Parameters
     ----------
-    n_subjects: int or list, optional
-        The number or list of subjects to load. If None is given,
+    subject_ids: list
+        List of Subject IDs (e.g., ['S01','S02']. If None is given,
         all 94 subjects are used.
     get_anats: boolean
-        Whether individual structural images should be fetched or not.
+        Whether individual structural images should be fetched or not.\
+    data_type: string
+        type of data to download. Valid values are ['raw','preprocessed']
     data_dir: string, optional
         Path of the data directory. Used to force data storage in a specified
         location.
@@ -57,13 +61,9 @@ def fetch_localizer_raw(n_subjects=None, get_anats=False, data_dir=None, url=Non
     -------
     data: Bunch
         Dictionary-like object, the interest attributes are :
-        - 'cmaps': string list
+        - 'functional': string list
             Paths to nifti contrast maps
-        - 'tmaps' string list (if 'get_tmaps' set to True)
-            Paths to nifti t maps
-        - 'masks': string list
-            Paths to nifti files corresponding to the subjects individual masks
-        - 'anats': string
+        - 'structural' string
             Path to nifti files corresponding to the subjects structural images
     References
     ----------
@@ -71,63 +71,56 @@ def fetch_localizer_raw(n_subjects=None, get_anats=False, data_dir=None, url=Non
     "Fast reproducible identification and large-scale databasing of
     individual functional cognitive networks."
     BMC neuroscience 8.1 (2007): 91.
-    See Also
-    ---------
-    nilearn.datasets.fetch_localizer_calculation_task
-    nilearn.datasets.fetch_localizer_button_task
+
     """
 
-    if n_subjects is None:
-        n_subjects = 94  # 94 subjects available
-    if (isinstance(n_subjects, numbers.Number) and
-                    ((n_subjects > 94) or (n_subjects < 1))):
-        warnings.warn("Wrong value for \'n_subjects\' (%d). The maximum "
-                      "value will be used instead (\'n_subjects=94\')")
-        n_subjects = 94  # 94 subjects available
+    if subject_ids is None:
+        subject_ids = ['S%02d' % x for x in np.arange(1,95)]
+    elif not isinstance(subject_ids, (list)):
+        raise ValueError("subject_ids must be a list of subject ids (e.g., ['S01','S02'])")
 
+    if data_type == 'raw':
+        dat_type = "raw fMRI"
+        dat_label = "raw bold"
+        anat_type = "raw T1"
+        anat_label = "raw anatomy"
+    elif data_type == 'preprocessed':
+        dat_type = "preprocessed fMRI"
+        dat_label = "bold"
+        anat_type = "normalized T1"
+        anat_label = "anatomy"
+    else:
+        raise ValueError("Only ['raw','preprocessed'] data_types are currently supported.")
+
+    root_url = "http://brainomics.cea.fr/localizer/"
+    dataset_name = 'brainomics_localizer'
+    data_dir = _get_dataset_dir(dataset_name, data_dir=data_dir,
+                                verbose=verbose)
+    fdescr = _get_dataset_descr(dataset_name)
     opts = {'uncompress': True}
 
-    if isinstance(n_subjects, numbers.Number):
-        subject_mask = np.arange(1, n_subjects + 1)
-        subject_id_max = "S%02d" % n_subjects
-    else:
-        subject_mask = np.array(n_subjects)
-        subject_id_max = "S%02d" % np.max(n_subjects)
-        n_subjects = len(n_subjects)
-    subject_ids = ["S%02d" % s for s in subject_mask]
-    data_type = "raw fMRI"
-    label = "raw bold"
-    rql_types = str.join(", ", ["\"%s\"" % x for x in [data_type]])
-    root_url = "http://brainomics.cea.fr/localizer/"
-
-    base_query = ("Any X,XT,XL,XI,XF,XD WHERE X is Scan, X type XT, "
-              "X concerns S, "
-              "X label XL, X identifier XI, "
-              "X format XF, X description XD, "
-              'S identifier <= "%s", ' % (subject_id_max, ) +
-              'X type IN(%(types)s), X label "%(label)s"')
-
-    urls = ["%sbrainomics_data.zip?rql=%s&vid=data-zip"
-            % (root_url, _urllib.parse.quote(base_query % {"types": rql_types,
-                                          "label": label}, safe=',()'))]
-    filenames = []
+    bold_files = []; anat_files = [];
     for subject_id in subject_ids:
-        name_aux = str.replace(
-                    str.join('_', [data_type, label]), ' ', '_')
-        file_path = os.path.join("brainomics_data", subject_id, "%s.nii.gz" % name_aux)
-        file_tarball_url = urls[0]
-        filenames.append((file_path, file_tarball_url, opts))
+        base_query = ("Any X,XT,XL,XI,XF,XD WHERE X is Scan, X type XT, "
+                  "X concerns S, "
+                  "X label XL, X identifier XI, "
+                  "X format XF, X description XD, "
+                  'S identifier = "%s", ' % (subject_id, ) +
+                  'X type IN(%(types)s), X label "%(label)s"')
 
-    # Fetch anats if asked by user
-    if get_anats:
-        urls.append("%sbrainomics_data_anats.zip?rql=%s&vid=data-zip"
-                    % (root_url,
-                       _urllib.parse.quote(base_query % {"types": '"raw T1"',
-                                                  "label": "raw anatomy"}, safe=',()')))
-        for subject_id in subject_ids:
-            file_path = os.path.join("brainomics_data", subject_id, "raw_T1_raw_anat_defaced.nii.gz")
-            file_tarball_url = urls[-1]
-            filenames.append((file_path, file_tarball_url, opts))
+        file_tarball_url = "%sbrainomics_data.zip?rql=%s&vid=data-zip" % (root_url, _urllib.parse.quote(base_query % {"types": "\"%s\"" % dat_type,  "label": dat_label}, safe=',()'))
+        name_aux = str.replace(str.join('_', [dat_type, dat_label]), ' ', '_')
+        file_path = os.path.join("brainomics_data", subject_id, "%s.nii.gz" % name_aux)
+        bold_files.append(_fetch_files(data_dir, [(file_path, file_tarball_url, opts)], verbose=verbose))
+
+        if get_anats:
+            file_tarball_url = "%sbrainomics_data_anats.zip?rql=%s&vid=data-zip" % (root_url, _urllib.parse.quote(base_query % {"types": "\"%s\"" % anat_type, "label": anat_label}, safe=',()'))
+            if data_type == 'raw':
+                anat_name_aux = "raw_T1_raw_anat_defaced.nii.gz"
+            elif data_type == 'preprocessed':
+                anat_name_aux = "normalized_T1_anat_defaced.nii.gz"
+            file_path = os.path.join("brainomics_data", subject_id, anat_name_aux)
+            anat_files.append(_fetch_files(data_dir, [(file_path, file_tarball_url, opts)], verbose=verbose))
 
     # Fetch subject characteristics (separated in two files)
     if url is None:
@@ -137,35 +130,19 @@ def fetch_localizer_raw(n_subjects=None, get_anats=False, data_dir=None, url=Non
                     % (root_url,
                        _urllib.parse.quote("Any X,XI,XD WHERE X is QuestionnaireRun, "
                                     "X identifier XI, X datetime "
-                                    "XD", safe=',')
-                       ))
+                                    "XD", safe=',')))
     else:
         url_csv = "%s/cubicwebexport.csv" % url
         url_csv2 = "%s/cubicwebexport2.csv" % url
-    filenames += [("cubicwebexport.csv", url_csv, {}),
-                  ("cubicwebexport2.csv", url_csv2, {})]
 
-    # Actual data fetching
-    dataset_name = 'brainomics_localizer'
-    data_dir = _get_dataset_dir(dataset_name, data_dir=data_dir,
-                                verbose=verbose)
-    fdescr = _get_dataset_descr(dataset_name)
-    files = _fetch_files(data_dir, filenames, verbose=verbose)
-    anats = None
+    filenames = [("cubicwebexport.csv", url_csv, {}),("cubicwebexport2.csv", url_csv2, {})]
+    csv_files = _fetch_files(data_dir, filenames, verbose=verbose)
+    metadata = pd.merge(pd.read_csv(csv_files[0], sep=';'), pd.read_csv(csv_files[1], sep=';'), on='"subject_id"')
+    metadata.to_csv(os.path.join(data_dir,'metadata.csv'))
+    for x in ['cubicwebexport.csv','cubicwebexport2.csv']:
+        os.remove(os.path.join(data_dir, x))
 
-    # combine data from both covariates files into one single recarray
-    from numpy.lib.recfunctions import join_by
-    ext_vars_file2 = files[-1]
-    csv_data2 = np.recfromcsv(ext_vars_file2, delimiter=';')
-    files = files[:-1]
-    ext_vars_file = files[-1]
-    csv_data = np.recfromcsv(ext_vars_file, delimiter=';')
-    files = files[:-1]
-    # join_by sorts the output along the key
-    csv_data = join_by('subject_id', csv_data, csv_data2,
-                       usemask=False, asrecarray=True)[subject_mask - 1]
-    if get_anats:
-        anats = files[-n_subjects:]
-        files = files[:-n_subjects]
+    if not get_anats:
+        anat_files = None
 
-    return Bunch(functional=files, structural=anats, ext_vars=csv_data, description=fdescr)
+    return Bunch(functional=bold_files, structural=anat_files, ext_vars=metadata, description=fdescr)
