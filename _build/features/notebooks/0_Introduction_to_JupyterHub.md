@@ -64,15 +64,18 @@ To access addditional software beyond our class Python conda environment, we wil
 
 Using a terminal window, type the following commands in your terminal window:
 
+First, we will create a symbolic link to 
 ```
-ssh your_netid@jupyter.dartmouth.edu [where "your_netid" is your netid]
+ln –s  /dartfs/rc/lab/P/Psych60  Psych60
+
+
 module initadd fsl
 module initadd freesurfer
 module initadd afni
 module initadd ants
 module initadd spm
 
-ln –s  /dartfs/rc/lab/P/Psych60  Psych60
+
 
 quota
 ls .snapshot
@@ -101,7 +104,7 @@ Log in with your netid and it should bring you to your home DartFS space.  Again
 ## Once you have logged in
 You should see something like this:
 
-![2019-04-11_07-59-08.png](attachment:2019-04-11_07-59-08.png)
+![](../../images/getting_started/HomeScreen.png)
 
 You will likely not have much in there unless you have used your DartFS space before.
 
@@ -110,14 +113,14 @@ You will likely not have much in there unless you have used your DartFS space be
 ## Try Using the Terminal
 Click on **New** and then **Terminal** to bring up a terminal window. It should look like this:
 
-![2019-04-11_07-59-08.png](attachment:2019-04-11_07-59-08.png)
+![](../../images/getting_started/Terminal.png)
 
 Type the commands into your terminal:
 `pwd`, `ls`, `module list`
 
 The result should look like this:
 
-![2019-04-11_08-00-45.png](attachment:2019-04-11_08-00-45.png)
+![](../../images/getting_started/Modules.png)
 
 Next click the **Running** tab and and click on **Shutdown** next to terminal. This is how we close sessions that we are finished with.
 

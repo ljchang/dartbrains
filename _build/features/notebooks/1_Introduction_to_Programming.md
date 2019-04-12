@@ -8,7 +8,7 @@ prev_page:
   url: /features/notebooks/0_Introduction_to_JupyterHub
   title: 'Getting Started'
 next_page:
-  url: /features/notebooks/2_Introduction_to_Dataframes_&_Plotting
+  url: /features/notebooks/2_1_MatplotlibTemplates
   title: 'Introduction to Dataframes and Plotting'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -20,7 +20,8 @@ In this notebook we will begin to learn how to use Python.  There are many diffe
 
 There are lots of free useful resources to learn how to use python and various modules.  See Yaroslav Halchenko's excellent [Dartmouth course](https://github.com/dartmouth-pbs/psyc161).  [Codeacademy](https://www.codecademy.com/) is a great interactive tutorial.  [Stack Overflow](http://stackoverflow.com/) is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community. 
 
-![image.png](attachment:image.png)
+![](../../images/programming/programming_growth.png)
+
 
 ## Jupyter Notebooks
 We will primarily be using [Jupyter Notebooks](http://jupyter.org/) to interface with Python.  A Jupyter notebook consists of **cells**. The two main types of cells you will use are code cells and markdown cells.
@@ -124,6 +125,17 @@ print(type(str(a)))
 ```
 
 
+{:.output .output_stream}
+```
+<class 'int'>
+<class 'float'>
+<class 'str'>
+<class 'bool'>
+<class 'NoneType'>
+<class 'str'>
+
+```
+
 ## Math Operators
 * +, -, *, and /
 * Exponentiation **
@@ -157,6 +169,17 @@ print(4/9)
 ```
 
 
+{:.output .output_stream}
+```
+9
+4
+8
+16
+4
+0.4444444444444444
+
+```
+
 ## String Operators
 * Some of the arithmetic operators also have meaning for strings. E.g. for string concatenation use `+` sign
 * String repetition: Use `*` sign with a number of repetitions
@@ -174,6 +197,13 @@ print(a + b)
 print(a*5)
 ```
 
+
+{:.output .output_stream}
+```
+HelloWorld
+HelloHelloHelloHelloHello
+
+```
 
 ## Logical Operators
 Perform logical comparison and return Boolean value
@@ -217,6 +247,15 @@ print(d < e)
 ```
 
 
+{:.output .output_stream}
+```
+False
+False
+True
+True
+
+```
+
 ## Conditional Logic (if...)
 Unlike most other languages, Python uses tab formatting rather than closing conditional statements (e.g., end).
 
@@ -257,6 +296,13 @@ if n is not None:
 ```
 
 
+{:.output .output_stream}
+```
+n is non-0
+n is not None
+
+```
+
 ## Loops
 * **for** loop is probably the most popular loop construct in Python:
 
@@ -283,6 +329,61 @@ for c in string:
 ```
 
 
+{:.output .output_stream}
+```
+P
+y
+t
+h
+o
+n
+ 
+i
+s
+ 
+g
+o
+i
+n
+g
+ 
+t
+o
+ 
+m
+a
+k
+e
+ 
+c
+o
+n
+d
+u
+c
+t
+i
+n
+g
+ 
+r
+e
+s
+e
+a
+r
+c
+h
+ 
+e
+a
+s
+i
+e
+r
+
+```
+
 
 
 {:.input_area}
@@ -298,6 +399,22 @@ while x < end:
 print("Exited with x==%d" % x )
 ```
 
+
+{:.output .output_stream}
+```
+0 0
+1 1
+2 3
+3 6
+4 10
+5 15
+6 21
+7 28
+8 36
+9 45
+Exited with x==10
+
+```
 
 ## Functions
 A **function** is a named sequence of statements that performs a computation.  You define the function by giving it a name, specify a sequence of statements, and optionally values to return.  Later, you can “call” the function by name. 
@@ -328,6 +445,12 @@ string = "Python is going to make conducting research easier"
 print(make_upper_case(string))
 ```
 
+
+{:.output .output_stream}
+```
+PYTHON IS GOING TO MAKE CONDUCTING RESEARCH EASIER
+
+```
 
 ## Python Containers
 There are 4 main types of builtin containers for storing data in Python:
@@ -399,6 +522,16 @@ print([x.upper() for x in a])
 ```
 
 
+{:.output .output_stream}
+```
+lists
+['are', 'arrays']
+['lists', 'are', 'python', 'arrays', '.']
+5
+['LISTS', 'ARE', 'PYTHON', 'ARRAYS', '.']
+
+```
+
 ### Dictionaries
 
 * In Python, a dictionary (or `dict`) is mapping between a set of
@@ -429,6 +562,15 @@ print(eng2sp.values())
 ```
 
 
+{:.output .output_stream}
+```
+{'one': 'uno'}
+{'one': 'uno', 'two': 'dos', 'three': 'tres'}
+dict_keys(['one', 'two', 'three'])
+dict_values(['uno', 'dos', 'tres'])
+
+```
+
 ### Tuples
 In Python, a **tuple** is an immutable sequence of values, meaning they can't be changed
 
@@ -456,6 +598,13 @@ print(t2)
 ```
 
 
+{:.output .output_stream}
+```
+(1, 2, 3, 4)
+(1, 2)
+
+```
+
 ## sets
 In Python, a `set` is an efficient storage for "membership" checking
 
@@ -480,6 +629,14 @@ print({1, 2, 3, 'mom', 'dad'} & {2, 3, 10})
 print({1, 2, 3, 'mom', 'dad'} - {2, 3, 10})
 ```
 
+
+{:.output .output_stream}
+```
+{1, 2, 3, 'mom', 10, 'dad'}
+{2, 3}
+{1, 'mom', 'dad'}
+
+```
 
 ## Modules
 A *Module* is a python file that contains a collection of related definitions. Python has *hundreds* of standard modules.  These are organized into what is known as the [Python Standard Library](http://docs.python.org/library/).  You can also create and use your own modules.  To use functionality from a module, you first have to import the entire module or parts of it into your namespace
@@ -520,16 +677,32 @@ os.path.abspath(os.path.curdir)
 ```
 
 
+
+
+
+{:.output .output_data_text}
+```
+'/Users/lukechang/Github/dartbrains/content/features/notebooks'
+```
+
+
+
 It looks like we are currently in the notebooks folder of the github repository.  Let's use glob, a pattern matching function, to list all of the csv files in the Data folder.  
 
 
 
 {:.input_area}
 ```python
-data_file_list = glob(os.path.join('..','Data','*csv'))
+data_file_list = glob(os.path.join('../..','Data','*csv'))
 print(data_file_list)
 ```
 
+
+{:.output .output_stream}
+```
+['../../Data/salary_exercise.csv', '../../Data/salary.csv']
+
+```
 
 This gives us a list of the files including the relative path from the current directory.  What if we wanted just the filenames?  There are several different ways to do this.  First, we can use the the `os.path.basename` function.  We loop over every file, grab the base file name and then append it to a new list. 
 
@@ -545,6 +718,12 @@ print(file_list)
 ```
 
 
+{:.output .output_stream}
+```
+['salary_exercise.csv', 'salary.csv']
+
+```
+
 Alternatively, we could loop over all files and split on the `/` character.  This will create a new list where each element is whatever characters are separated by the splitting character.  We can then take the last element of each list.
 
 
@@ -559,6 +738,12 @@ print(file_list)
 ```
 
 
+{:.output .output_stream}
+```
+['salary_exercise.csv', 'salary.csv']
+
+```
+
 It is also sometimes even cleaner to do this as a list comprehension
 
 
@@ -569,65 +754,23 @@ It is also sometimes even cleaner to do this as a list comprehension
 ```
 
 
+
+
+
+{:.output .output_data_text}
+```
+['salary_exercise.csv', 'salary.csv']
+```
+
+
+
 # Exercises
 
 ### Find Even Numbers
 Let’s say I give you a list saved in a variable: a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]. Make a new list that has only the even elements of this list in it.
 
-
-
-{:.input_area}
-```python
-
-a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-
-b = [bool(1-x%2) for x in a]
-
-c = []
-for x in a:
-    if not x%2:
-        c.append(x)
-        
-def evens_only(seq):
-    return [n for n in seq if n%2 == 0]
-
-evens_only(a)
-```
-
-
-
-
-
-{:.output .output_data_text}
-```
-[4, 16, 36, 64, 100]
-```
-
-
-
 ### Find Maximal Range
 Given an array length 1 or more of ints, return the difference between the largest and smallest values in the array. 
-
-
-
-{:.input_area}
-```python
-import numpy as np
-
-a = np.random.randint(0,100, 10)
-max(a)-min(a)
-```
-
-
-
-
-
-{:.output .output_data_text}
-```
-93
-```
-
-
 
 ### Duplicated Numbers
 Find the numbers in list a that are also in list b
@@ -636,55 +779,9 @@ a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289,
 
 b = [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
 
-
-
-{:.input_area}
-```python
-a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361]
-
-b = [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
-
-print(set(a) & set(b))
-
-print([x for x in a if x in b])
-```
-
-
-{:.output .output_stream}
-```
-{0, 256, 64, 4, 36, 100, 196, 324, 16, 144}
-[0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
-
-```
-
 ### Speeding Ticket Fine
 You are driving a little too fast on the highway, and a police officer stops you. Write a function that takes the speed as an input and returns the fine.  Your function must use a dictionary.
 
 
 If speed is 60 or less, the result is `$0`. If speed is between 61 and 80 inclusive, the result is `$100`. If speed is 81 or more, the result is `$500`. 
-
-
-
-
-{:.input_area}
-```python
-def speeding_ticket(speed):
-    if speed <= 60:
-        return '$0'
-    elif (speed >=61) & (speed < 100):
-        return '$100'
-    else:
-        return ('$500')
-speeding_ticket(81)
-```
-
-
-
-
-
-{:.output .output_data_text}
-```
-'$100'
-```
-
 
