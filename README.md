@@ -1,4 +1,4 @@
-# dartbrains
+# DartBrains
 This repository is a Python package with all of the functions and python libraries required for the Dartmouth fMRI Analysis Course taught by Prof Luke Chang, PhD.
 
 # Contributing
