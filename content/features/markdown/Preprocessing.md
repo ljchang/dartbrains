@@ -6,7 +6,7 @@ In this section, we will provide an overview of the basic preprocessing steps us
 
 ## Lecture
 
-The lecture for this section can be viewed here ![](../images/lectures/Preprocessing.pdf).
+The lecture for this section can be viewed here ![lecture](../../images/lectures/Preprocessing.pdf).
 
 ## Readings
 
