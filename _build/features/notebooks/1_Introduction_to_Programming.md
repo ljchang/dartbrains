@@ -780,7 +780,7 @@ a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289,
 b = [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
 
 ### Speeding Ticket Fine
-You are driving a little too fast on the highway, and a police officer stops you. Write a function that takes the speed as an input and returns the fine.  Your function must use a dictionary.
+You are driving a little too fast on the highway, and a police officer stops you. Write a function that takes the speed as an input and returns the fine.
 
 
 If speed is 60 or less, the result is `$0`. If speed is between 61 and 80 inclusive, the result is `$100`. If speed is 81 or more, the result is `$500`. 

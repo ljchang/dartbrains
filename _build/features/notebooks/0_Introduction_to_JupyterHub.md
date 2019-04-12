@@ -64,25 +64,27 @@ To access addditional software beyond our class Python conda environment, we wil
 
 Using a terminal window, type the following commands in your terminal window:
 
-First, we will create a symbolic link to 
+First, we will create a symbolic link to the course directory in your home directory.
+
+`ln –s  /dartfs/rc/lab/P/Psych60  Psych60`
+
+This will allow you to access the course folder after logging into jupyterhub.
+
+Second, we will create a directory namked with your netid in the `students_output` folder.
+
 ```
-ln –s  /dartfs/rc/lab/P/Psych60  Psych60
+cd Psych60/students_output 
+mkdir your_netid  [where "your_netid" is your netid]
+```
 
+Third, we will add additional software packages to be available to us on jupyterhub by adding specific modules
 
+```
 module initadd fsl
 module initadd freesurfer
 module initadd afni
 module initadd ants
 module initadd spm
-
-
-
-quota
-ls .snapshot
-
-cd Psych60/students_output 
-mkdir your_netid  [where "your_netid" is your netid]
-exit
 ```
 
 # Introduction to Jupyter Notebooks
@@ -108,8 +110,6 @@ You should see something like this:
 
 You will likely not have much in there unless you have used your DartFS space before.
 
-
-
 ## Try Using the Terminal
 Click on **New** and then **Terminal** to bring up a terminal window. It should look like this:
 
@@ -128,7 +128,7 @@ Next click the **Running** tab and and click on **Shutdown** next to terminal. T
 
 You should see a Psych60 link under the **Files** tab. If you click on it you **should** be brought to the data and tutorial folder.
 
-![2019-04-11_08-01-52.png](attachment:2019-04-11_08-01-52.png)
+![](../../images/getting_started/CourseScreen.png)
 
 You will find a variety of tutorial notebooks in here along with data that we will use for our first few labs.
 
@@ -151,31 +151,34 @@ Please contact Professor Huckins/Chang if you want any assistance doing this.
 
 ## Installing Jupyter Notebooks on your own computer
 
-1. Install python (I recommend [Acaconda](https://www.continuum.io/downloads))
+1. Install python. We recommend using the [Acaconda Distribution](https://www.continuum.io/downloads)) as it comes with most of the relevant scientific computing packages we will be using.  Be sure to download Python 3.
 
 Alternative 1: Install jupyter notebook (it comes with Anaconda)
 
 ```
-pip3 install jupyter
+pip install jupyter
 ```
 
 Alternative 2: If you already have python installed:
 
 ```
-pip3 install --upgrade pip
+pip install --upgrade pip
 ```
 
 ```
-pip3 install jupyter
+pip install jupyter
 ```
 
 ### Starting Jupter Notebooks on your computer
 Open a terminal, navigate to the directory you want to work from then type `jupyter notebook` or `jupyter lab`
 
 
+# Plotting and Atlases
+For most of our labs we will be using Python to plot our data and results.  However, it is often useful to have a more interactive experience.  We recommend additionally downloading [FSLeyes](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLeyes), which is a standalone image viewer developed by FSL.  It can be installed by either downloading directly from the website, or using `pip`.
 
+`pip install fsleyes` 
 
-
+If you are using a mac, you will likely also need to add an X11 window system such as [xQuartz](https://www.xquartz.org/) for the viewer to work properly.
 
 # References
 
