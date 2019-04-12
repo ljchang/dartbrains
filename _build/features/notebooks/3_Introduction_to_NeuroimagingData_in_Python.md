@@ -5,7 +5,7 @@ interact_link: content/features/notebooks/3_Introduction_to_NeuroimagingData_in_
 kernel_name: python3
 title: 'Introduction to Neuroimaging Data'
 prev_page:
-  url: /features/notebooks/2_1_MatplotlibTemplates
+  url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
   title: 'Introduction to Dataframes and Plotting'
 next_page:
   url: /features/notebooks/4_ICA
