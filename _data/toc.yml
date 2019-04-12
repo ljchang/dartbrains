@@ -28,7 +28,7 @@
 
 # External link
 - title: GitHub repository
-  url: https://github.com/jupyter/jupyter-book
+  url: https://github.com/ljchang/dartbrains
   external: true
   not_numbered: true
 
@@ -40,7 +40,7 @@
 - divider: true
 
 # Add a header and sample content section
-- header: Demo textbook
+- header: Course Overview
 
 # A chapter w/ a collection of sections beneath it
 - title: Syllabus
