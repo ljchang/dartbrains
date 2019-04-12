@@ -18,4 +18,4 @@ In this section, we will provide an overview of the course and a very introducto
 
 ## Lecture
 
-The lecture for this section can be viewed here [lecture](../../images/lectures/Intro_to_Neuroimaging.pdf).
+The lecture for this section can be viewed [here](../../images/lectures/Intro_to_Neuroimaging.pdf).

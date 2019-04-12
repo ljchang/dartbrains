@@ -6,7 +6,7 @@ In this section, we will provide a very introductory overview of the basics of M
 
 ## Lecture
 
-The lecture for this section can be viewed here ![lecture](../../images/lectures/Measurement_Signal.pdf).
+The lecture for this section can be viewed [here](../../images/lectures/Measurement_Signal.pdf).
 
 ## Readings
 
