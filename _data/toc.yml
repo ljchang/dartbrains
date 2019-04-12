@@ -48,6 +48,21 @@
   not_numbered: true
   expand_sections: true
 
+- title: Topics
+  url: /features/markdown/Topics
+  not_numbered: true
+  expand_sections: true
+  sections:
+  - title: Introduction to Neuroimaging
+    url: /features/markdown/Intro_to_Neuroimaging
+    not_numbered: false
+  - title: Measurement and Signal
+    url: /features/markdown/Signal_Measurement
+    not_numbered: false
+  - title: Preprocessing
+    url: /features/markdown/Preprocessing
+    not_numbered: false
+
 # A chapter w/ a collection of sections beneath it
 - title: Labs
   url: /features/markdown/Labs
@@ -56,19 +71,23 @@
   sections:
   - title: Getting Started
     url: /features/notebooks/0_Introduction_to_JupyterHub
-    not_numbered: true
+    not_numbered: false
   - title: Introduction to Python
     url: /features/notebooks/1_Introduction_to_Programming
-    not_numbered: true
+    not_numbered: false
   - title: Introduction to Dataframes and Plotting
     url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
-    not_numbered: true
+    not_numbered: false
   - title: Introduction to Neuroimaging Data
     url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
-    not_numbered: true
+    not_numbered: false
   - title: Separating Signal from Noise with ICA
     url: /features/notebooks/4_ICA
-    not_numbered: true
+    not_numbered: false
   - title: Signal Processing Basics
     url: /features/notebooks/5_Signal_Processing
-    not_numbered: true
+    not_numbered: false
+- title: Contributing
+  url: /features/markdown/Contributing
+  not_numbered: true
+  expand_sections: true

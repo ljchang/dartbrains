@@ -1,0 +1,48 @@
+# Python Related #
+###################
+*.pyc
+docs/_*/*
+docs/auto_examples
+docs/modules
+*.log
+*.egg*
+build/
+dist/
+.cache/
+htmlcov
+.pytest_cache/*
+dev/
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# iPython Notebook Caches #
+###########################
+scripts/nilearn_cache/
+.ipynb_checkpoints
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+thumbs.db
+Thumbs.db
+
+# Tests & Coverage
+##################
+.coverage
+htmlcov/
+
+# PyCharm
+#########
+.idea
+
+# TOX
+#####
+.tox
+.tox/*
