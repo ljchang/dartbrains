@@ -6,7 +6,7 @@ prev_page:
   url: /features/markdown/Topics
   title: 'Topics'
 next_page:
-  url: /features/notebooks/Signal_Measurement
+  url: /features/markdown/Signal_Measurement
   title: 'Measurement and Signal'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -18,4 +18,4 @@ In this section, we will provide an overview of the course and a very introducto
 
 ## Lecture
 
-The lecture for this section can be viewed here ![](../lectures/Intro_to_Neuroimaging.pdf).
+The lecture for this section can be viewed here ![](../images/lectures/Intro_to_Neuroimaging.pdf).
