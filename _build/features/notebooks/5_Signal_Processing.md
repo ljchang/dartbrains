@@ -51,7 +51,7 @@ print('Dot Product: %s' % np.dot(a,b))
 
 {:.output .output_stream}
 ```
-Dot Product: 513
+Dot Product: 606
 
 ```
 
@@ -78,7 +78,7 @@ print('Dot Product: %s' % np.dot(a,b))
 
 {:.output .output_stream}
 ```
-Dot Product: 731.0070204385588
+Dot Product: 823.8014392366592
 
 ```
 
@@ -116,7 +116,7 @@ a[1].plot(kernel)
 
 {:.output .output_data_text}
 ```
-[<matplotlib.lines.Line2D at 0x1c290aa6d8>]
+[<matplotlib.lines.Line2D at 0x1199ec7b8>]
 ```
 
 
@@ -148,7 +148,7 @@ plt.imshow(shifted_kernel)
 
 {:.output .output_data_text}
 ```
-<matplotlib.image.AxesImage at 0x11d1448d0>
+<matplotlib.image.AxesImage at 0x119e28cf8>
 ```
 
 
@@ -408,7 +408,7 @@ plt.plot(time, simulation)
 
 {:.output .output_data_text}
 ```
-[<matplotlib.lines.Line2D at 0x1c2ccaa780>]
+[<matplotlib.lines.Line2D at 0x1c2112f6a0>]
 ```
 
 
@@ -465,6 +465,54 @@ plt.tight_layout()
 
 
 
+What is the effect of changing the sampling frequency on our ability to measure these oscillations?  Try dropping it to be very low (e.g., less than 70 hz.)  Notice that signals will alias when the sampling frequency is below the nyquist frequency of a signal. To observe the oscillations, we need to be sampling at least two times the speed of the oscillation. This will result in a jagged view of the data, but we can still accurately observe the frequency.  Higher sampling rates allow us to better observe the underlying signals.
+
+
+
+{:.input_area}
+```python
+sampling_freq = 60
+
+freq = [3, 10, 5 ,15, 35]
+amplitude = [5, 15, 10, 5, 7]
+phases = pi*np.array([1/7, 1/8, 1, 1/2, -1/4])
+
+time = arange(-1, 1 + 1/sampling_freq, 1/sampling_freq) 
+
+sine_waves = []
+for i,f in enumerate(freq):
+    sine_waves.append(amplitude[i] * sin(2*pi*f*time + phases[i]))
+sine_waves = np.array(sine_waves)
+
+
+f,a = plt.subplots(nrows=5, ncols=1, figsize=(10,5), sharex=True)
+for i,x in enumerate(freq):
+    a[i].plot(sine_waves[i,:], linewidth=2)
+plt.tight_layout()    
+
+
+plt.figure(figsize=(10,3))
+plt.plot(np.sum(sine_waves, axis=0))
+plt.title("Sum of sines")
+plt.tight_layout()    
+
+```
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/5_Signal_Processing_30_0.png)
+
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/5_Signal_Processing_30_1.png)
+
+
+
+Be sure to rerun the code after increasing the sampling frequency above 70hz.
+
 We can add a little bit of gaussian (white) noise on top of this signal to make it even more realistic.  Try varying the amount of noise by adjusting the scaling on the noise.
 
 
@@ -494,7 +542,7 @@ Text(0.5, 0, 'Time')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_30_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_32_1.png)
 
 
 
@@ -551,7 +599,7 @@ plt.tight_layout()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_35_0.png)
+![png](../../images/features/notebooks/5_Signal_Processing_37_0.png)
 
 
 
@@ -580,7 +628,7 @@ Text(0.5, 0, 'Time')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_37_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_39_1.png)
 
 
 
@@ -622,7 +670,7 @@ Text(0, 0.5, 'Amplitude')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_41_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_43_1.png)
 
 
 
@@ -656,7 +704,7 @@ Text(0, 0.5, 'Amplitude')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_43_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_45_1.png)
 
 
 
@@ -691,7 +739,7 @@ Text(0.5, 0, 'Time')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_45_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_47_1.png)
 
 
 
@@ -726,7 +774,7 @@ Text(0, 0.5, 'Frequency (Hz)')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_47_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_49_1.png)
 
 
 
@@ -755,7 +803,7 @@ Text(0.5, 0, 'Time')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_49_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_51_1.png)
 
 
 
@@ -793,7 +841,7 @@ Here we will construct a high pass butterworth filter and plot it in frequency s
 ```python
 from scipy.signal import butter, filtfilt, freqz
 
-filter_order = 10
+filter_order = 3
 frequency_cutoff = 25
 sampling_frequency = 500
 
@@ -816,11 +864,69 @@ plot_filter(b, a, sampling_frequency)
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_53_0.png)
+![png](../../images/features/notebooks/5_Signal_Processing_55_0.png)
 
 
 
-Now let's apply the filter to our data.
+Notice how the gain scales from [0,1]?  Filters can be multiplied by the FFT of a signal to apply the filter in the frequency domain. When the resulting signal is transformed back in the time domain using the inverse FFT, the new signal will be filtered. This can be much faster than applying filters in the time domain.
+
+The filter_order parameter adjusts the sharpness of the cutoff in the frequency domain.  Try playing with different values to see how it changes the filter plot.
+
+
+
+{:.input_area}
+```python
+filter_order = 2
+frequency_cutoff = 25
+sampling_frequency = 500
+
+b, a = butter(filter_order, frequency_cutoff, btype='high', output='ba', fs=sampling_frequency)    
+
+plot_filter(b, a, sampling_frequency)
+```
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/5_Signal_Processing_57_0.png)
+
+
+
+What does the filter look like in the temporal domain?  Let's take the inverse FFT and plot it to see what it looks like as a kernel in the temporal domain.  Notice how changing the filter order adds more ripples in the time domain.
+
+
+
+{:.input_area}
+```python
+from scipy.signal import sosfreqz
+
+filter_order = 8
+sos = butter(filter_order, frequency_cutoff, btype='high', output='sos', fs=sampling_frequency)    
+w_sos, h_sos = sosfreqz(sos)
+
+plt.plot(ifft(h_sos)[0:100], linewidth=3)
+plt.ylabel('Amplitude', fontsize=18)
+plt.xlabel('Time', fontsize=18)
+```
+
+
+
+
+
+{:.output .output_data_text}
+```
+Text(0.5, 0, 'Time')
+```
+
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/5_Signal_Processing_59_1.png)
+
+
+
+Now let's apply the filter to our data. We will be applying the filter to the signal in the time domain using the `filtfilt` function. This is a good default option, even though there are several other functions to apply the filter. `filtfilt` applies the filter forward and then in reverse ensuring that there is zero-phase distortion.
 
 
 
@@ -842,14 +948,14 @@ plt.legend(['Original','Filtered'], fontsize=18)
 
 {:.output .output_data_text}
 ```
-<matplotlib.legend.Legend at 0x1c2d753048>
+<matplotlib.legend.Legend at 0x1c27f02cf8>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_55_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_61_1.png)
 
 
 
@@ -886,14 +992,14 @@ plt.legend(['Original','Filtered'], fontsize=18)
 
 {:.output .output_data_text}
 ```
-<matplotlib.legend.Legend at 0x1c2d6bcb70>
+<matplotlib.legend.Legend at 0x1c23d1b9e8>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_57_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_63_1.png)
 
 
 
@@ -916,7 +1022,7 @@ plot_filter(b, a, sampling_frequency)
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_59_0.png)
+![png](../../images/features/notebooks/5_Signal_Processing_65_0.png)
 
 
 
@@ -954,14 +1060,14 @@ plt.legend(['Original','Filtered'], fontsize=18)
 
 {:.output .output_data_text}
 ```
-<matplotlib.legend.Legend at 0x1c35103cc0>
+<matplotlib.legend.Legend at 0x1c23de8438>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_61_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_67_1.png)
 
 
 
@@ -999,20 +1105,20 @@ plt.legend(['Original','Filtered'], fontsize=18)
 
 {:.output .output_data_text}
 ```
-<matplotlib.legend.Legend at 0x1c38b5bf28>
+<matplotlib.legend.Legend at 0x1c24b67cc0>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_63_1.png)
+![png](../../images/features/notebooks/5_Signal_Processing_69_1.png)
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/5_Signal_Processing_63_2.png)
+![png](../../images/features/notebooks/5_Signal_Processing_69_2.png)
 
 
 

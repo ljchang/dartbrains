@@ -61,7 +61,7 @@
     url: /features/notebooks/1_Introduction_to_Programming
     not_numbered: true
   - title: Introduction to Dataframes and Plotting
-    url: /features/notebooks/2_1_MatplotlibTemplates
+    url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
     not_numbered: true
   - title: Introduction to Neuroimaging Data
     url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
