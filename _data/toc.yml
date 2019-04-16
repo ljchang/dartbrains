@@ -87,6 +87,15 @@
   - title: Signal Processing Basics
     url: /features/notebooks/5_Signal_Processing
     not_numbered: false
+  - title: Preprocessing with Nipype Quickstart
+    url: /features/notebooks/6_Nipype_Quickstart.ipynb
+    not_numbered: false
+  - title: Building Preprocessing Workflows with Nipype
+    url: /features/notebooks/7_Nipype_Preprocessing.ipynb
+    not_numbered: false
+  - title: Introduction to Automated Preprocessing with fmriprep
+    url: /features/notebooks/8_fmriprep_tutorial.ipynb
+    not_numbered: false
 - title: Contributing
   url: /features/markdown/Contributing
   not_numbered: true
