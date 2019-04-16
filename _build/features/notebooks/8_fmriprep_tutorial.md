@@ -218,7 +218,7 @@ We could run fmriprep on our computer, but this could take a long time if we hav
 
 Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been isntalled in racks. Below is a picture of what Dartmouth's [Discovery cluster](http://techdoc.dartmouth.edu/discovery/) looks like:
 
-![image.png](../../images/fmriprep/file_tree.png)
+![discovery](../../images/fmriprep/hpc.png)
 
 A cluster is simply a collection of nodes. A node can be thought of as an individual computer. Each node contains processors, which encompass multiple cores. Discovery contains 3000+ cores, which is certainly a lot more than your laptop!
 
