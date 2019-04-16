@@ -38,7 +38,8 @@ This tool allows you to easily do the following:
 - More information and documentation can be found at https://fmriprep.readthedocs.io/
 
 
-![image.png](attachment:image.png)
+![image.png](../../images/fmriprep/fmriprep.png)
+
 
 # BIDS: Brain Imaging Dataset Specification
 
@@ -49,16 +50,15 @@ Recently, there has been increasing momentum in the neuroimaging community to cr
 As you can imagine, individuals have idiosyncratic ways of maintaining files. Think about how you keep track of your files on your personal laptop (versus how your friend does). This may be okay in the personal realm, but in science, it's best if anyone—including yourself 6 months from now—can follow your work and know *which* files mean *what* by their titles.
 
 Here's an example of non-Bids versus BIDS dataset found in [this paper](https://www.nature.com/articles/sdata201644):
-<br>
-<br>
 
-![sdata201644-f1.jpg](attachment:sdata201644-f1.jpg)
 
-<br>
-Few major differences between above datasets: <br>
-1. In BIDS, files are in nifti format (not dicoms). <br>
-2. In BIDS, scans are broken up into separate folders by type of scan(functional versus anatomical versus diffusion weighted) for each subject. <br>
-3. In BIDS, JSON files are included that contain descriptive information about the scans (e.g., acquisition parameters) <br>
+![image.png](../../images/fmriprep/file_tree.png)
+
+Few major differences between above datasets:
+
+1. In BIDS, files are in nifti format (not dicoms).
+2. In BIDS, scans are broken up into separate folders by type of scan(functional versus anatomical versus diffusion weighted) for each subject.
+3. In BIDS, JSON files are included that contain descriptive information about the scans (e.g., acquisition parameters)
 
 Not only can using this specification be useful within labs to have a set way of structuring data, but it can also be useful when collaborating across labs, developing and utilizing software, and publishing data.
 
@@ -218,7 +218,8 @@ We could run fmriprep on our computer, but this could take a long time if we hav
 
 Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been isntalled in racks. Below is a picture of what Dartmouth's [Discovery cluster](http://techdoc.dartmouth.edu/discovery/) looks like:
 
-![Screen%20Shot%202019-04-15%20at%206.26.25%20PM.png](attachment:Screen%20Shot%202019-04-15%20at%206.26.25%20PM.png)
+![image.png](../../images/fmriprep/file_tree.png)
+
 A cluster is simply a collection of nodes. A node can be thought of as an individual computer. Each node contains processors, which encompass multiple cores. Discovery contains 3000+ cores, which is certainly a lot more than your laptop!
 
 In order to submit a job, you can create a Portable Batch System (PBS) script that sets up the parameters (e.g., how much time you want your script to run, specifying directory to run, etc) and submits your job to a queue.
@@ -231,7 +232,7 @@ See an example of a PBS script below used to run fMRIprep for sub-01 in the ds00
 
 You would want everything to be about the same, except swapping out email and directories singularity binds to.
 
-![pbs_script.png](attachment:pbs_script.png)
+![pbs_scripts.png](../../images/fmriprep/pbs_scripts.png)
 
 You need to save this file as a ".pbs" script and run it on the command line using the command:
 
@@ -314,31 +315,34 @@ For every functional Run you will see the following plots:
 *Anatomical Scans*
 
 ANTS Brain Extraction:
-![Screen%20Shot%202019-04-15%20at%207.44.47%20PM.png](attachment:Screen%20Shot%202019-04-15%20at%207.44.47%20PM.png)
+![normalization](../../images/fmriprep/T1_normalization.png)
 
-<br>
 
 T1 Segmentation 
-![Screen%20Shot%202019-04-15%20at%207.47.30%20PM.png](attachment:Screen%20Shot%202019-04-15%20at%207.47.30%20PM.png)
+![segmentation](../../images/fmriprep/T1_segmentation.png)
+
 
 T1 to MNI Registration (presented as a GIF to view overlay)
 
 *Functional Scans*
 
 Skull stripped EPI (notice these images are much blurrier and show some distortion compared to the T1s):
-![Screen%20Shot%202019-04-15%20at%207.49.44%20PM.png](attachment:Screen%20Shot%202019-04-15%20at%207.49.44%20PM.png)
+![epi](../../images/fmriprep/epi_registration.png)
 
 EPI to T1 Registration (presented as a GIF to view the overlay)
 
 aCompCor Mask (Aims to mitigate head motion by regressing out CSF and white matter. You can read more about it in [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4043948/): 
-![Screen%20Shot%202019-04-15%20at%207.52.24%20PM.png](attachment:Screen%20Shot%202019-04-15%20at%207.52.24%20PM.png)
+![aCompCorMask](../../images/fmriprep/aCompCorMask.png)
 
 
 Carpet Plots are designed to be 1 figure that gives a snapshot of data quality of a single scan. <br>
 
 X axis reflects time and Y axis reflects all the voxels in the brain (blue=cortex, orange=subcortical structures, green=cerebellum, red=white matter and CSF).
-<br> You may notice head motion (framewise displacement) increases correspond to a black line reflecting signal dropout in the plot. You can read more about this in the [paper](https://www.sciencedirect.com/science/article/pii/S1053811916303871?via%3Dihub) introducing carpet plots.
-![Screen%20Shot%202019-04-15%20at%208.03.05%20PM.png](attachment:Screen%20Shot%202019-04-15%20at%208.03.05%20PM.png)
+
+You may notice head motion (framewise displacement) increases correspond to a black line reflecting signal dropout in the plot. You can read more about this in the [paper]
+(https://www.sciencedirect.com/science/article/pii/S1053811916303871?via%3Dihub) introducing carpet plots.
+![headmotion](../../images/fmriprep/head_motion.png)
+
 
 # Limitations of fmriprep
 
