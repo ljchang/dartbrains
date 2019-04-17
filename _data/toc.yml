@@ -96,6 +96,11 @@
   - title: Introduction to Automated Preprocessing with fmriprep
     url: /features/notebooks/8_fmriprep_tutorial
     not_numbered: false
+  - title: Introduction to the General Linear Model
+    url: /features/notebooks/9_GLM
+    not_numbered: false
+
+
 - title: Contributing
   url: /features/markdown/Contributing
   not_numbered: true
