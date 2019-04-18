@@ -2,7 +2,7 @@
 redirect_from:
   - "/features/notebooks/9-glm"
 interact_link: content/features/notebooks/9_GLM.ipynb
-kernel_name: psych60-chang
+kernel_name: python3
 title: 'Introduction to the General Linear Model'
 prev_page:
   url: /features/notebooks/8_fmriprep_tutorial
@@ -45,7 +45,7 @@ To generate an intuition for how we use the GLM to make inferences in fMRI data 
 
 Imagine that we are interested in what region of the brain is involved in processing faces. We might show a variety of faces to a participant. Each presentation of a face will be a *trial*. Let's simulate what a design might look like with 5 trials of faces.
 
-![image.png](attachment:image.png)
+![faces](../../images/glm/faces.png)
 
 
 
@@ -81,11 +81,11 @@ To rule out this potential confound, we would need at least one other condition 
 
 One possibility is to create a visual stimulus that has all of the same visual properties in terms of luminance and color, but no longer resembles a face. Here is an example of the same faces that have been Fourier transformed, phase-scrambled, and inverse Fourier transformed. These pictures have essentially identical low level visual properties, but are clearly not faces.
 
-![image.png](attachment:image.png)
+![phase](../../images/glm/phase_scrambled.png)
 
 However, one might argue that faces are a type of object and regions that are involved in higher visual processing such as object recognition might not be selective to processing faces. In this case, an additional visual control might be objects.
 
-![image.png](attachment:image.png)
+![objects](../../images/glm/objects.png)
 
 So clearly we need at least one additional control condition.  Let's make it pictures of objects. 
 
