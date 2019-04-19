@@ -8,8 +8,8 @@ prev_page:
   url: /features/notebooks/8_fmriprep_tutorial
   title: 'Introduction to Automated Preprocessing with fmriprep'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/notebooks/10_GLM_Single_Subject_Model
+  title: 'Modeling Single Subject Data'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
@@ -20,6 +20,19 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 In this tutorial we will explore how we can use the general linear model (GLM) to make inferences about brain responses in a single subject.
 
 We will explore the statistics in the context of a simple hypothetical experiment.
+
+I encourage you to watch some short introductory videos on regression by Jeanette Mumford.
+ - [Simple Linear Regression](https://www.youtube.com/watch?v=yLgPpmXVVbs)
+ - [Matrix Algebra Basics](https://www.youtube.com/watch?v=fkZj8QoYjq8)
+ - [Multiple Linear Regression](https://www.youtube.com/watch?v=qdOG7YMolmA)
+ - [Hypothesis Testing](https://www.youtube.com/watch?v=ULeg3DH3g9w)
+ - [Contrasts in Linear Models](https://www.youtube.com/watch?v=yLgPpmXVVbs&t=631s)
+ - [Intepreting Regression Parameters](https://www.youtube.com/watch?v=uClfe4pLrCo)
+ - [Mean Centering Regressors](https://www.youtube.com/watch?v=K4S576j90N8)
+ 
+Also, videos from the Principles of fMRI Course by Tor Wager & Martin Lindquist.
+ - [GLM](https://www.youtube.com/watch?v=GDkLQuV4he4&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=18)
+ - [GLM Estimation](https://www.youtube.com/watch?v=Ab-5AbJ8gAs&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=23)
 
 First, let's import all of the modules we will need for this tutorial.
 
@@ -560,7 +573,7 @@ array([-0.49497307, 14.50961077,  6.26452574])
 
 ## Contrasts
 
-Contrasts are a very important concept in fMRI data analysis as they provide the statistical inference underlying the subtraction method of making inferences.
+Contrasts are a very important concept in fMRI data analysis as they provide the statistical inference underlying the subtraction method of making inferences. See this [video](https://www.youtube.com/watch?v=yLgPpmXVVbs) by Jeanette Mumford or this [video](https://www.youtube.com/watch?v=7MibM1ATai4&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=20) by Tor Wager & Martin Lindquist for a more in depth overview. 
 
 Contrasts describe a linear combination of variables in a regression model whose coefficients add up to zero. This allows us to flexibly compare different experimental conditions.
 
@@ -717,7 +730,7 @@ The BOLD signal has some intrinsic autocorrelation that varies with the length o
 
 Another important thing to note is that there is some evidence that the AR(1) model can actually increase false positives, especiall in shorter TRs.  See this [paper](https://www.sciencedirect.com/science/article/pii/S1053811912003825) by Anders Ekland and colleagues for more details. Also, this is a helpful [blog post](https://mandymejia.com/2016/11/06/how-to-efficiently-prewhiten-fmri-timeseries-the-right-way/) discussing prewhitening. 
 
-For the scope of this course we will largely be ignoring this issue, but I will plan to add some examples and simulations in the future.
+For the scope of this course we will largely be ignoring this issue, but I will plan to add some examples and simulations in the future.  For now, I encourage you to watch this video on [AR models](https://www.youtube.com/watch?v=Mb9LDzvhecY&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=24)
 
 ## Additional Resources for Learning about Regression
 

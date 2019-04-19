@@ -20,7 +20,14 @@ The first step in fMRI data analysis is to build a model for each subject to pre
 
 The Pinel Localizer task was designed to probe several different types of basic cognitive processes, such as visual perception, finger tapping, language, and math. Several of the tasks are cued by reading text on the screen (i.e., visual modality) and also by hearing auditory instructions (i.e., auditory modality). The trials are randomized across conditions and have been optimized to maximize efficiency for a rapid event related design. There are 100 trials in total over a 5-minute scanning session. Read the [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more specific details about the task. You can also view the Data on the author's [cubicweb](http://brainomics.cea.fr/localizer/dataset?rql=Any%20X%2C%20XT%2C%20XL%2C%20XI%2C%20XF%2C%20XD%20WHERE%20X%20is%20Scan%2C%20X%20type%20XT%2C%20X%20label%20XL%2C%20X%20identifier%20XI%2C%20X%20format%20XF%2C%20X%20description%20XD) interface.
 
-Let's first load all of the python modules we will need to complete this tutorial.
+I encourage you to watch some short introductory videos on the GLM by Tor Wager and Martin Lindquist.
+ - [GLM Applied to fMRI](https://www.youtube.com/watch?v=OyLKMb9FNhg&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=19)
+ - [Conditions & Contrasts](https://www.youtube.com/watch?v=7MibM1ATai4&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=20)
+ - [Temporal Basis Sets](https://www.youtube.com/watch?v=YfeMIcDWwko&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=21)
+ - [Nuisance Variables](https://www.youtube.com/watch?v=DEtwsFdFwYc&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=22)
+ - [Inference/Contrasts/T-Tests ](https://www.youtube.com/watch?v=NRunOo7EKD8&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=25)
+ 
+ Let's first load all of the python modules we will need to complete this tutorial.
 
 
 
@@ -42,6 +49,9 @@ from nilearn.plotting import view_img, glass_brain, plot_stat_map
 netid = 'f00275v'
 output_dir = '/dartfs/rc/lab/P/Psych60/students_output/%s' % netid
 data_dir = '/dartfs/rc/lab/P/Psych60/data/brainomics_data/'
+
+output_dir = '/Volumes/Psych60/students_output/%s' % netid
+data_dir = '/Volumes/Psych60/data/brainomics_data/'
 ```
 
 
@@ -411,6 +421,30 @@ Recall from our signal processing tutorial, that there are often other types of 
 
 {:.input_area}
 ```python
+dm_conv_filt.iloc[:,10:].plot()
+```
+
+
+
+
+
+{:.output .output_data_text}
+```
+<matplotlib.axes._subplots.AxesSubplot at 0x1c4fcda4e0>
+```
+
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_24_1.png)
+
+
+
+
+
+{:.input_area}
+```python
 dm_conv_filt = dm_conv.add_dct_basis(duration=128)
 dm_conv_filt.heatmap()
 ```
@@ -418,7 +452,7 @@ dm_conv_filt.heatmap()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_24_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_25_0.png)
 
 
 
@@ -438,7 +472,7 @@ dm_conv_filt_poly.heatmap()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_26_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_27_0.png)
 
 
 
@@ -458,7 +492,7 @@ dm_conv_filt_poly.heatmap()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_28_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_29_0.png)
 
 
 
@@ -496,19 +530,19 @@ plt.plot(zscore(mc))
 
 {:.output .output_data_text}
 ```
-[<matplotlib.lines.Line2D at 0x1c1debccc0>,
- <matplotlib.lines.Line2D at 0x1c1debce10>,
- <matplotlib.lines.Line2D at 0x1c1debcf60>,
- <matplotlib.lines.Line2D at 0x1c1dec50f0>,
- <matplotlib.lines.Line2D at 0x1c1dec5240>,
- <matplotlib.lines.Line2D at 0x1c1dec5390>]
+[<matplotlib.lines.Line2D at 0x1c4e2775c0>,
+ <matplotlib.lines.Line2D at 0x1c4e277710>,
+ <matplotlib.lines.Line2D at 0x1c4e277860>,
+ <matplotlib.lines.Line2D at 0x1c4e2779b0>,
+ <matplotlib.lines.Line2D at 0x1c4e277b00>,
+ <matplotlib.lines.Line2D at 0x1c4e277c50>]
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_32_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_33_1.png)
 
 
 
@@ -539,14 +573,14 @@ sns.heatmap(mc_cov)
 
 {:.output .output_data_text}
 ```
-<matplotlib.axes._subplots.AxesSubplot at 0x1c1db778d0>
+<matplotlib.axes._subplots.AxesSubplot at 0x1c503c5ba8>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_34_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_35_1.png)
 
 
 
@@ -577,7 +611,7 @@ Text(0, 0.5, 'Intensity')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_36_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_37_1.png)
 
 
 
@@ -602,14 +636,14 @@ spikes.plot(ax = a, linewidth=2)
 
 {:.output .output_data_text}
 ```
-<matplotlib.axes._subplots.AxesSubplot at 0x1c1e3e9f60>
+<matplotlib.axes._subplots.AxesSubplot at 0x1c4f4b8160>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_38_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_39_1.png)
 
 
 
@@ -624,13 +658,37 @@ In this example, we will append each of these additional matrices to our main de
 {:.input_area}
 ```python
 dm_conv_filt_poly_cov = dm_conv_filt_poly.append(mc_cov, axis=1).append(spikes, axis=1)
-dm_conv_filt_poly_cov.heatmap()
+dm_conv_filt_poly_cov.heatmap(cmap='RdBu_r', vmin=-1,vmax=1)
 ```
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_40_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_41_0.png)
+
+
+
+
+
+{:.input_area}
+```python
+plt.plot(dm_conv_filt_poly_cov.vif())
+```
+
+
+
+
+
+{:.output .output_data_text}
+```
+[<matplotlib.lines.Line2D at 0x1c519d5f60>]
+```
+
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_42_1.png)
 
 
 
@@ -768,6 +826,7 @@ First, let's try making a simple contrast where we average only the regressors p
 print(data.X.columns)
 c1 = np.zeros(len(stats['beta']))
 c1[[1,2,3,4]] = 1/4
+print(c1)
 
 motor = smoothed.copy()
 motor.data = np.dot(smoothed.data.T,c1).T
@@ -787,6 +846,9 @@ Index(['horizontal_checkerboard_c0', 'motor_left_auditory_c0',
        '0', '1', '2', '3', '4', '5', '0', '1', '2', '3', '4', '5', '0', '1',
        '2', '3', '4', '5', 'diff_spike1'],
       dtype='object')
+[0.   0.25 0.25 0.25 0.25 0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.  ]
 
 ```
 
