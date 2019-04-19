@@ -21,8 +21,11 @@ X-Hour Wed:  4:35-5:25
 Poldrack, R. A., Mumford, J. A., & Nichols, T. E. (2011). Handbook of functional MRI data analysis. Cambridge University Press.
 
 ## ONLINE VIDEOS
-Students are encouraged to watch assigned videos freely available online to supplement the classroom experience.  Most videos will be available on youtube from the [Principles of fMRI Course](https://www.youtube.com/channel/UC_BIby85hZmcItMrkAlc8eA) or [Analyzing Neural Time Series Data: Principles & Theory](http://mikexcohen.com/lectures.html).
-
+Students are encouraged to watch assigned videos freely available online to supplement the classroom experience.  Most videos will be available on youtube from:
+ - [Principles of fMRI Course](https://www.youtube.com/channel/UC_BIby85hZmcItMrkAlc8eA) by Tor Wager & Martin Lindquist
+ - [Analyzing Neural Time Series Data: Principles & Theory](http://mikexcohen.com/lectures.html) By Mike X Cohen
+ - [Mumford Brain Stats](https://www.youtube.com/channel/UCZ7gF0zm35FwrFpDND6DWeA) by Jeanette Mumford
+ 
 ## ASSIGNMENTS
 
 ### READINGS
