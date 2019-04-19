@@ -26,15 +26,13 @@
   url: /intro
   not_numbered: true
 
-# External link
+- title: Search
+  search: true
+
 - title: GitHub repository
   url: https://github.com/ljchang/dartbrains
   external: true
   not_numbered: true
-
-# Adds a searchbar link
-- title: Search
-  search: true
 
 # Divider for meta-pages and content page
 - divider: true
@@ -45,6 +43,11 @@
 # A chapter w/ a collection of sections beneath it
 - title: Syllabus
   url: /features/markdown/Syllabus
+  not_numbered: true
+  expand_sections: true
+
+- title: Schedule
+  url: /features/markdown/Schedule
   not_numbered: true
   expand_sections: true
 
