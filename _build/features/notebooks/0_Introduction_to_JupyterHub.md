@@ -173,6 +173,11 @@ pip install jupyter
 Open a terminal, navigate to the directory you want to work from then type `jupyter notebook` or `jupyter lab`
 
 
+# Accessing Jupyter Hub and Course Resources from Off-Campus
+If you are having difficulty logging in to the server or accessing dartfs off campus, we recommend accessing the Dartmouth network via VPN. The current method is to use Duo and authenticate your login using a mobile device. 
+
+Here are detailed [instructions](https://services.dartmouth.edu/TDClient/KB/ArticleDet?ID=64933) for how to setup VPN on your laptop.
+
 # Plotting and Atlases
 For most of our labs we will be using Python to plot our data and results.  However, it is often useful to have a more interactive experience.  We recommend additionally downloading [FSLeyes](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLeyes), which is a standalone image viewer developed by FSL.  It can be installed by either downloading directly from the website, or using `pip`.
 
