@@ -8,8 +8,8 @@ prev_page:
   url: /features/notebooks/9_GLM
   title: 'Introduction to the General Linear Model'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/notebooks/10_GLM_Single_Subject_Model
+  title: 'Modeling Group Data'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
@@ -421,6 +421,14 @@ Recall from our signal processing tutorial, that there are often other types of 
 
 {:.input_area}
 ```python
+dm_conv_filt = dm_conv.add_dct_basis(duration=128)
+```
+
+
+
+
+{:.input_area}
+```python
 dm_conv_filt.iloc[:,10:].plot()
 ```
 
@@ -437,7 +445,7 @@ dm_conv_filt.iloc[:,10:].plot()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_24_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_25_1.png)
 
 
 
@@ -452,7 +460,7 @@ dm_conv_filt.heatmap()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_25_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_26_0.png)
 
 
 
@@ -472,7 +480,7 @@ dm_conv_filt_poly.heatmap()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_27_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_28_0.png)
 
 
 
@@ -492,7 +500,7 @@ dm_conv_filt_poly.heatmap()
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_29_0.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_30_0.png)
 
 
 
@@ -530,19 +538,24 @@ plt.plot(zscore(mc))
 
 {:.output .output_data_text}
 ```
-[<matplotlib.lines.Line2D at 0x1c4e2775c0>,
- <matplotlib.lines.Line2D at 0x1c4e277710>,
- <matplotlib.lines.Line2D at 0x1c4e277860>,
- <matplotlib.lines.Line2D at 0x1c4e2779b0>,
- <matplotlib.lines.Line2D at 0x1c4e277b00>,
- <matplotlib.lines.Line2D at 0x1c4e277c50>]
+[<matplotlib.lines.Line2D at 0x1c21215da0>,
+ <matplotlib.lines.Line2D at 0x1c212153c8>,
+ <matplotlib.lines.Line2D at 0x1c212157b8>,
+ <matplotlib.lines.Line2D at 0x1c212156d8>,
+ <matplotlib.lines.Line2D at 0x1c21215710>,
+ <matplotlib.lines.Line2D at 0x1c21993208>,
+ <matplotlib.lines.Line2D at 0x1c219935c0>,
+ <matplotlib.lines.Line2D at 0x1c21993ac8>,
+ <matplotlib.lines.Line2D at 0x1c21993d68>,
+ <matplotlib.lines.Line2D at 0x1c219936a0>,
+ <matplotlib.lines.Line2D at 0x1c21917208>]
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_33_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_34_1.png)
 
 
 
@@ -573,14 +586,14 @@ sns.heatmap(mc_cov)
 
 {:.output .output_data_text}
 ```
-<matplotlib.axes._subplots.AxesSubplot at 0x1c503c5ba8>
+<matplotlib.axes._subplots.AxesSubplot at 0x1c210d82e8>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_35_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_36_1.png)
 
 
 
@@ -611,7 +624,7 @@ Text(0, 0.5, 'Intensity')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_37_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_38_1.png)
 
 
 
@@ -636,14 +649,14 @@ spikes.plot(ax = a, linewidth=2)
 
 {:.output .output_data_text}
 ```
-<matplotlib.axes._subplots.AxesSubplot at 0x1c4f4b8160>
+<matplotlib.axes._subplots.AxesSubplot at 0x1c211e4470>
 ```
 
 
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_39_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_40_1.png)
 
 
 
@@ -664,31 +677,7 @@ dm_conv_filt_poly_cov.heatmap(cmap='RdBu_r', vmin=-1,vmax=1)
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_41_0.png)
-
-
-
-
-
-{:.input_area}
-```python
-plt.plot(dm_conv_filt_poly_cov.vif())
-```
-
-
-
-
-
-{:.output .output_data_text}
-```
-[<matplotlib.lines.Line2D at 0x1c519d5f60>]
-```
-
-
-
-
-{:.output .output_png}
-![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_42_1.png)
+![png](../../images/features/notebooks/10_GLM_Single_Subject_Model_42_0.png)
 
 
 
@@ -740,8 +729,9 @@ Index(['horizontal_checkerboard_c0', 'motor_left_auditory_c0',
        'subtraction_auditory_c0', 'subtraction_visual_c0',
        'vertical_checkerboard_c0', 'cosine_1', 'cosine_2', 'cosine_3',
        'cosine_4', 'poly_0', 'poly_1', 'poly_2', '0', '1', '2', '3', '4', '5',
-       '0', '1', '2', '3', '4', '5', '0', '1', '2', '3', '4', '5', '0', '1',
-       '2', '3', '4', '5', 'diff_spike1'],
+       '6', '7', '8', '9', '10', '0', '1', '2', '3', '4', '5', '6', '7', '8',
+       '9', '10', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '0',
+       '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'diff_spike1'],
       dtype='object')
 
 ```
@@ -769,13 +759,13 @@ interactive(children=(FloatText(value=0.0, description='Threshold'), HTML(value=
 
 To increase the signal to noise ratio and clean up the data, it is common to apply spatial smoothing to the image.
 
-Here we will convolve the image with a 3-D gaussian kernel, with a 5mm full width half maximum (FWHM) using the `.smooth()` method.
+Here we will convolve the image with a 3-D gaussian kernel, with a 6mm full width half maximum (FWHM) using the `.smooth()` method.
 
 
 
 {:.input_area}
 ```python
-smoothed = stats['beta'].smooth(fwhm=5)
+smoothed = stats['beta'].smooth(fwhm=6)
 ```
 
 
@@ -817,19 +807,17 @@ This procedure is identical to those introduced in our GLM tutorial.
 
 First, let's try making a simple contrast where we average only the regressors pertaining to motor. This is essentially summing all of the motor regressors. To take the mean we need to divide by the number of regressors. 
 
-**Note**: we currently have to manually perform the matrix multiplication on the data. I will add a method to do this more easily soon.
-
 
 
 {:.input_area}
 ```python
 print(data.X.columns)
+
 c1 = np.zeros(len(stats['beta']))
 c1[[1,2,3,4]] = 1/4
 print(c1)
 
-motor = smoothed.copy()
-motor.data = np.dot(smoothed.data.T,c1).T
+motor = smoothed * c1
 
 motor.iplot()
 ```
@@ -843,12 +831,15 @@ Index(['horizontal_checkerboard_c0', 'motor_left_auditory_c0',
        'subtraction_auditory_c0', 'subtraction_visual_c0',
        'vertical_checkerboard_c0', 'cosine_1', 'cosine_2', 'cosine_3',
        'cosine_4', 'poly_0', 'poly_1', 'poly_2', '0', '1', '2', '3', '4', '5',
-       '0', '1', '2', '3', '4', '5', '0', '1', '2', '3', '4', '5', '0', '1',
-       '2', '3', '4', '5', 'diff_spike1'],
+       '6', '7', '8', '9', '10', '0', '1', '2', '3', '4', '5', '6', '7', '8',
+       '9', '10', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '0',
+       '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'diff_spike1'],
       dtype='object')
 [0.   0.25 0.25 0.25 0.25 0.   0.   0.   0.   0.   0.   0.   0.   0.
  0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
- 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.  ]
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.  ]
 
 ```
 
@@ -870,8 +861,7 @@ Now let's see which regions are more active when making motor movements with our
 c_lvr = np.zeros(len(stats['beta']))
 c_lvr[[1,2,3,4]] = [.5, .5, -.5, -.5]
 
-motor_lvr = smoothed.copy()
-motor_lvr.data = np.dot(smoothed.data.T, c_lvr).T
+motor_lvr = smoothed * c_lvr
 
 motor_lvr.iplot()
 ```

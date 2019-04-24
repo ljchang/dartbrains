@@ -105,7 +105,9 @@
   - title: Modeling Single Subject Data
     url: /features/notebooks/10_GLM_Single_Subject_Model
     not_numbered: false
-
+  - title: Modeling Group Data
+    url: /features/notebooks/10_GLM_Single_Subject_Model
+    not_numbered: false
 
 - title: Contributing
   url: /features/markdown/Contributing

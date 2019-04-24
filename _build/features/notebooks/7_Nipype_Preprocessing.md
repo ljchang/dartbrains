@@ -2,7 +2,7 @@
 redirect_from:
   - "/features/notebooks/7-nipype-preprocessing"
 interact_link: content/features/notebooks/7_Nipype_Preprocessing.ipynb
-kernel_name: psych60-chang
+kernel_name: conda-env-py36-py
 title: 'Building Preprocessing Workflows with Nipype'
 prev_page:
   url: /features/notebooks/6_Nipype_Quickstart

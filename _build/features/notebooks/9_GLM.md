@@ -209,9 +209,9 @@ plot_timeseries(voxel_conv, labels=['Face', 'Object'])
 
 
 
-While this might reflect the expected HRF response to a single event, real data is much noiser. It is easy to add differnt types of noise. For example, there might be a low frequency drift, autocorrelation, or possibly some aliased physiological artifacts.
+While this might reflect the expected HRF response to a single event, real data is much noiser. It is easy to add different types of noise. For example, there might be a low frequency drift, autocorrelation, or possibly some aliased physiological artifacts.
 
-For now, let's start with something simple, like independent white noise drawn from a random gaussian distribution
+For now, let's start with something simple, like independent white noise drawn from a random Gaussian distribution
 
 $\epsilon \sim \mathcal{N}(\mu,\,\sigma^{2})$ 
 
