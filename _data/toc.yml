@@ -106,7 +106,7 @@
     url: /features/notebooks/10_GLM_Single_Subject_Model
     not_numbered: false
   - title: Modeling Group Data
-    url: /features/notebooks/10_GLM_Single_Subject_Model
+    url: /features/notebooks/11_Group_Analysis
     not_numbered: false
 
 - title: Contributing

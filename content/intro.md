@@ -11,6 +11,6 @@ How can we understand how the brain works? This course provides an introduction 
 
 ## Acknowledgements
 
-Dartbrains was created by [Luke Chang][luke].
+Dartbrains was created by [Luke Chang][luke] and supported by an NSF CAREER Award 1848370.
 
 [luke]: http://cosanlab.com/
