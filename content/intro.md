@@ -11,6 +11,6 @@ How can we understand how the brain works? This course provides an introduction 
 
 ## Acknowledgements
 
-Dartbrains was created by [Luke Chang][luke] and supported by an NSF CAREER Award 1848370.
+Dartbrains was created by [Luke Chang](http://cosanlab.com/) and supported by an NSF CAREER Award 1848370.
 
-[luke]: http://cosanlab.com/
+Our [jupyterhub server](https://jupyter.dartmouth.edu) was built and maintained by the [Research Computing](https://rc.dartmouth.edu/) staff at Dartmouth. Special thanks to Susan Schwarz, William Hamblen, Christian Darabos, and John Hudson.
