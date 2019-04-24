@@ -8,8 +8,8 @@ prev_page:
   url: /features/notebooks/7_Nipype_Preprocessing
   title: 'Building Preprocessing Workflows with Nipype'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/notebooks/9_GLM
+  title: 'Introduction to the General Linear Model'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
@@ -52,7 +52,7 @@ As you can imagine, individuals have idiosyncratic ways of maintaining files. Th
 Here's an example of non-Bids versus BIDS dataset found in [this paper](https://www.nature.com/articles/sdata201644):
 
 
-![image.png](../../images/fmriprep/file_tree.png)
+![file_tree](../../images/fmriprep/file_tree.jpg)
 
 Few major differences between above datasets:
 
