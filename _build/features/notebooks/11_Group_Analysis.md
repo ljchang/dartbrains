@@ -48,18 +48,15 @@ from nltools.external import glover_hrf
 from scipy.stats import ttest_1samp
 
 netid = 'f00275v'
-# output_dir = '/dartfs/rc/lab/P/Psych60/students_output/%s' % netid
-# data_dir = '/dartfs/rc/lab/P/Psych60/data/brainomics_data/'
-
-output_dir = '/Volumes/Psych60/students_output/%s' % netid
-data_dir = '/Volumes/Psych60/data/brainomics_data/'
+output_dir = '/dartfs/rc/lab/P/Psych60/students_output/%s' % netid
+data_dir = '/dartfs/rc/lab/P/Psych60/data/brainomics_data/'
 ```
 
 
 # Hierarchical Data Structure
 We can think of the data as being organized into a hierarchical structure. For each brain, we are measuring BOLD activity in hundreds of thousands of cubic voxels sampled at about 0.5Hz (i.e., TR=2s). Our experimental task will have many different trials for each condition (seconds), and these trials may be spread across multiple scanning runs (minutes), or entire scanning sessions (hours). We are ultimately interested in modeling all of these different scales of data to make an inference about the function of a particular region of the brain across the group of participants we sampled, which we would hope will generalize to the broader population.
 
-![HierarchicalStructure.png](attachment:HierarchicalStructure.png)
+![HierarchicalStructure.png](../../images/group_analysis/HierarchicalStructure.png)
 
 In the past few notebooks, we have explored how to preprocess the data to reduce noise and enhance our signal and also how we can estimate responses in each voxel to specific conditions within a single participant based on convolving our experimental design with a canonical hemodynamic response function (HRF). Here we will discuss how we combine these brain responses estimated at the first-level in a second-level model to make inferences about the group.
 
@@ -261,6 +258,7 @@ for sub in range(100):
 plt.hist(betas)
 plt.ylabel('Frequency', fontsize=18)
 plt.xlabel('Estimated Beta', fontsize=18)
+plt.axvline(x=0, color='r', linestyle='dashed', linewidth=2)
 ```
 
 
@@ -269,7 +267,7 @@ plt.xlabel('Estimated Beta', fontsize=18)
 
 {:.output .output_data_text}
 ```
-Text(0.5, 0, 'Estimated Beta')
+<matplotlib.lines.Line2D at 0x1c3ee82438>
 ```
 
 
@@ -297,7 +295,7 @@ ttest_1samp(betas, 0)
 
 {:.output .output_data_text}
 ```
-Ttest_1sampResult(statistic=9.34758722792861, pvalue=2.8990494767551474e-15)
+Ttest_1sampResult(statistic=9.496118013613062, pvalue=1.3751674242606958e-15)
 ```
 
 
