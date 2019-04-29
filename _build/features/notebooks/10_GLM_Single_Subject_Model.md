@@ -9,7 +9,7 @@ prev_page:
   title: 'Introduction to the General Linear Model'
 next_page:
   url: /features/notebooks/11_Group_Analysis
-  title: 'Modeling Group Data'
+  title: 'Group Analysis'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
