@@ -8,8 +8,8 @@ prev_page:
   url: /features/notebooks/4_ICA
   title: 'Separating Signal from Noise with ICA'
 next_page:
-  url: 
-  title: ''
+  url: /features/notebooks/6_Nipype_Quickstart
+  title: 'Preprocessing with Nipype Quickstart'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
@@ -810,7 +810,7 @@ Text(0.5, 0, 'Time')
 ## Convolution Theorem
 Convolution in the time domain is the same multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [video](http://mikexcohen.com/lecturelets/convolutiontime/convolutiontime.html) for an overview of the convolution theorem and convolution in the frequency domain.
 
-![ConvolutionTheorem.png](attachment:ConvolutionTheorem.png)
+![ConvolutionTheorem.png](../../images/signal_processing/ConvolutionTheorem.png)
 
 # Filters
 
