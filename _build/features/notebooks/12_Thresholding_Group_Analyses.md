@@ -42,7 +42,7 @@ For a more in depth overview, I encourage you to watch these videos on correctin
  - [FDR](https://www.youtube.com/watch?v=W9ogBO4GEzA)
  - [Thresholds in Practice](https://www.youtube.com/watch?v=N7Iittt8HrU)
 
-# Simulations
+## Simulations
 
 Let's explore the concept of false positives to get an intuition about what the overall goals and issues are in controlling for multiple tests.
 
@@ -496,13 +496,13 @@ simulation.plot_grid_simulation(threshold=threshold, threshold_type='p', n_simul
 
 Ok, clearly we can see that the bonferroni threshold is too conservative for this example. We need to double the magnitude of the effect before we can reliably recover most of the signal.
 
-# Family Wise Error Rate
+## Family Wise Error Rate
 
 At this point you may be wondering if it even makes sense to assume that each test is independent. It seems reasonable to expect some degree of spatial correlation in our data. Our simulation is a good example of this as we have a square that contains signal across contiguous voxels. In practice, most of our functional neuroanatomy that we are investigating is larger than a single voxel and in addition, we are smoothing the data in preprocessing, which also increases spatial correlation.
 
 It can be shown that the Bonferroni correction is overally conservative in the presence of spatial dependence and results in a decreased power to detect voxels that are truly active.
 
-## Cluster Extent
+### Cluster Extent
 
 Another approach to controlling the FWER is called cluster correction, or cluster extent. In this approach, the goal is to identify a threshold such that the maximum statistic exceeds it at a specified alpha. The distribution of the maximum statistic can be approximated using Gaussian Random Field Theory (RFT), which attempts to account for the spatial dependence of the data.  
 
@@ -516,13 +516,13 @@ Cluster extent thresholding has recently become somewhat controversial due to se
 
 There are several other popular FWER approaches to correcting for multiple tests that try to address these issues.
 
-### Threshold Free Cluster Extent
+#### Threshold Free Cluster Extent
 One interesting solution to the issue of finding an initial threshold seems to be addressed by the threshold free cluster enhancement method presented in [Smith & Nichols, 2009](https://www.sciencedirect.com/science/article/pii/S1053811908002978?via%3Dihub). In this approach, the authors propose a way to combine cluster extent and voxel height into a single metric that does not require specifying a specific initial threshold. It essentially involves calculating the integral of the overall product of a signal intensity and spatial extent over multiple thresholds. It has been shown to perform particularly well with combined with non-parameteric resampling approaches such as [randomise](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide) in FSL. This method is implemented in FSL and also in [Matlab](https://github.com/markallenthornton/MatlabTFCE) by Mark Thornton. For more details about this approach check out this [blog post](http://markallenthornton.com/blog/matlab-tfce/) by Mark Thornton, this [video](https://mumfordbrainstats.tumblr.com/post/130127249926/paper-overview-threshold-free-cluster-enhancement) by Jeanette Mumford, and the original [technical report](https://www.fmrib.ox.ac.uk/datasets/techrep/tr08ss1/tr08ss1.pdf).
 
-### Parametric simulations
+#### Parametric simulations
 One approach to estimating the inherent smoothness in the data spatial autocorrelation is using parametric simulations this was the approach originally adopted in AFNI's AlphaSim/3DClustSim. After it was [demonstrated](https://www.pnas.org/content/113/28/7900) that real fMRI data was not adequately modeled by a standard Gaussian distribution, the AFNI group quickly updated their software and implemented a range of different algorithms in their [3DClustSim](https://afni.nimh.nih.gov/pub/dist/doc/program_help/3dClustSim.html) tool.  See this [paper](https://www.biorxiv.org/content/10.1101/065862v1) for an overview of these changes.
 
-## Nonparametric approaches
+### Nonparametric approaches
 As an alternative to RFT, nonparametric methods use the data themselves to find the appropriate distribution. These methods can provide substantial improvements in power and validity, particularly with small sample sizes, so we regard them as the ‘gold standard’ in imaging analyses. Thus these tests can verify the validity of the less computationally expensive parametric approaches. The FSL tool [randomise](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide), is probably the current gold standard and there are versions that run on GPUs, such as [BROCCOLI](https://github.com/wanderine/BROCCOLI) to speed up the computation time.
 
 Here we will run a simulation using a one-sample permutation test (i.e., sign test) on our data. We will make the grid much smaller to speed up the simulation. This approach makes no distributional assumptions, but still requires correcting for multiple tests using either FWER or FDR approaches.
@@ -548,7 +548,7 @@ simulation.plot_grid_simulation(threshold=threshold, threshold_type='p', n_simul
 
 
 
-# False Discovery Rate
+## False Discovery Rate
 You may be wondering why we need to control for *any* false positive when testing across hundreds of thousands of voxels. Surely a few are okay as long as they don't overwhelm the true signal. The *false discovery rate* (FDR) is a more recent development in multiple testing correction originally described by [Benjamini & Hochberg, 1995](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1995.tb02031.x). While FWER is the probability of any false positives occurring in a family of tests, the FDR is the expected proportion of false positives among significant tests. 
 
 The FDR is fairly straightforward to calculate.  
@@ -627,7 +627,7 @@ Text(0.5, 0, 'False Discovery Rate of Simulations')
 
 In our 100 simulations this is below our q < 0.05.
 
-# Thresholding Brain Maps
+## Thresholding Brain Maps
 
 Today we will be exploring two simple and fast ways to threshold your group analyses.
 
