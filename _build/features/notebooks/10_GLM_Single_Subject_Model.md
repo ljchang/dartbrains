@@ -8,7 +8,7 @@ prev_page:
   url: /features/notebooks/9_GLM
   title: 'Introduction to the General Linear Model'
 next_page:
-  url: /features/notebooks/10_GLM_Single_Subject_Model
+  url: /features/notebooks/11_Group_Analysis
   title: 'Modeling Group Data'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

@@ -396,7 +396,7 @@ We will use the `glob` function to search for all files that contain the name *h
 
 {:.input_area}
 ```python
-con1_name = 'horizonatal_checkerboard'
+con1_name = 'horizontal_checkerboard'
 con1_file_list = glob.glob(os.path.join(data_dir, '*', f'S*_{con1_name}*nii.gz'))
 con1_file_list.sort()
 con1_dat = Brain_Data(con1_file_list)

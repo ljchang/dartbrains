@@ -105,8 +105,8 @@
   - title: Modeling Single Subject Data
     url: /features/notebooks/10_GLM_Single_Subject_Model
     not_numbered: false
-  - title: Modeling Group Data
-    url: /features/notebooks/11_Group_Analysis
+  - title: Thresholding Group Analyses
+    url: /features/notebooks/12_Thresholding_Group_Analyses
     not_numbered: false
 
 - title: Contributing
