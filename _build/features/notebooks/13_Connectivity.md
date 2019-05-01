@@ -341,7 +341,7 @@ Structural equation modeling (SEM) is one early techniques that was used to mode
 
 ![sem.png](../../images/connectivity/sem.png)
 
-We will not be discussing this method in much detail. In practice, this method is more routinely used to examine how brain activations mediate relationships between other regions, or between different psychological constructs (e.g., X -> X -> Y). 
+We will not be discussing this method in much detail. In practice, this method is more routinely used to examine how brain activations mediate relationships between other regions, or between different psychological constructs (e.g., X -> Z -> Y). 
 
 Here are a couple of videos specifically examining how to conduct mediation and moderation analyses from Principles of fMRI ([Mediation and Moderation Part I](https://www.youtube.com/watch?v=0YqWXIfpu20), 
 [Mediation and Moderation Part II](https://www.youtube.com/watch?v=0YqWXIfpu20))

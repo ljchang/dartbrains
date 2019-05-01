@@ -189,11 +189,11 @@ In neuroimaging data analysis, there are two main approaches to implementing the
 
 A full mixed effects model can be written as, 
 
-$Y_i = X_i(X_g\beta_g + \eta) +\epsilon_i  $
+$$Y_i = X_i(X_g\beta_g + \eta) +\epsilon_i$$
 
-or
+            or
 
-$Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)$
+$$Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)$$
 
 ![TwoLevelModel.png](../../images/group_analysis/TwoLevelModel.png)
 
@@ -512,7 +512,7 @@ interactive(children=(FloatText(value=0.0, description='Threshold'), HTML(value=
 ```
 
 
-# Group Statistics
+# Group statistics using design matrices
 
 For these analyses we ran a one-sample t-test to examine the average activation to horizontal checkerboards and the difference between viewing horizontal and vertical checkerboards. This is equivalent to a vector of ones at the second level. The latter analysis is technically a paired-samples t-test.
 
@@ -524,14 +524,483 @@ It turns out that most parametric statistical tests are just special cases of th
 ![DesignMatrices.png](../../images/group_analysis/DesignMatrices.png)
 from Poldrack, Mumford, & Nichols 2011
 
+In this section, we will explore how we can formulate different types of statistical tests using a regression through simulations.
+
+## One Sample t-test
+
+Just to review, our one sample t-test can also be formulated as a regression, where the beta values for each subject in a voxel are predicted by a vector of ones. This *intercept* only model, computes the mean of $y$. If the mean of $y$ (i.e., the intercept) is consistently shifted away from zero, then we can reject the null hypothesis that the mean of the betas is zero.
+
+$$
+\begin{bmatrix}
+s_1 \\
+s_2 \\
+s_3 \\
+s_4 \\
+s_5 \\
+s_6
+\end{bmatrix}
+\quad
+=
+\quad
+\begin{bmatrix}
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+1
+\end{bmatrix}
+\begin{bmatrix}
+\beta_0 
+\end{bmatrix}
+$$
+
+We can simulate this by generating data from a Gaussian distribution. We will generate two groups, where $y$ reflects equal draws from each of these distributions ${group_1} = \mathcal{N}(10, 2)$ and ${group_2} = \mathcal{N}(5, 2)$. We then regress a vector of ones on $y$.
+
+We report the estimated value of beta and compare it to various summaries of the simulated data. This allows us to see exactly what each parameter in the regression is calculating.
+
+First, let's define a function `run_regression_simulation` to help us generate plots and calculate various ways to summarize the simulation.
+
+
+
+{:.input_area}
+```python
+def run_regression_simulation(x, y, paired=False):
+    '''This Function runs a regression and outputs results'''
+    # Estimate Regression
+    if not paired:
+        b, t, p, df, res = regress(x, y)
+        print(f"betas: {b}")
+        if x.shape[1] > 1:
+            print(f"beta1 + beta2: {b[0] + b[1]}")
+            print(f"beta1 - beta2: {b[0] - b[1]}")
+            print(f"mean(group1): {np.mean(group1)}")
+            print(f"mean(group2): {np.mean(group2)}")
+            print(f"mean(group1) - mean(group2): {np.mean(group1)-np.mean(group2)}")
+        print(f"mean(y): {np.mean(y)}")
+    else:
+        beta, t, p, df, res = regress(x, y)
+        a = y[x.iloc[:,0]==1]
+        b = y[x.iloc[:,0]==-1]
+        out = []
+        for sub in range(1, X.shape[1]):
+            sub_dat = y[X.iloc[:, sub]==1]
+            out.append(sub_dat-np.mean(sub_dat))
+        avg_sub_mean_diff = np.mean([x[0] for x in out])
+        print(f"betas: {b}")
+        print(f"contrast beta: {beta[0]}")
+        print(f"mean(subject betas): {np.mean(beta[1:])}")
+        print(f"mean(y): {np.mean(y)}")
+        print(f"mean(a): {a.mean()}")
+        print(f"mean(b): {b.mean()}")
+        print(f"mean(a-b): {np.mean(a - b)}")
+        print(f"sum(a_i-mean(y_i))/n: {avg_sub_mean_diff}")
+
+    # Create Plot
+    f,a = plt.subplots(ncols=2, sharey=True)
+    sns.heatmap(pd.DataFrame(y), ax=a[0], cbar=False, yticklabels=False, xticklabels=False)
+    sns.heatmap(x, ax=a[1], cbar=False, yticklabels=False)
+    a[0].set_ylabel('Subject Values', fontsize=18)    
+    a[0].set_title('Y')    
+    a[1].set_title('X')
+    plt.tight_layout()
+```
+
+
+okay, now let's run the simulation for the one sample t-test.
+
+
+
+{:.input_area}
+```python
+group1_params = {'n':20, 'mean':10, 'sd':2}
+group2_params = {'n':20, 'mean':5, 'sd':2}
+group1 = group1_params['mean'] + np.random.randn(group1_params['n']) * group1_params['sd']
+group2 = group2_params['mean'] + np.random.randn(group2_params['n']) * group2_params['sd']
+
+y = np.hstack([group1, group2])
+x = pd.DataFrame({'Intercept':np.ones(len(y))})
+    
+run_regression_simulation(x, y)
+    
+```
+
+
+{:.output .output_stream}
+```
+betas: 7.315928089674621
+mean(y): 7.315928089674621
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/11_Group_Analysis_37_1.png)
+
+
+
+The results of this simulation clearly demonstrate that the intercept of the regression is modeling the mean of $y$.
+
+## Independent-Samples T-Test - Dummy Codes
+
+Next, let's explore how we can compute an independent-sample t-test using a regression. There are several different ways to compute this. Each of them provides a different way to test for differences between the means of the two samples.
+
+First, we will explore how dummy codes can be used to test for group differences. We will create a design matrix with an intercept and also a column with a binary regressor indicating group membership. The target group will be ones, and the reference group will be zeros.
+
+$$
+\begin{bmatrix}
+s_1 \\
+s_2 \\
+s_3 \\
+s_4 \\
+s_5 \\
+s_6
+\end{bmatrix}
+\quad
+=
+\quad
+\begin{bmatrix}
+1 & 1\\
+1 & 1\\
+1 & 1\\
+1 & 0\\
+1 & 0\\
+1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+\beta_0 \\
+\beta_1
+\end{bmatrix}
+$$
+
+Let's run another simulation examining what the regression coefficients reflect using this dummy code approach.
+
+
+
+{:.input_area}
+```python
+group1_params = {'n':20, 'mean':10, 'sd':2}
+group2_params = {'n':20, 'mean':5, 'sd':2}
+group1 = group1_params['mean'] + np.random.randn(group1_params['n']) * group1_params['sd']
+group2 = group2_params['mean'] + np.random.randn(group2_params['n']) * group2_params['sd']
+
+y = np.hstack([group1, group2])
+x = pd.DataFrame({'Intercept':np.ones(len(y)), 'Contrast':np.hstack([np.ones(group1_params['n']), np.zeros(group2_params['n'])])})
+
+run_regression_simulation(x, y)
+```
+
+
+{:.output .output_stream}
+```
+betas: [5.19219744 5.11193207]
+beta1 + beta2: 10.304129514313178
+beta1 - beta2: 0.08026537485257101
+mean(group1): 10.304129514313178
+mean(group2): 5.192197444582875
+mean(group1) - mean(group2): 5.111932069730304
+mean(y): 7.748163479448027
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/11_Group_Analysis_40_1.png)
+
+
+
+Can you figure out what the beta estimates are calculating?
+
+The intercept $\beta_0$ is now the mean of the reference group, and the estimate of the dummy code regressor $\beta_1$ indicates the difference of the mean of the target group from the reference group. 
+
+Thus, the mean of the reference group is $\beta_0$ or the intercept, and the mean of the target group is $\beta_1 + \beta_2$. 
+
+## Independent-Samples T-Test - Contrasts
+
+Another way to compare two different groups is by creating a model with an intercept and contrast between the two groups.
+
+$$
+\begin{bmatrix}
+s_1 \\
+s_2 \\
+s_3 \\
+s_4 \\
+s_5 \\
+s_6
+\end{bmatrix}
+\quad
+=
+\quad
+\begin{bmatrix}
+1 & 1\\
+1 & 1\\
+1 & 1\\
+1 & -1\\
+1 & -1\\
+1 & -1
+\end{bmatrix}
+\begin{bmatrix}
+\beta_0 \\
+\beta_1
+\end{bmatrix}
+$$
+
+Let's now run another simulation to see how these beta estimates differ from the dummy code model.
+
+
+
+
+{:.input_area}
+```python
+group1_params = {'n':20, 'mean':10, 'sd':2}
+group2_params = {'n':20, 'mean':5, 'sd':2}
+group1 = group1_params['mean'] + np.random.randn(group1_params['n']) * group1_params['sd']
+group2 = group2_params['mean'] + np.random.randn(group2_params['n']) * group2_params['sd']
+
+y = np.hstack([group1, group2])
+x = pd.DataFrame({'Intercept':np.ones(len(y)), 'Contrast':np.hstack([np.ones(group1_params['n']), -1*np.ones(group2_params['n'])])})
+
+run_regression_simulation(x, y)
+```
+
+
+{:.output .output_stream}
+```
+betas: [7.52531063 2.1575329 ]
+beta1 + beta2: 9.682843528142556
+beta1 - beta2: 5.367777734193592
+mean(y): 7.525310631168073
+mean(group1): 9.682843528142554
+mean(group2): 5.367777734193592
+mean(group1) - mean(group2): 4.315065793948961
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/11_Group_Analysis_43_1.png)
+
+
+
+So, just as before, the intercept reflects the mean of $y$. Now can you figure out what $\beta_1$ is calculating?
+
+It is the average distance of each group to the mean. The mean of group 1 is $\beta_0 + \beta_1$ and the mean of group 2 is $\beta_0 - \beta_1$.
+
+Remember that in our earlier discussion of contrast codes, we noted the importance of balanced codes across regressors. What if the group sizes are unbalanced?  Will this effect our results?
+
+To test this, we will double the sample size of group1 and rerun the simulation.
+
+
+
+{:.input_area}
+```python
+group1_params = {'n':40, 'mean':10, 'sd':2}
+group2_params = {'n':20, 'mean':5, 'sd':2}
+group1 = group1_params['mean'] + np.random.randn(group1_params['n']) * group1_params['sd']
+group2 = group2_params['mean'] + np.random.randn(group2_params['n']) * group2_params['sd']
+
+y = np.hstack([group1, group2])
+x = pd.DataFrame({'Intercept':np.ones(len(y)), 'Contrast':np.hstack([np.ones(group1_params['n']), -1*np.ones(group2_params['n'])])})
+
+run_regression_simulation(x, y)
+```
+
+
+{:.output .output_stream}
+```
+betas: [7.54162736 2.3776784 ]
+beta1 + beta2: 9.919305767031998
+beta1 - beta2: 5.163948962827957
+mean(group1): 9.919305767031997
+mean(group2): 5.163948962827955
+mean(group1) - mean(group2): 4.755356804204042
+mean(y): 8.334186832297316
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/11_Group_Analysis_45_1.png)
+
+
+
+Looks like the beta estimates are identical to the previous simulation. This demonstrates that we *do not* need to adjust the weights of the number of ones and zeros to sum to zero.  This is because the beta is estimating the average distance from the mean, which is invariant to group sizes.
+
+## Independent-Samples T-Test - Group Intercepts
+
+The third way to calculate an independent samples t-test using a regression is to split the intercept into two separate binary regressors with each reflecting the membership of each group. There is no need to include an intercept as it is simply a linear combination of the other two regressors.
+
+$$
+\begin{bmatrix}
+s_1 \\
+s_2 \\
+s_3 \\
+s_4 \\
+s_5 \\
+s_6
+\end{bmatrix}
+\quad
+=
+\quad
+\begin{bmatrix}
+1 & 0\\
+1 & 0\\
+1 & 0\\
+0 & 1\\
+0 & 1\\
+0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+b_0 \\
+b_1
+\end{bmatrix}
+$$
+
+
+
+
+{:.input_area}
+```python
+group1_params = {'n':20, 'mean':10, 'sd':2}
+group2_params = {'n':20, 'mean':5, 'sd':2}
+group1 = group1_params['mean'] + np.random.randn(group1_params['n']) * group1_params['sd']
+group2 = group2_params['mean'] + np.random.randn(group2_params['n']) * group2_params['sd']
+
+y = np.hstack([group1, group2])
+x = pd.DataFrame({'Group1':np.hstack([np.ones(len(group1)), np.zeros(len(group2))]), 'Group2':np.hstack([np.zeros(len(group1)), np.ones(len(group2))])})
+
+run_regression_simulation(x, y)
+```
+
+
+{:.output .output_stream}
+```
+betas: [9.78711484 4.87967575]
+beta1 + beta2: 14.666790590832532
+beta1 - beta2: 4.907439099129961
+mean(y): 7.333395295416267
+mean(group1): 9.787114844981248
+mean(group2): 4.879675745851285
+mean(group1) - mean(group2): 4.907439099129963
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/11_Group_Analysis_48_1.png)
+
+
+
+This model is obviously separately estimating the means of each group, but how do we know if the difference is significant?  Any ideas?
+
+Just like the single subject regression models, we would need to calculate a contrast, which would simply be $c=[1 -1]$. 
+
+All three of these different approaches will yield identical results when performing a hypothesis test, but each is computing the t-test slightly differently.
+
+## Paired-Samples T-Test
+
+Now let's demonstrate that a paired-samples t-test can also be computed using a regression. Here, we will need to create a long format dataset, in which each subject $s_i$ has two data points (one for each condition $a$ and $b$). One regressor will compute the contrast between condition $a$ and condition $b$. Just like before, we need to account for the mean, but instead of computing a grand mean for all of the data, we will separately model the mean of each participant by adding $n$ more binary regressors where each subject is indicated in each regressor.
+
+$$
+\begin{bmatrix}
+s_1a \\
+s_1b \\
+s_2a \\
+s_2b \\
+s_3a \\
+s_3b
+\end{bmatrix}
+\quad
+=
+\quad
+\begin{bmatrix}
+1 & 1 & 0 & 0\\
+-1 & 1 & 0 & 0\\
+1 & 0 & 1 & 0\\
+-1 & 0 & 1 & 0\\
+1 & 0 & 0 & 1\\
+-1 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\beta_3
+\end{bmatrix}
+$$
+
+This simulation will be slightly more complicated as we will be adding subject level noise to each data point. In this simulation, we will assume that $\epsilon_i = \mathcal{N}(30, 10)$
+
+
+
+{:.input_area}
+```python
+a_params = {'mean':10, 'sd':2}
+b_params = {'mean':5, 'sd':2}
+sample_params = {'n':20, 'mean':30, 'sd':10}
+
+y = []; x = []; sub_id = [];
+for s in range(sample_params['n']):
+    sub_mean = sample_params['mean'] + np.random.randn()*sample_params['sd']
+    a = sub_mean + a_params['mean'] + np.random.randn() * a_params['sd']
+    b = sub_mean + b_params['mean'] + np.random.randn() * b_params['sd']
+    y.extend([a,b])
+    x.extend([1, -1])
+    sub_id.extend([s]*2)
+y = np.array(y)
+
+sub_means = pd.DataFrame([sub_id==x for x in np.unique(sub_id)]).T
+sub_means = sub_means.replace({True:1,False:0})
+X = pd.concat([pd.Series(x), sub_means], axis=1)
+    
+run_regression_simulation(X, y, paired=True)
+    
+```
+
+
+{:.output .output_stream}
+```
+betas: [20.07157277 31.19543909 40.81026036  3.64231891 29.44153664 33.71159865
+ 42.96742729 24.22379285 38.61182423 28.18178122 39.30238233 50.26407182
+ 36.58771528 47.34306937 40.82566265 39.19862603 26.62882288 50.33437057
+ 39.81456213 54.7994368 ]
+contrast beta: 2.318499370670205
+mean(subject betas): 38.216312964510266
+mean(y): 38.21631296451028
+mean(a): 40.53481233518049
+mean(b): 35.89781359384007
+mean(a-b): 4.636998741340409
+sum(a_i-mean(y_i))/n: 2.318499370670204
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/11_Group_Analysis_51_1.png)
+
+
+
+Okay, now let's try to make sense of all of these numbers. First, we now have $n$ + 1 $\beta$'s. $\beta_0$ corresponds to the between condition contrast. We will call this the *contrast $\beta$*. The rest of the $\beta$'s model each subject's mean. We can see that the means of all of these subject $\beta$'s corresponds to the overall mean of $y$.
+
+Now what is the meaning of the contrast $\beta$?
+
+We can see that it is not the average within subject difference between the two conditions as might be expected given a normal paired-samples t-test.
+
+Instead, just like the independent samples t-test described above, the contrast value reflects the average deviation of a condition from each subject's individual mean.
+
+$$\sum_{i=1}^n{\frac{a_i - mean(y_i)}{n}}$$
+
+where $n$ is the number of subjects, $a$ is the condition being compared to $b$, and the $mean(y_i)$ is the subject's mean.
+
+
 ## Linear and Quadratic contrasts
-In intro stats, you likely learned about one-sample t-tests, two-sample t-tests, ANOVAs, and regressions as if they were completely separate types of statistical tests. Now we can start to see that each type of test is really just a special case of the general linear model.
+Hopefully, now you are starting to see that all of the different statistical tests you learned in intro stats (e.g., one-sample t-tests, two-sample t-tests, ANOVAs, and regressions) are really just a special case of the general linear model.
 
-Contrasts allow us to flexibly test many different types of hypotheses within the regression framework. This allows us to test more complicated and precise hypotheses than might be possible than simply turning everything into a binary yes/no question (i.e., one sample t-test), or is condition A greater than condition B (i.e., two sample t-test).
+Contrasts allow us to flexibly test many different types of hypotheses within the regression framework. This allows us to test more complicated and precise hypotheses than might be possible than simply turning everything into a binary yes/no question (i.e., one sample t-test), or is condition $a$ greater than condition $b$ (i.e., two sample t-test). We've already explored how contrasts can be used to create independent and paired-samples t-tests in the above simulations. Here we will now provide examples of how to test more sophisticated hypotheses.
 
-For example, suppose we manipulated the intensity of some type of experimental manipulation across many levels. For example, we increase the working memory load across 4 different levels. We might be interested in identifying regions that monotonically increase as a function of this manipulation. This would be virtually impossible to test using a paired contrast approach (e.g., t-tests, ANOVAs). Instead, we can simply specify a linear contrast by setting the contrast vector to linearly increase. This is as simple as `[0, 1, 2, 3]`. However, remember that contrasts need to sum to zero (except for the one-sample ttest case).  So to make our contrast we can simply subtract the mean - `np.array([0, 1, 2, 3]) - np.mean((np.array([0, 1, 2, 3))`.
+Suppose we manipulated the intensity of some type of experimental manipulation across many levels. For example, we increase the working memory load across 4 different levels. We might be interested in identifying regions that monotonically increase as a function of this manipulation. This would be virtually impossible to test using a paired contrast approach (e.g., t-tests, ANOVAs). Instead, we can simply specify a linear contrast by setting the contrast vector to linearly increase. This is as simple as `[0, 1, 2, 3]`. However, remember that contrasts need to sum to zero (except for the one-sample t-test case).  So to make our contrast we can simply subtract the mean - `np.array([0, 1, 2, 3]) - np.mean((np.array([0, 1, 2, 3))`, which becomes $c_{linear} = [-1.5, -0.5,  0.5,  1.5]$.
 
-Regions involved in working memory load might not have a linear increase, but instead might show an inverted u-shaped response, such that the region is not activated at small or high loads, but only at medium loads.  To test this hypothesis, we would need to construct a quadratic contrast `[-1, 1, 1, -1]`.
+Regions involved in working memory load might not have a linear increase, but instead might show an inverted u-shaped response, such that the region is not activated at small or high loads, but only at medium loads.  To test this hypothesis, we would need to construct a quadratic contrast $c_{quadratic}=[-1, 1, 1, -1]$.
 
 Let's explore this idea with a simple simulation.
 
@@ -568,9 +1037,11 @@ Text(0.5, 1.0, 'Inverted U-Response to WM Load')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/11_Group_Analysis_35_1.png)
+![png](../../images/features/notebooks/11_Group_Analysis_54_1.png)
 
 
+
+See how the data appear to have a linear and quadratic response to working memory load?
 
 Now let's create some contrasts and see how a linear or quadratic contrast might be able to detect these different predicted responses.
 
@@ -622,13 +1093,15 @@ Text(0.5, 1.0, 'Inverted U-Response to WM Load')
 
 
 {:.output .output_png}
-![png](../../images/features/notebooks/11_Group_Analysis_37_2.png)
+![png](../../images/features/notebooks/11_Group_Analysis_56_2.png)
 
 
 
 As you can see, the linear contrast is sensitive to detecting responses that monotonically increase, while the quadratic contrast is more sensitive to responses that show an inverted u-response. Both of these are also signed, so they could also detect responses in the opposite direction.
 
-If we were to apply this to real brain data, we could now find regions that show a linear or quadratic responses to an experimental manipulation across the whole brain. Hopefully, this gives you a sense of the power of contrasts to flexibly test any hypothesis that you can think of.
+If we were to apply this to real brain data, we could now find regions that show a linear or quadratic responses to an experimental manipulation across the whole brain. We would then test the null hypothesis that there is no group effect of a linear or quadratic contrast at the second level. 
+
+Hopefully, this is starting you a sense of the power of contrasts to flexibly test any hypothesis that you can imagine.
 
 # Exercises
 
