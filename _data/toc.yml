@@ -84,9 +84,6 @@
   - title: Introduction to Neuroimaging Data
     url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
     not_numbered: false
-  - title: Separating Signal from Noise with ICA
-    url: /features/notebooks/4_ICA
-    not_numbered: false
   - title: Signal Processing Basics
     url: /features/notebooks/5_Signal_Processing
     not_numbered: false
@@ -110,6 +107,9 @@
     not_numbered: false
   - title: Thresholding Group Analyses
     url: /features/notebooks/12_Thresholding_Group_Analyses
+    not_numbered: false
+  - title: Connectivity
+    url: /features/notebooks/13_Connectivity
     not_numbered: false
 
 - title: Contributing
