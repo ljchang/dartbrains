@@ -2,7 +2,7 @@
 redirect_from:
   - "/features/notebooks/13-connectivity"
 interact_link: content/features/notebooks/13_Connectivity.ipynb
-kernel_name: conda-env-py36-py
+kernel_name: conda-env-Psych60_py368-py
 title: 'Connectivity'
 prev_page:
   url: /features/notebooks/12_Thresholding_Group_Analyses
@@ -331,7 +331,7 @@ All of the methods we have discussed so far assume that the relationship between
 Time-varying connectivity is beyond the scope of the current tutorial, but we encourage you to watch this [video](https://www.youtube.com/watch?v=lV9thGD18JI&list=PLfXA4opIOVrEFBitfTGRPppQmgKp7OO-F&index=22&t=0s) from Principles of fMRI for more details
 
 ## Effective Connectivity
-Effective connectivity refers to the degree that one brain region has a directed influence on another region. This approach requires making a number of assumptions about the data and requires testing how well a particular model describes the data. Typically, most researchers will create a model of a small number of nodes and compare different models to each other. This is because the overall model fit is typically in itself uninterpretable and because formulating large models can be quite difficult and computationally expensive. The number of connections can be calcualted as:
+Effective connectivity refers to the degree that one brain region has a directed influence on another region. This approach requires making a number of assumptions about the data and requires testing how well a particular model describes the data. Typically, most researchers will create a model of a small number of nodes and compare different models to each other. This is because the overall model fit is typically in itself uninterpretable and because formulating large models can be quite difficult and computationally expensive. The number of connections can be calculated as:
 
 $connections = \frac{n(n-1)}{2}$, where $n$ is the total number of nodes.
 

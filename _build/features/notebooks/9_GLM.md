@@ -213,7 +213,7 @@ While this might reflect the expected HRF response to a single event, real data 
 
 For now, let's start with something simple, like independent white noise drawn from a random Gaussian distribution
 
-$\epsilon \sim \mathcal{N}(\mu,\,\sigma^{2})$ 
+$$\epsilon \sim \mathcal{N}(\mu,\,\sigma^{2})$$ 
 
 where $\mu = 0$ and $\sigma = 0.15$
 
@@ -259,7 +259,7 @@ plot_timeseries(Y)
 
 Now that we have our simulated voxel timeseries, let's try and see if we can recover the original signal using a general linear model in the form of:
 
-$Y = X\beta + \epsilon$
+$$Y = X\beta + \epsilon$$
 
 where $Y$ is our observed voxel time series. $X$ is our model or design matrix, and is where we will specify a predicted response to each condition. $\beta$ is a vector of values that we will estimate to scale our model. $\epsilon$ is independent gaussian noise. This model is linear because we can decompose $Y$ into a set of features r regressors that are scaled by an estimated $\beta$ parameter and summed together. The $\epsilon$ parameter is not usually known and can also be estimated.
 
@@ -290,7 +290,7 @@ plot_timeseries(X)
 
 We can write our model out so that it is very clear what we are doing.
 
-$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects + \epsilon$
+$$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects + \epsilon$$
 
 We can also make a plot and rotate the timeseries, to better reflect the equation.
 
@@ -327,11 +327,15 @@ There are several ways to estimate the parameters for our general linear model. 
 
 This can be formulated using linear algebra as: 
 
-$\hat{\beta} = (X^T X)^{-1}X^TY$
+$$\hat{\beta} = (X^T X)^{-1}X^TY$$
 
 There is also maximum likelihood estimator, which is identical to the ordinary least squares estimator, when the error terms are normally distributed.
 
-$L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt(2\pi\sigma^2)} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}$, where $\mathcal{N}(0,\sigma^{2})$ 
+$$L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt(2\pi\sigma^2)} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}$$
+
+            where 
+
+$$\mathcal{N}(0,\sigma^{2})$$
 
 For this class, we will primarily be focusing on the Ordinary Least Squares Estimator. In fact, just to demonstrate that the math is actually relatively straightforward, we will write our own function for the estimator using the linear algebra formulation. In practice, we typically will use a premade function, which is usually slightly more computationally efficient and also will calculate standard errors, etc.
 
@@ -370,7 +374,7 @@ Another way to evaluate how well our model is working is to plot our predicted $
 
 We can quantify the degree to which our model is accurately predicting the observed data by calculating the residual.
 
-$residual = Y - \hat Y$
+$$residual = Y - \hat Y$$
 
 
 
@@ -424,7 +428,7 @@ The *standard error of the estimate* refers to the standard deviation of the res
 
 Formally, this can be described as:
 
-$\hat \sigma = \sqrt{\frac{\displaystyle \sum_i^n(\hat Y_i - Y_i)^2}{n-k}}$
+$$\hat \sigma = \sqrt{\frac{\displaystyle \sum_i^n(\hat Y_i - Y_i)^2}{n-k}}$$
 
 where $n$ is the number of observations and $k$ is the total number of regressors. 
 
@@ -476,7 +480,7 @@ Sometimes we want a single metric to quantify overall how well our model explain
 
 Here we will calculate $R^2$ using the following formula:
 
-$R^2 = 1 - \frac{\displaystyle \sum_i^n(\hat y_i - y_i)^2}{\displaystyle \sum_i^n(y_i - \bar y)^2}$
+$$R^2 = 1 - \frac{\displaystyle \sum_i^n(\hat y_i - y_i)^2}{\displaystyle \sum_i^n(y_i - \bar y)^2}$$
 
 where $y_i$ is the measured value of the voxel at timepoint $i$, $\hat y_i$ is the predicted value for time point $i$, and $\bar y$ is the mean of the measured voxel timeseries.
 
@@ -505,7 +509,7 @@ R^2: 0.55
 
 We can also estimate the uncertainty of regression coefficients. The uncertainty of the beta parameters is quantified as a standard error around each specific estimate. 
 
-$\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma$
+$$\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma$$
 
 This is essentially a confidence interval around the $\beta_j$ estimate. One standard error, $1*\hat \sigma$ is approximately equivalent to a 68% confidence interval, while $2*\hat\sigma$ is approximately a 95% confidence interval.
 
@@ -548,7 +552,9 @@ This exercise is simply meant to provide parallels to common statistical jargon.
 
 The formula for calculating a t-statistic is very simple:
 
-$t = \frac{\hat \beta_j}{\hat \sigma_j}$, where $\beta_j$ refers to the estimated parameter for a regressor $j$, and $\sigma_j$ refers to the standard error of regressor $j$.
+$$t = \frac{\hat \beta_j}{\hat \sigma_j}$$
+
+where $\beta_j$ refers to the estimated parameter for a regressor $j$, and $\sigma_j$ refers to the standard error of regressor $j$.
 
 $t$ values that are more than 2 standard errors away from zero are called *statistically significant*, which basically just means we are more confident that the estimate is stable and not just an artifact of small sample size. In general, we don't recommend reading too much into significance for individual $\beta$ estimates in single subject fMRI analysis.
 
@@ -581,7 +587,7 @@ For example, suppose we just wanted to know the magnitude of an effect for a sin
 
 If our GLM, was:
 
-$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects$
+$$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects$$
 
 then, the corresponding contrast code or vector for faces would be:
 
@@ -636,7 +642,7 @@ c3 = [0, 1, -1]
 
 We can estimate the efficiency, or the quality of an estimator for a specific experimental design or a hypothesis testing procedure. Efficiency is related to power, or the ability to detect an effect should one exist. However, unlike power, we can estimate efficiency from our design matrix and do not actually need to know the standard error for the model (unlike with power calculations). Specifically, efficiency is defined as the inverse of the sum of the estimator variances. For a more detailed explanation and general experimental design recommendations see this [overview](http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency) by Rik Henson, this [blog post](https://theclevermachine.wordpress.com/tag/fmri-design-efficiency/) on efficiency in experimental designs.
 
-$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$
+$$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$
 
 Reducing collinearity or covariance between regressors can increase design efficiency
 

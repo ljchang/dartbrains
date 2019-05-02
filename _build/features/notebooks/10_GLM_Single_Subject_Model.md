@@ -2,7 +2,7 @@
 redirect_from:
   - "/features/notebooks/10-glm-single-subject-model"
 interact_link: content/features/notebooks/10_GLM_Single_Subject_Model.ipynb
-kernel_name: conda-env-py36-py
+kernel_name: conda-env-Psych60_py368-py
 title: 'Modeling Single Subject Data'
 prev_page:
   url: /features/notebooks/9_GLM
@@ -49,9 +49,6 @@ from nilearn.plotting import view_img, glass_brain, plot_stat_map
 netid = 'f00275v'
 output_dir = '/dartfs/rc/lab/P/Psych60/students_output/%s' % netid
 data_dir = '/dartfs/rc/lab/P/Psych60/data/brainomics_data/'
-
-output_dir = '/Volumes/Psych60/students_output/%s' % netid
-data_dir = '/Volumes/Psych60/data/brainomics_data/'
 ```
 
 
@@ -367,7 +364,7 @@ sns.heatmap(dm_conv.corr(), vmin=-1, vmax=1)
 ### Variance Inflation Factor
 Pairwise correlations will let you know if any regressor is correlated with another regressor. However, we are even more concerned about being able to explain any regressor as a linear combination of the other regressors. For example, *can one regressor be explained by three or more of the remaining regressors?* The variance inflation factor (VIF) is a metric that can help us detect multicollinearity. Specifically, it is simply the ratio of variance in a model with multiple terms, divided by the variance of a model with only a single term. This ratio reduces to the following formula:
 
-$VIF_j=\frac{1}{1-R_i^2}$
+$$VIF_j=\frac{1}{1-R_i^2}$$
 
 Where $R_j^2$ is the $R^2$ value obtained by regressing the $jth$ predictor on the remaining predictors. This means that each regressor $j$ will have it's own variance inflation factor.
 

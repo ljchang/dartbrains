@@ -191,7 +191,7 @@ A full mixed effects model can be written as,
 
 $$Y_i = X_i(X_g\beta_g + \eta) +\epsilon_i$$
 
-            or
+         or
 
 $$Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)$$
 
