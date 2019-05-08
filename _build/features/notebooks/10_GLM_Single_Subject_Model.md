@@ -667,7 +667,7 @@ In this example, we will append each of these additional matrices to our main de
 
 {:.input_area}
 ```python
-dm_conv_filt_poly_cov = dm_conv_filt_poly.append(mc_cov, axis=1).append(spikes, axis=1)
+dm_conv_filt_poly_cov = pd.concat([dm_conv_filt_poly, mc_cov, spikes.drop('TR', axis=1)], axis=1)
 dm_conv_filt_poly_cov.heatmap(cmap='RdBu_r', vmin=-1,vmax=1)
 ```
 
@@ -792,7 +792,7 @@ We will frequently want to save different brain images we are working with to a 
 
 {:.input_area}
 ```python
-smoothed.write(os.path.join(data_dir, sub, 'denoised_smoothed_preprocessed_fMRI_bold.nii.gz'))
+smoothed.write(os.path.join(output_dir, 'denoised_smoothed_preprocessed_fMRI_bold.nii.gz'))
 ```
 
 

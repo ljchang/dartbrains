@@ -8,7 +8,7 @@ prev_page:
   url: /features/notebooks/0_Introduction_to_JupyterHub
   title: 'Getting Started'
 next_page:
-  url: /features/notebooks/2_1_MatplotlibTemplates
+  url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
   title: 'Introduction to Dataframes and Plotting'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

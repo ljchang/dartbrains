@@ -710,7 +710,7 @@ Let's practice what we learned through a few different exercises.
 
 ### 1) Let's calculate seed-based functional connectivity using a different ROI - the right motor cortex
 
-- Calculate functional connectivity using roi=47 with the whole brain.
+- Calculate functional connectivity using roi=48 with the whole brain.
 
 ### 2) Calculate a group level analysis for this connectivity analysis
 - this will require running this analysis over all subjects

@@ -330,8 +330,7 @@ def make_motion_covariates(mc):
 sub = 'S01'
 sub_list = [os.path.basename(x) for x in glob(os.path.join(data_dir, 'S*'))]
 sub_list = [x for x in sub_list if x != 'S30']
-completed = [os.path.dirname(x).split('/')[-1] for x in glob(os.path.join(data_dir, '*', 'denoised_smoothed_preprocessed_fMRI_bold.nii.gz'))]
-for sub in [x for x in sub_list if x not in completed]:
+for sub in sub_list:
     print(sub)
     file_name = os.path.join(data_dir, sub ,'preprocessed_fMRI_bold.nii.gz')
     data = Brain_Data(file_name)
@@ -1117,15 +1116,7 @@ Hopefully, this is starting you a sense of the power of contrasts to flexibly te
  - plot the results
  - write the file to your output folder.
 
-## 3. Show that a one-sample ttest of differences of betas is equivalent to a two-sample paired t-ttest using any contrast
-
- - Create contrasts to test this hypothesis
- - run group level tests
- - show that the tests are equivalent numerically
- - plot both of the results
-
-
-## 4. Are there gender differences?
+## 3. Are there gender differences?
 In this exercise, create a two sample design matrix comparing men and women on arithmetic vs reading.
 
 You will first have to figure out the subjects gender using the using the `metadata.csv` file.

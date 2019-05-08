@@ -5,11 +5,11 @@ interact_link: content/features/notebooks/12_Thresholding_Group_Analyses.ipynb
 kernel_name: python3
 title: 'Thresholding Group Analyses'
 prev_page:
-  url: /features/notebooks/10_GLM_Single_Subject_Model
-  title: 'Modeling Single Subject Data'
+  url: /features/notebooks/11_Group_Analysis
+  title: 'Group Analysis'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/notebooks/13_Connectivity
+  title: 'Connectivity'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 

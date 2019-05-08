@@ -5,8 +5,8 @@ interact_link: content/features/notebooks/5_Signal_Processing.ipynb
 kernel_name: python3
 title: 'Signal Processing Basics'
 prev_page:
-  url: /features/notebooks/4_ICA
-  title: 'Separating Signal from Noise with ICA'
+  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
+  title: 'Introduction to Neuroimaging Data'
 next_page:
   url: /features/notebooks/6_Nipype_Quickstart
   title: 'Preprocessing with Nipype Quickstart'
