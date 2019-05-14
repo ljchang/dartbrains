@@ -854,7 +854,7 @@ def rad_sample_to_hz(x, fs):
 def plot_filter(b, a, fs):
     plt.figure(figsize=(20,5))
     w, h = freqz(b, a, worN=512*2, whole=False)
-    plt.plot(rad_sample_to_hz(w, sampling_frequency), abs(h), linewidth=3)
+    plt.plot(rad_sample_to_hz(w, fs), abs(h), linewidth=3)
     plt.ylabel('Gain', fontsize=18)
     plt.xlabel('Frequency', fontsize=18)
     

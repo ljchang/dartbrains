@@ -111,6 +111,9 @@
   - title: Connectivity
     url: /features/notebooks/13_Connectivity
     not_numbered: false
+  - title: Multivariate Prediction
+    url: /features/notebooks/14_Multivariate_Prediction
+    not_numbered: false
 
 - title: Contributing
   url: /features/markdown/Contributing

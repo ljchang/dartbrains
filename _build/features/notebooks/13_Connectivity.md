@@ -8,8 +8,8 @@ prev_page:
   url: /features/notebooks/12_Thresholding_Group_Analyses
   title: 'Thresholding Group Analyses'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/notebooks/14_Multivariate_Prediction
+  title: 'Multivariate Prediction'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
