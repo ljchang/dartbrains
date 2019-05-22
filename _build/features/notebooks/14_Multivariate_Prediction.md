@@ -8,8 +8,8 @@ prev_page:
   url: /features/notebooks/13_Connectivity
   title: 'Connectivity'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/notebooks/15_RSA
+  title: 'Representational Similarity Analysis'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
