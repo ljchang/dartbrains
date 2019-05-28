@@ -374,7 +374,7 @@ Both Lasso and Ridge regressions have a penalty hyperparameter $\lambda$. Essent
 
 Cross-validation is an ideal method to deal with this.  We can use cross-validation to select the alpha while adding minimal bias to the overall model prediction.
 
-Here we will demonstrate using both to select an optimal value of the regularization parameter alpha of the Lasso estimator from an example provided by [scikit-learn](http://scikit-learn.org/stable/auto_examples/linear_model/plot_lasso_model_selection.html). For cross-validation, we will use a nested cross-validation as implemented by the LassoCV algorithm.
+Here we will demonstrate using both to select an optimal value of the regularization parameter alpha of the Lasso estimator from an example provided by [scikit-learn](http://scikit-learn.org/stable/auto_examples/linear_model/plot_lasso_model_selection.html). For cross-validation, we will use a nested cross-validation as implemented by the LassoCV algorithm.  Note that these examples with nested cross-validation take much longer to run.
 
 
 
@@ -536,3 +536,48 @@ lasso_cv_stats = data.predict(algorithm='lassoCV',
 
 
 ```
+
+## Classification and Class Imbalance
+
+One important thing to note is that when you use classification, it is important to account for class imbalances. i.e., that there might be unequal amounts of data in each group.  The reason why this is a problem is that chance classification is no longer at 50% when there is a class imbalance.  Suppose you were trying to classify A from B, but 80% of the data were instances of B. A classifier that always says B, would be correct 80% of the time. 
+
+There are several different ways to deal with class imbalance.
+
+1) **Make the Class Sizes Equal** You can randomly sample data that is overrepresented to create your own balanced dataset. Advantages are that the data classes will be balanced. The disadvantage of this approach is that you are not using all of your data.
+
+2) **Average Data** You can average all of the data within a class so that each participant only has one data point per class. Advantages are the data are balanced. Disadvantages are that you have dramatically reduced the amount of data going into training the model.
+
+3) **Balance Class Weights** If you are using SVM, you can set `class_weight=balanced`. The general idea is to increase the penalty for misclassifying minority classes to prevent them from being “overwhelmed” by the majority class. See [here](https://chrisalbon.com/machine_learning/support_vector_machines/imbalanced_classes_in_svm/) for a brief overview.
+
+When testing your model you can also make adjustments to calculate a balanced accuracy. Scikit-learn has the [`balanced_accuracy_score` method](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html), which implements the technique outlined in [this](https://ieeexplore.ieee.org/document/5597285) paper. It essentially defines accuracy as the average recall obtained on each class.
+
+Let's test an example using the `'class_weight'='balanced'` approach.
+
+
+
+{:.input_area}
+```python
+svm_stats = data.predict(algorithm='svm', cv_dict={'type': 'kfolds','n_folds': 5, 'subject_id':subject_id}, **{'class_weight':'balanced', 'kernel':"linear"})
+
+```
+
+
+{:.output .output_stream}
+```
+overall accuracy: 1.00
+overall CV accuracy: 0.93
+threshold is ignored for simple axial plots
+
+```
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/14_Multivariate_Prediction_29_1.png)
+
+
+
+
+{:.output .output_png}
+![png](../../images/features/notebooks/14_Multivariate_Prediction_29_2.png)
+
+
