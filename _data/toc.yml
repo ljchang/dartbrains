@@ -41,6 +41,11 @@
 - header: Course Overview
 
 # A chapter w/ a collection of sections beneath it
+- title: Instructors
+  url: /features/markdown/Instructors
+  not_numbered: true
+  expand_sections: true
+
 - title: Syllabus
   url: /features/markdown/Syllabus
   not_numbered: true
@@ -117,6 +122,13 @@
   - title: Representational Similarity Analysis
     url: /features/notebooks/15_RSA
     not_numbered: false
+
+- title: Project Gallery
+  url: /features/markdown/Project_Gallery
+  not_numbered: true
+  expand_sections: true
+  sections:
+
 
 - title: Contributing
   url: /features/markdown/Contributing
