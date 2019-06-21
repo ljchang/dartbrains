@@ -12,7 +12,7 @@ nltools
 nipype
 hypertools
 networkx
-scikit-learning
+scikit-learn
 pynv
 nipype
 fmriprep
