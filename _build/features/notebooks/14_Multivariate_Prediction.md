@@ -137,11 +137,45 @@ threshold is ignored for simple axial plots
 
 ```
 
+{:.output .output_traceback_line}
+```
 
-{:.output .output_png}
-![png](../../images/features/notebooks/14_Multivariate_Prediction_8_1.png)
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    <ipython-input-8-69aec54b7ae2> in <module>
+    ----> 1 svm_stats = data.predict(algorithm='svm', **{'kernel':"linear"})
+    
+
+    ~/anaconda3/envs/py36/lib/python3.6/site-packages/nltools/data/brain_data.py in predict(self, algorithm, cv_dict, plot, **kwargs)
+       1090                                 output['roc'] = Roc(input_values=output['prob_xval'][:, 1], binary_outcome=output['Y'].astype('bool'))
+       1091                         output['roc'].plot()
+    -> 1092             output['weight_map'].plot()
+       1093 
+       1094         return output
 
 
+    ~/anaconda3/envs/py36/lib/python3.6/site-packages/nltools/data/brain_data.py in plot(self, limit, anatomical, view, threshold_upper, threshold_lower, **kwargs)
+        441             else:
+        442                 # anatomical = nib.load(resolve_mni_path(MNI_Template)['plot'])
+    --> 443                 anatomical = get_mni_from_img_resolution(self, img_type='plot')
+        444 
+        445             if self.data.ndim == 1:
+
+
+    ~/anaconda3/envs/py36/lib/python3.6/site-packages/nltools/utils.py in get_mni_from_img_resolution(brain, img_type)
+         83     voxel_dims = np.unique(res_array)
+         84     if len(voxel_dims) != 1:
+    ---> 85         raise ValueError("Voxels are not isometric and cannot be visualized in standard space")
+         86     else:
+         87         dim = str(int(voxel_dims[0])) + 'mm'
+
+
+    ValueError: Voxels are not isometric and cannot be visualized in standard space
+
+
+```
 
 the results of this analysis are stored in a dictionary.
 
