@@ -2,34 +2,41 @@
 
 ## INSTRUCTORS
 
-Professor: Luke Chang, PhD
-Email: luke.j.chang@dartmouth.edu
-Office Hours: Monday 1-3pm
-Office: Moore 357
+Professor: Jeremy Huckins, PhD
 
-Teaching Assistant: Sasha Brietzke
-Email: sasha.c.brietzke.gr@dartmouth.edu
-Office Hours: Thurs 1-2pm (or by appointment)
-Office: Moore 240
+Email: jeremy.f.huckins@dartmouth.edu
+
+Office Hours: Tuesday 1-2pm
+
+Office: Moore 220 (or by appointment)
+
+Teaching Assistant: Kirsten Ziman
+
+Email: Kirsten.K.Ziman.GR@dartmouth.edu
+
+Office Hours: Monday & Wednesday, 11:30 - 12:30 pm
+
+Office: Moore 416
 
 ## SPACE AND TIME
-Moore 110
+Moore 150
 2A Tue/Thurs: 2:25-4:15
 X-Hour Wed:  4:35-5:25
 
 ## TEXTBOOK
-Poldrack, R. A., Mumford, J. A., & Nichols, T. E. (2011). Handbook of functional MRI data analysis. Cambridge University Press.
+Lindquist, M. & Wager, T (2015). Principles of fMRI. Available from https://leanpub.com/principlesoffmri.
 
 ## ONLINE VIDEOS
 Students are encouraged to watch assigned videos freely available online to supplement the classroom experience.  Most videos will be available on youtube from:
  - [Principles of fMRI Course](https://www.youtube.com/channel/UC_BIby85hZmcItMrkAlc8eA) by Tor Wager & Martin Lindquist
  - [Analyzing Neural Time Series Data: Principles & Theory](http://mikexcohen.com/lectures.html) By Mike X Cohen
  - [Mumford Brain Stats](https://www.youtube.com/channel/UCZ7gF0zm35FwrFpDND6DWeA) by Jeanette Mumford
- 
+
 ## ASSIGNMENTS
+TBA
 
 ### READINGS
-Most of the readings will be from the Poldrack (2011) book. We will be supplementing these readings with additional articles and chapters and occasionally online videos. The reading list and electronic PDFs (or links) will be posted on Canvas.
+Most of the readings will be from the Lindquist and Wager (2011) book. We will be supplementing these readings with additional articles and chapters and occasionally online videos. The reading list and electronic PDFs (or links) will be posted on Canvas.
 
 ### CLASS PARTICIPATION (10% of grade)
 You will be expected to participate in class discussions each day of class. This might include asking clarifying questions or helping another student.
