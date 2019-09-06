@@ -33,7 +33,7 @@ Students are encouraged to watch assigned videos freely available online to supp
  - [Mumford Brain Stats](https://www.youtube.com/channel/UCZ7gF0zm35FwrFpDND6DWeA) by Jeanette Mumford
 
 ## ASSIGNMENTS
-TBA
+Assignments will be posted on canvas.
 
 ### READINGS
 Most of the readings will be from the Lindquist and Wager (2011) book. We will be supplementing these readings with additional articles and chapters and occasionally online videos. The reading list and electronic PDFs (or links) will be posted on Canvas.
@@ -77,5 +77,8 @@ Computers and tablets may be used in class, but use of cell phones will not be p
 
 ### DISABILITIES
 Any student with a documented disability needing academic adjustments or accommodations is requested to speak with me by the end of the second week of the term. All discussions will remain confidential, although the Academic Skills Center may be consulted to verify the documentation of the disability.
+
+### MENTAL HEALTH
+The academic environment at Dartmouth is challenging, our terms are intensive, and classes are not the only demanding part of your life. There are a number of resources available to you on campus to support your wellness, including your undergraduate dean (http://www.dartmouth.edu/~upperde/), Counseling and Human Development (http://www.dartmouth.edu/~chd/), and the Student Wellness Center (http://www.dartmouth.edu/~healthed/).
 ### RELIGIOUS OBSERVANCES
 Some students may wish to take part in religious observances that occur during this academic term. If you have a religious observance which conflicts with your participation in the course, please meet with me by the end of the second week of the term to discuss appropriate accommodations.

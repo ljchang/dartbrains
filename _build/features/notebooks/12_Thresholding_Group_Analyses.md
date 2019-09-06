@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/12-thresholding-group-analyses"
 interact_link: content/features/notebooks/12_Thresholding_Group_Analyses.ipynb
 kernel_name: conda-env-py36-py
+has_widgets: false
 title: 'Thresholding Group Analyses'
 prev_page:
-  url: /features/notebooks/11_Group_Analysis
+  url: /features/notebooks/11_Group_Analysis.html
   title: 'Group Analysis'
 next_page:
-  url: /features/notebooks/13_Connectivity
+  url: /features/notebooks/13_Connectivity.html
   title: 'Connectivity'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

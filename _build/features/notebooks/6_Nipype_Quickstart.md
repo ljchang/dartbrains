@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/6-nipype-quickstart"
 interact_link: content/features/notebooks/6_Nipype_Quickstart.ipynb
 kernel_name: psych60-chang
+has_widgets: false
 title: 'Preprocessing with Nipype Quickstart'
 prev_page:
-  url: /features/notebooks/5_Signal_Processing
+  url: /features/notebooks/5_Signal_Processing.html
   title: 'Signal Processing Basics'
 next_page:
-  url: /features/notebooks/7_Nipype_Preprocessing
+  url: /features/notebooks/7_Nipype_Preprocessing.html
   title: 'Building Preprocessing Workflows with Nipype'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

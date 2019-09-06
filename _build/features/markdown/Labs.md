@@ -3,10 +3,10 @@ redirect_from:
   - "/features/markdown/labs"
 title: 'Labs'
 prev_page:
-  url: /features/markdown/Syllabus
-  title: 'Syllabus'
+  url: /features/markdown/Preprocessing.html
+  title: 'Preprocessing'
 next_page:
-  url: /features/notebooks/0_Introduction_to_JupyterHub
+  url: /features/notebooks/0_Introduction_to_JupyterHub.html
   title: 'Getting Started'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

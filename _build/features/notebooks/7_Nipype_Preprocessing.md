@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/7-nipype-preprocessing"
 interact_link: content/features/notebooks/7_Nipype_Preprocessing.ipynb
 kernel_name: conda-env-py36-py
+has_widgets: false
 title: 'Building Preprocessing Workflows with Nipype'
 prev_page:
-  url: /features/notebooks/6_Nipype_Quickstart
+  url: /features/notebooks/6_Nipype_Quickstart.html
   title: 'Preprocessing with Nipype Quickstart'
 next_page:
-  url: /features/notebooks/8_fmriprep_tutorial
+  url: /features/notebooks/8_fmriprep_tutorial.html
   title: 'Introduction to Automated Preprocessing with fmriprep'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

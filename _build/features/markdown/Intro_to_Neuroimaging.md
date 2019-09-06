@@ -3,10 +3,10 @@ redirect_from:
   - "/features/markdown/intro-to-neuroimaging"
 title: 'Introduction to Neuroimaging'
 prev_page:
-  url: /features/markdown/Topics
-  title: 'Topics'
+  url: /features/markdown/Topics.html
+  title: 'Lectures'
 next_page:
-  url: /features/markdown/Signal_Measurement
+  url: /features/markdown/Signal_Measurement.html
   title: 'Measurement and Signal'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

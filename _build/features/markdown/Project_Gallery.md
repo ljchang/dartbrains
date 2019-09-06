@@ -3,10 +3,10 @@ redirect_from:
   - "/features/markdown/project-gallery"
 title: 'Project Gallery'
 prev_page:
-  url: /features/notebooks/15_RSA
+  url: /features/notebooks/15_RSA.html
   title: 'Representational Similarity Analysis'
 next_page:
-  url: /features/markdown/Contributing
+  url: /features/markdown/Contributing.html
   title: 'Contributing'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

@@ -3,11 +3,11 @@ redirect_from:
   - "/features/markdown/schedule"
 title: 'Schedule'
 prev_page:
-  url: /features/markdown/Syllabus
+  url: /features/markdown/Syllabus.html
   title: 'Syllabus'
 next_page:
-  url: /features/markdown/Topics
-  title: 'Topics'
+  url: /features/markdown/Topics.html
+  title: 'Lectures'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 ## SCHEDULE

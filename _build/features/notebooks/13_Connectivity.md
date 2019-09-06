@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/13-connectivity"
 interact_link: content/features/notebooks/13_Connectivity.ipynb
 kernel_name: conda-env-Psych60_py368-py
+has_widgets: false
 title: 'Connectivity'
 prev_page:
-  url: /features/notebooks/12_Thresholding_Group_Analyses
+  url: /features/notebooks/12_Thresholding_Group_Analyses.html
   title: 'Thresholding Group Analyses'
 next_page:
-  url: /features/notebooks/14_Multivariate_Prediction
+  url: /features/notebooks/14_Multivariate_Prediction.html
   title: 'Multivariate Prediction'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
