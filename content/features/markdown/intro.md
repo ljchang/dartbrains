@@ -6,3 +6,7 @@ How can we understand how the brain works? This course provides an introduction 
  2) Introduce standard data preprocessing techniques
  3) Introduce the general linear model
  4) Introduce advanced analysis techniques
+
+ # License for this book
+All content is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
+(CC BY-SA 4.0) license.
