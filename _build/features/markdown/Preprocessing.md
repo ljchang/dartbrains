@@ -3,10 +3,10 @@ redirect_from:
   - "/features/markdown/preprocessing"
 title: 'Preprocessing'
 prev_page:
-  url: /features/markdown/Signal_Measurement
+  url: /features/markdown/Signal_Measurement.html
   title: 'Measurement and Signal'
 next_page:
-  url: /features/markdown/Labs
+  url: /features/markdown/Labs.html
   title: 'Labs'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/0-introduction-to-jupyterhub"
 interact_link: content/features/notebooks/0_Introduction_to_JupyterHub.ipynb
 kernel_name: python3
+has_widgets: false
 title: 'Getting Started'
 prev_page:
-  url: /features/markdown/Labs
+  url: /features/markdown/Labs.html
   title: 'Labs'
 next_page:
-  url: /features/notebooks/1_Introduction_to_Programming
+  url: /features/notebooks/1_Introduction_to_Programming.html
   title: 'Introduction to Python'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

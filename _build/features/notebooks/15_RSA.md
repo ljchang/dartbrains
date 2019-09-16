@@ -3,13 +3,14 @@ redirect_from:
   - "/features/notebooks/15-rsa"
 interact_link: content/features/notebooks/15_RSA.ipynb
 kernel_name: conda-env-py36-py
+has_widgets: false
 title: 'Representational Similarity Analysis'
 prev_page:
-  url: /features/notebooks/14_Multivariate_Prediction
+  url: /features/notebooks/14_Multivariate_Prediction.html
   title: 'Multivariate Prediction'
 next_page:
-  url: /features/markdown/Contributing
-  title: 'Contributing'
+  url: /features/markdown/Project_Gallery.html
+  title: 'Project Gallery'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 

@@ -3,13 +3,14 @@ redirect_from:
   - "/features/notebooks/2-introduction-to-dataframes-plotting"
 interact_link: content/features/notebooks/2_Introduction_to_Dataframes_Plotting.ipynb
 kernel_name: python3
+has_widgets: false
 title: 'Introduction to Dataframes and Plotting'
 prev_page:
-  url: /features/notebooks/1_Introduction_to_Programming
+  url: /features/notebooks/1_Introduction_to_Programming.html
   title: 'Introduction to Python'
 next_page:
-  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
-  title: 'Introduction to Neuroimaging Data'
+  url: /features/notebooks/Download_Data.html
+  title: 'Download Localizer Data'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 

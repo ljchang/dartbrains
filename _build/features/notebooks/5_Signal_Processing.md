@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/5-signal-processing"
 interact_link: content/features/notebooks/5_Signal_Processing.ipynb
 kernel_name: python3
+has_widgets: false
 title: 'Signal Processing Basics'
 prev_page:
-  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
+  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python.html
   title: 'Introduction to Neuroimaging Data'
 next_page:
-  url: /features/notebooks/6_Nipype_Quickstart
+  url: /features/notebooks/6_Nipype_Quickstart.html
   title: 'Preprocessing with Nipype Quickstart'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

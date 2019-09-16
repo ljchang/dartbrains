@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/11-group-analysis"
 interact_link: content/features/notebooks/11_Group_Analysis.ipynb
 kernel_name: conda-env-Psych60_py368-py
+has_widgets: false
 title: 'Group Analysis'
 prev_page:
-  url: /features/notebooks/10_GLM_Single_Subject_Model
+  url: /features/notebooks/10_GLM_Single_Subject_Model.html
   title: 'Modeling Single Subject Data'
 next_page:
-  url: /features/notebooks/12_Thresholding_Group_Analyses
+  url: /features/notebooks/12_Thresholding_Group_Analyses.html
   title: 'Thresholding Group Analyses'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
