@@ -8,5 +8,6 @@ How can we understand how the brain works? This course provides an introduction 
  4) Introduce advanced analysis techniques
 
  # License for this book
-All content is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
+All content 
+is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
 (CC BY-SA 4.0) license.
