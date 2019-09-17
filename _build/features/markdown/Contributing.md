@@ -3,7 +3,7 @@ redirect_from:
   - "/features/markdown/contributing"
 title: 'Contributing'
 prev_page:
-  url: /features/markdown/Project_Gallery
+  url: /features/markdown/Project_Gallery.html
   title: 'Project Gallery'
 next_page:
   url: 

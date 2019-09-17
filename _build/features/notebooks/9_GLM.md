@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/9-glm"
 interact_link: content/features/notebooks/9_GLM.ipynb
 kernel_name: python3
+has_widgets: false
 title: 'Introduction to the General Linear Model'
 prev_page:
-  url: /features/notebooks/8_fmriprep_tutorial
+  url: /features/notebooks/8_fmriprep_tutorial.html
   title: 'Introduction to Automated Preprocessing with fmriprep'
 next_page:
-  url: /features/notebooks/10_GLM_Single_Subject_Model
+  url: /features/notebooks/10_GLM_Single_Subject_Model.html
   title: 'Modeling Single Subject Data'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/10-glm-single-subject-model"
 interact_link: content/features/notebooks/10_GLM_Single_Subject_Model.ipynb
 kernel_name: conda-env-Psych60_py368-py
+has_widgets: false
 title: 'Modeling Single Subject Data'
 prev_page:
-  url: /features/notebooks/9_GLM
+  url: /features/notebooks/9_GLM.html
   title: 'Introduction to the General Linear Model'
 next_page:
-  url: /features/notebooks/11_Group_Analysis
+  url: /features/notebooks/11_Group_Analysis.html
   title: 'Group Analysis'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

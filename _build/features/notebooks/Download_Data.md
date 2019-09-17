@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/download-data"
 interact_link: content/features/notebooks/Download_Data.ipynb
 kernel_name: conda-env-py36-py
+has_widgets: false
 title: 'Download Localizer Data'
 prev_page:
-  url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
+  url: /features/notebooks/2_Introduction_to_Dataframes_Plotting.html
   title: 'Introduction to Dataframes and Plotting'
 next_page:
-  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
+  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python.html
   title: 'Introduction to Neuroimaging Data'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

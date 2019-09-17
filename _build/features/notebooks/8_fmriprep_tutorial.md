@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/8-fmriprep-tutorial"
 interact_link: content/features/notebooks/8_fmriprep_tutorial.ipynb
 kernel_name: python3
+has_widgets: false
 title: 'Introduction to Automated Preprocessing with fmriprep'
 prev_page:
-  url: /features/notebooks/7_Nipype_Preprocessing
+  url: /features/notebooks/7_Nipype_Preprocessing.html
   title: 'Building Preprocessing Workflows with Nipype'
 next_page:
-  url: /features/notebooks/9_GLM
+  url: /features/notebooks/9_GLM.html
   title: 'Introduction to the General Linear Model'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

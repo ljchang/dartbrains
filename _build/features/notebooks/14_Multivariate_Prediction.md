@@ -3,12 +3,13 @@ redirect_from:
   - "/features/notebooks/14-multivariate-prediction"
 interact_link: content/features/notebooks/14_Multivariate_Prediction.ipynb
 kernel_name: conda-env-py36-py
+has_widgets: false
 title: 'Multivariate Prediction'
 prev_page:
-  url: /features/notebooks/13_Connectivity
+  url: /features/notebooks/13_Connectivity.html
   title: 'Connectivity'
 next_page:
-  url: /features/notebooks/15_RSA
+  url: /features/notebooks/15_RSA.html
   title: 'Representational Similarity Analysis'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---

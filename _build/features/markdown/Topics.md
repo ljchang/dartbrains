@@ -1,12 +1,12 @@
 ---
 redirect_from:
   - "/features/markdown/topics"
-title: 'Topics'
+title: 'Lectures'
 prev_page:
-  url: /features/markdown/Syllabus
-  title: 'Syllabus'
+  url: /features/markdown/Schedule.html
+  title: 'Schedule'
 next_page:
-  url: /features/markdown/Intro_to_Neuroimaging
+  url: /features/markdown/Intro_to_Neuroimaging.html
   title: 'Introduction to Neuroimaging'
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
