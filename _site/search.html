@@ -1,73 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
   <title>Search the site</title>
-  <meta name="description" content="This is an example book built with Jupyter Books.">
+  <meta name="description" content="        ">
 
-  <link rel="canonical" href="https://jupyter.org/jupyter-book/search">
-  <link rel="alternate" type="application/rss+xml" title="Jupyter Book" href="https://jupyter.org/jupyter-book/feed.xml">
+  <link rel="canonical" href="http://dartbrains.org//search">
+  <link rel="alternate" type="application/rss+xml" title="DartBrains" href="http://dartbrains.org//feed.xml">
 
-  <meta property="og:url"         content="https://jupyter.org/jupyter-book/search" />
+  <meta property="og:url"         content="http://dartbrains.org//search" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Search the site" />
-<meta property="og:description" content="This is an example book built with Jupyter Books." />
-<meta property="og:image"       content="" />
+<meta property="og:description" content="        " />
+<meta property="og:image"       content="http://dartbrains.org/images/logo/dartbrains_logo_square_transparent.png" />
+
+<meta name="twitter:card" content="summary">
 
 
   <script type="application/ld+json">
   {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage":
-    "https://jupyter.org/jupyter-book/search",
-  "headline":
-    "Search the site",
-  "datePublished":
-    "2019-03-07T14:34:44-08:00",
-  "dateModified":
-    "2019-03-07T14:34:44-08:00",
-  "description":
-    "This is an example book built with Jupyter Books.",
+  "mainEntityOfPage": "http://dartbrains.org//search",
+  "headline": "Search the site",
+  "datePublished": "2019-12-27T10:58:44-08:00",
+  "dateModified": "2019-12-27T10:58:44-08:00",
+  "description": "        ",
   "author": {
     "@type": "Person",
-    "name": "The Jupyter Book Community"
+    "name": "Luke Chang"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Data 100 at UC Berkeley",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://jupyter.org/jupyter-book",
+      "url": "http://dartbrains.org/",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "https://jupyter.org/jupyter-book",
+    "url": "http://dartbrains.org/",
     "height": 60,
     "width": 60
   }
 }
 
   </script>
-  <link rel="stylesheet" href="/jupyter-book/assets/css/styles.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css ">
-  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+  <link rel="stylesheet" href="/assets/css/styles.css">
 
   <!-- <link rel="manifest" href="/manifest.json"> -->
   <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
@@ -76,10 +61,12 @@
   <meta name="theme-color" content="#233947">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/jupyter-book/images/logo/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/images/logo/favicon.ico">
 
   <!-- MathJax Config -->
   <!-- Allow inline math using $ and automatically break long math lines -->
+<!-- (mostly) copied from nbconvert configuration -->
+<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
@@ -88,352 +75,74 @@ MathJax.Hub.Config({
         processEscapes: true,
         processEnvironments: true
     },
-    CommonHTML: {
-        linebreaks: {
-            automatic: true,
-        },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true },
     },
+    
 });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML' async></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
+
 
   <!-- DOM updating function -->
-  <script>
-const runWhenDOMLoaded = cb => {
-  if (document.readyState != 'loading') {
-    cb()
-  } else if (document.addEventListener) {
-    document.addEventListener('DOMContentLoaded', cb)
-  } else {
-    document.attachEvent('onreadystatechange', function() {
-      if (document.readyState == 'complete') cb()
-    })
-  }
-}
+  <script src="/assets/js/page/dom-update.js"></script>
 
-// Helper function to init things quickly
-initFunction = function(myfunc) {
-  runWhenDOMLoaded(myfunc);
-  document.addEventListener('turbolinks:load', myfunc);
-};
-</script>
+  <!-- Selectors for elements on the page -->
+  <script src="/assets/js/page/documentSelectors.js"></script>
 
   <!-- Define some javascript variables that will be useful in other javascript -->
   <script>
-    const site_basename = '/jupyter-book';
+    const site_basename = '/';
   </script>
 
   <!-- Add AnchorJS to let headers be linked -->
-  <script src="/jupyter-book/assets/js/anchor.min.js"  type="text/javascript"></script>
-  <script>
-
-initFunction(function () {
-    anchors.add("main h1, main h2, main h3, main h4")
-});
-
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
+  <script src="/assets/js/page/anchors.js" async></script>
 
   <!-- Include Turbolinks to make page loads fast -->
   <!-- https://github.com/turbolinks/turbolinks -->
-  <script src="/jupyter-book/assets/js/turbolinks.js" async></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
   <meta name="turbolinks-cache-control" content="no-cache">
 
   <!-- Load nbinteract for widgets -->
   
-<!-- Include nbinteract for interactive widgets -->
-<script src="https://unpkg.com/nbinteract-core" async></script>
-
-<script>
-let interact
-
-const initializeNbinteract = () => {
-  // If NbInteract hasn't loaded, wait one second and try again
-  if (window.NbInteract === undefined) {
-    setTimeout(initializeNbinteract, 1000)
-    return
-  }
-
-  if (interact === undefined) {
-    console.log('Initializing nbinteract...')
-    interact = new window.NbInteract({
-      baseUrl: 'https://mybinder.org',
-      spec: 'jupyter/jupyter-book/master',
-      provider: 'gh',
-    })
-    window.interact = interact
-  } else {
-    console.log("nbinteract already initialized...")
-  }
-
-  interact.prepare()
-}
-
-// const setupInteractButton = () => {
-//     const interactButton = document.getElementById("interact-button-nbinteract");
-//     interactButton.addEventListener('click', initializeNbinteract)
-// }
-
-// Initialize nbinteract
-initFunction(initializeNbinteract);
-</script>
-
 
   <!-- Load Thebelab for interactive widgets -->
   <!-- Include Thebelab for interactive code if it's enabled -->
 
-<script type="text/x-thebe-config">
-    {
-      requestKernel: true,
-      binderOptions: {
-        repo: 'jupyter/jupyter-book',
-        ref: 'master',
-      },
-      kernelOptions: {
-        name: 'python3',
-      }
-    }
-</script>
-<script src="https://unpkg.com/thebelab@0.3.3/lib/index.js"></script>
-<script>
-    /**
-     * Add attributes to Thebelab blocks
-     */
 
-    const initThebelab = () => {
-        const addThebelabToCodeCells = () => {
-            console.log("Adding thebelab to code cells...");
-            // If Thebelab hasn't loaded, wait a bit and try again. This
-            // happens because we load ClipboardJS asynchronously.
-            if (window.thebelab === undefined) {
-                setTimeout(addThebelabToCodeCells, 250)
-            return
-            }
 
-            // If we already detect a Thebelab cell, don't re-run
-            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
-                return;
-            }
-
-            // Find all code cells, replace with Thebelab interactive code cells
-            const codeCells = document.querySelectorAll('.input_area pre')
-            codeCells.forEach((codeCell, index) => {
-                const id = codeCellId(index)
-                codeCell.setAttribute('data-executable', 'true')
-
-                // Figure out the language it uses and add this too
-                var parentDiv = codeCell.parentElement.parentElement;
-                var arrayLength = parentDiv.classList.length;
-                for (var ii = 0; ii < arrayLength; ii++) {
-                    var parts = parentDiv.classList[ii].split('language-');
-                    if (parts.length === 2) {
-                        // If found, assign dataLanguage and break the loop
-                        var dataLanguage = parts[1];
-                        break;
-                    }
-                }
-                codeCell.setAttribute('data-language', dataLanguage)
-
-                // If the code cell is hidden, show it
-                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
-                if (inputCheckbox !== null) {
-                    setCodeCellVisibility(inputCheckbox, 'visible');
-                }
-            });
-
-            // Remove the event listener from the page so keyboard press doesn't
-            // Change page
-            document.removeEventListener('keydown', initPageNav)
-            keyboardListener = false;
-
-            // Init thebelab
-            thebelab.bootstrap();
-
-            // Remove copy buttons since they won't work anymore
-            const copyButtons = document.querySelectorAll('.copybtn')
-            copyButtons.forEach((copyButton, index) => {
-                copyButton.remove();
-            });
-
-            // Remove outputs since they'll be stale
-            const outputs = document.querySelectorAll('.output *, .output')
-            outputs.forEach((output, index) => {
-                output.remove();
-            });
-        }
-
-        // Add event listener for the function to modify code cells
-        const thebelabButton = document.getElementById('interact-button-thebelab');
-        if (thebelabButton === null) {
-            setTimeout(initThebelab, 250)
-        return
-        };
-        thebelabButton.addEventListener('click', addThebelabToCodeCells);
-    }
-
-    // Initialize Thebelab
-    initFunction(initThebelab);
-</script>
-
+  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
+  <script src="/assets/js/page/tocbot.js"></script>
 
   <!-- Google analytics -->
-  <script src="/jupyter-book/assets/js/ga.js" async></script>
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-138270939-1');
+</script>
+
+
 
   <!-- Clipboard copy button -->
-  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" async></script>
-
-  <!-- Load JS that depends on site variables -->
-  <script>
-/**
- * Set up copy/paste for code blocks
- */
-const codeCellId = index => `codecell${index}`
-
-const clipboardButton = id =>
-  `<a class="btn copybtn o-tooltip--left" data-tooltip="Copy" data-clipboard-target="#${id}">
-    <img src="/jupyter-book/assets/images/copy-button.svg" alt="Copy to clipboard">
-  </a>`
-
-// Clears selected text since ClipboardJS will select the text when copying
-const clearSelection = () => {
-  if (window.getSelection) {
-    window.getSelection().removeAllRanges()
-  } else if (document.selection) {
-    document.selection.empty()
-  }
-}
-
-// Changes tooltip text for two seconds, then changes it back
-const temporarilyChangeTooltip = (el, newText) => {
-  const oldText = el.getAttribute('data-tooltip')
-  el.setAttribute('data-tooltip', newText)
-  setTimeout(() => el.setAttribute('data-tooltip', oldText), 2000)
-}
-
-const addCopyButtonToCodeCells = () => {
-  // If ClipboardJS hasn't loaded, wait a bit and try again. This
-  // happens because we load ClipboardJS asynchronously.
-  if (window.ClipboardJS === undefined) {
-    setTimeout(addCopyButtonToCodeCells, 250)
-    return
-  }
-
-  const codeCells = document.querySelectorAll('div.highlighter-rouge:not(.output) pre')
-  codeCells.forEach((codeCell, index) => {
-    const id = codeCellId(index)
-    codeCell.setAttribute('id', id)
-    if (document.querySelector(`pre#${id} + a`) == null) {
-      codeCell.insertAdjacentHTML('afterend', clipboardButton(id));
-    }
-  })
-
-  const clipboard = new ClipboardJS('.copybtn')
-  clipboard.on('success', event => {
-    clearSelection()
-    temporarilyChangeTooltip(event.trigger, 'Copied!')
-  })
-
-  clipboard.on('error', event => {
-    temporarilyChangeTooltip(event.trigger, 'Failed to copy')
-  })
-
-  // Get rid of clipboard before the next page visit to avoid memory leak
-  document.addEventListener('turbolinks:before-visit', () =>
-    clipboard.destroy()
-  )
-}
-
-initFunction(addCopyButtonToCodeCells);
-</script>
-
-  <!-- Hide cell code -->
-  
-<script>
-/**
-Add buttons to hide code cells
-*/
-
-
-var setCodeCellVisibility = function(inputField, kind) {
-    // Update the image and class for hidden
-    var id = inputField.getAttribute('data-id');
-    var codeCell = document.querySelector(`#${id}`);
-
-    if (kind === "visible") {
-        codeCell.classList.remove('hidden');
-        inputField.checked = true;
-    } else {
-        codeCell.classList.add('hidden');
-        inputField.checked = false;
-    }
-}
-
-var toggleCodeCellVisibility = function (event) {
-    // The label is clicked, and now we decide what to do based on the input field's clicked status
-    if (event.target.tagName === "LABEL") {
-        var inputField = event.target.previousElementSibling;
-    } else {
-        // It is the span inside the target
-        var inputField = event.target.parentElement.previousElementSibling;
-    }
-
-    if (inputField.checked === true) {
-        setCodeCellVisibility(inputField, "visible");
-    } else {
-        setCodeCellVisibility(inputField, "hidden");
-    }
-}
-
-
-// Button constructor
-const hideCodeButton = id => `<input class="hidebtn" type="checkbox" id="hidebtn${id}" data-id="${id}"><label title="Toggle cell" for="hidebtn${id}" class="plusminus"><span class="pm_h"></span><span class="pm_v"></span></label>`
-
-var addHideButton = function () {
-  // If a hide button is already added, don't add another
-  if (document.querySelector('div.hidecode input') !== null) {
-      return;
-  }
-
-  // Find the input cells and add a hide button
-  document.querySelectorAll('div.input_area div.highlight').forEach(function (item, index) {
-    if (!item.parentElement.classList.contains("hidecode")) {
-        // Skip the cell if it doesn't have a hidecode class
-        return;
-    }
-
-    const id = codeCellId(index)
-    item.setAttribute('id', id);
-    item.insertAdjacentHTML('afterend', hideCodeButton(id))
-
-    // Set up the visibility toggle
-    hideLink = document.querySelector(`#${id} + input + label`);
-    hideLink.addEventListener('click', toggleCodeCellVisibility)
-  });
-}
-
-
-// Initialize the hide buttos
-var initHiddenCells = function () {
-    // Add hide buttons to the cells
-    addHideButton();
-
-    // Toggle the code cells that should be hidden
-    document.querySelectorAll('div.hidecode input').forEach(function (item) {
-        setCodeCellVisibility(item, 'hidden');
-        item.checked = true;
-    })
-}
-
-initFunction(initHiddenCells);
-
-</script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
 
   <!-- Load custom website scripts -->
-  <script src="/jupyter-book/assets/js/scripts.js" async></script>
+  <script src="/assets/js/scripts.js" async></script>
 
   <!-- Load custom user CSS and JS  -->
-  <script src="/jupyter-book/assets/custom/custom.js" async></script>
-  <link rel="stylesheet" href="/jupyter-book/assets/custom/custom.css">
+  <script src="/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/assets/custom/custom.css">
 
   <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
   
@@ -497,7 +206,7 @@ function addParamToInternalLinks(hub) {
   var links = document.querySelectorAll("a").forEach(function(link) {
     var href = link.href;
     // If the link is an internal link...
-    if (href.search("https://jupyter.org") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
+    if (href.search("http://dartbrains.org") !== -1 || href.startsWith('/') || href.search("127.0.0.1:") !== -1) {
       // Assume we're an internal link, add the hub param to it
       var params = getJsonFromUrl(href);
       if (params !== false) {
@@ -557,7 +266,7 @@ function updateInteractLink() {
       } else {
         // If interact button isn't binderhub, assume it's jupyterhub
         // If JupyterHub links, we only need to replace the hub url
-        href = href.replace("", hubUrl);
+        href = href.replace("https://jupyterhub.dartmouth.edu", hubUrl);
         if (hubUrl.indexOf('http%3A%2F%2Flocalhost') > -1) {
           // Assume we're working from a local Jupyter server and remove `/hub`
           href = href.replace("/hub/user-redirect", "");
@@ -580,7 +289,7 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
 
   <!-- Lunr search code - will only be executed on the /search page -->
-  <script src="/jupyter-book/assets/js/lunr/lunr.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
   <script>var initQuery = function() {
   // See if we have a search box
   var searchInput = document.querySelector('input#lunr_search');
@@ -666,9 +375,68 @@ document.addEventListener('turbolinks:load', updateInteractLink)
 
 initFunction(initQuery);
 </script>
+
+  <!-- Load JS that depends on site variables -->
+  <script src="/assets/js/page/copy-button.js" async></script>
+
+  <!-- Hide cell code -->
+  <script src="/assets/js/page/hide-cell.js" async></script>
+
+  <!-- Printing the screen -->
+  <!-- Include nbinteract for interactive widgets -->
+<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
+<script>
+printContent = () => {
+    // MathJax displays a second version of any math for assistive devices etc.
+    // This prevents double-rendering in the PDF output.
+    var ignoreAssistList = [];
+    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
+        var thisId = 'MathJax-assistive-' + index.toString();
+        element.setAttribute('id', thisId);
+        ignoreAssistList.push(thisId)
+    });
+
+    // Print the actual content object
+    printJS({
+        printable: 'textbook_content',
+        type: 'html',
+        css: "/assets/css/styles.css",
+        style: "#textbook_content {padding-top: 40px};",
+        scanStyles: false,
+        targetStyles: ["*"],
+        ignoreElements: ignoreAssistList,
+        documentTitle: "Made with Jupyter Book"
+    })
+};
+
+initPrint = () => {
+    document.querySelector('#interact-button-print').addEventListener('click', printContent)
+}
+
+initFunction(initPrint)
+</script>
+
 </head>
 
   <body>
+    <!-- Include the ThebeLab config so it gets reloaded on each page -->
+    <script type="text/x-thebe-config">{
+    requestKernel: true,
+    binderOptions: {
+    repo: "ljchang/dartbrains",
+    ref: "master",
+    },
+    codeMirrorConfig: {
+    theme: "abcdef",
+    mode: "python"
+    },
+    kernelOptions: {
+    kernelName: "python3",
+    path: ""
+    }
+}
+</script>
+
     <!-- .js-show-sidebar shows sidebar by default -->
     <div id="js-textbook" class="c-textbook js-show-sidebar">
       
@@ -676,8 +444,8 @@ initFunction(initQuery);
 
 
 <nav id="js-sidebar" class="c-textbook__sidebar">
-  <a href="https://jupyter.org/jupyter-book/intro.html"><img src="/jupyter-book/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" data-turbolinks-permanent/></a>
-  <h2 class="c-sidebar__title">Jupyter Book</h2>
+  <a href="https://dartbrains.org"><img src="/images/logo/dartbrains_logo_square_transparent.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">DartBrains</h2>
   <ul class="c-sidebar__chapters">
     
       
@@ -685,124 +453,60 @@ initFunction(initQuery);
 
       
       
+      
+      
 
       
       
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/intro.html"
+      <li class="c-sidebar__chapter" data-url="/intro">
+        <a class="c-sidebar__entry"
+          href="/intro.html"
         >
           
           Home
         </a>
-
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
       
       
-        <li class="c-sidebar__chapter"><a class="c-sidebar__entry" href="/jupyter-book/search.html">Search</a></li>
-        
+
+      
+      
       
       
 
       
       
-
-      
-      
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/guide/01_overview.html"
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Contributing">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Contributing.html"
         >
           
-          Getting started
+          Contributing
         </a>
-
-        
-
-          
-          
-          
-          
-
-          
-
-          <ul class="c-sidebar__sections ">
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/guide/02_create.html"
-                >
-                  
-                  Create your book
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/guide/03_build.html"
-                >
-                  
-                  Build and publish your book
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/guide/04_faq.html"
-                >
-                  
-                  FAQ
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/guide/05_advanced.html"
-                >
-                  
-                  How-to and advanced topics
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-          </ul>
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
@@ -811,154 +515,29 @@ initFunction(initQuery);
 
       
       
-
-      
-      
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/features/features.html"
-        >
-          
-          Features and customization
-        </a>
-
-        
-
-          
-          
-          
-          
-
-          
-
-          <ul class="c-sidebar__sections ">
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/features/markdown.html"
-                >
-                  
-                  Markdown files
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/features/notebooks.html"
-                >
-                  
-                  Jupyter notebooks
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/features/hiding.html"
-                >
-                  
-                  Hiding code blocks or entire cells
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/features/interact.html"
-                >
-                  
-                  Connecting content with JupyterHub and Binder
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/features/citations.html"
-                >
-                  
-                  Citations and bibliographies
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/features/search.html"
-                >
-                  
-                  Searching your book
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-          </ul>
-        
-      </li>
-
-      
-    
       
       
 
       
       
-
-      
-      
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="https://github.com/jupyter/jupyter-book"
+      <li class="c-sidebar__chapter" data-url="https://github.com/ljchang/dartbrains">
+        <a class="c-sidebar__entry"
+          href="https://github.com/ljchang/dartbrains"
         >
           
           GitHub repository
         </a>
-
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
@@ -968,125 +547,302 @@ initFunction(initQuery);
         
       
       
-        <li><h2 class="c-sidebar__title">Demo textbook</li>
+        <li><h2 class="c-sidebar__title">Course Overview</li>
         
       
       
 
       
       
+      
+      
 
       
       
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/01/what-is-data-science.html"
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Instructors">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Instructors.html"
+        >
+          
+          Instructors
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Syllabus">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Syllabus.html"
+        >
+          
+          Syllabus
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Schedule">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Schedule.html"
+        >
+          
+          Schedule
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">Computing Resources</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/0_Introduction_to_JupyterHub">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/0_Introduction_to_JupyterHub.html"
+        >
+          
+          Getting Started with JupyterHub
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/1_Introduction_to_Programming">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/1_Introduction_to_Programming.html"
+        >
+          
+          Introduction to Python
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/2_Introduction_to_Dataframes_Plotting">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/2_Introduction_to_Dataframes_Plotting.html"
+        >
+          
+          Introduction to Dataframes and Plotting
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/Download_Data">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/Download_Data.html"
+        >
+          
+          Download Localizer Data
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/Glossary">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/Glossary.html"
+        >
+          
+          Glossary of Python Functions
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+        <li><h2 class="c-sidebar__title">Topics</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Intro_to_Neuroimaging">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Intro_to_Neuroimaging.html"
         >
           
             1.
           
-          Data Science
+          Introduction to Neuroimaging
         </a>
-
-        
-
-          
-          
-          
-          
-
-          
-
-          <ul class="c-sidebar__sections u-hidden-visually">
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/01/1/intro.html"
-                >
-                  
-                    1.1
-                  
-                  Introduction
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/01/2/why-data-science.html"
-                >
-                  
-                    1.2
-                  
-                  Why Data Science?
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/01/3/Plotting_the_Classics.html"
-                >
-                  
-                    1.3
-                  
-                  Plotting the Classics
-                </a>
-
-                
-                
-                  
-                  
-
-                  <li class="c-sidebar__subsection">
-                    <a class="c-sidebar__entry "
-                      href="/jupyter-book/01/3/subsection/subsections.html"
-                    >
-                      
-                        1.3.1
-                        
-                      
-                      Subsection Demo 1
-                    </a>
-                
-                  
-                  
-
-                  <li class="c-sidebar__subsection">
-                    <a class="c-sidebar__entry "
-                      href="/jupyter-book/01/3/subsection/subsectiontwo.html"
-                    >
-                      
-                        1.3.2
-                        
-                      
-                      Subsection Demo 2
-                    </a>
-                
-
-              </li>
-              
-            
-          </ul>
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
@@ -1095,128 +851,31 @@ initFunction(initQuery);
 
       
       
+      
+      
 
       
       
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/02/causality-and-experiments.html"
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Signal_Measurement">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Signal_Measurement.html"
         >
           
             2.
           
-          Causality and Experiments
+          Measurement and Signal
         </a>
-
-        
-
-          
-          
-          
-          
-
-          
-
-          <ul class="c-sidebar__sections u-hidden-visually">
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/02/1/observation-and-visualization-john-snow-and-the-broad-street-pump.html"
-                >
-                  
-                    2.1
-                  
-                  John Snow and the Broad Street Pump
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/02/2/snow-s-grand-experiment.html"
-                >
-                  
-                    2.2
-                  
-                  Snow’s “Grand Experiment”
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/02/3/establishing-causality.html"
-                >
-                  
-                    2.3
-                  
-                  Establishing Causality
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/02/4/randomization.html"
-                >
-                  
-                    2.4
-                  
-                  Randomization
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/02/5/endnote.html"
-                >
-                  
-                    2.5
-                  
-                  Endnote
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-          </ul>
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
@@ -1225,109 +884,31 @@ initFunction(initQuery);
 
       
       
+      
+      
 
       
       
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/03/programming-in-python.html"
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/3_Introduction_to_NeuroimagingData_in_Python">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/3_Introduction_to_NeuroimagingData_in_Python.html"
         >
           
             3.
           
-          Programming in Python
+          Introduction to Neuroimaging Data
         </a>
-
-        
-
-          
-          
-          
-          
-
-          
-
-          <ul class="c-sidebar__sections u-hidden-visually">
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/03/1/Expressions.html"
-                >
-                  
-                    3.1
-                  
-                  Expressions
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/03/2/Names.html"
-                >
-                  
-                    3.2
-                  
-                  Names
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/03/3/Calls.html"
-                >
-                  
-                    3.3
-                  
-                  Call Expressions
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/03/4/Introduction_to_Tables.html"
-                >
-                  
-                    3.4
-                  
-                  Introduction to Tables
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-          </ul>
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
@@ -1336,90 +917,361 @@ initFunction(initQuery);
 
       
       
+      
+      
 
       
       
-      <li class="c-sidebar__chapter">
-        <a class="c-sidebar__entry "
-          href="/jupyter-book/04/Types.html"
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/5_Signal_Processing">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/5_Signal_Processing.html"
         >
           
             4.
           
-          Data Types
+          Signal Processing Basics
         </a>
-
-        
-
-          
-          
-          
-          
-
-          
-
-          <ul class="c-sidebar__sections u-hidden-visually">
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/04/1/Numbers.html"
-                >
-                  
-                    4.1
-                  
-                  Numbers
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/04/2/Strings.html"
-                >
-                  
-                    4.2
-                  
-                  Strings
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-              
-              
-
-              <li class="c-sidebar__section">
-                <a class="c-sidebar__entry "
-                  href="/jupyter-book/04/3/Comparison.html"
-                >
-                  
-                    4.3
-                  
-                  Comparisons
-                </a>
-
-                
-                
-
-              </li>
-              
-            
-          </ul>
-        
       </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Preprocessing">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Preprocessing.html"
+        >
+          
+            5.
+          
+          Preprocessing
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/features/notebooks/6_Nipype_Quickstart">
+              <a class="c-sidebar__entry"
+                href="/features/notebooks/6_Nipype_Quickstart.html"
+              >
+                
+                Preprocessing with Nipype Quickstart
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/features/notebooks/7_Nipype_Preprocessing">
+              <a class="c-sidebar__entry"
+                href="/features/notebooks/7_Nipype_Preprocessing.html"
+              >
+                
+                Building Preprocessing Workflows with Nipype
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/features/notebooks/8_fmriprep_tutorial">
+              <a class="c-sidebar__entry"
+                href="/features/notebooks/8_fmriprep_tutorial.html"
+              >
+                
+                Introduction to Automated Preprocessing with fmriprep
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/9_GLM">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/9_GLM.html"
+        >
+          
+            6.
+          
+          Introduction to the General Linear Model
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/features/notebooks/10_GLM_Single_Subject_Model">
+              <a class="c-sidebar__entry"
+                href="/features/notebooks/10_GLM_Single_Subject_Model.html"
+              >
+                
+                Modeling Single Subject Data
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/features/notebooks/11_Group_Analysis">
+              <a class="c-sidebar__entry"
+                href="/features/notebooks/11_Group_Analysis.html"
+              >
+                
+                Group Analysis
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/features/notebooks/12_Thresholding_Group_Analyses">
+              <a class="c-sidebar__entry"
+                href="/features/notebooks/12_Thresholding_Group_Analyses.html"
+              >
+                
+                Thresholding Group Analyses
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/13_Connectivity">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/13_Connectivity.html"
+        >
+          
+            7.
+          
+          Connectivity
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/14_Multivariate_Prediction">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/14_Multivariate_Prediction.html"
+        >
+          
+            8.
+          
+          Multivariate Prediction
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/notebooks/15_RSA">
+        <a class="c-sidebar__entry"
+          href="/features/notebooks/15_RSA.html"
+        >
+          
+            9.
+          
+          Representational Similarity Analysis
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/features/markdown/Project_Gallery">
+        <a class="c-sidebar__entry"
+          href="/features/markdown/Project_Gallery.html"
+        >
+          
+          Project Gallery
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
 
       
     
@@ -1428,24 +1280,43 @@ initFunction(initQuery);
 </nav>
 
       
-      <main class="c-textbook__page" tabindex="-1">
-          <div class="o-wrapper">
-            <div class="c-sidebar-toggle">
+      <div class="c-topbar" id="top-navbar">
   <!-- We show the sidebar by default so we use .is-active -->
-  <button
-    id="js-sidebar-toggle"
-    class="hamburger hamburger--arrowalt is-active"
-  >
-    <span class="hamburger-box">
-      <span class="hamburger-inner"></span>
-    </span>
-    <span class="c-sidebar-toggle__label">Toggle Sidebar</span>
-  </button>
+  <div class="c-topbar__buttons">
+    <button
+      id="js-sidebar-toggle"
+      class="hamburger hamburger--arrowalt is-active"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    <div class="buttons">
+<div class="download-buttons-dropdown">
+    <button id="dropdown-button-trigger" class="interact-button"><img src="/assets/images/download-solid.svg" alt="Download" /></button>
+    <div class="download-buttons">
+        
+        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+    </div>
 </div>
 
-            
 
-            <div class="c-textbook__content">
+</div>
+
+  </div>
+  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+  <aside class="sidebar__right">
+    <header><h4 class="nav__title"><img src="/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
+    <nav class="onthispage">
+    </nav>
+  </aside>
+  <a href="/search.html" class="topbar-right-button" id="search-button">
+    <img src="/assets/images/search-solid.svg" alt="Search" />
+  </a>
+</div>
+
+      <main class="c-textbook__page" tabindex="-1">
+            <div class="c-textbook__content" id="textbook_content">
               <div class="search-content__inner-wrap">
     <input type="text" id="lunr_search" class="search-input" tabindex="-1" placeholder="'Enter your search term...''" />
     <div id="results" class="results"></div>
@@ -1454,290 +1325,220 @@ initFunction(initQuery);
 <script>
     // Add the lunr store since we will now search it
     var store = [{
-        "title": "Introduction",
+        "title": "Contributing",
         
-        "excerpt":
-            "Chapter 1: Introduction Data are descriptions of the world around us, collected through observation and stored on computers. Computers enable us to infer properties of the world from these descriptions. Data science is the discipline of drawing conclusions from data using computation. There are three core aspects of effective data analysis: exploration, prediction, and inference. This text develops a consistent approach to all three, introducing statistical ideas and fundamental ideas in computer science concurrently. We focus on a minimal set of core techniques that they apply to a vast range of real-world applications. A foundation in data science requires not...",
+        "excerpt": "content jupyter book please any neuroimaging dartbrains project open org broader community goal resource learn us github issue website intro html license sa contributing wonderful aspects both python scientific computing communities strong commitment developing sharing knowledge tools within build work provide analyze data try incorporate much contributes let inadvertently omitted credit generated others though based analysis course taught dartmouth college welcome contributions anyone imaging getting started hosted com ljchang questions comments suggestions notice mistakes idea new either submit pull request review built using creates jekyll markdown notebooks read materials neat ie files folder licensed under creative commons attribution sharealike international",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/01/1/intro.html",
+        "url": "http://dartbrains.org/features/markdown/Contributing.html",
         "teaser":null},{
-        "title": "Why Data Science?",
+        "title": "Instructors",
         
-        "excerpt":
-            "Why Data Science? Most important decisions are made with only partial information and uncertain outcomes. However, the degree of uncertainty for many decisions can be reduced sharply by public access to large data sets and the computational tools required to analyze them effectively. Data-driven decision making has already transformed a tremendous breadth of industries, including finance, advertising, manufacturing, and real estate. At the same time, a wide range of academic disciplines are evolving rapidly to incorporate large-scale data analysis into their theory and practice. Studying data science enables individuals to bring these techniques to bear on their work, their scientific...",
+        "excerpt": "dartmouth college neuroscience phd completed social instructors university img src images width research professor com computational jpg io ba school chang psychology org course huckins jeremy github fall researcher psychological brain sciences worked king lab harvard medicine program focused spring affective clinical cognitive training california fellowship methods dartbrains community ziman graduate student currently brietzke www socialneurolab professors mtnhuck lecturer post doctoral department bowdoin med edu medical experimental molecular current gaining insights into mental health using fmri mobile smartphone sensing luke lukejchang assistant directs laboratory cosanlab reed ma new arizona alan sanfey predoctoral internship behavioral los angeles postdoctoral colorado boulder under",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/01/2/why-data-science.html",
+        "url": "http://dartbrains.org/features/markdown/Instructors.html",
         "teaser":null},{
-        "title": "Plotting the Classics",
+        "title": "Introduction to Neuroimaging",
         
-        "excerpt":
-            "In this example, we will explore statistics for two classic novels: The Adventures of Huckleberry Finn by Mark Twain, and Little Women by Louisa May Alcott. The text of any book can be read by a computer at great speed. Books published before 1923 are currently in the public domain, meaning that everyone has the right to copy or use the text in any way. Project Gutenberg is a website that publishes public domain books online. Using Python, we can load the text of these books directly from the web. This example is meant to illustrate some of the broad...",
+        "excerpt": "neuroimaging brain section overview different types lecture introduction measuring vivo activity humans extraordinary feat learn using technique provide course very introductory few examples things bold fmri viewed here images lectures introtoneuroimaging pdf",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/01/3/Plotting_the_Classics.html",
+        "url": "http://dartbrains.org/features/markdown/Intro_to_Neuroimaging.html",
         "teaser":null},{
-        "title": "Subsection Demo 1",
+        "title": "Topics",
         
-        "excerpt":
-            "Subsections   You can also add subsections to your markdown files. These will be displayed along with the sidebar!  ",
+        "excerpt": "course learning python labs designed primarily around basics fmri data analysis through interactive jupyter notebooks covers lot ground introducing programming language signal processing working opensource packages scientific computing community not covering everything supplementing via links short videos readings depth tutorials resources essential mastering topics",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/01/3/subsection/subsections.html",
+        "url": "http://dartbrains.org/features/markdown/Labs.html",
         "teaser":null},{
-        "title": "Subsection Demo 2",
+        "title": "Preprocessing",
         
-        "excerpt":
-            "A second subsection page   And here’s another subsection page!  ",
+        "excerpt": "preprocessing fmri www youtube com watch v plfxaopiovrghnchrxiqagecsudwmxmindex t s data noise section lecture lectures videos signals measured incredibly noisy remove amplify our signal provide overview basic steps used software packages viewed here images pdf readings please read chapters poldrack mumford nichols textbook analysis org fantastic topic recommend watching short tor wager martin lindquist principles coursera class artifacts kkrsgychslist qcrrajwoclist qamrgwsc glist",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/01/3/subsection/subsectiontwo.html",
+        "url": "http://dartbrains.org/features/markdown/Preprocessing.html",
         "teaser":null},{
-        "title": "Data Science",
+        "title": "Project Gallery",
         
-        "excerpt":
-            "What is Data Science Data Science is about drawing useful conclusions from large and diverse data sets through exploration, prediction, and inference. Exploration involves identifying patterns in information. Prediction involves using information we know to make informed guesses about values we wish we knew. Inference involves quantifying our degree of certainty: will those patterns we found also appear in new observations? How accurate are our predictions? Our primary tools for exploration are visualizations and descriptive statistics, for prediction are machine learning and optimization, and for inference are statistical tests and models. Statistics is a central component of data science because...",
+        "excerpt": "memes activation dartmouth faces participants viewing social brain ffa study meme whether our analysis data undergraduates using fmri face perceived project here after share not between results self processing response univariate contrast predict area found gallery spring projects developed students functional while relatability questions become media however evaluated referential relatable through scans behavioral presented also non based roi types others presentation images projectgallery pdf human humans identify networks us provide fusiform without performed prediction unsure significantly dartbrains course experiment neural basis process twelve scanned magnetic resonance imaging made decision likely friend scanning session rated dimensions qualtrics survey e g enjoyment",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/01/what-is-data-science.html",
+        "url": "http://dartbrains.org/features/markdown/Project_Gallery.html",
         "teaser":null},{
-        "title": "John Snow and the Broad Street Pump",
+        "title": "Schedule",
         
-        "excerpt":
-            "Observation and Visualization: John Snow and the Broad Street Pump One of the earliest examples of astute observation eventually leading to the establishment of causality dates back more than 150 years. To get your mind into the right timeframe, try to imagine London in the 1850’s. It was the world’s wealthiest city but many of its people were desperately poor. Charles Dickens, then at the height of his fame, was writing about their plight. Disease was rife in the poorer parts of the city, and cholera was among the most feared. It was not yet known that germs cause disease;...",
+        "excerpt": "lab readings videos ch poldrack principles fmri modules signal introduction data preprocessing et al processing cohen nipype general linear model analysis schedule measurement huettel python frames plotting image neuroimaging vs noise ica lecturelets basics quickstart building worklows automated fmriprep modeling single subject group multiple comparisons connectivity prediction classification representational similarity haxby kriegeskorte intersubject synchrony hasson nummenmaa",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/02/1/observation-and-visualization-john-snow-and-the-broad-street-pump.html",
+        "url": "http://dartbrains.org/features/markdown/Schedule.html",
         "teaser":null},{
-        "title": "Snow’s “Grand Experiment”",
+        "title": "Measurement and Signal",
         
-        "excerpt":
-            "Snow’s “Grand Experiment” Encouraged by what he had learned in Soho, Snow completed a more thorough analysis of cholera deaths. For some time, he had been gathering data on cholera deaths in an area of London that was served by two water companies. The Lambeth water company drew its water upriver from where sewage was discharged into the River Thames. Its water was relatively clean. But the Southwark and Vauxhall (S&amp;V) company drew its water below the sewage discharge, and thus its supply was contaminated. The map below shows the areas served by the two companies. Snow honed in on...",
+        "excerpt": "com signal www youtube watch v plfxaopiovrghnchrxiqagecsudwmxmindex t s measuring bold section mr physics physiology fmri lecture lectures videos measurement vivo brain activity humans extraordinary feat scanners work exactly provide very introductory overview basics underlying viewed here images measurementsignal pdf readings please read chapter huettel song mccarthy textbook sites sinauer fmrie sq html fantastic topic recommend watching short tor wager martin lindquist principles coursera class basic xsdxxgjejvylist image formation pxqdjhofuslist k space fifrnsrtilist jgwqpgpnmslist",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/02/2/snow-s-grand-experiment.html",
+        "url": "http://dartbrains.org/features/markdown/Signal_Measurement.html",
         "teaser":null},{
-        "title": "Establishing Causality",
+        "title": "Syllabus",
         
-        "excerpt":
-            "Establishing Causality In the language developed earlier in the section, you can think of the people in the S&amp;V houses as the treatment group, and those in the Lambeth houses at the control group. A crucial element in Snow’s analysis was that the people in the two groups were comparable to each other, apart from the treatment. In order to establish whether it was the water supply that was causing cholera, Snow had to compare two groups that were similar to each other in all but one aspect–their water supply. Only then would he be able to ascribe the differences...",
+        "excerpt": "students dartmouth class assignments academic data course www grade student fmri edu available expected not office moore principles com videos participation due paper analysis lindquist wager online classroom youtube brain canvas readings questions homework presentation region presentations imaging should exam key week center want analyze during results group end honor principle excused college late term religious professor jeremy huckins email hours pm kirsten ziman space x hour t channel analyzing html mumford posted participate discussions include midnight flash brief learn concepts scanner project learning dataset any org work final written format intro methods own independent policy please scientific just appropriate",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/02/3/establishing-causality.html",
+        "url": "http://dartbrains.org/features/markdown/Syllabus.html",
         "teaser":null},{
-        "title": "Randomization",
+        "title": "Lectures",
         
-        "excerpt":
-            "Randomization An excellent way to avoid confounding is to assign individuals to the treatment and control groups at random, and then administer the treatment to those who were assigned to the treatment group. Randomization keeps the two groups similar apart from the treatment. If you are able to randomize individuals into the treatment and control groups, you are running a randomized controlled experiment, also known as a randomized controlled trial (RCT). Sometimes, people’s responses in an experiment are influenced by their knowing which group they are in. So you might want to run a blind experiment in which individuals do...",
+        "excerpt": "basic concepts needed neuroimaging data statistics signal content generated topics course provides broad overview conduct analysis large amount base knowledge different disciplines expert including physics engineering psychology neuroscience computer science provide introductions fundamental such measurement programming python processing preprocessing done our best incorporate excellent open source broader community please let us inadvertently admitted credit any others",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/02/4/randomization.html",
+        "url": "http://dartbrains.org/features/markdown/Topics.html",
         "teaser":null},{
-        "title": "Endnote",
+        "title": "Getting Started with JupyterHub",
         
-        "excerpt":
-            "Endnote In the terminology of that we have developed, John Snow conducted an observational study, not a randomized experiment. But he called his study a “grand experiment” because, as he wrote, “No fewer than three hundred thousand people … were divided into two groups without their choice, and in most cases, without their knowledge …” Studies such as Snow’s are sometimes called “natural experiments.” However, true randomization does not simply mean that the treatment and control groups are selected “without their choice.” The method of randomization can be as simple as tossing a coin. It may also be quite a...",
+        "excerpt": "jupyter dartfs using notebook server dartmouth psych terminal rc access edu python data notebooks computer run software our running window home click jupyterhub accessing should lab com campus space folder directory module work install pip own via through please need link mac p initadd course also storage e analyses laptop computing us browser netid logging few not same done into create modules studentsoutput class file vpn path fsl results images gettingstarted png recommend analysis installed anaconda distribution www additional system let logout button add specific yournetid network off hpc de type nbviewer dropbox processing likely tab shutdown here alternative fsleyes",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/02/5/endnote.html",
+        "url": "http://dartbrains.org/features/notebooks/0_Introduction_to_JupyterHub.html",
         "teaser":null},{
-        "title": "Causality and Experiments",
+        "title": "Modeling Single Subject Data",
         
-        "excerpt":
-            "Causality and Experiments “These problems are, and will probably ever remain, among the inscrutable secrets of nature. They belong to a class of questions radically inaccessible to the human intelligence.” —The Times of London, September 1849, on how cholera is contracted and spread Does the death penalty have a deterrent effect? Is chocolate good for you? What causes breast cancer? All of these questions attempt to assign a cause to an effect. A careful examination of data can help shed light on questions like these. In this section you will learn some of the fundamental concepts involved in establishing causality....",
+        "excerpt": "our regressors model using data design variance regressor lets plot single matrix different method also filter signal results brain file head often orthogonalization linear processing task here com collinearity not any include motion threshold voxel need regions watch www tutorial multicollinearity x between values create image smoothing contrast build involved specific types e conditions glm youtube v plfxaopiovrghnchrxiqagecsudwmxmindex designmatrix tr sure convolve want regression y simply only procedure artifacts might take common intercept average associated parameters motor folder output means load visual across contrasts reflect frequency useful hrf recall function standard impact png images inflation factor example vif covariates changes",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/02/causality-and-experiments.html",
+        "url": "http://dartbrains.org/features/notebooks/10_GLM_Single_Subject_Model.html",
         "teaser":null},{
-        "title": "Expressions",
+        "title": "Group Analysis",
         
-        "excerpt":
-            "3.1 Expressions Programming languages are much simpler than human languages. Nonetheless, there are some rules of grammar to learn in any language, and that is where we will begin. In this text, we will use the Python programming language. Learning the grammar rules is essential, and the same rules used in the most basic programs are also central to more sophisticated programs. Programs are made up of expressions, which describe to the computer how to combine pieces of data. For example, a multiplication expression consists of a * symbol between two numerical expressions. Expressions, such as 3 * 4, are...",
+        "excerpt": "group test data beta level our t bmatrix s mean across contrast different model sample participants lets hair begin end analysis using participant independent subject length run need between regression samples simulation os linear interested e hypothesis path brain not population voxel within second effects subjects parameter n intercept quad response responses condition models might datadir join sub create tests single png design distribution example us estimates average y load just quadratic modeling import into also approach betas x regions results simply contrasts tr images noise signal here mixed same another variance fixed groups parameters g used mathcal try code",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/03/1/Expressions.html",
+        "url": "http://dartbrains.org/features/notebooks/11_Group_Analysis.html",
         "teaser":null},{
-        "title": "Names",
+        "title": "Thresholding Group Analyses",
         
-        "excerpt":
-            "3.2 Names Names are given to values in Python using an assignment statement. In an assignment, a name is followed by =, which is followed by any expression. The value of the expression to the right of = is assigned to the name. Once a name has a value assigned to it, the value will be substituted for that name in future expressions. a = 10 b = 20 a + b 30 A previously assigned name can be used in the expression to the right of =. quarter = 1/4 half = 2 * quarter half 0.5 However, only...",
+        "excerpt": "false threshold fdr tests our voxels rate positives fwer p positive using signal any simulation correction multiple approach cluster e www simulations data png com bonferroni across need lets spatial thresholding alpha test q hypothesis different true control run extent fsl analyses fmri brain testing specific error voxel approaches overall controlling calculate values well effect power discovery images overview watch v practice distribution t value results only means seems also initial not particular requires h null between participants reject probability correcting proportion significant approximately contrast youtube thresholds okay independent family another such image much matthew brett github ac uk org",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/03/2/Names.html",
+        "url": "http://dartbrains.org/features/notebooks/12_Thresholding_Group_Analyses.html",
         "teaser":null},{
-        "title": "Call Expressions",
+        "title": "Connectivity",
         
-        "excerpt":
-            "Call expressions invoke functions, which are named operations. The name of the function appears first, followed by expressions in parentheses. abs(-12) 12 round(5 - 1.3) 4 max(2, 2 + 3, 4) 5 In this last example, the max function is called on three arguments: 2, 5, and 4. The value of each expression within parentheses is passed to the function, and the function returns the final value of the full call expression. The max function can take any number of arguments and returns the maximum. A few functions are available by default, such as abs and round, but most functions...",
+        "excerpt": "connectivity analysis regions brain www components our com data functional using region different between watch v s graph calculate lets matrix e connected youtube need seed roi relationship model course set vmpfc also degree ica centrality based not png causal typically here fmri used method x values images called voxels similar plot signal g nodes independent into pca node graphs models where type modeling variance analyses task temporal mediation example influence principles t multivariate decomposition theory principal correlation whole subject mask regression covariates article procedure practice overall network level group motor video requires sem assumes spatial running related activity however",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/03/3/Calls.html",
+        "url": "http://dartbrains.org/features/notebooks/13_Connectivity.html",
         "teaser":null},{
-        "title": "Introduction to Tables",
+        "title": "Multivariate Prediction",
         
-        "excerpt":
-            "We can now apply Python to analyze data. We will work with data stored in Table structures. Tables are a fundamental way of representing data sets. A table can be viewed in two ways: a sequence of named columns that each describe a single attribute of all entries in a data set, or a sequence of rows that each contain all information about a single individual in a data set. We will study tables in great detail in the next several chapters. For now, we will just introduce a few methods without going into technical details. The table cones has...",
+        "excerpt": "model data using our cross validation training com left feature brain right class selection www regularization approach here features learn also l prediction voxels text outcome learning test mvpa org subject lets single across different need train into accuracy k lasso multivariate regression might e classification well scikit youtube motor method variables balanced testing univariate beta problem algorithms not analysis machine should papers pdf part watch v note labels vector parcellations overfitting folds voxel b level carefully correct cdot patterns predict g load used independent variable models called include step very example same images cortex only best fit lead important",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/03/4/Introduction_to_Tables.html",
+        "url": "http://dartbrains.org/features/notebooks/14_Multivariate_Prediction.html",
         "teaser":null},{
-        "title": "Programming in Python",
+        "title": "Representational Similarity Analysis",
         
-        "excerpt":
-            "Programming in Python   Programming can dramatically improve our ability to collect and analyze information about the world, which in turn can lead to discoveries through the kind of careful reasoning demonstrated in the previous section. In data science, the purpose of writing a program is to instruct a computer to carry out the steps of an analysis. Computers cannot study the world on their own. People must describe precisely what steps the computer should take in order to collect and analyze data, and those steps are expressed through programs.   ",
+        "excerpt": "similarity rsa distance using across org brain images test www roi space between different motor image jpg left representational lets et al articles participants values com example e matrix calculate visual our data matrices neuro full single region might feature method structure frontiersin utmsource fwebutmmedium nblogutmcampaign ecoyatop research kriegeskorte pattern correlation cortex conditions technique map tutorial t beta voxel within similar en sample subject p run auditory allows g computing pairwise stimuli wikipedia wiki interested regions inferences permutation s type approach spatial adjacency plot also rois analysis specific extract patterns yield us computed hypotheses any because examine value distribution same",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/03/programming-in-python.html",
+        "url": "http://dartbrains.org/features/notebooks/15_RSA.html",
         "teaser":null},{
-        "title": "Numbers",
+        "title": "Introduction to Python",
         
-        "excerpt":
-            "Computers are designed to perform numerical calculations, but there are some important details about working with numbers that every programmer working with quantitative data should know. Python (and most other programming languages) distinguishes between two different types of numbers: Integers are called int values in the Python language. They can only represent whole numbers (negative, zero, or positive) that don’t have a fractional component Real numbers are called float values (or floating point values) in the Python language. They can represent whole or fractional numbers but have some limitations. The type of a number is evident from the way it...",
+        "excerpt": "python list y x cell jupyter true org data false function lists cells code module import also new using www com package value containers set dartmouth github markdown enter text here type condition name values element elements tuples syntax pbs psyc types specify hit esc insert into called return end loop sequence result notebook install anaconda modules tutorial while note execute not its keys b string operators e g equal less statements any nbviewer blob master classes fundamentals ipynb l speed learn different starting start language languages useful specific notebooks want toolbar after shift say hitting add conda division functions",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/04/1/Numbers.html",
+        "url": "http://dartbrains.org/features/notebooks/1_Introduction_to_Programming.html",
         "teaser":null},{
-        "title": "Strings",
+        "title": "Introduction to Dataframes and Plotting",
         
-        "excerpt":
-            "Much of the world’s data is text, and a piece of text represented in a computer is called a string. A string can represent a word, a sentence, or even the contents of every book in a library. Since text can include numbers (like this: 5) or truth values (True), a string can also describe those things. The meaning of an expression depends both upon its structure and the types of values that are being combined. So, for instance, adding two strings together produces another string. This expression is still an addition expression, but it is combining a different type...",
+        "excerpt": "data dataframe column method plotting pandas using here matplotlib values index salary create plots new missing axis plot seaborn also indexing into variables useful set want different rows names python professor library github used null any group rank dataframes learn load frame standard methods notebooks jakevdp pythondatasciencehandbook org basic name note pd csv ways read function check another output row instance lets true key department blob master ipynb scatterplot x bar visualization professors exercise datasets format introduction notice text not try allow readcsv easy often only columns left per based original boolean value count dataset means sum where get following",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/04/2/Strings.html",
+        "url": "http://dartbrains.org/features/notebooks/2_Introduction_to_Dataframes_Plotting.html",
         "teaser":null},{
-        "title": "Comparisons",
+        "title": "Introduction to Neuroimaging Data",
         
-        "excerpt":
-            "Boolean values most often arise from comparison operators. Python includes a variety of operators that compare values. For example, 3 is larger than 1 + 1. 3 &gt; 1 + 1 True The value True indicates that the comparison is valid; Python has confirmed this simple fact about the relationship between 3 and 1+1. The full set of common comparison operators are listed below. Comparison Operator True example False Example Less than &lt; 2 &lt; 3 2 &lt; 2 Greater than &gt; 3&gt;2 3&gt;3 Less than or equal &lt;= 2 &lt;= 2 3 &lt;= 2 Greater or equal &gt;= 3...",
+        "excerpt": "bmatrix quad begin end m data matrix braindata image x j nibabel y z affine k theta cos sin phi d nilearn voxel space also using images transformations rotation here coordinates coordinate function b c plot lets org get html instances python dimensions io our load stored transformation f wikipedia en p q r example radians around axis multiplication applying plotting neuroimaging nifti dataset information documentation array functions try different represented output linear rotations zooms gamma matrices class manipulate written header access file nipy easy where anatomical object either tutorials add feel transform github scanner us input translations second third",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/04/3/Comparison.html",
+        "url": "http://dartbrains.org/features/notebooks/3_Introduction_to_NeuroimagingData_in_Python.html",
         "teaser":null},{
-        "title": "Data Types",
+        "title": "Signal Processing Basics",
         
-        "excerpt":
-            "Every value has a type, and the built-in type function returns the type of the result of any expression.   One type we have encountered already is a built-in function. Python indicates that the type is a builtin_function_or_method; the distinction between a function and a method is not important at this stage.   type(abs)   builtin_function_or_method   This chapter will explore many useful types of data.  ",
+        "excerpt": "frequency signal domain fourier sine frequencies kernel waves lets transform convolution product filter dot different filters data using function com html our notice x series also lecturelets mikexcohen sampling n only example signals video half wave complex information fft e create shape np here try pass practice hz need vector between vectors overview noise response oscillations f amplitude plot low zero inverse high second sum depth happens point gain taking matrix multiplication oscillating phase observe convolutiontime discrete k bandpass neural analysis watch measure typically described entire simply dotproduct limits works same length add gaussian forward variable value spikes convolve boxcar",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/04/Types.html",
+        "url": "http://dartbrains.org/features/notebooks/5_Signal_Processing.html",
         "teaser":null},{
-        "title": "Citations and bibliographies",
+        "title": "Preprocessing with Nipype Quickstart",
         
-        "excerpt":
-            "Including citations in your book Because jupyter-book is built on top of Jekyll, we can use the excellent jekyll-scholar book to include citations and a bibliography with your book. Note that this only works if you’re building your book HTML locally and hosting the HTML files online somewhere. This can still use GitHub pages, but not the auto-generation of a cite from markdown files feature of GitHub pages. This is because GitHub pages doesn’t include the jekyll-scholar plugin. How to use citations Including citations with your markdown files or notebooks is done in the following way. Modify the file in...",
+        "excerpt": "nipype lets node workflow list interface output run here code interfaces youre lost file nodes multiple create input files mapnode smoothing want com fsl check exercise inputs b mm function graph outputs results github images png external try bet plot using isotropicsmooth connect our infile maskfile smoothnode iterables same only written quick introduction readthedocs io en latest taken very tutorial reproducible imaging import core pieces python mandatory sub ses analysis execute least field take execution full basedir masknode structure created not filetree does simple say again new need feed imagine example accept c x quickstart michael notter provide concepts comprehensive",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/citations.html",
+        "url": "http://dartbrains.org/features/notebooks/6_Nipype_Quickstart.html",
         "teaser":null},{
-        "title": "Features and customization",
+        "title": "Building Preprocessing Workflows with Nipype",
         
-        "excerpt":
-            "Features   This is a short demonstration textbook to show the general layout / style of textbooks built with Jupyter and Jekyll.   To begin, click on one of the chapter sections in the sidebar to the left. Alternatively, click on the “next” button below in order to read further.   The first sections demonstrate some simple functionality of Jupyter Books, while the final chapters contain a subset of content from the Foundations in Data Science textbook.  ",
+        "excerpt": "workflow node lets need functional mask images run want output image data motion specify probability create step just matter e fsls preprocessing nodes coregistration connect analysis nipype subjects following note also input above gray function list file its only correction detection apply created using threshold anatomical again map datasink hands might not right done dummy scans fsl segmentation later next parameter flirt susan section nice interfaces relevant handed our gunzip slice artifact smoothing binary keep infile directly rest outliers interface parameters used should maps bbr subject files still value well actually folder ipynb additional always investigate taken nipypetutorial before download",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/features.html",
+        "url": "http://dartbrains.org/features/notebooks/7_Nipype_Preprocessing.html",
         "teaser":null},{
-        "title": "Hiding code blocks or entire cells",
+        "title": "Introduction to Automated Preprocessing with fmriprep",
         
-        "excerpt":
-            "Hiding code blocks or entire cells It’s possible to control which cells show up in your final book pages. For example, you may want to display a complex visualization to illustrate an idea, but don’t want the page to be cluttered with a large code cell that generated the viz. In other cases, you may want to remove a code cell entirely. This page explains how to accomplish this with Jupyter Book. Hiding code cells and displaying a button to show them Jupyter Books uses notebook cell tags to determine which code cells to hide. If you add the tag...",
+        "excerpt": "fmriprep bids preprocessing data run using software images png files dataset not need easily pipeline steps io processing parameters best functional brain take file its com also check apps containers singularity discovery script tool pipelines create type want very fmri based state output etc neuroimaging following quality specification order system versus www scans e g pybids t tutorial our command docker single participants cluster pbs line automated labs nipype readthedocs provide useful provides any addition understand developers edu easy called imaging designed scan minimal user normalization extraction segmentation including motion field tools packages subject information image example paper format within",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/hiding.html",
+        "url": "http://dartbrains.org/features/notebooks/8_fmriprep_tutorial.html",
         "teaser":null},{
-        "title": "Connecting content with JupyterHub and Binder",
+        "title": "Introduction to the General Linear Model",
         
-        "excerpt":
-            "Connecting content with JupyterHub and Binder Because Jupyter Books are built with Jupyter Notebooks, you can connect your online book with a Jupyter kernel running in the cloud. This lets readers quickly interact with your content in a traditional coding interface using either JupyterHub or BinderHub. This page describes a few ways to accomplish this. Creating interact buttons for BinderHub BinderHub can be used to build the environment needed to run a repository, and provides a link that lets others interact with that repository. If your Jupyter Book is hosted online on GitHub, you can automatically insert buttons that link...",
+        "excerpt": "our model faces beta linear www hat watch com y data design v might efficiency regression youtube sigma estimate standard condition objects glm also lets voxel signal where contrast error single face experimental simulated visual not epsilon cdot estimator yi general parameters fmri processing response different noise parameter brain need simulation level n timeseries between frac matrix mean regressors using least object simply length much x just zero plot e actually errors regressor interval estimates statistical exercise inferences simple videos contrasts plfxaopiovrghnchrxiqagecsudwmxmindex analysis series however because well region involved trials duration any regions properties example method specific amplitude function add",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/interact.html",
+        "url": "http://dartbrains.org/features/notebooks/9_GLM.html",
         "teaser":null},{
-        "title": "Markdown files",
+        "title": "Download Localizer Data",
         
-        "excerpt":
-            "Creating book content The two kinds of files that contain course content are: Jupyter Notebooks Markdown files Each are contained in the content/ folder and referenced from _data/toc.yml. If the file is markdown, it will be copied over with front-matter YAML added so that Jekyll can parse it Sidebars with Jekyll You may notice that there’s a sidebar to the right (if your screen is wide enough). These are automatically generated from the headers that are present in your page. The sidebar will automatically capture all 2nd and 3rd level section headers. The best way to designate these headers is...",
+        "excerpt": "data download lets f contains localizer create file load task also dataset subjects need list using get functional looks correctly nibabel dimension tutorials pinel several different types visual e modality auditory trials total read specific available only subject s function datasets choose preprocessed feel free datatype want images preprocessing dont set datadir ok structural metadata description braindata fix shape dimensions extra numpy array correct new instance imaging open designed probe basic cognitive processes such perception finger tapping language math tasks cued reading text screen hearing instructions randomized across conditions optimized maximize efficiency rapid event related design minute scanning session paper",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/markdown.html",
+        "url": "http://dartbrains.org/features/notebooks/Download_Data.html",
         "teaser":null},{
-        "title": "Jupyter notebooks",
+        "title": "Glossary of Python Functions",
         
-        "excerpt":
-            "Content with notebooks You can also create content with Jupyter Notebooks. The content for the current page is contained in a Jupyter Notebook in the notebooks/ folder of the repository. This means that we can include code blocks and their outputs, and export them to Jekyll markdown. You can find the original notebook for this page at this address Markdown + notebooks As it is markdown, you can embed images, HTML, etc into your posts! You an also $add_{math}$ and or But make sure you \\$Escape \\$your \\$dollar signs \\$you want to keep! Code blocks and image outputs Textbooks with...",
+        "excerpt": "html org api data docs numpy io scipy reference braindata readthedocs en nltools matplotlib pandas neurolearn latest generated python doc np functions library return dataframe stable axes plot nibabel designmatrix stats pydata image matrix asgen adjacency array nilearn function type set seaborn interactive path using object pd instance magics ipython import mean signal plotting pyplot plt networkx github list magic values file axis columns compute shape design distance types x os dimensional y ax threshold across any not returns std series random create learn modules nipy nifti also used kernel element run sequence tuple string standard given calculate fft format",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/notebooks.html",
-        "teaser":null},{
-        "title": "Searching your book",
-        
-        "excerpt":
-            "Searching your book It’s possible to enable search in your book so that users can find the content they’re looking for. This uses a nifty package called lunr.js. To add search to your book, simple add the following entry to _data/toc.yml. - title: Search (whatever title you like) search: true The result will be a link in your Table of Contents that directs users to a search page. For example, click the Search link in the TOC of this demo book. Customizing how much text is stored in search The Jupyter-Book search works by storing excerpts of text from each...",
-        "categories": [],
-        "tags": [],
-        "url": "https://jupyter.org/jupyter-book/features/search.html",
-        "teaser":null},{
-        "title": "Getting started",
-        
-        "excerpt":
-            "The Jupyter Book Guide This is a guide for creating your own book using Jupyter Notebooks and Jekyll. Book content is written in markdown and Jupyter Notebooks, and jupyter-book converts these into a book fit for hosting on the web. Install the command-line interface First off, make sure you have the CLI installed so that you can work with Jupyter Book. The Jupyter-Book CLI allows you to create, build, upgrade, and otherwise control your Jupyter Book. You can install it via pip with the following command: pip install jupyter-book A quick tour of a Jupyter Book Jupyter-Book comes with a...",
-        "categories": [],
-        "tags": [],
-        "url": "https://jupyter.org/jupyter-book/guide/01_overview.html",
-        "teaser":null},{
-        "title": "Create your book",
-        
-        "excerpt":
-            "Create your Jupyter Book This page covers how to create a Jupyter Book with your own content. You’ve got three primary ways to create your Jupyter Book. by starting with a minimal book Running the following command will create a new Jupyter Book with a few content pages and a Table of Contents to get you started: jupyter-book create mybookname This will create a new book using your content in mybookname/. You’ll then need to Add your content to mybookname/content/ Modify mybookname/_data/toc.yml to match your content Modify mybookname/_config.yml to the configuration you’d like Note that if you choose to create...",
-        "categories": [],
-        "tags": [],
-        "url": "https://jupyter.org/jupyter-book/guide/02_create.html",
-        "teaser":null},{
-        "title": "Build and publish your book",
-        
-        "excerpt":
-            "Building and publishing your book Once you’ve added content and configured your book, it’s time to build the raw material that Jekyll will use to turn your book into a website. We’ll also cover how to turn this book into the HTML for a website that can be served online. Build the book’s markdown Now that you’ve got the files installed content is in the book, you can build your book. Build your book by running the following command: jupyter-book build mybookname/ This will: Use the links specified in the _data/toc.yml file (pointing to files in /content/) and do the...",
-        "categories": [],
-        "tags": [],
-        "url": "https://jupyter.org/jupyter-book/guide/03_build.html",
-        "teaser":null},{
-        "title": "FAQ",
-        
-        "excerpt":
-            "The following are some common issues and questions that have arisen when building your textbook with Jekyll. How can I update my book? Sometimes Jupyter Book will get updates that you want to incorporate into a book you’ve already built. The easiest way to do this is to use the Command-Line Interface to upgrade your book. To upgrade a pre-existing Jupyter Book, run the following command: jupyter-book upgrade path/to/mybook This will do the following: Generate a fresh Jupyter Book in mybook_UPGRADED using the content files in your current book. If this succeeds, copy over the contents of mybook_UPGRADED into your...",
-        "categories": [],
-        "tags": [],
-        "url": "https://jupyter.org/jupyter-book/guide/04_faq.html",
-        "teaser":null},{
-        "title": "How-to and advanced topics",
-        
-        "excerpt":
-            "This page contains more advanced and complete information about the jupyter-book repository. See the sections below. Hide cells or cell outputs in the built site Sometimes you want to use code to generate visualizations or prepare data, but you don’t want users to see it in your built book. To prevent code cells from showing up in your built site, you can use the following two configuration options in your _config.yml file. To remove entire code cells from your book, use the following configuration: hide_cell_text : \"YOUR TEXT\" Any code cell with the value of hide_cell_text (above it is YOUR...",
-        "categories": [],
-        "tags": [],
-        "url": "https://jupyter.org/jupyter-book/guide/05_advanced.html",
+        "url": "http://dartbrains.org/features/notebooks/Glossary.html",
         "teaser":null},{
         "title": "Home",
         
-        "excerpt":
-            "Books with Jupyter and Jekyll Jupyter Books lets you build an online book using a collection of Jupyter Notebooks and Markdown files. Its output is similar to the excellent Bookdown tool, and adds extra functionality for people running a Jupyter stack. For an example of a book built with Jupyter Books, see the textbook for Data 100 at UC Berkeley (or this website!) Here are a few features of Jupyter Books A Command-Line Interface (CLI) to quickly create, build, and upgrade books. Write book content in markdown and Jupyter Notebooks Convert these into Jekyll pages that can be hosted for...",
+        "excerpt": "data introduce fmri neuroimaging using dartmouth introduction analysis brain course imaging scanner students techniques edu understand works provides vivo humans functional magnetic resonance goal class generates psychological states probed processed analyzed expected collect analyze opensource python programming language several packages such numpy matplotlib nibabel nilearn fmriprep nltools useful working labs completing thesis interested pursuing graduate training fields related cognitive neuroscience goals learn basics signals standard preprocessing general linear model advanced acknowledgements dartbrains created luke chang cosanlab com supported nsf career award our jupyterhub server jupyter built maintained research computing rc staff special thanks susan schwarz william hamblen christian darabos john",
         "categories": [],
         "tags": [],
-        "url": "https://jupyter.org/jupyter-book/intro.html",
+        "url": "http://dartbrains.org/intro.html",
         "teaser":null},]
 </script>
-              <nav class="c-page__nav">
+            </div>
+            <div class="c-textbook__footer" id="textbook_footer">
+              
+<nav class="c-page__nav">
   
 
   
 </nav>
 
+              <footer>
+  <p class="footer">This page was created by <a href="http://www.lukejchang.com/">Luke Chang<a> using <a href="https://jupyterbook.org/">Jupyter Book Jupyter Book</a></p>
+</footer>
+
             </div>
-          </div>
+
         </div>
       </main>
     </div>
-
   </body>
 </html>

@@ -1,0 +1,623 @@
+---
+redirect_from:
+  - "/features/notebooks/8-fmriprep-tutorial"
+interact_link: content/features/notebooks/8_fmriprep_tutorial.ipynb
+kernel_name: python3
+kernel_path: content/features/notebooks
+has_widgets: false
+title: |-
+  Introduction to Automated Preprocessing with fmriprep
+pagenum: 17
+prev_page:
+  url: /features/notebooks/7_Nipype_Preprocessing.html
+next_page:
+  url: /features/notebooks/9_GLM.html
+suffix: .ipynb
+search: fmriprep bids preprocessing data run using software images png files dataset not need easily pipeline steps io processing parameters best functional brain take file its com also check apps containers singularity discovery script tool pipelines create type want very fmri based state output etc neuroimaging following quality specification order system versus www scans e g pybids t tutorial our command docker single participants cluster pbs line automated labs nipype readthedocs provide useful provides any addition understand developers edu easy called imaging designed scan minimal user normalization extraction segmentation including motion field tools packages subject information image example paper format within
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Introduction to Automated Preprocessing with fmriprep</div>
+</div>
+    
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Automated-Preprocessing-with-fMRIPrep">Automated Preprocessing with fMRIPrep<a class="anchor-link" href="#Automated-Preprocessing-with-fMRIPrep"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>Written by Sasha Brietzke &amp; Luke Chang</em></p>
+<p>In labs <a href="6_Nipype_Quickstart.ipynb">6</a> &amp; <a href="7_Nipype_Preprocessing.ipynb">7</a>, we learned about how <a href="https://nipype.readthedocs.io/en/latest/">nipype</a> can provide a useful tool to build preprocessing pipelines in python. This provides a completely flexible way to create custom pipelines using any type of software. However, as you already may have noticed, there is a fairly steep learning curve to mastering these concepts and software. In addition, this requires thinking in depth about how you want to setup your processing pipeline and making detailed choices about the parameters for each step. In general, we think these concepts are very important to understand when performing fMRI data analysis, especially when you have messy data that might require adjusting the preprocessing steps or parameters. In practice, most researchers typically use similar preprocessing steps and do not need to tweak the pipelines very often. In addition, many researchers do not fully understand how each preprocessing step will impact their results and would prefer if somebody else picked suitable defaults based on current best practices in the literature.</p>
+<p>To meet this need, a team of developers from the <a href="http://reproducibility.stanford.edu/">Center for Reproducible Research</a> led by Russ Poldrack and Chris Gorgolewski created an easy to use automated preprocessing pipeline called <a href="https://fmriprep.readthedocs.io/en/stable/">fmriprep</a>.</p>
+<p>fmriprep is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that is designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols and that requires minimal user input, while providing easily interpretable and comprehensive error and output reporting. It performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that can be easily submitted to a variety of group level analyses, including task-based or resting-state fMRI, graph theory measures, surface or volume-based statistics, etc.</p>
+<p>Note, fmriprep performs <em>minimal preprocessing</em>. Here we define <em>minimal preprocessing</em> as motion correction, field unwarping, normalization, bias field correction, and brain extraction. See the workflows_ for more details.</p>
+<p>The fmriprep pipeline uses a combination of tools from well-known software packages, including FSL<em>, ANTs</em>, FreeSurfer<em> and AFNI</em>. This pipeline was designed to provide the best software implementation for each state of preprocessing, and will be updated as newer and better neuroimaging software become available.</p>
+<p>This tool allows you to easily do the following:</p>
+<ul>
+<li>Take fMRI data from raw to fully preprocessed form.</li>
+<li>Implement tools from different software packages.</li>
+<li>Achieve optimal data processing quality by using the best tools available.</li>
+<li>Generate preprocessing quality reports, with which the user can easily identify outliers.</li>
+<li>Receive verbose output concerning the stage of preprocessing for each subject, including meaningful errors.</li>
+<li>Automate and parallelize processing steps, which provides a significant speed-up from typical linear, manual processing.</li>
+<li>More information and documentation can be found at <a href="https://fmriprep.readthedocs.io/">https://fmriprep.readthedocs.io/</a></li>
+</ul>
+<p><img src="../../images/fmriprep/fmriprep.png" alt="image.png"></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="BIDS:-Brain-Imaging-Dataset-Specification">BIDS: Brain Imaging Dataset Specification<a class="anchor-link" href="#BIDS:-Brain-Imaging-Dataset-Specification"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to make an automated preprocessing system, it is necessary to have some standards in how the data is organized and named. Historically, this has been a nightmare, where each lab uses their own idiosyncratic conventions.</p>
+<p>Recently, there has been increasing momentum in the neuroimaging community to create a consisten file organization system. This specification is called <strong>BIDS</strong> for <a href="http://bids.neuroimaging.io/">Brain Imaging Dataset Specification</a>.</p>
+<p>As you can imagine, individuals have idiosyncratic ways of maintaining files. Think about how you keep track of your files on your personal laptop (versus how your friend does). This may be okay in the personal realm, but in science, it's best if anyone—including yourself 6 months from now—can follow your work and know <em>which</em> files mean <em>what</em> by their titles.</p>
+<p>Here's an example of non-Bids versus BIDS dataset found in <a href="https://www.nature.com/articles/sdata201644">this paper</a>:</p>
+<p><img src="../../images/fmriprep/file_tree.jpg" alt="file_tree"></p>
+<p>Few major differences between above datasets:</p>
+<ol>
+<li>In BIDS, files are in nifti format (not dicoms).</li>
+<li>In BIDS, scans are broken up into separate folders by type of scan(functional versus anatomical versus diffusion weighted) for each subject.</li>
+<li>In BIDS, JSON files are included that contain descriptive information about the scans (e.g., acquisition parameters)</li>
+</ol>
+<p>Not only can using this specification be useful within labs to have a set way of structuring data, but it can also be useful when collaborating across labs, developing and utilizing software, and publishing data.</p>
+<p>In addition, because this is a consistent format, it is possible to have a python package to make it easy to query a dataset. We recommend using <a href="https://github.com/bids-standard/pybids">pybids</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p>There are a number of ways to <a href="https://neurostars.org/t/convert-data-to-bids-format/720">convert</a> from dicom to BIDS. Dataset for the tutorial has already been converted on OpenNeuro, so let's check out our BIDS dataset.</p>
+<p>You may need to install <a href="">pybids</a> to query the BIDS datasets using following command <code>!pip install pybids</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bids</span> <span class="k">import</span> <span class="n">BIDSLayout</span><span class="p">,</span> <span class="n">BIDSValidator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Failed to import duecredit due to No module named &#39;duecredit&#39;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set path for data</span>
+<span class="n">your_netid</span> <span class="o">=</span> <span class="s1">&#39;f00275v&#39;</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;/dartfs/rc/lab/P/Psych60/data/ds000114&#39;</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;/dartfs/rc/lab/P/Psych60/students_output/</span><span class="si">%s</span><span class="s1">/7_nipype_preprocessing&#39;</span> <span class="o">%</span> <span class="n">your_netid</span>
+
+<span class="c1"># root_dir = &#39;/dartfs-hpc/rc/home/3/f002tx3/&#39;  # change root path to you own (change netID to your own)</span>
+<span class="c1"># data_path = os.path.join(root_dir, &#39;Psych60&#39;, &#39;data&#39;, &#39;ds000114&#39;) </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can also validate a dataset to check if its BIDS compliant. For simplicity, I'll just check if all Finger Foot Lips files are BIDS compliant.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validator</span> <span class="o">=</span> <span class="n">BIDSValidator</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;fingerfootlips_bold.nii.gz&quot;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span> <span class="n">file</span><span class="p">,</span> <span class="n">validator</span><span class="o">.</span><span class="n">is_bids</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="mi">51</span><span class="p">:],</span> <span class="n">file</span><span class="p">))</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>sub-04_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-04_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-02_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-02_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-03_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-03_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-08_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-08_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-01_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-01_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-10_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-10_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-06_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-06_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-07_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-07_ses-test_task-fingerfootlips_bold.nii.gz False
+sub-09_ses-retest_task-fingerfootlips_bold.nii.gz False
+sub-09_ses-test_task-fingerfootlips_bold.nii.gz False
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also create a BIDS layout, that helps us to quickly pull all files of a like "type".</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a BIDSLayout of your study</span>
+<span class="n">my_study</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">derivatives</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">my_study</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>BIDS Layout: ...rc/lab/P/Psych60/data/ds000114 | Subjects: 9 | Sessions: 18 | Runs: 0</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can take a closer look at one of our BID's file within the study and glean some information. Looks like file #80 corresponds to subject 1's BOLD data for the "Finger Foot Lips" run of the retest session.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="n">my_study</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">80</span><span class="p">]</span>
+<span class="n">file</span><span class="o">.</span><span class="n">entities</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;subject&#39;: &#39;01&#39;,
+ &#39;session&#39;: &#39;test&#39;,
+ &#39;task&#39;: &#39;covertverbgeneration&#39;,
+ &#39;suffix&#39;: &#39;bold&#39;,
+ &#39;datatype&#39;: &#39;func&#39;}</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To that end, we can grab all of the "Finger Foot Lips" runs in the retest session by using the "get" method, which stores file extensions in a list</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">my_study</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s1">&#39;fingerfootlips&#39;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="s1">&#39;retest&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-01/ses-retest/func/sub-01_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-02/ses-retest/func/sub-02_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-03/ses-retest/func/sub-03_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-04/ses-retest/func/sub-04_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-06/ses-retest/func/sub-06_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-07/ses-retest/func/sub-07_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-08/ses-retest/func/sub-08_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-09/ses-retest/func/sub-09_ses-retest_task-fingerfootlips_bold.nii.gz&#39;,
+ &#39;/dartfs/rc/lab/P/Psych60/data/ds000114/sub-10/ses-retest/func/sub-10_ses-retest_task-fingerfootlips_bold.nii.gz&#39;]</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction-to-BIDS-Apps,-Containers,-and-HPCs">Introduction to BIDS Apps, Containers, and HPCs<a class="anchor-link" href="#Introduction-to-BIDS-Apps,-Containers,-and-HPCs"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once you have your data converted to BIDS, there are a number of handy <a href="http://bids-apps.neuroimaging.io/apps/">BIDS Apps</a> that you can use. These BIDS Apps all leverage package software called <em>containers</em>.</p>
+<p>Containers, like <a href="https://www.docker.com/resources/what-container">Docker</a> and <a href="https://singularity.lbl.gov/about">Singularity</a>, can be thought of as metaphorical containers for software that can be easily moved across destinations. Much like Blue Apron provides all the ingredients needed to make a recipe, containers warehouse all of the software needed to implement an analysis in a single image. This is very handy as a research tool because it allows <strong>portability</strong>, an <strong>easy way to share</strong>, and most importantly, <strong>reproducibility</strong>.</p>
+<p>Check out this <a href="https://github.com/Summer-MIND/mind_2018/blob/master/slides/docker.pdf">tutorial on Docker</a> and this <a href="http://mvdoc.me/2017/using-singularity-to-make-analyses-reproducible.html">tutorial on Singularity</a> to understand how to build and run these images in greater depth. We won't need to prepare an image for this class—we will just run the computing environment provided by fmriprep.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Quick-primer-on-High-Performance-Computing">Quick primer on High Performance Computing<a class="anchor-link" href="#Quick-primer-on-High-Performance-Computing"> </a></h3><p>We could run fmriprep on our computer, but this could take a long time if we have a lot of participants. Because we have a limited amount of computatational resources on our laptops (e.g., cpus, and memory), we would have to run each participant sequentially. For example, if we had 50 participants, it would take 50 times longer to run all participants than a single one.</p>
+<p>Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been isntalled in racks. Below is a picture of what Dartmouth's <a href="http://techdoc.dartmouth.edu/discovery/">Discovery cluster</a> looks like:</p>
+<p><img src="../../images/fmriprep/hpc.png" alt="discovery"></p>
+<p>A cluster is simply a collection of nodes. A node can be thought of as an individual computer. Each node contains processors, which encompass multiple cores. Discovery contains 3000+ cores, which is certainly a lot more than your laptop!</p>
+<p>In order to submit a job, you can create a Portable Batch System (PBS) script that sets up the parameters (e.g., how much time you want your script to run, specifying directory to run, etc) and submits your job to a queue.</p>
+<p><strong>NOTE</strong>: You will need to request access to the <em>discovery</em> system in order to run this tutorial using this <a href="https://caligari.dartmouth.edu/accounts/index.php">link</a>. For the purposes of this class, it will not be necessary to use the cluster outside of the jupyterhub environment.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="fmriprep">fmriprep<a class="anchor-link" href="#fmriprep"> </a></h1><p>See an example of a PBS script below used to run fMRIprep for sub-01 in the ds000114 dataset.</p>
+<p>You would want everything to be about the same, except swapping out email and directories singularity binds to.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="../../images/fmriprep/pbs_scripts.png" alt="pbs_scripts.png"></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You need to save this file as a ".pbs" script and run it on the command line using the command:</p>
+<p><code>mksub &lt;.pbs script&gt;</code></p>
+<p>You can check the status of your job using the following command:</p>
+<p><code>myjobs</code></p>
+<p>It will take several hours to run (especially if you elect to do Freesurfer recon-all), but it's just one line! Kind of amazing!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="fMRIprep-Quality-Control-Output">fMRIprep Quality Control Output<a class="anchor-link" href="#fMRIprep-Quality-Control-Output"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are many outputs of fMRIprep with various nifti files that have undergone stages of preprocessing. Here are all the files generated from one session of subject's functional data, located in the <code>derivatives</code> folder.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bids_derivs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="s1">&#39;fmriprep&#39;</span><span class="p">,</span> <span class="s1">&#39;sub-01&#39;</span><span class="p">,</span> <span class="s1">&#39;ses-test&#39;</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">)</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">bids_derivs</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;sub-01_ses-test_task-linebisection_bold_space-mni152nlin2009casym_brainmask.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-overtwordrepetition_bold_confounds.tsv&#39;,
+ &#39;sub-01_ses-test_task-fingerfootlips_bold_space-mni152nlin2009casym_brainmask.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-fingerfootlips_bold_space-fsaverage5.r.func.gii&#39;,
+ &#39;sub-01_ses-test_task-overtwordrepetition_bold_space-fsaverage5.l.func.gii&#39;,
+ &#39;sub-01_ses-test_task-overtwordrepetition_bold_space-mni152nlin2009casym_preproc.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-linebisection_bold_confounds.tsv&#39;,
+ &#39;sub-01_ses-test_task-overtwordrepetition_bold_space-fsaverage5.r.func.gii&#39;,
+ &#39;sub-01_ses-test_task-covertverbgeneration_bold_space-fsaverage5.r.func.gii&#39;,
+ &#39;sub-01_ses-test_task-overtverbgeneration_bold_space-fsaverage5.l.func.gii&#39;,
+ &#39;sub-01_ses-test_task-linebisection_bold_space-fsaverage5.r.func.gii&#39;,
+ &#39;sub-01_ses-test_task-covertverbgeneration_bold_space-mni152nlin2009casym_brainmask.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-linebisection_bold_space-fsaverage5.l.func.gii&#39;,
+ &#39;sub-01_ses-test_task-overtwordrepetition_bold_space-mni152nlin2009casym_brainmask.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-overtverbgeneration_bold_space-mni152nlin2009casym_preproc.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-linebisection_bold_space-mni152nlin2009casym_preproc.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-covertverbgeneration_bold_space-fsaverage5.l.func.gii&#39;,
+ &#39;sub-01_ses-test_task-overtverbgeneration_bold_space-mni152nlin2009casym_brainmask.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-covertverbgeneration_bold_confounds.tsv&#39;,
+ &#39;sub-01_ses-test_task-overtverbgeneration_bold_space-fsaverage5.r.func.gii&#39;,
+ &#39;sub-01_ses-test_task-fingerfootlips_bold_space-fsaverage5.l.func.gii&#39;,
+ &#39;sub-01_ses-test_task-fingerfootlips_bold_space-mni152nlin2009casym_preproc.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-overtverbgeneration_bold_confounds.tsv&#39;,
+ &#39;sub-01_ses-test_task-covertverbgeneration_bold_space-mni152nlin2009casym_preproc.nii.gz&#39;,
+ &#39;sub-01_ses-test_task-fingerfootlips_bold_confounds.tsv&#39;]</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can see a summary of the operations fmriprep performed by examining the .html files. See below: <br></p>
+<p>You can also find in <code>derivatives/fmriprep</code> folder within data directory.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="s1">&#39;fmriprep&#39;</span><span class="p">,</span> <span class="s1">&#39;sub-01.html&#39;</span><span class="p">)</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Interpreting Output</strong></p>
+<p>For every functional Run you will see the following plots:</p>
+<p><em>Anatomical Scans</em></p>
+<p>ANTS Brain Extraction:
+<img src="../../images/fmriprep/T1_normalization.png" alt="normalization"></p>
+<p>T1 Segmentation 
+<img src="../../images/fmriprep/T1_segmentation.png" alt="segmentation"></p>
+<p>T1 to MNI Registration (presented as a GIF to view overlay)</p>
+<p><em>Functional Scans</em></p>
+<p>Skull stripped EPI (notice these images are much blurrier and show some distortion compared to the T1s):
+<img src="../../images/fmriprep/epi_registration.png" alt="epi"></p>
+<p>EPI to T1 Registration (presented as a GIF to view the overlay)</p>
+<p>aCompCor Mask (Aims to mitigate head motion by regressing out CSF and white matter. You can read more about it in <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4043948/">this paper</a>: 
+<img src="../../images/fmriprep/aCompCorMask.png" alt="aCompCorMask"></p>
+<p>Carpet Plots are designed to be 1 figure that gives a snapshot of data quality of a single scan. <br></p>
+<p>X axis reflects time and Y axis reflects all the voxels in the brain (blue=cortex, orange=subcortical structures, green=cerebellum, red=white matter and CSF).</p>
+<p>You may notice head motion (framewise displacement) increases correspond to a black line reflecting signal dropout in the plot. You can read more about this in the [paper]
+(<a href="https://www.sciencedirect.com/science/article/pii/S1053811916303871?via%3Dihub">https://www.sciencedirect.com/science/article/pii/S1053811916303871?via%3Dihub</a>) introducing carpet plots.
+<img src="../../images/fmriprep/head_motion.png" alt="headmotion"></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Limitations-of-fmriprep">Limitations of fmriprep<a class="anchor-link" href="#Limitations-of-fmriprep"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In general, we recommend using this pipeline if you want a sensible default. Considerable thought has gone into selecting reasonable default parameters and selecting preprocessing steps based on best practices in the field (as determined by the developers). This is not necessarily the case for any of the default settings in any of the more conventional software packages (e.g., spm, fsl, afni, etc).</p>
+<p>However, there is an important tradeoff in using this tool. On the one hand, it's nice in that it is incredibly straightforward to use (one line of code!), has excellent documentation, and is actively being developed to fix bugs and improve the overall functionality. There is also a growing user base to ask questions.  <a href="https://neurostars.org/">Neurostars</a> is an excellent form to post questions and learn from others. On the other hand, fmriprep, is unfortunately in its current state not easily customizable. If you disagree with the developers about the order or specific preprocessing steps, it is very difficult to modify. Future versions will hopefully be more modular and easier to make custom pipelines.  If you need this type of customizability we strongly recommend using nipype over fmriprep.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
