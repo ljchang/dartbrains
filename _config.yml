@@ -23,7 +23,7 @@ description: >-
   This is a jupyter-book developed for a Dartmouth undergraduate course on
   Principles of fMRI Data Analysis (Psych60).
 
-baseurl: /  # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
+baseurl: ""  # the subpath of your site, e.g. /blog. If there is no subpath for your site, use an empty string ""
 url: http://dartbrains.org     # the base hostname & protocol for your site, e.g. http://example.com
 
 
