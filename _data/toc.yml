@@ -22,118 +22,123 @@
 # See the links below for an example.
 
 # Top-level page
+# - search: true
+
 - title: Home
   url: /intro
   not_numbered: true
 
-- title: Search
-  search: true
+- url: /features/markdown/Contributing
+  not_numbered: true
 
 - title: GitHub repository
   url: https://github.com/ljchang/dartbrains
   external: true
   not_numbered: true
 
-# Divider for meta-pages and content page
 - divider: true
 
-# Add a header and sample content section
 - header: Course Overview
 
-# A chapter w/ a collection of sections beneath it
 - title: Instructors
   url: /features/markdown/Instructors
   not_numbered: true
-  expand_sections: true
 
 - title: Syllabus
   url: /features/markdown/Syllabus
   not_numbered: true
-  expand_sections: true
 
 - title: Schedule
   url: /features/markdown/Schedule
   not_numbered: true
-  expand_sections: true
 
-- title: Lectures
-  url: /features/markdown/Topics
+- divider: true
+- header: Computing Resources
+
+- title: Getting Started with JupyterHub
+  url: /features/notebooks/0_Introduction_to_JupyterHub
   not_numbered: true
+
+- title: Introduction to Python
+  url: /features/notebooks/1_Introduction_to_Programming
+  not_numbered: true
+
+- title: Introduction to Dataframes and Plotting
+  url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
+  not_numbered: true
+
+- title: Download Localizer Data
+  url: /features/notebooks/Download_Data
+  not_numbered: true
+
+- title: Glossary of Python Functions
+  url: /features/notebooks/Glossary
+  not_numbered: true
+
+- divider: true
+
+- header: Topics
+
+- title: Introduction to Neuroimaging
+  url: /features/markdown/Intro_to_Neuroimaging
+  not_numbered: false
+
+- title: Measurement and Signal
+  url: /features/markdown/Signal_Measurement
+  not_numbered: false
+
+- title: Introduction to Neuroimaging Data
+  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
+  not_numbered: false
+
+- title: Signal Processing Basics
+  url: /features/notebooks/5_Signal_Processing
+  not_numbered: false
+
+- title: Preprocessing
+  url: /features/markdown/Preprocessing
   expand_sections: true
   sections:
-  - title: Introduction to Neuroimaging
-    url: /features/markdown/Intro_to_Neuroimaging
-    not_numbered: false
-  - title: Measurement and Signal
-    url: /features/markdown/Signal_Measurement
-    not_numbered: false
-  - title: Preprocessing
-    url: /features/markdown/Preprocessing
-    not_numbered: false
-
-# A chapter w/ a collection of sections beneath it
-- title: Labs
-  url: /features/markdown/Labs
-  not_numbered: true
-  expand_sections: true
-  sections:
-  - title: Getting Started
-    url: /features/notebooks/0_Introduction_to_JupyterHub
-    not_numbered: false
-  - title: Introduction to Python
-    url: /features/notebooks/1_Introduction_to_Programming
-    not_numbered: false
-  - title: Introduction to Dataframes and Plotting
-    url: /features/notebooks/2_Introduction_to_Dataframes_Plotting
-    not_numbered: false
-  - title: Download Localizer Data
-    url: /features/notebooks/Download_Data
-    not_numbered: false
-  - title: Introduction to Neuroimaging Data
-    url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
-    not_numbered: false
-  - title: Signal Processing Basics
-    url: /features/notebooks/5_Signal_Processing
-    not_numbered: false
   - title: Preprocessing with Nipype Quickstart
     url: /features/notebooks/6_Nipype_Quickstart
-    not_numbered: false
+    not_numbered: true
   - title: Building Preprocessing Workflows with Nipype
     url: /features/notebooks/7_Nipype_Preprocessing
-    not_numbered: false
+    not_numbered: true
   - title: Introduction to Automated Preprocessing with fmriprep
     url: /features/notebooks/8_fmriprep_tutorial
-    not_numbered: false
-  - title: Introduction to the General Linear Model
-    url: /features/notebooks/9_GLM
-    not_numbered: false
-  - title: Modeling Single Subject Data
-    url: /features/notebooks/10_GLM_Single_Subject_Model
-    not_numbered: false
-  - title: Group Analysis
-    url: /features/notebooks/11_Group_Analysis
-    not_numbered: false
-  - title: Thresholding Group Analyses
-    url: /features/notebooks/12_Thresholding_Group_Analyses
-    not_numbered: false
-  - title: Connectivity
-    url: /features/notebooks/13_Connectivity
-    not_numbered: false
-  - title: Multivariate Prediction
-    url: /features/notebooks/14_Multivariate_Prediction
-    not_numbered: false
-  - title: Representational Similarity Analysis
-    url: /features/notebooks/15_RSA
-    not_numbered: false
+    not_numbered: true
 
-- title: Project Gallery
-  url: /features/markdown/Project_Gallery
-  not_numbered: true
+- title: Introduction to the General Linear Model
+  url: /features/notebooks/9_GLM
+  not_numbered: false
   expand_sections: true
   sections:
+  - title: Modeling Single Subject Data
+    url: /features/notebooks/10_GLM_Single_Subject_Model
+    not_numbered: true
+  - title: Group Analysis
+    url: /features/notebooks/11_Group_Analysis
+    not_numbered: true
+  - title: Thresholding Group Analyses
+    url: /features/notebooks/12_Thresholding_Group_Analyses
+    not_numbered: true
 
+- title: Connectivity
+  url: /features/notebooks/13_Connectivity
+  not_numbered: false
 
-- title: Contributing
-  url: /features/markdown/Contributing
+- title: Multivariate Prediction
+  url: /features/notebooks/14_Multivariate_Prediction
+  not_numbered: false
+
+- title: Representational Similarity Analysis
+  url: /features/notebooks/15_RSA
+  not_numbered: false
+
+- divider: true
+
+- url: /features/markdown/Project_Gallery
   not_numbered: true
   expand_sections: true
+
