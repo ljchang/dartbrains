@@ -16,3 +16,4 @@ scikit-learn
 pynv
 nipype
 fmriprep
+pybids

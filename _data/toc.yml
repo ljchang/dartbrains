@@ -68,7 +68,7 @@
   not_numbered: true
 
 - title: Download Localizer Data
-  url: /features/notebooks/Download_Data
+  url: /features/notebooks/Download_Localizer_Data
   not_numbered: true
 
 - title: Glossary of Python Functions
