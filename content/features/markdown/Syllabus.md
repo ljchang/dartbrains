@@ -19,20 +19,20 @@ Remote Zoom Meetings
 2A Tue/Thurs: 2:25-4:15
 X-Hour Wed:  4:35-5:25
 
-CLASS FORMAT
+## CLASS FORMAT
 The format of Psych60 will be slightly different than the typical in-person version of the course. All course materials will be made available online in the format of a jupyter book, https://dartbrains.org/. Lectures will primarily be delivered via publicly available pre-recorded lectures available on youtube. Each course module will have a jupyter book tutorial and an accompanying assignment that will require completing some type of programming task or analysis. Students will work within small groups throughout the term on their assignments. Scheduled classes will primarily take the form of a Q&A where solutions to the assignments will be discussed and specific topics can be discussed in more detail. There will be a single exam, in which students will have to replicate an analysis of a published study using real data. For the final project, students will analyze an existing publicly available dataset to answer a new research question. Unfortunately, we will not be able to collect a new fMRI dataset as the Dartmouth Brain Imaging Center is currently closed for this term.
 
-# ZOOM MEETINGS 
+## ZOOM MEETINGS 
 All class meetings will be held on zoom. By participating in the zoom meetings, all students will consent to the following:
-- ** (1) Consent to recording of course and group office hours**
+** (1) Consent to recording of course and group office hours**
     - a) I affirm my understanding that this course and any associated group meetings involving students and the instructor, including but not limited to scheduled and ad hoc office hours and other consultations, may be recorded within any digital platform used to offer remote instruction for this course; 
     - b) I further affirm that the instructor owns the copyright to their instructional materials, of which these recordings constitute a part, and distribution of any of these recordings in whole or in part without prior written consent of the instructor may be subject to discipline by Dartmouth up to and including expulsion;
     - c) I authorize Dartmouth and anyone acting on behalf of Dartmouth to record my participation and appearance in any medium, and to use my name, likeness, and voice in connection with such recording; and 
     - d) I authorize Dartmouth and anyone acting on behalf of Dartmouth to use, reproduce, or distribute such recording without restrictions or limitation for any educational purpose deemed appropriate by Dartmouth and anyone acting on behalf of Dartmouth.
- - ** (2) Requirement of consent to one-on-one recordings** 
+ ** (2) Requirement of consent to one-on-one recordings** 
     By enrolling in this course, I hereby affirm that I will not under any circumstance make a recording in any medium of any one-on-one meeting with the instructor without obtaining the prior written consent of all those participating, and I understand that if I violate this prohibition, I will be subject to discipline by Dartmouth up to and including expulsion, as well as any other civil or criminal penalties under applicable law.
 
-# COMMUNICATION
+## COMMUNICATION
 For this class, we will have most of our discussion through the dart-psych60.slack.com channel.
 
 ## TEXTBOOK
@@ -43,9 +43,6 @@ Students are encouraged to watch assigned videos freely available online to supp
  - [Principles of fMRI Course](https://www.youtube.com/channel/UC_BIby85hZmcItMrkAlc8eA) by Tor Wager & Martin Lindquist
  - [Analyzing Neural Time Series Data: Principles & Theory](http://mikexcohen.com/lectures.html) By Mike X Cohen
  - [Mumford Brain Stats](https://www.youtube.com/channel/UCZ7gF0zm35FwrFpDND6DWeA) by Jeanette Mumford
-
-## ASSIGNMENTS
-Assignments will be posted on canvas.
 
 ## LECTURES
 Lectures will primarily be delivered via freely available youtube videos. Students are expected to watch these on their own time and bring question to class or post on slack.
@@ -67,31 +64,6 @@ To ensure that students learn key concepts about the principles of fMRI data ana
 
 ## ANALYSIS PROJECT (30% of grade)
 A key component of this course is learning how to process and analyze imaging data. Students will be introduced to key concepts during the laboratory assignments. Students will be expected to apply what they learn to analyzing an fMRI dataset. Most students will likely analyze the data collected in class, but are free to analyze any publicly available dataset (e.g., https://openfmri.org/, https://www.datalad.org/datasets.html). Students may work in small groups (~2-3 people), but each will independently write a final report of the research.  The final written paper should be in journal format using APA style with an abstract, intro, methods, results, discussion, and references. Format 12-20 typed double-space pages, 11pt Ariel or Times font. (bibliography not included in the page limit).  Each person is expected to write their own intro and conclusion, but the group can collaborate on the methods and results sections if they want.  At the end of the class each group will give a ~10 minute presentation on their project (background, hypothesis, experimental design, results, analyses, conclusions).  Paper Due at Midnight on the last day of class.
-
-
-### READINGS
-Most of the readings will be from the Lindquist and Wager (2011) book. We will be supplementing these readings with additional articles and chapters and occasionally online videos. The reading list and electronic PDFs (or links) will be posted on Canvas.
-
-### CLASS PARTICIPATION (10% of grade)
-You will be expected to participate in class discussions each day of class. This might include asking clarifying questions or helping another student.
-
-### HOMEWORK (20% of grade)
-We will have occasional homework assignments based on lab assignments. You will be required to upload your jupyter notebook to the canvas site by midnight the day the homework is due.
-
-### ANATOMY FLASH (10% of grade)
-In each class, a student will present a very brief presentation on one region of the brain. Flash presentations will include how to identify the region anatomically, a quick overview of its function, and a brief example of an interesting imaging study that identified a functional property of the region. Presentations should be developed on google slides and should be between 2-5 minutes.
-
-### EXAM (20% of grade)
-To ensure that students learn key concepts about the principles of fMRI data analysis, we will have one exam with short answer and essay questions.
-
-### DATA COLLECTION (10% of grade)
-We will spend approximately one week of the course collecting data on the 3T Siemens Prisma scanner at the Dartmouth Brain Imaging Center located in the basement of Moore Hall. Students are expected to operate the scanner. If they want to they can participate as subjects in the experiment (assuming it is safe for them to be scanned).
-
-### ANALYSIS PROJECT (30% of grade)
-A key component of this course is learning how to process and analyze imaging data. Students will be introduced to key concepts during the laboratory assignments. Students will be expected to apply what they learn to analyzing an fMRI dataset. Most students will likely analyze the data collected in class, but are free to analyze any publicly available dataset (e.g., https://openfmri.org/, https://www.datalad.org/datasets.html). Students may work in small groups (~2-3 people), but each will independently write a final report of the research.  The final written paper should be in journal format using APA style with an abstract, intro, methods, results, discussion, and references. Format 12-20 typed double-space pages, 11pt Ariel or Times font. (bibliography not included in the page limit).  Each person is expected to write their own intro and conclusion, but the group can collaborate on the methods and results sections if they want.  At the end of the class each group will give a ~10 minute presentation on their project (background, hypothesis, experimental design, results, analyses, conclusions).  Paper Due at Midnight on the last day of class.
- - Paper: 15%
- - Presentation: 10%
- - Group participation: 5%
 
 ## CLASSROOM POLICIES
 ### HONOR CODE
