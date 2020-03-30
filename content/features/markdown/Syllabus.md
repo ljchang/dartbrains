@@ -4,7 +4,7 @@
 
 **Professor**: Luke Chang, PhD
 
-Email: <lukej.chang@dartmouth.edu>
+Email: <luke.j.chang@dartmouth.edu>
 
 Office Hours: Tuesday 1-2pm
 
