@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: /features/notebooks/1_Introduction_to_Programming.html
 suffix: .ipynb
-search: jupyter dartfs using notebook server dartmouth psych terminal rc access edu python data notebooks computer run software our running window home click jupyterhub accessing should lab com campus space folder directory module work install pip own via through please need link mac p initadd course also storage e analyses laptop computing us browser netid logging few not same done into create modules studentsoutput class file vpn path fsl results images gettingstarted png recommend analysis installed anaconda distribution www additional system let logout button add specific yournetid network off hpc de type nbviewer dropbox processing likely tab shutdown here alternative fsleyes
+search: jupyter notebook notebooks computer using jupyterhub python server install data run com pip own software through our work access need browser running window click recommend installed anaconda distribution www installing also org analyses web images png shutdown results same nbviewer dropbox alternative fsleyes fsl markdown chang course learn laptops once via however different packages tutorials download html very computing us should not working login main jhub please psych relevant stop finished sure lets open code done lab writing program going file any button doing processing likely dont want io comes downloading viewer xquartz dashboard walkthrough getting started cheatsheet github introduction
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -21,39 +21,20 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
     <main class="jupyter-page">
     <div id="page-info"><div id="page-title">Getting Started with JupyterHub</div>
 </div>
-    
-<div class="jb_cell">
+    <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-JupyterHub">Introduction to JupyterHub<a class="anchor-link" href="#Introduction-to-JupyterHub"> </a></h1><p><em>Written by Jeremy Huckins &amp; Luke Chang</em></p>
-<p>In this course we will primarily be using python to learn about fMRI data analysis. Many of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an <a href="https://www.anaconda.com/distribution/">anaconda distribution</a>. Often we will also be working with neuroimaging datasets, which can have large storage requirements. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). Finally, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop.  To meet these needs, Dartmouth's Research Computing has generously provided a dedicated server on their high performance computing system that will allow us to store data, access specialized software, and run analyses.</p>
-<p>The main portal to access this resource will be through the Jupyterhub interface. This allows you to remotely login in to the server through your browser at <a href="https://jupyter.dartmouth.edu">https://jupyter.dartmouth.edu</a> using your netid. Please let us know if you are having difficulty logging in as this might mean we need to have an account created for you.</p>
-<p>A couple of quick notes. You will be sharing this server with your fellow classmates as well as a few other classes on campus. This server has a limited number of resources (currently 16 CPUs and 128gb of RAM). This means that we may not all be able to run our analyses at the same time or the server may slow down or possibly even crash.  To be a good user, please do not leave your notebook running when you aren't using it. This can be accomplished by using the <em>logout</em> button when you're done rather than simply closing your laptop or browser.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Today's-Goals">Today's Goals<a class="anchor-link" href="#Today's-Goals"> </a></h1><ol>
-<li><p>Connect your laptop to your personal DartFS and Psych60 DartFS space</p>
-</li>
-<li><p>From a terminal window ssh into jupyter.dartmouth.edu</p>
-</li>
-<li><p>Create link to access Psych60 data from jupyterhub</p>
-</li>
-<li><p>Add modules so we can use MRI-specific software on the server</p>
-</li>
-<li><p>Create a folder for yourself in Psych60/students_output/your_netid</p>
-</li>
-<li><p>Run a test notebook from your personal folder</p>
-</li>
-</ol>
+<h1 id="Introduction-to-JupyterHub">Introduction to JupyterHub<a class="anchor-link" href="#Introduction-to-JupyterHub"> </a></h1><p><em>Written by Luke Chang &amp; Jeremy Huckins</em></p>
+<p>In this course we will primarily be using python to learn about fMRI data analysis. All of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an <a href="https://www.anaconda.com/distribution/">anaconda distribution</a>. However, the datasets are large and there can be annoying issues with different versions of packages and installing software across different operating systems. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). We have a docker container available that will contain all of the software and have created tutorials to <a href="https://dartbrains.org/features/notebooks/Download_Localizer_Data.html">download the data</a>. In addition, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop.</p>
+<p>To meet these needs, Dartmouth's Research Computing has generously provided a dedicated server hosted on Amazon Web Services that will allow us to store data, access specialized software, and run analyses. This means that everyone should be able to run all of the tutorials on their laptops, tablets, etc by accessing notebooks on the jupyterhub server and will not need to install anything beyond a working browser.</p>
+<h2 id="Login">Login<a class="anchor-link" href="#Login"> </a></h2><p>The main portal to access this resource will be through the Jupyterhub interface. This allows you to remotely login in to the server through your browser at <a href="https://jhub.dartmouth.edu">https://jhub.dartmouth.edu</a> using your netid. Please let us know if you are having difficulty logging in.</p>
+<p>Once you've logged in you should see a screen like this.</p>
+<p><img src="../../images/jupyterhub/jhub.png" alt=""></p>
+<p>The <code>Psych60</code> folder contains all of the relevant notebooks and data for the course.</p>
+<h2 id="Stop-server">Stop server<a class="anchor-link" href="#Stop-server"> </a></h2><p>A couple of quick notes. When you are finished working on the server, make sure you shut down your server. The college is paying for your compute time, so let's be mindful to not run more analyses then we need to for our educational purposes. It is completely fine to leave jobs running without keeping your computer open.</p>
+<p><img src="../../images/jupyterhub/controlpanel.png" alt=""></p>
+<p><img src="../../images/jupyterhub/shutdown.png" alt=""></p>
 
 </div>
 </div>
@@ -64,53 +45,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Data-Storage-via-DartFS">Data Storage via DartFS<a class="anchor-link" href="#Data-Storage-via-DartFS"> </a></h1><p>We will host most of our data and tutorials for the class on DartFS. DartFS is a file storage system that can be accessed by most computers and devices provided that you are on a campus network (or logged in via VPN). You have a home directory and the instructions below are for accessing your home space. If you are enrolled in the class you <em>should</em> be authorized to access the Psych 60 space. Please let us know if that is not the case. You need to be connected to Dartmouth network to access DartFS. If you are off campus, use a VPN connection.</p>
-<p><a href="http://rc.dartmouth.edu/index.php/hrf_faq/how-to-access-dartfs-from-a-mac/">Accessing DartFS on a mac</a></p>
-<p><a href="http://rc.dartmouth.edu/index.php/hrf_faq/how-to-access-dartfs-from-a-pc/">Accessing DartFS on a pc</a></p>
-<p>RC Linux systems:      /dartfs-hpc/rc/home/e/d12345e</p>
-<p>RC Linux systems:      /dartfs/rc/lab/P/Psych60</p>
-<p>Mac Finder path:  smb://dartfs-hpc.dartmouth.edu/rc/home/e/d12345e</p>
-<p>Mac Finder path:  smb://dartfs.dartmouth.edu/rc/lab/P/Psych60</p>
-<p>Windows UNC path:     \dartfs-hpc.dartmouth.edu\rc\home\e\d12345e</p>
-<p>Windows UNC path:     \dartfs.dartmouth.edu\rc\lab\P\Psych60</p>
-<p>Please see the email you received to determine the location of your home directory.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Accessing-Additional-Software">Accessing Additional Software<a class="anchor-link" href="#Accessing-Additional-Software"> </a></h2><p>To access addditional software beyond our class Python conda environment, we will need to set up a few things on the research computing servers.  This involves remotely logging in to the server using a terminal and adding a few software modules to your environment profile.</p>
-<p>Using a terminal window, type the following commands in your terminal window:</p>
-<p>First, we will create a symbolic link to the course directory in your home directory.</p>
-<p><code>ln –s  /dartfs/rc/lab/P/Psych60  Psych60</code></p>
-<p>This will allow you to access the course folder after logging into jupyterhub.</p>
-<p>Second, we will create a directory namked with your netid in the <code>students_output</code> folder.</p>
-
-<pre><code>cd Psych60/students_output 
-mkdir your_netid  [where "your_netid" is your netid]</code></pre>
-<p>Third, we will add additional software packages to be available to us on jupyterhub by adding specific modules</p>
-
-<pre><code>module initadd fsl
-module initadd freesurfer
-module initadd afni
-module initadd ants
-module initadd spm</code></pre>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-Jupyter-Notebooks">Introduction to Jupyter Notebooks<a class="anchor-link" href="#Introduction-to-Jupyter-Notebooks"> </a></h1><p>Jupyter notebooks are a great way to have your code, comments and results show up inline in a web browser. Work for this class will be done in Jupyter notebooks so you can reference what you have done, see the results and someone else could redo it in the future, similar to a typical lab notebook.</p>
+<h1 id="Jupyter-Notebooks">Jupyter Notebooks<a class="anchor-link" href="#Jupyter-Notebooks"> </a></h1><p>Jupyter notebooks are a great way to have your code, comments and results show up inline in a web browser. Work for this class will be done in Jupyter notebooks so you can reference what you have done, see the results and someone else could redo it in the future, similar to a typical lab notebook.</p>
 <p>Rather than writing and re-writing an entire program, you can write lines of code and run them one at a time. Then, if you need to make a change, you can go back and make your edit and rerun the program again, all in the same window. In our specific case, we are going to use JupyterHub which lets several people access the same computer and data at the same time through a web browser.</p>
 <p>Finally, you can view examples and share your work with the world very easily through <a href="https://nbviewer.jupyter.org">nbviewer</a>.  One easy trick if you use a cloud storage service like dropbox is to paste a link to the dropbox file in nbviewer.  These links will persist as long as the file remains being shared via dropbox.</p>
 
@@ -123,64 +58,8 @@ module initadd spm</code></pre>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Using-Jupyter-Notebooks-on-a-server-hosted-by-Dartmouth">Using Jupyter Notebooks on a server hosted by Dartmouth<a class="anchor-link" href="#Using-Jupyter-Notebooks-on-a-server-hosted-by-Dartmouth"> </a></h2><p>If you use our server, all analyses you run will be performed on a server deep in the basement of a building on campus. This is great because you can start an analysis and let it run, checking in on the the results later by reconnecting to the server and opening the notebook you were running. The downside of this setup is that you will be sharing processing power with others, which may lead to some forced coffee breaks.</p>
-<p><a href="https://jupyter.dartmouth.edu">https://jupyter.dartmouth.edu</a></p>
-<p>Log in with your netid and it should bring you to your home DartFS space.  Again, <em>don't forget to <strong>logout</strong> when you are done running your analysis</em>.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Once-you-have-logged-in">Once you have logged in<a class="anchor-link" href="#Once-you-have-logged-in"> </a></h2><p>You should see something like this:</p>
-<p><img src="../../images/getting_started/HomeScreen.png" alt=""></p>
-<p>You will likely not have much in there unless you have used your DartFS space before.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Try-Using-the-Terminal">Try Using the Terminal<a class="anchor-link" href="#Try-Using-the-Terminal"> </a></h2><p>Click on <strong>New</strong> and then <strong>Terminal</strong> to bring up a terminal window. It should look like this:</p>
-<p><img src="../../images/getting_started/Terminal.png" alt=""></p>
-<p>Type the commands into your terminal:
-<code>pwd</code>, <code>ls</code>, <code>module list</code></p>
-<p>The result should look like this:</p>
-<p><img src="../../images/getting_started/Modules.png" alt=""></p>
-<p>Next click the <strong>Running</strong> tab and and click on <strong>Shutdown</strong> next to terminal. This is how we close sessions that we are finished with.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Connecting-to-Psych60-lab-space-from-within-Jupyterhub">Connecting to Psych60 lab space from within Jupyterhub<a class="anchor-link" href="#Connecting-to-Psych60-lab-space-from-within-Jupyterhub"> </a></h2><p>You should see a Psych60 link under the <strong>Files</strong> tab. If you click on it you <strong>should</strong> be brought to the data and tutorial folder.</p>
-<p><img src="../../images/getting_started/CourseScreen.png" alt=""></p>
-<p>You will find a variety of tutorial notebooks in here along with data that we will use for our first few labs.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Opening-a-notebook-on-the-server">Opening a notebook on the server<a class="anchor-link" href="#Opening-a-notebook-on-the-server"> </a></h1><p>Click on Files, then the Psych60 link you created, then navigate to <strong>nipype_tutorial/notebooks</strong> and click on <strong>introduction_jupyter-notebook.ipynb</strong></p>
-<p>This will be the first notebook we will work with today. Save this into your folder in <strong>students_output</strong> before running anything (File, Save As)</p>
+<h1 id="Opening-a-notebook-on-the-server">Opening a notebook on the server<a class="anchor-link" href="#Opening-a-notebook-on-the-server"> </a></h1><p>Click on Files, then Psych60, then notebooks. Click on any notebook you would like to load.</p>
+<p>For example, our first laboratory will be <strong>1_Introduction_to_Programming.ipynb</strong>.</p>
 <p>Now work through this sample notebook.</p>
 <p>When you are finished, click on the <strong>Running</strong> tab in the main jupyter window and then the <strong>Shutdown</strong> button to shutdown the notebook. Close the notebook window and then click on the <strong>logout</strong> button.</p>
 
@@ -193,8 +72,9 @@ module initadd spm</code></pre>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Alternative">Alternative<a class="anchor-link" href="#Alternative"> </a></h1><p>If you use jupyter notebooks on your own computer then you own computer will be doing the processing. If you put your computer to sleep then processing will stop. It will also likely slow down other programs you are using on your computer. I would recommend installing it on your own computer so you can learn more about how to use it, or if you are interested in tinkering with the software or you happen to have a particularly fast/newer computer.</p>
-<p>Please contact Professor Huckins/Chang if you want any assistance doing this.</p>
+<h1 id="Alternative-to-Jupyterhub">Alternative to Jupyterhub<a class="anchor-link" href="#Alternative-to-Jupyterhub"> </a></h1><p>If you use jupyter notebooks on your own computer then you own computer will be doing the processing. If you put your computer to sleep then processing will stop. It will also likely slow down other programs you are using on your computer. I would recommend installing it on your own computer so you can learn more about how to use it, or if you are interested in tinkering with the software or you happen to have a particularly fast/newer computer. We don't recommend going this route unless you don't have reliable access to the internet.</p>
+<p>Please contact Professor Chang if you want any assistance doing this.
+"</p>
 <h2 id="Installing-Jupyter-Notebooks-on-your-own-computer">Installing Jupyter Notebooks on your own computer<a class="anchor-link" href="#Installing-Jupyter-Notebooks-on-your-own-computer"> </a></h2><ol>
 <li>Install python. We recommend using the <a href="https://www.continuum.io/downloads">Acaconda Distribution</a>) as it comes with most of the relevant scientific computing packages we will be using.  Be sure to download Python 3.</li>
 </ol>
@@ -207,18 +87,6 @@ module initadd spm</code></pre>
 
 <pre><code>pip install jupyter</code></pre>
 <h3 id="Starting-Jupter-Notebooks-on-your-computer">Starting Jupter Notebooks on your computer<a class="anchor-link" href="#Starting-Jupter-Notebooks-on-your-computer"> </a></h3><p>Open a terminal, navigate to the directory you want to work from then type <code>jupyter notebook</code> or <code>jupyter lab</code></p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Accessing-Jupyter-Hub-and-Course-Resources-from-Off-Campus">Accessing Jupyter Hub and Course Resources from Off-Campus<a class="anchor-link" href="#Accessing-Jupyter-Hub-and-Course-Resources-from-Off-Campus"> </a></h1><p>If you are having difficulty logging in to the server or accessing dartfs off campus, we recommend accessing the Dartmouth network via VPN. The current method is to use Duo and authenticate your login using a mobile device.</p>
-<p>Here are detailed <a href="https://services.dartmouth.edu/TDClient/KB/ArticleDet?ID=64933">instructions</a> for how to setup VPN on your laptop.</p>
 
 </div>
 </div>
