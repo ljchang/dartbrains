@@ -11,9 +11,9 @@ pagenum: 6
 prev_page:
   url: /features/notebooks/0_Introduction_to_JupyterHub.html
 next_page:
-  url: /features/notebooks/2_Introduction_to_Dataframes_Plotting.html
+  url: /features/notebooks/2_Introduction_to_Pandas.html
 suffix: .ipynb
-search: python list y x cell jupyter true org data false function lists cells code module import also new using www com package value containers set dartmouth github markdown enter text here type condition name values element elements tuples syntax pbs psyc types specify hit esc insert into called return end loop sequence result notebook install anaconda modules tutorial while note execute not its keys b string operators e g equal less statements any nbviewer blob master classes fundamentals ipynb l speed learn different starting start language languages useful specific notebooks want toolbar after shift say hitting add conda division functions
+search: python list y x cell jupyter true org data false function lists cells code module import com also new using www github package value containers set dartmouth markdown enter text here type condition name values element elements tuples syntax pbs psyc types specify hit esc insert into called return end loop sequence result notebook install anaconda language modules tutorial while note execute not its keys b string operators e g equal less statements any nbviewer blob master classes fundamentals ipynb l speed learn different starting start languages useful specific notebooks want toolbar after shift say hitting add conda variable bool
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -21,14 +21,13 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
     <main class="jupyter-page">
     <div id="page-info"><div id="page-title">Introduction to Python</div>
 </div>
-    
-<div class="jb_cell">
+    <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Introduction-to-programming">Introduction to programming<a class="anchor-link" href="#Introduction-to-programming"> </a></h1><p><em>Written by Luke Chang</em></p>
 <p>In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing <a href="https://www.anaconda.com/distribution/">Python 3.7</a>.  For those who prefer a more configurable IDE, <a href="https://www.jetbrains.com/pycharm/">Pycharm</a> is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for <a href="http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/">conducting research</a>.  You can use python for <a href="http://www.psychopy.org/">stimulus presentation</a>, <a href="http://statsmodels.sourceforge.net/">data analysis</a>, <a href="http://scikit-learn.org/stable/">machine-learning</a>, <a href="https://www.crummy.com/software/BeautifulSoup/">scraping data</a>, creating websites with <a href="http://flask.pocoo.org/">flask</a> or <a href="https://www.djangoproject.com/">django</a>, or <a href="http://nipy.org/">neuroimaging data analysis</a>.</p>
-<p>There are lots of free useful resources to learn how to use python and various modules.  See Yaroslav Halchenko's excellent <a href="https://github.com/dartmouth-pbs/psyc161">Dartmouth course</a>.  <a href="https://www.codecademy.com/">Codeacademy</a> is a great interactive tutorial.  <a href="http://stackoverflow.com/">Stack Overflow</a> is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.</p>
+<p>There are lots of free useful resources to learn how to use python and various modules.  See <a href="https://github.com/ContextLab/cs-for-psych">Jeremy Manning's</a> or <a href="https://github.com/dartmouth-pbs/psyc161">Yaroslav Halchenko's</a> excellent Dartmouth courses.  <a href="https://www.codecademy.com/">Codeacademy</a> is a great interactive tutorial.  <a href="http://stackoverflow.com/">Stack Overflow</a> is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.</p>
 <p><img src="../../images/programming/programming_growth.png" alt=""></p>
 
 </div>
@@ -141,14 +140,15 @@ If you want to execute the code in a code cell, hit "shift + enter." Note that c
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Variables">Variables<a class="anchor-link" href="#Variables"> </a></h2><ul>
+<h2 id="Variables">Variables<a class="anchor-link" href="#Variables"> </a></h2><p>Python is a dynamically typed language, which means that you can easily change the datatype associated with a variable. There are several built-in datatypes that are good to be aware of.</p>
+<ul>
 <li>Built-in<ul>
 <li>Numeric types:<ul>
 <li><strong>int</strong>, <strong>float</strong>, <strong>long</strong>, complex</li>
 </ul>
 </li>
-<li><strong>str</strong>ing </li>
-<li><strong>bool</strong>ean<ul>
+<li>String: <strong>str</strong> </li>
+<li>Boolean: <strong>bool</strong><ul>
 <li>True / False</li>
 </ul>
 </li>
@@ -1060,7 +1060,7 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 </pre></div>
 </li>
 <li><p>You can also import a module using a specific name</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">module_name</span> <span class="kn">as</span> <span class="nn">new_module_name</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">module_name</span> <span class="k">as</span> <span class="nn">new_module_name</span>
 </pre></div>
 </li>
 <li><p>To import specific definitions (e.g. functions, variables, etc) from the module into your local namespace, use</p>
@@ -1083,7 +1083,7 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 </pre></div>
 
     </div>
@@ -1127,7 +1127,7 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;/Users/lukechang/Github/dartbrains/content/features/notebooks&#39;</pre>
+<pre>&#39;/Users/lukechang/Dropbox/Dartbrains/Notebooks&#39;</pre>
 </div>
 
 </div>
@@ -1171,7 +1171,7 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;../../Data/salary_exercise.csv&#39;, &#39;../../Data/salary.csv&#39;]
+<pre>[]
 </pre>
 </div>
 </div>

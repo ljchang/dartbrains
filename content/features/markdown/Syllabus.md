@@ -26,19 +26,21 @@ The format of Psych60 will be slightly different than the typical in-person vers
 All class meetings will be held on zoom. By participating in the zoom meetings, all students will consent to the following:
 
 ** (1) Consent to recording of course and group office hours**
-    a) I affirm my understanding that this course and any associated group meetings involving students and the instructor, including but not limited to scheduled and ad hoc office hours and other consultations, may be recorded within any digital platform used to offer remote instruction for this course; 
-    b) I further affirm that the instructor owns the copyright to their instructional materials, of which these recordings constitute a part, and distribution of any of these recordings in whole or in part without prior written consent of the instructor may be subject to discipline by Dartmouth up to and including expulsion;
-    c) I authorize Dartmouth and anyone acting on behalf of Dartmouth to record my participation and appearance in any medium, and to use my name, likeness, and voice in connection with such recording; and 
-    d) I authorize Dartmouth and anyone acting on behalf of Dartmouth to use, reproduce, or distribute such recording without restrictions or limitation for any educational purpose deemed appropriate by Dartmouth and anyone acting on behalf of Dartmouth.
+    
+    - a. I affirm my understanding that this course and any associated group meetings involving students and the instructor, including but not limited to scheduled and ad hoc office hours and other consultations, may be recorded within any digital platform used to offer remote instruction for this course; 
+    - b. I further affirm that the instructor owns the copyright to their instructional materials, of which these recordings constitute a part, and distribution of any of these recordings in whole or in part without prior written consent of the instructor may be subject to discipline by Dartmouth up to and including expulsion;
+    - c. I authorize Dartmouth and anyone acting on behalf of Dartmouth to record my participation and appearance in any medium, and to use my name, likeness, and voice in connection with such recording; and 
+    - d. I authorize Dartmouth and anyone acting on behalf of Dartmouth to use, reproduce, or distribute such recording without restrictions or limitation for any educational purpose deemed appropriate by Dartmouth and anyone acting on behalf of Dartmouth.
 
  ** (2) Requirement of consent to one-on-one recordings** 
+    
     By enrolling in this course, I hereby affirm that I will not under any circumstance make a recording in any medium of any one-on-one meeting with the instructor without obtaining the prior written consent of all those participating, and I understand that if I violate this prohibition, I will be subject to discipline by Dartmouth up to and including expulsion, as well as any other civil or criminal penalties under applicable law.
 
 ## COMMUNICATION
 For this class, we will have most of our discussion through the dart-psych60.slack.com channel.
 
 ## TEXTBOOK
-Lindquist, M. & Wager, T (2015). Principles of fMRI. Available from https://leanpub.com/principlesoffmri.
+[OPTIONAL] Lindquist, M. & Wager, T (2015). Principles of fMRI. Available from https://leanpub.com/principlesoffmri.
 
 ## ONLINE VIDEOS
 Students are encouraged to watch assigned videos freely available online to supplement the classroom experience.  Most videos will be available on youtube from:
