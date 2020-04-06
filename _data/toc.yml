@@ -87,8 +87,12 @@
   url: /features/markdown/Signal_Measurement
   not_numbered: false
 
+- title: Separating Signal from Noise with ICA
+  url: /features/notebooks/4_ICA
+  not_numbered: false
+
 - title: Introduction to Neuroimaging Data
-  url: /features/notebooks/3_Introduction_to_NeuroimagingData_in_Python
+  url: /features/notebooks/5_Introduction_to_NeuroimagingData_in_Python
   not_numbered: false
 
 - title: Signal Processing Basics
