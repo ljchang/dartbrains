@@ -67,6 +67,10 @@
   url: /features/notebooks/2_Introduction_to_Pandas
   not_numbered: true
 
+- title: Introduction to Plotting
+  url: /features/notebooks/3_Introduction_to_Plotting
+  not_numbered: true
+
 - title: Download Localizer Data
   url: /features/notebooks/Download_Localizer_Data
   not_numbered: true
