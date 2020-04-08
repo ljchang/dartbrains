@@ -16,7 +16,7 @@ This course is designed primarily around learning the basics of fMRI data analys
 - There will be a single exam, in which students will have to replicate an analysis of a published study using real data. 
 - For the final project, students will analyze an existing publicly available dataset to answer a new research question. Unfortunately, we will not be able to collect a new fMRI dataset as the Dartmouth Brain Imaging Center is currently closed for this term.
 
- # License for this book
+# License for this book
 All content 
 is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
 (CC BY-SA 4.0) license.
