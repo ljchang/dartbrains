@@ -96,7 +96,7 @@
   not_numbered: false
 
 - title: Introduction to Neuroimaging Data
-  url: /features/notebooks/5_Introduction_to_NeuroimagingData_in_Python
+  url: /features/notebooks/5_Introduction_to_Neuroimaging_Data
   not_numbered: false
 
 - title: Signal Processing Basics

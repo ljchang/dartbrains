@@ -11,7 +11,7 @@ pagenum: 13
 prev_page:
   url: /features/markdown/Signal_Measurement.html
 next_page:
-  url: /features/notebooks/5_Introduction_to_NeuroimagingData_in_Python.html
+  url: /features/notebooks/5_Introduction_to_Neuroimaging_Data.html
 suffix: .ipynb
 search: data run ica preprocessing using signals our might fmriprep component docker also signal s license frequency components noise recommend readthedocs io en stable dropbox dartbrains work standard any threshold tutorial explore artifacts participant html specific users lukechang its into bids nltools filter hz spatial analysis axis voxels sure plot timecourse present already done loading automated pipeline stanford poldracklab com latest location want fs file issues freesurfer even not validator very once ok load steps high pass scanner arbitrary voxel independent decompose fastica scikit learn setting images default possible view brain deviations less play nyquist respiration cardiac important consider think does
 
@@ -135,8 +135,8 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <span class="kn">from</span> <span class="nn">nltools.data</span> <span class="kn">import</span> <span class="n">Brain_Data</span>
 <span class="kn">from</span> <span class="nn">nltools.plotting</span> <span class="kn">import</span> <span class="n">component_viewer</span>
 
-<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">&#39;~/Psych60/Data/localizer/derivatives/preproc/fmriprep&#39;</span>
-
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">&#39;../data/localizer/derivatives/preproc/fmriprep&#39;</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s1">&#39;/Users/lukechang/Dropbox/Dartbrains/Data/preproc/fmriprep&#39;</span>
 <span class="n">sub</span> <span class="o">=</span> <span class="s1">&#39;S01&#39;</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;sub-</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;sub-</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz&#39;</span><span class="p">))</span>
@@ -168,12 +168,182 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x7f8a825dc0d0&gt;]</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/4_ICA_6_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">2.4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.4166666666666667
+0.0078125
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mf">2.4</span><span class="p">,</span> <span class="n">high_pass</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">128</span><span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x7f8ab1902690&gt;]</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/4_ICA_9_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/4_ICA_10_1.png"
+>
+</div>
+
+</div>
+</div>
 </div>
 </div>
 
@@ -251,13 +421,13 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
  
  
-<div id="746914fe-3e41-48cc-98b5-69e31493af62"></div>
+<div id="2fd784bc-6800-4359-80e4-512bcd475489"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#746914fe-3e41-48cc-98b5-69e31493af62');
+var element = $('#2fd784bc-6800-4359-80e4-512bcd475489');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "dd907642386743f1b7d0e17a2a541adb", "version_major": 2, "version_minor": 0}
+{"model_id": "24a0e738864b4269bbb4ac97e2a1b3e4", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -277,6 +447,52 @@ var element = $('#746914fe-3e41-48cc-98b5-69e31493af62');
 
 </div>
 </div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># function(data)</span>
+
+<span class="c1"># data.function()</span>
+
+<span class="c1"># print(type([1,2,3]))</span>
+<span class="c1"># print(type((1,2,3)))</span>
+<span class="c1"># print(type({&#39;a&#39;:1,&#39;b&#39;:2}))</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;everyone&#39;</span>
+<span class="sa">f</span><span class="s2">&quot;hello: &#39;hi&#39;&quot;</span>
+<span class="c1"># fhello: &#39;hi&#39;&#39;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-29-474a57c403d1&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">11</span>
+<span class="ansi-red-fg">    f&#39;hello: &#39;hi&#39;&#39;</span>
+               ^
+<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
