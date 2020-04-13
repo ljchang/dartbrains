@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: /features/markdown/Preprocessing.html
 suffix: .ipynb
-search: frequency signal domain sine fourier frequencies lets waves transform kernel convolution filter product different dot using complex x data video filters also watch only function wave youtu signals our notice series sampling information e n example half create here amplitude fft practice need shape np try oscillations plot coefficients pass mike hz vector between vectors overview noise response get much pi theta f phase low zero inverse high second simply sum same happens add point forward gain boxcar samples taking matrix reflects multiplication note want cohen python varying oscillating dont nyquist observe not discrete k negative original bandpass neural analysis
+search: frequency signal domain sine fourier frequencies lets transform waves kernel convolution filter product different dot using complex x data video filters also watch only function wave youtu our signals notice series sampling information e n example half create here amplitude fft practice need shape np try oscillations plot coefficients pass mike hz vector between vectors overview noise response get much pi theta f phase low discrete zero inverse high second simply sum same happens add point forward gain boxcar samples taking matrix reflects multiplication note want cohen details python ok varying oscillating dont nyquist observe not k negative original bandpass
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -764,7 +764,7 @@ Convolved Signal Length: 109
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If you are interested in a more detailed overview of convolution in the time domain, I encourage you to watch this <a href="https://youtu.be/9Hk-RAIzOaw">video</a> by Mike X Cohen. For more details about convolution and the HRF function, I see this <a href="https://practical-neuroimaging.github.io/on_convolution.html">overview</a> using python examples.</p>
+<p>If you are interested in a more detailed overview of convolution in the time domain, I encourage you to watch this <a href="https://youtu.be/9Hk-RAIzOaw">video</a> by Mike X Cohen. For more details about convolution and the HRF function, see this <a href="https://practical-neuroimaging.github.io/on_convolution.html">overview</a> using python examples.</p>
 
 </div>
 </div>
@@ -957,10 +957,10 @@ Convolved Signal Length: 109
 
  
  
-<div id="18403e31-918b-4fab-a57c-35b1256f7195"></div>
+<div id="66eb810d-919f-4cd9-9195-b757d95b101c"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#18403e31-918b-4fab-a57c-35b1256f7195');
+var element = $('#66eb810d-919f-4cd9-9195-b757d95b101c');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "1b433fd75248489e829a2856b0af51e8", "version_major": 2, "version_minor": 0}
@@ -1674,47 +1674,6 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 <div class="jb_cell">
 
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;RHjqvcKVopg&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/RHjqvcKVopg"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Notice that there are 5 different frequencies that have varying amplitudes. Recall that when we simulated this data we added 5 different sine waves with different frequencies and amplitudes.</p>
@@ -1769,8 +1728,60 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_57_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_56_1.png"
 >
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, now that we've created our own discrete fourier transform, let's learn a few more important details that are important to consider.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;RHjqvcKVopg&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/RHjqvcKVopg"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
 </div>
 
 </div>
@@ -1832,7 +1843,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_59_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_60_1.png"
 >
 </div>
 
@@ -1867,7 +1878,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 <span class="n">fourier_fft</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">80</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fourier_fft</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">80</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">80</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fourier_fft</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">80</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Frequency domain representation of signal derived from fast fourier transform&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
@@ -1897,7 +1908,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_61_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_62_1.png"
 >
 </div>
 
@@ -1958,7 +1969,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_63_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_64_1.png"
 >
 </div>
 
@@ -2058,7 +2069,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_67_0.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_68_0.png"
 >
 </div>
 
@@ -2112,7 +2123,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_69_0.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_70_0.png"
 >
 </div>
 
@@ -2177,7 +2188,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_71_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_72_1.png"
 >
 </div>
 
@@ -2241,7 +2252,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_73_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_74_1.png"
 >
 </div>
 
@@ -2315,7 +2326,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_75_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_76_1.png"
 >
 </div>
 
@@ -2368,7 +2379,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_77_0.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_78_0.png"
 >
 </div>
 
@@ -2441,7 +2452,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_79_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_80_1.png"
 >
 </div>
 
@@ -2516,7 +2527,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_81_1.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_82_1.png"
 >
 </div>
 
@@ -2528,7 +2539,7 @@ $$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$<p>We will not spend too m
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/6_Signal_Processing_81_2.png"
+<img src="../../images/features/notebooks/6_Signal_Processing_82_2.png"
 >
 </div>
 
