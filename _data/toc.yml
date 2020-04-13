@@ -100,7 +100,7 @@
   not_numbered: false
 
 - title: Signal Processing Basics
-  url: /features/notebooks/5_Signal_Processing
+  url: /features/notebooks/6_Signal_Processing
   not_numbered: false
 
 - title: Preprocessing
