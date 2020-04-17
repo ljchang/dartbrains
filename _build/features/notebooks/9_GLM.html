@@ -7,13 +7,13 @@ kernel_path: content/features/notebooks
 has_widgets: false
 title: |-
   Introduction to the General Linear Model
-pagenum: 18
+pagenum: 17
 prev_page:
-  url: /features/notebooks/8_fmriprep_tutorial.html
+  url: /features/notebooks/7_Preprocessing.html
 next_page:
   url: /features/notebooks/10_GLM_Single_Subject_Model.html
 suffix: .ipynb
-search: our model faces beta linear www hat watch com y data design v might efficiency regression youtube sigma estimate standard condition objects glm also lets voxel signal where contrast error single face experimental simulated visual not epsilon cdot estimator yi general parameters fmri processing response different noise parameter brain need simulation level n timeseries between frac matrix mean regressors using least object simply length much x just zero plot e actually errors regressor interval estimates statistical exercise inferences simple videos contrasts plfxaopiovrghnchrxiqagecsudwmxmindex analysis series however because well region involved trials duration any regions properties example method specific amplitude function add
+search: our model faces beta linear data hat might regression y watch www design glm com efficiency video sigma estimate standard simulated where lets v condition objects single using also not youtube voxel signal contrast error general face experimental statistics visual epsilon cdot estimator yi fmri need parameters processing response different noise parameter brain because much mean simulation level n timeseries between frac inferences course concepts provide specific matrix algebra contrasts analysis regressors least object simply length x just zero plot e actually errors regressor interval estimates statistical exercise simple important real basic videos additional learning key into hypothesis series however
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -21,30 +21,134 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
     <main class="jupyter-page">
     <div id="page-info"><div id="page-title">Introduction to the General Linear Model</div>
 </div>
-    
-<div class="jb_cell">
+    <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Introduction-to-the-General-Linear-Model-(GLM)">Introduction to the General Linear Model (GLM)<a class="anchor-link" href="#Introduction-to-the-General-Linear-Model-(GLM)"> </a></h1><p><em>Written by Luke Chang</em></p>
-<p>In this tutorial we will explore how we can use the general linear model (GLM) to make inferences about brain responses in a single subject.</p>
-<p>We will explore the statistics in the context of a simple hypothetical experiment.</p>
-<p>I encourage you to watch some short introductory videos on regression by Jeanette Mumford.</p>
+<p>In this tutorial we will explore how we can use the general linear model (GLM) to make inferences about brain responses in a single subject. We will explore the statistics in the context of a simple hypothetical experiment using simulated data. Throughout this course, we frequently rely on simulations to gain an intuition for how a particular preprocessing or statistic works. This is important because it reinforces the assumptions behind the operation (which are rarely met in real data), and also provides a way where you can learn to answer your own questions by creating your own simulations.</p>
+<p>In this lab we will cover:</p>
 <ul>
-<li><a href="https://www.youtube.com/watch?v=yLgPpmXVVbs">Simple Linear Regression</a></li>
-<li><a href="https://www.youtube.com/watch?v=fkZj8QoYjq8">Matrix Algebra Basics</a></li>
-<li><a href="https://www.youtube.com/watch?v=qdOG7YMolmA">Multiple Linear Regression</a></li>
-<li><a href="https://www.youtube.com/watch?v=ULeg3DH3g9w">Hypothesis Testing</a></li>
-<li><a href="https://www.youtube.com/watch?v=yLgPpmXVVbs&amp;t=631s">Contrasts in Linear Models</a></li>
-<li><a href="https://www.youtube.com/watch?v=uClfe4pLrCo">Intepreting Regression Parameters</a></li>
-<li><a href="https://www.youtube.com/watch?v=K4S576j90N8">Mean Centering Regressors</a></li>
+<li>What is a GLM?</li>
+<li>How can use a GLM to test psychological hypotheses with simulated data.</li>
 </ul>
-<p>Also, videos from the Principles of fMRI Course by Tor Wager &amp; Martin Lindquist.</p>
+<p>Let's start by watching a video introducing the general linear model by Tor Wager and how this can be applied to fMRI.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;GDkLQuV4he4&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/GDkLQuV4he4"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;OyLKMb9FNhg&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/OyLKMb9FNhg"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Are-you-ready-for-this?">Are you ready for this?<a class="anchor-link" href="#Are-you-ready-for-this?"> </a></h1><p>This lab assumes that you have some basic background knowledge in statistics from an introductory course. If you are already feeling overwhelmed from Tor Wager's videos and think you might need to slow down and refresh some basic concepts and lingo, I highly encourage you to watch Jeannette Mumford's crash course in statistics. These are certainly not required, but she is a wonderful teacher and watching her videos will provide an additional explanation of the core concepts needed to understand the GLM. You could watch these in one sitting, or go back and forth with working through the notebooks. There is so much to know in statistics and people can often feel lost because the concepts are certainly not intuitive. Even though I have been using statistics in my work for many many years, I still find it helpful to periodically revisit concepts. I find that learning neuroimaging is an iterative process. In the beginning, it is important to get a general understanding of the key steps and how to make inferences, but as you progress in your training, you can zoom into each step to focus more on the specific details and nuances that you didn't appreciate the first time.</p>
 <ul>
-<li><a href="https://www.youtube.com/watch?v=GDkLQuV4he4&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=18">GLM</a></li>
-<li><a href="https://www.youtube.com/watch?v=Ab-5AbJ8gAs&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=23">GLM Estimation</a></li>
+<li><a href="https://youtu.be/apt8uAgtgdY">Basic statistics terminology</a> This video gently introduces some of the key concepts that provide the foundation for statistics.</li>
+<li><a href="https://www.youtube.com/watch?v=yLgPpmXVVbs">Simple Linear Regression</a> This video explains how a regression works using a single variable.</li>
+<li><a href="https://www.youtube.com/watch?v=fkZj8QoYjq8">Matrix Algebra Basics</a> This video provides the background linear algebra needed for understanding the GLM.</li>
+<li><a href="https://www.youtube.com/watch?v=qdOG7YMolmA">Multiple Linear Regression</a> This video explains how multiple regression works using linear algebra.</li>
+<li><a href="https://www.youtube.com/watch?v=ULeg3DH3g9w">Hypothesis Testing</a> This video covers the basics of hypothesis testing.</li>
+<li><a href="https://www.youtube.com/watch?v=yLgPpmXVVbs&amp;t=631s">Contrasts in Linear Models</a> This video provides an overview of how to test hypotheses using contrasts in the context of the GLM.</li>
+<li><a href="https://www.youtube.com/watch?v=uClfe4pLrCo">Intepreting Regression Parameters</a> This video covers how to interpret the results from a regression analysis.</li>
+<li><a href="https://www.youtube.com/watch?v=K4S576j90N8">Mean Centering Regressors</a> This video covers a more subtle detail of why you might consider mean centering your continuour regression variables.</li>
 </ul>
-<p>First, let's import all of the modules we will need for this tutorial.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, let's get started. First, lwe will need to import all of the modules used in this tutorial.</p>
 
 </div>
 </div>
@@ -66,8 +170,8 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">nltools.stats</span> <span class="k">import</span> <span class="n">regress</span>
-<span class="kn">from</span> <span class="nn">nltools.external</span> <span class="k">import</span> <span class="n">glover_hrf</span>
+<span class="kn">from</span> <span class="nn">nltools.stats</span> <span class="kn">import</span> <span class="n">regress</span>
+<span class="kn">from</span> <span class="nn">nltools.external</span> <span class="kn">import</span> <span class="n">glover_hrf</span>
 </pre></div>
 
     </div>
@@ -145,7 +249,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_3_0.png"
+<img src="../../images/features/notebooks/9_GLM_7_0.png"
 >
 </div>
 
@@ -207,7 +311,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_5_0.png"
+<img src="../../images/features/notebooks/9_GLM_9_0.png"
 >
 </div>
 
@@ -265,7 +369,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_7_0.png"
+<img src="../../images/features/notebooks/9_GLM_11_0.png"
 >
 </div>
 
@@ -337,7 +441,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_9_2.png"
+<img src="../../images/features/notebooks/9_GLM_13_2.png"
 >
 </div>
 
@@ -387,7 +491,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_11_0.png"
+<img src="../../images/features/notebooks/9_GLM_15_0.png"
 >
 </div>
 
@@ -440,7 +544,7 @@ $$\epsilon \sim \mathcal{N}(\mu,\,\sigma^{2})$$<p></p>
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_13_0.png"
+<img src="../../images/features/notebooks/9_GLM_17_0.png"
 >
 </div>
 
@@ -489,7 +593,7 @@ $$\epsilon \sim \mathcal{N}(\mu,\,\sigma^{2})$$<p></p>
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_15_0.png"
+<img src="../../images/features/notebooks/9_GLM_19_0.png"
 >
 </div>
 
@@ -556,7 +660,7 @@ $$Y = X\beta + \epsilon$$<p>where $Y$ is our observed voxel time series. $X$ is 
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_18_0.png"
+<img src="../../images/features/notebooks/9_GLM_22_0.png"
 >
 </div>
 
@@ -615,7 +719,7 @@ $$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects + \e
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_20_0.png"
+<img src="../../images/features/notebooks/9_GLM_24_0.png"
 >
 </div>
 
@@ -683,7 +787,7 @@ $$\mathcal{N}(0,\sigma^{2})$$<p>For this class, we will primarily be focusing on
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_22_1.png"
+<img src="../../images/features/notebooks/9_GLM_26_1.png"
 >
 </div>
 
@@ -751,7 +855,7 @@ $$residual = Y - \hat Y$$
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_24_1.png"
+<img src="../../images/features/notebooks/9_GLM_28_1.png"
 >
 </div>
 
@@ -763,7 +867,7 @@ $$residual = Y - \hat Y$$
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_24_2.png"
+<img src="../../images/features/notebooks/9_GLM_28_2.png"
 >
 </div>
 
@@ -848,7 +952,7 @@ $$\hat \sigma = \sqrt{\frac{\displaystyle \sum_i^n(\hat Y_i - Y_i)^2}{n-k}}$$<p>
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_26_2.png"
+<img src="../../images/features/notebooks/9_GLM_30_2.png"
 >
 </div>
 
@@ -971,7 +1075,7 @@ $$\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma$$<p>This is essentially a 
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_31_1.png"
+<img src="../../images/features/notebooks/9_GLM_35_1.png"
 >
 </div>
 
@@ -1097,7 +1201,7 @@ $$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects$$<p>
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_35_1.png"
+<img src="../../images/features/notebooks/9_GLM_39_1.png"
 >
 </div>
 
@@ -1237,7 +1341,7 @@ $$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$<p>Reducing collinearity or covaria
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/9_GLM_39_1.png"
+<img src="../../images/features/notebooks/9_GLM_43_1.png"
 >
 </div>
 
