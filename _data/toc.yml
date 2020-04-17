@@ -104,18 +104,7 @@
   not_numbered: false
 
 - title: Preprocessing
-  url: /features/markdown/Preprocessing
-  expand_sections: true
-  sections:
-  - title: Preprocessing with Nipype Quickstart
-    url: /features/notebooks/6_Nipype_Quickstart
-    not_numbered: true
-  - title: Building Preprocessing Workflows with Nipype
-    url: /features/notebooks/7_Nipype_Preprocessing
-    not_numbered: true
-  - title: Introduction to Automated Preprocessing with fmriprep
-    url: /features/notebooks/8_fmriprep_tutorial
-    not_numbered: true
+  url: /features/notebooks/7_Preprocessing
 
 - title: Introduction to the General Linear Model
   url: /features/notebooks/9_GLM
