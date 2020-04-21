@@ -107,7 +107,7 @@
   url: /features/notebooks/7_Preprocessing
 
 - title: Introduction to the General Linear Model
-  url: /features/notebooks/9_GLM
+  url: /features/notebooks/8_GLM
   not_numbered: false
   expand_sections: true
   sections:
