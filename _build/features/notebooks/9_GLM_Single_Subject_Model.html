@@ -1,0 +1,1903 @@
+---
+redirect_from:
+  - "/features/notebooks/9-glm-single-subject-model"
+interact_link: content/features/notebooks/9_GLM_Single_Subject_Model.ipynb
+kernel_name: python3
+kernel_path: content/features/notebooks
+has_widgets: false
+title: |-
+  Modeling Single Subject Data
+pagenum: 18
+prev_page:
+  url: /features/notebooks/8_GLM.html
+next_page:
+  url: /features/notebooks/11_Group_Analysis.html
+suffix: .ipynb
+search: our regressors using model data design variance regressor matrix lets single different plot method filter also signal glm brain tutorial not file head often orthogonalization results build linear processing only create collinearity any include motion threshold voxel need regions task types here multicollinearity x between values image smoothing contrast apply involved specific e designmatrix tr sure hrf convolve want regression y simply procedure artifacts might take common high pass intercept average associated parameters motor subject its working means estimate noise variables contrasts dataset visual across conditions reflect frequency useful recall function standard s impact png images inflation factor example vif
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Modeling Single Subject Data</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Single-Subject-First-Level-Models">Single Subject First Level Models<a class="anchor-link" href="#Single-Subject-First-Level-Models"> </a></h1><p><em>Written by Luke Chang</em></p>
+<p>Now that we have learned the basics of the GLM using simulations, it's time to apply this to working with real data. The first step in fMRI data analysis is to build a model for each subject to predict the activation in a single voxel over the entire scanning session. To do this, we need to build a design matrix for our general linear model. We expect distinct brain regions to be involved in processing specific aspects of our task. This means that we will construct separate regressors that model different brain processes.</p>
+<p>In this tutorial, we will learn how to build and estimate a single subject first-level model and will cover the following topics:</p>
+<ul>
+<li>Building a design matrix</li>
+<li>Modeling noise in the GLM with nuisance variables</li>
+<li>Estimating GLM </li>
+<li>Performing basic contrasts</li>
+</ul>
+<h1 id="Dataset">Dataset<a class="anchor-link" href="#Dataset"> </a></h1><p>We will continue to work with the Pinel Localizer dataset from our preprocessing examples.</p>
+<p>The Pinel Localizer task was designed to probe several different types of basic cognitive processes, such as visual perception, finger tapping, language, and math. Several of the tasks are cued by reading text on the screen (i.e., visual modality) and also by hearing auditory instructions (i.e., auditory modality). The trials are randomized across conditions and have been optimized to maximize efficiency for a rapid event related design. There are 100 trials in total over a 5-minute scanning session. Read the original <a href="https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91">paper</a> for more specific details about the task and the <a href="https://doi.org/10.1016/j.neuroimage.2015.09.052">dataset paper</a>.</p>
+<p>This dataset is well suited for these tutorials as it is (a) publicly available to anyone in the world, (b) relatively small (only about 5min), and (c) provides many options to create different types of contrasts.</p>
+<p>There are a total of 94 subjects available, but we will primarily only be working with a smaller subset of 10-20 participants. See our tutorial on how to download the data if you are not taking the Psych60 version of the class.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Building-a-Design-Matrix">Building a Design Matrix<a class="anchor-link" href="#Building-a-Design-Matrix"> </a></h1><p>First, we will learn the basics of how to build a design matrix for our GLM.</p>
+<p>Let's load all of the python modules we will need to complete this tutorial.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nib</span>
+<span class="kn">from</span> <span class="nn">nltools.file_reader</span> <span class="kn">import</span> <span class="n">onsets_to_dm</span>
+<span class="kn">from</span> <span class="nn">nltools.stats</span> <span class="kn">import</span> <span class="n">regress</span><span class="p">,</span> <span class="n">zscore</span>
+<span class="kn">from</span> <span class="nn">nltools.data</span> <span class="kn">import</span> <span class="n">Brain_Data</span><span class="p">,</span> <span class="n">Design_Matrix</span>
+<span class="kn">from</span> <span class="nn">nltools.stats</span> <span class="kn">import</span> <span class="n">find_spikes</span> 
+<span class="kn">from</span> <span class="nn">nilearn.plotting</span> <span class="kn">import</span> <span class="n">view_img</span><span class="p">,</span> <span class="n">glass_brain</span><span class="p">,</span> <span class="n">plot_stat_map</span>
+<span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span><span class="p">,</span> <span class="n">BIDSValidator</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data/localizer&#39;</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">derivatives</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/lukechang/anaconda3/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.linear_model.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.linear_model. Anything that cannot be imported from sklearn.linear_model is now part of the private API.
+  warnings.warn(message, FutureWarning)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To build the design matrix, we will be using the Design_Matrix class from the nltools toolbox.  First, we use pandas to load the text file that contains the onset and duration for each condition of the task. Rows reflect measurements in time sampled at 1/tr cycles per second. Columns reflect distinct conditions. Conditions are either on or off. We then cast this Pandas DataFrame as a Design_Matrix object. Be sure to specify the sampling frequency, which is $\frac{1}{tr}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_bids_events</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Create a design_matrix instance from BIDS event file&#39;&#39;&#39;</span>
+    
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get_tr</span><span class="p">()</span>
+    <span class="n">n_tr</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">onsets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;events&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">onsets</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Onset&#39;</span><span class="p">,</span> <span class="s1">&#39;Duration&#39;</span><span class="p">,</span> <span class="s1">&#39;Stim&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">onsets_to_dm</span><span class="p">(</span><span class="n">onsets</span><span class="p">,</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">,</span> <span class="n">run_length</span><span class="o">=</span><span class="n">n_tr</span><span class="p">)</span>
+
+<span class="n">dm</span> <span class="o">=</span> <span class="n">load_bids_events</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="s1">&#39;S01&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The Design_Matrix class is built on top of Pandas DataFrames and retains most of that functionality. There are additional methods to help with building design matrices. Be sure to check out this <a href="https://neurolearn.readthedocs.io/en/latest/auto_examples/01_DataOperations/plot_design_matrix.html#sphx-glr-auto-examples-01-dataoperations-plot-design-matrix-py">tutorial</a> for more information about how to use this tool.</p>
+<p>We can check out details about the data using the <code>.info()</code> method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;nltools.data.design_matrix.Design_Matrix&#39;&gt;
+RangeIndex: 128 entries, 0 to 127
+Data columns (total 10 columns):
+ #   Column                   Non-Null Count  Dtype  
+---  ------                   --------------  -----  
+ 0   video_computation        128 non-null    float64
+ 1   horizontal_checkerboard  128 non-null    float64
+ 2   audio_right_hand         128 non-null    float64
+ 3   audio_sentence           128 non-null    float64
+ 4   video_right_hand         128 non-null    float64
+ 5   audio_left_hand          128 non-null    float64
+ 6   video_left_hand          128 non-null    float64
+ 7   vertical_checkerboard    128 non-null    float64
+ 8   audio_computation        128 non-null    float64
+ 9   video_sentence           128 non-null    float64
+dtypes: float64(10)
+memory usage: 10.1 KB
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also view the raw design matrix as a dataframe just like pd.Dataframe.  We use the <code>.head()</code> method to just post the first few rows.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_computation</th>
+      <th>horizontal_checkerboard</th>
+      <th>audio_right_hand</th>
+      <th>audio_sentence</th>
+      <th>video_right_hand</th>
+      <th>audio_left_hand</th>
+      <th>video_left_hand</th>
+      <th>vertical_checkerboard</th>
+      <th>audio_computation</th>
+      <th>video_sentence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can plot each regressor's time course using the <code>.plot()</code> method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb089200b10&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_10_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This plot can be useful sometimes, but here there are too many regressors, which makes it difficult to see what is going on.</p>
+<p>Often,  <code>.heatmap()</code> method provides a more useful visual representation of the design matrix.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_12_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="HRF-Convolution">HRF Convolution<a class="anchor-link" href="#HRF-Convolution"> </a></h2><p>Recall what we learned about convolution in our signal processing tutorial. We can now convolve all of the onset regressors with an HRF function using the <code>.convolve()</code> method. By default it will convolve all regressors with the standard double gamma HRF function, though you can specify custom ones and also specific regressors to convolve. Check out the docstrings for more information by adding a <code>?</code> after the function name. If you are interested in learning more about different ways to model the HRF using temporal basis functions, watch this <a href="https://www.youtube.com/watch?v=YfeMIcDWwko&amp;t=9s">video</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>
+<span class="n">dm_conv</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_14_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can see that each of the regressors is now  bit blurrier and now has the shape of an HRF function. We can plot a single regoressor to see this more clearly using the <code>.plot()</code> method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">dm_conv</span><span class="p">[</span><span class="s1">&#39;horizontal_checkerboard_c0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb07b27bed0&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_16_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Maybe we want to plot both of the checkerboard regressors.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">dm_conv</span><span class="p">[[</span><span class="s1">&#39;horizontal_checkerboard_c0&#39;</span><span class="p">,</span><span class="s1">&#39;vertical_checkerboard_c0&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb0b8ed9290&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_18_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Multicollinearity">Multicollinearity<a class="anchor-link" href="#Multicollinearity"> </a></h2><p>In statistics, collinearity or multicollinearity is when one regressor can be strongly linearly predicted from the others. While this does not actually impact the model's ability to predict data as a whole, it will impact our ability to accurately attribute variance to a single regressor. Recall that in multiple regression, we are estimating the independent variance from each regressor from <code>X</code> on <code>Y</code>. If there is substantial overlap between the regressors, then the estimator can not attribute the correct amount of variance each regressor accounts for <code>Y</code> and the coefficients can become unstable. A more intuitive depiction of this problem can be seen in the venn diagram. The dark orange area in the center at the confluence of all 3 circles reflects the shared variance between <code>X1</code> and <code>X2</code> on <code>Y</code>. If this area becomes bigger, the unique variances become smaller and individually reflect less of the total variance on <code>Y</code>.</p>
+<p><img src="../../images/single_subject/MultipleRegression.png" alt="MultipleRegression.png"></p>
+<p>One way to evaluate multicollinearity is to examine the pairwise correlations between each regressor. We plot the correlation matrix as a heatmap.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">dm_conv</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb089125e10&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_20_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Variance-Inflation-Factor">Variance Inflation Factor<a class="anchor-link" href="#Variance-Inflation-Factor"> </a></h3><p>Pairwise correlations will let you know if any regressor is correlated with another regressor. However, we are even more concerned about being able to explain any regressor as a linear combination of the other regressors. For example, <em>can one regressor be explained by three or more of the remaining regressors?</em> The variance inflation factor (VIF) is a metric that can help us detect multicollinearity. Specifically, it is simply the ratio of variance in a model with multiple terms, divided by the variance of a model with only a single term. This ratio reduces to the following formula:</p>
+$$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regressing the $jth$ predictor on the remaining predictors. This means that each regressor $j$ will have it's own variance inflation factor.</p>
+<p>How should we interpret the VIF values?</p>
+<p>A VIF of 1 indicates that there is no correlation among the $jth$ predictor and the remaining variables. Values greater than 4 should be investigated further, while VIFs exceeding 10 indicate significant multicollinearity and will likely require intervention.</p>
+<p>Here we will use the <code>.vif()</code> method to calculate the variance inflation factor for our design matrix.</p>
+<p>See this <a href="https://newonlinecourses.science.psu.edu/stat501/node/347/">overview</a> for more details on VIFs.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dm_conv</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">dm_conv</span><span class="o">.</span><span class="n">vif</span><span class="p">(),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Variance Inflation Factor&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Text(0, 0.5, &#39;Variance Inflation Factor&#39;)</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_22_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Orthogonalization">Orthogonalization<a class="anchor-link" href="#Orthogonalization"> </a></h3><p>There are many ways to deal with collinearity. In practice, don't worry about collinearity between your covariates. The more pernicious issues are collinearity in your experimental design.</p>
+<p>It is commonly thought that using a procedure called orthogonalization should be used to address issues of multicollinearity. In linear algebra, orthogonalization is the process of prioritizing shared variance between regressors to a single regressor. Recall that the standard GLM already accounts for shared variance by removing it from individual regressors. Orthogonalization allows a user to assign that variance to a specific regressor. However, the process of performing this procedure can introduce artifact into the model and often changes the interpretation of the beta weights in unanticipated ways.</p>
+<p><img src="../../images/single_subject/Orthogonalization.png" alt="Orthogonalization.png"></p>
+<p>In general, we do not recommend using orthogonalization in most use cases, with the exception of centering regressor variables. We encourage the interested reader to review this very useful <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0126255">overview</a> of collinearity and orthogonalization by Jeanette Mumford and colleagues.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Nuisance-Variables">Nuisance Variables<a class="anchor-link" href="#Nuisance-Variables"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;DEtwsFdFwYc&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/DEtwsFdFwYc"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Filtering">Filtering<a class="anchor-link" href="#Filtering"> </a></h2><p>Recall from our signal processing tutorial, that there are often other types of artifacts in our signal that might take the form of slow or fast oscillations. It is common to apply a high pass filter to the data to remove low frequency artifacts. Often this can also be addressed by simply using a few polynomials to model these types of trends. If we were to directly filter the brain data using something like a butterworth filter as we did in our signal processing tutorial, we would also need to apply it to our design matrix to make sure that we don't have any low frequency drift in experimental design. One easy way to simultaneously perform both of these procedures is to simply build a filter into the design matrix. We will be using a discrete cosine transform (DCT), which is a basis set of cosine regressors of varying frequencies up to a filter cutoff of a specified number of seconds. Many software use 100s or 128s as a default cutoff, but we encourage caution that the filter cutoff isn't too short for your specific experimental design. Longer trials will require longer filter cutoffs. See this <a href="https://www.sciencedirect.com/science/article/pii/S1053811900906098">paper</a> for a more technical treatment of using the DCT as a high pass filter in fMRI data analysis. In addition, here is a more detailed discussion about <a href="http://mindhive.mit.edu/node/116">filtering</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt</span> <span class="o">=</span> <span class="n">dm_conv</span><span class="o">.</span><span class="n">add_dct_basis</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">10</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb099597710&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_28_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt</span> <span class="o">=</span> <span class="n">dm_conv</span><span class="o">.</span><span class="n">add_dct_basis</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_29_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Intercepts">Intercepts<a class="anchor-link" href="#Intercepts"> </a></h2><p>We almost always want to include an intercept in our model. This will usually reflect the baseline, or the average voxel response during the times that are not being modeled as a regressor. It is important to note that you must have some sparsity to your model, meaning that you can't model every point in time, as this will make your model rank deficient and unestimable.</p>
+<p>If you are concatenating runs and modeling them all together, it is recommended to include a separate intercept for each run, but not for the entire model. This means that the average response within a voxel might differ across runs. You can add an intercept by simply creating a new column of ones (e.g., <code>dm['Intercept] = 1</code>). Here we provide an example using the <code>.add_poly()</code> method, which adds an intercept by default.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt_poly</span> <span class="o">=</span> <span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">add_poly</span><span class="p">()</span>
+<span class="n">dm_conv_filt_poly</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_31_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Linear-Trends">Linear Trends<a class="anchor-link" href="#Linear-Trends"> </a></h2><p>We also often want to remove any slow drifts in our data.  This might include a linear trend and a quadratic trend. We can also do this with the <code>.add_poly()</code> method and adding all trends up to an order of 2 (e.g., quadratic). We typically use this approach rather than applying a high pass filter when working with naturalistic viewing data.</p>
+<p>Notice that these do not appear to be very different from the high pass filter basis set. It's actually okay if there is collinearity in our covariate regressors. Collinearity is only a problem when it correlates with the task regressors as it means that we will not be able to uniquely model the variance. The DCT can occasionally run into edge artifacts, which can be addressed by the linear trend.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt_poly</span> <span class="o">=</span> <span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">add_poly</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dm_conv_filt_poly</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_33_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Noise-Covariates">Noise Covariates<a class="anchor-link" href="#Noise-Covariates"> </a></h2><p>Another important thing to consider is removing variance associated with head motion. Remember the preprocessed data has already realigned each TR in space, but head motion itself can nonlinearly distort the magnetic field. There are several common strategies for trying to remove artifacts associated with head motion. One is using a data driven denoising algorithm like ICA and combining it with a classifer such as FSL's <a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX">FIX</a> module. Another approach is to include the amount of correction that needed to be applied to align each TR. For example, if someone moved a lot in a single TR, there will be a strong change in their realignment parameters. It is common to include the 6 parameters as covariates in your regression model. However, as we already noted, often motion can have a nonlinear relationship with signal intensity, so it is often good to include other transformations of these signals to capture nonlinear signal changes resulting from head motion. We typically center the six realigment parameters (or zscore) and then additionally add a quadratic version, a derivative, and the square of the derivatives, which becomes 24 additional regressors.</p>
+<p>In addition, it is common to model out big changes using a regressor with a single value indicating the timepoint of the movement. This will be zeros along time, with a single value of one at the time point of interest. This effectively removes any variance associated with this single time point. It is important to model each "spike" as a separate regressor as there might be distinct spatial patterns associated with different types of head motions. We strongly recommond against using a single continuous frame displacement metric as is often recommended by the fMRIprep team. This assumes (1) that there is a <em>linear</em> relationship between displacement and voxel activity, and (2) that there is a <em>single</em> spatial generator or pattern associated with frame displacement. As we saw in the ICA noise lab, there might be many different types of head motion artifacts. This procedure of including spikes as nuisance regressors is mathematically equivalent to censoring your data and removing the bad TRs. We think it is important to do this in the context of the GLM as it will also reduce the impact if it happens to covary with your task.</p>
+<p>First, let's load preprocessed data from one participant.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="s1">&#39;S01&#39;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;nii.gz&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's inspect the realignment parameters for this participant. These pertain to how much each volume had to be moved in the (X,Y,Z) planes and rotations around each axis. We are standardizing the data so that rotations and translations are on the same scale.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">covariates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="s1">&#39;S01&#39;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.tsv&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">mc</span> <span class="o">=</span> <span class="n">covariates</span><span class="p">[[</span><span class="s1">&#39;trans_x&#39;</span><span class="p">,</span><span class="s1">&#39;trans_y&#39;</span><span class="p">,</span><span class="s1">&#39;trans_z&#39;</span><span class="p">,</span><span class="s1">&#39;rot_x&#39;</span><span class="p">,</span> <span class="s1">&#39;rot_y&#39;</span><span class="p">,</span> <span class="s1">&#39;rot_z&#39;</span><span class="p">]]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">zscore</span><span class="p">(</span><span class="n">mc</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x7fb0b91d7bd0&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb0b91d7450&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb0b91d7d10&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb0b8ed93d0&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb0b8ed96d0&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb0a97bbb10&gt;]</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_37_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, let's build the 24 covariates related to head motion. We include the 6 realignment parameters that have been standardized. In addition, we add their quadratic, their derivative, and the square of their derivative.</p>
+<p>We can create a quick visualization to see what the overall pattern is across the different regressors.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">make_motion_covariates</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+    <span class="n">z_mc</span> <span class="o">=</span> <span class="n">zscore</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span>
+    <span class="n">all_mc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">z_mc</span><span class="p">,</span> <span class="n">z_mc</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">z_mc</span><span class="o">.</span><span class="n">diff</span><span class="p">(),</span> <span class="n">z_mc</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">all_mc</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">all_mc</span><span class="p">,</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+
+<span class="n">tr</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get_tr</span><span class="p">()</span>
+<span class="n">mc_cov</span> <span class="o">=</span> <span class="n">make_motion_covariates</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">tr</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">mc_cov</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb099c18f50&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_39_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's try to find some spikes in the data. This is performed by finding TRs that exceed a global mean threshold and also that exceed an overall average intensity change by a threshold.  We are using an arbitrary cutoff of 3 standard deviations as a threshold.</p>
+<p>First, let's plot the average signal intensity across all voxels over time.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Text(0, 0.5, &#39;Intensity&#39;)</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_41_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice there is a clear slow drift in the signal that we will need to remove with our high pass filter.</p>
+<p>Now, let's see if there are any spikes in the data that exceed our threshold. What happens if we use a different threshold?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">find_spikes</span><span class="p">(</span><span class="n">global_spike_cutoff</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">diff_spike_cutoff</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:],</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">spikes</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">a</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb07d443090&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_43_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For this subject, our spike identification procedure only found a single spike. Let's add all of these covariate to our design matrix.</p>
+<p>In this example, we will append each of these additional matrices to our main design matrix.</p>
+<p><strong>Note</strong>: <code>.append()</code> requires that all matrices are a design_matrix with the same sampling frequency.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt_poly_cov</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dm_conv_filt_poly</span><span class="p">,</span> <span class="n">mc_cov</span><span class="p">,</span> <span class="n">spikes</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dm_conv_filt_poly_cov</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_45_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Estimate-GLM-for-all-voxels">Estimate GLM for all voxels<a class="anchor-link" href="#Estimate-GLM-for-all-voxels"> </a></h1><p>Now we are ready to estimate the regression model for all voxels.</p>
+<p>We will assign the design_matrix object to the <code>.X</code> attribute of our <code>Brain_Data</code> instance.</p>
+<p>Then we simply need to run the <code>.regress()</code> method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">dm_conv_filt_poly_cov</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">regress</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dict_keys([&#39;beta&#39;, &#39;t&#39;, &#39;p&#39;, &#39;sigma&#39;, &#39;residual&#39;])
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, it's done! Let's take a look at the results.</p>
+<p>The stats variable is a dictionary with the main results from the regression: a brain image with all of the betas for each voxel, a correspondign image of t-values, p-values, standard error of the estimate, and residuals.</p>
+<p>Remember we have run the same regression model separately on each voxel of the brain.</p>
+<p>Let's take a look at one of the regressors. The names of each of them are in the column names of the design matrix, which is in the <code>data.X</code> field.  We can print them to see the names. Let's plot the first one, which is a horizontal checkerboard.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Index([&#39;video_computation_c0&#39;, &#39;horizontal_checkerboard_c0&#39;,
+       &#39;audio_right_hand_c0&#39;, &#39;audio_sentence_c0&#39;, &#39;video_right_hand_c0&#39;,
+       &#39;audio_left_hand_c0&#39;, &#39;video_left_hand_c0&#39;, &#39;vertical_checkerboard_c0&#39;,
+       &#39;audio_computation_c0&#39;, &#39;video_sentence_c0&#39;, &#39;cosine_1&#39;, &#39;cosine_2&#39;,
+       &#39;cosine_3&#39;, &#39;cosine_4&#39;, &#39;poly_0&#39;, &#39;poly_1&#39;, &#39;poly_2&#39;, &#39;trans_x&#39;,
+       &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;,
+       &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;,
+       &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;,
+       &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;diff_spike1&#39;, &#39;diff_spike2&#39;, &#39;diff_spike3&#39;],
+      dtype=&#39;object&#39;)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Brain_Data instances have their own plotting methods. We will be using <code>.iplot()</code> here, which can allow us to interactively look at all of the values.</p>
+<p>If you would like to see the top values, we can quickly apply a threshold. Try using <code>95</code>% threshold, and be sure to click the <code>percentile_threshold</code> option.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+ 
+ 
+<div id="8632790b-dc68-4afe-a105-6cac9fb4e369"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#8632790b-dc68-4afe-a105-6cac9fb4e369');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7cf9b75e968d40d5a75f69aeb6ee45cb", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Smoothing">Smoothing<a class="anchor-link" href="#Smoothing"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To increase the signal to noise ratio and clean up the data, it is common to apply spatial smoothing to the image.</p>
+<p>Here we will convolve the image with a 3-D gaussian kernel, with a 6mm full width half maximum (FWHM) using the <code>.smooth()</code> method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's take a look and see how this changes the image.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+ 
+ 
+<div id="c715a8eb-07eb-4149-b7fb-a5e48b214ef8"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "847e94d80db24070af0c788014533956", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Save-Image">Save Image<a class="anchor-link" href="#Save-Image"> </a></h2><p>We will frequently want to save different brain images we are working with to a nifti file. This is useful for saving intermediate work, or sharing our results with others. This is easy with the <code>.write()</code> method. Be sure to specify a path and file name for the file.</p>
+<p><strong>Note</strong>: You can only write to folders where you have permission. Try changing the path to your own directory.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;denoised_smoothed_preprocessed_fMRI_bold.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Contrasts">Contrasts<a class="anchor-link" href="#Contrasts"> </a></h1><p>Now that we have estimated our model, we will likely want to create contrasts to examine brain activation to different conditions.</p>
+<p>This procedure is identical to those introduced in our GLM tutorial.</p>
+<p>First, let's try making a simple contrast where we average only the regressors pertaining to motor. This is essentially summing all of the motor regressors. To take the mean we need to divide by the number of regressors.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;NRunOo7EKD8&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/NRunOo7EKD8"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]))</span>
+<span class="n">c1</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+
+<span class="n">motor</span> <span class="o">=</span> <span class="n">smoothed</span> <span class="o">*</span> <span class="n">c1</span>
+
+<span class="n">motor</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Index([&#39;video_computation_c0&#39;, &#39;horizontal_checkerboard_c0&#39;,
+       &#39;audio_right_hand_c0&#39;, &#39;audio_sentence_c0&#39;, &#39;video_right_hand_c0&#39;,
+       &#39;audio_left_hand_c0&#39;, &#39;video_left_hand_c0&#39;, &#39;vertical_checkerboard_c0&#39;,
+       &#39;audio_computation_c0&#39;, &#39;video_sentence_c0&#39;, &#39;cosine_1&#39;, &#39;cosine_2&#39;,
+       &#39;cosine_3&#39;, &#39;cosine_4&#39;, &#39;poly_0&#39;, &#39;poly_1&#39;, &#39;poly_2&#39;, &#39;trans_x&#39;,
+       &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;,
+       &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;,
+       &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;,
+       &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;diff_spike1&#39;, &#39;diff_spike2&#39;, &#39;diff_spike3&#39;],
+      dtype=&#39;object&#39;)
+[0.   0.   0.25 0.   0.25 0.25 0.25 0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
+ 0.   0.  ]
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+ 
+ 
+<div id="026980cc-aac8-41ad-b80f-5c7baf88cdcf"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#026980cc-aac8-41ad-b80f-5c7baf88cdcf');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "a2c34fc5d8394e8791b5c1a7bbaf2021", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok, now we can clearly see regions specifically involved in motor processing.</p>
+<p>Now let's see which regions are more active when making motor movements with our right hand compared to our left hand.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">c_rvl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]))</span>
+<span class="n">c_rvl</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="n">motor_rvl</span> <span class="o">=</span> <span class="n">smoothed</span> <span class="o">*</span> <span class="n">c_rvl</span>
+
+<span class="n">motor_rvl</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+ 
+ 
+<div id="47d2b807-7f36-4454-9aac-d9ee221b2556"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#47d2b807-7f36-4454-9aac-d9ee221b2556');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8bf418029f674fedadcd8bdd2faceee1", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What do you see?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Exercises">Exercises<a class="anchor-link" href="#Exercises"> </a></h1><p>For homework, let's get a better handle on how to play with our data and test different hypotheses.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing?">1. Which regions are more involved with visual compared to auditory sensory processing?<a class="anchor-link" href="#1.-Which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing?"> </a></h2><ul>
+<li>Create a contrast to test this hypothesis</li>
+<li>plot the results</li>
+<li>write the file to your output folder.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Which-regions-are-more-involved-in-processing-numbers-compared-to-words?">2. Which regions are more involved in processing numbers compared to words?<a class="anchor-link" href="#2.-Which-regions-are-more-involved-in-processing-numbers-compared-to-words?"> </a></h2><ul>
+<li>Create a contrast to test this hypothesis</li>
+<li>plot the results</li>
+<li>write the file to your output folder.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-(e.g.,-language-and-math)?">3. Which regions are more involved with motor compared to cognitive processes (e.g., language and math)?<a class="anchor-link" href="#3.-Which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-(e.g.,-language-and-math)?"> </a></h2><ul>
+<li>Create a contrast to test this hypothesis</li>
+<li>plot the results</li>
+<li>write the file to your output folder.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-How-are-your-results-impacted-by-different-smoothing-kernels?">4. How are your results impacted by different smoothing kernels?<a class="anchor-link" href="#4.-How-are-your-results-impacted-by-different-smoothing-kernels?"> </a></h2><ul>
+<li>Pick two different sized smoothing kernels and create two new brain images with each smoothing kernel</li>
+<li>Pick any contrast of interest to you and evaluate the impact of smoothing on the contrast.</li>
+<li>plot the results</li>
+<li>write the file to your output folder.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
