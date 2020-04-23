@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: /features/notebooks/10_GLM_Single_Subject_Model.html
 suffix: .ipynb
-search: our model beta faces data design hat linear y using glm standard lets might watch not voxel also face efficiency simulated com sigma estimate contrast condition objects single need video regression www signal where visual exercise error general statistics youtube v different experimental contrasts parameters processing response epsilon cdot estimator yi brain fmri matrix level object noise timeseries x parameter between errors because analysis simulation e function n just regressor frac t inferences simple least course concepts provide much example important specific particular around algebra mean regressors series well method add simply values length zero should intercept plot actually interval
+search: our model beta faces data design hat linear watch y glm using standard lets might not com voxel also face simulated sigma estimate video www condition objects single need regression youtube v signal where visual exercise error general statistics different experimental efficiency contrasts parameters processing response epsilon cdot estimator yi brain contrast fmri matrix level object noise timeseries x parameter between errors because analysis simulation e function n just regressor frac t inferences simple least course concepts provide much example important specific particular around algebra mean regressors series well method add simply values length zero fit should intercept plot actually
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -743,6 +743,7 @@ $$Voxel = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects 
 $$\hat{\beta} = (X^T X)^{-1}X^TY$$<p>There is also maximum likelihood estimator, which should produce an almost identical result to the ordinary least squares estimator when the error terms are normally distributed.</p>
 $$L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt(2\pi\sigma^2)} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}$$<p>where</p>
 $$\mathcal{N}(0,\sigma^{2})$$<p>For this class, we will primarily be focusing on the Ordinary Least Squares Estimator. In fact, just to demonstrate that the math is actually relatively straightforward, we will write our own function for the estimator using the linear algebra formulation. In practice, we typically will use a premade function, which is usually slightly more computationally efficient and will also calculate standard errors, etc.</p>
+<p>For a more in depth overview of GLM estimation, watch this <a href="https://www.youtube.com/watch?v=Ab-5AbJ8gAs">video</a> by Tor Wager and Martin Lindquist.</p>
 
 </div>
 </div>
@@ -779,7 +780,7 @@ $$\mathcal{N}(0,\sigma^{2})$$<p>For this class, we will primarily be focusing on
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>beta Faces - beta Objects: 1.0
+<pre>beta Faces - beta Objects: 0.95
 </pre>
 </div>
 </div>
@@ -1128,7 +1129,7 @@ $$t = \frac{\hat \beta_j}{\hat \sigma_j}$$<p>where $\beta_j$ refers to the estim
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([ 0.35077091, 15.9043135 ,  7.59932637])</pre>
+<pre>array([-0.65716867, 15.83929013,  8.23580115])</pre>
 </div>
 
 </div>
@@ -1180,7 +1181,7 @@ $$t = \frac{\hat \beta_j}{\hat \sigma_j}$$<p>where $\beta_j$ refers to the estim
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[7.26131269e-01 2.69754829e-37 1.14399894e-12]
+<pre>[5.11831798e-01 4.26134329e-37 2.33906074e-14]
 </pre>
 </div>
 </div>
@@ -1191,7 +1192,7 @@ $$t = \frac{\hat \beta_j}{\hat \sigma_j}$$<p>where $\beta_j$ refers to the estim
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.collections.LineCollection at 0x7fbab9a4f890&gt;</pre>
+<pre>&lt;matplotlib.collections.LineCollection at 0x7fe020f135d0&gt;</pre>
 </div>
 
 </div>
@@ -1317,9 +1318,9 @@ $$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects$$<p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{(&#39;[0, 0, 1]&#39;, 0.8685208378484232),
- (&#39;[0, 1, -1]&#39;, 1.143107787787324),
- (&#39;[0, 1, 0]&#39;, 2.011628625635747)}</pre>
+<pre>{(&#39;[0, 0, 1]&#39;, 1.0721521304389894),
+ (&#39;[0, 1, -1]&#39;, 0.8735019759362619),
+ (&#39;[0, 1, 0]&#39;, 1.9456541063752513)}</pre>
 </div>
 
 </div>
@@ -1385,7 +1386,7 @@ $$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$<p>Reducing collinearity or covaria
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[2.553683999619242, 2.5536839996192415, 1.3465769784519137]</pre>
+<pre>[2.44032677542221, 2.5429401030547045, 1.3578767952519295]</pre>
 </div>
 
 </div>
@@ -1436,7 +1437,7 @@ $$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$<p>Reducing collinearity or covaria
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">face</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">hrf</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">hrf</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
 
 <span class="c1"># Estimate Model</span>
-<span class="n">beta</span> <span class="o">=</span> <span class="n">estimate_beta</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">ols_estimator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
 <span class="n">predicted_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
 <span class="n">predicted_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span>
 <span class="n">predicted_ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">Y</span><span class="p">,</span> <span class="n">predicted_y</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
@@ -1459,7 +1460,7 @@ $$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$<p>Reducing collinearity or covaria
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[2.515579145518315, 2.5125914094384942, 1.449084912124725]</pre>
+<pre>[2.5597167760964403, 2.066820546582558, 1.1233445684652128]</pre>
 </div>
 
 </div>
@@ -1510,8 +1511,8 @@ $$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$<p>Reducing collinearity or covaria
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exercise-1.-What-happens-when-we-vary-the-signal-amplitude?">Exercise 1. What happens when we vary the signal amplitude?<a class="anchor-link" href="#Exercise-1.-What-happens-when-we-vary-the-signal-amplitude?"> </a></h2><p>Some signals will be very strong and others weaker. How does the contrast efficiency change when the signal amplitudes are stronger and weaker?</p>
-<p>In this exercise, make a plot showing how the contrast efficiency changes over 3 different levels of signal intensity.</p>
+<h2 id="Exercise-1.-What-happens-when-we-vary-the-signal-amplitude?">Exercise 1. What happens when we vary the signal amplitude?<a class="anchor-link" href="#Exercise-1.-What-happens-when-we-vary-the-signal-amplitude?"> </a></h2><p>Some signals will be very strong and others weaker. How does the model fit change when the signal amplitudes are stronger and weaker?</p>
+<p>In this exercise, make a plot showing how the $r^2$ changes over 3 different levels of signal intensity.</p>
 
 </div>
 </div>
@@ -1522,8 +1523,8 @@ $$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$<p>Reducing collinearity or covaria
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exercise-2.-What-happens-when-we-vary-the-noise?">Exercise 2. What happens when we vary the noise?<a class="anchor-link" href="#Exercise-2.-What-happens-when-we-vary-the-noise?"> </a></h2><p>How does the amount of noise in the data impact our contrast efficiency?</p>
-<p>In this exercise, make a plot showing the contrast efficiency for 3 different levels of simulated noise.</p>
+<h2 id="Exercise-2.-What-happens-when-we-vary-the-noise?">Exercise 2. What happens when we vary the noise?<a class="anchor-link" href="#Exercise-2.-What-happens-when-we-vary-the-noise?"> </a></h2><p>How does the amount of noise in the data impact our model fits?</p>
+<p>In this exercise, make a plot showing the $r^2$ for 3 different levels of simulated noise.</p>
 
 </div>
 </div>
