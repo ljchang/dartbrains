@@ -11,9 +11,9 @@ pagenum: 18
 prev_page:
   url: /features/notebooks/8_GLM.html
 next_page:
-  url: /features/notebooks/11_Group_Analysis.html
+  url: /features/notebooks/10_Group_Analysis.html
 suffix: .ipynb
-search: our regressors using model data design variance regressor matrix lets single different plot method filter also signal glm brain tutorial not file head often orthogonalization results build linear processing only create collinearity any include motion threshold voxel need regions task types here multicollinearity x between values image smoothing contrast apply involved specific e designmatrix tr sure hrf convolve want regression y simply procedure artifacts might take common high pass intercept average associated parameters motor subject its working means estimate noise variables contrasts dataset visual across conditions reflect frequency useful recall function standard s impact png images inflation factor example vif
+search: our regressors model using data design variance lets regressor matrix single different plot method filter also signal glm brain tutorial not file head often orthogonalization results build linear processing only create collinearity any include motion threshold voxel need regions task types here multicollinearity x between values smoothing image contrast apply involved specific contrasts e designmatrix tr sure hrf convolve want regression y simply procedure artifacts might take common high pass intercept average associated parameters motor subject its working means estimate noise variables dataset visual across conditions reflect frequency useful recall function standard s impact png images inflation factor another example
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -138,6 +138,26 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/lukechang/anaconda3/lib/python3.7/site-packages/nltools-0.3.18-py3.7.egg/nltools/file_reader.py:141: UserWarning: Computed onsets for video_right_hand are inconsistent with expected values. Please manually verify the outputted Design_Matrix!
+  f&#34;Computed onsets for {data.Stim.unique()[i]} are inconsistent with expected values. Please manually verify the outputted Design_Matrix!&#34;
+/Users/lukechang/anaconda3/lib/python3.7/site-packages/nltools-0.3.18-py3.7.egg/nltools/file_reader.py:141: UserWarning: Computed onsets for video_left_hand are inconsistent with expected values. Please manually verify the outputted Design_Matrix!
+  f&#34;Computed onsets for {data.Stim.unique()[i]} are inconsistent with expected values. Please manually verify the outputted Design_Matrix!&#34;
+/Users/lukechang/anaconda3/lib/python3.7/site-packages/nltools-0.3.18-py3.7.egg/nltools/file_reader.py:141: UserWarning: Computed onsets for audio_computation are inconsistent with expected values. Please manually verify the outputted Design_Matrix!
+  f&#34;Computed onsets for {data.Stim.unique()[i]} are inconsistent with expected values. Please manually verify the outputted Design_Matrix!&#34;
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -381,7 +401,7 @@ memory usage: 10.1 KB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb089200b10&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb700ed4110&gt;</pre>
 </div>
 
 </div>
@@ -533,7 +553,7 @@ memory usage: 10.1 KB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb07b27bed0&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb69091c990&gt;</pre>
 </div>
 
 </div>
@@ -591,7 +611,7 @@ memory usage: 10.1 KB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb0b8ed9290&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb690964c90&gt;</pre>
 </div>
 
 </div>
@@ -650,7 +670,7 @@ memory usage: 10.1 KB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb089125e10&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb700e335d0&gt;</pre>
 </div>
 
 </div>
@@ -855,7 +875,7 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb099597710&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb69095e390&gt;</pre>
 </div>
 
 </div>
@@ -981,7 +1001,7 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt_poly</span> <span class="o">=</span> <span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">add_poly</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dm_conv_filt_poly</span> <span class="o">=</span> <span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">add_poly</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include_lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dm_conv_filt_poly</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
 </pre></div>
 
@@ -1030,7 +1050,8 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="s1">&#39;S01&#39;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;nii.gz&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sub</span> <span class="o">=</span> <span class="s1">&#39;S01&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">sub</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">&#39;localizer&#39;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;nii.gz&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -1079,12 +1100,12 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[&lt;matplotlib.lines.Line2D at 0x7fb0b91d7bd0&gt;,
- &lt;matplotlib.lines.Line2D at 0x7fb0b91d7450&gt;,
- &lt;matplotlib.lines.Line2D at 0x7fb0b91d7d10&gt;,
- &lt;matplotlib.lines.Line2D at 0x7fb0b8ed93d0&gt;,
- &lt;matplotlib.lines.Line2D at 0x7fb0b8ed96d0&gt;,
- &lt;matplotlib.lines.Line2D at 0x7fb0a97bbb10&gt;]</pre>
+<pre>[&lt;matplotlib.lines.Line2D at 0x7fb68b61c190&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb68b61cd10&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb68b61c390&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb68b61c110&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb68b61cc50&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fb68b61c290&gt;]</pre>
 </div>
 
 </div>
@@ -1151,7 +1172,7 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb099c18f50&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb68bb6d210&gt;</pre>
 </div>
 
 </div>
@@ -1274,7 +1295,7 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb07d443090&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fb7010e7950&gt;</pre>
 </div>
 
 </div>
@@ -1350,6 +1371,145 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Smoothing">Smoothing<a class="anchor-link" href="#Smoothing"> </a></h1>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To increase the signal to noise ratio and clean up the data, it is common to apply spatial smoothing to the image.</p>
+<p>Here we will convolve the image with a 3-D gaussian kernel, with a 6mm full width half maximum (FWHM) using the <code>.smooth()</code> method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fwhm</span><span class="o">=</span><span class="mi">6</span>
+<span class="n">smoothed</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="n">fwhm</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's take a look and see how this changes the image.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_50_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/9_GLM_Single_Subject_Model_51_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Estimate-GLM-for-all-voxels">Estimate GLM for all voxels<a class="anchor-link" href="#Estimate-GLM-for-all-voxels"> </a></h1><p>Now we are ready to estimate the regression model for all voxels.</p>
 <p>We will assign the design_matrix object to the <code>.X</code> attribute of our <code>Brain_Data</code> instance.</p>
 <p>Then we simply need to run the <code>.regress()</code> method.</p>
@@ -1366,8 +1526,8 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">dm_conv_filt_poly_cov</span>
-<span class="n">stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">regress</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">dm_conv_filt_poly_cov</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">smoothed</span><span class="o">.</span><span class="n">regress</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
@@ -1415,7 +1575,7 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">smoothed</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1433,11 +1593,11 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
        &#39;audio_right_hand_c0&#39;, &#39;audio_sentence_c0&#39;, &#39;video_right_hand_c0&#39;,
        &#39;audio_left_hand_c0&#39;, &#39;video_left_hand_c0&#39;, &#39;vertical_checkerboard_c0&#39;,
        &#39;audio_computation_c0&#39;, &#39;video_sentence_c0&#39;, &#39;cosine_1&#39;, &#39;cosine_2&#39;,
-       &#39;cosine_3&#39;, &#39;cosine_4&#39;, &#39;poly_0&#39;, &#39;poly_1&#39;, &#39;poly_2&#39;, &#39;trans_x&#39;,
+       &#39;cosine_3&#39;, &#39;cosine_4&#39;, &#39;poly_0&#39;, &#39;poly_1&#39;, &#39;poly_2&#39;, &#39;poly_3&#39;,
+       &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;,
        &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;,
        &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;,
-       &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;,
-       &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;diff_spike1&#39;, &#39;diff_spike2&#39;, &#39;diff_spike3&#39;],
+       &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;diff_spike1&#39;, &#39;diff_spike2&#39;, &#39;diff_spike3&#39;],
       dtype=&#39;object&#39;)
 </pre>
 </div>
@@ -1486,106 +1646,13 @@ $$VIF_j=\frac{1}{1-R_i^2}$$<p>Where $R_j^2$ is the $R^2$ value obtained by regre
 
  
  
-<div id="8632790b-dc68-4afe-a105-6cac9fb4e369"></div>
+<div id="6ac9a0ac-384b-4ef2-bb61-cff1b8b2ca98"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#8632790b-dc68-4afe-a105-6cac9fb4e369');
+var element = $('#6ac9a0ac-384b-4ef2-bb61-cff1b8b2ca98');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "7cf9b75e968d40d5a75f69aeb6ee45cb", "version_major": 2, "version_minor": 0}
-</script>
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Smoothing">Smoothing<a class="anchor-link" href="#Smoothing"> </a></h2>
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>To increase the signal to noise ratio and clean up the data, it is common to apply spatial smoothing to the image.</p>
-<p>Here we will convolve the image with a 3-D gaussian kernel, with a 6mm full width half maximum (FWHM) using the <code>.smooth()</code> method.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's take a look and see how this changes the image.</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-
-
- 
- 
-<div id="c715a8eb-07eb-4149-b7fb-a5e48b214ef8"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
-</script>
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "847e94d80db24070af0c788014533956", "version_major": 2, "version_minor": 0}
+{"model_id": "6f91755cf56e4335a11b7ee33eb0bd0a", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -1616,7 +1683,7 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;denoised_smoothed_preprocessed_fMRI_bold.nii.gz&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smoothed</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s1">_betas_denoised_smoothed</span><span class="si">{</span><span class="n">fwhm</span><span class="si">}</span><span class="s1">_preprocessed_fMRI_bold.nii.gz&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1632,7 +1699,7 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Contrasts">Contrasts<a class="anchor-link" href="#Contrasts"> </a></h1><p>Now that we have estimated our model, we will likely want to create contrasts to examine brain activation to different conditions.</p>
 <p>This procedure is identical to those introduced in our GLM tutorial.</p>
-<p>First, let's try making a simple contrast where we average only the regressors pertaining to motor. This is essentially summing all of the motor regressors. To take the mean we need to divide by the number of regressors.</p>
+<p>Let's watch another video by Tor Wager to better understand contrasts at the first-level model stage.</p>
 
 </div>
 </div>
@@ -1646,7 +1713,7 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;NRunOo7EKD8&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;7MibM1ATai4&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1665,7 +1732,7 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
 <iframe
     width="400"
     height="300"
-    src="https://www.youtube.com/embed/NRunOo7EKD8"
+    src="https://www.youtube.com/embed/7MibM1ATai4"
     frameborder="0"
     allowfullscreen
 ></iframe>
@@ -1682,18 +1749,29 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
 
 <div class="jb_cell">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, let's try making a simple contrast where we average only the regressors pertaining to motor. This is essentially summing all of the motor regressors. To take the mean we need to divide by the number of regressors.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">smoothed</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
 <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]))</span>
 <span class="n">c1</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
 
-<span class="n">motor</span> <span class="o">=</span> <span class="n">smoothed</span> <span class="o">*</span> <span class="n">c1</span>
+<span class="n">motor</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c1</span>
 
 <span class="n">motor</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
 </pre></div>
@@ -1713,16 +1791,16 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
        &#39;audio_right_hand_c0&#39;, &#39;audio_sentence_c0&#39;, &#39;video_right_hand_c0&#39;,
        &#39;audio_left_hand_c0&#39;, &#39;video_left_hand_c0&#39;, &#39;vertical_checkerboard_c0&#39;,
        &#39;audio_computation_c0&#39;, &#39;video_sentence_c0&#39;, &#39;cosine_1&#39;, &#39;cosine_2&#39;,
-       &#39;cosine_3&#39;, &#39;cosine_4&#39;, &#39;poly_0&#39;, &#39;poly_1&#39;, &#39;poly_2&#39;, &#39;trans_x&#39;,
+       &#39;cosine_3&#39;, &#39;cosine_4&#39;, &#39;poly_0&#39;, &#39;poly_1&#39;, &#39;poly_2&#39;, &#39;poly_3&#39;,
+       &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;,
        &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;,
        &#39;trans_z&#39;, &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;,
-       &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;trans_x&#39;, &#39;trans_y&#39;, &#39;trans_z&#39;, &#39;rot_x&#39;,
-       &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;diff_spike1&#39;, &#39;diff_spike2&#39;, &#39;diff_spike3&#39;],
+       &#39;rot_x&#39;, &#39;rot_y&#39;, &#39;rot_z&#39;, &#39;diff_spike1&#39;, &#39;diff_spike2&#39;, &#39;diff_spike3&#39;],
       dtype=&#39;object&#39;)
 [0.   0.   0.25 0.   0.25 0.25 0.25 0.   0.   0.   0.   0.   0.   0.
  0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
  0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.   0.
- 0.   0.  ]
+ 0.   0.   0.  ]
 </pre>
 </div>
 </div>
@@ -1735,13 +1813,13 @@ var element = $('#c715a8eb-07eb-4149-b7fb-a5e48b214ef8');
 
  
  
-<div id="026980cc-aac8-41ad-b80f-5c7baf88cdcf"></div>
+<div id="c14d8dd2-004b-4d69-90db-512bfd6ba4a7"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#026980cc-aac8-41ad-b80f-5c7baf88cdcf');
+var element = $('#c14d8dd2-004b-4d69-90db-512bfd6ba4a7');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a2c34fc5d8394e8791b5c1a7bbaf2021", "version_major": 2, "version_minor": 0}
+{"model_id": "8cf0fee0774c4fd29aac5d461145ea80", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -1775,7 +1853,7 @@ var element = $('#026980cc-aac8-41ad-b80f-5c7baf88cdcf');
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">c_rvl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]))</span>
 <span class="n">c_rvl</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">5</span><span class="p">]</span>
 
-<span class="n">motor_rvl</span> <span class="o">=</span> <span class="n">smoothed</span> <span class="o">*</span> <span class="n">c_rvl</span>
+<span class="n">motor_rvl</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_rvl</span>
 
 <span class="n">motor_rvl</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
 </pre></div>
@@ -1795,13 +1873,13 @@ var element = $('#026980cc-aac8-41ad-b80f-5c7baf88cdcf');
 
  
  
-<div id="47d2b807-7f36-4454-9aac-d9ee221b2556"></div>
+<div id="1394b533-18e0-4e47-bc0d-fffdf992fa9a"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#47d2b807-7f36-4454-9aac-d9ee221b2556');
+var element = $('#1394b533-18e0-4e47-bc0d-fffdf992fa9a');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8bf418029f674fedadcd8bdd2faceee1", "version_major": 2, "version_minor": 0}
+{"model_id": "a882fb737d0a41ebb1766f348ae75200", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 

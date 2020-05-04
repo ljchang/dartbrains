@@ -640,9 +640,7 @@ $$Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)$$<p><img src="../../im
 <h1 id="Running-a-Group-Analysis">Running a Group Analysis<a class="anchor-link" href="#Running-a-Group-Analysis"> </a></h1><p>Okay, now let's try and run our own group level analysis with real imaging data using the Pinel Localizer data. I have run a first level model for the first 10 participants using the procedure we used in the single-subject analysis notebook.</p>
 <p>Here is the code I used to complete this for all participants. I wrote all of the betas and also a separate file for each individual regressor of interest.</p>
 
-<pre><code>
-
-import os
+<pre><code>import os
 from glob import glob
 import pandas as pd
 import numpy as np
@@ -678,21 +676,22 @@ def make_motion_covariates(mc):
     return Design_Matrix(all_mc, sampling_freq=1/tr)
 
 for sub in layout.get_subjects(scope='derivatives'):
+    data = Brain_Data([x for x in layout.get(subject=sub, scope='derivatives', suffix='bold', extension='nii.gz', return_type='file') if 'denoised' not in x][0])
+    smoothed = data.smooth(fwhm=fwhm)
+
     dm = load_bids_events(layout, sub)
     covariates = pd.read_csv(layout.get(subject=sub, scope='derivatives', extension='.tsv')[0].path, sep='\t')
-    data = Brain_Data([x for x in layout.get(subject=sub, scope='derivatives', suffix='bold', extension='nii.gz', return_type='file') if 'denoised' not in x][0])
     mc_cov = make_motion_covariates(covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']])
     spikes = data.find_spikes(global_spike_cutoff=spike_cutoff, diff_spike_cutoff=spike_cutoff)
     dm_cov = dm.convolve().add_dct_basis(duration=128).add_poly(order=1, include_lower=True)
     dm_cov = dm_cov.append(mc_cov, axis=1).append(Design_Matrix(spikes.iloc[:, 1:], sampling_freq=1/tr), axis=1)
-    data.X = dm_cov
-    stats = data.regress()
-    smoothed = stats['beta'].smooth(fwhm=fwhm)
+    smoothed.X = dm_cov
+    stats = smoothed.regress()
     file_name = layout.get(subject=sub, scope='derivatives', suffix='bold', extension='nii.gz', return_type='file')[0]
-    smoothed.write(os.path.join(os.path.dirname(file_name), f"sub-{sub}_betas_denoised_{file_name.split('_')[1]}_{file_name.split('_')[2]}_smoothed{fwhm}_{file_name.split('_')[-1]}"))
+    stats['beta'].write(os.path.join(os.path.dirname(file_name), f"sub-{sub}_betas_denoised_{file_name.split('_')[1]}_{file_name.split('_')[2]}_smoothed{fwhm}_{file_name.split('_')[-1]}"))
 
     for i, name in enumerate([x[:-3] for x in dm_cov.columns[:10]]):
-        smoothed[i].write(os.path.join(os.path.dirname(file_name), f"sub-{sub}_{name}_denoised_{file_name.split('_')[2]}_smoothed{fwhm}_{file_name.split('_')[-1]}"))</code></pre>
+        stats['beta'][i].write(os.path.join(os.path.dirname(file_name), f"sub-{sub}_{name}_denoised_{file_name.split('_')[2]}_smoothed{fwhm}_{file_name.split('_')[-1]}"))</code></pre>
 <p>Now, we are ready to run our first group analyses!</p>
 <p>Let's load our design matrix to remind ourselves of the various conditions</p>
 
@@ -873,10 +872,10 @@ for sub in layout.get_subjects(scope='derivatives'):
 
  
  
-<div id="66880078-ac14-498c-b8c4-656ab15991ec"></div>
+<div id="aa0fa8ed-d27a-4dfc-94d4-4a95af79a29f"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#66880078-ac14-498c-b8c4-656ab15991ec');
+var element = $('#aa0fa8ed-d27a-4dfc-94d4-4a95af79a29f');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "df9deeea0d2c4c99b3dadd1c0a0428df", "version_major": 2, "version_minor": 0}
@@ -964,10 +963,10 @@ var element = $('#66880078-ac14-498c-b8c4-656ab15991ec');
 
  
  
-<div id="ea7e7b17-42bb-427b-8532-ccce2e65e5cf"></div>
+<div id="9952daf4-0b06-4dbc-9ed6-c8b03d37d370"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#ea7e7b17-42bb-427b-8532-ccce2e65e5cf');
+var element = $('#9952daf4-0b06-4dbc-9ed6-c8b03d37d370');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "1b7a76208c164fc9bbe96cd0af599699", "version_major": 2, "version_minor": 0}
