@@ -120,7 +120,7 @@
   url: /features/notebooks/11_Thresholding_Group_Analyses
 
 - title: Connectivity
-  url: /features/notebooks/13_Connectivity
+  url: /features/notebooks/12_Connectivity
   not_numbered: false
 
 - title: Multivariate Prediction
