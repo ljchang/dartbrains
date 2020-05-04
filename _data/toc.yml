@@ -114,7 +114,7 @@
   url: /features/notebooks/9_GLM_Single_Subject_Model
 
 - title: Group Analysis
-  url: /features/notebooks/11_Group_Analysis
+  url: /features/notebooks/10_Group_Analysis
 
 - title: Thresholding Group Analyses
   url: /features/notebooks/12_Thresholding_Group_Analyses
