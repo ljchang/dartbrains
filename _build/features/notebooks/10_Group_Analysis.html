@@ -11,7 +11,7 @@ pagenum: 19
 prev_page:
   url: /features/notebooks/9_GLM_Single_Subject_Model.html
 next_page:
-  url: /features/notebooks/12_Thresholding_Group_Analyses.html
+  url: /features/notebooks/11_Thresholding_Group_Analyses.html
 suffix: .ipynb
 search: group test data beta level t bmatrix our mean s across different model contrast sample subject participants lets hair begin end using participant independent length run effects models second between regression samples simulation linear analysis interested not e need hypothesis import layout brain population voxel within subjects parameter n create intercept quad response responses approach condition might load tests single design into png also distribution example us estimates average betas y file filename just quadratic modeling mixed tr fixed another x path sub regions results simply contrasts inferences statistics images noise signal here random same variance groups parameters g individual
 
@@ -872,10 +872,10 @@ for sub in layout.get_subjects(scope='derivatives'):
 
  
  
-<div id="aa0fa8ed-d27a-4dfc-94d4-4a95af79a29f"></div>
+<div id="7adc236a-6341-463a-b08a-09fbf6ab88e3"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#aa0fa8ed-d27a-4dfc-94d4-4a95af79a29f');
+var element = $('#7adc236a-6341-463a-b08a-09fbf6ab88e3');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "df9deeea0d2c4c99b3dadd1c0a0428df", "version_major": 2, "version_minor": 0}
@@ -963,10 +963,10 @@ var element = $('#aa0fa8ed-d27a-4dfc-94d4-4a95af79a29f');
 
  
  
-<div id="9952daf4-0b06-4dbc-9ed6-c8b03d37d370"></div>
+<div id="1e90a978-91a1-46d1-88f1-6990c5855b64"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#9952daf4-0b06-4dbc-9ed6-c8b03d37d370');
+var element = $('#1e90a978-91a1-46d1-88f1-6990c5855b64');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "1b7a76208c164fc9bbe96cd0af599699", "version_major": 2, "version_minor": 0}
@@ -1935,44 +1935,6 @@ Quadratic Contrast: [-1  1  1 -1]
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-19-9f0285d60950&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> 
-<span class="ansi-green-intense-fg ansi-bold">      3</span> data_dir <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;../data/localizer&#39;</span>
-<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span>layout <span class="ansi-blue-fg">=</span> BIDSLayout<span class="ansi-blue-fg">(</span>data_dir<span class="ansi-blue-fg">,</span> derivatives<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      5</span> 
-<span class="ansi-green-intense-fg ansi-bold">      6</span> meta_data <span class="ansi-blue-fg">=</span> pd<span class="ansi-blue-fg">.</span>read_csv<span class="ansi-blue-fg">(</span>layout<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span>suffix<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;participants&#39;</span><span class="ansi-blue-fg">,</span> extension<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;.tsv&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> sep<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;\t&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/bids/layout/layout.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, root, validate, absolute_paths, derivatives, config, sources, ignore, force_index, config_filename, regex_search, database_path, database_file, reset_database, index_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">    228</span> 
-<span class="ansi-green-intense-fg ansi-bold">    229</span>         <span class="ansi-red-fg"># Do basic BIDS validation on root directory</span>
-<span class="ansi-green-fg">--&gt; 230</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_validate_root<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    231</span> 
-<span class="ansi-green-intense-fg ansi-bold">    232</span>         <span class="ansi-green-fg">if</span> ignore <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/bids/layout/layout.py</span> in <span class="ansi-cyan-fg">_validate_root</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    458</span> 
-<span class="ansi-green-intense-fg ansi-bold">    459</span>         <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>exists<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>root<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 460</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;BIDS root does not exist: %s&#34;</span> <span class="ansi-blue-fg">%</span> self<span class="ansi-blue-fg">.</span>root<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    461</span> 
-<span class="ansi-green-intense-fg ansi-bold">    462</span>         target <span class="ansi-blue-fg">=</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>root<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;dataset_description.json&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">ValueError</span>: BIDS root does not exist: /Users/lukechang/Github/dartbrains/content/features/data/localizer</pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 
