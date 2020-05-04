@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: /features/notebooks/12_Thresholding_Group_Analyses.html
 suffix: .ipynb
-search: group test data beta level t bmatrix our mean s across different model contrast sample subject lets participants hair begin end using participant independent length run effects models second between regression samples simulation linear analysis interested not e need hypothesis import layout brain population voxel within subjects parameter n create intercept quad response responses approach condition might load tests single design into png also distribution example us estimates average betas y file filename just quadratic modeling mixed tr fixed another x path sub regions results simply contrasts inferences statistics images noise signal here random same variance groups parameters g individual
+search: group test data beta level t bmatrix our mean s across different model contrast sample subject participants lets hair begin end using participant independent length run effects models second between regression samples simulation linear analysis interested not e need hypothesis import layout brain population voxel within subjects parameter n create intercept quad response responses approach condition might load tests single design into png also distribution example us estimates average betas y file filename just quadratic modeling mixed tr fixed another x path sub regions results simply contrasts inferences statistics images noise signal here random same variance groups parameters g individual
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -287,20 +287,10 @@ from Poldrack, Mumford, &amp; Nichols (2011)</p>
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/Users/lukechang/anaconda3/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.linear_model.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.linear_model. Anything that cannot be imported from sklearn.linear_model is now part of the private API.
-  warnings.warn(message, FutureWarning)
-</pre>
-</div>
-</div>
-</div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
 
 
 <div class="output_png output_subarea ">
-<img src="../../images/features/notebooks/10_Group_Analysis_8_1.png"
+<img src="../../images/features/notebooks/10_Group_Analysis_8_0.png"
 >
 </div>
 
@@ -883,10 +873,10 @@ for sub in layout.get_subjects(scope='derivatives'):
 
  
  
-<div id="ebdf0e2e-4903-45e9-bcd4-639e40a96002"></div>
+<div id="66880078-ac14-498c-b8c4-656ab15991ec"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#ebdf0e2e-4903-45e9-bcd4-639e40a96002');
+var element = $('#66880078-ac14-498c-b8c4-656ab15991ec');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "df9deeea0d2c4c99b3dadd1c0a0428df", "version_major": 2, "version_minor": 0}
@@ -974,10 +964,10 @@ var element = $('#ebdf0e2e-4903-45e9-bcd4-639e40a96002');
 
  
  
-<div id="97b6f051-4ab0-4114-a74f-4935af294fbe"></div>
+<div id="ea7e7b17-42bb-427b-8532-ccce2e65e5cf"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#97b6f051-4ab0-4114-a74f-4935af294fbe');
+var element = $('#ea7e7b17-42bb-427b-8532-ccce2e65e5cf');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "1b7a76208c164fc9bbe96cd0af599699", "version_major": 2, "version_minor": 0}
@@ -1916,7 +1906,7 @@ Quadratic Contrast: [-1  1  1 -1]
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="3.-Are-there-gender-differences?">3. Are there gender differences?<a class="anchor-link" href="#3.-Are-there-gender-differences?"> </a></h2><p>In this exercise, create a two sample design matrix comparing men and women on arithmetic vs reading.</p>
-<p>You will first have to figure out the subjects gender using the using the <code>metadata.csv</code> file.</p>
+<p>You will first have to figure out the subjects gender using the using the <code>participants.tsv</code> file.</p>
 <ul>
 <li>Create a contrast to test this hypothesis</li>
 <li>run a group level t-test</li>
@@ -1936,11 +1926,54 @@ Quadratic Contrast: [-1  1  1 -1]
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">meta_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;metadata.csv&#39;</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span><span class="p">,</span> <span class="n">BIDSValidator</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data/localizer&#39;</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">derivatives</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">meta_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;participants&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.tsv&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">meta_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-19-9f0285d60950&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> 
+<span class="ansi-green-intense-fg ansi-bold">      3</span> data_dir <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;../data/localizer&#39;</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span>layout <span class="ansi-blue-fg">=</span> BIDSLayout<span class="ansi-blue-fg">(</span>data_dir<span class="ansi-blue-fg">,</span> derivatives<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> 
+<span class="ansi-green-intense-fg ansi-bold">      6</span> meta_data <span class="ansi-blue-fg">=</span> pd<span class="ansi-blue-fg">.</span>read_csv<span class="ansi-blue-fg">(</span>layout<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span>suffix<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;participants&#39;</span><span class="ansi-blue-fg">,</span> extension<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;.tsv&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> sep<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;\t&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/bids/layout/layout.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, root, validate, absolute_paths, derivatives, config, sources, ignore, force_index, config_filename, regex_search, database_path, database_file, reset_database, index_metadata)</span>
+<span class="ansi-green-intense-fg ansi-bold">    228</span> 
+<span class="ansi-green-intense-fg ansi-bold">    229</span>         <span class="ansi-red-fg"># Do basic BIDS validation on root directory</span>
+<span class="ansi-green-fg">--&gt; 230</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_validate_root<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    231</span> 
+<span class="ansi-green-intense-fg ansi-bold">    232</span>         <span class="ansi-green-fg">if</span> ignore <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/bids/layout/layout.py</span> in <span class="ansi-cyan-fg">_validate_root</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    458</span> 
+<span class="ansi-green-intense-fg ansi-bold">    459</span>         <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>exists<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>root<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 460</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;BIDS root does not exist: %s&#34;</span> <span class="ansi-blue-fg">%</span> self<span class="ansi-blue-fg">.</span>root<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    461</span> 
+<span class="ansi-green-intense-fg ansi-bold">    462</span>         target <span class="ansi-blue-fg">=</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>root<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;dataset_description.json&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">ValueError</span>: BIDS root does not exist: /Users/lukechang/Github/dartbrains/content/features/data/localizer</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 
