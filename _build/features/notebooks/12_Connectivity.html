@@ -11,7 +11,7 @@ pagenum: 21
 prev_page:
   url: /features/notebooks/11_Thresholding_Group_Analyses.html
 next_page:
-  url: /features/notebooks/14_Multivariate_Prediction.html
+  url: /features/notebooks/13_Multivariate_Prediction.html
 suffix: .ipynb
 search: connectivity analysis regions lets data brain components our functional using different region www between graph calculate matrix e connected need com s watch model seed relationship roi ica not set vmpfc also v degree pca centrality based course png causal typically into similar used video method nodes x values images called short voxels plot signal here g youtube fmri independent example graphs models where type modeling variance node analyses task temporal mediation influence tutorial work principal theory details correlation subject mask regression covariates article procedure practice overall network level group motor run requires sem assumes decomposition spatial component running related
 
@@ -456,7 +456,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <span class="n">csf_mask</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;masks&#39;</span><span class="p">,</span> <span class="s1">&#39;csf.nii.gz&#39;</span><span class="p">))</span>
 <span class="n">csf</span> <span class="o">=</span> <span class="n">zscore</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">smoothed</span><span class="o">.</span><span class="n">extract_roi</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="n">csf_mask</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csf&#39;</span><span class="p">]))</span>
 
-<span class="n">spikes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">find_spikes</span><span class="p">(</span><span class="n">global_spike_cutoff</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">diff_spike_cutoff</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">smoothed</span><span class="o">.</span><span class="n">find_spikes</span><span class="p">(</span><span class="n">global_spike_cutoff</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">diff_spike_cutoff</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">covariates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">sub</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.tsv&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">mc</span> <span class="o">=</span> <span class="n">covariates</span><span class="p">[[</span><span class="s1">&#39;trans_x&#39;</span><span class="p">,</span><span class="s1">&#39;trans_y&#39;</span><span class="p">,</span><span class="s1">&#39;trans_z&#39;</span><span class="p">,</span><span class="s1">&#39;rot_x&#39;</span><span class="p">,</span> <span class="s1">&#39;rot_y&#39;</span><span class="p">,</span> <span class="s1">&#39;rot_z&#39;</span><span class="p">]]</span>
 <span class="n">mc_cov</span> <span class="o">=</span> <span class="n">make_motion_covariates</span><span class="p">(</span><span class="n">mc</span><span class="p">,</span> <span class="n">tr</span><span class="p">)</span>
@@ -711,10 +711,10 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
  
  
-<div id="e554820b-ab90-4b75-ad61-2e48dfae61f3"></div>
+<div id="727013c8-e0aa-428e-bea4-f3ac04b750ef"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#e554820b-ab90-4b75-ad61-2e48dfae61f3');
+var element = $('#727013c8-e0aa-428e-bea4-f3ac04b750ef');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "9c5f92b8b80f4feb8409ed5a86fb1013", "version_major": 2, "version_minor": 0}
@@ -1008,10 +1008,10 @@ var element = $('#e554820b-ab90-4b75-ad61-2e48dfae61f3');
 
  
  
-<div id="db0cd967-2c10-4cb9-b4f6-0fdf56f412ba"></div>
+<div id="e6cd2cf3-0b4f-4081-85b7-3c0ae2f916cb"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#db0cd967-2c10-4cb9-b4f6-0fdf56f412ba');
+var element = $('#e6cd2cf3-0b4f-4081-85b7-3c0ae2f916cb');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "7b43ea4485e94de2be43e61d3c9a5df5", "version_major": 2, "version_minor": 0}

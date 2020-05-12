@@ -1,0 +1,1255 @@
+---
+redirect_from:
+  - "/features/notebooks/13-multivariate-prediction"
+interact_link: content/features/notebooks/13_Multivariate_Prediction.ipynb
+kernel_name: python3
+kernel_path: content/features/notebooks
+has_widgets: false
+title: |-
+  Multivariate Prediction
+pagenum: 22
+prev_page:
+  url: /features/notebooks/12_Connectivity.html
+next_page:
+  url: /features/notebooks/15_RSA.html
+suffix: .ipynb
+search: model data using our cross validation training brain left feature learn right class approach selection into also lets regularization multivariate might features org subject l com prediction single voxels text different outcome here learning test mvpa train across patterns e classification pattern need well accuracy k lasso univariate regression analysis scikit motor method variables balanced testing participants beta problem conditions n specific algorithms not used machine should process details important note labels vector parcellations only papers pdf overfitting folds voxel where b glm level carefully correct cdot predict between g load new psychological throughout independent variable models called include generalize
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Multivariate Prediction</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Multivariate-Prediction">Multivariate Prediction<a class="anchor-link" href="#Multivariate-Prediction"> </a></h1><p><em>Written by Luke Chang</em></p>
+<p>The statistical methods we have discussed in this course so far have primarily been concerned with modeling activation in a <em>single voxel</em> and testing hypotheses in the form of "where in the brain is activation significantly greater in condition A relative condition B". As you may recall this involved using multilevel modeling with the GLM, where a voxel's time course was modeled using a first level GLM and then the contrast effect was aggregated across participants in the second level model. This procedure is often referred to as mass univariate testing and requires carefully considering how to correct for the many tests across voxels.</p>
+$$\text{voxel} = \beta \cdot \text{task model} + \beta \cdot \text{covariates} + \epsilon$$<p>A completely different approach to the problem is to reverse the regression equation and identify patterns of voxel activations that predict an outcome. This might be <strong>classifying</strong> between different conditions of a task, or <strong>predicting</strong> the intensity of a continuous outcome measure (e.g., emotion, pain, working memory load, etc).</p>
+$$\text{outcome} = \sum_{i}^n \beta_i\cdot \text{voxel}_i + \epsilon$$<p>Here we are learning a model of $\beta$ values across the brain that when multiplied by new data will predict the intensity of a psychological state or outcome or the probability of being a specific state.</p>
+$$\text{predicted outcome} = \text{model} \cdot \text{brain data}$$<p>This is the general approach behind <em>supervised learning</em> algorithms. The intuition behind this approach is that brain signal might not be functionally localizable to a single region, but instead might be distributed throughout the brain. Patterns of brain activity can thus be used to <em>decode</em> psychological states.</p>
+<p>The focus of this supervised learning approach is to accurately predict or classify the outcome, whereas the goal in classical statistics is to test hypotheses about <em>which</em> regressor explains the most independent variance of the dependent variable. These two approaches are complementary, but require thinking carefully about different issues.</p>
+<p>In mass-univariate testing, we spent a lot of time thinking carefully about independence of errors (e.g., multi-level models) and correcting for multiple hypothesis tests. In multivariate prediction/classification or <strong>multivoxel pattern analysis</strong> as it is often called, we need to carefully think about <strong>feature selection</strong> -  which voxels we will include in our model, and <strong>cross-validation</strong> - how well our model will <em>generalize</em> to new data. In MVPA, we typically have more features (i.e., voxels) then data points (i.e., n &lt; p), so this requires performing feature selection or a data reduction step. The algorithms used to learn patterns come from the field of machine-learning are very good at detecting patterns, but have a tendency to <em>overfit</em> the training data.</p>
+<p>In this tutorial, we will cover the basic steps of multivariate prediction/classification:</p>
+<ol>
+<li><strong>Data Extraction</strong> - what data should we use to train model?</li>
+<li><strong>Feature Selection</strong> - which features or voxels should we use?</li>
+<li><strong>Cross-validation</strong> - how do we train and test the model?</li>
+<li><strong>Model Interpretation</strong> - how should we interpret the model?</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Why-MVPA?">Why MVPA?<a class="anchor-link" href="#Why-MVPA?"> </a></h1><p>For most of our tutorials, we have tended to focus on the basics of <em>how</em> to perform a specific type of analysis, and have largely ignored questions about <em>why</em> we might be interested in specific questions. While univariate GLM analyses allow us to localize which regions might be associated with a specific psychological process, MVPA analyses, and specifically multivariate decoding, allows us to identify distributed representations throughout the brain. These might be localizable to a single region, or may be diffusely encompass many different brain systems.</p>
+<p>Before we dive into the details of how to conduct these analyses, let' learn a little bit about the theoretical background motivating this appraoch in two videos from Tor Wager.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;87yKz23sPnE&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/87yKz23sPnE"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;FAyPEr7eu4M&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/FAyPEr7eu4M"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Important-MVPA-Concepts">Important MVPA Concepts<a class="anchor-link" href="#Important-MVPA-Concepts"> </a></h1><p>Now, we are ready to dive into the details. In this tutorial, we will be using the nltools toolsbox to run these models, but also see (<a href="https://nilearn.github.io/">nilearn</a>, <a href="https://brainiak.org/tutorials/">brainiak</a>, and <a href="http://www.pymvpa.org/">pyMPVA</a>) for excellent alternatives.</p>
+<p>Running MVPA style analyses using multivariate regression is surprisingly easier and faster than univariate methods. All you need to do is specify the algorithm and cross-validation parameters. Currently, we have several different linear algorithms implemented from <a href="http://scikit-learn.org/stable/">scikit-learn</a> in the nltools package.</p>
+<p>To make sure you understand all of the key concepts involved in the practical aspects of conducting MVPA, let's watch two short videos by Martin Lindquist before we dive into the code.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;dJIb5bzkQHQ&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/dJIb5bzkQHQ"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;zKMsJyiL5Dc&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/zKMsJyiL5Dc"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Extraction">Data Extraction<a class="anchor-link" href="#Data-Extraction"> </a></h2><p>The first step in MVPA is to decide what data you want to use to predict your outcome variable. Typically, researchers perform a temporal data reduction step, which involves estimating a standard univariate GLM using a single subject first-level model. This model will specify regressors for a single trial, or model a specific condition type over many trials. Just as in the standard univariate approach, these regressors are convolved with an HRF function. These models also usually include nuisance covariates (e.g., motion parameters, spikes, filters, linear trends, etc.). The estimated beta maps from this temporal reduction step are then used as the input data into the prediction model. Note that it is also possible to learn a <em>spatiotemporal</em> model that includes the voxels from each TR measured during a a given trial, but this is less common in practice.</p>
+<p>First, let's load the modules we need for this analysis.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">nltools.data</span> <span class="kn">import</span> <span class="n">Brain_Data</span>
+<span class="kn">from</span> <span class="nn">nltools.mask</span> <span class="kn">import</span> <span class="n">expand_mask</span>
+<span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span><span class="p">,</span> <span class="n">BIDSValidator</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data/localizer&#39;</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">derivatives</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/lukechang/anaconda3/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.linear_model.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.linear_model. Anything that cannot be imported from sklearn.linear_model is now part of the private API.
+  warnings.warn(message, FutureWarning)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's load some data to train a model.</p>
+<p>In this example, let's continue to use data from the Pinel Localizer Task that we have been using throughout all of our tutorials. For our first analysis, let's attempt to classify <em>Left</em> from <em>Right</em> motor activation. We will load a single beta image for each subject that we already estimated in earlier tutorials. We are sorting the files so that subjects are in the same order, then we are stacking all of the images together using <code>.append()</code> such that the data looks like $Subject_{1, left}, ... Subject_{n, left}, Subject_{1, right}, ... Subject_{n, right}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">left_file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;derivatives&#39;</span><span class="p">,</span><span class="s1">&#39;fmriprep&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span><span class="s1">&#39;func&#39;</span><span class="p">,</span><span class="s1">&#39;*_video_left*.nii.gz&#39;</span><span class="p">))</span>
+<span class="n">left_file_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> 
+<span class="n">left</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">left_file_list</span><span class="p">)</span>
+
+<span class="n">right_file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;derivatives&#39;</span><span class="p">,</span><span class="s1">&#39;fmriprep&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span><span class="s1">&#39;func&#39;</span><span class="p">,</span><span class="s1">&#39;*_video_right*.nii.gz&#39;</span><span class="p">))</span>
+<span class="n">right_file_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">right</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">right_file_list</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, we need to create the labels or outcome variable to train the model. We will make a vector of ones and zeros to indicate left images and right images, respectively.</p>
+<p>We assign this vector to the <code>data.Y</code> attribute of the Brain_Data instance.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">left_file_list</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">left_file_list</span><span class="p">))]))</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>okay, we are ready to go. Let's now train our first model. We will use a support vector machine (SVM) to learn a pattern that can discriminate left from right motor responses across all 9 participants.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;svm&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:</span><span class="s2">&quot;linear&quot;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>overall accuracy: 1.00
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_14_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>the results of this analysis are stored in a dictionary.</p>
+<ul>
+<li><strong>Y</strong>: training labels</li>
+<li><strong>yfit_all</strong>: predicted labels</li>
+<li><strong>dist_from_hyperplane_all</strong>: how far the prediction is from the classifier hyperplane through feature space, &gt; 0 indicates left, while &lt; 0 indicates right.</li>
+<li><strong>intercept</strong>: scalar value which indicates how much to add to the prediction to get the correct class label.</li>
+<li><strong>weight_map</strong>: multivariate brain model</li>
+<li><strong>mcr_all</strong>: overall model accuracy in classifying training data</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">svm_stats</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>dict_keys([&#39;Y&#39;, &#39;yfit_all&#39;, &#39;dist_from_hyperplane_all&#39;, &#39;intercept&#39;, &#39;weight_map&#39;, &#39;mcr_all&#39;])
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can see that that the model can perfectly discriminate between left and right using the training data. This is great, but we definitely shouldn't get our hopes up as this model is completely being overfit to the training data. To get an unbiased estimate of the accuracy we will need to test the model on independent data.</p>
+<p>We can also examine the model weights more thoroughly by plotting it.  This shows that we see a very nice expected motor cortex representation, but notice that there are many other regions also contributing to the prediction.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_stats</span><span class="p">[</span><span class="s1">&#39;weight_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+ 
+ 
+<div id="8b66efd9-b1b8-4726-bae4-779fcf085374"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#8b66efd9-b1b8-4726-bae4-779fcf085374');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "a4e9c35a20164a9ca7c98881dcc6ee56", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Feature-Selection">Feature Selection<a class="anchor-link" href="#Feature-Selection"> </a></h2><p>Feature selection describes the process of deciding which features to include when training the model.  Here it is simply, which voxels should we use to train the model?</p>
+<p>There are several ways to perform feature selection.  Searchlights are a popular approach.  I personally have a preference for using parcellation schemes.</p>
+<ul>
+<li>Parcellations are orders of magnitude computationally less expensive than searchlights.</li>
+<li>Parcellations are easier to correct for multiple comparisons (50 vs 300k)</li>
+<li>Parcellations can include regions distributed throughout the brain (searchlights are only local)</li>
+<li>Parcellations can be integrated into a meta-model.</li>
+</ul>
+<p>Here we download a single 50 parcel map from a forthcoming paper on conducting automated parcellations using neurosynth.</p>
+
+<pre><code>Yarkoni, T., de la Vega, A., &amp; Chang, L.J. (In Prep).  Fully automated meta-analytic clustering and decoding of human brain activity
+
+</code></pre>
+<p>Some of the details can be found <a href="http://cosanlab.com/static/papers/delaVega_2016_JNeuro.pdf">here</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;masks&#39;</span><span class="p">,</span> <span class="s1">&#39;k50_2mm.nii.gz&#39;</span><span class="p">))</span>
+<span class="n">mask_x</span> <span class="o">=</span> <span class="n">expand_mask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="n">mask</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_20_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's combine two parcels (left-26 and right-47 motor) to make a mask and use this as a feature extract method.</p>
+<p>This means that we will only be training voxels to discriminate between the two conditions if they are in the right or left motor cortex.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">motor</span> <span class="o">=</span> <span class="n">mask_x</span><span class="p">[[</span><span class="mi">26</span><span class="p">,</span><span class="mi">47</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">motor</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">view</span><span class="o">=</span><span class="s1">&#39;glass&#39;</span><span class="p">)</span>
+
+<span class="n">data_masked</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply_mask</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span>
+
+<span class="n">svm_stats_masked</span> <span class="o">=</span> <span class="n">data_masked</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;svm&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:</span><span class="s2">&quot;linear&quot;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Plotting unthresholded image
+overall accuracy: 1.00
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_22_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_22_2.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_stats_masked</span><span class="p">[</span><span class="s1">&#39;weight_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+
+ 
+ 
+<div id="9589b198-5042-4b54-b87b-52a7113bf221"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#9589b198-5042-4b54-b87b-52a7113bf221');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "e712825078e14730986a9a588908168d", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that this also correctly learns that left motor cortex is positive while right cortex is negative - left vs right classification.  In addition, the training accuracy is still 100%.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Cross-Validation">Cross-Validation<a class="anchor-link" href="#Cross-Validation"> </a></h2><p>Clearly, our model is overfitting our training data. The next thing we need to do is to estimate how well our model will generalize to <em>new</em> data.  Ideally, we would have left out some data to test after we are done training and tuning our models.  This is called <strong>holdout data</strong> and should only be tested once when you are ready to write up your paper.</p>
+<p>However, we don't always have the luxury of having so much extra data and also we might want to tune our model using different algorithms, features, or adjusting hyperparameters of the model.</p>
+<p>The best way to do this, is to use <strong>cross-validation</strong>. The idea behind this is to subdivide the data into training and testing partitions - k-folds cross-validation is a common method - divide the data into $k$ separate folds and use all of the data except for one fold to train the model and then test the model using the left out fold. We iterate over this process for each fold. For example, consider k=2 or split-half cross-validation.</p>
+<p><img src="../../images/multivariate/cv.png" alt="cv.png"></p>
+<p>We divide the data into two partitions. We estimate the model using half of the data and test it on the other half and then evaluate how well the model performed. As you can see from this simulation, the model will almost always fit the training data better than the test data, because it is overfitting to the noise inherent to the training data, which is presumably independent across folds. More training data will lead to better estimation. This means that a k &gt; 2 will usually result in better model estimates. When k=number of subjects, we call this <em>leave-one-subject-out</em> cross-validation.</p>
+<p>One key concept to note is that it is very important to ensure that the data is independent across folds or this will lead to a biased and usually overly optimistic generalization. This can happen if you have multiple data from the same participant. You will need to make sure that the data from the same participants are held out together. We can do this by passing a vector of group labels to make sure that data within the same group are held out together. Another approach is to make sure that the data is equally representative across folds. We can use something called stratified sampling to achieve this (see <a href="http://cosanlab.com/static/papers/Changetal2015PLoSBiology.pdf">here</a> for more details)</p>
+<p>Let's add cross-validation to our SVM model.  We will start with $k=5$, and will pass a vector indicating subject labels as our grouping variable.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sub_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">right_file_list</span><span class="p">]</span>
+<span class="n">subject_id</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sub_list</span> <span class="o">+</span> <span class="n">sub_list</span><span class="p">)</span>
+
+<span class="n">svm_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;svm&#39;</span><span class="p">,</span> <span class="n">cv_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;kfolds&#39;</span><span class="p">,</span><span class="s1">&#39;n_folds&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">:</span><span class="n">subject_id</span><span class="p">},</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:</span><span class="s2">&quot;linear&quot;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>overall accuracy: 1.00
+overall CV accuracy: 0.78
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_26_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_26_2.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we see that our whole-brain model is still performing very well ~78% accuracy.</p>
+<p>What about our masked version?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">motor</span> <span class="o">=</span> <span class="n">mask_x</span><span class="p">[[</span><span class="mi">26</span><span class="p">,</span><span class="mi">47</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">data_masked</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply_mask</span><span class="p">(</span><span class="n">motor</span><span class="p">)</span>
+
+<span class="n">svm_stats_masked</span> <span class="o">=</span> <span class="n">data_masked</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;svm&#39;</span><span class="p">,</span> <span class="n">cv_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;kfolds&#39;</span><span class="p">,</span><span class="s1">&#39;n_folds&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">:</span><span class="n">subject_id</span><span class="p">},</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:</span><span class="s2">&quot;linear&quot;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>overall accuracy: 1.00
+overall CV accuracy: 0.83
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_28_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_28_2.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Wow, it looks like the model with feature selection actually outperforms the whole-brain model in cross-validation! 83% &gt; 78% accuracy.</p>
+<p>Why do you think this is the case?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Regularization">Regularization<a class="anchor-link" href="#Regularization"> </a></h2><p>Another key concept that is used to help with feature selection is called regularization. Regularization is a method to help deal with <a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a> and also avoid <a href="https://en.wikipedia.org/wiki/Overfitting">overfitting</a>. Overfitting occurs when you have an overly complex model such as having more features(Xs) than observations(Y) (n &lt; p). For instance, if you try to fit 10 observations with 10 features, each coefficient can be adjusted for a perfect fit but it wouldn't generalize well. In other cases, you might face the problem of feature selection. If you have numerous variables, it is time consuming to try every single combination of features in your model to see what yields the best result. 
+<img src="http://i.stack.imgur.com/0NbOY.png"></p>
+<p>Regularization attempts to solve this problem by introducting a loss function that penalizes the model for each additional features added to the model. There are two common types of loss functions <em>L1</em> and <em>L2</em>. L1 regularization is commonly referred to as <em>lasso</em> and leads to sparse solutions, where some regressors are set to zero. L2 regularization, does not lead to a sparse solution, but instead shrinks collinear variables towards zero. Elastic Nets are a type of model that combines L1 and L2 penalizations.</p>
+<h3 id="Lasso-regression---L1-Regularization">Lasso regression - L1 Regularization<a class="anchor-link" href="#Lasso-regression---L1-Regularization"> </a></h3><p>In short, <a href="http://stats.stackexchange.com/questions/17251/what-is-the-lasso-in-regression-analysis">Lasso</a> is a feature selection method that reduces the number of features to use in a regression.<br>
+This is useful if you have a lot of variables that are correlated or you have more variables than observations.</p>
+<h3 id="Ridge-Regression---L2-Regularization">Ridge Regression - L2 Regularization<a class="anchor-link" href="#Ridge-Regression---L2-Regularization"> </a></h3><p>The goal of the ridge function is to choose a penalty $\lambda$ for which the coefficients are not rapidly changing and have “sensible” signs. It is especially useful when data suffers from multicollinearity, that is some of your predictor variables are highly correlated. Unlike LASSO, ridge does not produce a sparse solution, but rather shrinks variables that are highly collinear towards zero.</p>
+<h3 id="How-do-we-determine-the-penalty-value?">How do we determine the penalty value?<a class="anchor-link" href="#How-do-we-determine-the-penalty-value?"> </a></h3><p>Both Lasso and Ridge regressions have a penalty hyperparameter $\lambda$. Essentially, we want to select the regularization parameter by identifying the one from a set of possible values (e.g. grid search) that results in the best fit of the model to the data.  However, it is important to note that it is easy to introduce bias into this process by trying a bunch of alphas and selecting the one that works best.  This can lead to optimistic evaluations of how well your model works.</p>
+<p>Cross-validation is an ideal method to deal with this.  We can use cross-validation to select the alpha while adding minimal bias to the overall model prediction.</p>
+<p>Here we will demonstrate using both to select an optimal value of the regularization parameter alpha of the Lasso estimator from an example provided by <a href="http://scikit-learn.org/stable/auto_examples/linear_model/plot_lasso_model_selection.html">scikit-learn</a>. For cross-validation, we will use a nested cross-validation as implemented by the LassoCV algorithm.  Note that these examples with nested cross-validation take much longer to run.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ridge_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ridgeClassifier&#39;</span><span class="p">,</span> 
+                        <span class="n">cv_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;kfolds&#39;</span><span class="p">,</span><span class="s1">&#39;n_folds&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span><span class="s1">&#39;subject_id&#39;</span><span class="p">:</span><span class="n">subject_id</span><span class="p">},</span>
+                           <span class="o">**</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">01</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>overall accuracy: 1.00
+overall CV accuracy: 0.72
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_31_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_31_2.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ridge_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ridgeCV&#39;</span><span class="p">,</span>
+    <span class="n">cv_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;kfolds&#39;</span><span class="p">,</span><span class="s1">&#39;n_folds&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">:</span><span class="n">subject_id</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>overall Root Mean Squared Error: 0.00
+overall Correlation: 1.00
+overall CV Root Mean Squared Error: 0.50
+overall CV Correlation: 0.56
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_32_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_32_2.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lasso_cv_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;lassoCV&#39;</span><span class="p">,</span>
+    <span class="n">cv_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;kfolds&#39;</span><span class="p">,</span><span class="s1">&#39;n_folds&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">:</span><span class="n">subject_id</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Classification-and-Class-Imbalance">Classification and Class Imbalance<a class="anchor-link" href="#Classification-and-Class-Imbalance"> </a></h2><p>One important thing to note is that when you use classification, it is important to account for class imbalances. i.e., that there might be unequal amounts of data in each group.  The reason why this is a problem is that chance classification is no longer at 50% when there is a class imbalance.  Suppose you were trying to classify A from B, but 80% of the data were instances of B. A classifier that always says B, would be correct 80% of the time.</p>
+<p>There are several different ways to deal with class imbalance.</p>
+<p>1) <strong>Make the Class Sizes Equal</strong> You can randomly sample data that is overrepresented to create your own balanced dataset. Advantages are that the data classes will be balanced. The disadvantage of this approach is that you are not using all of your data.</p>
+<p>2) <strong>Average Data</strong> You can average all of the data within a class so that each participant only has one data point per class. Advantages are the data are balanced. Disadvantages are that you have dramatically reduced the amount of data going into training the model.</p>
+<p>3) <strong>Balance Class Weights</strong> If you are using SVM, you can set <code>class_weight=balanced</code>. The general idea is to increase the penalty for misclassifying minority classes to prevent them from being “overwhelmed” by the majority class. See <a href="https://chrisalbon.com/machine_learning/support_vector_machines/imbalanced_classes_in_svm/">here</a> for a brief overview.</p>
+<p>When testing your model you can also make adjustments to calculate a balanced accuracy. Scikit-learn has the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html"><code>balanced_accuracy_score</code> method</a>, which implements the technique outlined in <a href="https://ieeexplore.ieee.org/document/5597285">this</a> paper. It essentially defines accuracy as the average recall obtained on each class.</p>
+<p>Let's test an example using the <code>'class_weight'='balanced'</code> approach.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_stats</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;svm&#39;</span><span class="p">,</span> <span class="n">cv_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;kfolds&#39;</span><span class="p">,</span><span class="s1">&#39;n_folds&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">:</span><span class="n">subject_id</span><span class="p">},</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;class_weight&#39;</span><span class="p">:</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="s1">&#39;kernel&#39;</span><span class="p">:</span><span class="s2">&quot;linear&quot;</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>overall accuracy: 1.00
+overall CV accuracy: 0.78
+threshold is ignored for simple axial plots
+</pre>
+</div>
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_35_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../../images/features/notebooks/13_Multivariate_Prediction_35_2.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="MVPA-Patterns-as-Biomarkers">MVPA Patterns as Biomarkers<a class="anchor-link" href="#MVPA-Patterns-as-Biomarkers"> </a></h1><p>Now that we know how to train multivariate patterns, what can we do with them? There has been a lot of interest in their potential to serve as neural biomarkers of psychological states.  If you would like to learn about how these can be used to better understand how we process and experience pain, watch these two videos by Tor Wager, where he summarizes some of the groundbreaking work he has been doing in this space.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;LV51_3jHg_c&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/LV51_3jHg_c"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;3iXh0FzuAjY&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/3iXh0FzuAjY"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Additional-Resources">Additional Resources<a class="anchor-link" href="#Additional-Resources"> </a></h1><p>If you are feeling like you would like to learn more about some of the details and possibilities of this approach, we encourage you to read some of the many review papers from <a href="https://www.nature.com/articles/nrn1931">Haynes &amp; Rees, 2006</a>, <a href="https://www.sciencedirect.com/science/article/pii/S1053811910010657">Naselaris et al., 2011</a>, <a href="https://www.annualreviews.org/doi/full/10.1146/annurev-neuro-062012-170325">Haxby et al., 2014</a>, <a href="http://cosanlab.com/static/papers/Woo_2017_NN.pdf">Woo et al, 2017</a>.</p>
+<p>There are also many great books covering the machine-learning including the freely available <a href="https://web.stanford.edu/~hastie/Papers/ESLII.pdf">the elements of statistical learning</a> and <a href="http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf">pattern recognition and machine-learning</a>.</p>
+<p>Finally, Here is a helpful <a href="http://blog.kaggle.com/2016/07/21/approaching-almost-any-machine-learning-problem-abhishek-thakur/">blog post</a> on different algorithms and reasonable default parameters.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Exercises">Exercises<a class="anchor-link" href="#Exercises"> </a></h1><h2 id="Exercise-1.-Vertical-vs-Horizontal-Checkerboard-Classification.">Exercise 1. Vertical vs Horizontal Checkerboard Classification.<a class="anchor-link" href="#Exercise-1.-Vertical-vs-Horizontal-Checkerboard-Classification."> </a></h2><p>For this exercise, find a multivariate pattern that can discriminate between horizontal and vertical checkerboards in new participants with SVM and leave-one-subject out cross-validation.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise-2.-Generalizing-Patterns.">Exercise 2. Generalizing Patterns.<a class="anchor-link" href="#Exercise-2.-Generalizing-Patterns."> </a></h2><p>Now, let's see how well this pattern generalizes to other conditions. See which other conditions this pattern appears to generalize too by applying the pattern to all of the participants. Does it only get <em>confused</em> for conditions involving visual information?</p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

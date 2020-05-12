@@ -124,7 +124,7 @@
   not_numbered: false
 
 - title: Multivariate Prediction
-  url: /features/notebooks/14_Multivariate_Prediction
+  url: /features/notebooks/13_Multivariate_Prediction
   not_numbered: false
 
 - title: Representational Similarity Analysis
