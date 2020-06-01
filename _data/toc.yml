@@ -44,7 +44,7 @@
   url: /features/markdown/Instructors
   not_numbered: true
 
-- title: Syllabus
+- title: Faculty
   url: /features/markdown/Syllabus
   not_numbered: true
 
@@ -129,6 +129,10 @@
 
 - title: Representational Similarity Analysis
   url: /features/notebooks/14_RSA
+  not_numbered: false
+
+- title: Resampling Statistics
+  url: /features/notebooks/15_Resampling_Statistics
   not_numbered: false
 
 - divider: true
