@@ -1,6 +1,4 @@
 [![DOI](https://zenodo.org/badge/171529794.svg)](https://zenodo.org/badge/latestdoi/171529794)
-[<img src="https://zenodo.org/badge/171529794.svg)">](https://zenodo.org/badge/latestdoi/171529794)
- <a href="https://zenodo.org/badge/latestdoi/171529794"><img src="https://zenodo.org/badge/171529794.svg"></a>
 
 # COURSE DESCRIPTION AND OBJECTIVES
 How can we understand how the brain works? This course provides an introduction to in vivo neuroimaging in humans using functional magnetic resonance imaging (fMRI). The goal of the class is to introduce: (1) how the scanner generates data, (2) how psychological states can be probed in the scanner, and (3) how this data can be processed and analyzed. Students will be expected to analyze brain imaging data using the opensource Python programming language. We will be using several packages such as numpy, matplotlib, nibabel, nilearn, fmriprep, and nltools. This course will be useful for students working in neuroimaging labs, completing a neuroimaging thesis, or interested in pursuing graduate training in fields related to cognitive neuroscience.
