@@ -1,4 +1,5 @@
 [![DOI](https://zenodo.org/badge/171529794.svg)](https://zenodo.org/badge/latestdoi/171529794)
+[![DOI](https://zenodo.org/badge/171529794.svg#left)](https://zenodo.org/badge/latestdoi/171529794)
 <a href=“https://zenodo.org/badge/latestdoi/171529794”><img align="left" src=“https://zenodo.org/badge/171529794.svg”></a>
 
 # COURSE DESCRIPTION AND OBJECTIVES
