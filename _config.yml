@@ -31,7 +31,7 @@ url: http://dartbrains.org     # the base hostname & protocol for your site, e.g
 # Jupyter Book settings
 
 # Main page settings
-footer_text: Created by <a href="http://www.lukejchang.com/">Luke Chang</a> using <a href="https://jupyterbook.org/">Jupyter Book</a> and partially supported by an NSF CAREER Award 1848370.  Post any questions on our <a href="https://www.askpbs.org/c/naturalistic-data">Discourse Page</a>.
+footer_text: Created by <a href="http://www.lukejchang.com/">Luke Chang</a> using <a href="https://jupyterbook.org/">Jupyter Book</a> and partially supported by an NSF CAREER Award 1848370.  Post any questions to our <a href="https://www.askpbs.org/c/dartbrains">Discourse Page</a>.
 
 # Sidebar settings
 show_sidebar: true                # Show the sidebar. Only set to false if your only wish to host a single page.
