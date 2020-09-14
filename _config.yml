@@ -61,7 +61,7 @@ launch_buttons:
   colab_url                 : https://colab.research.google.com # The URL of Google Colab (e.g., https://colab.research.google.com)
 
 repository:
-  url                       : https://github.com/executablebooks/jupyter-book  # The URL to your book's repository
+  url                       : https://github.com/ljchang/dartbrains # The URL to your book's repository
   path_to_book              : ""  # A path to your book's folder, relative to the repository root.
   branch                    : master  # Which branch of the repository should be used when creating links
 
