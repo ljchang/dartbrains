@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to JupyterHub &#8212; DartBrains</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_JupyterHub.html" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Download Data" href="Download_Data.html" />
+    <link rel="prev" title="Schedule" href="Schedule.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="http://dartbrains.org/content/Introduction_to_JupyterHub.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Introduction to JupyterHub" />
+<meta property="og:description" content="Introduction to JupyterHub  Written by Luke Chang &amp; Jeremy Huckins  In this course we will primarily be using python to learn about fMRI data analysis. All of t" />
+<meta property="og:image"       content="http://dartbrains.org/_static/dartbrains_logo_square_transparent.png" />
+
+<meta name="twitter:card" content="summary" />
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">DartBrains</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Course Overview
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Instructors.html">
+   Instructors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Schedule.html">
+   Schedule
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Computing Resources
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to JupyterHub
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Download_Data.html">
+   Download Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Programming.html">
+   Introduction to programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Pandas.html">
+   Introduction to Pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Plotting.html">
+   Introduction to Plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Glossary.html">
+   Glossary
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Course Topics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro_to_Neuroimaging.html">
+   Introduction to Neuroimaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Measurement.html">
+   Measurement and Signal
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ICA.html">
+   Separating Signal From Noise With ICA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
+   Introduction to Neuroimaging Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Processing.html">
+   Signal Processing Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Preprocessing.html">
+   Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM.html">
+   Introduction to the General Linear Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM_Single_Subject_Model.html">
+   Modeling Single Subject Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Group_Analysis.html">
+   Group Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Thresholding_Group_Analyses.html">
+   Thresholding Group Analyses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connectivity.html">
+   Connectivity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Multivariate_Prediction.html">
+   Multivariate Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="RSA.html">
+   Representational Similarity Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Resampling_Statistics.html">
+   Resampling Statistics
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Project Gallery
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="2019_Spring.html">
+   Spring 2019
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Spring.html">
+   Spring 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Contributing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Contributing.html">
+   Contributing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/ljchang/dartbrains">
+   GitHub Repository
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/Introduction_to_JupyterHub.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_JupyterHub.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/executablebooks/jupyter-book/edit/master/content/Introduction_to_JupyterHub.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Introduction_to_JupyterHub.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/executablebooks/jupyter-book&urlpath=tree/jupyter-book/content/Introduction_to_JupyterHub.ipynb&branch=master"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
+                data-placement="left"><img class="jupyterhub-button-logo"
+                    src="../_static/images/logo_jupyterhub.svg"
+                    alt="Interact on JupyterHub">JupyterHub</button></a>
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Introduction_to_JupyterHub.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#login">
+   Login
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#server">
+   Server
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jupyter-notebooks">
+   Jupyter Notebooks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#opening-a-notebook-on-the-server">
+     Opening a notebook on the server
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#copying-notebook">
+     Copying Notebook
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#alternative-to-jupyterhub">
+   Alternative to Jupyterhub
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-jupyter-notebooks-on-your-own-computer">
+     Installing Jupyter Notebooks on your own computer
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#starting-jupter-notebooks-on-your-computer">
+     Starting Jupter Notebooks on your computer
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting-and-atlases">
+   Plotting and Atlases
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="introduction-to-jupyterhub">
+<h1>Introduction to JupyterHub<a class="headerlink" href="#introduction-to-jupyterhub" title="Permalink to this headline">¶</a></h1>
+<p><em>Written by Luke Chang &amp; Jeremy Huckins</em></p>
+<p>In this course we will primarily be using python to learn about fMRI data analysis. All of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an <a class="reference external" href="https://www.anaconda.com/distribution/">anaconda distribution</a>. However, the datasets are large and there can be annoying issues with different versions of packages and installing software across different operating systems. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). We have a docker container available that will contain all of the software and have created tutorials to <a class="reference external" href="https://dartbrains.org/features/notebooks/Download_Localizer_Data.html">download the data</a>. In addition, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop.</p>
+<p>To meet these needs, Dartmouth’s Research Computing has generously provided a dedicated server hosted on Amazon Web Services that will allow us to store data, access specialized software, and run analyses. This means that everyone should be able to run all of the tutorials on their laptops, tablets, etc by accessing notebooks on the jupyterhub server and will not need to install anything beyond a working browser.</p>
+<div class="section" id="login">
+<h2>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h2>
+<p>The main portal to access this resource will be through the Jupyterhub interface. This allows you to remotely login in to the server through your browser at https://jhub.dartmouth.edu using your netid. Please let us know if you are having difficulty logging in.</p>
+<p>Once you’ve logged in you should see a screen like this.</p>
+<p><img alt="" src="../_images/jhub.png" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> folder contains all of the relevant notebooks and data for the course.</p>
+<p>Every time you login jupyterhub will spin up a new server just for you and will update all of the files.</p>
+</div>
+<div class="section" id="server">
+<h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<p>Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 512mb of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds 512mb.</p>
+</div>
+<div class="section" id="jupyter-notebooks">
+<h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h2>
+<p>Jupyter notebooks are a great way to have your code, comments and results show up inline in a web browser. Work for this class will be done in Jupyter notebooks so you can reference what you have done, see the results and someone else could redo it in the future, similar to a typical lab notebook.</p>
+<p>Rather than writing and re-writing an entire program, you can write lines of code and run them one at a time. Then, if you need to make a change, you can go back and make your edit and rerun the program again, all in the same window. In our specific case, we are going to use JupyterHub which lets several people access the same computer and data at the same time through a web browser.</p>
+<p>Finally, you can view examples and share your work with the world very easily through <a class="reference external" href="https://nbviewer.jupyter.org">nbviewer</a>.  One easy trick if you use a cloud storage service like dropbox is to paste a link to the dropbox file in nbviewer.  These links will persist as long as the file remains being shared via dropbox.</p>
+<p><em><strong>Do not work directly on the notebooks in the <code class="docutils literal notranslate"><span class="pre">Psych60/notebook</span></code> folder</strong></em>. These will always be updating as I edit them. Instead, make sure you copy the notebooks you are working on to <strong>your own personal folder</strong>. These can only be changed by you and won’t be deleted or updated when your server starts.</p>
+<div class="section" id="opening-a-notebook-on-the-server">
+<h3>Opening a notebook on the server<a class="headerlink" href="#opening-a-notebook-on-the-server" title="Permalink to this headline">¶</a></h3>
+<p>Click on Files, then Psych60, then notebooks. Click on any notebook you would like to load. Make sure you copy the notebook to another location outside of Psych60 to make sure your work won’t be deleted.</p>
+<p>For example, our first laboratory will be <strong>1_Introduction_to_Programming.ipynb</strong>.</p>
+</div>
+<div class="section" id="copying-notebook">
+<h3>Copying Notebook<a class="headerlink" href="#copying-notebook" title="Permalink to this headline">¶</a></h3>
+<p>Make sure you copy your notebook to a different directory to make sure it will not be erased when you restart your server.</p>
+<p>First, you will need to create a folder called <code class="docutils literal notranslate"><span class="pre">Homework</span></code>. Click on <code class="docutils literal notranslate"><span class="pre">New</span></code> then <code class="docutils literal notranslate"><span class="pre">Folder</span></code>.
+<img alt="" src="../_images/create_homework_folder.png" /></p>
+<p>Second, you will need to rename folder. <code class="docutils literal notranslate"><span class="pre">Check</span></code> the box next to the new untitled folder, then click <code class="docutils literal notranslate"><span class="pre">Rename</span></code>, then type <code class="docutils literal notranslate"><span class="pre">Homework</span></code>
+<img alt="" src="../_images/rename_folder.png" /></p>
+<p>Third, for all notebooks you will need to save a copy into your homework directory. Go to <code class="docutils literal notranslate"><span class="pre">File</span></code> then <code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span></code> then type in <code class="docutils literal notranslate"><span class="pre">psych60/notebooks/Homework</span></code>. You will need to do this for each new notebook assignment.
+<img alt="" src="../_images/save_notebook.png" /></p>
+</div>
+</div>
+<div class="section" id="alternative-to-jupyterhub">
+<h2>Alternative to Jupyterhub<a class="headerlink" href="#alternative-to-jupyterhub" title="Permalink to this headline">¶</a></h2>
+<p>If you use jupyter notebooks on your own computer then you own computer will be doing the processing. If you put your computer to sleep then processing will stop. It will also likely slow down other programs you are using on your computer. I would recommend installing it on your own computer so you can learn more about how to use it, or if you are interested in tinkering with the software or you happen to have a particularly fast/newer computer. We don’t recommend going this route unless you don’t have reliable access to the internet.</p>
+<p>Please contact Professor Chang if you want any assistance doing this.</p>
+<div class="section" id="installing-jupyter-notebooks-on-your-own-computer">
+<h3>Installing Jupyter Notebooks on your own computer<a class="headerlink" href="#installing-jupyter-notebooks-on-your-own-computer" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Install python. We recommend using the <a class="reference external" href="https://www.anaconda.com/distribution/">Acaconda Distribution</a> as it comes with most of the relevant scientific computing packages we will be using.  Be sure to download Python 3.</p></li>
+</ol>
+<p>Alternative 1: Install jupyter notebook (it comes with Anaconda)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span>
+</pre></div>
+</div>
+<p>Alternative 2: If you already have python installed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="starting-jupter-notebooks-on-your-computer">
+<h3>Starting Jupter Notebooks on your computer<a class="headerlink" href="#starting-jupter-notebooks-on-your-computer" title="Permalink to this headline">¶</a></h3>
+<p>Open a terminal, navigate to the directory you want to work from then type <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> or <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code></p>
+</div>
+</div>
+<div class="section" id="plotting-and-atlases">
+<h2>Plotting and Atlases<a class="headerlink" href="#plotting-and-atlases" title="Permalink to this headline">¶</a></h2>
+<p>For most of our labs we will be using Python to plot our data and results.  However, it is often useful to have a more interactive experience.  We recommend additionally downloading <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLeyes">FSLeyes</a>, which is a standalone image viewer developed by FSL.  It can be installed by either downloading directly from the website, or using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">fsleyes</span></code></p>
+<p>If you are using a mac, you will likely also need to add an X11 window system such as <a class="reference external" href="https://www.xquartz.org/">xQuartz</a> for the viewer to work properly.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://365datascience.com/the-jupyter-dashboard-a-walkthrough/">Jupyter Dashboard Walkthrough</a></p>
+<p><a class="reference external" href="https://jupyter.readthedocs.io/en/latest/running.html#running">Jupyter Notebook Manual</a></p>
+<p><a class="reference external" href="https://medium.com/codingthesmartway-com-blog/getting-started-with-jupyter-notebook-for-python-4e7082bd5d46">Getting Started With Jupyter Notebook</a></p>
+<p><a class="reference external" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheatsheet</a></p>
+<p><a class="reference external" href="https://github.com/datitran/jupyter2slides">Convert jupyter notebook to slides</a></p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Schedule.html" title="previous page">Schedule</a>
+    <a class='right-next' id="next-link" href="Download_Data.html" title="next page">Download Data</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Luke Chang<br/>
+        
+            &copy; Copyright 2020.<br/>
+          <div class="extra_footer">
+            Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-138270939-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
