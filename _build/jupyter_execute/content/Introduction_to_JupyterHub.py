@@ -17,7 +17,7 @@ The `Psych60` folder contains all of the relevant notebooks and data for the cou
 Every time you login jupyterhub will spin up a new server just for you and will update all of the files.
 
 ## Server
-Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 512mb of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds 512mb.
+Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 3gb of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds 3gb.
 
 ## Jupyter Notebooks
 
@@ -27,11 +27,11 @@ Rather than writing and re-writing an entire program, you can write lines of cod
 
 Finally, you can view examples and share your work with the world very easily through [nbviewer](https://nbviewer.jupyter.org).  One easy trick if you use a cloud storage service like dropbox is to paste a link to the dropbox file in nbviewer.  These links will persist as long as the file remains being shared via dropbox.
 
-***Do not work directly on the notebooks in the `Psych60/notebook` folder***. These will always be updating as I edit them. Instead, make sure you copy the notebooks you are working on to **your own personal folder**. These can only be changed by you and won't be deleted or updated when your server starts.
+***Do not work directly on the notebooks in the `Psych60/notebook` folder***. These will always be updating as I edit them. Instead, make sure you copy the notebooks you are working on to **your own personal folder**. These can only be changed by you and won't be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.
 
 ### Opening a notebook on the server
 
-Click on Files, then Psych60, then notebooks. Click on any notebook you would like to load. Make sure you copy the notebook to another location outside of Psych60 to make sure your work won't be deleted. 
+Click on Files, then Psych60, then notebooks. Click on any notebook you would like to load. Make sure you copy the notebook to another location outside of `notebooks` folder to make sure your work won't be deleted. 
 
 For example, our first laboratory will be **1_Introduction_to_Programming.ipynb**.
 
@@ -78,6 +78,21 @@ pip install jupyter
 ### Starting Jupter Notebooks on your computer
 Open a terminal, navigate to the directory you want to work from then type `jupyter notebook` or `jupyter lab`
 
+
+(python-packages)= 
+### Python packages for the course
+All of the packages we will be using for the course are in the [requirements.txt](https://github.com/ljchang/dartbrains/blob/master/requirements.txt) file of the github repository.
+
+You can install all of the packages using `pip`. We will download the file from github and parse it and install each package.
+
+import pandas as pd
+import requests
+
+requirements = requests.get('https://raw.githubusercontent.com/ljchang/dartbrains/master/requirements.txt').text
+requirements = [x for x in requirements.split('\n')][3:-1]
+
+for r in requirements:
+    !pip install {r}
 
 ## Plotting and Atlases
 For most of our labs we will be using Python to plot our data and results.  However, it is often useful to have a more interactive experience.  We recommend additionally downloading [FSLeyes](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FSLeyes), which is a standalone image viewer developed by FSL.  It can be installed by either downloading directly from the website, or using `pip`.

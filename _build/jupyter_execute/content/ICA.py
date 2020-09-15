@@ -3,30 +3,16 @@
 
 In this tutorial we will use ICA to explore which signals in our imaging data might be real signal or artifacts.
 
+To run this tutorial, we will be working with data that has already been preprocessed. *If you are in Psych60, this has already been done for you*. If you reading this online, then I recommend reading the {ref}`preprocessing tutorial <run-preprocessing>`, or downloading the data using the {doc}`datalad <../content/Download_Data>` tutorial.
+
 For a brief overview of types of artifacts that might be present in your data, I recommend watching this video by Tor Wager and Martin Lindquist.
 
 from IPython.display import YouTubeVideo
 
 YouTubeVideo('7Kk_RsGycHs')
 
-## Preprocessing Data
-To run this tutorial, you must have run preprocessing on at least one participant. *If you are in Psych60, this has already been done for you and you can just skip to **Loading Data***. If you reading this online, then I recommend preprocessing your data with [fmriprep](https://fmriprep.readthedocs.io/en/stable/), which is a robust, but opinionated automated preprocessing pipeline developed by [Russ Poldrack's group at Stanford University](https://poldracklab.stanford.edu/). The developer's have made a number of choices about how to preprocess your fMRI data using best practices and have created an automated pipeline using multiple software packages that are all distributed via a [docker container](https://fmriprep.readthedocs.io/en/stable/docker.html).
-
-In theory, this is extraodinarily straightforward to run:
-
- - 1. Install [Docker](https://www.docker.com/) and download image
-     
-     `docker pull poldracklab/fmriprep:<latest-version>`
-
-
- - 2. Run a single command in the terminal specifying the location of the data, the location of the output, the participant id, and a few specific flags depending on specific details of how you want to run the preprocessing.
-
-    `fmriprep-docker /Users/lukechang/Dropbox/Dartbrains/Data/localizer /Users/lukechang/Dropbox/Dartbrains/Data/preproc participant --participant_label sub-S01 --write-graph --fs-no-reconall --notrack --fs-license-file ~/Dropbox/Dartbrains/License/license.txt --work-dir /Users/lukechang/Dropbox/Dartbrains/Data/work`
-    
-In practice, it's alway a little bit finicky to get everything set up on a particular system. Sometimes you might run into issues with a specific missing file like the [freesurfer license](https://fmriprep.readthedocs.io/en/stable/usage.html#the-freesurfer-license) even if you're not using it. You might also run into issues with the format of the data that might have some conflicts with the [bids-validator](https://github.com/bids-standard/bids-validator). In our experience, there is always some frustrations getting this to work, but it's very nice once it's done.
-
 ## Loading Data
-Ok, once you've finished preprocessing some of your data with fmriprep, we can load a subject and run an ICA to explore signals that are present. Since we have completed preprocessing, our data should be realigned and also normalized to MNI stereotactic space. We will use the [nltools](https://neurolearn.readthedocs.io/en/latest/) package to work with this data in python.
+Ok, let's load a subject and run an ICA to explore signals that are present. Since we have completed preprocessing, our data should be realigned and also normalized to MNI stereotactic space. We will use the [nltools](https://neurolearn.readthedocs.io/en/latest/) package to work with this data in python.
 
 %matplotlib inline
 

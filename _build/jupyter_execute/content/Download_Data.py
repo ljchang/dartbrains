@@ -8,17 +8,12 @@ The Pinel Localizer task was designed to probe several different types of basic 
 
 This dataset is well suited for these tutorials as it is (a) publicly available to anyone in the world, (b) relatively small (only about 5min), and (c) provides many options to create different types of contrasts.
 
-There are a total of 94 subjects available, but we will primarily only be working with a smaller subset of about 30.
+There are a total of 94 subjects available, but we will primarily only be working with a smaller subset of about 15.
 
-Downloading the data is very easy as it is currently available on the [OSF website](https://osf.io/vhtf6/files/) and also 
+Though the data is being shared on the [OSF website](https://osf.io/vhtf6/files/), we recommend downloading it from our [g-node repository](https://gin.g-node.org/ljchang/Localizer) as we have fixed a few issues with BIDS formatting and have also performed preprocessing using fmriprep.
 
-We will use the `osfclient` [package](https://github.com/osfclient/osfclient) to download the entire dataset. Note, that the entire dataset is fairly large (~5.25gb), so make sure you have space on your computer. At some point, we will make a smaller version for the dartbrain course available for download.
+In this notebook, we will walk through how to access the datset using DataLad. Note, that the entire dataset is fairly large (~42gb), but the tutorials will mostly only be working with a small portion of the data (5.8gb), so there is no need to download the entire thing. If you are taking the Psych60 course at Dartmouth, we have already made the data available on the jupyterhub server.
 
-If you are taking the Psych60 course at Dartmouth, we have already made the download available on the jupyterhub server.
-
-Let's first make sure the `osfclient` package is installed in our python environment.
-
-In this notebook, we will walk through how to access the datset using DataLad. 
 
 ## DataLad
 
@@ -166,11 +161,38 @@ How much of the dataset have we downloaded?  We can check the status of the anne
 
 result = ds.status(annex='all')
 
-Now let's download the preprocessed data for the first 15 subjects including the fmriprep reports.
+## Download Data for Course
+Now let's download the data we will use for the course. We will download:
+- `sub-S01`'s raw data
+- experimental metadata
+- preprocessed data for the first 15 subjects including the fmriprep QC reports.
+
+
+result = ds.get(os.path.join(localizer_path, 'sub-S01'))
+result = ds.get(glob.glob(os.path.join(localizer_path, '*.json')))
+result = ds.get(glob.glob(os.path.join(localizer_path, '*.tsv')))
+result = ds.get(glob.glob(os.path.join(localizer_path, 'phenotype')))
 
 file_list = glob.glob(os.path.join(localizer_path, '*', 'fmriprep', 'sub*'))
 file_list.sort()
 for f in file_list[:30]:
     result = ds.get(f)
 
-Ok, that concludes our tutorial for how to download data for this course with datalad using both the command line interface and also the Python API.
+To get the python packages for the course be sure to read the installation {ref}`instructions <python-packages>` in the {doc}`../content/Introduction_to_JupyterHub` tutorial.
+
+(run-preprocessing)= 
+## Preprocessing
+The data has already been preprocessed using [fmriprep](https://fmriprep.readthedocs.io/en/stable/), which is a robust, but opinionated automated preprocessing pipeline developed by [Russ Poldrack's group at Stanford University](https://poldracklab.stanford.edu/). The developer's have made a number of choices about how to preprocess your fMRI data using best practices and have created an automated pipeline using multiple software packages that are all distributed via a [docker container](https://fmriprep.readthedocs.io/en/stable/docker.html).
+
+Though, you are welcome to just start working right away with the preprocessed data, here are the steps to run it yourself:
+
+ - 1. Install [Docker](https://www.docker.com/) and download image
+     
+     `docker pull poldracklab/fmriprep:<latest-version>`
+
+
+ - 2. Run a single command in the terminal specifying the location of the data, the location of the output, the participant id, and a few specific flags depending on specific details of how you want to run the preprocessing.
+
+    `fmriprep-docker /Users/lukechang/Dropbox/Dartbrains/Data/localizer /Users/lukechang/Dropbox/Dartbrains/Data/preproc participant --participant_label sub-S01 --write-graph --fs-no-reconall --notrack --fs-license-file ~/Dropbox/Dartbrains/License/license.txt --work-dir /Users/lukechang/Dropbox/Dartbrains/Data/work`
+    
+In practice, it's alway a little bit finicky to get everything set up on a particular system. Sometimes you might run into issues with a specific missing file like the [freesurfer license](https://fmriprep.readthedocs.io/en/stable/usage.html#the-freesurfer-license) even if you're not using it. You might also run into issues with the format of the data that might have some conflicts with the [bids-validator](https://github.com/bids-standard/bids-validator). In our experience, there is always some frustrations getting this to work, but it's very nice once it's done.

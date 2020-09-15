@@ -25,6 +25,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
@@ -220,6 +221,20 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
+  Additional Courses
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://naturalistic-data.org/">
+   Naturalistic Data Analysis
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
   Project Gallery
  </span>
 </p>
@@ -370,11 +385,6 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#preprocessing-data">
-   Preprocessing Data
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loading-data">
    Loading Data
   </a>
@@ -413,6 +423,7 @@
 <h1>Separating Signal From Noise With ICA<a class="headerlink" href="#separating-signal-from-noise-with-ica" title="Permalink to this headline">¶</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>In this tutorial we will use ICA to explore which signals in our imaging data might be real signal or artifacts.</p>
+<p>To run this tutorial, we will be working with data that has already been preprocessed. <em>If you are in Psych60, this has already been done for you</em>. If you reading this online, then I recommend reading the <a class="reference internal" href="Download_Data.html#run-preprocessing"><span class="std std-ref">preprocessing tutorial</span></a>, or downloading the data using the <a class="reference internal" href="Download_Data.html"><span class="doc">datalad</span></a> tutorial.</p>
 <p>For a brief overview of types of artifacts that might be present in your data, I recommend watching this video by Tor Wager and Martin Lindquist.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -433,27 +444,9 @@
 ></iframe>
 </div></div>
 </div>
-<div class="section" id="preprocessing-data">
-<h2>Preprocessing Data<a class="headerlink" href="#preprocessing-data" title="Permalink to this headline">¶</a></h2>
-<p>To run this tutorial, you must have run preprocessing on at least one participant. <em>If you are in Psych60, this has already been done for you and you can just skip to <strong>Loading Data</strong></em>. If you reading this online, then I recommend preprocessing your data with <a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/">fmriprep</a>, which is a robust, but opinionated automated preprocessing pipeline developed by <a class="reference external" href="https://poldracklab.stanford.edu/">Russ Poldrack’s group at Stanford University</a>. The developer’s have made a number of choices about how to preprocess your fMRI data using best practices and have created an automated pipeline using multiple software packages that are all distributed via a <a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/docker.html">docker container</a>.</p>
-<p>In theory, this is extraodinarily straightforward to run:</p>
-<ul>
-<li><ol class="simple">
-<li><p>Install <a class="reference external" href="https://www.docker.com/">Docker</a> and download image</p></li>
-</ol>
-<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">poldracklab/fmriprep:&lt;latest-version&gt;</span></code></p>
-</li>
-<li><ol class="simple">
-<li><p>Run a single command in the terminal specifying the location of the data, the location of the output, the participant id, and a few specific flags depending on specific details of how you want to run the preprocessing.</p></li>
-</ol>
-<p><code class="docutils literal notranslate"><span class="pre">fmriprep-docker</span> <span class="pre">/Users/lukechang/Dropbox/Dartbrains/Data/localizer</span> <span class="pre">/Users/lukechang/Dropbox/Dartbrains/Data/preproc</span> <span class="pre">participant</span> <span class="pre">--participant_label</span> <span class="pre">sub-S01</span> <span class="pre">--write-graph</span> <span class="pre">--fs-no-reconall</span> <span class="pre">--notrack</span> <span class="pre">--fs-license-file</span> <span class="pre">~/Dropbox/Dartbrains/License/license.txt</span> <span class="pre">--work-dir</span> <span class="pre">/Users/lukechang/Dropbox/Dartbrains/Data/work</span></code></p>
-</li>
-</ul>
-<p>In practice, it’s alway a little bit finicky to get everything set up on a particular system. Sometimes you might run into issues with a specific missing file like the <a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/usage.html#the-freesurfer-license">freesurfer license</a> even if you’re not using it. You might also run into issues with the format of the data that might have some conflicts with the <a class="reference external" href="https://github.com/bids-standard/bids-validator">bids-validator</a>. In our experience, there is always some frustrations getting this to work, but it’s very nice once it’s done.</p>
-</div>
 <div class="section" id="loading-data">
 <h2>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h2>
-<p>Ok, once you’ve finished preprocessing some of your data with fmriprep, we can load a subject and run an ICA to explore signals that are present. Since we have completed preprocessing, our data should be realigned and also normalized to MNI stereotactic space. We will use the <a class="reference external" href="https://neurolearn.readthedocs.io/en/latest/">nltools</a> package to work with this data in python.</p>
+<p>Ok, let’s load a subject and run an ICA to explore signals that are present. Since we have completed preprocessing, our data should be realigned and also normalized to MNI stereotactic space. We will use the <a class="reference external" href="https://neurolearn.readthedocs.io/en/latest/">nltools</a> package to work with this data in python.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline

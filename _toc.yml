@@ -29,6 +29,10 @@
   - file: content/Multivariate_Prediction
   - file: content/RSA
   - file: content/Resampling_Statistics
+- part: Additional Courses
+  chapters:
+  - url: http://naturalistic-data.org/
+    title: Naturalistic Data Analysis  
 - part: Project Gallery
   chapters:
   - file: content/2019_Spring

@@ -21,7 +21,7 @@
 
 <img src="../images/instructors/saleki.jpg" width="200"/>
 
-[Sharif Saleki](https://sites.dartmouth.edu/peter/people/) (Fall 2020) is a graduate student at Dartmouth college working with Peter Tse.
+[Sharif Saleki](https://devxl.github.io/) (Fall 2020) is a graduate student at Dartmouth College. He recieved his BA in Psychology and MSc in Cognitive Science. After a period of research on visual attention at Tehran University of Medical Science's Brain and Behavior Laboratory, he joined Professor Peter Tse's lab at Dartmouth to study attention and its role in constructing conscious visual perception.
 
 <img src="../images/instructors/gonzalez.jpg" width="200"/>
 
