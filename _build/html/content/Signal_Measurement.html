@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Measurement and Signal &#8212; DartBrains</title>
+    <title>Signal Generation &#8212; DartBrains</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -50,8 +50,8 @@
 <!-- Opengraph tags -->
 <meta property="og:url"         content="http://dartbrains.org/content/Signal_Measurement.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Measurement and Signal" />
-<meta property="og:description" content="Measurement and Signal  Measuring in-vivo brain activity from humans is an extraordinary feat. How do scanners work? and what exactly are we measuring?  In this" />
+<meta property="og:title"       content="Signal Generation" />
+<meta property="og:description" content="Signal Generation  by Luke Chang  Measuring in-vivo brain activity from humans is an extraordinary feat. How do scanners work? and what exactly are we measuring" />
 <meta property="og:image"       content="http://dartbrains.org/_static/dartbrains_logo_square_transparent.png" />
 
 <meta name="twitter:card" content="summary" />
@@ -155,7 +155,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Measurement and Signal
+   Signal Generation
   </a>
  </li>
  <li class="toctree-l1">
@@ -310,9 +310,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/Signal_Measurement.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/content/Signal_Measurement.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -333,7 +333,7 @@
             href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Signal_Measurement.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Signal_Measurement.md"><button
+        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Signal_Measurement.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -347,6 +347,34 @@
 
         <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Signal_Measurement.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Signal_Measurement.ipynb&branch=master"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
+                data-placement="left"><img class="jupyterhub-button-logo"
+                    src="../_static/images/logo_jupyterhub.svg"
+                    alt="Interact on JupyterHub">JupyterHub</button></a>
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Signal_Measurement.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
     </div>
 
     <!-- Table of contents -->
@@ -357,18 +385,23 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#lecture">
-   Lecture
+  <a class="reference internal nav-link" href="#basic-mr-physics">
+   Basic MR Physics
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#readings">
-   Readings
+  <a class="reference internal nav-link" href="#image-formation">
+   Image Formation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#videos">
-   Videos
+  <a class="reference internal nav-link" href="#k-space">
+   K-Space
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fmri-signal-bold-physiology">
+   fMRI Signal &amp; BOLD Physiology
   </a>
  </li>
 </ul>
@@ -381,27 +414,92 @@
         
               <div>
                 
-  <div class="section" id="measurement-and-signal">
-<h1>Measurement and Signal<a class="headerlink" href="#measurement-and-signal" title="Permalink to this headline">¶</a></h1>
-<p>Measuring in-vivo brain activity from humans is an extraordinary feat. How do scanners work? and what exactly are we measuring?</p>
-<p>In this section, we will provide a very introductory overview of the basics of MR Physics and the physiology underlying the signal we are measuring with BOLD fMRI.</p>
-<div class="section" id="lecture">
-<h2>Lecture<a class="headerlink" href="#lecture" title="Permalink to this headline">¶</a></h2>
-<p>The lecture for this section can be viewed <a class="reference download internal" download="" href="../_downloads/eeb7554d8fe7aef4e276ae76debe5d35/Measurement_Signal.pdf"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
+  <div class="section" id="signal-generation">
+<h1>Signal Generation<a class="headerlink" href="#signal-generation" title="Permalink to this headline">¶</a></h1>
+<p><em>by Luke Chang</em></p>
+<p>Measuring in-vivo brain activity from humans is an extraordinary feat. How do scanners work? and what exactly are we measuring? In this course, we will be learning how to analyze functional magnetic resonance imaging (fMRI) data. Before we dive in the analysis methods, it’s important to have a basic understanding of what we are measuring. This course primarily focuses on Blood Oxygenated Level Dependent (BOLD) fMRI signals. In this section, we will watch a few short videos by Martin Lindquist and Tor Wager to gain a very high level understanding of (1) magnetic resonance physics, (2) how images are formed from these signals, (3) the relationship between k-space and image space, and (4) BOLD physiology. Gaining a deep understanding of the MR physics and physiological basis for the BOLD fMRI signal is beyond the scope of this course and we refer the interested reader to the excellent <a class="reference external" href="https://www.amazon.com/Functional-Magnetic-Resonance-Imaging-Huettel/dp/0878936270/ref=pd_sbs_14_1/144-9493364-1935804?_encoding=UTF8&amp;pd_rd_i=0878936270&amp;pd_rd_r=ac61b1df-17bf-47c5-8db5-25dfa36bcd16&amp;pd_rd_w=J61zv&amp;pd_rd_wg=d1O2i&amp;pf_rd_p=703f3758-d945-4136-8df6-a43d19d750d1&amp;pf_rd_r=PCEXDFT3TQQ4JW7FD8HF&amp;psc=1&amp;refRID=PCEXDFT3TQQ4JW7FD8HF">Huettel, Song, &amp; McCarthy (2004) Functional magnetic resonance imaging textbook</a> for a more in depth conceptual and quantitative overview.</p>
+<p>The lecture for this section can be viewed <a class="reference download internal" download="" href="../_downloads/5febb5e2cc862f783c4a3d184409462f/Intro_to_Neuroimaging.pdf"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
+<div class="section" id="basic-mr-physics">
+<h2>Basic MR Physics<a class="headerlink" href="#basic-mr-physics" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;XsDXxgjEJVY&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="readings">
-<h2>Readings<a class="headerlink" href="#readings" title="Permalink to this headline">¶</a></h2>
-<p>Please read Chapter 7 of the <a class="reference external" href="http://sites.sinauer.com/fmri3e/sq07.html">Huettel, Song, &amp; McCarthy textbook</a> on the BOLD signal</p>
 </div>
-<div class="section" id="videos">
-<h2>Videos<a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h2>
-<p>There are many fantastic lectures on this topic. We recommend watching the short videos by Tor Wager and Martin Lindquist from their Principles of fMRI Coursera class.</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=XsDXxgjEJVY&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=7&amp;t=0s">Basic MR Physics</a></p></li>
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=PxqDjhO9FUs&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=8&amp;t=0s">Image Formation</a></p></li>
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=FI5frNsRTI4&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=9&amp;t=436s">K-Space</a></p></li>
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=jG2WQpgpnMs&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=10&amp;t=0s">Signal &amp; BOLD Physiology</a></p></li>
-</ul>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/XsDXxgjEJVY"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
+</div>
+<div class="section" id="image-formation">
+<h2>Image Formation<a class="headerlink" href="#image-formation" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;PxqDjhO9FUs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/PxqDjhO9FUs"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
+</div>
+<div class="section" id="k-space">
+<h2>K-Space<a class="headerlink" href="#k-space" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;FI5frNsRTI4&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/FI5frNsRTI4"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
+</div>
+<div class="section" id="fmri-signal-bold-physiology">
+<h2>fMRI Signal &amp; BOLD Physiology<a class="headerlink" href="#fmri-signal-bold-physiology" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s1">&#39;jG2WQpgpnMs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/jG2WQpgpnMs"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
 </div>
 </div>
 
@@ -417,13 +515,13 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "python37764bitbaseconda668a19539d4e488a990d2e1ac0a9ce49",
             path: "./content"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python37764bitbaseconda668a19539d4e488a990d2e1ac0a9ce49'</script>
 
               </div>
               
