@@ -155,7 +155,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Signal_Measurement.html">
-   Measurement and Signal
+   Signal Generation
   </a>
  </li>
  <li class="toctree-l1">
@@ -508,8 +508,8 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-4-reconstruct-the-signal-with-the-frequency-removed-and-compare-it-to-the-original">
-     Exercise 4. Reconstruct the signal with the frequency removed and compare it to the original
+    <a class="reference internal nav-link" href="#exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original">
+     Exercise 4. Remove frequency with a bandstop filter in the frequency domain and reconstruct the signal in the time domain with the frequency removed and compare it to the original
     </a>
    </li>
   </ul>
@@ -535,7 +535,7 @@
 <h3>Dot Product<a class="headerlink" href="#dot-product" title="Permalink to this headline">¶</a></h3>
 <p>To understand convolution, we first need to familiarize ourselves with the dot product.  The dot product is simply the sum of the elements of a vector weighted by the elements of another vector. This method is commonly used in signal processing, and also in statistics as a measure of similarity between two vectors. Finally, there is also a geometric inrepretation which is a mapping between vectors (i.e., the product of the magnitudes of the two vectors scaled by the cosine of the angle between them). For a more in depth overview of the dot product and its relation to convolution, you can watch this optional <a class="reference external" href="https://youtu.be/rea6M1oagmA">video</a>.</p>
 <p><span class="math notranslate nohighlight">\(dotproduct_{ab}=\sum\limits_{i=1}^n a_i b_i\)</span></p>
-<p>Let’s create some vectors of random numbers and see how the dot product works.  First, the two vectos need to be of the same length.</p>
+<p>Let’s create some vectors of random numbers and see how the dot product works.  First, the two vectors need to be of the same length.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -556,7 +556,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dot Product: 434
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dot Product: 380
 </pre></div>
 </div>
 <img alt="../_images/Signal_Processing_3_1.png" src="../_images/Signal_Processing_3_1.png" />
@@ -576,7 +576,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dot Product: 583.1197152049825
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dot Product: 449.19188650977253
 </pre></div>
 </div>
 <img alt="../_images/Signal_Processing_5_1.png" src="../_images/Signal_Processing_5_1.png" />
@@ -738,14 +738,10 @@ Convolved Signal Length: 109
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/sklearn/utils/deprecation.py:144: FutureWarning: The sklearn.linear_model.base module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.linear_model. Anything that cannot be imported from sklearn.linear_model is now part of the private API.
-  warnings.warn(message, FutureWarning)
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Hemodynamic Response Function&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_19_2.png" src="../_images/Signal_Processing_19_2.png" />
+<img alt="../_images/Signal_Processing_19_1.png" src="../_images/Signal_Processing_19_1.png" />
 </div>
 </div>
 <p>For this example, we oversampled the function to make it more smooth.  In practice we will want to make sure that the kernel is the correct shape given our sampling resolution.  Be sure to se the oversampling to 1.  Notice how the function looks more jagged now?</p>
@@ -779,12 +775,12 @@ Convolved Signal Length: 109
 <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Timeseries of spikes with varying intensities&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
-<span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Signal convolved with boxcar kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Signal convolved with HRF kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Signal convolved with boxcar kernel&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Signal convolved with HRF kernel&#39;)
 </pre></div>
 </div>
 <img alt="../_images/Signal_Processing_23_1.png" src="../_images/Signal_Processing_23_1.png" />
@@ -876,7 +872,7 @@ Convolved Signal Length: 109
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "b6acc994b74443fba620f4040e22f605", "version_major": 2, "version_minor": 0}
+{"model_id": "ee345347b0034675bdcf09bfe609d373", "version_major": 2, "version_minor": 0}
 </script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.plot_oscillation(amplitude=5, frequency=5, theta=1)&gt;
 </pre></div>
 </div>
@@ -1053,7 +1049,7 @@ Convolved Signal Length: 109
 </div></div>
 </div>
 <p>The discrete Fourier transform of variable <span class="math notranslate nohighlight">\(x\)</span> at frequency <span class="math notranslate nohighlight">\(f\)</span> can be defined as:</p>
-<p><span class="math notranslate nohighlight">\(X_f = \sum\limits_{k=0}^{n-1} x_k e^{-i2\pi f(k-1)n^{-1}}\)</span>
+<p><span class="math notranslate nohighlight">\(X_f = \sum\limits_{k=0}^{n-1} x_k \cdot e^\frac{-i2\pi fk}{n}\)</span>
 where <span class="math notranslate nohighlight">\(n\)</span> refers to the number of data points in vector <span class="math notranslate nohighlight">\(x\)</span>, and the capital letter <span class="math notranslate nohighlight">\(X_f\)</span> is the fourier coefficient of time series variable <span class="math notranslate nohighlight">\(x\)</span> at frequency <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <p>Essentially, we create a bank of complex sine waves at different frequencies that are linearly spaced. The zero frequency component reflects the mean offset over the entire signal and will simply be zero in our example.</p>
 <div class="section" id="complex-sine-waves">
@@ -1236,7 +1232,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="section" id="inverse-fourier-transform">
 <h3>Inverse Fourier Transform<a class="headerlink" href="#inverse-fourier-transform" title="Permalink to this headline">¶</a></h3>
 <p>The fourier transform allows you to represent a time series in the frequency domain. This is a lossless operation, meaning that no information in the original signal is lost by the transform. This means that we can reconstruct the original signal by inverting the operation. Thus, we can create a time series with only the frequency domain information using the <em>inverse fourier transform</em>. Watch this <a class="reference external" href="https://youtu.be/HFacSL--vps">video</a> if you would like a more in depth explanation.</p>
-<p><span class="math notranslate nohighlight">\(x_k = \sum\limits_{k=0}^{n-1} X_k e^{i2\pi f(k-1)n^{-1}}\)</span></p>
+<p><span class="math notranslate nohighlight">\(x_k = \sum\limits_{k=0}^{n-1} X_f \cdot e^\frac{i2\pi fk}{n}\)</span></p>
 <p>Notice that we are computing the dot product between the complex sine wave and the fourier coefficients <span class="math notranslate nohighlight">\(X\)</span> instead of the time series data <span class="math notranslate nohighlight">\(x\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1301,14 +1297,14 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 <div class="section" id="convolution-theorem">
 <h3>Convolution Theorem<a class="headerlink" href="#convolution-theorem" title="Permalink to this headline">¶</a></h3>
-<p>Convolution in the time domain is the same multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this <a class="reference external" href="https://youtu.be/hj7j4Q8T3Ck">video</a> for an overview of the convolution theorem and convolution in the frequency domain.</p>
+<p>Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this <a class="reference external" href="https://youtu.be/hj7j4Q8T3Ck">video</a> for an overview of the convolution theorem and convolution in the frequency domain.</p>
 <p><img alt="ConvolutionTheorem.png" src="../_images/ConvolutionTheorem.png" /></p>
 </div>
 </div>
 <div class="section" id="filters">
 <h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
-<p>Filters can be classified as finite impulse response (FIR) or infinite impulse response (IIR). These terms describe how a filter responds to a single input impulse.  FIR filters have a response that ends at a disrete point in time, while IIR filters have a response that continues indefinitely.</p>
-<p>Filters are constructed in the frequency domain and several properties that need to be considers.</p>
+<p>Filters can be classified as finite impulse response (FIR) or infinite impulse response (IIR). These terms describe how a filter responds to a single input impulse.  FIR filters have a response that ends at a discrete point in time, while IIR filters have a response that continues indefinitely.</p>
+<p>Filters are constructed in the frequency domain and have several properties that need to be considered.</p>
 <ul class="simple">
 <li><p>ripple in the pass-band</p></li>
 <li><p>attenuation in the stop-band</p></li>
@@ -1548,8 +1544,8 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="section" id="exercise-3-remove-one-frequency-with-a-bandstop-filter">
 <h3>Exercise 3. Remove one frequency with a bandstop filter<a class="headerlink" href="#exercise-3-remove-one-frequency-with-a-bandstop-filter" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="exercise-4-reconstruct-the-signal-with-the-frequency-removed-and-compare-it-to-the-original">
-<h3>Exercise 4. Reconstruct the signal with the frequency removed and compare it to the original<a class="headerlink" href="#exercise-4-reconstruct-the-signal-with-the-frequency-removed-and-compare-it-to-the-original" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original">
+<h3>Exercise 4. Remove frequency with a bandstop filter in the frequency domain and reconstruct the signal in the time domain with the frequency removed and compare it to the original<a class="headerlink" href="#exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
