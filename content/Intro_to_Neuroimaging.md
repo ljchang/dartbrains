@@ -8,3 +8,7 @@ In this section, we will provide an overview of the course and a very introducto
 
 The lecture for this section can be viewed {download}`here <../images/lectures/Intro_to_Neuroimaging.pdf>`.
 
+
+```python
+
+```

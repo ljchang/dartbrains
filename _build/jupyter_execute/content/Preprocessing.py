@@ -1,7 +1,7 @@
 # Preprocessing
 *Written by Luke Chang*
 
-Being able to study brain activity associated with cognitive processes in humans is an amazing achievement. However, as we have noted throughout this course, there is an extraordinary amount of noise and a very low levels of signal, which makes it difficult to make inferences about the function of the brain using this BOLD imaging. A critical step before we can perform any analyses is to do our best to remove as much of the noise as possible. The series of steps to remove noise comprise our *neuroimaging data **preprocessing** pipeline*.
+Being able to study brain activity associated with cognitive processes in humans is an amazing achievement. However, as we have noted throughout this course, there is an extraordinary amount of noise and a very low levels of signal, which makes it difficult to make inferences about the function of the brain using this BOLD imaging. A critical step before we can perform any analyses is to do our best to remove as much of the noise as possible. The series of steps to remove noise comprise our *neuroimaging data **preprocessing** pipeline*. See slides on our preprocessing lecture {download}`here <../images/lectures/Preprocessing.pdf>`.
 
 ![preprocessing](../images/preprocessing/preprocessing.png)
 

@@ -53,7 +53,7 @@ Notice we are setting `derivatives=True`. This means the layout will also index 
 from bids import BIDSLayout, BIDSValidator
 import os
 
-data_dir = '/Users/lukechang/Dropbox/Dartbrains/data/Localizer'
+data_dir = '../data/localizer'
 layout = BIDSLayout(data_dir, derivatives=True)
 layout
 
@@ -65,7 +65,7 @@ layout.get()[:10]
 
 As you can see, just a generic `.get()` call gives us *all* of the files. We will definitely want to be a bit more specific. We can specify the type of data we would like to query. For example, suppose we want to return the first 10 subject ids.
 
-layout.get(target='subject', return_type='id')[:10]
+layout.get(target='subject', return_type='id', scope='derivatives')[:10]
 
 Or perhaps, we would like to get the file names for the raw bold functional nifti images for the first 10 subjects. We can filter files in the `raw` or `derivatives`, using `scope` keyword.`scope='raw'`, to only query raw bold nifti files.
 
@@ -125,6 +125,7 @@ import nibabel as nib
 
 data = nib.load(layout.get(subject='S01', scope='derivatives', suffix='T1w', return_type='file', extension='nii.gz')[1])
 
+
 If we want to get more help on how to work with the nibabel data object we can either consult the [documentation](https://nipy.org/nibabel/tutorials.html#tutorials) or add a `?`.
 
 data?
@@ -181,9 +182,11 @@ view_img(data)
 
 The `view_img` function is particularly useful for overlaying statistical maps over an anatomical image so that we can interactively examine where the results are located.
 
-As an example, let's load a mask of the amygdala and try to find where it is located.
+As an example, let's load a mask of the amygdala and try to find where it is located. We will download it from [Neurovault](https://neurovault.org/images/18632/) using a function from `nltools`.
 
-amygdala_mask = nib.load(os.path.join(data_dir, '../..', 'masks', 'FSL_BAmyg_thr0.nii.gz'))
+from nltools.data import Brain_Data
+amygdala_mask = Brain_Data('https://neurovault.org/media/images/1290/FSL_BAmyg_thr0.nii.gz').to_nifti()
+
 view_img(amygdala_mask, data)
 
 We can also plot a glass brain which allows us to see through the brain from different slice orientations. In this example, we will plot the binary amygdala mask.
@@ -193,7 +196,7 @@ plot_glass_brain(amygdala_mask)
 ## Manipulating Data with Nltools
 Ok, we've now learned how to use nibabel to load imaging data and nilearn to plot it.
 
-Next we are going to learn how to use the `nltools` package that tries to make loading, plotting, and manipulating data easier. It uses many functions from nibabe, nilearn, and other python libraries. The bulk of the nltools toolbox is built around the `Brain_Data()` class. The concept behind the class is to have a similar feel to a pandas dataframe, which means that it should feel intuitive to manipulate the data.
+Next we are going to learn how to use the `nltools` package that tries to make loading, plotting, and manipulating data easier. It uses many functions from nibabel, nilearn, and other python libraries. The bulk of the nltools toolbox is built around the `Brain_Data()` class. The concept behind the class is to have a similar feel to a pandas dataframe, which means that it should feel intuitive to manipulate the data.
 
 The `Brain_Data()` class has several attributes that may be helpful to know about. First, it stores imaging data in `.data` as a vectorized features by observations matrix. Each image is an observation and each voxel is a feature. Space is flattened using `nifti_masker` from nilearn. This object is also stored as an attribute in `.nifti_masker` to allow transformations from 2D to 3D/4D matrices. In addition, a brain_mask is stored in `.mask`. Finally, there are attributes to store either class labels for prediction/classification analyses in `.Y` and design matrices in `.X`. These are both expected to be pandas `DataFrames`.
 
@@ -224,7 +227,9 @@ Ok, now let's load a single subject's functional data from the localizer dataset
 Loading data can be a little bit slow especially if the data need to be resampled to the template, which is set at $2mm^3$ by default. However, once it's loaded into the workspace it should be relatively fast to work with it.
 
 
-data = Brain_Data(layout.get(target='subject', scope='derivatives', suffix='bold', extension='nii.gz', return_type='file')[0])
+sub = 'sub-S01'
+
+data = Brain_Data(os.path.join(data_dir, 'derivatives', 'fmriprep', sub, 'func', f'{sub}_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'))
 
 Here are a few quick basic data operations.
 

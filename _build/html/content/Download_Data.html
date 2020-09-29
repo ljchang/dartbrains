@@ -155,7 +155,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Signal_Measurement.html">
-   Measurement and Signal
+   Signal Generation
   </a>
  </li>
  <li class="toctree-l1">
@@ -1018,7 +1018,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">sub-S01</span></code>’s raw data</p></li>
 <li><p>experimental metadata</p></li>
-<li><p>preprocessed data for the first 15 subjects including the fmriprep QC reports.</p></li>
+<li><p>preprocessed data for the first 20 subjects including the fmriprep QC reports.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1034,7 +1034,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">localizer_path</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;fmriprep&#39;</span><span class="p">,</span> <span class="s1">&#39;sub*&#39;</span><span class="p">))</span>
 <span class="n">file_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">[:</span><span class="mi">30</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">[:</span><span class="mi">20</span><span class="p">]:</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>

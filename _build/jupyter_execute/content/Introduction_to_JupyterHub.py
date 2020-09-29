@@ -1,7 +1,7 @@
 # Introduction to JupyterHub
 *Written by Luke Chang & Jeremy Huckins*
 
-In this course we will primarily be using python to learn about fMRI data analysis. All of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an [anaconda distribution](https://www.anaconda.com/distribution/). However, the datasets are large and there can be annoying issues with different versions of packages and installing software across different operating systems. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). We have a docker container available that will contain all of the software and have created tutorials to [download the data](https://dartbrains.org/features/notebooks/Download_Localizer_Data.html). In addition, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop. 
+In this course we will primarily be using python to learn about fMRI data analysis. All of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an [anaconda distribution](https://www.anaconda.com/distribution/). However, the datasets are large and there can be annoying issues with different versions of packages and installing software across different operating systems. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). We have a docker container available that will contain all of the software and have created tutorials to {doc} download the data <../content/Download_Data>. In addition, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop. 
 
 To meet these needs, Dartmouth's Research Computing has generously provided a dedicated server hosted on Amazon Web Services that will allow us to store data, access specialized software, and run analyses. This means that everyone should be able to run all of the tutorials on their laptops, tablets, etc by accessing notebooks on the jupyterhub server and will not need to install anything beyond a working browser.
 
@@ -31,22 +31,34 @@ Finally, you can view examples and share your work with the world very easily th
 
 ### Opening a notebook on the server
 
-Click on Files, then Psych60, then notebooks. Click on any notebook you would like to load. Make sure you copy the notebook to another location outside of `notebooks` folder to make sure your work won't be deleted. 
-
-For example, our first laboratory will be **1_Introduction_to_Programming.ipynb**.
+Click on `Files` ->  `Psych60` ->  `notebooks`. Click on any notebook you would like to open (e.g., `1_Introduction_to_Programming.ipynb`). It should open and you will be to edit text and run code.
 
 
 ### Copying Notebook
-Make sure you copy your notebook to a different directory to make sure it will not be erased when you restart your server.
 
-First, you will need to create a folder called `Homework`. Click on `New` then `Folder`.
-![](../images/jupyterhub/create_homework_folder.png)
+For this course, I strongly recommend that you create a copy of each notebook to your `Homework` folder and work off of the copy. This will allow you to take risks and change the code as well as ensure that your work won't be deleted when the notebooks update. 
 
-Second, you will need to rename folder. `Check` the box next to the new untitled folder, then click `Rename`, then type `Homework`
+Let's learn how to duplicate the notebook and move it to the homework folder.
+
+1. In your home directory, you will need to create a folder called `Homework`. Click on `New` then `Folder`.
+![](../images/jupyterhub/create_folder.png)
+
+2. You will need to rename the folder. `Check` the box next to the new untitled folder, then click `Rename`.
 ![](../images/jupyterhub/rename_folder.png)
 
-Third, for all notebooks you will need to save a copy into your homework directory. Go to `File` then `Save as` then type in `psych60/notebooks/Homework`. You will need to do this for each new notebook assignment.
-![](../images/jupyterhub/save_notebook.png)
+Now type the new name of the folder, i.e., `Homework`
+![](../images/jupyterhub/create_homework.png)
+
+3. Let's practice copying a notebook to your Homework folder. Navigate to `Psych60` -> `notebooks`. Check the box next to the notebook you would like to duplicate. Here we will select `1_Introduction_to_Programming.ipynb`. Then click the `Duplicate` button. 
+![](../images/jupyterhub/duplicate_notebook.png)
+
+4. Move duplicated notebook to your homework folder. Check the box next to the duplicated notebook and click the `Move` button.
+![](../images/jupyterhub/move_notebook.png)
+
+This will allow you to specify the path to where you would like the notebook moved. Type `/Homework` to move it out of the current directory to your Homework folder.
+![](../images/jupyterhub/move_to_homework.png)
+
+Your duplicated notebook is now in your homework folder. You will need to do this for each new notebook assignment.
 
 
 ## Alternative to Jupyterhub

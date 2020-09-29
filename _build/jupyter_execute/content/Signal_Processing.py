@@ -12,7 +12,7 @@ To understand convolution, we first need to familiarize ourselves with the dot p
 
 $dotproduct_{ab}=\sum\limits_{i=1}^n a_i b_i$
 
-Let's create some vectors of random numbers and see how the dot product works.  First, the two vectos need to be of the same length.
+Let's create some vectors of random numbers and see how the dot product works.  First, the two vectors need to be of the same length.
 
 %matplotlib inline
 
@@ -158,7 +158,7 @@ a[0].set_ylabel('Intensity', fontsize=18)
 a[0].set_title('Timeseries of spikes with varying intensities', fontsize=18)
 a[1].set_ylabel('Intensity', fontsize=18)
 a[1].set_xlabel('Time', fontsize=18)
-a[1].set_title('Signal convolved with boxcar kernel', fontsize=18)
+a[1].set_title('Signal convolved with HRF kernel', fontsize=18)
 
 
 If you are interested in a more detailed overview of convolution in the time domain, I encourage you to watch this [video](https://youtu.be/9Hk-RAIzOaw) by Mike X Cohen. For more details about convolution and the HRF function, see this [overview](https://practical-neuroimaging.github.io/on_convolution.html) using python examples. 
@@ -337,7 +337,7 @@ YouTubeVideo('_htCsieA0_U')
 
 The discrete Fourier transform of variable $x$ at frequency $f$ can be defined as:
 
-$X_f = \sum\limits_{k=0}^{n-1} x_k e^{-i2\pi f(k-1)n^{-1}}$
+$X_f = \sum\limits_{k=0}^{n-1} x_k \cdot e^\frac{-i2\pi fk}{n}$
  where $n$ refers to the number of data points in vector $x$, and the capital letter $X_f$ is the fourier coefficient of time series variable $x$ at frequency $f$.
  
 Essentially, we create a bank of complex sine waves at different frequencies that are linearly spaced. The zero frequency component reflects the mean offset over the entire signal and will simply be zero in our example.
@@ -464,7 +464,7 @@ YouTubeVideo('RHjqvcKVopg')
 
 The fourier transform allows you to represent a time series in the frequency domain. This is a lossless operation, meaning that no information in the original signal is lost by the transform. This means that we can reconstruct the original signal by inverting the operation. Thus, we can create a time series with only the frequency domain information using the *inverse fourier transform*. Watch this [video](https://youtu.be/HFacSL--vps) if you would like a more in depth explanation.
 
-$x_k = \sum\limits_{k=0}^{n-1} X_k e^{i2\pi f(k-1)n^{-1}}$
+$x_k = \sum\limits_{k=0}^{n-1} X_f \cdot e^\frac{i2\pi fk}{n}$
 
 Notice that we are computing the dot product between the complex sine wave and the fourier coefficients $X$ instead of the time series data $x$.
 
@@ -497,15 +497,15 @@ plt.xlabel('Time', fontsize=18)
 plt.title('Reconstructed Time Series Signal', fontsize=18)
 
 ### Convolution Theorem
-Convolution in the time domain is the same multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
+Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
 
 ![ConvolutionTheorem.png](../images/signal_processing/ConvolutionTheorem.png)
 
 ## Filters
 
-Filters can be classified as finite impulse response (FIR) or infinite impulse response (IIR). These terms describe how a filter responds to a single input impulse.  FIR filters have a response that ends at a disrete point in time, while IIR filters have a response that continues indefinitely.
+Filters can be classified as finite impulse response (FIR) or infinite impulse response (IIR). These terms describe how a filter responds to a single input impulse.  FIR filters have a response that ends at a discrete point in time, while IIR filters have a response that continues indefinitely.
 
-Filters are constructed in the frequency domain and several properties that need to be considers.
+Filters are constructed in the frequency domain and have several properties that need to be considered.
 
 - ripple in the pass-band
 - attenuation in the stop-band
@@ -674,5 +674,5 @@ plt.legend(['Original','Filtered'], fontsize=18)
 
 
 
-### Exercise 4. Reconstruct the signal with the frequency removed and compare it to the original
+### Exercise 4. Remove frequency with a bandstop filter in the frequency domain and reconstruct the signal in the time domain with the frequency removed and compare it to the original
 

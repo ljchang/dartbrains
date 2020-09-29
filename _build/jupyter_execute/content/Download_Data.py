@@ -165,7 +165,7 @@ result = ds.status(annex='all')
 Now let's download the data we will use for the course. We will download:
 - `sub-S01`'s raw data
 - experimental metadata
-- preprocessed data for the first 15 subjects including the fmriprep QC reports.
+- preprocessed data for the first 20 subjects including the fmriprep QC reports.
 
 
 result = ds.get(os.path.join(localizer_path, 'sub-S01'))
@@ -175,7 +175,7 @@ result = ds.get(glob.glob(os.path.join(localizer_path, 'phenotype')))
 
 file_list = glob.glob(os.path.join(localizer_path, '*', 'fmriprep', 'sub*'))
 file_list.sort()
-for f in file_list[:30]:
+for f in file_list[:20]:
     result = ds.get(f)
 
 To get the python packages for the course be sure to read the installation {ref}`instructions <python-packages>` in the {doc}`../content/Introduction_to_JupyterHub` tutorial.

@@ -12,6 +12,11 @@ dist/
 htmlcov
 .pytest_cache/*
 dev/
+
+# Data #
+###################
+data/localizer/
+
 # Logs and databases #
 ######################
 *.log
