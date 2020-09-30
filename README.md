@@ -1,4 +1,4 @@
-![alt text](https://github.com/ljchang/dartbrains/blob/master/content/images/logo/dartbrains_logo_square_transparent.png)
+![alt text](https://github.com/ljchang/dartbrains/blob/master/images/logo/dartbrains_logo_square_transparent.png)
 [![DOI](https://zenodo.org/badge/171529794.svg)](https://zenodo.org/badge/latestdoi/171529794)
 
 
