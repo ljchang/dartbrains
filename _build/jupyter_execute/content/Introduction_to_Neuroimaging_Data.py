@@ -363,5 +363,5 @@ In Exercise 2, calculate the SNR for S01 and plot this so we can figure which re
 
 ### Exercise 3
 
-We are often interested in identifying outliers in our data. In this exercise, find any image from 'S01' that exceeds a zscore of 2 and plot each one.
+We are often interested in identifying outliers in our data. In this exercise, find any image that is outside 95% of all images based on global intensity (i.e., zscore greater than 2) from 'S01' and plot each one.
 
