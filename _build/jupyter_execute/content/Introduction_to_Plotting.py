@@ -361,7 +361,17 @@ Place titles for each plot as shown, and your name as the main title.
 
 ![](../images/plotting/hw2-3.png)
 
+data = pd.read_csv('../data/salary/salary_exercise.csv')
+data.columns = ['Sex', 'Rank', 'Year', 'Degree', 'YearsSinceHighestDegree', 'Salary']
 
+with sns.plotting_context(context='paper', font_scale=2.5):
+    f,a = plt.subplots(ncols=2, nrows=1, figsize=(25, 10))
+    sns.heatmap(data.query('Sex=="male"').corr(), 
+                linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=a[0])
+
+    sns.heatmap(data.query('Sex=="male"').corr(), 
+                linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=a[1])
+    plt.tight_layout()
 
 ### Exercise 2
 Recreate the following plot from the salary_exercise.csv dataset.   
@@ -374,4 +384,17 @@ Add a legend for the scatterplot and place it at a bottom-right location.
 Add your name as the main title of the plot.   
 
 ![](../images/plotting/hw2-4.png)
+
+data = pd.read_csv('../data/salary/salary_exercise.csv')
+data.columns = ['Sex', 'Rank', 'Year', 'Degree', 'YearsSinceHighestDegree', 'Salary']
+f,a = plt.subplots(ncols=2, nrows=1, figsize=(12, 5))
+
+sns.barplot(data=data, x='Sex', y='Salary', ax=a[0])
+a[0].set_ylabel('Salary', fontsize=18)
+
+sns.scatterplot(data=data, x='YearsSinceHighestDegree', y='Salary', hue='Sex', ax=a[1])
+a[1].set_ylabel('Salary', fontsize=18)
+a[1].set_xlabel('Years Since Highest Degree', fontsize=18)
+plt.suptitle('Years Since Highest Degree', fontsize=18)
+plt.tight_layout()
 

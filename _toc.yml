@@ -37,6 +37,7 @@
   chapters:
   - file: content/2019_Spring
   - file: content/2020_Spring
+  - file: content/2020_Fall
 - part: Contributing
   chapters:
   - file: content/Contributing

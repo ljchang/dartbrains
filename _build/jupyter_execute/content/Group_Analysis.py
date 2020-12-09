@@ -725,11 +725,3 @@ You will first have to figure out the subjects gender using the using the `parti
  - plot the results
  - write the file to your output folder.
 
-from bids import BIDSLayout, BIDSValidator
-
-data_dir = '../data/localizer'
-layout = BIDSLayout(data_dir, derivatives=False)
-
-meta_data = pd.read_csv(layout.get(suffix='participants', extension='.tsv')[0], sep='\t')
-meta_data.head()
-
