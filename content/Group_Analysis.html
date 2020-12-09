@@ -155,7 +155,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Signal_Measurement.html">
-   Measurement and Signal
+   Signal Generation
   </a>
  </li>
  <li class="toctree-l1">
@@ -247,6 +247,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="2020_Spring.html">
    Spring 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Fall.html">
+   Fall 2020
   </a>
  </li>
 </ul>
@@ -1418,19 +1423,6 @@ Quadratic Contrast: [-1  1  1 -1]
 <li><p>plot the results</p></li>
 <li><p>write the file to your output folder.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span><span class="p">,</span> <span class="n">BIDSValidator</span>
-
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;../data/localizer&#39;</span>
-<span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">derivatives</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="n">meta_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;participants&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.tsv&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">meta_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
