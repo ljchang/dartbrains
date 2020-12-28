@@ -19,6 +19,10 @@
 
 ## Teaching Assistants
 
+<img src="../images/instructors/heller.jpg" width="200"/>
+
+[Nate Heller](https://www.researchgate.net/profile/Nathan_Heller) (Winter 2021) is a graduate student at Dartmouth College in Peter Tse’s lab. He completed his undergraduate education at University of California, Santa Cruz where he studied cognitive science and applied mathematics. His research interests include understanding the neural basis of high-level and low-level attentional systems, including volitional attention, object-based attention, and attentional capture. Recently, he has become involved in psychedelic research, looking at the influence of the classical psychedelic psilocybin on creativity, long-term memory, and volitional attention.
+
 <img src="../images/instructors/saleki.jpg" width="200"/>
 
 [Sharif Saleki](https://devxl.github.io/) (Fall 2020) is a graduate student at Dartmouth College. He recieved his BA in Psychology and MSc in Cognitive Science. After a period of research on visual attention at Tehran University of Medical Science's Brain and Behavior Laboratory, he joined Professor Peter Tse's lab at Dartmouth to study attention and its role in constructing conscious visual perception.
@@ -34,4 +38,3 @@
 <img src="../images/instructors/brietzke.jpg" width="200"/>
 
 [Sasha Brietzke](http://www.dartmouth-socialneurolab.com/people) (Spring 2019) is graduate student at Dartmouth College. She completed a BA at Johns Hopkins University and an IRTA postbac fellowship at the NIH. She currently works in the [Dartmouth Social Neuroscience Lab](http://www.dartmouth-socialneurolab.com) investigating the self through a social cognitive lens.
-
