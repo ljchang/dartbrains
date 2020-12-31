@@ -11,7 +11,7 @@ How can we understand how the brain works? This course provides an introduction 
  4) Introduce advanced analysis techniques
 
 ## Overview
-This course is designed primarily around learning the basics of fMRI data analysis using the Python programming language. We will cover a lot of ground from introducing the Python programming language, to signal processing, to working with opensource packages from the Python Scientific Computing community. The format will be slightly different than the typical in-person version of the course. 
+This course is designed primarily around learning the basics of fMRI data analysis using the Python programming language. We will cover a lot of ground from introducing the Python programming language, to signal processing, to working with open-source packages from the Python Scientific Computing community. The format will be slightly different than the typical in-person version of the course. 
 
 - All course materials will be made available online in the format of a jupyter book, https://dartbrains.org/. Lectures will primarily be delivered via publicly available pre-recorded lectures available on youtube. 
 - Each course module will have a jupyter book tutorial and an accompanying assignment that will require completing some type of programming task or analysis. Students will work within small groups throughout the term on their assignments. 
