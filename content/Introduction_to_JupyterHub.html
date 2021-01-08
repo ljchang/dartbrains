@@ -71,7 +71,7 @@
 <meta property="og:url"         content="http://dartbrains.org/content/Introduction_to_JupyterHub.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Introduction to JupyterHub" />
-<meta property="og:description" content="Introduction to JupyterHub  Written by Luke Chang &amp; Jeremy Huckins  In this course we will primarily be using python to learn about fMRI data analysis. All of t" />
+<meta property="og:description" content="Introduction to JupyterHub  Written by Luke Chang &amp; Jeremy Huckins  In this course we will primarily be using Python to learn about fMRI data analysis. All of t" />
 <meta property="og:image"       content="http://dartbrains.org/_static/dartbrains_logo_square_transparent.png" />
 
 <meta name="twitter:card" content="summary" />
@@ -182,7 +182,37 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
+   Introduction to neuroimaging data with Python
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html#software-packages">
+   Software Packages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html#bids-brain-imaging-dataset-specification">
+   BIDS: Brain Imaging Dataset Specification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html#loading-data-with-nibabel">
+   Loading Data with Nibabel
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html#plotting-data-with-nilearn">
+   Plotting Data with Nilearn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html#manipulating-data-with-nltools">
+   Manipulating Data with Nltools
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html#exercises">
+   Exercises
   </a>
  </li>
  <li class="toctree-l1">
@@ -479,29 +509,25 @@
   <div class="section" id="introduction-to-jupyterhub">
 <h1>Introduction to JupyterHub<a class="headerlink" href="#introduction-to-jupyterhub" title="Permalink to this headline">¶</a></h1>
 <p><em>Written by Luke Chang &amp; Jeremy Huckins</em></p>
-<p>In this course we will primarily be using python to learn about fMRI data analysis. All of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an <a class="reference external" href="https://www.anaconda.com/distribution/">anaconda distribution</a>. However, the datasets are large and there can be annoying issues with different versions of packages and installing software across different operating systems. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). We have a docker container available that will contain all of the software and have created tutorials to {doc} download the data &lt;../content/Download_Data&gt;. In addition, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop.</p>
+<p>In this course we will primarily be using Python to learn about fMRI data analysis. All of the laboratories can be run on your own individual laptops once you have installed Python (preferably via an <a class="reference external" href="https://www.anaconda.com/distribution/">anaconda distribution</a>. However, the datasets are large and there can be annoying issues with different versions of packages and installing software across different operating systems. We will also occasionally be using additional software that will be called by Python (e.g., preprocessing). We have a docker container available that will contain all of the software and have created tutorials to {doc} download the data &lt;../content/Download_Data&gt;. In addition, some of the analyses we will run can be very computationally expensive and may exceed the capabilities of your laptop.</p>
 <p>To meet these needs, Dartmouth’s Research Computing has generously provided a dedicated server hosted on Amazon Web Services that will allow us to store data, access specialized software, and run analyses. This means that everyone should be able to run all of the tutorials on their laptops, tablets, etc by accessing notebooks on the jupyterhub server and will not need to install anything beyond a working browser.</p>
 <div class="section" id="login">
 <h2>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h2>
 <p>The main portal to access this resource will be through the Jupyterhub interface. This allows you to remotely login in to the server through your browser at https://jhub.dartmouth.edu using your netid. Please let us know if you are having difficulty logging in.</p>
-<p>Once you’ve logged in you should see a screen like this.</p>
-<p><img alt="" src="../_images/jhub.png" /></p>
-<p>The <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> folder contains all of the relevant notebooks and data for the course.</p>
-<p>Every time you login jupyterhub will spin up a new server just for you and will update all of the files.</p>
 </div>
 <div class="section" id="server">
 <h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
-<p>Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 3gb of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds 3gb.</p>
+<p>Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 4gb of RAM, keep an eye on how much your jobs are using (you can see this in the top right corner of the notebook). The server may crash if it exceeds 4gb.</p>
 </div>
 <div class="section" id="jupyter-notebooks">
 <h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h2>
 <p>Jupyter notebooks are a great way to have your code, comments and results show up inline in a web browser. Work for this class will be done in Jupyter notebooks so you can reference what you have done, see the results and someone else could redo it in the future, similar to a typical lab notebook.</p>
 <p>Rather than writing and re-writing an entire program, you can write lines of code and run them one at a time. Then, if you need to make a change, you can go back and make your edit and rerun the program again, all in the same window. In our specific case, we are going to use JupyterHub which lets several people access the same computer and data at the same time through a web browser.</p>
 <p>Finally, you can view examples and share your work with the world very easily through <a class="reference external" href="https://nbviewer.jupyter.org">nbviewer</a>.  One easy trick if you use a cloud storage service like dropbox is to paste a link to the dropbox file in nbviewer.  These links will persist as long as the file remains being shared via dropbox.</p>
-<p><em><strong>Do not work directly on the notebooks in the <code class="docutils literal notranslate"><span class="pre">Psych60/notebook</span></code> folder</strong></em>. These will always be updating as I edit them. Instead, make sure you copy the notebooks you are working on to <strong>your own personal folder</strong>. These can only be changed by you and won’t be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.</p>
+<p><em><strong>Do not work directly on the notebooks in the <code class="docutils literal notranslate"><span class="pre">psych60/notebook</span></code> folder</strong></em>. (Actually, as of winter ‘21 term, you probably can’t, as these notebooks are read-only.) These will always be updating as we edit them. Instead, make sure you copy the notebooks you are working on to <strong>your own personal folder (instructions given below)</strong>. These can only be changed by you and won’t be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.</p>
 <div class="section" id="opening-a-notebook-on-the-server">
 <h3>Opening a notebook on the server<a class="headerlink" href="#opening-a-notebook-on-the-server" title="Permalink to this headline">¶</a></h3>
-<p>Click on <code class="docutils literal notranslate"><span class="pre">Files</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. Click on any notebook you would like to open (e.g., <code class="docutils literal notranslate"><span class="pre">1_Introduction_to_Programming.ipynb</span></code>). It should open and you will be to edit text and run code.</p>
+<p>Click on <code class="docutils literal notranslate"><span class="pre">Files</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">psych60</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. Click on any notebook you would like to open (e.g., <code class="docutils literal notranslate"><span class="pre">1_Introduction_to_Programming.ipynb</span></code>). It should open.</p>
 </div>
 <div class="section" id="copying-notebook">
 <h3>Copying Notebook<a class="headerlink" href="#copying-notebook" title="Permalink to this headline">¶</a></h3>
@@ -515,15 +541,15 @@
 </ol>
 <p>Now type the new name of the folder, i.e., <code class="docutils literal notranslate"><span class="pre">Homework</span></code>
 <img alt="" src="../_images/create_homework.png" /></p>
+<p>Those first two steps will only need to be done once, at the start of term. The following steps will need to be done for each new homework notebook you’d like to complete.</p>
 <ol class="simple">
-<li><p>Let’s practice copying a notebook to your Homework folder. Navigate to <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. Check the box next to the notebook you would like to duplicate. Here we will select <code class="docutils literal notranslate"><span class="pre">1_Introduction_to_Programming.ipynb</span></code>. Then click the <code class="docutils literal notranslate"><span class="pre">Duplicate</span></code> button.
-<img alt="" src="../_images/duplicate_notebook.png" /></p></li>
-<li><p>Move duplicated notebook to your homework folder. Check the box next to the duplicated notebook and click the <code class="docutils literal notranslate"><span class="pre">Move</span></code> button.
-<img alt="" src="../_images/move_notebook.png" /></p></li>
+<li><p>Let’s practice copying a notebook to your Homework folder. From your server homepage, click <code class="docutils literal notranslate"><span class="pre">New</span></code> and then <code class="docutils literal notranslate"><span class="pre">Terminal</span></code>. This will open a new browser tab with a terminal window.
+<img alt="" src="content/../images/jupyterhub/open_terminal.png" /></p></li>
+<li><p>At the terminal prompt, enter the following code: <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">psych60/notebooks/{name</span> <span class="pre">of</span> <span class="pre">notebook</span> <span class="pre">you</span> <span class="pre">would</span> <span class="pre">like</span> <span class="pre">to</span> <span class="pre">copy}</span> <span class="pre">Homework/</span></code>. For example, if you want to copy the intro to programming notebook, you would type <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">psych60/notebooks/1_Introduction_to_Programming.ipynb</span> <span class="pre">Homework/</span></code>. Then press enter.
+<img alt="" src="../_images/copy_notebook.png" /></p></li>
 </ol>
-<p>This will allow you to specify the path to where you would like the notebook moved. Type <code class="docutils literal notranslate"><span class="pre">/Homework</span></code> to move it out of the current directory to your Homework folder.
-<img alt="" src="../_images/move_to_homework.png" /></p>
-<p>Your duplicated notebook is now in your homework folder. You will need to do this for each new notebook assignment.</p>
+<p>Now, you can go back to your original browser window. If you click your <code class="docutils literal notranslate"><span class="pre">Homework</span></code> folder, the notebook copy should be there. You can then work on this copy.</p>
+<p>Your duplicated notebook is now in your homework folder.</p>
 </div>
 </div>
 <div class="section" id="alternative-to-jupyterhub">
@@ -641,9 +667,7 @@ Requirement already satisfied: cycler&gt;=0.10 in /Users/lukechang/anaconda3/lib
 Requirement already satisfied: requests&gt;=2.10.0 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from pynv-&gt;nltools) (2.24.0)
 Requirement already satisfied: tables in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from deepdish&gt;=0.3.6-&gt;nltools) (3.6.1)
 Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from requests&gt;=2.10.0-&gt;pynv-&gt;nltools) (1.25.10)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from requests&gt;=2.10.0-&gt;pynv-&gt;nltools) (3.0.4)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from requests&gt;=2.10.0-&gt;pynv-&gt;nltools) (3.0.4)
 Requirement already satisfied: idna&lt;3,&gt;=2.5 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from requests&gt;=2.10.0-&gt;pynv-&gt;nltools) (2.10)
 Requirement already satisfied: numexpr&gt;=2.6.2 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from tables-&gt;deepdish&gt;=0.3.6-&gt;nltools) (2.7.1)
 Requirement already satisfied: nipype in /Users/lukechang/anaconda3/lib/python3.7/site-packages (1.4.2)
@@ -713,9 +737,7 @@ Installing collected packages: scikit-learn
 <span class=" -Color -Color-Red">fmriprep 20.0.5 requires indexed-gzip&gt;=0.8.8, which is not installed.</span>
 <span class=" -Color -Color-Red">fmriprep 20.0.5 requires nitime, which is not installed.</span>
 Successfully installed scikit-learn-0.21.3
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: networkx in /Users/lukechang/anaconda3/lib/python3.7/site-packages (2.5)
+Requirement already satisfied: networkx in /Users/lukechang/anaconda3/lib/python3.7/site-packages (2.5)
 Requirement already satisfied: decorator&gt;=4.3.0 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from networkx) (4.4.2)
 Requirement already satisfied: scikit-learn in /Users/lukechang/anaconda3/lib/python3.7/site-packages (0.21.3)
 Requirement already satisfied: numpy&gt;=1.11.0 in /Users/lukechang/anaconda3/lib/python3.7/site-packages (from scikit-learn) (1.19.1)
