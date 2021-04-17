@@ -7,7 +7,7 @@ The DartBrains project is hosted on [github](https://github.com/ljchang/dartbrai
 
 If you notice any mistakes or have idea for new content, please either open an issue or submit a pull request for us to review.
 
-The website is built using [jupyter book](https://jupyter.org/jupyter-book/intro.html), which creates a jekyll website from markdown and jupyter notebooks. Please read their [materials](https://jupyter.org/jupyter-book/intro.html) to learn more about this neat resource.
+The website is built using [jupyter book](https://jupyterbook.org/), which creates a jekyll website from markdown and jupyter notebooks. Please read their [materials](https://jupyterbook.org/start/overview.html) to learn more about this neat resource.
 
 ## License for this book
 
