@@ -290,108 +290,108 @@ It leverages the scikit-learn Python toolbox for multivariate statistics with ap
 [nilearn.plotting.plot_stat_map](https://nilearn.github.io/modules/generated/nilearn.plotting.plot_stat_map.html): Plot cuts of an ROI/mask image (by default 3 cuts: Frontal, Axial, and Lateral)
 
 ## nltools
-[NLTools](https://neurolearn.readthedocs.io/en/latest/) is a Python package for analyzing neuroimaging data. It is the analysis engine powering neuro-learn There are tools to perform data manipulation and analyses such as univariate GLMs, predictive multivariate modeling, and representational similarity analyses.
+[NLTools](https://nltools.org/) is a Python package for analyzing neuroimaging data. It is the analysis engine powering neuro-learn There are tools to perform data manipulation and analyses such as univariate GLMs, predictive multivariate modeling, and representational similarity analyses.
 
 ***
 
 ### Data Classes
 #### Adjacency
-[Adjacency](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Adjacency) is a class to represent Adjacency matrices as a vector rather than a 2-dimensional matrix. This makes it easier to perform data manipulation and analyses. This tool is particularly useful for performing Representational Similarity Analyses.
+[Adjacency](https://nltools.org/api.html#nltools.data.Adjacency) is a class to represent Adjacency matrices as a vector rather than a 2-dimensional matrix. This makes it easier to perform data manipulation and analyses. This tool is particularly useful for performing Representational Similarity Analyses.
 
-[Adjacency.distance](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Adjacency.distance): Calculate distance between images within an Adjacency() instance.
+[Adjacency.distance](https://nltools.org/api.html#nltools.data.Adjacency.distance): Calculate distance between images within an Adjacency() instance.
 
-[Adjacency.distance_to_similarity](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Adjacency.distance_to_similarity): Convert distance matrix to similarity matrix
+[Adjacency.distance_to_similarity](https://nltools.org/api.html#nltools.data.Adjacency.distance_to_similarity): Convert distance matrix to similarity matrix
 
-[Adjacency.plot](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Adjacency.plot): Create Heatmap of Adjacency Matrix
+[Adjacency.plot](https://nltools.org/api.html#nltools.data.Adjacency.plot): Create Heatmap of Adjacency Matrix
 
-[Adjacency.plot_mds](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Adjacency.plot_mds): Plot Multidimensional Scaling
+[Adjacency.plot_mds](https://nltools.org/api.html#nltools.data.Adjacency.plot_mds): Plot Multidimensional Scaling
 
-[Adjacency.to_graph](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Adjacency.to_graph): Convert Adjacency into networkx graph. only works on single_matrix for now.
+[Adjacency.to_graph](https://nltools.org/api.html#nltools.data.Adjacency.to_graph): Convert Adjacency into networkx graph. only works on single_matrix for now.
 
 
 ### Brain_Data
-[Brain_Data](https://neurolearn.readthedocs.io/en/latest/api.html#nltools-data-data-types) is a class to represent neuroimaging data in python as a vector rather than a 3-dimensional matrix.This makes it easier to perform data manipulation and analyses. This is the main tool for working with neuroimaging data.
+[Brain_Data](https://nltools.org/api.html#nltools-data-data-types) is a class to represent neuroimaging data in python as a vector rather than a 3-dimensional matrix.This makes it easier to perform data manipulation and analyses. This is the main tool for working with neuroimaging data.
 
-[Brain_Data.append](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.append): Append data to Brain_Data instance
+[Brain_Data.append](https://nltools.org/api.html#nltools.data.Brain_Data.append): Append data to Brain_Data instance
 
-[apply_mask](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.apply_mask): Mask Brain_Data instance
+[apply_mask](https://nltools.org/#nltools.data.Brain_Data.apply_mask): Mask Brain_Data instance
 
-[Brain_Data.copy](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.copy): Create a copy of a Brain_Data instance.
+[Brain_Data.copy](https://nltools.org/api.html#nltools.data.Brain_Data.copy): Create a copy of a Brain_Data instance.
 
-[Brain_Data.decompose](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.decompose): Decompose Brain_Data object
+[Brain_Data.decompose](https://nltools.org/api.html#nltools.data.Brain_Data.decompose): Decompose Brain_Data object
 
-[Brain_Data.distance](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.distance): Calculate distance between images within a Brain_Data() instance.
+[Brain_Data.distance](https://nltools.org/api.html#nltools.data.Brain_Data.distance): Calculate distance between images within a Brain_Data() instance.
 
-[Brain_Data.extract_roi](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.extract_roi): Extract activity from mask
+[Brain_Data.extract_roi](https://nltools.org/api.html#nltools.data.Brain_Data.extract_roi): Extract activity from mask
 
-[Brain_Data.find_spikes](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.find_spikes): Function to identify spikes from Time Series Data
+[Brain_Data.find_spikes](https://nltools.org/api.html#nltools.data.Brain_Data.find_spikes): Function to identify spikes from Time Series Data
 
-[Brain_Data.iplot](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.iplot): Create an interactive brain viewer for the current brain data instance.
+[Brain_Data.iplot](https://nltools.org/api.html#nltools.data.Brain_Data.iplot): Create an interactive brain viewer for the current brain data instance.
 
-[Brain_Data.mean](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.mean): Get mean of each voxel across images.
+[Brain_Data.mean](https://nltools.org/api.html#nltools.data.Brain_Data.mean): Get mean of each voxel across images.
 
-[Brain_Data.plot](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.plot): Create a quick plot of self.data. Will plot each image separately
+[Brain_Data.plot](https://nltools.org/api.html#nltools.data.Brain_Data.plot): Create a quick plot of self.data. Will plot each image separately
 
-[Brain_Data.predict](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.predict): Run prediction
+[Brain_Data.predict](https://nltools.org/api.html#nltools.data.Brain_Data.predict): Run prediction
 
-[Brain_Data.regress](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.regress
+[Brain_Data.regress](https://nltools.org/api.html#nltools.data.Brain_Data.regress
 ): Run a mass-univariate regression across voxels. Three types of regressions can be run: 1) Standard OLS (default) 2) Robust OLS (heteroscedasticty and/or auto-correlation robust errors), i.e. OLS with “sandwich estimators” 3) ARMA (auto-regressive and moving-average lags = 1 by default; experimental)
 
-[Brain_Data.shape](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.shape): Get images by voxels shape.
+[Brain_Data.shape](https://nltools.org/api.html#nltools.data.Brain_Data.shape): Get images by voxels shape.
 
-[Brain_Data.similarity](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.similaritye): Calculate similarity of Brain_Data() instance with single Brain_Data or Nibabel image
+[Brain_Data.similarity](https://nltools.org/api.html#nltools.data.Brain_Data.similarity): Calculate similarity of Brain_Data() instance with single Brain_Data or Nibabel image
 
-[Brain_Data.smooth](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.smooth): Apply spatial smoothing using nilearn smooth_img()
+[Brain_Data.smooth](https://nltools.org/api.html#nltools.data.Brain_Data.smooth): Apply spatial smoothing using nilearn smooth_img()
 
-[Brain_Data.std](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.std): Get standard deviation of each voxel across images.
+[Brain_Data.std](https://nltools.org/api.html#nltools.data.Brain_Data.std): Get standard deviation of each voxel across images.
 
-[Brain_Data.threshold](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.threshold): Threshold Brain_Data instance. 
+[Brain_Data.threshold](https://nltools.org/api.html#nltools.data.Brain_Data.threshold): Threshold Brain_Data instance. 
 
-[Brain_Data.to_nifti](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.to_nifti): Convert Brain_Data Instance into Nifti Object
+[Brain_Data.to_nifti](https://nltools.org/api.html#nltools.data.Brain_Data.to_nifti): Convert Brain_Data Instance into Nifti Object
 
-[Brain_Data.ttest](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.ttest): Calculate one sample t-test across each voxel (two-sided)
+[Brain_Data.ttest](https://nltools.org/api.html#nltools.data.Brain_Data.ttest): Calculate one sample t-test across each voxel (two-sided)
 
-[Brain_Data.write](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Brain_Data.write): Write out Brain_Data object to Nifti or HDF5 File.
+[Brain_Data.write](https://nltools.org/api.html#nltools.data.Brain_Data.write): Write out Brain_Data object to Nifti or HDF5 File.
 
 ### Design_Matrix
-[Design_Matrix](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix) is a class to represent design matrices with special methods for data processing (e.g. convolution, upsampling, downsampling) and also intelligent and flexible and intelligent appending (e.g. auto-matically keep certain columns or polynomial terms separated during concatentation). It plays nicely with Brain_Data and can be used to build an experimental design to pass to Brain_Data’s X attribute. It is essentially an enhanced pandas df, with extra attributes and methods. Methods always return a new design matrix instance (copy). Column names are always string types. Inherits most methods on pandas DataFrames.
+[Design_Matrix](https://nltools.org/api.html#nltools.data.Design_Matrix) is a class to represent design matrices with special methods for data processing (e.g. convolution, upsampling, downsampling) and also intelligent and flexible and intelligent appending (e.g. auto-matically keep certain columns or polynomial terms separated during concatentation). It plays nicely with Brain_Data and can be used to build an experimental design to pass to Brain_Data’s X attribute. It is essentially an enhanced pandas df, with extra attributes and methods. Methods always return a new design matrix instance (copy). Column names are always string types. Inherits most methods on pandas DataFrames.
 
-[Design_Matrix.add_dct_basis](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.add_dct_basis): Adds unit scaled cosine basis functions to Design_Matrix columns, based on spm-style discrete cosine transform for use in high-pass filtering. Does not add intercept/constant. Care is recommended if using this along with .add_poly(), as some columns will be highly-correlated.
+[Design_Matrix.add_dct_basis](https://nltools.org/api.html#nltools.data.Design_Matrix.add_dct_basis): Adds unit scaled cosine basis functions to Design_Matrix columns, based on spm-style discrete cosine transform for use in high-pass filtering. Does not add intercept/constant. Care is recommended if using this along with .add_poly(), as some columns will be highly-correlated.
 
-[Design_Matrix.add_poly](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.add_poly): Add nth order Legendre polynomial terms as columns to design matrix. Good for adding constant/intercept to model (order = 0) and accounting for slow-frequency nuisance artifacts e.g. linear, quadratic, etc drifts. Care is recommended when using this with .add_dct_basis() as some columns will be highly correlated.
+[Design_Matrix.add_poly](https://nltools.org/api.html#nltools.data.Design_Matrix.add_poly): Add nth order Legendre polynomial terms as columns to design matrix. Good for adding constant/intercept to model (order = 0) and accounting for slow-frequency nuisance artifacts e.g. linear, quadratic, etc drifts. Care is recommended when using this with .add_dct_basis() as some columns will be highly correlated.
 
-[Design_Matrix.clean](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.clean): Method to fill NaNs in Design Matrix and remove duplicate columns based on data values, NOT names. Columns are dropped if they are correlated >= the requested threshold (default = .95). In this case, only the first instance of that column will be retained and all others will be dropped.
+[Design_Matrix.clean](https://nltools.org/api.html#nltools.data.Design_Matrix.clean): Method to fill NaNs in Design Matrix and remove duplicate columns based on data values, NOT names. Columns are dropped if they are correlated >= the requested threshold (default = .95). In this case, only the first instance of that column will be retained and all others will be dropped.
 
-[Design_Matrix.convolve](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.convolve): Perform convolution using an arbitrary function.
+[Design_Matrix.convolve](https://nltools.org/api.html#nltools.data.Design_Matrix.convolve): Perform convolution using an arbitrary function.
 
-[Design_Matrix.heatmap](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.heatmap): Visualize Design Matrix spm style. Use .plot() for typical pandas plotting functionality. Can pass optional keyword args to seaborn heatmap.
+[Design_Matrix.heatmap](https://nltools.org/api.html#nltools.data.Design_Matrix.heatmap): Visualize Design Matrix spm style. Use .plot() for typical pandas plotting functionality. Can pass optional keyword args to seaborn heatmap.
 
-[Design_Matrix.head](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html): This function returns the first n rows for the object based on position. It is useful for quickly testing if your object has the right type of data in it.
+[Design_Matrix.head](https://nltools.org/api/pandas.DataFrame.head.html): This function returns the first n rows for the object based on position. It is useful for quickly testing if your object has the right type of data in it.
 
-[Design_Matrix.info](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html): Print a concise summary of a DataFrame.
+[Design_Matrix.info](https://nltools.org/api/pandas.DataFrame.info.html): Print a concise summary of a DataFrame.
 
-[Design_Matrix.vif](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.vif): Compute variance inflation factor amongst columns of design matrix, ignoring polynomial terms. Much faster that statsmodel and more reliable too. Uses the same method as Matlab and R (diagonal elements of the inverted correlation matrix).
+[Design_Matrix.vif](https://nltools.org/api.html#nltools.data.Design_Matrix.vif): Compute variance inflation factor amongst columns of design matrix, ignoring polynomial terms. Much faster that statsmodel and more reliable too. Uses the same method as Matlab and R (diagonal elements of the inverted correlation matrix).
 
-[Design_Matrix.zscore](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.data.Design_Matrix.zscore
+[Design_Matrix.zscore](https://nltools.org/api.html#nltools.data.Design_Matrix.zscore
 ): nltools.stats.downsample, but ensures that returned object is a design matrix.
 
 
 ### Statistics Functions
 
 
-[stats.fdr](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.fdr): Determine FDR threshold given a p value array and desired false discovery rate q.
+[stats.fdr](https://nltools.org/api.html#nltools.stats.fdr): Determine FDR threshold given a p value array and desired false discovery rate q.
 
-[stats.find_spikes](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.find_spikes): Function to identify spikes from fMRI Time Series Data
+[stats.find_spikes](https://nltools.org/api.html#nltools.stats.find_spikes): Function to identify spikes from fMRI Time Series Data
 
-[stats.fisher_r_to_z](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.fisher_r_to_z): Use Fisher transformation to convert correlation to z score
+[stats.fisher_r_to_z](https://nltools.org/api.html#nltools.stats.fisher_r_to_z): Use Fisher transformation to convert correlation to z score
 
-[stats.one_sample_permutation](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.one_sample_permutation): One sample permutation test using randomization.
+[stats.one_sample_permutation](https://nltools.org/api.html#nltools.stats.one_sample_permutation): One sample permutation test using randomization.
 
-[stats.threshold](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.threshold): Threshold test image by p-value from p image
+[stats.threshold](https://nltools.org/api.html#nltools.stats.threshold): Threshold test image by p-value from p image
 
-[stats.regress](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.regress): This is a flexible function to run several types of regression models provided X and Y numpy arrays. Y can be a 1d numpy array or 2d numpy array. In the latter case, results will be output with shape 1 x Y.shape[1], in other words fitting a separate regression model to each column of Y.
+[stats.regress](https://nltools.org/api.html#nltools.stats.regress): This is a flexible function to run several types of regression models provided X and Y numpy arrays. Y can be a 1d numpy array or 2d numpy array. In the latter case, results will be output with shape 1 x Y.shape[1], in other words fitting a separate regression model to each column of Y.
 
-[stats.zscore](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.stats.zscore): zscore every column in a pandas dataframe or series.
+[stats.zscore](https://nltools.org/api.html#nltools.stats.zscore): zscore every column in a pandas dataframe or series.
 
 ### Miscellaneous Functions
 
@@ -399,9 +399,7 @@ It leverages the scikit-learn Python toolbox for multivariate statistics with ap
 
 [external.hrf.glover_hrf](https://nistats.github.io/modules/generated/nistats.hemodynamic_models.glover_hrf.html): Implementation of the Glover hemodynamic response function (HRF) model.
 
-[datasets.fetch_pain](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.datasets.fetch_pain): Download and loads pain dataset from neurovault
-
-[datasets.fetch_localizer](https://neurolearn.readthedocs.io/en/latest/api.html#nltools.datasets.fetch_localizer): Download and load Brainomics Localizer dataset (94 subjects).
+[datasets.fetch_pain](https://nltools.org/api.html#nltools.datasets.fetch_pain): Download and loads pain dataset from neurovault
 
 
 

@@ -19,7 +19,7 @@ There has been a growing trend to adopt the open source Python framework in the 
 
 For this course, I have chosen to focus on tools developed in Python as it is an easy to learn programming language, has excellent tools, works well on distributed computing systems, has great ways to disseminate information (e.g., jupyter notebooks, jupyter-book, etc), and is free! If you are just getting started, I would spend some time working with [NiLearn](https://nilearn.github.io/) and [Brainiak](https://brainiak.org/), which have a lot of functionality, are very well tested, are reasonably computationally efficient, and most importantly have lots of documentation and tutorials to get started.
 
-We will be using many packages throughout the course such as [PyBids](https://bids-standard.github.io/pybids/) to navigate neuroimaging datasets, [fmriprep](https://fmriprep.readthedocs.io/en/stable/) to perform preprocessing, and [nltools](https://neurolearn.readthedocs.io/en/latest/), which is a package developed in my lab, to do basic data manipulation and analysis. NLtools is built using many other toolboxes such as [nibabel](https://nipy.org/nibabel/) and [nilearn](https://nilearn.github.io/), and we will also be using these frequently throughout the course.
+We will be using many packages throughout the course such as [PyBids](https://bids-standard.github.io/pybids/) to navigate neuroimaging datasets, [fmriprep](https://fmriprep.readthedocs.io/en/stable/) to perform preprocessing, and [nltools](https://nltools.org/), which is a package developed in my lab, to do basic data manipulation and analysis. NLtools is built using many other toolboxes such as [nibabel](https://nipy.org/nibabel/) and [nilearn](https://nilearn.github.io/), and we will also be using these frequently throughout the course.
 
 ## BIDS: Brain Imaging Dataset Specification
 
@@ -117,7 +117,7 @@ There is an very nice tool to access nifti data stored on your file system in py
 
 nibabel objects can be initialized by simply pointing to a nifti file even if it is compressed through gzip.  First, we will import the nibabel module as `nib` (short and sweet so that we don't have to type so much when using the tool).  I'm also including a path to where the data file is located so that I don't have to constantly type this.  It is easy to change this on your own computer.
 
-We will be loading an anatomical image from subject S01 from the localizer [dataset](http://brainomics.cea.fr/localizer/).  See this [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more information about this dataset.
+We will be loading an anatomical image from subject S01 from the localizer [dataset](../content/Download_Data).  See this [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more information about this dataset.
 
 We will use pybids to grab subject S01's T1 image.
 
@@ -200,7 +200,7 @@ Next we are going to learn how to use the `nltools` package that tries to make l
 
 The `Brain_Data()` class has several attributes that may be helpful to know about. First, it stores imaging data in `.data` as a vectorized features by observations matrix. Each image is an observation and each voxel is a feature. Space is flattened using `nifti_masker` from nilearn. This object is also stored as an attribute in `.nifti_masker` to allow transformations from 2D to 3D/4D matrices. In addition, a brain_mask is stored in `.mask`. Finally, there are attributes to store either class labels for prediction/classification analyses in `.Y` and design matrices in `.X`. These are both expected to be pandas `DataFrames`.
 
-We will give a quick overview of basic Brain_Data operations, but we encourage you to see our [documentation](https://neurolearn.readthedocs.io/en/latest/index.html) for more details.
+We will give a quick overview of basic Brain_Data operations, but we encourage you to see our [documentation](https://nltools.org/) for more details.
 
 ### Brain_Data basics
 To get a feel for `Brain_Data`, let's load an example anatomical overlay image that comes packaged with the toolbox.
@@ -217,7 +217,7 @@ print(vars(anat))
 
 `Brain_Data` has many methods to help manipulate, plot, and analyze imaging data. We can use the `dir()` function to get a quick list of all of the available methods that can be used on this class.
 
-To learn more about how to use these tools either use the `?` function, or look up the function in the [api documentation](https://neurolearn.readthedocs.io/en/latest/api.html).
+To learn more about how to use these tools either use the `?` function, or look up the function in the [api documentation](https://nltools.org/api.html).
 
 
 print(dir(anat))
@@ -336,7 +336,7 @@ plot_glass_brain(data.mean().to_nifti())
 
 Ok, that's the basics. `Brain_Data` can do much more!
 
-Check out some of our [tutorials](https://neurolearn.readthedocs.io/en/latest/auto_examples/index.html) for more detailed examples.
+Check out some of our [tutorials](https://nltools.org/auto_examples/index.html) for more detailed examples.
 
 We'll be using this tool throughout the course.
 
