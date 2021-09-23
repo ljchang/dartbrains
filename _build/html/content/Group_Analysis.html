@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Group Analysis &#8212; DartBrains</title>
     
-  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -34,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -45,39 +42,28 @@
     <script src="../_static/copybutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="canonical" href="http://dartbrains.org/content/Group_Analysis.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Thresholding Group Analyses" href="Thresholding_Group_Analyses.html" />
     <link rel="prev" title="Modeling Single Subject Data" href="GLM_Single_Subject_Model.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
-
-
-<!-- Opengraph tags -->
-<meta property="og:url"         content="http://dartbrains.org/content/Group_Analysis.html" />
-<meta property="og:type"        content="article" />
-<meta property="og:title"       content="Group Analysis" />
-<meta property="og:description" content="Group Analysis  Written by Luke Chang  In fMRI analysis, we are primarily interested in making inferences about how the brain processes information that is fund" />
-<meta property="og:image"       content="http://dartbrains.org/_static/dartbrains_logo_square_transparent.png" />
-
-<meta name="twitter:card" content="summary" />
-
-
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -86,25 +72,29 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../index.html">
-  
-  <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">DartBrains</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">DartBrains</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <p class="caption collapsible-parent">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
  <span class="caption-text">
   Course Overview
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Instructors.html">
    Instructors
@@ -121,12 +111,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Computing Resources
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Introduction_to_JupyterHub.html">
    Introduction to JupyterHub
@@ -158,12 +148,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Course Topics
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Intro_to_Neuroimaging.html">
    Introduction to Neuroimaging
@@ -235,26 +225,24 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Additional Courses
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference external" href="http://naturalistic-data.org/">
    Naturalistic Data Analysis
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Project Gallery
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="2019_Spring.html">
    Spring 2019
@@ -271,12 +259,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Contributing
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Contributing.html">
    Contributing
@@ -285,12 +273,11 @@
  <li class="toctree-l1">
   <a class="reference external" href="https://github.com/ljchang/dartbrains">
    GitHub Repository
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -358,12 +345,12 @@
     </div>
 </div>
 
-
             <!-- Full screen (wrap in <a> to have style consistency -->
-            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                    title="Fullscreen mode"><i
-                        class="fas fa-expand"></i></button></a>
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
 
@@ -400,114 +387,199 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#hierarchical-data-structure">
-   Hierarchical Data Structure
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Group Analysis
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#modeling-mixed-effects">
-   Modeling Mixed Effects
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#first-level-single-subject-model">
-     First Level - Single Subject Model
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hierarchical-data-structure">
+     Hierarchical Data Structure
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#second-level-summary-of-between-group-variance">
-     Second level summary of between group variance
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#modeling-mixed-effects">
+     Modeling Mixed Effects
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#first-level-single-subject-model">
+       First Level - Single Subject Model
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#second-level-summary-of-between-group-variance">
+       Second level summary of between group variance
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mixed-effects-model">
+       Mixed Effects Model
+      </a>
+     </li>
+    </ul>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mixed-effects-model">
-     Mixed Effects Model
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#running-a-group-analysis">
+     Running a Group Analysis
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#one-sample-t-test">
+       One Sample t-test
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#group-statistics-using-design-matrices">
+     Group statistics using design matrices
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       One Sample t-test
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#running-a-group-analysis">
-   Running a Group Analysis
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#begin-bmatrix-s-1-s-2-s-3-s-4-s-5-s-6-end-bmatrix-quad">
+   $$
+\begin{bmatrix}
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
+s_6
+\end{bmatrix}
+\quad
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#one-sample-t-test">
-     One Sample t-test
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#group-statistics-using-design-matrices">
-   Group statistics using design matrices
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     One Sample t-test
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#independent-samples-t-test-dummy-codes">
      Independent-Samples T-Test - Dummy Codes
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   $$
+\begin{bmatrix}
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
+s_6
+\end{bmatrix}
+\quad
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#independent-samples-t-test-contrasts">
      Independent-Samples T-Test - Contrasts
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   $$
+\begin{bmatrix}
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
+s_6
+\end{bmatrix}
+\quad
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#independent-samples-t-test-group-intercepts">
      Independent-Samples T-Test - Group Intercepts
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   $$
+\begin{bmatrix}
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
+s_6
+\end{bmatrix}
+\quad
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#paired-samples-t-test">
      Paired-Samples T-Test
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#begin-bmatrix-s-1a-s-1b-s-2a-s-2b-s-3a-s-3b-end-bmatrix-quad">
+   $$
+\begin{bmatrix}
+s_1a \
+s_1b \
+s_2a \
+s_2b \
+s_3a \
+s_3b
+\end{bmatrix}
+\quad
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#linear-and-quadratic-contrasts">
      Linear and Quadratic contrasts
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
-     1. Which regions are more involved with visual compared to auditory sensory processing?
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercises">
+     Exercises
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#which-regions-are-more-involved-in-processing-numbers-compared-to-words">
-     2. Which regions are more involved in processing numbers compared to words?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#are-there-gender-differences">
-     3. Are there gender differences?
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
+       1. Which regions are more involved with visual compared to auditory sensory processing?
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#which-regions-are-more-involved-in-processing-numbers-compared-to-words">
+       2. Which regions are more involved in processing numbers compared to words?
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#are-there-gender-differences">
+       3. Are there gender differences?
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
         </div>
     </div>
 </div>
@@ -572,7 +644,7 @@
 ></iframe>
 </div></div>
 </div>
-<p>Most of the statistics we have discussed to this point have assumed that the data we are trying to model are drawn from an identical distribution and that they are independent of each other. For example, each group of participants that complete each version of our experiment are assumed to be random sample of the larger population. However, if there was some type of systematic bias in our sampling strategy, our group level statistics would not necessarily reflect a random draw from the population-level Gaussian distribution. However, as should already be clear from the graphical depiction of the hierarchical structure of our data above, our data are not always independent. For example, we briefly discussed this in the GLM notebook, but voxel responses within the same participant are not necessarily independent as there appears to be a small amount of autocorrelation in the BOLD response. This requires whitening the data to meet the independence assumption. What is clear from the hierarchy is that all of the data measured from one participant are likely to be more similar to each other than another participant. In fact, it is almost always the case that the variance <em>within</em> a subject <span class="math notranslate nohighlight">\(\sigma_{within}^2\)</span> is almost always smaller than the variance <em>across</em> participants <span class="math notranslate nohighlight">\(\sigma_{between}^2\)</span>. If we combined all of the data from all participants and treated them as if they were independent, we would likely have an inflated view of the group effect (this was historically referred to as a “fixed effects group analysis”).</p>
+<p>Most of the statistics we have discussed to this point have assumed that the data we are trying to model are drawn from an identical distribution and that they are independent of each other. For example, each group of participants that complete each version of our experiment are assumed to be random sample of the larger population. However, if there was some type of systematic bias in our sampling strategy, our group level statistics would not necessarily reflect a random draw from the population-level Gaussian distribution. However, as should already be clear from the graphical depiction of the hierarchical structure of our data above, our data are not always independent. For example, we briefly discussed this in the GLM notebook, but voxel responses within the same participant are not necessarily independent as there appears to be a small amount of autocorrelation in the BOLD response. This requires whitening the data to meet the independence assumption. What is clear from the hierarchy is that all of the data measured from one participant are likely to be more similar to each other than another participant. In fact, it is almost always the case that the variance <em>within</em> a subject $\sigma_{within}^2$ is almost always smaller than the variance <em>across</em> participants $\sigma_{between}^2$. If we combined all of the data from all participants and treated them as if they were independent, we would likely have an inflated view of the group effect (this was historically referred to as a “fixed effects group analysis”).</p>
 <p>This problem has been elegantly solved in statistics in a class of models called <em>mixed effects models</em>. Mixed effects models are an extension of regression that allows data to be structured into groups and coefficients to vary by groups. They are referred to differently in different scientific domains, for example they may be referred to as multilevel, hierarchical, or panel models. The reason that this framework has been found to be useful in many different fields, is that it is particularly well suited for modeling clustered data, such as students in a classroom and also longitudinal or repeated data, such as within-subject designs.</p>
 <p>The term “mixed” comes from the fact that these models are composed of both <em>fixed</em> and <em>random</em> effects. Fixed effects refer to parameters describing the amount of variance that a feature explains of an outcome variable. Fixed factors are often explicitly manipulated in an experiment and can be categorical (e.g., gender) or continuous (e.g., age). We assume that the magnitude of these effects are <em>fixed</em> in the population, but that the observed signal strength will vary across sessions and subjects. This variation can be decomposed into different sources of variance, such as:
 - Measurement or Irreducible Error
@@ -605,7 +677,7 @@ from Poldrack, Mumford, &amp; Nichols (2011)</p>
 <h3>First Level - Single Subject Model<a class="headerlink" href="#first-level-single-subject-model" title="Permalink to this headline">¶</a></h3>
 <p>In fMRI data analysis, we often break analyses into multiple stages. First, we are interested in estimating the parameter (or distribution) of signal in a given region resulting from our experimental manipulation, while simultaneously attempting to control for as much noise and artifacts as possible. This will give us a a single number for each participant of the average length they keep their hair.</p>
 <p>At the first level model, for each participant we can define our model as:</p>
-<p><span class="math notranslate nohighlight">\(Y_i = X_i\beta + \epsilon_i\)</span>, where <span class="math notranslate nohighlight">\(i\)</span> is an observation for a single participant and <span class="math notranslate nohighlight">\(\epsilon_i \sim \mathcal{N}(0, \sigma_i^2)\)</span></p>
+<p>$Y_i = X_i\beta + \epsilon_i$, where $i$ is an observation for a single participant and $\epsilon_i \sim \mathcal{N}(0, \sigma_i^2)$</p>
 <p>Because participants are independent, it is possible to estimate each participant separately.</p>
 <p>To provide a concrete illustration of the different sources of variability in a signal, let’s make a quick simulation a hypothetical voxel timeseries.</p>
 <div class="cell docutils container">
@@ -660,9 +732,9 @@ from Poldrack, Mumford, &amp; Nichols (2011)</p>
 </div>
 <div class="section" id="second-level-summary-of-between-group-variance">
 <h3>Second level summary of between group variance<a class="headerlink" href="#second-level-summary-of-between-group-variance" title="Permalink to this headline">¶</a></h3>
-<p>In the second level model, we are interested in relating the subject specific parameters contained in <span class="math notranslate nohighlight">\(\beta\)</span> to the population parameters <span class="math notranslate nohighlight">\(\beta_g\)</span>.  We assume that the first level parameters are randomly sampled from a population of possible regression parameters.</p>
-<p><span class="math notranslate nohighlight">\(\beta = X_g\beta_g + \eta\)</span></p>
-<p><span class="math notranslate nohighlight">\(\eta \sim \mathcal{N}(0,\,\sigma_g^{2})\)</span></p>
+<p>In the second level model, we are interested in relating the subject specific parameters contained in $\beta$ to the population parameters $\beta_g$.  We assume that the first level parameters are randomly sampled from a population of possible regression parameters.</p>
+<p>$\beta = X_g\beta_g + \eta$</p>
+<p>$\eta \sim \mathcal{N}(0,,\sigma_g^{2})$</p>
 <p>Now let’s add noise onto the beta parameter to see what happens.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -699,13 +771,11 @@ from Poldrack, Mumford, &amp; Nichols (2011)</p>
 <h3>Mixed Effects Model<a class="headerlink" href="#mixed-effects-model" title="Permalink to this headline">¶</a></h3>
 <p>In neuroimaging data analysis, there are two main approaches to implementing these different models. Some software packages attempt to use a computationally efficient approximation and use what is called a two stage summary statistic approach. First level models are estimated separately for every participant and then the betas from each participant’s model is combined in a second level model. This is the strategy implemented in SPM and is computationally efficient. However, another approach simultaneously estimates the first and second level models at the same time and often use algorithms that iterate back and forth from the single to the group. The main advantage of this approach over the two-stage approach is that the uncertainty in the parameter estimates at the first-level can be appropriately weighted at the group level. For example, if we had a bad participant with very noisy data, we might not want to weight their estimate when we aggregate everyone’s data across the group. The disadvantage of this approach is that the estimation procedure is considerably more computationally expensive. This is the approach implemented in FSL, BrainVoyager, and AFNI. In practice, the advantage of the true random effects simultaneous parameter estimation only probably benefits getting more reliable estimates when the sample size is small. In the limit, both methods should converge to the same answer. For a more in depth comparison see this <a class="reference external" href="http://eshinjolly.com/2019/02/18/rep_measures/">blog post</a> by Eshin Jolly.</p>
 <p>A full mixed effects model can be written as,</p>
-<div class="math notranslate nohighlight">
-\[Y_i = X_i(X_g\beta_g + \eta) +\epsilon_i\]</div>
+<p>$$Y_i = X_i(X_g\beta_g + \eta) +\epsilon_i$$</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>     or
 </pre></div>
 </div>
-<div class="math notranslate nohighlight">
-\[Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)\]</div>
+<p>$$Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)$$</p>
 <p><img alt="TwoLevelModel.png" src="../_images/TwoLevelModel.png" /></p>
 <p>from Poldrack, Mumford, &amp; Nichols (2011)</p>
 <p>Let’s now try to recover the beta estimates from our 3 simulated subjects.</p>
@@ -940,33 +1010,35 @@ from Poldrack, Mumford, &amp; Nichols 2011</p>
 <p>In this section, we will explore how we can formulate different types of statistical tests using a regression through simulations.</p>
 <div class="section" id="id1">
 <h3>One Sample t-test<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>Just to review, our one sample t-test can also be formulated as a regression, where the beta values for each subject in a voxel are predicted by a vector of ones. This <em>intercept</em> only model, computes the mean of <span class="math notranslate nohighlight">\(y\)</span>. If the mean of <span class="math notranslate nohighlight">\(y\)</span> (i.e., the intercept) is consistently shifted away from zero, then we can reject the null hypothesis that the mean of the betas is zero.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<p>Just to review, our one sample t-test can also be formulated as a regression, where the beta values for each subject in a voxel are predicted by a vector of ones. This <em>intercept</em> only model, computes the mean of $y$. If the mean of $y$ (i.e., the intercept) is consistently shifted away from zero, then we can reject the null hypothesis that the mean of the betas is zero.</p>
+</div>
+</div>
+</div>
+<div class="section" id="begin-bmatrix-s-1-s-2-s-3-s-4-s-5-s-6-end-bmatrix-quad">
+<h1>$$
 \begin{bmatrix}
-s_1 \\
-s_2 \\
-s_3 \\
-s_4 \\
-s_5 \\
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
 s_6
 \end{bmatrix}
-\quad
-=
-\quad
+\quad<a class="headerlink" href="#begin-bmatrix-s-1-s-2-s-3-s-4-s-5-s-6-end-bmatrix-quad" title="Permalink to this headline">¶</a></h1>
+<p>\quad
 \begin{bmatrix}
-1 \\
-1 \\
-1 \\
-1 \\
-1 \\
+1 \
+1 \
+1 \
+1 \
+1 \
 1
 \end{bmatrix}
 \begin{bmatrix}
-\beta_0 
+\beta_0
 \end{bmatrix}
-\end{split}\]</div>
-<p>We can simulate this by generating data from a Gaussian distribution. We will generate two groups, where <span class="math notranslate nohighlight">\(y\)</span> reflects equal draws from each of these distributions <span class="math notranslate nohighlight">\({group_1} = \mathcal{N}(10, 2)\)</span> and <span class="math notranslate nohighlight">\({group_2} = \mathcal{N}(5, 2)\)</span>. We then regress a vector of ones on <span class="math notranslate nohighlight">\(y\)</span>.</p>
+$$</p>
+<p>We can simulate this by generating data from a Gaussian distribution. We will generate two groups, where $y$ reflects equal draws from each of these distributions ${group_1} = \mathcal{N}(10, 2)$ and ${group_2} = \mathcal{N}(5, 2)$. We then regress a vector of ones on $y$.</p>
 <p>We report the estimated value of beta and compare it to various summaries of the simulated data. This allows us to see exactly what each parameter in the regression is calculating.</p>
 <p>First, let’s define a function <code class="docutils literal notranslate"><span class="pre">run_regression_simulation</span></code> to help us generate plots and calculate various ways to summarize the simulation.</p>
 <div class="cell docutils container">
@@ -1038,38 +1110,38 @@ mean(y): 7.767465428733613
 <img alt="../_images/Group_Analysis_39_1.png" src="../_images/Group_Analysis_39_1.png" />
 </div>
 </div>
-<p>The results of this simulation clearly demonstrate that the intercept of the regression is modeling the mean of <span class="math notranslate nohighlight">\(y\)</span>.</p>
-</div>
+<p>The results of this simulation clearly demonstrate that the intercept of the regression is modeling the mean of $y$.</p>
 <div class="section" id="independent-samples-t-test-dummy-codes">
-<h3>Independent-Samples T-Test - Dummy Codes<a class="headerlink" href="#independent-samples-t-test-dummy-codes" title="Permalink to this headline">¶</a></h3>
+<h2>Independent-Samples T-Test - Dummy Codes<a class="headerlink" href="#independent-samples-t-test-dummy-codes" title="Permalink to this headline">¶</a></h2>
 <p>Next, let’s explore how we can compute an independent-sample t-test using a regression. There are several different ways to compute this. Each of them provides a different way to test for differences between the means of the two samples.</p>
 <p>First, we will explore how dummy codes can be used to test for group differences. We will create a design matrix with an intercept and also a column with a binary regressor indicating group membership. The target group will be ones, and the reference group will be zeros.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+</div>
+</div>
+<div class="section" id="id2">
+<h1>$$
 \begin{bmatrix}
-s_1 \\
-s_2 \\
-s_3 \\
-s_4 \\
-s_5 \\
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
 s_6
 \end{bmatrix}
-\quad
-=
-\quad
+\quad<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<p>\quad
 \begin{bmatrix}
-1 &amp; 1\\
-1 &amp; 1\\
-1 &amp; 1\\
-1 &amp; 0\\
-1 &amp; 0\\
+1 &amp; 1\
+1 &amp; 1\
+1 &amp; 1\
+1 &amp; 0\
+1 &amp; 0\
 1 &amp; 0
 \end{bmatrix}
 \begin{bmatrix}
-\beta_0 \\
+\beta_0 \
 \beta_1
 \end{bmatrix}
-\end{split}\]</div>
+$$</p>
 <p>Let’s run another simulation examining what the regression coefficients reflect using this dummy code approach.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1099,38 +1171,38 @@ mean(y): 8.030433391536677
 </div>
 </div>
 <p>Can you figure out what the beta estimates are calculating?</p>
-<p>The intercept <span class="math notranslate nohighlight">\(\beta_0\)</span> is now the mean of the reference group, and the estimate of the dummy code regressor <span class="math notranslate nohighlight">\(\beta_1\)</span> indicates the difference of the mean of the target group from the reference group.</p>
-<p>Thus, the mean of the reference group is <span class="math notranslate nohighlight">\(\beta_0\)</span> or the intercept, and the mean of the target group is <span class="math notranslate nohighlight">\(\beta_1 + \beta_2\)</span>.</p>
-</div>
+<p>The intercept $\beta_0$ is now the mean of the reference group, and the estimate of the dummy code regressor $\beta_1$ indicates the difference of the mean of the target group from the reference group.</p>
+<p>Thus, the mean of the reference group is $\beta_0$ or the intercept, and the mean of the target group is $\beta_1 + \beta_2$.</p>
 <div class="section" id="independent-samples-t-test-contrasts">
-<h3>Independent-Samples T-Test - Contrasts<a class="headerlink" href="#independent-samples-t-test-contrasts" title="Permalink to this headline">¶</a></h3>
+<h2>Independent-Samples T-Test - Contrasts<a class="headerlink" href="#independent-samples-t-test-contrasts" title="Permalink to this headline">¶</a></h2>
 <p>Another way to compare two different groups is by creating a model with an intercept and contrast between the two groups.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+</div>
+</div>
+<div class="section" id="id3">
+<h1>$$
 \begin{bmatrix}
-s_1 \\
-s_2 \\
-s_3 \\
-s_4 \\
-s_5 \\
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
 s_6
 \end{bmatrix}
-\quad
-=
-\quad
+\quad<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<p>\quad
 \begin{bmatrix}
-1 &amp; 1\\
-1 &amp; 1\\
-1 &amp; 1\\
-1 &amp; -1\\
-1 &amp; -1\\
+1 &amp; 1\
+1 &amp; 1\
+1 &amp; 1\
+1 &amp; -1\
+1 &amp; -1\
 1 &amp; -1
 \end{bmatrix}
 \begin{bmatrix}
-\beta_0 \\
+\beta_0 \
 \beta_1
 \end{bmatrix}
-\end{split}\]</div>
+$$</p>
 <p>Let’s now run another simulation to see how these beta estimates differ from the dummy code model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1159,8 +1231,8 @@ mean(y): 7.606152625689674
 <img alt="../_images/Group_Analysis_45_1.png" src="../_images/Group_Analysis_45_1.png" />
 </div>
 </div>
-<p>So, just as before, the intercept reflects the mean of <span class="math notranslate nohighlight">\(y\)</span>. Now can you figure out what <span class="math notranslate nohighlight">\(\beta_1\)</span> is calculating?</p>
-<p>It is the average distance of each group to the mean. The mean of group 1 is <span class="math notranslate nohighlight">\(\beta_0 + \beta_1\)</span> and the mean of group 2 is <span class="math notranslate nohighlight">\(\beta_0 - \beta_1\)</span>.</p>
+<p>So, just as before, the intercept reflects the mean of $y$. Now can you figure out what $\beta_1$ is calculating?</p>
+<p>It is the average distance of each group to the mean. The mean of group 1 is $\beta_0 + \beta_1$ and the mean of group 2 is $\beta_0 - \beta_1$.</p>
 <p>Remember that in our earlier discussion of contrast codes, we noted the importance of balanced codes across regressors. What if the group sizes are unbalanced?  Will this effect our results?</p>
 <p>To test this, we will double the sample size of group1 and rerun the simulation.</p>
 <div class="cell docutils container">
@@ -1191,36 +1263,36 @@ mean(y): 8.707662060563798
 </div>
 </div>
 <p>Looks like the beta estimates are identical to the previous simulation. This demonstrates that we <em>do not</em> need to adjust the weights of the number of ones and zeros to sum to zero.  This is because the beta is estimating the average distance from the mean, which is invariant to group sizes.</p>
-</div>
 <div class="section" id="independent-samples-t-test-group-intercepts">
-<h3>Independent-Samples T-Test - Group Intercepts<a class="headerlink" href="#independent-samples-t-test-group-intercepts" title="Permalink to this headline">¶</a></h3>
+<h2>Independent-Samples T-Test - Group Intercepts<a class="headerlink" href="#independent-samples-t-test-group-intercepts" title="Permalink to this headline">¶</a></h2>
 <p>The third way to calculate an independent samples t-test using a regression is to split the intercept into two separate binary regressors with each reflecting the membership of each group. There is no need to include an intercept as it is simply a linear combination of the other two regressors.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+</div>
+</div>
+<div class="section" id="id4">
+<h1>$$
 \begin{bmatrix}
-s_1 \\
-s_2 \\
-s_3 \\
-s_4 \\
-s_5 \\
+s_1 \
+s_2 \
+s_3 \
+s_4 \
+s_5 \
 s_6
 \end{bmatrix}
-\quad
-=
-\quad
+\quad<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<p>\quad
 \begin{bmatrix}
-1 &amp; 0\\
-1 &amp; 0\\
-1 &amp; 0\\
-0 &amp; 1\\
-0 &amp; 1\\
+1 &amp; 0\
+1 &amp; 0\
+1 &amp; 0\
+0 &amp; 1\
+0 &amp; 1\
 0 &amp; 1
 \end{bmatrix}
 \begin{bmatrix}
-b_0 \\
+b_0 \
 b_1
 \end{bmatrix}
-\end{split}\]</div>
+$$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">group1_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
@@ -1249,41 +1321,41 @@ mean(y): 6.879747849495177
 </div>
 </div>
 <p>This model is obviously separately estimating the means of each group, but how do we know if the difference is significant?  Any ideas?</p>
-<p>Just like the single subject regression models, we would need to calculate a contrast, which would simply be <span class="math notranslate nohighlight">\(c=[1 -1]\)</span>.</p>
+<p>Just like the single subject regression models, we would need to calculate a contrast, which would simply be $c=[1 -1]$.</p>
 <p>All three of these different approaches will yield identical results when performing a hypothesis test, but each is computing the t-test slightly differently.</p>
-</div>
 <div class="section" id="paired-samples-t-test">
-<h3>Paired-Samples T-Test<a class="headerlink" href="#paired-samples-t-test" title="Permalink to this headline">¶</a></h3>
-<p>Now let’s demonstrate that a paired-samples t-test can also be computed using a regression. Here, we will need to create a long format dataset, in which each subject <span class="math notranslate nohighlight">\(s_i\)</span> has two data points (one for each condition <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>). One regressor will compute the contrast between condition <span class="math notranslate nohighlight">\(a\)</span> and condition <span class="math notranslate nohighlight">\(b\)</span>. Just like before, we need to account for the mean, but instead of computing a grand mean for all of the data, we will separately model the mean of each participant by adding <span class="math notranslate nohighlight">\(n\)</span> more binary regressors where each subject is indicated in each regressor.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<h2>Paired-Samples T-Test<a class="headerlink" href="#paired-samples-t-test" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s demonstrate that a paired-samples t-test can also be computed using a regression. Here, we will need to create a long format dataset, in which each subject $s_i$ has two data points (one for each condition $a$ and $b$). One regressor will compute the contrast between condition $a$ and condition $b$. Just like before, we need to account for the mean, but instead of computing a grand mean for all of the data, we will separately model the mean of each participant by adding $n$ more binary regressors where each subject is indicated in each regressor.</p>
+</div>
+</div>
+<div class="section" id="begin-bmatrix-s-1a-s-1b-s-2a-s-2b-s-3a-s-3b-end-bmatrix-quad">
+<h1>$$
 \begin{bmatrix}
-s_1a \\
-s_1b \\
-s_2a \\
-s_2b \\
-s_3a \\
+s_1a \
+s_1b \
+s_2a \
+s_2b \
+s_3a \
 s_3b
 \end{bmatrix}
-\quad
-=
-\quad
+\quad<a class="headerlink" href="#begin-bmatrix-s-1a-s-1b-s-2a-s-2b-s-3a-s-3b-end-bmatrix-quad" title="Permalink to this headline">¶</a></h1>
+<p>\quad
 \begin{bmatrix}
-1 &amp; 1 &amp; 0 &amp; 0\\
--1 &amp; 1 &amp; 0 &amp; 0\\
-1 &amp; 0 &amp; 1 &amp; 0\\
--1 &amp; 0 &amp; 1 &amp; 0\\
-1 &amp; 0 &amp; 0 &amp; 1\\
+1 &amp; 1 &amp; 0 &amp; 0\
+-1 &amp; 1 &amp; 0 &amp; 0\
+1 &amp; 0 &amp; 1 &amp; 0\
+-1 &amp; 0 &amp; 1 &amp; 0\
+1 &amp; 0 &amp; 0 &amp; 1\
 -1 &amp; 0 &amp; 0 &amp; 1
 \end{bmatrix}
 \begin{bmatrix}
-\beta_0 \\
-\beta_1 \\
-\beta_2 \\
+\beta_0 \
+\beta_1 \
+\beta_2 \
 \beta_3
 \end{bmatrix}
-\end{split}\]</div>
-<p>This simulation will be slightly more complicated as we will be adding subject level noise to each data point. In this simulation, we will assume that <span class="math notranslate nohighlight">\(\epsilon_i = \mathcal{N}(30, 10)\)</span></p>
+$$</p>
+<p>This simulation will be slightly more complicated as we will be adding subject level noise to each data point. In this simulation, we will assume that $\epsilon_i = \mathcal{N}(30, 10)$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mean&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
@@ -1326,20 +1398,18 @@ sum(a_i-mean(y_i))/n: 2.5452269645282555
 <img alt="../_images/Group_Analysis_53_1.png" src="../_images/Group_Analysis_53_1.png" />
 </div>
 </div>
-<p>Okay, now let’s try to make sense of all of these numbers. First, we now have <span class="math notranslate nohighlight">\(n\)</span> + 1 <span class="math notranslate nohighlight">\(\beta\)</span>’s. <span class="math notranslate nohighlight">\(\beta_0\)</span> corresponds to the between condition contrast. We will call this the <em>contrast <span class="math notranslate nohighlight">\(\beta\)</span></em>. The rest of the <span class="math notranslate nohighlight">\(\beta\)</span>’s model each subject’s mean. We can see that the means of all of these subject <span class="math notranslate nohighlight">\(\beta\)</span>’s corresponds to the overall mean of <span class="math notranslate nohighlight">\(y\)</span>.</p>
-<p>Now what is the meaning of the contrast <span class="math notranslate nohighlight">\(\beta\)</span>?</p>
+<p>Okay, now let’s try to make sense of all of these numbers. First, we now have $n$ + 1 $\beta$’s. $\beta_0$ corresponds to the between condition contrast. We will call this the <em>contrast $\beta$</em>. The rest of the $\beta$’s model each subject’s mean. We can see that the means of all of these subject $\beta$’s corresponds to the overall mean of $y$.</p>
+<p>Now what is the meaning of the contrast $\beta$?</p>
 <p>We can see that it is not the average within subject difference between the two conditions as might be expected given a normal paired-samples t-test.</p>
 <p>Instead, just like the independent samples t-test described above, the contrast value reflects the average deviation of a condition from each subject’s individual mean.</p>
-<div class="math notranslate nohighlight">
-\[\sum_{i=1}^n{\frac{a_i - mean(y_i)}{n}}\]</div>
-<p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of subjects, <span class="math notranslate nohighlight">\(a\)</span> is the condition being compared to <span class="math notranslate nohighlight">\(b\)</span>, and the <span class="math notranslate nohighlight">\(mean(y_i)\)</span> is the subject’s mean.</p>
-</div>
+<p>$$\sum_{i=1}^n{\frac{a_i - mean(y_i)}{n}}$$</p>
+<p>where $n$ is the number of subjects, $a$ is the condition being compared to $b$, and the $mean(y_i)$ is the subject’s mean.</p>
 <div class="section" id="linear-and-quadratic-contrasts">
-<h3>Linear and Quadratic contrasts<a class="headerlink" href="#linear-and-quadratic-contrasts" title="Permalink to this headline">¶</a></h3>
+<h2>Linear and Quadratic contrasts<a class="headerlink" href="#linear-and-quadratic-contrasts" title="Permalink to this headline">¶</a></h2>
 <p>Hopefully, now you are starting to see that all of the different statistical tests you learned in intro stats (e.g., one-sample t-tests, two-sample t-tests, ANOVAs, and regressions) are really just a special case of the general linear model.</p>
-<p>Contrasts allow us to flexibly test many different types of hypotheses within the regression framework. This allows us to test more complicated and precise hypotheses than might be possible than simply turning everything into a binary yes/no question (i.e., one sample t-test), or is condition <span class="math notranslate nohighlight">\(a\)</span> greater than condition <span class="math notranslate nohighlight">\(b\)</span> (i.e., two sample t-test). We’ve already explored how contrasts can be used to create independent and paired-samples t-tests in the above simulations. Here we will now provide examples of how to test more sophisticated hypotheses.</p>
-<p>Suppose we manipulated the intensity of some type of experimental manipulation across many levels. For example, we increase the working memory load across 4 different levels. We might be interested in identifying regions that monotonically increase as a function of this manipulation. This would be virtually impossible to test using a paired contrast approach (e.g., t-tests, ANOVAs). Instead, we can simply specify a linear contrast by setting the contrast vector to linearly increase. This is as simple as <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>. However, remember that contrasts need to sum to zero (except for the one-sample t-test case).  So to make our contrast we can simply subtract the mean - <code class="docutils literal notranslate"><span class="pre">np.array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3])</span> <span class="pre">-</span> <span class="pre">np.mean((np.array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3))</span></code>, which becomes <span class="math notranslate nohighlight">\(c_{linear} = [-1.5, -0.5,  0.5,  1.5]\)</span>.</p>
-<p>Regions involved in working memory load might not have a linear increase, but instead might show an inverted u-shaped response, such that the region is not activated at small or high loads, but only at medium loads.  To test this hypothesis, we would need to construct a quadratic contrast <span class="math notranslate nohighlight">\(c_{quadratic}=[-1, 1, 1, -1]\)</span>.</p>
+<p>Contrasts allow us to flexibly test many different types of hypotheses within the regression framework. This allows us to test more complicated and precise hypotheses than might be possible than simply turning everything into a binary yes/no question (i.e., one sample t-test), or is condition $a$ greater than condition $b$ (i.e., two sample t-test). We’ve already explored how contrasts can be used to create independent and paired-samples t-tests in the above simulations. Here we will now provide examples of how to test more sophisticated hypotheses.</p>
+<p>Suppose we manipulated the intensity of some type of experimental manipulation across many levels. For example, we increase the working memory load across 4 different levels. We might be interested in identifying regions that monotonically increase as a function of this manipulation. This would be virtually impossible to test using a paired contrast approach (e.g., t-tests, ANOVAs). Instead, we can simply specify a linear contrast by setting the contrast vector to linearly increase. This is as simple as <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>. However, remember that contrasts need to sum to zero (except for the one-sample t-test case).  So to make our contrast we can simply subtract the mean - <code class="docutils literal notranslate"><span class="pre">np.array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3])</span> <span class="pre">-</span> <span class="pre">np.mean((np.array([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3))</span></code>, which becomes $c_{linear} = [-1.5, -0.5,  0.5,  1.5]$.</p>
+<p>Regions involved in working memory load might not have a linear increase, but instead might show an inverted u-shaped response, such that the region is not activated at small or high loads, but only at medium loads.  To test this hypothesis, we would need to construct a quadratic contrast $c_{quadratic}=[-1, 1, 1, -1]$.</p>
 <p>Let’s explore this idea with a simple simulation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1411,7 +1481,6 @@ Quadratic Contrast: [-1  1  1 -1]
 <p>If we were to apply this to real brain data, we could now find regions that show a linear or quadratic responses to an experimental manipulation across the whole brain. We would then test the null hypothesis that there is no group effect of a linear or quadratic contrast at the second level.</p>
 <p>Hopefully, this is starting you a sense of the power of contrasts to flexibly test any hypothesis that you can imagine.</p>
 </div>
-</div>
 <div class="section" id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
@@ -1469,16 +1538,36 @@ Quadratic Contrast: [-1  1  1 -1]
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="GLM_Single_Subject_Model.html" title="previous page">Modeling Single Subject Data</a>
-    <a class='right-next' id="next-link" href="Thresholding_Group_Analyses.html" title="next page">Thresholding Group Analyses</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="GLM_Single_Subject_Model.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Modeling Single Subject Data</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="Thresholding_Group_Analyses.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Thresholding Group Analyses</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
@@ -1496,21 +1585,19 @@ Quadratic Contrast: [-1  1  1 -1]
 
       </div>
     </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    
-  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+  
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
 
-
-    
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-138270939-1', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    
   </body>
 </html>

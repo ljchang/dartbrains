@@ -1,11 +1,12 @@
-- file: content/intro
-
-- part: Course Overview
+format: jb-book
+root: content/intro
+parts:
+- caption: Course Overview
   chapters:
   - file: content/Instructors
   - file: content/Syllabus
   - file: content/Schedule
-- part: Computing Resources
+- caption: Computing Resources
   chapters:
   - file: content/Introduction_to_JupyterHub
   - file: content/Download_Data
@@ -13,7 +14,7 @@
   - file: content/Introduction_to_Pandas
   - file: content/Introduction_to_Plotting
   - file: content/Glossary
-- part: Course Topics
+- caption: Course Topics
   chapters:
   - file: content/Intro_to_Neuroimaging
   - file: content/Signal_Measurement
@@ -29,16 +30,16 @@
   - file: content/Multivariate_Prediction
   - file: content/RSA
   - file: content/Resampling_Statistics
-- part: Additional Courses
+- caption: Additional Courses
   chapters:
   - url: http://naturalistic-data.org/
-    title: Naturalistic Data Analysis  
-- part: Project Gallery
+    title: Naturalistic Data Analysis
+- caption: Project Gallery
   chapters:
   - file: content/2019_Spring
   - file: content/2020_Spring
   - file: content/2020_Fall
-- part: Contributing
+- caption: Contributing
   chapters:
   - file: content/Contributing
   - url: https://github.com/ljchang/dartbrains

@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thresholding Group Analyses &#8212; DartBrains</title>
     
-  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -34,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -45,39 +42,28 @@
     <script src="../_static/copybutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="canonical" href="http://dartbrains.org/content/Thresholding_Group_Analyses.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Connectivity" href="Connectivity.html" />
     <link rel="prev" title="Group Analysis" href="Group_Analysis.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
-
-
-<!-- Opengraph tags -->
-<meta property="og:url"         content="http://dartbrains.org/content/Thresholding_Group_Analyses.html" />
-<meta property="og:type"        content="article" />
-<meta property="og:title"       content="Thresholding Group Analyses" />
-<meta property="og:description" content="Thresholding Group Analyses  Written by Luke Chang  Now that we have learned how to estimate a single-subject model, create contrasts, and run a group-level ana" />
-<meta property="og:image"       content="http://dartbrains.org/_static/dartbrains_logo_square_transparent.png" />
-
-<meta name="twitter:card" content="summary" />
-
-
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -86,25 +72,29 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../index.html">
-  
-  <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">DartBrains</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">DartBrains</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <p class="caption collapsible-parent">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
  <span class="caption-text">
   Course Overview
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Instructors.html">
    Instructors
@@ -121,12 +111,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Computing Resources
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Introduction_to_JupyterHub.html">
    Introduction to JupyterHub
@@ -158,12 +148,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Course Topics
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Intro_to_Neuroimaging.html">
    Introduction to Neuroimaging
@@ -235,26 +225,24 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Additional Courses
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference external" href="http://naturalistic-data.org/">
    Naturalistic Data Analysis
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Project Gallery
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="2019_Spring.html">
    Spring 2019
@@ -271,12 +259,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Contributing
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Contributing.html">
    Contributing
@@ -285,12 +273,11 @@
  <li class="toctree-l1">
   <a class="reference external" href="https://github.com/ljchang/dartbrains">
    GitHub Repository
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -358,12 +345,12 @@
     </div>
 </div>
 
-
             <!-- Full screen (wrap in <a> to have style consistency -->
-            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                    title="Fullscreen mode"><i
-                        class="fas fa-expand"></i></button></a>
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
 
@@ -400,12 +387,11 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#simulations">
    Simulations
@@ -474,8 +460,7 @@
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
         </div>
     </div>
 </div>
@@ -515,20 +500,20 @@
 ></iframe>
 </div></div>
 </div>
-<p>The primary goal in fMRI data analysis is to make inferences about how the brain processes information. These inferences can be in the form of predictions, but most often we are testing hypotheses about whether a particular region of the brain is involved in a specific type of process. This requires rejecting a <span class="math notranslate nohighlight">\(H_0\)</span> hypothesis (i.e., that there is no effect). Null hypothesis testing is traditionally performed by specifying contrasts between different conditions of an experimental design and assessing if these differences between conditions are reliably present across many participants. There are two main types of errors in null-hypothesis testing.</p>
+<p>The primary goal in fMRI data analysis is to make inferences about how the brain processes information. These inferences can be in the form of predictions, but most often we are testing hypotheses about whether a particular region of the brain is involved in a specific type of process. This requires rejecting a $H_0$ hypothesis (i.e., that there is no effect). Null hypothesis testing is traditionally performed by specifying contrasts between different conditions of an experimental design and assessing if these differences between conditions are reliably present across many participants. There are two main types of errors in null-hypothesis testing.</p>
 <p><em>Type I error</em></p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(H_0\)</span> is true, but we mistakenly reject it (i.e., False Positive)</p></li>
-<li><p>This is controlled by significance level <span class="math notranslate nohighlight">\(\alpha\)</span>.</p></li>
+<li><p>$H_0$ is true, but we mistakenly reject it (i.e., False Positive)</p></li>
+<li><p>This is controlled by significance level $\alpha$.</p></li>
 </ul>
 <p><em>Type II error</em></p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(H_0\)</span> is false, but we fail to reject it (False Negative)</p></li>
+<li><p>$H_0$ is false, but we fail to reject it (False Negative)</p></li>
 </ul>
 <p>The probability that a hypothesis test will correctly reject a false null hypothesis is described as the <em>power</em> of the test.</p>
 <p>Hypothesis testing in fMRI is complicated by the fact that we are running many tests across each voxel in the brain (hundreds of thousands of tests). Selecting an appropriate threshold requires finding a balance between sensitivity (i.e., true positive rate) and specificity (i.e., false negative rate). There are two main approaches to correcting for multiple tests in fMRI data analysis.</p>
-<p><strong>Familywise Error Rate</strong> (FWER) attempts to control the probability of finding <em>any</em> false positives. Mathematically, FWER can be defined as the probability <span class="math notranslate nohighlight">\(P\)</span> of observing any false positive <span class="math notranslate nohighlight">\({FWER} = P({False Positives}\geq 1)\)</span>.</p>
-<p>While, <strong>False Discovery Rate</strong> (FDR) attempts to control the proportion of false positives among rejected tests. Formally, this is the expected proportion of false positive to the observed number of significant tests <span class="math notranslate nohighlight">\({FDR} = E(\frac{False Positives}{Significant Tests})\)</span>.</p>
+<p><strong>Familywise Error Rate</strong> (FWER) attempts to control the probability of finding <em>any</em> false positives. Mathematically, FWER can be defined as the probability $P$ of observing any false positive ${FWER} = P({False Positives}\geq 1)$.</p>
+<p>While, <strong>False Discovery Rate</strong> (FDR) attempts to control the proportion of false positives among rejected tests. Formally, this is the expected proportion of false positive to the observed number of significant tests ${FDR} = E(\frac{False Positives}{Significant Tests})$.</p>
 <p>This should probably be no surprise to anyone, but fMRI studies are expensive and inherently underpowered. Here is a simulation by Jeannette Mumford to show approximately how many participants you would need to achieve 80% power assuming a specific effect size in your contrast.</p>
 <p><img alt="fmri_power.png" src="../_images/fmri_power.png" /></p>
 <div class="section" id="simulations">
@@ -551,7 +536,7 @@
 </div>
 </div>
 </div>
-<p>Okay, let’s get started and generate 100 x 100 voxels from <span class="math notranslate nohighlight">\(\mathcal{N}(0,1)\)</span> distribution for 20 independent participants.</p>
+<p>Okay, let’s get started and generate 100 x 100 voxels from $\mathcal{N}(0,1)$ distribution for 20 independent participants.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">grid_width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -636,7 +621,7 @@
 </div>
 </div>
 <p>You can see that this dramatically decreases the number of false positives to the point that some of the simulations no longer contain any false positives.</p>
-<p>What is the optimal threshold that will give us an <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>?</p>
+<p>What is the optimal threshold that will give us an $\alpha=0.05$?</p>
 <p>To calculate this, we will run 100 simulations at different threshold levels to find the threshold that leads to a false positive rate that is lower than our alpha value.</p>
 <p>We could search over t-values, or p-values. Let’s explore t-values first.</p>
 <div class="cell docutils container">
@@ -682,7 +667,7 @@
 </div>
 <p>Notice, that we are now observing a false positive rate of approximately .05, though this number will slightly change each time you run the simulation.</p>
 <p>Another way to find the threshold that controls FWER is to divide the alpha by the number of independent tests across voxels. This is called the <strong>bonferroni correction</strong>.</p>
-<p><span class="math notranslate nohighlight">\({bonferroni} = \frac{\alpha}{M}\)</span>, where <span class="math notranslate nohighlight">\(M\)</span> is the number of voxels.</p>
+<p>${bonferroni} = \frac{\alpha}{M}$, where $M$ is the number of voxels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">100</span>
@@ -805,17 +790,17 @@
 <p>The <em>false discovery rate</em> (FDR) is a more recent development in multiple testing correction originally described by <a class="reference external" href="https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1995.tb02031.x">Benjamini &amp; Hochberg, 1995</a>. While FWER is the probability of any false positives occurring in a family of tests, the FDR is the expected proportion of false positives among significant tests.</p>
 <p>The FDR is fairly straightforward to calculate.</p>
 <ol class="simple">
-<li><p>We select a desired limit <span class="math notranslate nohighlight">\(q\)</span> on FDR, which is the proportion of false positives we are okay with observing (e.g., 5/100 tests or 0.05).</p></li>
+<li><p>We select a desired limit $q$ on FDR, which is the proportion of false positives we are okay with observing (e.g., 5/100 tests or 0.05).</p></li>
 <li><p>We rank all of the p-values over all the voxels from the smallest to largest.</p></li>
-<li><p>We find the threshold <span class="math notranslate nohighlight">\(r\)</span> such that <span class="math notranslate nohighlight">\(p \leq i/m * q\)</span></p></li>
-<li><p>We reject any <span class="math notranslate nohighlight">\(H_0\)</span> that is lower than <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
+<li><p>We find the threshold $r$ such that $p \leq i/m * q$</p></li>
+<li><p>We reject any $H_0$ that is lower than $r$.</p></li>
 </ol>
 <p><img alt="image.png" src="../_images/fdr_calc.png" /></p>
 <p>In a brain map, this means that we expect approximately 95% of the voxels reported at q &lt; .05 FDR-corrected to be true activations (note we use q instead of p). The FDR procedure adaptively identifies a threshold based on the overall signal across all voxels. Larger signals results in lower thresholds. Importantly, if all of the null hypotheses are true, then the FDR will be equivalent to the FWER. This means that any FWER procedure will <em>also</em> control the FDR. For these reasons, any procedure which controls the FDR is necessarily less stringent than a FWER controlling procedure, which leads to an overall increased power. Another nice feature of FDR, is that it operates on p-values instead of test statistics, which means it can be applied to most statistical tests.</p>
 <p>This figure is taken from Poldrack, Mumford, &amp; Nichols (2011) and compares different procedures to control for multiple tests.
 <img alt="image.png" src="../_images/fdr.png" /></p>
 <p>For a more indepth overview of FDR, see this <a class="reference external" href="https://matthew-brett.github.io/teaching/fdr.html">tutorial</a> by Matthew Brett.</p>
-<p>Let’s now try to apply FDR to our own simulations. All we need to do is add a <code class="docutils literal notranslate"><span class="pre">correction='fdr'</span></code> flag to our simulation plot. We need to make sure that the <code class="docutils literal notranslate"><span class="pre">threshold=0.05</span></code> to use the correct <span class="math notranslate nohighlight">\(q\)</span>.</p>
+<p>Let’s now try to apply FDR to our own simulations. All we need to do is add a <code class="docutils literal notranslate"><span class="pre">correction='fdr'</span></code> flag to our simulation plot. We need to make sure that the <code class="docutils literal notranslate"><span class="pre">threshold=0.05</span></code> to use the correct $q$.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">100</span>
@@ -1003,16 +988,36 @@
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Group_Analysis.html" title="previous page">Group Analysis</a>
-    <a class='right-next' id="next-link" href="Connectivity.html" title="next page">Connectivity</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="Group_Analysis.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Group Analysis</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="Connectivity.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Connectivity</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
@@ -1030,21 +1035,19 @@
 
       </div>
     </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    
-  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+  
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
 
-
-    
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-138270939-1', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    
   </body>
 </html>

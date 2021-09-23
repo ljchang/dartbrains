@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signal Processing Basics &#8212; DartBrains</title>
     
-  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -34,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -45,39 +42,28 @@
     <script src="../_static/copybutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="canonical" href="http://dartbrains.org/content/Signal_Processing.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Preprocessing" href="Preprocessing.html" />
     <link rel="prev" title="Introduction to Neuroimaging Data" href="Introduction_to_Neuroimaging_Data.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
-
-
-<!-- Opengraph tags -->
-<meta property="og:url"         content="http://dartbrains.org/content/Signal_Processing.html" />
-<meta property="og:type"        content="article" />
-<meta property="og:title"       content="Signal Processing Basics" />
-<meta property="og:description" content="Signal Processing Basics  Written by Luke Chang  In this lab, we will cover the basics of convolution, sine waves, and fourier transforms. This lab is largely b" />
-<meta property="og:image"       content="http://dartbrains.org/_static/dartbrains_logo_square_transparent.png" />
-
-<meta name="twitter:card" content="summary" />
-
-
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -86,25 +72,29 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="../index.html">
-  
-  <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">DartBrains</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">DartBrains</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <p class="caption collapsible-parent">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
  <span class="caption-text">
   Course Overview
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Instructors.html">
    Instructors
@@ -121,12 +111,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Computing Resources
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Introduction_to_JupyterHub.html">
    Introduction to JupyterHub
@@ -158,12 +148,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Course Topics
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Intro_to_Neuroimaging.html">
    Introduction to Neuroimaging
@@ -235,26 +225,24 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Additional Courses
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference external" href="http://naturalistic-data.org/">
    Naturalistic Data Analysis
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Project Gallery
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="2019_Spring.html">
    Spring 2019
@@ -271,12 +259,12 @@
   </a>
  </li>
 </ul>
-<p class="caption collapsible-parent">
+<p class="caption">
  <span class="caption-text">
   Contributing
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Contributing.html">
    Contributing
@@ -285,12 +273,11 @@
  <li class="toctree-l1">
   <a class="reference external" href="https://github.com/ljchang/dartbrains">
    GitHub Repository
-   <i class="fas fa-external-link-alt">
-   </i>
   </a>
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -358,12 +345,12 @@
     </div>
 </div>
 
-
             <!-- Full screen (wrap in <a> to have style consistency -->
-            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                    title="Fullscreen mode"><i
-                        class="fas fa-expand"></i></button></a>
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
 
@@ -400,12 +387,11 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#time-domain">
    Time Domain
@@ -538,8 +524,7 @@
  </li>
 </ul>
 
-        </nav>
-        
+            </nav>
         </div>
     </div>
 </div>
@@ -554,11 +539,11 @@
 <p>In this lab, we will cover the basics of convolution, sine waves, and fourier transforms. This lab is largely based on exercises from Mike X Cohen’s excellent book, <a class="reference external" href="https://www.amazon.com/Analyzing-Neural-Time-Data-Practice/dp/0262019876">Analying Neural Data Analysis: Theory and Practice</a>. If you are interested in learning in more detail about the basics of EEG and time-series analyses I highly recommend his accessible introduction. I also encourage you to watch his accompanying freely available <a class="reference external" href="https://www.youtube.com/channel/UCUR_LsXk7IYyueSnXcNextQ"><em>lecturelets</em></a> to learn more about each topic introduced in this notebook.</p>
 <div class="section" id="time-domain">
 <h2>Time Domain<a class="headerlink" href="#time-domain" title="Permalink to this headline">¶</a></h2>
-<p>First we will work on signals in the time domain.  This requires measuring a signal at a constant interval over time.  The frequency with which we measure a signal is referred to as the sampling frequency.  The units of this are typically described in <span class="math notranslate nohighlight">\(Hz\)</span> - or the number of cycles per second. It is critical that the sampling frequency is consistent over the entire measurement of the time series.</p>
+<p>First we will work on signals in the time domain.  This requires measuring a signal at a constant interval over time.  The frequency with which we measure a signal is referred to as the sampling frequency.  The units of this are typically described in $Hz$ - or the number of cycles per second. It is critical that the sampling frequency is consistent over the entire measurement of the time series.</p>
 <div class="section" id="dot-product">
 <h3>Dot Product<a class="headerlink" href="#dot-product" title="Permalink to this headline">¶</a></h3>
 <p>To understand convolution, we first need to familiarize ourselves with the dot product.  The dot product is simply the sum of the elements of a vector weighted by the elements of another vector. This method is commonly used in signal processing, and also in statistics as a measure of similarity between two vectors. Finally, there is also a geometric inrepretation which is a mapping between vectors (i.e., the product of the magnitudes of the two vectors scaled by the cosine of the angle between them). For a more in depth overview of the dot product and its relation to convolution, you can watch this optional <a class="reference external" href="https://youtu.be/rea6M1oagmA">video</a>.</p>
-<p><span class="math notranslate nohighlight">\(dotproduct_{ab}=\sum\limits_{i=1}^n a_i b_i\)</span></p>
+<p>$dotproduct_{ab}=\sum\limits_{i=1}^n a_i b_i$</p>
 <p>Let’s create some vectors of random numbers and see how the dot product works.  First, the two vectors need to be of the same length.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -836,8 +821,8 @@ Convolved Signal Length: 109
 </div></div>
 </div>
 <p>Oscillations can be described mathematically as:</p>
-<p><span class="math notranslate nohighlight">\(A\sin(2 \pi ft + \theta)\)</span></p>
-<p>where <span class="math notranslate nohighlight">\(f\)</span> is the frequency or the speed of the oscillation described in the number of cycles per second - <span class="math notranslate nohighlight">\(Hz\)</span>. Amplitude <span class="math notranslate nohighlight">\(A\)</span> refers to the height of the waves, which is half the distance of the peak to the trough. Finally, <span class="math notranslate nohighlight">\(\theta\)</span> describes the phase angle offset, which is in radians.</p>
+<p>$A\sin(2 \pi ft + \theta)$</p>
+<p>where $f$ is the frequency or the speed of the oscillation described in the number of cycles per second - $Hz$. Amplitude $A$ refers to the height of the waves, which is half the distance of the peak to the trough. Finally, $\theta$ describes the phase angle offset, which is in radians.</p>
 <p>Here we will plot a simple sine wave.  Try playing with the different parameters (i.e., amplitude, frequency, &amp; theta) to gain an intuition of how they each impact the shape of the wave.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1072,19 +1057,18 @@ Convolved Signal Length: 109
 ></iframe>
 </div></div>
 </div>
-<p>The discrete Fourier transform of variable <span class="math notranslate nohighlight">\(x\)</span> at frequency <span class="math notranslate nohighlight">\(f\)</span> can be defined as:</p>
-<p><span class="math notranslate nohighlight">\(X_f = \sum\limits_{k=0}^{n-1} x_k \cdot e^\frac{-i2\pi fk}{n}\)</span>
-where <span class="math notranslate nohighlight">\(n\)</span> refers to the number of data points in vector <span class="math notranslate nohighlight">\(x\)</span>, and the capital letter <span class="math notranslate nohighlight">\(X_f\)</span> is the fourier coefficient of time series variable <span class="math notranslate nohighlight">\(x\)</span> at frequency <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>The discrete Fourier transform of variable $x$ at frequency $f$ can be defined as:</p>
+<p>$X_f = \sum\limits_{k=0}^{n-1} x_k \cdot e^\frac{-i2\pi fk}{n}$
+where $n$ refers to the number of data points in vector $x$, and the capital letter $X_f$ is the fourier coefficient of time series variable $x$ at frequency $f$.</p>
 <p>Essentially, we create a bank of complex sine waves at different frequencies that are linearly spaced. The zero frequency component reflects the mean offset over the entire signal and will simply be zero in our example.</p>
 <div class="section" id="complex-sine-waves">
 <h4>Complex Sine Waves<a class="headerlink" href="#complex-sine-waves" title="Permalink to this headline">¶</a></h4>
 <p>You may have noticed that we are computing <em>complex</em> sine waves using the <code class="docutils literal notranslate"><span class="pre">np.exp</span></code> function instead of the <code class="docutils literal notranslate"><span class="pre">np.sin</span></code> function.</p>
-<div class="math notranslate nohighlight">
-\[\text{complex sine wave} = e^{i(2\pi ft + \theta)}\]</div>
-<p>We will not spend too much time on the details, but basically complex sine waves have three components: time, a real part of the sine wave, and the imaginary part of the sine wave, which are basically phase shifted by <span class="math notranslate nohighlight">\(\frac{\pi}{2}\)</span>.
+<p>$$\text{complex sine wave} = e^{i(2\pi ft + \theta)}$$</p>
+<p>We will not spend too much time on the details, but basically complex sine waves have three components: time, a real part of the sine wave, and the imaginary part of the sine wave, which are basically phase shifted by $\frac{\pi}{2}$.
 <code class="docutils literal notranslate"><span class="pre">1j</span></code> is how we can specify a complex number in python. We can extract the real components using <code class="docutils literal notranslate"><span class="pre">np.real</span></code> or the imaginary using <code class="docutils literal notranslate"><span class="pre">np.imag</span></code>.</p>
 <p>We can visualize complex sine waves in three dimensions. For more information, watch this <a class="reference external" href="https://youtu.be/iZCDOuzfsY0">video</a>. If you need a refresher on complex numbers, you may want to watch this <a class="reference external" href="https://youtu.be/fNfXKiIIufY">video</a>.</p>
-<p>In this plot we show this complex signal in 3 dimensions and also project on two dimensional planes to show that the real and imaginary create a unit circle, and are phase offset by <span class="math notranslate nohighlight">\(\frac{\pi}{2}\)</span> with respect to time.</p>
+<p>In this plot we show this complex signal in 3 dimensions and also project on two dimensional planes to show that the real and imaginary create a unit circle, and are phase offset by $\frac{\pi}{2}$ with respect to time.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
@@ -1189,7 +1173,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="section" id="visualizing-fourier-coefficients">
 <h4>Visualizing Fourier Coefficients<a class="headerlink" href="#visualizing-fourier-coefficients" title="Permalink to this headline">¶</a></h4>
 <p>Now that we have computed the fourier transform, we might want to examine the results.  The fourier transform provides a 3-D representation of the data including frquency, power, and phase. Typically, the phase information is ignored when plotting the results of a fourier analysis. The traditional way to view the information is plot the data as amplitude on the <em>y-axis</em> and frequency on the <em>x-axis</em>. We will extract amplitude by taking the absolute value of the fourier coefficients. Remember that we are only focusing on the positive frequencies (the 1st half of the sine wave basis functions).</p>
-<p>Here the x axis simply reflects the index of the frequency.  The actual frequency is <span class="math notranslate nohighlight">\(N/2 + 1\)</span> as we are only able estimate frequencies that are half the sampling frequency, this is called the Nyquist frequency. Also, note that we are only plotting the first half of the frequencies. This is because we are only plotting the <em>positive</em> frequencies. We will ignore frequencies above the nyquist frequency (i.e., <span class="math notranslate nohighlight">\(\frac{\text{fs}}{2}\)</span>), which are called negative frequencies. Watch this <a class="reference external" href="https://youtu.be/Nupda1rm01Y">video</a> if you’d like more information about why.</p>
+<p>Here the x axis simply reflects the index of the frequency.  The actual frequency is $N/2 + 1$ as we are only able estimate frequencies that are half the sampling frequency, this is called the Nyquist frequency. Also, note that we are only plotting the first half of the frequencies. This is because we are only plotting the <em>positive</em> frequencies. We will ignore frequencies above the nyquist frequency (i.e., $\frac{\text{fs}}{2}$), which are called negative frequencies. Watch this <a class="reference external" href="https://youtu.be/Nupda1rm01Y">video</a> if you’d like more information about why.</p>
 <p>Watch this <a class="reference external" href="https://youtu.be/oh7WvhlkxnU">video</a> to hear more about frequencies and zero padding.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1211,7 +1195,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <p>Notice that there are 5 different frequencies that have varying amplitudes. Recall that when we simulated this data we added 5 different sine waves with different frequencies and amplitudes.</p>
 <p><code class="docutils literal notranslate"><span class="pre">freq</span> <span class="pre">=</span> <span class="pre">[3,</span> <span class="pre">10,</span> <span class="pre">5</span> <span class="pre">,15,</span> <span class="pre">35]</span></code>
 <code class="docutils literal notranslate"><span class="pre">amplitude</span> <span class="pre">=</span> <span class="pre">[5,</span> <span class="pre">15,</span> <span class="pre">10,</span> <span class="pre">5,</span> <span class="pre">7]</span></code></p>
-<p>Let’s zoom in a bit more to see this more clearly and also add the correct frequency labels in <span class="math notranslate nohighlight">\(Hz\)</span>. We will use the numpy <code class="docutils literal notranslate"><span class="pre">fftfreq</span></code> function to help convert frequency indices to <span class="math notranslate nohighlight">\(Hz\)</span>.</p>
+<p>Let’s zoom in a bit more to see this more clearly and also add the correct frequency labels in $Hz$. We will use the numpy <code class="docutils literal notranslate"><span class="pre">fftfreq</span></code> function to help convert frequency indices to $Hz$.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.fft</span> <span class="kn">import</span> <span class="n">fftfreq</span>
@@ -1256,8 +1240,8 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="section" id="inverse-fourier-transform">
 <h3>Inverse Fourier Transform<a class="headerlink" href="#inverse-fourier-transform" title="Permalink to this headline">¶</a></h3>
 <p>The fourier transform allows you to represent a time series in the frequency domain. This is a lossless operation, meaning that no information in the original signal is lost by the transform. This means that we can reconstruct the original signal by inverting the operation. Thus, we can create a time series with only the frequency domain information using the <em>inverse fourier transform</em>. Watch this <a class="reference external" href="https://youtu.be/HFacSL--vps">video</a> if you would like a more in depth explanation.</p>
-<p><span class="math notranslate nohighlight">\(x_k = \sum\limits_{k=0}^{n-1} X_f \cdot e^\frac{i2\pi fk}{n}\)</span></p>
-<p>Notice that we are computing the dot product between the complex sine wave and the fourier coefficients <span class="math notranslate nohighlight">\(X\)</span> instead of the time series data <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>$x_k = \sum\limits_{k=0}^{n-1} X_f \cdot e^\frac{i2\pi fk}{n}$</p>
+<p>Notice that we are computing the dot product between the complex sine wave and the fourier coefficients $X$ instead of the time series data $x$.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -1597,16 +1581,36 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Introduction_to_Neuroimaging_Data.html" title="previous page">Introduction to Neuroimaging Data</a>
-    <a class='right-next' id="next-link" href="Preprocessing.html" title="next page">Preprocessing</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="Introduction_to_Neuroimaging_Data.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Introduction to Neuroimaging Data</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="Preprocessing.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Preprocessing</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
@@ -1624,21 +1628,19 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 
       </div>
     </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    
-  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+  
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
 
-
-    
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-138270939-1', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    
   </body>
 </html>
