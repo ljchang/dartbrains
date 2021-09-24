@@ -50,12 +50,10 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_JupyterHub.html" />
+    <link rel="canonical" href="http://dartbrains.org/content/0_Introduction_to_JupyterHub.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Download Data" href="Download_Data.html" />
-    <link rel="prev" title="Schedule" href="Schedule.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -116,9 +114,9 @@
   Computing Resources
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_JupyterHub.html">
    Introduction to JupyterHub
   </a>
  </li>
@@ -316,7 +314,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/Introduction_to_JupyterHub.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/content/0_Introduction_to_JupyterHub.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -336,10 +334,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_JupyterHub.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/0_Introduction_to_JupyterHub.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_JupyterHub.ipynb"><button
+        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/0_Introduction_to_JupyterHub.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -359,21 +357,21 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_JupyterHub.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/0_Introduction_to_JupyterHub.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_JupyterHub.ipynb&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/0_Introduction_to_JupyterHub.ipynb&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="../_static/images/logo_jupyterhub.svg"
                     alt="Interact on JupyterHub">JupyterHub</button></a>
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_JupyterHub.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/0_Introduction_to_JupyterHub.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -471,42 +469,44 @@
 <h2>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h2>
 <p>The main portal to access this resource will be through the Jupyterhub interface. This allows you to remotely login in to the server through your browser at <a class="reference external" href="https://jhub.dartmouth.edu">https://jhub.dartmouth.edu</a> using your netid. Note that you need to be either on campus or logged into VPN to access the portal. Please let us know if you are having difficulty logging in.</p>
 <p>Once you’ve logged in you should see a screen like this.</p>
-<p><img alt="" src="../_images/First_Time.png" /></p>
-<p>The <code class="docutils literal notranslate"><span class="pre">shared</span></code> folder contains all of the relevant notebooks and data for the course. Files in this folder are read only and cannot be modified by students. You will need to copy the file to a different folder on your server, which will cover below.</p>
-<p>Every time you log in, jupyterhub will spin up a new server just for you and will update all of the files. Sometimes if a lot of new files have been added they may not have enough time to copy so you may need to log out and back in to make sure everything syncs correctly to your server.</p>
+<p><img alt="" src="../_images/jhub.png" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> folder contains all of the relevant notebooks and data for the course.</p>
+<p>Every time you login jupyterhub will spin up a new server just for you and will update all of the files.</p>
 </div>
 <div class="section" id="server">
 <h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
-<p>Every student will be able to have their own personal server to work on. This server is running on Google cloud computing and should have all of the software you need to run the tutorials. If your server is idle for a short amount of time, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to a small amount of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds a certain amount.</p>
+<p>Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 3gb of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds 3gb.</p>
 </div>
 <div class="section" id="jupyter-notebooks">
 <h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h2>
 <p>Jupyter notebooks are a great way to have your code, comments and results show up inline in a web browser. Work for this class will be done in Jupyter notebooks so you can reference what you have done, see the results and someone else could redo it in the future, similar to a typical lab notebook.</p>
 <p>Rather than writing and re-writing an entire program, you can write lines of code and run them one at a time. Then, if you need to make a change, you can go back and make your edit and rerun the program again, all in the same window. In our specific case, we are going to use JupyterHub which lets several people access the same computer and data at the same time through a web browser.</p>
 <p>Finally, you can view examples and share your work with the world very easily through <a class="reference external" href="https://nbviewer.jupyter.org">nbviewer</a>.  One easy trick if you use a cloud storage service like dropbox is to paste a link to the dropbox file in nbviewer.  These links will persist as long as the file remains being shared via dropbox.</p>
-<p><em><strong>You will not be able to work directly and modify the notebooks in the <code class="docutils literal notranslate"><span class="pre">shared/PSYC60-21F/notebook</span></code> folder</strong></em>. These will always be updating as we edit them. Instead, make sure you copy the notebooks you are working on to <strong>your own personal folder</strong>. These can only be viewed and changed by you and won’t be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.</p>
+<p><em><strong>Do not work directly on the notebooks in the <code class="docutils literal notranslate"><span class="pre">Psych60/notebook</span></code> folder</strong></em>. These will always be updating as I edit them. Instead, make sure you copy the notebooks you are working on to <strong>your own personal folder</strong>. These can only be changed by you and won’t be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.</p>
 <div class="section" id="opening-a-notebook-on-the-server">
 <h3>Opening a notebook on the server<a class="headerlink" href="#opening-a-notebook-on-the-server" title="Permalink to this headline">¶</a></h3>
-<p>Click on <code class="docutils literal notranslate"><span class="pre">shared</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">PSYC60-21F</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. Click on any notebook you would like to open (e.g., <code class="docutils literal notranslate"><span class="pre">1_Introduction_to_Programming.ipynb</span></code>). It should open and you will be to view the notebook read-only, which means you will <strong>NOT</strong> be able to modify it.</p>
+<p>Click on <code class="docutils literal notranslate"><span class="pre">Files</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> -&gt;  <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. Click on any notebook you would like to open (e.g., <code class="docutils literal notranslate"><span class="pre">1_Introduction_to_Programming.ipynb</span></code>). It should open and you will be to edit text and run code.</p>
 </div>
 <div class="section" id="copying-notebook">
 <h3>Copying Notebook<a class="headerlink" href="#copying-notebook" title="Permalink to this headline">¶</a></h3>
-<p>For this course, you will need to create a copy of each notebook to your <code class="docutils literal notranslate"><span class="pre">homework</span></code> folder and work off of the copy. This will allow you to take risks and change the code as well as ensure that your work won’t be deleted when the notebooks update.</p>
+<p>For this course, I strongly recommend that you create a copy of each notebook to your <code class="docutils literal notranslate"><span class="pre">Homework</span></code> folder and work off of the copy. This will allow you to take risks and change the code as well as ensure that your work won’t be deleted when the notebooks update.</p>
 <p>Let’s learn how to duplicate the notebook and move it to the homework folder.</p>
 <ol class="simple">
-<li><p>In your home directory, you will need to create a folder called <code class="docutils literal notranslate"><span class="pre">homework</span></code>. Click on <code class="docutils literal notranslate"><span class="pre">New</span></code> then <code class="docutils literal notranslate"><span class="pre">Folder</span></code>.
-<img alt="" src="../_images/New_Folder.png" /></p></li>
+<li><p>In your home directory, you will need to create a folder called <code class="docutils literal notranslate"><span class="pre">Homework</span></code>. Click on <code class="docutils literal notranslate"><span class="pre">New</span></code> then <code class="docutils literal notranslate"><span class="pre">Folder</span></code>.
+<img alt="" src="../_images/create_folder.png" /></p></li>
 <li><p>You will need to rename the folder. <code class="docutils literal notranslate"><span class="pre">Check</span></code> the box next to the new untitled folder, then click <code class="docutils literal notranslate"><span class="pre">Rename</span></code>.
-<img alt="" src="../_images/Rename_Folder.png" /></p></li>
+<img alt="" src="../_images/rename_folder.png" /></p></li>
 </ol>
-<p>Now type the new name of the folder, i.e., <code class="docutils literal notranslate"><span class="pre">homework</span></code>
-<img alt="" src="../_images/Rename_Homework.png" /></p>
+<p>Now type the new name of the folder, i.e., <code class="docutils literal notranslate"><span class="pre">Homework</span></code>
+<img alt="" src="../_images/create_homework.png" /></p>
 <ol class="simple">
-<li><p>Let’s practice copying a notebook to your Homework folder. Navigate to <code class="docutils literal notranslate"><span class="pre">shared</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">PSYC60-21F</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>, and open the notebook you would like to copy by clicking on it (e.g., <code class="docutils literal notranslate"><span class="pre">4_ICA.ipynb</span></code>. Then click <code class="docutils literal notranslate"><span class="pre">File</span></code> then <code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as...</span></code> button.
-<img alt="" src="../_images/SaveAs.png" /></p></li>
-<li><p>You will need to specify the folder and name to save a copy of the notebook. Since we have already created the <code class="docutils literal notranslate"><span class="pre">homework</span></code> folder in your root directory of your server, we can now save notebooks to that location by specifying the path and the name of the file <code class="docutils literal notranslate"><span class="pre">homework/4_ICA</span></code>.
-<img alt="" src="../_images/SaveAs_Name.png" /></p></li>
+<li><p>Let’s practice copying a notebook to your Homework folder. Navigate to <code class="docutils literal notranslate"><span class="pre">Psych60</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. Check the box next to the notebook you would like to duplicate. Here we will select <code class="docutils literal notranslate"><span class="pre">1_Introduction_to_Programming.ipynb</span></code>. Then click the <code class="docutils literal notranslate"><span class="pre">Duplicate</span></code> button.
+<img alt="" src="../_images/duplicate_notebook.png" /></p></li>
+<li><p>Move duplicated notebook to your homework folder. Check the box next to the duplicated notebook and click the <code class="docutils literal notranslate"><span class="pre">Move</span></code> button.
+<img alt="" src="../_images/move_notebook.png" /></p></li>
 </ol>
+<p>This will allow you to specify the path to where you would like the notebook moved. Type <code class="docutils literal notranslate"><span class="pre">/Homework</span></code> to move it out of the current directory to your Homework folder.
+<img alt="" src="../_images/move_to_homework.png" /></p>
 <p>Your duplicated notebook is now in your homework folder. You will need to do this for each new notebook assignment.</p>
 </div>
 </div>
@@ -806,24 +806,6 @@ Requirement already satisfied: pyparsing&gt;=2.0.2 in /Users/lukechang/anaconda3
 
 <div class='prev-next-bottom'>
     
-    <div id="prev">
-        <a class="left-prev" href="Schedule.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Schedule</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="Download_Data.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Download Data</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
 
 </div>
         

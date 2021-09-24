@@ -19,7 +19,7 @@
 
 ## Teaching Assistant
 
-<img src="../images/instructors/wasita.jpg" width="200"/>
+<img src="../images/instructors/wasita.png" width="200"/>
 
-[Wasita](https://wasita.space/) graduated from Brown University with a BS in Cognitive Neuroscience. After graduation, she managed a lab at Brown, where she investigated the behavioral and computational mechanisms underlying learning and decision-making under uncertainty in healthy adults and patients with obsessive compulsive disorder. She currently works in the [COSAN Lab](http://cosanlab.com/), where she investigates how we learn social cognitive maps and use this information in how we communicate and make decisions.
+[Wasita Mahaphanit](https://wasita.space/) graduated from Brown University with a BS in Cognitive Neuroscience. After graduation, she managed a lab at Brown, where she investigated the behavioral and computational mechanisms underlying learning and decision-making under uncertainty in healthy adults and patients with obsessive compulsive disorder. She currently works in the [COSAN Lab](http://cosanlab.com/), where she investigates how we learn social cognitive maps and use this information in how we communicate and make decisions.
 

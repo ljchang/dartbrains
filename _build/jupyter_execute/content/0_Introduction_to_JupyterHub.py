@@ -13,14 +13,14 @@
 # 
 # Once you've logged in you should see a screen like this.
 # 
-# ![](../images/jupyterhub/First_Time.png)
+# ![](../images/jupyterhub/jhub.png)
 # 
-# The `shared` folder contains all of the relevant notebooks and data for the course. Files in this folder are read only and cannot be modified by students. You will need to copy the file to a different folder on your server, which will cover below.
+# The `Psych60` folder contains all of the relevant notebooks and data for the course.
 # 
-# Every time you log in, jupyterhub will spin up a new server just for you and will update all of the files. Sometimes if a lot of new files have been added they may not have enough time to copy so you may need to log out and back in to make sure everything syncs correctly to your server.
+# Every time you login jupyterhub will spin up a new server just for you and will update all of the files.
 # 
 # ## Server
-# Every student will be able to have their own personal server to work on. This server is running on Google cloud computing and should have all of the software you need to run the tutorials. If your server is idle for a short amount of time, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to a small amount of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds a certain amount.
+# Every student will be able to have their own personal server to work on. This server is running on AWS cloud computing and should have all of the software you need to run the tutorials. If your server is idle for 10 minutes, it will automatically shut down. There are also a limited amount of resources available (e.g., storage, RAM). Each user has access to 3gb of RAM, keep an eye on how much your jobs are using. The server may crash if it exceeds 3gb.
 
 # ## Jupyter Notebooks
 # 
@@ -30,33 +30,36 @@
 # 
 # Finally, you can view examples and share your work with the world very easily through [nbviewer](https://nbviewer.jupyter.org).  One easy trick if you use a cloud storage service like dropbox is to paste a link to the dropbox file in nbviewer.  These links will persist as long as the file remains being shared via dropbox.
 # 
-# ***You will not be able to work directly and modify the notebooks in the `shared/PSYC60-21F/notebook` folder***. These will always be updating as we edit them. Instead, make sure you copy the notebooks you are working on to **your own personal folder**. These can only be viewed and changed by you and won't be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.
+# ***Do not work directly on the notebooks in the `Psych60/notebook` folder***. These will always be updating as I edit them. Instead, make sure you copy the notebooks you are working on to **your own personal folder**. These can only be changed by you and won't be deleted or updated when your server starts. We also recommend saving a backup of these files on your local computer, just in case anything happens to the cloud storage.
 
 # ### Opening a notebook on the server
 # 
-# Click on `shared` ->  `PSYC60-21F` ->  `notebooks`. Click on any notebook you would like to open (e.g., `1_Introduction_to_Programming.ipynb`). It should open and you will be to view the notebook read-only, which means you will **NOT** be able to modify it.
+# Click on `Files` ->  `Psych60` ->  `notebooks`. Click on any notebook you would like to open (e.g., `1_Introduction_to_Programming.ipynb`). It should open and you will be to edit text and run code.
 # 
 
 # ### Copying Notebook
 # 
-# For this course, you will need to create a copy of each notebook to your `homework` folder and work off of the copy. This will allow you to take risks and change the code as well as ensure that your work won't be deleted when the notebooks update. 
+# For this course, I strongly recommend that you create a copy of each notebook to your `Homework` folder and work off of the copy. This will allow you to take risks and change the code as well as ensure that your work won't be deleted when the notebooks update. 
 # 
 # Let's learn how to duplicate the notebook and move it to the homework folder.
 # 
-# 1. In your home directory, you will need to create a folder called `homework`. Click on `New` then `Folder`.
-# ![](../images/jupyterhub/New_Folder.png)
+# 1. In your home directory, you will need to create a folder called `Homework`. Click on `New` then `Folder`.
+# ![](../images/jupyterhub/create_folder.png)
 # 
 # 2. You will need to rename the folder. `Check` the box next to the new untitled folder, then click `Rename`.
-# ![](../images/jupyterhub/Rename_Folder.png)
+# ![](../images/jupyterhub/rename_folder.png)
 # 
-# Now type the new name of the folder, i.e., `homework`
-# ![](../images/jupyterhub/Rename_Homework.png)
+# Now type the new name of the folder, i.e., `Homework`
+# ![](../images/jupyterhub/create_homework.png)
 # 
-# 3. Let's practice copying a notebook to your Homework folder. Navigate to `shared` -> `PSYC60-21F` -> `notebooks`, and open the notebook you would like to copy by clicking on it (e.g., `4_ICA.ipynb`. Then click `File` then `Save as...` button. 
-# ![](../images/jupyterhub/SaveAs.png)
+# 3. Let's practice copying a notebook to your Homework folder. Navigate to `Psych60` -> `notebooks`. Check the box next to the notebook you would like to duplicate. Here we will select `1_Introduction_to_Programming.ipynb`. Then click the `Duplicate` button. 
+# ![](../images/jupyterhub/duplicate_notebook.png)
 # 
-# 4. You will need to specify the folder and name to save a copy of the notebook. Since we have already created the `homework` folder in your root directory of your server, we can now save notebooks to that location by specifying the path and the name of the file `homework/4_ICA`. 
-# ![](../images/jupyterhub/SaveAs_Name.png)
+# 4. Move duplicated notebook to your homework folder. Check the box next to the duplicated notebook and click the `Move` button.
+# ![](../images/jupyterhub/move_notebook.png)
+# 
+# This will allow you to specify the path to where you would like the notebook moved. Type `/Homework` to move it out of the current directory to your Homework folder.
+# ![](../images/jupyterhub/move_to_homework.png)
 # 
 # Your duplicated notebook is now in your homework folder. You will need to do this for each new notebook assignment.
 # 
