@@ -1,22 +1,22 @@
 # Syllabus
-## INSTRUCTORS: Winter 2021
+## INSTRUCTORS: Fall 2021
 
-**Professor**: Emily S. Finn, PhD
+**Professor**: Luke J. Chang, PhD
 
-Email: <emily.s.finn@dartmouth.edu>
+Email: <luke.j.chang@dartmouth.edu>
 
-Office Hours: TBA
+Office Hours: Wed 1:00-3:00pm
+Office: Moore 357
 
 **Teaching Assistant**: Nate Heller
 
-Email: <Nathan.H.Heller.GR@dartmouth.edu>
+Email: <wasita.mahaphanit.gr@dartmouth.edu>
 
 Office Hours: TBA
 
 ## SPACE AND TIME
-Remote Zoom Meetings
-K-block, Tue/Thurs: 2:50-4:40pm
-X-hour, Fri:  5:10-6:00pm
+2A Tue/Thurs: 2:25-4:15
+X-Hour Fri:  4:35-5:25
 
 ## CLASS FORMAT
 The format of Psych60 will be slightly different than the typical in-person version of the course. All course materials will be made available online in the format of a Jupyter book, https://dartbrains.org/. Lectures will primarily be delivered via publicly available pre-recorded lectures available on youtube. Each course module will have a Jupyter book tutorial and an accompanying assignment that will require completing some type of programming task or analysis. Students will work within small groups throughout the term on their assignments. Scheduled classes will primarily take the form of a Q&A where solutions to the assignments will be discussed and specific topics can be discussed in more detail. There will be a single exam, in which students will have to replicate an analysis of a published study using real data. For the final project, students will analyze an existing publicly available dataset to answer a new research question. Unfortunately, we will not be able to collect a new fMRI dataset as the Dartmouth Brain Imaging Center is closed to non-PBS users this term.
@@ -34,7 +34,7 @@ All class meetings will be held on Zoom. By participating in the Zoom meetings, 
 - By enrolling in this course, I hereby affirm that I will not under any circumstance make a recording in any medium of any one-on-one meeting with the instructor without obtaining the prior written consent of all those participating, and I understand that if I violate this prohibition, I will be subject to discipline by Dartmouth up to and including expulsion, as well as any other civil or criminal penalties under applicable law.
 
 ## COMMUNICATION
-For this class, we will have most of our discussion through the dart-psych60.slack.com channel and the class [discourse page](https://www.askpbs.org/c/dartbrains/9).
+For this class, we will have most of our discussion through the slack channel and the class [discourse page](https://www.askpbs.org/c/dartbrains/9).
 
 ## TEXTBOOK
 The course website (https://dartbrains.org/) and embedded videos will serve as the textbook for this course. Students may find the optional book (Poldrack, R. A., Mumford, J. A., & Nichols, T. E. (2011). Handbook of functional MRI data analysis. Cambridge University Press) to be helpful.
