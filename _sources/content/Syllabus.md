@@ -8,7 +8,7 @@ Email: <luke.j.chang@dartmouth.edu>
 Office Hours: Wed 1:00-3:00pm
 Office: Moore 357
 
-**Teaching Assistant**: Nate Heller
+**Teaching Assistant**: Wasita Mahaphanit
 
 Email: <wasita.mahaphanit.gr@dartmouth.edu>
 
