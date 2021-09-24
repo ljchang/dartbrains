@@ -17,21 +17,9 @@
 
 [Jeremy Huckins](https://mtnhuck.github.io/), PhD (Fall 2019) is a Lecturer and Post-Doctoral researcher in the department of Psychological and Brain Sciences at Dartmouth College. He completed a BA in Neuroscience at Bowdoin College, worked with as a researcher with the [King Lab](https://king.med.harvard.edu/) at Harvard Medical School then completed a PhD in Experimental and Molecular Medicine at Dartmouth College. His current research program is focused on gaining insights into mental health using fMRI and mobile smartphone sensing.
 
-## Teaching Assistants
+## Teaching Assistant
 
-<img src="../images/instructors/saleki.jpg" width="200"/>
+<img src="../images/instructors/wasita.jpg" width="200"/>
 
-[Sharif Saleki](https://devxl.github.io/) (Fall 2020) is a graduate student at Dartmouth College. He recieved his BA in Psychology and MSc in Cognitive Science. After a period of research on visual attention at Tehran University of Medical Science's Brain and Behavior Laboratory, he joined Professor Peter Tse's lab at Dartmouth to study attention and its role in constructing conscious visual perception.
-
-<img src="../images/instructors/gonzalez.jpg" width="200"/>
-
-[Bryan Gonzalez](https://github.com/BryanGonzalez262) (Spring 2020) is a graduate student at Dartmouth college working with Luke Chang. He received his BA and MA from NYU. After a stint as a producer in creative media industries, his interest in research began in the Social Relations Lab at Columbia University studying speech mimicry. He later spent time learning polysomnography at Weill Cornell before coming to NYU Langone as a senior research coordinator. There, his efforts focused on finding biological markers of PTSD. At Dartmouth, Bryan is primarily interested in the computational mechanisms underpinning theory of mind across perceptual, behavioral and cognitive domains. His research is strongly influenced by reinforcement learning models, and probes mental state attribution in action understanding, preference learning, and anthropomorphism in human-robot interaction. Bryan is also passionate about promoting diversity in STEM education. In his free time, he loves running, live music, and curling up with his cat, “Puppy”.
-
-<img src="../images/instructors/ziman.png" width="200"/>
-
-[Kirsten Ziman](https://kirstensgithub.github.io/) (Fall 2019) is a graduate student at Dartmouth college. She completed her bachelor’s in Neuroscience at the University of Southern California, and worked in research settings at USC and UCLA before joining the Dartmouth community. Currently, she is studying attention and memory with professor Jeremy Manning.
-
-<img src="../images/instructors/brietzke.jpg" width="200"/>
-
-[Sasha Brietzke](http://www.dartmouth-socialneurolab.com/people) (Spring 2019) is graduate student at Dartmouth College. She completed a BA at Johns Hopkins University and an IRTA postbac fellowship at the NIH. She currently works in the [Dartmouth Social Neuroscience Lab](http://www.dartmouth-socialneurolab.com) investigating the self through a social cognitive lens.
+[Wasita](https://wasita.space/) graduated from Brown University with a BS in Cognitive Neuroscience. After graduation, she managed a lab at Brown, where she investigated the behavioral and computational mechanisms underlying learning and decision-making under uncertainty in healthy adults and patients with obsessive compulsive disorder. She currently works in the [COSAN Lab](http://cosanlab.com/), where she investigates how we learn social cognitive maps and use this information in how we communicate and make decisions.
 
