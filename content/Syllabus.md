@@ -5,13 +5,15 @@
 
 Email: <luke.j.chang@dartmouth.edu>
 
-Office Hours: Wed @ 1-3 pm in Moore 357
+Office Hours: Wed 1:00-3:00pm
+Office: Moore 357
 
 **Teaching Assistant**: Wasita Mahaphanit
 
 Email: <wasita.mahaphanit.gr@dartmouth.edu>
 
-Office Hours: Mon @ 2-3 pm & Thurs @ 10-11 am in Moore 233
+Office Hours: Mon @ 2-3 pm & Thurs @ 10-11 am
+Office: Moore 233
 
 ## SPACE AND TIME
 - 2A Tue/Thurs: 2:25-4:15 [Moore 150]
@@ -25,7 +27,7 @@ Class and assignment schedule (https://tinyurl.com/y3ezjf7s)
 
 
 ## COMMUNICATION
-For this class, we will have most of our discussion through the class [Slack channel](https://canvas.dartmouth.edu/courses/49322/external_tools/12469) and the class [discourse page](https://www.askpbs.org/c/dartbrains/9).
+For this class, we will have most of our discussion through the slack channel (accessible via canvas) and the class [discourse page](https://www.askpbs.org/c/dartbrains/9).
 
 ## TEXTBOOK
 The course website (https://dartbrains.org/) and embedded videos will serve as the textbook for this course. Students may find the optional book (Poldrack, R. A., Mumford, J. A., & Nichols, T. E. (2011). Handbook of functional MRI data analysis. Cambridge University Press) to be helpful.
