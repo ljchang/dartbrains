@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -43,6 +43,8 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -441,7 +443,7 @@
 <h2>Bootstrap<a class="headerlink" href="#bootstrap" title="Permalink to this headline">¶</a></h2>
 <p>In statistics, we are typically trying to make inferences about the parameters of a population based on a limited number of randomly drawn samples. How reliable are the parameters estimated from this sample? Would we observe the same parameter if we ran the model on a different independent sample? <a class="reference external" href="https://projecteuclid.org/download/pdf_1/euclid.aos/1176344552"><em>Bootstrapping</em></a> offers a way to empirically estimate the precision of the estimated parameter by resampling with replacement from our sample distribution and estimating the parameters with each new subsample. This allows us to capitalize on naturally varying error within our sample to create a distribution of the range of parameters we might expect to observe from other independent samples. This procedure is reasonably robust to the presence of outliers as they should rarely be randomly selected across the different subsamples. Together, the subsamples create a distribution of the parameters we might expect to encounter from independent random draws from the population and allow us to assess the precision of a sample statistic. This technique assumes that the original samples are independent and are random samples representative of the population.</p>
 <p>Let’s demonstrate how this works using a simulation.</p>
-<p>First, let’s create population data by sampling from a normal distribution. For this simulation, we will assume that there are 10,000 participants in the population that are normally distributed $\mathcal{N}(\mu=50, \sigma=10)$.</p>
+<p>First, let’s create population data by sampling from a normal distribution. For this simulation, we will assume that there are 10,000 participants in the population that are normally distributed <span class="math notranslate nohighlight">\(\mathcal{N}(\mu=50, \sigma=10)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -617,11 +619,11 @@ Bootstrapped Std: 2.09
 </div>
 <div class="section" id="permutation-test">
 <h2>Permutation Test<a class="headerlink" href="#permutation-test" title="Permalink to this headline">¶</a></h2>
-<p>After we have estimated a parameter for a sample, we often want to perform a hypothesis test to assess if the observed distribution is statistically different from a null distribution at a specific alpha criterion (e.g., p &lt; 0.05). This is called null hypothesis testing, and classical statistical tests, such as the t-test, F-test, and $\chi^2$ tests, rely on theoretical probability distributions. This can be problematic when your data are not well approximated by the theoretical distributions. Using resampling statistics, we can empirically evaluate the null hypothesis by randomly shuffling the labels and re-running the statistic. Assuming that the labels are exchangeable under the null hypothesis, then the resulting tests yield the exact significance levels, i.e., the number of times we observed our result by chance. This class of non-parametric tests are called permutation tests, and are also occasionally referred to as randomization, re-rerandomization, or exact tests. Assuming the data is exchangeable, permutation tests can provide a “p-value” for pretty much any test statistic regardless if the distribution is known. This provides a relatively straightforward statistic that is easy to compute and understand. Permutation tests can be computationally expensive and often require writing custom code. However, because they are independent they can be run in parallel using multiple CPUs or on a high performance computing system.</p>
+<p>After we have estimated a parameter for a sample, we often want to perform a hypothesis test to assess if the observed distribution is statistically different from a null distribution at a specific alpha criterion (e.g., p &lt; 0.05). This is called null hypothesis testing, and classical statistical tests, such as the t-test, F-test, and <span class="math notranslate nohighlight">\(\chi^2\)</span> tests, rely on theoretical probability distributions. This can be problematic when your data are not well approximated by the theoretical distributions. Using resampling statistics, we can empirically evaluate the null hypothesis by randomly shuffling the labels and re-running the statistic. Assuming that the labels are exchangeable under the null hypothesis, then the resulting tests yield the exact significance levels, i.e., the number of times we observed our result by chance. This class of non-parametric tests are called permutation tests, and are also occasionally referred to as randomization, re-rerandomization, or exact tests. Assuming the data is exchangeable, permutation tests can provide a “p-value” for pretty much any test statistic regardless if the distribution is known. This provides a relatively straightforward statistic that is easy to compute and understand. Permutation tests can be computationally expensive and often require writing custom code. However, because they are independent they can be run in parallel using multiple CPUs or on a high performance computing system.</p>
 <div class="section" id="one-sample-permutation-test">
 <h3>One Sample Permutation Test<a class="headerlink" href="#one-sample-permutation-test" title="Permalink to this headline">¶</a></h3>
 <p>Let’s simulate some data to demonstrate how to run a permutation test to evaluate if the mean of the simulated sample is statistically different from zero.</p>
-<p>We will sample 20 data points from a normal distribution, $\mathcal{N}(\mu=1, \sigma=1)$.</p>
+<p>We will sample 20 data points from a normal distribution, <span class="math notranslate nohighlight">\(\mathcal{N}(\mu=1, \sigma=1)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -652,7 +654,7 @@ Sample Std: 1.04
 <img alt="../_images/Resampling_Statistics_16_1.png" src="../_images/Resampling_Statistics_16_1.png" />
 </div>
 </div>
-<p>In this example, the null hypothesis is that the sample does not significantly differ from zero. We can empirically evaluate this by randomly multiplying each sample by a $1$ or $-1$ and then calculating the mean for each permutation. This will yield an empirical distribution of null means and we can evaluate the number of times the mean of our sample exceeds the mean of the null distribution.</p>
+<p>In this example, the null hypothesis is that the sample does not significantly differ from zero. We can empirically evaluate this by randomly multiplying each sample by a <span class="math notranslate nohighlight">\(1\)</span> or <span class="math notranslate nohighlight">\(-1\)</span> and then calculating the mean for each permutation. This will yield an empirical distribution of null means and we can evaluate the number of times the mean of our sample exceeds the mean of the null distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_permutations</span> <span class="o">=</span> <span class="mi">5000</span>
@@ -691,8 +693,8 @@ p-value = 0.0004
 </div>
 <div class="section" id="two-sample-permutation-test">
 <h3>Two Sample Permutation Test<a class="headerlink" href="#two-sample-permutation-test" title="Permalink to this headline">¶</a></h3>
-<p>When we were computed a one-sample permutation test above, we randomly multiplied each data point by a $1$ or $-1$ to create a null distribution. If we are interested in comparing two different groups using a permutation test, we can randomly swap group labels and can recompute the difference between the two distribution. This assumes the data are exchangeable.</p>
-<p>Let’s start by simulating two different groups. Sample 1 is randomly drawn from this normal distribution, $\mathcal{N}(\mu=10, \sigma=5)$, while Sample 2 is drawn from this normal distribution $\mathcal{N}(\mu=7, \sigma=5)$.</p>
+<p>When we were computed a one-sample permutation test above, we randomly multiplied each data point by a <span class="math notranslate nohighlight">\(1\)</span> or <span class="math notranslate nohighlight">\(-1\)</span> to create a null distribution. If we are interested in comparing two different groups using a permutation test, we can randomly swap group labels and can recompute the difference between the two distribution. This assumes the data are exchangeable.</p>
+<p>Let’s start by simulating two different groups. Sample 1 is randomly drawn from this normal distribution, <span class="math notranslate nohighlight">\(\mathcal{N}(\mu=10, \sigma=5)\)</span>, while Sample 2 is drawn from this normal distribution <span class="math notranslate nohighlight">\(\mathcal{N}(\mu=7, \sigma=5)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_n</span> <span class="o">=</span> <span class="mi">50</span>
@@ -767,7 +769,7 @@ p-value = 0.0008
 </div>
 </div>
 <p>The difference we observed between the two distributions does not occur very frequently by chance. By permuting the labels and recomputing the difference, we found that the sample difference exceeded the permutated label differences 4,996/5000 times.</p>
-<p>As long as your data are exchangeable, you can compute p-values for pretty much any type of test statistic using a permutation test. For example, to compute a p-value for a correlation between $X$ and $Y$ you would just shuffle one of the vectors and recompute the correlation. The p-value is the proportion of times that the correlation value exceeds the permuted correlations.</p>
+<p>As long as your data are exchangeable, you can compute p-values for pretty much any type of test statistic using a permutation test. For example, to compute a p-value for a correlation between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> you would just shuffle one of the vectors and recompute the correlation. The p-value is the proportion of times that the correlation value exceeds the permuted correlations.</p>
 <p>We hope that you will consider using these resampling statistics in your own work. There are many packages in python that can help you calculate bootstrap and permutation tests, but you can see that you can always write your code fairly easily if you understand the core concepts.</p>
 </div>
 </div>

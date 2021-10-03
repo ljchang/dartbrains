@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -43,6 +43,8 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -424,7 +426,11 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#standard-error-of-beta-estimates">
-     Standard Error of $\beta$ estimates
+     Standard Error of
+     <span class="math notranslate nohighlight">
+      \(\beta\)
+     </span>
+     estimates
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -703,8 +709,9 @@
 </div>
 <p>While this might reflect the expected HRF response to a single event, real data is much noiser. It is easy to add different types of noise. For example, there might be a low frequency drift, autocorrelation, or possibly some aliased physiological artifacts.</p>
 <p>For now, let’s start with something simple, like independent white noise drawn from a random Gaussian distribution</p>
-<p>$$\epsilon \sim \mathcal{N}(\mu,,\sigma^{2})$$</p>
-<p>where $\mu = 0$ and $\sigma = 0.15$</p>
+<div class="math notranslate nohighlight">
+\[\epsilon \sim \mathcal{N}(\mu,\,\sigma^{2})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu = 0\)</span> and <span class="math notranslate nohighlight">\(\sigma = 0.15\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.15</span>
@@ -737,10 +744,11 @@
 <div class="section" id="construct-design-matrix">
 <h2>Construct Design Matrix<a class="headerlink" href="#construct-design-matrix" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have our simulated voxel timeseries, let’s try and see if we can recover the original signal using a general linear model in the form of:</p>
-<p>$$Y = X\beta + \epsilon$$</p>
-<p>where $Y$ is our observed voxel time series. $X$ is our model or design matrix, and is where we will specify a predicted response to each condition. $\beta$ is a vector of values that we will estimate to scale our model. $\epsilon$ is independent gaussian noise. This model is linear because we can decompose $Y$ into a set of features or independent variables that are scaled by an estimated $\beta$ parameter and summed together. The $\epsilon$ parameter is not usually known and can also be estimated.</p>
-<p>You may be wondering how our model is distinct from our simulated data. Remember when we simulated the data we specified 3 parameters - face amplitude, object amplitude, and $\epsilon$, we could have also added a mean, but for now, let’s just assume that it is zero. When we fit our model to the simulated data, we should in theory be able to almost perfectly recover these three parameters.</p>
-<p>Now let’s build a design matrix $X$ using an intercept, and a regressor indicating the onset of each condition, convolved with the hemodynamic response function (HRF).</p>
+<div class="math notranslate nohighlight">
+\[Y = X\beta + \epsilon\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y\)</span> is our observed voxel time series. <span class="math notranslate nohighlight">\(X\)</span> is our model or design matrix, and is where we will specify a predicted response to each condition. <span class="math notranslate nohighlight">\(\beta\)</span> is a vector of values that we will estimate to scale our model. <span class="math notranslate nohighlight">\(\epsilon\)</span> is independent gaussian noise. This model is linear because we can decompose <span class="math notranslate nohighlight">\(Y\)</span> into a set of features or independent variables that are scaled by an estimated <span class="math notranslate nohighlight">\(\beta\)</span> parameter and summed together. The <span class="math notranslate nohighlight">\(\epsilon\)</span> parameter is not usually known and can also be estimated.</p>
+<p>You may be wondering how our model is distinct from our simulated data. Remember when we simulated the data we specified 3 parameters - face amplitude, object amplitude, and <span class="math notranslate nohighlight">\(\epsilon\)</span>, we could have also added a mean, but for now, let’s just assume that it is zero. When we fit our model to the simulated data, we should in theory be able to almost perfectly recover these three parameters.</p>
+<p>Now let’s build a design matrix <span class="math notranslate nohighlight">\(X\)</span> using an intercept, and a regressor indicating the onset of each condition, convolved with the hemodynamic response function (HRF).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
@@ -761,7 +769,8 @@
 </div>
 </div>
 <p>We can write our model out so that it is very clear what we are doing.</p>
-<p>$$Voxel = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects + \epsilon$$</p>
+<div class="math notranslate nohighlight">
+\[Voxel = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects + \epsilon\]</div>
 <p>We can also make a plot and rotate the timeseries, to better reflect the equation.</p>
 <p>It should be clear how each of these components relate to the regression equation.</p>
 <div class="cell docutils container">
@@ -788,14 +797,17 @@
 </div>
 <div class="section" id="estimate-glm">
 <h2>Estimate GLM<a class="headerlink" href="#estimate-glm" title="Permalink to this headline">¶</a></h2>
-<p>Now that have created our simulated voxel timeseries $Y$ and our design matrix $X$, we need to fit our model to the data by estimating the three $\beta$ parameters.</p>
-<p>There are several ways to estimate the parameters for our general linear model. The Ordinary Least Squares (OLS) estimator finds the $\hat\beta$ hyperplane that minimizes the error between the observed $Y$ and predicted $\hat Y$.</p>
+<p>Now that have created our simulated voxel timeseries <span class="math notranslate nohighlight">\(Y\)</span> and our design matrix <span class="math notranslate nohighlight">\(X\)</span>, we need to fit our model to the data by estimating the three <span class="math notranslate nohighlight">\(\beta\)</span> parameters.</p>
+<p>There are several ways to estimate the parameters for our general linear model. The Ordinary Least Squares (OLS) estimator finds the <span class="math notranslate nohighlight">\(\hat\beta\)</span> hyperplane that minimizes the error between the observed <span class="math notranslate nohighlight">\(Y\)</span> and predicted <span class="math notranslate nohighlight">\(\hat Y\)</span>.</p>
 <p>This can be formulated using linear algebra as:</p>
-<p>$$\hat{\beta} = (X^T X)^{-1}X^TY$$</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta} = (X^T X)^{-1}X^TY\]</div>
 <p>There is also maximum likelihood estimator, which should produce an almost identical result to the ordinary least squares estimator when the error terms are normally distributed.</p>
-<p>$$L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt(2\pi\sigma^2)} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}$$</p>
+<div class="math notranslate nohighlight">
+\[L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt(2\pi\sigma^2)} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}\]</div>
 <p>where</p>
-<p>$$\mathcal{N}(0,\sigma^{2})$$</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{N}(0,\sigma^{2})\]</div>
 <p>For this class, we will primarily be focusing on the Ordinary Least Squares Estimator. In fact, just to demonstrate that the math is actually relatively straightforward, we will write our own function for the estimator using the linear algebra formulation. In practice, we typically will use a premade function, which is usually slightly more computationally efficient and will also calculate standard errors, etc.</p>
 <p>For a more in depth overview of GLM estimation, watch this <a class="reference external" href="https://www.youtube.com/watch?v=Ab-5AbJ8gAs">video</a> by Tor Wager and Martin Lindquist.</p>
 <div class="cell docutils container">
@@ -821,9 +833,10 @@
 </div>
 </div>
 <p>We can see that our model is working pretty well. We did not add a mean to the simulated timeseries, so our estimator correctly figures out that the intercept parameter should be zero. The model also correctly figured out that the scaling parameter for the faces regressor was 2, and 1 for the objects regressor, with the difference between them equal to approximately 1.</p>
-<p>Another way to evaluate how well our model is working is to plot our predicted $\hat Y$ on top of our simulated $Y$.</p>
+<p>Another way to evaluate how well our model is working is to plot our predicted <span class="math notranslate nohighlight">\(\hat Y\)</span> on top of our simulated <span class="math notranslate nohighlight">\(Y\)</span>.</p>
 <p>We can quantify the degree to which our model is accurately predicting the observed data by calculating the residual.</p>
-<p>$$residual = Y - \hat Y$$</p>
+<div class="math notranslate nohighlight">
+\[residual = Y - \hat Y\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
@@ -852,15 +865,16 @@
 <p>As you can see, we are doing a reasonable job recovering the original signals.</p>
 <p>You may recall that we specified 3 parameters in our simulation</p>
 <ul class="simple">
-<li><p>a $\beta$ weight for faces</p></li>
-<li><p>a $\beta$ weight for objects</p></li>
-<li><p>an $\epsilon$ noise parameter.</p></li>
+<li><p>a <span class="math notranslate nohighlight">\(\beta\)</span> weight for faces</p></li>
+<li><p>a <span class="math notranslate nohighlight">\(\beta\)</span> weight for objects</p></li>
+<li><p>an <span class="math notranslate nohighlight">\(\epsilon\)</span> noise parameter.</p></li>
 </ul>
 <p>The <em>standard error of the estimate</em> refers to the standard deviation of the residual.</p>
 <p>Formally, this can be described as:</p>
-<p>$$\hat \sigma = \sqrt{\frac{\displaystyle \sum_i^n(\hat Y_i - Y_i)^2}{n-k}}$$</p>
-<p>where $n$ is the number of observations and $k$ is the total number of regressors.</p>
-<p>This number is essentially an estimate of the overall amount of error in the model or $\epsilon$. This error is assumed to be independent and normally distributed. The smaller the residual variance $\hat\sigma$ the better the fit of the model.</p>
+<div class="math notranslate nohighlight">
+\[\hat \sigma = \sqrt{\frac{\displaystyle \sum_i^n(\hat Y_i - Y_i)^2}{n-k}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of observations and <span class="math notranslate nohighlight">\(k\)</span> is the total number of regressors.</p>
+<p>This number is essentially an estimate of the overall amount of error in the model or <span class="math notranslate nohighlight">\(\epsilon\)</span>. This error is assumed to be independent and normally distributed. The smaller the residual variance <span class="math notranslate nohighlight">\(\hat\sigma\)</span> the better the fit of the model.</p>
 <p>As you can see, the parameter is close, but slightly higher than the one we simulated.  This might be because we have relatively little data in our simulation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -889,10 +903,11 @@
 <div class="section" id="explained-variance">
 <h3>Explained Variance<a class="headerlink" href="#explained-variance" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes we want a single metric to quantify overall how well our model was able to explain variance in the data. There are many metrics that can provide a quantitative measure of <em>goodness of fit</em>.</p>
-<p>Here we will calculate $R^2$ using the following formula:</p>
-<p>$$R^2 = 1 - \frac{\displaystyle \sum_i^n(\hat y_i - y_i)^2}{\displaystyle \sum_i^n(y_i - \bar y)^2}$$</p>
-<p>where $y_i$ is the measured value of the voxel at timepoint $i$, $\hat y_i$ is the predicted value for time point $i$, and $\bar y$ is the mean of the measured voxel timeseries.</p>
-<p>$R^2$ will lie on the interval between $[0,1]$ and can be interpreted as percentage of the total variance in $Y$ explained by the model, $X$, where 1 is 100% and 0 is none.</p>
+<p>Here we will calculate <span class="math notranslate nohighlight">\(R^2\)</span> using the following formula:</p>
+<div class="math notranslate nohighlight">
+\[R^2 = 1 - \frac{\displaystyle \sum_i^n(\hat y_i - y_i)^2}{\displaystyle \sum_i^n(y_i - \bar y)^2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y_i\)</span> is the measured value of the voxel at timepoint <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\hat y_i\)</span> is the predicted value for time point <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(\bar y\)</span> is the mean of the measured voxel timeseries.</p>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> will lie on the interval between <span class="math notranslate nohighlight">\([0,1]\)</span> and can be interpreted as percentage of the total variance in <span class="math notranslate nohighlight">\(Y\)</span> explained by the model, <span class="math notranslate nohighlight">\(X\)</span>, where 1 is 100% and 0 is none.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">r_square</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">predicted_y</span><span class="p">):</span>
@@ -912,10 +927,11 @@
 </div>
 </div>
 <div class="section" id="standard-error-of-beta-estimates">
-<h3>Standard Error of $\beta$ estimates<a class="headerlink" href="#standard-error-of-beta-estimates" title="Permalink to this headline">¶</a></h3>
+<h3>Standard Error of <span class="math notranslate nohighlight">\(\beta\)</span> estimates<a class="headerlink" href="#standard-error-of-beta-estimates" title="Permalink to this headline">¶</a></h3>
 <p>We can also estimate the uncertainty of regression coefficients. The uncertainty of the beta parameters is quantified as a standard error around each specific estimate.</p>
-<p>$$\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma$$</p>
-<p>This is essentially a confidence interval around the $\beta_j$ estimate. One standard error, $1*\hat \sigma$ is approximately equivalent to a 68% confidence interval, while $2*\hat\sigma$ is approximately a 95% confidence interval.</p>
+<div class="math notranslate nohighlight">
+\[\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma\]</div>
+<p>This is essentially a confidence interval around the <span class="math notranslate nohighlight">\(\beta_j\)</span> estimate. One standard error, <span class="math notranslate nohighlight">\(1*\hat \sigma\)</span> is approximately equivalent to a 68% confidence interval, while <span class="math notranslate nohighlight">\(2*\hat\sigma\)</span> is approximately a 95% confidence interval.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">std_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)))))</span> <span class="o">*</span> <span class="n">standard_error_of_estimate</span>
@@ -939,9 +955,10 @@
 <p>We could also perform a hypothesis test to evaluate if any of the regressors are statistically different from zero.</p>
 <p>This exercise is simply meant to provide parallels to common statistical jargon. In practice, this is actually rarely done in neuroimaging analysis as we are typically more interested in making statistical inferences across the population rather than within a single participant.</p>
 <p>The formula for calculating a t-statistic is very simple:</p>
-<p>$$t = \frac{\hat \beta_j}{\hat \sigma_j}$$</p>
-<p>where $\beta_j$ refers to the estimated parameter for a regressor $j$, and $\sigma_j$ refers to the standard error of regressor $j$.</p>
-<p>$t$ values that are more than 2 standard errors away from zero are called <em>statistically significant</em>, which basically just means we are more confident that the estimate is stable and not just an artifact of small sample size. In general, we don’t recommend reading too much into significance for individual $\beta$ estimates in single subject fMRI analysis.</p>
+<div class="math notranslate nohighlight">
+\[t = \frac{\hat \beta_j}{\hat \sigma_j}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta_j\)</span> refers to the estimated parameter for a regressor <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(\sigma_j\)</span> refers to the standard error of regressor <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(t\)</span> values that are more than 2 standard errors away from zero are called <em>statistically significant</em>, which basically just means we are more confident that the estimate is stable and not just an artifact of small sample size. In general, we don’t recommend reading too much into significance for individual <span class="math notranslate nohighlight">\(\beta\)</span> estimates in single subject fMRI analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">beta</span><span class="o">/</span><span class="n">std_error</span>
@@ -955,8 +972,8 @@
 </div>
 </div>
 </div>
-<p>Just like in intro statistics, we could find the p-value that corresponds to a particular t-statistic using the t-distribution. We will load the t distribution from <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> and calculate the corresponding p-values using the survival function or  $1- cdf$, which requires specifying the degrees of freedom (df), which is $n-1$. We multiply these values by 2 to calculated a two-tailed test.</p>
-<p>You can see that the intercept $\beta$ is not significant, but the face and object regressors are well below <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;</span> <span class="pre">0.05</span></code>.</p>
+<p>Just like in intro statistics, we could find the p-value that corresponds to a particular t-statistic using the t-distribution. We will load the t distribution from <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> and calculate the corresponding p-values using the survival function or  <span class="math notranslate nohighlight">\(1- cdf\)</span>, which requires specifying the degrees of freedom (df), which is <span class="math notranslate nohighlight">\(n-1\)</span>. We multiply these values by 2 to calculated a two-tailed test.</p>
+<p>You can see that the intercept <span class="math notranslate nohighlight">\(\beta\)</span> is not significant, but the face and object regressors are well below <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">&lt;</span> <span class="pre">0.05</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
@@ -1004,9 +1021,10 @@
 </div></div>
 </div>
 <p>Contrasts describe a linear combination of variables in a regression model whose coefficients add up to zero. This allows us to flexibly compare different experimental conditions.</p>
-<p>For example, suppose we just wanted to know the magnitude of an effect for a single condition, such as the brain response to faces. We would create a contrast code that isolates the effect size (i.e., $\beta$ estimate for the face regressor)</p>
+<p>For example, suppose we just wanted to know the magnitude of an effect for a single condition, such as the brain response to faces. We would create a contrast code that isolates the effect size (i.e., <span class="math notranslate nohighlight">\(\beta\)</span> estimate for the face regressor)</p>
 <p>If our GLM, was:</p>
-<p>$$Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects$$</p>
+<div class="math notranslate nohighlight">
+\[Y = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects\]</div>
 <p>then, the corresponding contrast code or vector for faces would be:</p>
 <p>[0, 1, 0]</p>
 <p>The contrast code for the object condition would be:</p>
@@ -1040,7 +1058,8 @@
 <div class="section" id="efficiency">
 <h3>Efficiency<a class="headerlink" href="#efficiency" title="Permalink to this headline">¶</a></h3>
 <p>We can estimate the efficiency, or the quality of an estimator for a specific experimental design or a hypothesis testing procedure. Efficiency is related to power, or the ability to detect an effect should one exist. However, unlike power, we can estimate efficiency from our design matrix and do not actually need to know the standard error for the model (unlike with power calculations). Specifically, efficiency is defined as the inverse of the sum of the estimator variances. For a more detailed explanation and general experimental design recommendations see this <a class="reference external" href="http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency">overview</a> by Rik Henson, or this <a class="reference external" href="https://theclevermachine.wordpress.com/tag/fmri-design-efficiency/">blog post</a> on efficiency in experimental designs.</p>
-<p>$$e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}$$</p>
+<div class="math notranslate nohighlight">
+\[e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}\]</div>
 <p>Reducing collinearity or covariance between regressors can increase design efficiency</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1122,12 +1141,12 @@
 <div class="section" id="exercise-1-what-happens-when-we-vary-the-signal-amplitude">
 <h3>Exercise 1. What happens when we vary the signal amplitude?<a class="headerlink" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude" title="Permalink to this headline">¶</a></h3>
 <p>Some signals will be very strong and others weaker. How does the model fit change when the signal amplitudes are stronger and weaker?</p>
-<p>In this exercise, make a plot showing how the $r^2$ changes over 3 different levels of signal intensity.</p>
+<p>In this exercise, make a plot showing how the <span class="math notranslate nohighlight">\(r^2\)</span> changes over 3 different levels of signal intensity.</p>
 </div>
 <div class="section" id="exercise-2-what-happens-when-we-vary-the-noise">
 <h3>Exercise 2. What happens when we vary the noise?<a class="headerlink" href="#exercise-2-what-happens-when-we-vary-the-noise" title="Permalink to this headline">¶</a></h3>
 <p>How does the amount of noise in the data impact our model fits?</p>
-<p>In this exercise, make a plot showing the $r^2$ for 3 different levels of simulated noise.</p>
+<p>In this exercise, make a plot showing the <span class="math notranslate nohighlight">\(r^2\)</span> for 3 different levels of simulated noise.</p>
 </div>
 <div class="section" id="exercise-3-how-many-trials-do-we-need">
 <h3>Exercise 3. How many trials do we need?<a class="headerlink" href="#exercise-3-how-many-trials-do-we-need" title="Permalink to this headline">¶</a></h3>
@@ -1138,7 +1157,7 @@
 <h3>Exercise 4. What is the impact of the stimulus duration?<a class="headerlink" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration" title="Permalink to this headline">¶</a></h3>
 <p>What if one condition simply results in processes that systematically take longer than the other condition?</p>
 <p>In this exercise, let’s try to answer this question by creating a simulation where the signal intensity between the two condition is identical, but one simply has a longer duration (i.e., the duration has more TRs than the other condition).</p>
-<p>Make a plot showing what happens to the $\beta$ estimates.</p>
+<p>Make a plot showing what happens to the <span class="math notranslate nohighlight">\(\beta\)</span> estimates.</p>
 </div>
 </div>
 </div>
