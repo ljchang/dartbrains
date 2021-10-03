@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -43,6 +43,8 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -559,7 +561,7 @@
 <h3>Lineplot<a class="headerlink" href="#lineplot" title="Permalink to this headline">¶</a></h3>
 <p>First, let’s generate some numbers and create a basic lineplot.</p>
 <p>In this example, we plot:</p>
-<p>$y = x^2$</p>
+<p><span class="math notranslate nohighlight">\(y = x^2\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -579,7 +581,7 @@
 </div>
 <div class="section" id="scatterplot">
 <h3>Scatterplot<a class="headerlink" href="#scatterplot" title="Permalink to this headline">¶</a></h3>
-<p>We can also plot associations between two different variables using a scatterplot. In this example, we will simulate correlated data with $\mathcal{N}(0,1)$ using <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code> and create a scatterplot. Try playing with the covariance values to change the degree of association.</p>
+<p>We can also plot associations between two different variables using a scatterplot. In this example, we will simulate correlated data with <span class="math notranslate nohighlight">\(\mathcal{N}(0,1)\)</span> using <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code> and create a scatterplot. Try playing with the covariance values to change the degree of association.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>

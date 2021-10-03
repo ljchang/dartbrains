@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -43,6 +43,8 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -500,20 +502,20 @@
 ></iframe>
 </div></div>
 </div>
-<p>The primary goal in fMRI data analysis is to make inferences about how the brain processes information. These inferences can be in the form of predictions, but most often we are testing hypotheses about whether a particular region of the brain is involved in a specific type of process. This requires rejecting a $H_0$ hypothesis (i.e., that there is no effect). Null hypothesis testing is traditionally performed by specifying contrasts between different conditions of an experimental design and assessing if these differences between conditions are reliably present across many participants. There are two main types of errors in null-hypothesis testing.</p>
+<p>The primary goal in fMRI data analysis is to make inferences about how the brain processes information. These inferences can be in the form of predictions, but most often we are testing hypotheses about whether a particular region of the brain is involved in a specific type of process. This requires rejecting a <span class="math notranslate nohighlight">\(H_0\)</span> hypothesis (i.e., that there is no effect). Null hypothesis testing is traditionally performed by specifying contrasts between different conditions of an experimental design and assessing if these differences between conditions are reliably present across many participants. There are two main types of errors in null-hypothesis testing.</p>
 <p><em>Type I error</em></p>
 <ul class="simple">
-<li><p>$H_0$ is true, but we mistakenly reject it (i.e., False Positive)</p></li>
-<li><p>This is controlled by significance level $\alpha$.</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span> is true, but we mistakenly reject it (i.e., False Positive)</p></li>
+<li><p>This is controlled by significance level <span class="math notranslate nohighlight">\(\alpha\)</span>.</p></li>
 </ul>
 <p><em>Type II error</em></p>
 <ul class="simple">
-<li><p>$H_0$ is false, but we fail to reject it (False Negative)</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span> is false, but we fail to reject it (False Negative)</p></li>
 </ul>
 <p>The probability that a hypothesis test will correctly reject a false null hypothesis is described as the <em>power</em> of the test.</p>
 <p>Hypothesis testing in fMRI is complicated by the fact that we are running many tests across each voxel in the brain (hundreds of thousands of tests). Selecting an appropriate threshold requires finding a balance between sensitivity (i.e., true positive rate) and specificity (i.e., false negative rate). There are two main approaches to correcting for multiple tests in fMRI data analysis.</p>
-<p><strong>Familywise Error Rate</strong> (FWER) attempts to control the probability of finding <em>any</em> false positives. Mathematically, FWER can be defined as the probability $P$ of observing any false positive ${FWER} = P({False Positives}\geq 1)$.</p>
-<p>While, <strong>False Discovery Rate</strong> (FDR) attempts to control the proportion of false positives among rejected tests. Formally, this is the expected proportion of false positive to the observed number of significant tests ${FDR} = E(\frac{False Positives}{Significant Tests})$.</p>
+<p><strong>Familywise Error Rate</strong> (FWER) attempts to control the probability of finding <em>any</em> false positives. Mathematically, FWER can be defined as the probability <span class="math notranslate nohighlight">\(P\)</span> of observing any false positive <span class="math notranslate nohighlight">\({FWER} = P({False Positives}\geq 1)\)</span>.</p>
+<p>While, <strong>False Discovery Rate</strong> (FDR) attempts to control the proportion of false positives among rejected tests. Formally, this is the expected proportion of false positive to the observed number of significant tests <span class="math notranslate nohighlight">\({FDR} = E(\frac{False Positives}{Significant Tests})\)</span>.</p>
 <p>This should probably be no surprise to anyone, but fMRI studies are expensive and inherently underpowered. Here is a simulation by Jeannette Mumford to show approximately how many participants you would need to achieve 80% power assuming a specific effect size in your contrast.</p>
 <p><img alt="fmri_power.png" src="../_images/fmri_power.png" /></p>
 <div class="section" id="simulations">
@@ -536,7 +538,7 @@
 </div>
 </div>
 </div>
-<p>Okay, let’s get started and generate 100 x 100 voxels from $\mathcal{N}(0,1)$ distribution for 20 independent participants.</p>
+<p>Okay, let’s get started and generate 100 x 100 voxels from <span class="math notranslate nohighlight">\(\mathcal{N}(0,1)\)</span> distribution for 20 independent participants.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">grid_width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -621,7 +623,7 @@
 </div>
 </div>
 <p>You can see that this dramatically decreases the number of false positives to the point that some of the simulations no longer contain any false positives.</p>
-<p>What is the optimal threshold that will give us an $\alpha=0.05$?</p>
+<p>What is the optimal threshold that will give us an <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>?</p>
 <p>To calculate this, we will run 100 simulations at different threshold levels to find the threshold that leads to a false positive rate that is lower than our alpha value.</p>
 <p>We could search over t-values, or p-values. Let’s explore t-values first.</p>
 <div class="cell docutils container">
@@ -667,7 +669,7 @@
 </div>
 <p>Notice, that we are now observing a false positive rate of approximately .05, though this number will slightly change each time you run the simulation.</p>
 <p>Another way to find the threshold that controls FWER is to divide the alpha by the number of independent tests across voxels. This is called the <strong>bonferroni correction</strong>.</p>
-<p>${bonferroni} = \frac{\alpha}{M}$, where $M$ is the number of voxels.</p>
+<p><span class="math notranslate nohighlight">\({bonferroni} = \frac{\alpha}{M}\)</span>, where <span class="math notranslate nohighlight">\(M\)</span> is the number of voxels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">100</span>
@@ -790,17 +792,17 @@
 <p>The <em>false discovery rate</em> (FDR) is a more recent development in multiple testing correction originally described by <a class="reference external" href="https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1995.tb02031.x">Benjamini &amp; Hochberg, 1995</a>. While FWER is the probability of any false positives occurring in a family of tests, the FDR is the expected proportion of false positives among significant tests.</p>
 <p>The FDR is fairly straightforward to calculate.</p>
 <ol class="simple">
-<li><p>We select a desired limit $q$ on FDR, which is the proportion of false positives we are okay with observing (e.g., 5/100 tests or 0.05).</p></li>
+<li><p>We select a desired limit <span class="math notranslate nohighlight">\(q\)</span> on FDR, which is the proportion of false positives we are okay with observing (e.g., 5/100 tests or 0.05).</p></li>
 <li><p>We rank all of the p-values over all the voxels from the smallest to largest.</p></li>
-<li><p>We find the threshold $r$ such that $p \leq i/m * q$</p></li>
-<li><p>We reject any $H_0$ that is lower than $r$.</p></li>
+<li><p>We find the threshold <span class="math notranslate nohighlight">\(r\)</span> such that <span class="math notranslate nohighlight">\(p \leq i/m * q\)</span></p></li>
+<li><p>We reject any <span class="math notranslate nohighlight">\(H_0\)</span> that is lower than <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
 </ol>
 <p><img alt="image.png" src="../_images/fdr_calc.png" /></p>
 <p>In a brain map, this means that we expect approximately 95% of the voxels reported at q &lt; .05 FDR-corrected to be true activations (note we use q instead of p). The FDR procedure adaptively identifies a threshold based on the overall signal across all voxels. Larger signals results in lower thresholds. Importantly, if all of the null hypotheses are true, then the FDR will be equivalent to the FWER. This means that any FWER procedure will <em>also</em> control the FDR. For these reasons, any procedure which controls the FDR is necessarily less stringent than a FWER controlling procedure, which leads to an overall increased power. Another nice feature of FDR, is that it operates on p-values instead of test statistics, which means it can be applied to most statistical tests.</p>
 <p>This figure is taken from Poldrack, Mumford, &amp; Nichols (2011) and compares different procedures to control for multiple tests.
 <img alt="image.png" src="../_images/fdr.png" /></p>
 <p>For a more indepth overview of FDR, see this <a class="reference external" href="https://matthew-brett.github.io/teaching/fdr.html">tutorial</a> by Matthew Brett.</p>
-<p>Let’s now try to apply FDR to our own simulations. All we need to do is add a <code class="docutils literal notranslate"><span class="pre">correction='fdr'</span></code> flag to our simulation plot. We need to make sure that the <code class="docutils literal notranslate"><span class="pre">threshold=0.05</span></code> to use the correct $q$.</p>
+<p>Let’s now try to apply FDR to our own simulations. All we need to do is add a <code class="docutils literal notranslate"><span class="pre">correction='fdr'</span></code> flag to our simulation plot. We need to make sure that the <code class="docutils literal notranslate"><span class="pre">threshold=0.05</span></code> to use the correct <span class="math notranslate nohighlight">\(q\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">100</span>
