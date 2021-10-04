@@ -583,7 +583,7 @@
 <p>Let’s see what this looks like for a threshold of p &lt; 0.05.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">.05</span>
 <span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">grid_width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">simulation</span><span class="o">.</span><span class="n">plot_grid_simulation</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">threshold_type</span><span class="o">=</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">n_simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
@@ -598,7 +598,7 @@
 <p>What if we looked at a fewer number of voxels? How would this change our false positive rate?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">.05</span>
 <span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">grid_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">simulation</span><span class="o">.</span><span class="n">plot_grid_simulation</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">threshold_type</span><span class="o">=</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">n_simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
@@ -612,7 +612,7 @@
 <p>What about if we increase the threshold on our original 100 x 100 grid?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="o">.</span><span class="mi">0001</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="mf">.0001</span>
 <span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">grid_width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">simulation</span><span class="o">.</span><span class="n">plot_grid_simulation</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">threshold_type</span><span class="o">=</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">n_simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
@@ -630,7 +630,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
 <span class="n">n_simulations</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">.</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mf">.2</span><span class="p">)</span>
 
 <span class="n">sim_all</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
@@ -690,7 +690,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span><span class="o">/</span><span class="p">(</span><span class="n">grid_width</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">.05</span><span class="o">/</span><span class="p">(</span><span class="n">grid_width</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">signal_width</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">signal_amplitude</span> <span class="o">=</span> <span class="mi">1</span>
 
@@ -755,7 +755,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">.05</span>
 <span class="n">signal_amplitude</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">signal_amplitude</span><span class="o">=</span><span class="n">signal_amplitude</span><span class="p">,</span> <span class="n">signal_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">grid_width</span><span class="o">=</span><span class="n">grid_width</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">simulation</span><span class="o">.</span><span class="n">t_values</span><span class="p">,</span> <span class="n">simulation</span><span class="o">.</span><span class="n">p_values</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">_run_permutation</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -806,7 +806,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_width</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="o">.</span><span class="mi">05</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">.05</span>
 <span class="n">signal_amplitude</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulateGrid</span><span class="p">(</span><span class="n">signal_amplitude</span><span class="o">=</span><span class="n">signal_amplitude</span><span class="p">,</span> <span class="n">signal_width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">grid_width</span><span class="o">=</span><span class="n">grid_width</span><span class="p">,</span> <span class="n">n_subjects</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">simulation</span><span class="o">.</span><span class="n">plot_grid_simulation</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">threshold_type</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">n_simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="s1">&#39;fdr&#39;</span><span class="p">)</span>
@@ -870,7 +870,7 @@
 <span class="n">con1_file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;derivatives&#39;</span><span class="p">,</span><span class="s1">&#39;fmriprep&#39;</span><span class="p">,</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;sub*_</span><span class="si">{</span><span class="n">con1_name</span><span class="si">}</span><span class="s1">*nii.gz&#39;</span><span class="p">))</span>
 <span class="n">con1_file_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 <span class="n">con1_dat</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">con1_file_list</span><span class="p">)</span>
-<span class="n">con1_stats</span> <span class="o">=</span> <span class="n">con1_dat</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;unc&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">001</span><span class="p">})</span>
+<span class="n">con1_stats</span> <span class="o">=</span> <span class="n">con1_dat</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;unc&#39;</span><span class="p">:</span><span class="mf">.001</span><span class="p">})</span>
 
 <span class="n">con1_stats</span><span class="p">[</span><span class="s1">&#39;thr_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
@@ -888,7 +888,7 @@
 <p>We can also easily run FDR correction by changing the inputs of the <code class="docutils literal notranslate"><span class="pre">threshold_dict</span></code>. We will be using a q value of 0.05 to control our false discovery rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">con1_stats</span> <span class="o">=</span> <span class="n">con1_dat</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fdr&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">05</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">con1_stats</span> <span class="o">=</span> <span class="n">con1_dat</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fdr&#39;</span><span class="p">:</span><span class="mf">.05</span><span class="p">})</span>
 <span class="n">con1_stats</span><span class="p">[</span><span class="s1">&#39;thr_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -911,7 +911,7 @@
 
 <span class="n">con1_v_con2</span> <span class="o">=</span> <span class="n">con1_dat</span><span class="o">-</span><span class="n">con2_dat</span>
 
-<span class="n">con1_v_con2_stats</span> <span class="o">=</span> <span class="n">con1_v_con2</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;unc&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">001</span><span class="p">})</span>
+<span class="n">con1_v_con2_stats</span> <span class="o">=</span> <span class="n">con1_v_con2</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;unc&#39;</span><span class="p">:</span><span class="mf">.001</span><span class="p">})</span>
 <span class="n">con1_v_con2_stats</span><span class="p">[</span><span class="s1">&#39;thr_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -925,7 +925,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">con1_v_con2_stats</span> <span class="o">=</span> <span class="n">con1_v_con2</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fdr&#39;</span><span class="p">:</span><span class="o">.</span><span class="mi">05</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">con1_v_con2_stats</span> <span class="o">=</span> <span class="n">con1_v_con2</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">threshold_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fdr&#39;</span><span class="p">:</span><span class="mf">.05</span><span class="p">})</span>
 <span class="n">con1_v_con2_stats</span><span class="p">[</span><span class="s1">&#39;thr_t&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
