@@ -34,6 +34,11 @@ jobs:
         run: |
           jupyter-book build .
 
+      # Run linkchecker
+      - name: Run sphinx linkchecker
+        run: |
+          jupyter-book build . --builder linkcheck
+
       # Push the book's HTML to github-pages
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3.8.0
