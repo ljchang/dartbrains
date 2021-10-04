@@ -1,7 +1,7 @@
 ![alt text](https://github.com/ljchang/dartbrains/blob/master/images/logo/dartbrains_logo_square_transparent.png)
 [![DOI](https://zenodo.org/badge/171529794.svg)](https://zenodo.org/badge/latestdoi/171529794)
-[![deploy-book](https://github.com/ljchang/dartbrains/actions/workflows/deploy-book.yml/badge.svg?branch=master)](https://github.com/ljchang/dartbrains/actions/workflows/deploy-book.yml)
-[![sphinx-linkcheck](https://github.com/ljchang/dartbrains/actions/workflows/sphinx-linkcheck.yml/badge.svg?branch=master)](https://github.com/ljchang/dartbrains/actions/workflows/sphinx-linkcheck.yml)
+[![deploy-book](https://github.com/ljchang/dartbrains/actions/workflows/deploy-book.yml/badge.svg)](https://github.com/ljchang/dartbrains/actions/workflows/deploy-book.yml)
+[![sphinx-linkcheck](https://github.com/ljchang/dartbrains/actions/workflows/sphinx-linkcheck.yml/badge.svg)](https://github.com/ljchang/dartbrains/actions/workflows/sphinx-linkcheck.yml)
 
 # DartBrains
 
