@@ -51,3 +51,4 @@ htmlcov/
 #####
 .tox
 .tox/*
+.DS_Store
