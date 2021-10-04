@@ -11,6 +11,9 @@ on:
     #
     # paths:
     # - some-subfolder/**
+  pull_request:
+    branches:
+      - master
 
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
@@ -30,12 +33,7 @@ jobs:
           pip install -r requirements.txt
 
       # Build the book
-      - name: Build the book
-        run: |
-          jupyter-book build .
-
-      # Run linkchecker
-      - name: Run sphinx linkchecker
+      - name: Build the book & run linkcheck
         run: |
           jupyter-book build . --builder linkcheck
 
