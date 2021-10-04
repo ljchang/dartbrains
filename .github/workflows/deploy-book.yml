@@ -11,7 +11,7 @@ on:
     #
     # paths:
     # - some-subfolder/**
-  pull request:
+  pull_request:
     branches:
       - master
 
