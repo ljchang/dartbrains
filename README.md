@@ -1,6 +1,6 @@
 ![alt text](https://github.com/ljchang/dartbrains/blob/master/images/logo/dartbrains_logo_square_transparent.png)
 [![DOI](https://zenodo.org/badge/171529794.svg)](https://zenodo.org/badge/latestdoi/171529794)
-
+[![deploy-book](https://github.com/ljchang/dartbrains/actions/workflows/deploy-book.yml/badge.svg?branch=master)](https://github.com/ljchang/dartbrains/actions/workflows/deploy-book.yml)
 
 # DartBrains
 DartBrains.org is an open access online educational resource that provides an introduction to functional neuroimaging analysis methods using Python. DartBrains is built using Jupyter-Book and provides interactive tutorials for introducing the basics of neuroimaging data analysis. This includes the basics of programming, signal processing, preprocessing, univariate analyses using the general linear model, functional connectivity, and multivariate analytic techniques (e.g., prediction/classification and representational similarity analysis). The tutorials focus on practical applications using open access data, short open access video lectures, and interactive Jupyter notebooks. All of the tutorials use open source packages from the python scientific computing community (e.g.,  numpy, pandas, scipy, matplotlib, scikit-learn, networkx, nibabel, nilearn, fmriprep, and nltools). The course is designed to be useful for varying levels of experience, including individuals with minimal experience with programming, Python, and statistics.
