@@ -21,21 +21,27 @@ The website is built using [jupyter book](https://jupyter.org/jupyter-book/intro
 
 # Updating Book
 
-To update the book, you will need to build it locally using [jupyter-book build](https://jupyterbook.org/start/build.html) and then push it to github. We are syncing the code to master and the deployed website to the gh-pages branch. I recommend using [ghp-import](https://github.com/c-w/ghp-import) to make this easier. We are using the new version of jupyter-book, so make sure this package is up to date. You will also need to install `ghp-import`. I think we can probably set this up to autobuild on travis or circelci at some point if anyone wants to help with that.
+To update the book, you can either push changes directly to the master branch (skip to step 4) or you can build the book locally with [jupyter-book build](https://jupyterbook.org/start/build.html) and then push it to the master branch on this repo. We are syncing the code to master and then deploying the website through the gh-pages branch. Thanks to [this workflow in our repo](https://github.com/ljchang/dartbrains/tree/master/.github/workflows), when changes are pushed to the master branch they will be automatically deployed to DartBrains.org through the gh-pages branch.
+To locally build the book, to easily visualize any changes you make, I recommend using [ghp-import](https://github.com/c-w/ghp-import). We are using the new version of jupyter-book, so make sure this package is up to date.
 
-1. **Install packages**
+1. **Clone the repo into your desired directory**
+
+`git clone https://github.com/ljchang/dartbrains.git`
+
+2. **Install packages**
 
 `pip install jupyter-book ghp-import`
 
-2. **Build website locally**. The new version of jupyter-book will run the notebooks to generate the figures by default. I find it helpful to keep 1-2 subjects in `~/Github/dartbrains/data/localizer`, which is in .gitignore so it will not get pushed to github.
+3. **Build website locally**
+
+By building the website locally you can preview any changes you make in your web browser. In other words, you will need to re-run this build command each time you make changes to the book to view them locally in your web browser. We are using the new version of jupyter-book which will run the notebooks to generate the figures by default. I find it helpful to keep 1-2 subjects in `~/Github/dartbrains/data/localizer`, which is in .gitignore so it will not get pushed to GitHub.
 
 `jupyter-book build dartbrains`
 
-3. **Push updated book to github**. This will sync the updated book to gh-pages branch of our github repository. Don't forget to submit a pull request or push the code to the master repository as well.
+4. **Push updated book to GitHub on the master branch**
 
-`ghp-import -n -p -f -c dartbrains.org _build/html`
-
-4. **Add domain name to settings**. Everytime we update the website, we need to tell github that we are using a custom domain name. This is annoying and should be an easy fix. I think it just has something to do with properly specifying the URL in the CNAME file. Until this is fixed, after syncing gh-pages branch, you will need to go into settings and add `dartbrains.org` as URL name.
+This will automatically trigger a workflow to sync the updated book to the gh-pages branch of our github repository, which ultimately deploys the website on DartBrains.org. 
+If you would like us to review your changes before pushing or deploying them, you can submit a pull request to the master branch and add @ljchang as a reviewer. 
 
 # License for this book
 
