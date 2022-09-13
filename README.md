@@ -36,12 +36,14 @@ To locally build the book, to easily visualize any changes you make, I recommend
 
 By building the website locally you can preview any changes you make in your web browser. In other words, you will need to re-run this build command each time you make changes to the book to view them locally in your web browser. We are using the new version of jupyter-book which will run the notebooks to generate the figures by default. I find it helpful to keep 1-2 subjects in `~/Github/dartbrains/data/localizer`, which is in .gitignore so it will not get pushed to GitHub.
 
+Before running the below command, make sure to change your directory such that you are one directory outside of the cloned repo `dartbrains` folder (i.e., do not be within the `dartbrains` repo folder when running this command as it will throw an error).
+
 `jupyter-book build dartbrains`
 
 4. **Push updated book to GitHub on the master branch**
 
-This will automatically trigger a workflow to sync the updated book to the gh-pages branch of our github repository, which ultimately deploys the website on DartBrains.org. 
-If you would like us to review your changes before pushing or deploying them, you can submit a pull request to the master branch and add @ljchang as a reviewer. 
+This will automatically trigger a workflow to sync the updated book to the gh-pages branch of our github repository, which ultimately deploys the website on DartBrains.org.
+If you would like us to review your changes before pushing or deploying them, you can submit a pull request to the master branch and add @ljchang as a reviewer.
 
 # License for this book
 
