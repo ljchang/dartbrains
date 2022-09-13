@@ -4,7 +4,7 @@
 
 <img src="../images/instructors/chang.jpg" width="200"/>
 
-[Luke Chang](http://lukejchang.com), PhD (Fall 2020) is an Assistant Professor of Psychological and Brain Sciences at Dartmouth College and directs the [Computational Social Affective Neuroscience Laboratory](http://cosanlab.com/). He completed a BA in psychology at Reed College, an MA in psychology at the New School for Social Research, and a PhD in clinical psychology and cognitive neuroscience at the University of Arizona with Alan Sanfey, PhD. He completed his predoctoral clinical internship training in behavioral medicine at the University of California Los Angeles and a postdoctoral fellowship at the University of Colorado Boulder under the mentorship of Tor Wager, PhD. His research program is focused on understanding the neurobiological and computational mechanisms underlying emotions and social interactions. Professor Chang is highly committed to innovating training in methods. He is the lead developer of the [dartbrains](https://dartbrains.org/) course, the [nltools](https://neurolearn.readthedocs.io/en/latest/) python data analysis project, the [Computational Social and Affective Neuroscience](http://compsan.org/) community page, and Co-Director of the [Methods in Neuroscience at Dartmouth Computational Summer School](http://mindsummerschool.org/).
+[Luke Chang](http://lukejchang.com), PhD (Fall 2022) is an Assistant Professor of Psychological and Brain Sciences at Dartmouth College and directs the [Computational Social Affective Neuroscience Laboratory](http://cosanlab.com/). He completed a BA in psychology at Reed College, an MA in psychology at the New School for Social Research, and a PhD in clinical psychology and cognitive neuroscience at the University of Arizona with Alan Sanfey, PhD. He completed his predoctoral clinical internship training in behavioral medicine at the University of California Los Angeles and a postdoctoral fellowship at the University of Colorado Boulder under the mentorship of Tor Wager, PhD. His research program is focused on understanding the neurobiological and computational mechanisms underlying emotions and social interactions. Professor Chang is highly committed to innovating training in methods. He is the lead developer of the [dartbrains](https://dartbrains.org/) course, the [nltools](https://neurolearn.readthedocs.io/en/latest/) python data analysis project, the [Computational Social and Affective Neuroscience](http://compsan.org/) community page, and Co-Director of the [Methods in Neuroscience at Dartmouth Computational Summer School](http://mindsummerschool.org/).
 
 <img src="../images/instructors/finn.jpg" width="200"/>
 
@@ -19,6 +19,8 @@
 [Jeremy Huckins](https://mtnhuck.github.io/), PhD (Fall 2019) is a Lecturer and Post-Doctoral researcher in the department of Psychological and Brain Sciences at Dartmouth College. He completed a BA in Neuroscience at Bowdoin College, worked with as a researcher with the [King Lab](https://king.med.harvard.edu/) at Harvard Medical School then completed a PhD in Experimental and Molecular Medicine at Dartmouth College. His current research program is focused on gaining insights into mental health using fMRI and mobile smartphone sensing.
 
 ## Teaching Assistant
+
+### Fall 2022
 
 <img src="../images/instructors/wasita.png" width="200"/>
 
