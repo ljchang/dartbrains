@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Introduction to Pandas &#8212; DartBrains</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,37 +20,36 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_Pandas.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -57,10 +58,37 @@
     <link rel="next" title="Introduction to Plotting" href="Introduction_to_Plotting.html" />
     <link rel="prev" title="Introduction to programming" href="Introduction_to_Programming.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
     
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -69,9 +97,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -89,7 +118,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Overview
  </span>
@@ -111,7 +140,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Computing Resources
  </span>
@@ -148,7 +177,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Topics
  </span>
@@ -225,7 +254,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Additional Courses
  </span>
@@ -237,7 +266,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Project Gallery
  </span>
@@ -259,7 +288,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contributing
  </span>
@@ -278,120 +307,262 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/Introduction_to_Pandas.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ljchang/dartbrains"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Pandas.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Pandas.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Pandas.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Pandas.ipynb&branch=master"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
-                data-placement="left"><img class="jupyterhub-button-logo"
-                    src="../_static/images/logo_jupyterhub.svg"
-                    alt="Interact on JupyterHub">JupyterHub</button></a>
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Pandas.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Pandas.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/Introduction_to_Pandas.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#pandas-objects">
    Pandas Objects
@@ -565,27 +736,216 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to Pandas</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pandas-objects">
+   Pandas Objects
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#series">
+     Series
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataframe">
+     DataFrame
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-data">
+   Loading Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ways-to-check-the-dataframe">
+     Ways to check the dataframe
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#describing-the-data">
+     Describing the data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dealing-with-missing-values">
+     Dealing with missing values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-new-columns">
+     Create New Columns
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#indexing-and-slicing-data">
+   Indexing and slicing Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#indexing-with-keys">
+     Indexing with Keys
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#indexing-with-integers">
+     Indexing with Integers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#indexing-with-booleans">
+     Indexing with booleans
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numpy-indexing">
+     Numpy indexing
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#renaming">
+   Renaming
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#renaming-columns">
+     Renaming Columns
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#renaming-rows">
+     Renaming Rows
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operations">
+   Operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#merging-data">
+   Merging Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concatenation">
+     Concatenation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#append">
+     Append
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#merge">
+     Merge
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grouping">
+   Grouping
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#groupby">
+     Groupby
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#transform">
+     Transform
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reshaping-data">
+   Reshaping Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#melt">
+     Melt
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pivot">
+     Pivot
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises-homework">
+   Exercises ( Homework)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3">
+     Exercise 3
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="introduction-to-pandas">
-<h1>Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-pandas">
+<h1>Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Luke Chang &amp; Jin Cheong</em></p>
 <p>Analyzing data requires being facile with manipulating and transforming datasets to be able to test specific hypotheses. Data come in all different types of flavors and there are many different tools in the Python ecosystem to work with pretty much any type of data you might encounter. For example, you might be interested in working with functional neuroimaging data that is four dimensional. Three dimensional matrices contain brain activations in space, and these data can change over time in the 4th dimension. This type of data is well suited for <a class="reference external" href="https://numpy.org/">numpy</a> and specialized brain imaging packages such as <a class="reference external" href="https://nilearn.github.io/">nilearn</a>. The majority of data, however, is typically in some version of a two-dimensional observations by features format as might be seen in an excel spreadsheet, a SQL table, or in a comma delimited format (i.e., csv).</p>
 <p>In Python, the <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> library is a powerful tool to work with this type of data. This is a very large library with a tremendous amount of functionality. In this tutorial, we will cover the basics of how to load and manipulate data and will focus on common to data munging tasks.</p>
 <p>For those interested in diving deeper into Pandas, there are many online resources. There is the <a class="reference external" href="https://pandas.pydata.org/">Pandas online documention</a>, <a class="reference external" href="https://stackoverflow.com/questions/tagged/pandas">stackoverflow</a>, and <a class="reference external" href="https://medium.com/search?q=pandas">medium blogposts</a>. I highly recommend  Jake Vanderplas’s terrific <a class="reference external" href="https://jakevdp.github.io/PythonDataScienceHandbook/">Python Data Science Handbook</a>.   In addition, here is a brief <a class="reference external" href="https://neurohackademy.org/course/complex-data-structures/">video</a> by Tal Yarkoni providing a useful introduction to pandas.</p>
 <p>After the tutorial you will have the chance to apply the methods to a new set of data.</p>
-<div class="section" id="pandas-objects">
-<h2>Pandas Objects<a class="headerlink" href="#pandas-objects" title="Permalink to this headline">¶</a></h2>
+<section id="pandas-objects">
+<h2>Pandas Objects<a class="headerlink" href="#pandas-objects" title="Permalink to this headline">#</a></h2>
 <p>Pandas has several objects that are commonly used (i.e., Series, DataFrame, Index). At it’s core, Pandas Objects are enhanced numpy arrays where columns and rows can have special names and there are lots of methods to operate on the data. See Jake Vanderplas’s <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.01-Introducing-Pandas-Objects.ipynb">tutorial</a> for a more in depth overview.</p>
-<div class="section" id="series">
-<h3>Series<a class="headerlink" href="#series" title="Permalink to this headline">¶</a></h3>
+<section id="series">
+<h3>Series<a class="headerlink" href="#series" title="Permalink to this headline">#</a></h3>
 <p>A pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> is a one-dimensional array of indexed data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -641,9 +1001,9 @@ dtype: int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="dataframe">
-<h3>DataFrame<a class="headerlink" href="#dataframe" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="dataframe">
+<h3>DataFrame<a class="headerlink" href="#dataframe" title="Permalink to this headline">#</a></h3>
 <p>If a <code class="docutils literal notranslate"><span class="pre">Series</span></code> is a one-dimensional indexed array, the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is a two-dimensional indexed array. It can be thought of as a collection of Series objects, where each Series represents a column, or as an enhanced 2D numpy array.</p>
 <p>In a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, the index refers to labels for each row, while columns describe each column.</p>
 <p>First, let’s create a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> using random numbers generated from numpy.</p>
@@ -892,10 +1252,10 @@ dtype: int64
 </table>
 </div></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="loading-data">
-<h2>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="loading-data">
+<h2>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this headline">#</a></h2>
 <p>Loading data is fairly straightfoward in Pandas. Type <code class="docutils literal notranslate"><span class="pre">pd.read</span></code> then press tab to see a list of functions that can load specific file formats such as: csv, excel, spss, and sql.</p>
 <p>In this example, we will use <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code> to load a .csv file into a dataframe.
 Note that read_csv() has many options that can be used to make sure you load the data correctly. You can explore the docstrings for a function to get more information about the inputs and general useage guidelines by running <code class="docutils literal notranslate"><span class="pre">pd.read_csv?</span></code></p>
@@ -1059,8 +1419,8 @@ Note that read_csv() has many options that can be used to make sure you load the
 <p>77 rows × 6 columns</p>
 </div></div></div>
 </div>
-<div class="section" id="ways-to-check-the-dataframe">
-<h3>Ways to check the dataframe<a class="headerlink" href="#ways-to-check-the-dataframe" title="Permalink to this headline">¶</a></h3>
+<section id="ways-to-check-the-dataframe">
+<h3>Ways to check the dataframe<a class="headerlink" href="#ways-to-check-the-dataframe" title="Permalink to this headline">#</a></h3>
 <p>There are many ways to examine your dataframe. One easy way is to just call the dataframe variable itself.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1347,9 +1707,9 @@ Name: salary, dtype: int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="describing-the-data">
-<h3>Describing the data<a class="headerlink" href="#describing-the-data" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="describing-the-data">
+<h3>Describing the data<a class="headerlink" href="#describing-the-data" title="Permalink to this headline">#</a></h3>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method to get a quick summary of the continuous values of the data frame. We will <code class="docutils literal notranslate"><span class="pre">.transpose()</span></code> the output to make it slightly easier to read.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1498,9 +1858,9 @@ Name: gender, dtype: int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="dealing-with-missing-values">
-<h3>Dealing with missing values<a class="headerlink" href="#dealing-with-missing-values" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="dealing-with-missing-values">
+<h3>Dealing with missing values<a class="headerlink" href="#dealing-with-missing-values" title="Permalink to this headline">#</a></h3>
 <p>Data are always messy and often have lots of missing values. There are many different ways, in which missing data might present <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>, or <code class="docutils literal notranslate"><span class="pre">NA</span></code>, Sometimes researchers code missing values with specific numeric codes such as 999999. It is important to find these as they can screw up your analyses if they are hiding in your data.</p>
 <p>If the missing values are using a standard pandas or numpy value such as <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>, or <code class="docutils literal notranslate"><span class="pre">NA</span></code>, we can identify where the missing values are as booleans using the <code class="docutils literal notranslate"><span class="pre">isnull()</span></code> method.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">isnull()</span></code> method will return a dataframe with True/False values on whether a datapoint is null or not a number (nan).</p>
@@ -1901,9 +2261,9 @@ dtype: int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="create-new-columns">
-<h3>Create New Columns<a class="headerlink" href="#create-new-columns" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="create-new-columns">
+<h3>Create New Columns<a class="headerlink" href="#create-new-columns" title="Permalink to this headline">#</a></h3>
 <p>You can create new columns to fit your needs.
 For instance you can set initialize a new column with zeros.</p>
 <div class="cell docutils container">
@@ -1941,13 +2301,13 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="indexing-and-slicing-data">
-<h2>Indexing and slicing Data<a class="headerlink" href="#indexing-and-slicing-data" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="indexing-and-slicing-data">
+<h2>Indexing and slicing Data<a class="headerlink" href="#indexing-and-slicing-data" title="Permalink to this headline">#</a></h2>
 <p>Indexing in Pandas can be tricky. There are many ways to index in pandas, for this tutorial we will focus on four: loc, iloc, boolean, and indexing numpy values. For a more in depth overview see Jake Vanderplas’s tutorial](https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.02-Data-Indexing-and-Selection.ipynb), where he also covers more advanced topics, such as <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.05-Hierarchical-Indexing.ipynb">hierarchical indexing</a>.</p>
-<div class="section" id="indexing-with-keys">
-<h3>Indexing with Keys<a class="headerlink" href="#indexing-with-keys" title="Permalink to this headline">¶</a></h3>
+<section id="indexing-with-keys">
+<h3>Indexing with Keys<a class="headerlink" href="#indexing-with-keys" title="Permalink to this headline">#</a></h3>
 <p>First, we will cover indexing with keys using the <code class="docutils literal notranslate"><span class="pre">.loc</span></code> method. This method references the explicit index with a key name. It works for both index names and also column names. Note that often the keys for rows are integers by default.</p>
 <p>In this example, we will return rows 10-20 on the salary column.</p>
 <div class="cell docutils container">
@@ -2062,9 +2422,9 @@ Name: salary, dtype: int64
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="indexing-with-integers">
-<h3>Indexing with Integers<a class="headerlink" href="#indexing-with-integers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="indexing-with-integers">
+<h3>Indexing with Integers<a class="headerlink" href="#indexing-with-integers" title="Permalink to this headline">#</a></h3>
 <p>Next we wil try <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>.  This method references the implicit python index using integer indexing (starting from 0, exclusive of last number).  You can think of this like row by column indexing using integers.</p>
 <p>For example, let’s grab the first 3 rows and columns.</p>
 <div class="cell docutils container">
@@ -2129,9 +2489,9 @@ Name: salary, dtype: int64
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="indexing-with-booleans">
-<h3>Indexing with booleans<a class="headerlink" href="#indexing-with-booleans" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="indexing-with-booleans">
+<h3>Indexing with booleans<a class="headerlink" href="#indexing-with-booleans" title="Permalink to this headline">#</a></h3>
 <p>Boolean or logical indexing is useful if you need to sort the data based on some True or False value.</p>
 <p>For instance, who are the people with salaries greater than 90K but lower than 100K ?</p>
 <div class="cell docutils container">
@@ -2253,9 +2613,9 @@ Name: salary, dtype: int64
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="numpy-indexing">
-<h3>Numpy indexing<a class="headerlink" href="#numpy-indexing" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="numpy-indexing">
+<h3>Numpy indexing<a class="headerlink" href="#numpy-indexing" title="Permalink to this headline">#</a></h3>
 <p>Finally, you can also return a numpy matrix from a pandas data frame by accessing the <code class="docutils literal notranslate"><span class="pre">.values</span></code> property. This returns a numpy array that can be indexed using numpy integer indexing and slicing.</p>
 <p>As an example, let’s grab the last 10 rows and the first 3 columns.</p>
 <div class="cell docutils container">
@@ -2279,13 +2639,13 @@ Name: salary, dtype: int64
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="renaming">
-<h2>Renaming<a class="headerlink" href="#renaming" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="renaming">
+<h2>Renaming<a class="headerlink" href="#renaming" title="Permalink to this headline">#</a></h2>
 <p>Part of cleaning up the data is renaming with more sensible names. This is easy to do with Pandas.</p>
-<div class="section" id="renaming-columns">
-<h3>Renaming Columns<a class="headerlink" href="#renaming-columns" title="Permalink to this headline">¶</a></h3>
+<section id="renaming-columns">
+<h3>Renaming Columns<a class="headerlink" href="#renaming-columns" title="Permalink to this headline">#</a></h3>
 <p>We can rename columns with the <code class="docutils literal notranslate"><span class="pre">.rename</span></code> method by passing in a dictionary using the <code class="docutils literal notranslate"><span class="pre">{'Old</span> <span class="pre">Name':'New</span> <span class="pre">Name'}</span></code>. We either need to assigne the result to a new variable or add <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2303,9 +2663,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="renaming-rows">
-<h3>Renaming Rows<a class="headerlink" href="#renaming-rows" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="renaming-rows">
+<h3>Renaming Rows<a class="headerlink" href="#renaming-rows" title="Permalink to this headline">#</a></h3>
 <p>Often we may want to change the coding scheme for a variable. For example, it is hard to remember what zeros and ones mean in the gender variable. We can make this easier by changing these with a dictionary <code class="docutils literal notranslate"><span class="pre">{0:'male',</span> <span class="pre">1:'female'}</span></code> with the <code class="docutils literal notranslate"><span class="pre">replace</span></code> method. We can do this <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> or we can assign it to a new variable. As an example, we will assign this to a new variable to also retain the original lablels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2412,10 +2772,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </table>
 </div></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="operations">
-<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">#</a></h2>
 <p>One of the really fun things about pandas once you get the hang of it is how easy it is to perform operations on the data. It is trivial to compute simple summaries of the data. We can also leverage the object-oriented nature of a pandas object, we can chain together multiple commands.</p>
 <p>For example, let’s grab the mean of a few columns.</p>
 <div class="cell docutils container">
@@ -2542,12 +2902,12 @@ dtype: float64
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="merging-data">
-<h2>Merging Data<a class="headerlink" href="#merging-data" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="merging-data">
+<h2>Merging Data<a class="headerlink" href="#merging-data" title="Permalink to this headline">#</a></h2>
 <p>Another common data manipulation goal is to merge datasets. There are multiple ways to do this in pandas, we will cover concatenation, append, and merge.</p>
-<div class="section" id="concatenation">
-<h3>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this headline">¶</a></h3>
+<section id="concatenation">
+<h3>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this headline">#</a></h3>
 <p>Concatenation describes the process of <em>stacking</em> dataframes together. The main thing to consider is to make sure that the shapes of the two dataframes are the same as well as the index labels. For example, if we wanted to vertically stack two dataframe, they need to have the same column names.</p>
 <p>Remember that we previously created two separate dataframes for males and females?  Let’s put them back together using the <code class="docutils literal notranslate"><span class="pre">pd.concat</span></code> method. Note how the index of this output retains the old index.</p>
 <div class="cell docutils container">
@@ -2783,9 +3143,9 @@ dtype: float64
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="append">
-<h3>Append<a class="headerlink" href="#append" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="append">
+<h3>Append<a class="headerlink" href="#append" title="Permalink to this headline">#</a></h3>
 <p>We can also combine datasets by appending new data to the end of a dataframe.</p>
 <p>Suppose we want to append a new data entry of an additional participant onto the <code class="docutils literal notranslate"><span class="pre">df3</span></code> dataframe. Notice that we need to specify to <code class="docutils literal notranslate"><span class="pre">ignore_index=True</span></code> and also that we need to assign the new dataframe back to a variable. This operation is not done in place.</p>
 <p>For more information about concatenation and appending see Jake Vanderplas’s <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.06-Concat-And-Append.ipynb">tutorial</a>.</p>
@@ -2862,9 +3222,9 @@ dtype: float64
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="merge">
-<h3>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="merge">
+<h3>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">#</a></h3>
 <p>The most powerful method of merging data is using the <code class="docutils literal notranslate"><span class="pre">pd.merge</span></code> method. This allows you to merge datasets of different shapes and sizes on specific variables that match. This is very common when you need to merge multiple sql tables together for example.</p>
 <p>In this example, we are creating two separate data frames that have different states and columns and will merge on the <code class="docutils literal notranslate"><span class="pre">State</span></code> column.</p>
 <p>First, we will only retain rows where there is a match across dataframes, using <code class="docutils literal notranslate"><span class="pre">how=inner</span></code>. This is equivalent to an ‘and’ join in sql.</p>
@@ -2984,17 +3344,17 @@ dtype: float64
 </div></div></div>
 </div>
 <p>This is a very handy way to merge data when you have lots of files with missing data.  See Jake Vanderplas’s <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.07-Merge-and-Join.ipynb">tutorial</a> for a more in depth overview.</p>
-</div>
-</div>
-<div class="section" id="grouping">
-<h2>Grouping<a class="headerlink" href="#grouping" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="grouping">
+<h2>Grouping<a class="headerlink" href="#grouping" title="Permalink to this headline">#</a></h2>
 <p>We’ve seen above that it is very easy to summarize data over columns using the builtin functions such as <code class="docutils literal notranslate"><span class="pre">pd.mean()</span></code>. Sometimes we are interested in summarizing data over different groups of rows. For example, what is the mean of participants in Condition A compared to Condition B?</p>
 <p>This is suprisingly easy to compute in pandas using the <code class="docutils literal notranslate"><span class="pre">groupby</span></code> operator, where we aggregate data using a specific operation over different labels.</p>
 <p>One useful way to conceptualize this is using the <strong>Split, Apply, Combine</strong> operation (similar to map-reduce).</p>
 <p><img alt="" src="../_images/split-apply-combine.png" /></p>
 <p>This figure is taken from Jake Vanderplas’s tutorial and highlights how input data can be <em>split</em> on some key and then an operation such as sum can be <em>applied</em> separately to each split. Finally, the results of the applied function for each key can be <em>combined</em> into a new data frame.</p>
-<div class="section" id="groupby">
-<h3>Groupby<a class="headerlink" href="#groupby" title="Permalink to this headline">¶</a></h3>
+<section id="groupby">
+<h3>Groupby<a class="headerlink" href="#groupby" title="Permalink to this headline">#</a></h3>
 <p>In this example, we will use the <code class="docutils literal notranslate"><span class="pre">groupby</span></code> operator to split the data based on gender labels and separately calculate the mean for each group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3062,9 +3422,9 @@ dtype: float64
 </div></div></div>
 </div>
 <p>Other default aggregation methods include <code class="docutils literal notranslate"><span class="pre">.count()</span></code>, <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">.median()</span></code>, <code class="docutils literal notranslate"><span class="pre">.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">.max()</span></code>, <code class="docutils literal notranslate"><span class="pre">.std()</span></code>, <code class="docutils literal notranslate"><span class="pre">.var()</span></code>, and <code class="docutils literal notranslate"><span class="pre">.sum()</span></code></p>
-</div>
-<div class="section" id="transform">
-<h3>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="transform">
+<h3>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">#</a></h3>
 <p>While the split, apply, combine operation that we just demonstrated is extremely usefuly to quickly summarize data based on a grouping key, the resulting data frame is compressed to one row per grouping label.</p>
 <p>Sometimes, we would like to perform an operation over groups, but retain the original data shape. One common example is standardizing data within a subject or grouping variable. Normally, you might think to loop over subject ids and separately z-score or center a variable and then recombine the subject data using a vertical concatenation operation.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">transform</span></code> method in pandas can make this much easier and faster!</p>
@@ -3295,14 +3655,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div></div></div>
 </div>
 <p>For a more in depth overview of data aggregation and grouping, check out Jake Vanderplas’s <a class="reference external" href="http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.08-Aggregation-and-Grouping.ipynb">tutorial</a></p>
-</div>
-</div>
-<div class="section" id="reshaping-data">
-<h2>Reshaping Data<a class="headerlink" href="#reshaping-data" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="reshaping-data">
+<h2>Reshaping Data<a class="headerlink" href="#reshaping-data" title="Permalink to this headline">#</a></h2>
 <p>The last topic we will cover in this tutorial is reshaping data. Data is often in the form of observations by features, in which there is a single row for each independent observation of data and a separate column for each feature of the data. This is commonly referred to as as the <em>wide</em> format. However, when running regression or plotting in libraries such as seaborn, we often want our data in the <em>long</em> format, in which each grouping variable is specified in a separate column.</p>
 <p>In this section we cover how to go from wide to long using the <code class="docutils literal notranslate"><span class="pre">melt</span></code> operation and from long to wide using the <code class="docutils literal notranslate"><span class="pre">pivot</span></code> function.</p>
-<div class="section" id="melt">
-<h3>Melt<a class="headerlink" href="#melt" title="Permalink to this headline">¶</a></h3>
+<section id="melt">
+<h3>Melt<a class="headerlink" href="#melt" title="Permalink to this headline">#</a></h3>
 <p>To <code class="docutils literal notranslate"><span class="pre">melt</span></code> a dataframe into the long format, we need to specify which variables are the <code class="docutils literal notranslate"><span class="pre">id_vars</span></code>, which ones should be combined into a <code class="docutils literal notranslate"><span class="pre">value_var</span></code>, and finally, what we should label the column name for the <code class="docutils literal notranslate"><span class="pre">value_var</span></code>, and also for the <code class="docutils literal notranslate"><span class="pre">var_name</span></code>. We will call the values ‘Ratings’ and variables ‘Condition’.</p>
 <p>First, we need to create a dataset to play with.</p>
 <div class="cell docutils container">
@@ -3505,9 +3865,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div></div></div>
 </div>
 <p>Notice how the id variable is repeated for each condition?</p>
-</div>
-<div class="section" id="pivot">
-<h3>Pivot<a class="headerlink" href="#pivot" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pivot">
+<h3>Pivot<a class="headerlink" href="#pivot" title="Permalink to this headline">#</a></h3>
 <p>We can also go back to the wide data format from a long dataframe using <code class="docutils literal notranslate"><span class="pre">pivot</span></code>. We just need to specify the variable containing the labels which will become the <code class="docutils literal notranslate"><span class="pre">columns</span></code> and the <code class="docutils literal notranslate"><span class="pre">values</span></code> column that will be broken into separate columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3581,10 +3941,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </table>
 </div></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="exercises-homework">
-<h2>Exercises ( Homework)<a class="headerlink" href="#exercises-homework" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="exercises-homework">
+<h2>Exercises ( Homework)<a class="headerlink" href="#exercises-homework" title="Permalink to this headline">#</a></h2>
 <p>The following exercises uses the dataset “salary_exercise.csv” adapted from material available <a class="reference external" href="http://data.princeton.edu/wws509/datasets/#salary">here</a></p>
 <p>These are the salary data used in Weisberg’s book, consisting of observations on six variables for 52 tenure-track professors in a small college. The variables are:</p>
 <ul class="simple">
@@ -3599,8 +3959,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <li><p>sl = Academic year salary, in dollars.</p></li>
 </ul>
 <p>Reference: S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.</p>
-<div class="section" id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<section id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
 <p>Read the salary_exercise.csv into a dataframe, and change the column names to a more readable format such as sex, rank, yearsinrank, degree, yearssinceHD, and salary.</p>
 <p>Clean the data by excluding rows with any missing value.</p>
 <p>What are the overall mean, standard deviation, min, and maximum of professors’ salary?</p>
@@ -3611,17 +3971,17 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h3>
 <p>Create two separate dataframes based on the type of degree. Now calculate the mean salary of the 5 oldest professors of each degree type.</p>
-</div>
-<div class="section" id="exercise-3">
-<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">#</a></h3>
 <p>What is the correlation between the standardized salary <em>across</em> all ranks and the standardized salary <em>within</em> ranks?</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -3645,67 +4005,51 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="Introduction_to_Programming.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Introduction to programming</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Introduction_to_Programming.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to programming</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Introduction_to_Plotting.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to Plotting</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="Introduction_to_Plotting.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Introduction to Plotting</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Luke Chang<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-          </div>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
 
   </body>
 </html>

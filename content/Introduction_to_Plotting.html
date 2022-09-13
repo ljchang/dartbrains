@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Introduction to Plotting &#8212; DartBrains</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,40 +20,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_Plotting.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -59,10 +60,37 @@
     <link rel="next" title="Glossary" href="Glossary.html" />
     <link rel="prev" title="Introduction to Pandas" href="Introduction_to_Pandas.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
     
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -71,9 +99,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -91,7 +120,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Overview
  </span>
@@ -113,7 +142,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Computing Resources
  </span>
@@ -150,7 +179,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Topics
  </span>
@@ -227,7 +256,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Additional Courses
  </span>
@@ -239,7 +268,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Project Gallery
  </span>
@@ -261,7 +290,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contributing
  </span>
@@ -280,120 +309,262 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/Introduction_to_Plotting.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ljchang/dartbrains"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Plotting.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Plotting.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Plotting.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Plotting.ipynb&branch=master"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
-                data-placement="left"><img class="jupyterhub-button-logo"
-                    src="../_static/images/logo_jupyterhub.svg"
-                    alt="Interact on JupyterHub">JupyterHub</button></a>
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Plotting.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Plotting.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Plotting.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Plotting.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Plotting.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Plotting.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/Introduction_to_Plotting.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#matplotlib-key-concepts">
    Matplotlib Key Concepts
@@ -521,21 +692,164 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to Plotting</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matplotlib-key-concepts">
+   Matplotlib Key Concepts
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lineplot">
+     Lineplot
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scatterplot">
+     Scatterplot
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#histogram">
+     Histogram
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bar-plot">
+     Bar Plot
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-plots">
+     3D Plots
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#customization">
+     Customization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#layouts">
+     Layouts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#saving-plots">
+     Saving Plots
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#seaborn">
+   Seaborn
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scatterplots">
+     Scatterplots
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#factor-plots">
+     Factor plots
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#heatmaps">
+     Heatmaps
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pandas">
+   Pandas
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Scatterplot
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generating-bar-errorbar-plots-in-pandas">
+     Generating bar - errorbar plots in Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interactive-plots">
+   Interactive Plots
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotly">
+     Plotly
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bokeh">
+     Bokeh
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#altair">
+     Altair
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1">
+     Exercise 1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2">
+     Exercise 2
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="introduction-to-plotting">
-<h1>Introduction to Plotting<a class="headerlink" href="#introduction-to-plotting" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-plotting">
+<h1>Introduction to Plotting<a class="headerlink" href="#introduction-to-plotting" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Luke Chang &amp; Jin Cheong</em></p>
 <p>In this lab, we will introduce the basics of plotting in python using the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> packages. Matlotlib is probably the most popular python package for 2D graphics and has a nice tradeoff between ease of use and customizability. We will be working with the <code class="docutils literal notranslate"><span class="pre">pyplot</span></code> interface, which is an object-oriented plotting library based on plotting in Matlab. Many graphics libraries are built on top of matplotlib, and have tried to make plotting even easier. One library that is very nice to generate plots similar to how analyses are performed is <a class="reference external" href="https://seaborn.pydata.org/examples/index.html">seaborn</a>. There are many great tutorials online. Here are a few that I found to be helpful from <a class="reference external" href="https://github.com/neurohackademy/visualization-in-python/blob/master/visualization-in-python.ipynb">neurohackademy</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/04.00-Introduction-To-Matplotlib.ipynb">Jake Vanderplas</a>, and <a class="reference external" href="https://github.com/rougier/matplotlib-tutorial">rougier</a>.</p>
-<div class="section" id="matplotlib-key-concepts">
-<h2>Matplotlib Key Concepts<a class="headerlink" href="#matplotlib-key-concepts" title="Permalink to this headline">¶</a></h2>
+<section id="matplotlib-key-concepts">
+<h2>Matplotlib Key Concepts<a class="headerlink" href="#matplotlib-key-concepts" title="Permalink to this headline">#</a></h2>
 <p>There are a few different types of concepts in the <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> framework.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Figure</span></code>: Essentially the canvas, which contains the plots</p></li>
@@ -557,8 +871,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="lineplot">
-<h3>Lineplot<a class="headerlink" href="#lineplot" title="Permalink to this headline">¶</a></h3>
+<section id="lineplot">
+<h3>Lineplot<a class="headerlink" href="#lineplot" title="Permalink to this headline">#</a></h3>
 <p>First, let’s generate some numbers and create a basic lineplot.</p>
 <p>In this example, we plot:</p>
 <p><span class="math notranslate nohighlight">\(y = x^2\)</span></p>
@@ -578,14 +892,14 @@
 <img alt="../_images/Introduction_to_Plotting_3_1.png" src="../_images/Introduction_to_Plotting_3_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="scatterplot">
-<h3>Scatterplot<a class="headerlink" href="#scatterplot" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="scatterplot">
+<h3>Scatterplot<a class="headerlink" href="#scatterplot" title="Permalink to this headline">#</a></h3>
 <p>We can also plot associations between two different variables using a scatterplot. In this example, we will simulate correlated data with <span class="math notranslate nohighlight">\(\mathcal{N}(0,1)\)</span> using <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code> and create a scatterplot. Try playing with the covariance values to change the degree of association.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">.9</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">],</span>
@@ -603,9 +917,9 @@
 <img alt="../_images/Introduction_to_Plotting_5_1.png" src="../_images/Introduction_to_Plotting_5_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="histogram">
-<h3>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="histogram">
+<h3>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">#</a></h3>
 <p>We can also plot the distribution of a variable using a histogram.</p>
 <p>Let’s see if the data we simulated above are actually normally distributed.</p>
 <div class="cell docutils container">
@@ -628,14 +942,14 @@
 <p>We can also plot overlaying histograms. Let’s simulate more data, but shift the mean of one by 3.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="mf">.9</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">],</span>
     <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.7</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -651,9 +965,9 @@
 <img alt="../_images/Introduction_to_Plotting_9_1.png" src="../_images/Introduction_to_Plotting_9_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="bar-plot">
-<h3>Bar Plot<a class="headerlink" href="#bar-plot" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bar-plot">
+<h3>Bar Plot<a class="headerlink" href="#bar-plot" title="Permalink to this headline">#</a></h3>
 <p>We can also plot the same data as a bar plot to emphasize the difference in the means of the distributions. To create a bar plot, we need to specify the bar names and the heights of the bars.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -668,9 +982,9 @@
 <img alt="../_images/Introduction_to_Plotting_11_1.png" src="../_images/Introduction_to_Plotting_11_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="d-plots">
-<h3>3D Plots<a class="headerlink" href="#d-plots" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="d-plots">
+<h3>3D Plots<a class="headerlink" href="#d-plots" title="Permalink to this headline">#</a></h3>
 <p>We can also plot in 3 dimensions with <code class="docutils literal notranslate"><span class="pre">mplot3d</span></code>. Here we will simulate 3 different variables with different correlations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -678,9 +992,9 @@
 
 <span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>
 
-<span class="n">r1</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span>
-<span class="n">r2</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
-<span class="n">r3</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="mf">.1</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="mf">.5</span>
+<span class="n">r3</span> <span class="o">=</span> <span class="mf">.9</span>
 
 <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">])</span>
 
@@ -693,7 +1007,7 @@
 
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter3D</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter3D</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -704,9 +1018,9 @@
 <img alt="../_images/Introduction_to_Plotting_13_1.png" src="../_images/Introduction_to_Plotting_13_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="customization">
-<h3>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="customization">
+<h3>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">#</a></h3>
 <p>One of the nice things about matplotlib is that everything is customizable.</p>
 <p>Let’s go back to our first scatterplot and show how we can customize it to make it easier to read.</p>
 <p>We can specify the type of <code class="docutils literal notranslate"><span class="pre">marker</span></code>, the <code class="docutils literal notranslate"><span class="pre">color</span></code>, the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> transparency, and the size of the dots with <code class="docutils literal notranslate"><span class="pre">s</span></code>.</p>
@@ -715,14 +1029,14 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">r</span> <span class="o">=</span> <span class="o">.</span><span class="mi">9</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">.9</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">],</span>
     <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.25</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Variable 1&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Variable 2&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
@@ -738,9 +1052,9 @@
 <img alt="../_images/Introduction_to_Plotting_15_1.png" src="../_images/Introduction_to_Plotting_15_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="layouts">
-<h3>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="layouts">
+<h3>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">#</a></h3>
 <p>The easiest way to make customized layouts that can include multiple panels of a plot are with <code class="docutils literal notranslate"><span class="pre">subplot</span></code>.</p>
 <p><img alt="subplot" src="../_images/subplot.png" /></p>
 <p>There are two different ways to index. One is by adding a subplot. The first number is the number of rows, the second is the number of columns, and the third is the index number.</p>
@@ -751,7 +1065,7 @@
 <p>When modifying <code class="docutils literal notranslate"><span class="pre">axes</span></code> we need to use the <code class="docutils literal notranslate"><span class="pre">set_{}</span></code> command rather than just the command itself. For example, <code class="docutils literal notranslate"><span class="pre">ax[0,0].set_xlabel('X')</span></code> rather than <code class="docutils literal notranslate"><span class="pre">plt.xlabel('X')</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=.</span><span class="mi">9</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">.9</span><span class="p">):</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
         <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">],</span>
@@ -760,27 +1074,27 @@
 
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
 
-<span class="n">r</span><span class="o">=.</span><span class="mi">1</span>
+<span class="n">r</span><span class="o">=</span><span class="mf">.1</span>
 <span class="n">sim1</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.25</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;r=</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="n">r</span><span class="o">=.</span><span class="mi">3</span>
+<span class="n">r</span><span class="o">=</span><span class="mf">.3</span>
 <span class="n">sim1</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.25</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;r=</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="n">r</span><span class="o">=.</span><span class="mi">6</span>
+<span class="n">r</span><span class="o">=</span><span class="mf">.6</span>
 <span class="n">sim1</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.25</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;r=</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="n">r</span><span class="o">=.</span><span class="mi">9</span>
+<span class="n">r</span><span class="o">=</span><span class="mf">.9</span>
 <span class="n">sim1</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sim1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">sim1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.25</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;r=</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
@@ -792,9 +1106,9 @@
 <img alt="../_images/Introduction_to_Plotting_17_0.png" src="../_images/Introduction_to_Plotting_17_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="saving-plots">
-<h3>Saving Plots<a class="headerlink" href="#saving-plots" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="saving-plots">
+<h3>Saving Plots<a class="headerlink" href="#saving-plots" title="Permalink to this headline">#</a></h3>
 <p>Plots can be saved to disk using the <code class="docutils literal notranslate"><span class="pre">savefig</span></code> command. There are lots of ways to customize the saved plot. I typically save rasterized versions as <code class="docutils literal notranslate"><span class="pre">.png</span></code> and vectorized versions as <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>. Don’t forget to specify a path where you want the file written to.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -810,20 +1124,20 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="seaborn">
-<h2>Seaborn<a class="headerlink" href="#seaborn" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="seaborn">
+<h2>Seaborn<a class="headerlink" href="#seaborn" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://seaborn.pydata.org/index.html">Seaborn</a> is a plotting library built on Matplotlib that has many pre-configured plots that are often used for visualization.
 Other great tutorials about seaborn are <a class="reference external" href="http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/04.14-Visualization-With-Seaborn.ipynb">here</a></p>
 <p>Most seaborn plots can be customized using the standard matplotlib commands, though be sure to look at the docstrings first as often there are already keywords within each type of plot to do what you want.</p>
-<div class="section" id="scatterplots">
-<h3>Scatterplots<a class="headerlink" href="#scatterplots" title="Permalink to this headline">¶</a></h3>
+<section id="scatterplots">
+<h3>Scatterplots<a class="headerlink" href="#scatterplots" title="Permalink to this headline">#</a></h3>
 <p>There are many variants of each type of plot that you might like to use. For example, <code class="docutils literal notranslate"><span class="pre">scatterplot</span></code>, <code class="docutils literal notranslate"><span class="pre">regplot</span></code>, <code class="docutils literal notranslate"><span class="pre">jointplot</span></code>.</p>
 <p>Let’s update our simulation code a little bit to make this easier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=.</span><span class="mi">9</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate_xy</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">.9</span><span class="p">):</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
         <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">],</span>
@@ -875,7 +1189,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <p>We can create a quick way to view relations between multiple variables using <code class="docutils literal notranslate"><span class="pre">pairplot</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=.</span><span class="mi">9</span><span class="p">),</span><span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=.</span><span class="mi">3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">.9</span><span class="p">),</span><span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">.3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;V3&#39;</span><span class="p">,</span> <span class="s1">&#39;V4&#39;</span><span class="p">]</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
@@ -888,19 +1202,19 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <img alt="../_images/Introduction_to_Plotting_28_1.png" src="../_images/Introduction_to_Plotting_28_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="factor-plots">
-<h3>Factor plots<a class="headerlink" href="#factor-plots" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="factor-plots">
+<h3>Factor plots<a class="headerlink" href="#factor-plots" title="Permalink to this headline">#</a></h3>
 <p>Factor plots allow you to visualize the distribution of parameters in different forms such as point, bar, or violin graphs.</p>
 <p>One important thing to note is that the data needs to be in the long format. Let’s quickly simulate some data to plot.</p>
 <p>Here are some possible values for kind : {point, bar, count, box, violin, strip}</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data1</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=.</span><span class="mi">9</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data1</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">.9</span><span class="p">)</span>
 <span class="n">data1</span><span class="p">[</span><span class="s1">&#39;Group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Group1&#39;</span>
 <span class="n">data1</span><span class="p">[</span><span class="s1">&#39;Variable1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[</span><span class="s1">&#39;Variable1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
 
-<span class="n">data2</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
 <span class="n">data2</span><span class="p">[</span><span class="s1">&#39;Group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Group2&#39;</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -960,14 +1274,14 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <img alt="../_images/Introduction_to_Plotting_33_1.png" src="../_images/Introduction_to_Plotting_33_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="heatmaps">
-<h3>Heatmaps<a class="headerlink" href="#heatmaps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="heatmaps">
+<h3>Heatmaps<a class="headerlink" href="#heatmaps" title="Permalink to this headline">#</a></h3>
 <p>Heatmap plots allow you to visualize matrices such as correlation matrices that show relationships across multiple variables.</p>
 <p>Let’s create a dataset with different relationships between variables. We can quickly calculate the correlation between these variables and visualize it with a heatmap</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=.</span><span class="mi">9</span><span class="p">),</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=.</span><span class="mi">3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">.9</span><span class="p">),</span> <span class="n">simulate_xy</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mf">.3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;V3&#39;</span><span class="p">,</span> <span class="s1">&#39;V4&#39;</span><span class="p">]</span>
 <span class="n">corr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
@@ -985,7 +1299,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <p>Like all other plots, we can also customize heatmaps.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Correlation Matrix&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1012,10 +1326,10 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <img alt="../_images/Introduction_to_Plotting_39_1.png" src="../_images/Introduction_to_Plotting_39_1.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="pandas">
-<h2>Pandas<a class="headerlink" href="#pandas" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="pandas">
+<h2>Pandas<a class="headerlink" href="#pandas" title="Permalink to this headline">#</a></h2>
 <p>We introduced <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> in a previous tutorial. It can also call matplotlib to quickly generate plots.</p>
 <p>We will use the same dataset used in that tutorial to generate some plots using <code class="docutils literal notranslate"><span class="pre">pd.Dataframe</span></code>.</p>
 <div class="cell docutils container">
@@ -1057,8 +1371,8 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <img alt="../_images/Introduction_to_Plotting_44_1.png" src="../_images/Introduction_to_Plotting_44_1.png" />
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Scatterplot<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>Scatterplot<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;years&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;years&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;salary&#39;</span><span class="p">)</span>
@@ -1092,9 +1406,9 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 </div>
 </div>
 <p>The problem is that it treats department as a continuous variable.</p>
-</div>
-<div class="section" id="generating-bar-errorbar-plots-in-pandas">
-<h3>Generating bar - errorbar plots in Pandas<a class="headerlink" href="#generating-bar-errorbar-plots-in-pandas" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="generating-bar-errorbar-plots-in-pandas">
+<h3>Generating bar - errorbar plots in Pandas<a class="headerlink" href="#generating-bar-errorbar-plots-in-pandas" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">means</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span>
@@ -1107,27 +1421,27 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <img alt="../_images/Introduction_to_Plotting_51_0.png" src="../_images/Introduction_to_Plotting_51_0.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="interactive-plots">
-<h2>Interactive Plots<a class="headerlink" href="#interactive-plots" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="interactive-plots">
+<h2>Interactive Plots<a class="headerlink" href="#interactive-plots" title="Permalink to this headline">#</a></h2>
 <p>Interactive data visualizations are an exciting development and are likely to continue to grow in popularity with the rapid developments in web frontend frameworks. Covering these libraries is beyond the scope of this tutorial, but I highly encourage you to check them out. Some of them are surprisingly easy to use and make exploring your data and sharing your results much more fun.</p>
 <p>It is possible to add some basic interactivity to the plotting libraries covered in this tutorial in jupyter notebooks with <a class="reference external" href="https://ipywidgets.readthedocs.io/en/latest/">ipywidgets</a>. You will see a few examples of this in other tutorials.</p>
-<div class="section" id="plotly">
-<h3>Plotly<a class="headerlink" href="#plotly" title="Permalink to this headline">¶</a></h3>
+<section id="plotly">
+<h3>Plotly<a class="headerlink" href="#plotly" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://plotly.com/python/">Plotly</a> is an graphing library to make interactive plots.</p>
-</div>
-<div class="section" id="bokeh">
-<h3>Bokeh<a class="headerlink" href="#bokeh" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bokeh">
+<h3>Bokeh<a class="headerlink" href="#bokeh" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://docs.bokeh.org/en/latest/index.html">Bokeh</a> is an interactive visualization library</p>
-</div>
-<div class="section" id="altair">
-<h3>Altair<a class="headerlink" href="#altair" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="altair">
+<h3>Altair<a class="headerlink" href="#altair" title="Permalink to this headline">#</a></h3>
 <p><a class="reference external" href="https://altair-viz.github.io/">Altair</a> is a declarative statistical visualization library for Python based on Vega</p>
-</div>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <p>The following exercises uses the dataset “salary_exercise.csv” adapted from material available <a class="reference external" href="http://data.princeton.edu/wws509/datasets/#salary">here</a></p>
 <p>These are the salary data used in Weisberg’s book, consisting of observations on six variables for 52 tenure-track professors in a small college. The variables are:</p>
 <ul class="simple">
@@ -1142,8 +1456,8 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <li><p>sl = Academic year salary, in dollars.</p></li>
 </ul>
 <p>Reference: S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.</p>
-<div class="section" id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<section id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
 <p>Recreate the plot shown in figure.<br />
 On the left is a correlation of all parameters of only the male professors.<br />
 On the right is the same but only for female professors.<br />
@@ -1170,9 +1484,9 @@ Place titles for each plot as shown, and your name as the main title.</p>
 <img alt="../_images/Introduction_to_Plotting_55_0.png" src="../_images/Introduction_to_Plotting_55_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h3>
 <p>Recreate the following plot from the salary_exercise.csv dataset.<br />
 Create a 1 x 2 subplot.<br />
 On the left is a bar-errorbar of salary per gender.<br />
@@ -1203,9 +1517,9 @@ Add your name as the main title of the plot.</p>
 <img alt="../_images/Introduction_to_Plotting_57_0.png" src="../_images/Introduction_to_Plotting_57_0.png" />
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1229,67 +1543,51 @@ Add your name as the main title of the plot.</p>
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="Introduction_to_Pandas.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Introduction to Pandas</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Introduction_to_Pandas.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to Pandas</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Glossary.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Glossary</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="Glossary.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Glossary</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Luke Chang<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-          </div>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
 
   </body>
 </html>

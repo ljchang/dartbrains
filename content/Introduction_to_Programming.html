@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Introduction to programming &#8212; DartBrains</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,37 +20,36 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_Programming.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -57,10 +58,37 @@
     <link rel="next" title="Introduction to Pandas" href="Introduction_to_Pandas.html" />
     <link rel="prev" title="Download Data" href="Download_Data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
     
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -69,9 +97,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -89,7 +118,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Overview
  </span>
@@ -111,7 +140,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Computing Resources
  </span>
@@ -148,7 +177,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Topics
  </span>
@@ -225,7 +254,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Additional Courses
  </span>
@@ -237,7 +266,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Project Gallery
  </span>
@@ -259,7 +288,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contributing
  </span>
@@ -278,120 +307,262 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/Introduction_to_Programming.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ljchang/dartbrains"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Programming.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Programming.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Programming.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Programming.ipynb&branch=master"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
-                data-placement="left"><img class="jupyterhub-button-logo"
-                    src="../_static/images/logo_jupyterhub.svg"
-                    alt="Interact on JupyterHub">JupyterHub</button></a>
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Programming.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Programming.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Programming.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Programming.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Programming.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Programming.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/Introduction_to_Programming.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#jupyter-notebooks">
    Jupyter Notebooks
@@ -498,23 +669,145 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to programming</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#jupyter-notebooks">
+   Jupyter Notebooks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#package-management">
+   Package Management
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variables">
+   Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#math-operators">
+   Math Operators
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#string-operators">
+   String Operators
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logical-operators">
+   Logical Operators
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-logic-if">
+   Conditional Logic (if…)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loops">
+   Loops
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-containers">
+   Python Containers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lists">
+     Lists
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dictionaries">
+     Dictionaries
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tuples">
+     Tuples
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sets">
+   sets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modules">
+   Modules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#find-even-numbers">
+     Find Even Numbers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#find-maximal-range">
+     Find Maximal Range
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#duplicated-numbers">
+     Duplicated Numbers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#speeding-ticket-fine">
+     Speeding Ticket Fine
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="introduction-to-programming">
-<h1>Introduction to programming<a class="headerlink" href="#introduction-to-programming" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-programming">
+<h1>Introduction to programming<a class="headerlink" href="#introduction-to-programming" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing <a class="reference external" href="https://www.anaconda.com/distribution/">Python 3.7</a>.  For those who prefer a more configurable IDE, <a class="reference external" href="https://www.jetbrains.com/pycharm/">Pycharm</a> is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for <a class="reference external" href="http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/">conducting research</a>.  You can use python for <a class="reference external" href="http://www.psychopy.org/">stimulus presentation</a>, <a class="reference external" href="http://statsmodels.sourceforge.net/">data analysis</a>, <a class="reference external" href="http://scikit-learn.org/stable/">machine-learning</a>, <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">scraping data</a>, creating websites with <a class="reference external" href="http://flask.pocoo.org/">flask</a> or <a class="reference external" href="https://www.djangoproject.com/">django</a>, or <a class="reference external" href="http://nipy.org/">neuroimaging data analysis</a>.</p>
 <p>There are lots of free useful resources to learn how to use python and various modules.  See <a class="reference external" href="https://github.com/ContextLab/cs-for-psych">Jeremy Manning’s</a> or <a class="reference external" href="https://github.com/dartmouth-pbs/psyc161">Yaroslav Halchenko’s</a> excellent Dartmouth courses.  <a class="reference external" href="https://www.codecademy.com/">Codeacademy</a> is a great interactive tutorial.  <a class="reference external" href="http://stackoverflow.com/">Stack Overflow</a> is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.</p>
 <p><img alt="" src="../_images/programming_growth.png" /></p>
-<div class="section" id="jupyter-notebooks">
-<h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h2>
+<section id="jupyter-notebooks">
+<h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">#</a></h2>
 <p>We will primarily be using <a class="reference external" href="http://jupyter.org/">Jupyter Notebooks</a> to interface with Python.  A Jupyter notebook consists of <strong>cells</strong>. The two main types of cells you will use are code cells and markdown cells.</p>
 <p>A <strong><em>code cell</em></strong> contains actual code that you want to run. You can specify a cell as a code cell using the pulldown menu in the toolbar in your Jupyter notebook. Otherwise, you can can hit esc and then y (denoted “esc, y”) while a cell is selected to specify that it is a code cell. Note that you will have to hit enter after doing this to start editing it.
 If you want to execute the code in a code cell, hit “shift + enter.” Note that code cells are executed in the order you execute them. That is to say, the ordering of the cells for which you hit “shift + enter” is the order in which the code is executed. If you did not explicitly execute a cell early in the document, its results are now known to the Python interpreter.</p>
@@ -527,9 +820,9 @@ If you want to execute the code in a code cell, hit “shift + enter.” Note th
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="package-management">
-<h2>Package Management<a class="headerlink" href="#package-management" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="package-management">
+<h2>Package Management<a class="headerlink" href="#package-management" title="Permalink to this headline">#</a></h2>
 <p>Package managment in Python has been dramatically improving.  Anaconda has it’s own package manager called ‘conda’.  Use this if you would like to install a new module as it is optimized to work with anaconda.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!conda install *package*
 </pre></div>
@@ -561,9 +854,9 @@ If you want to execute the code in a code cell, hit “shift + enter.” Note th
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="variables">
-<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">#</a></h2>
 <p>Python is a dynamically typed language, which means that you can easily change the datatype associated with a variable. There are several built-in datatypes that are good to be aware of.</p>
 <ul class="simple">
 <li><p>Built-in</p>
@@ -624,9 +917,9 @@ If you want to execute the code in a code cell, hit “shift + enter.” Note th
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="math-operators">
-<h2>Math Operators<a class="headerlink" href="#math-operators" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="math-operators">
+<h2>Math Operators<a class="headerlink" href="#math-operators" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>+, -, *, and /</p></li>
 <li><p>Exponentiation **</p></li>
@@ -668,9 +961,9 @@ If you want to execute the code in a code cell, hit “shift + enter.” Note th
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="string-operators">
-<h2>String Operators<a class="headerlink" href="#string-operators" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="string-operators">
+<h2>String Operators<a class="headerlink" href="#string-operators" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Some of the arithmetic operators also have meaning for strings. E.g. for string concatenation use <code class="docutils literal notranslate"><span class="pre">+</span></code> sign</p></li>
 <li><p>String repetition: Use <code class="docutils literal notranslate"><span class="pre">*</span></code> sign with a number of repetitions</p></li>
@@ -694,9 +987,9 @@ HelloHelloHelloHelloHello
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="logical-operators">
-<h2>Logical Operators<a class="headerlink" href="#logical-operators" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="logical-operators">
+<h2>Logical Operators<a class="headerlink" href="#logical-operators" title="Permalink to this headline">#</a></h2>
 <p>Perform logical comparison and return Boolean value</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span> <span class="c1"># x is equal to y</span>
 <span class="n">x</span> <span class="o">!=</span> <span class="n">y</span> <span class="c1"># x is not equal to y</span>
@@ -778,9 +1071,9 @@ True
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="conditional-logic-if">
-<h2>Conditional Logic (if…)<a class="headerlink" href="#conditional-logic-if" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="conditional-logic-if">
+<h2>Conditional Logic (if…)<a class="headerlink" href="#conditional-logic-if" title="Permalink to this headline">#</a></h2>
 <p>Unlike most other languages, Python uses tab formatting rather than closing conditional statements (e.g., end).</p>
 <ul class="simple">
 <li><p>Syntax:</p></li>
@@ -823,9 +1116,9 @@ n is not None
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="loops">
-<h2>Loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="loops">
+<h2>Loops<a class="headerlink" href="#loops" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>for</strong> loop is probably the most popular loop construct in Python:</p></li>
 </ul>
@@ -933,9 +1226,9 @@ Exited with x==10
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">#</a></h2>
 <p>A <strong>function</strong> is a named sequence of statements that performs a computation.  You define the function by giving it a name, specify a sequence of statements, and optionally values to return.  Later, you can “call” the function by name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_upper_case</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
@@ -967,9 +1260,9 @@ It is a common practice to use 4 spaces for indentation, and to avoid mixing wit
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="python-containers">
-<h2>Python Containers<a class="headerlink" href="#python-containers" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="python-containers">
+<h2>Python Containers<a class="headerlink" href="#python-containers" title="Permalink to this headline">#</a></h2>
 <p>There are 4 main types of builtin containers for storing data in Python:</p>
 <ul class="simple">
 <li><p>list</p></li>
@@ -977,8 +1270,8 @@ It is a common practice to use 4 spaces for indentation, and to avoid mixing wit
 <li><p>dict</p></li>
 <li><p>set</p></li>
 </ul>
-<div class="section" id="lists">
-<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h3>
+<section id="lists">
+<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">#</a></h3>
 <p>In Python, a list is a mutable sequence of values.  Mutable means that we can change separate entries within a list. For a more in depth tutorial on lists look <a class="reference external" href="http://nbviewer.jupyter.org/github/dartmouth-pbs/psyc161/blob/master/classes/02d-Python-Fundamentals-Containers-Lists.ipynb">here</a></p>
 <ul class="simple">
 <li><p>Each value in the list is an element or item</p></li>
@@ -1053,9 +1346,9 @@ It is a common practice to use 4 spaces for indentation, and to avoid mixing wit
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="dictionaries">
-<h3>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="dictionaries">
+<h3>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>In Python, a dictionary (or <code class="docutils literal notranslate"><span class="pre">dict</span></code>) is mapping between a set of
 indices (<strong>keys</strong>) and a set of <strong>values</strong></p></li>
@@ -1088,9 +1381,9 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="tuples">
-<h3>Tuples<a class="headerlink" href="#tuples" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tuples">
+<h3>Tuples<a class="headerlink" href="#tuples" title="Permalink to this headline">#</a></h3>
 <p>In Python, a <strong>tuple</strong> is an immutable sequence of values, meaning they can’t be changed</p>
 <ul class="simple">
 <li><p>Each value in the tuple is an element or item</p></li>
@@ -1117,10 +1410,10 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="sets">
-<h2>sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sets">
+<h2>sets<a class="headerlink" href="#sets" title="Permalink to this headline">#</a></h2>
 <p>In Python, a <code class="docutils literal notranslate"><span class="pre">set</span></code> is an efficient storage for “membership” checking</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">set</span></code> is like a <code class="docutils literal notranslate"><span class="pre">dict</span></code> but only with keys and without values</p></li>
@@ -1148,9 +1441,9 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">#</a></h2>
 <p>A <em>Module</em> is a python file that contains a collection of related definitions. Python has <em>hundreds</em> of standard modules.  These are organized into what is known as the <a class="reference external" href="http://docs.python.org/library/">Python Standard Library</a>.  You can also create and use your own modules.  To use functionality from a module, you first have to import the entire module or parts of it into your namespace</p>
 <ul class="simple">
 <li><p>To import the entire module, use</p></li>
@@ -1253,30 +1546,30 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="find-even-numbers">
-<h3>Find Even Numbers<a class="headerlink" href="#find-even-numbers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<section id="find-even-numbers">
+<h3>Find Even Numbers<a class="headerlink" href="#find-even-numbers" title="Permalink to this headline">#</a></h3>
 <p>Let’s say I give you a list saved in a variable: a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]. Make a new list that has only the even elements of this list in it.</p>
-</div>
-<div class="section" id="find-maximal-range">
-<h3>Find Maximal Range<a class="headerlink" href="#find-maximal-range" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="find-maximal-range">
+<h3>Find Maximal Range<a class="headerlink" href="#find-maximal-range" title="Permalink to this headline">#</a></h3>
 <p>Given an array length 1 or more of ints, return the difference between the largest and smallest values in the array.</p>
-</div>
-<div class="section" id="duplicated-numbers">
-<h3>Duplicated Numbers<a class="headerlink" href="#duplicated-numbers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="duplicated-numbers">
+<h3>Duplicated Numbers<a class="headerlink" href="#duplicated-numbers" title="Permalink to this headline">#</a></h3>
 <p>Find the numbers in list a that are also in list b</p>
 <p>a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361]</p>
 <p>b = [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]</p>
-</div>
-<div class="section" id="speeding-ticket-fine">
-<h3>Speeding Ticket Fine<a class="headerlink" href="#speeding-ticket-fine" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="speeding-ticket-fine">
+<h3>Speeding Ticket Fine<a class="headerlink" href="#speeding-ticket-fine" title="Permalink to this headline">#</a></h3>
 <p>You are driving a little too fast on the highway, and a police officer stops you. Write a function that takes the speed as an input and returns the fine.</p>
 <p>If speed is 60 or less, the result is <code class="docutils literal notranslate"><span class="pre">$0</span></code>. If speed is between 61 and 80 inclusive, the result is <code class="docutils literal notranslate"><span class="pre">$100</span></code>. If speed is 81 or more, the result is <code class="docutils literal notranslate"><span class="pre">$500</span></code>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1300,67 +1593,51 @@ dict_values([&#39;uno&#39;, &#39;dos&#39;, &#39;tres&#39;])
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="Download_Data.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Download Data</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Download_Data.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Download Data</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Introduction_to_Pandas.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to Pandas</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="Introduction_to_Pandas.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Introduction to Pandas</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Luke Chang<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-          </div>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
 
   </body>
 </html>

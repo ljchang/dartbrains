@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Modeling Single Subject Data &#8212; DartBrains</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,40 +20,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="canonical" href="http://dartbrains.org/content/GLM_Single_Subject_Model.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -59,10 +60,37 @@
     <link rel="next" title="Group Analysis" href="Group_Analysis.html" />
     <link rel="prev" title="Introduction to the General Linear Model" href="GLM.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
     
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -71,9 +99,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -91,7 +120,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Overview
  </span>
@@ -113,7 +142,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Computing Resources
  </span>
@@ -150,7 +179,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Topics
  </span>
@@ -227,7 +256,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Additional Courses
  </span>
@@ -239,7 +268,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Project Gallery
  </span>
@@ -261,7 +290,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contributing
  </span>
@@ -280,120 +309,262 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/GLM_Single_Subject_Model.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ljchang/dartbrains"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/GLM_Single_Subject_Model.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/GLM_Single_Subject_Model.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/GLM_Single_Subject_Model.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/GLM_Single_Subject_Model.ipynb&branch=master"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
-                data-placement="left"><img class="jupyterhub-button-logo"
-                    src="../_static/images/logo_jupyterhub.svg"
-                    alt="Interact on JupyterHub">JupyterHub</button></a>
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/GLM_Single_Subject_Model.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/GLM_Single_Subject_Model.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/GLM_Single_Subject_Model.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/GLM_Single_Subject_Model.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/GLM_Single_Subject_Model.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/GLM_Single_Subject_Model.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/GLM_Single_Subject_Model.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dataset">
    Dataset
@@ -506,17 +677,145 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Modeling Single Subject Data</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dataset">
+   Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-a-design-matrix">
+   Building a Design Matrix
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hrf-convolution">
+     HRF Convolution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multicollinearity">
+     Multicollinearity
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#variance-inflation-factor">
+       Variance Inflation Factor
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#orthogonalization">
+       Orthogonalization
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nuisance-variables">
+   Nuisance Variables
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filtering">
+     Filtering
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intercepts">
+     Intercepts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-trends">
+     Linear Trends
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#noise-covariates">
+     Noise Covariates
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#smoothing">
+   Smoothing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#estimate-glm-for-all-voxels">
+   Estimate GLM for all voxels
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#save-image">
+     Save Image
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contrasts">
+   Contrasts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
+     1. Which regions are more involved with visual compared to auditory sensory processing?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#which-regions-are-more-involved-in-processing-numbers-compared-to-words">
+     2. Which regions are more involved in processing numbers compared to words?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-e-g-language-and-math">
+     3. Which regions are more involved with motor compared to cognitive processes (e.g., language and math)?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-are-your-results-impacted-by-different-smoothing-kernels">
+     4. How are your results impacted by different smoothing kernels?
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="modeling-single-subject-data">
-<h1>Modeling Single Subject Data<a class="headerlink" href="#modeling-single-subject-data" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="modeling-single-subject-data">
+<h1>Modeling Single Subject Data<a class="headerlink" href="#modeling-single-subject-data" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>Now that we have learned the basics of the GLM using simulations, it’s time to apply this to working with real data. The first step in fMRI data analysis is to build a model for each subject to predict the activation in a single voxel over the entire scanning session. To do this, we need to build a design matrix for our general linear model. We expect distinct brain regions to be involved in processing specific aspects of our task. This means that we will construct separate regressors that model different brain processes.</p>
 <p>In this tutorial, we will learn how to build and estimate a single subject first-level model and will cover the following topics:</p>
@@ -526,15 +825,15 @@
 <li><p>Estimating GLM</p></li>
 <li><p>Performing basic contrasts</p></li>
 </ul>
-<div class="section" id="dataset">
-<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<section id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">#</a></h2>
 <p>We will continue to work with the Pinel Localizer dataset from our preprocessing examples.</p>
 <p>The Pinel Localizer task was designed to probe several different types of basic cognitive processes, such as visual perception, finger tapping, language, and math. Several of the tasks are cued by reading text on the screen (i.e., visual modality) and also by hearing auditory instructions (i.e., auditory modality). The trials are randomized across conditions and have been optimized to maximize efficiency for a rapid event related design. There are 100 trials in total over a 5-minute scanning session. Read the original <a class="reference external" href="https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91">paper</a> for more specific details about the task and the <a class="reference external" href="https://doi.org/10.1016/j.neuroimage.2015.09.052">dataset paper</a>.</p>
 <p>This dataset is well suited for these tutorials as it is (a) publicly available to anyone in the world, (b) relatively small (only about 5min), and (c) provides many options to create different types of contrasts.</p>
 <p>There are a total of 94 subjects available, but we will primarily only be working with a smaller subset of 10-20 participants. See our tutorial on how to download the data if you are not taking the Psych60 version of the class.</p>
-</div>
-<div class="section" id="building-a-design-matrix">
-<h2>Building a Design Matrix<a class="headerlink" href="#building-a-design-matrix" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="building-a-design-matrix">
+<h2>Building a Design Matrix<a class="headerlink" href="#building-a-design-matrix" title="Permalink to this headline">#</a></h2>
 <p>First, we will learn the basics of how to build a design matrix for our GLM.</p>
 <p>Let’s load all of the python modules we will need to complete this tutorial.</p>
 <div class="cell docutils container">
@@ -760,8 +1059,8 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_12_0.png" src="../_images/GLM_Single_Subject_Model_12_0.png" />
 </div>
 </div>
-<div class="section" id="hrf-convolution">
-<h3>HRF Convolution<a class="headerlink" href="#hrf-convolution" title="Permalink to this headline">¶</a></h3>
+<section id="hrf-convolution">
+<h3>HRF Convolution<a class="headerlink" href="#hrf-convolution" title="Permalink to this headline">#</a></h3>
 <p>Recall what we learned about convolution in our signal processing tutorial. We can now convolve all of the onset regressors with an HRF function using the <code class="docutils literal notranslate"><span class="pre">.convolve()</span></code> method. By default it will convolve all regressors with the standard double gamma HRF function, though you can specify custom ones and also specific regressors to convolve. Check out the docstrings for more information by adding a <code class="docutils literal notranslate"><span class="pre">?</span></code> after the function name. If you are interested in learning more about different ways to model the HRF using temporal basis functions, watch this <a class="reference external" href="https://www.youtube.com/watch?v=YfeMIcDWwko&amp;t=9s">video</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -804,9 +1103,9 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_18_1.png" src="../_images/GLM_Single_Subject_Model_18_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="multicollinearity">
-<h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="multicollinearity">
+<h3>Multicollinearity<a class="headerlink" href="#multicollinearity" title="Permalink to this headline">#</a></h3>
 <p>In statistics, collinearity or multicollinearity is when one regressor can be strongly linearly predicted from the others. While this does not actually impact the model’s ability to predict data as a whole, it will impact our ability to accurately attribute variance to a single regressor. Recall that in multiple regression, we are estimating the independent variance from each regressor from <code class="docutils literal notranslate"><span class="pre">X</span></code> on <code class="docutils literal notranslate"><span class="pre">Y</span></code>. If there is substantial overlap between the regressors, then the estimator can not attribute the correct amount of variance each regressor accounts for <code class="docutils literal notranslate"><span class="pre">Y</span></code> and the coefficients can become unstable. A more intuitive depiction of this problem can be seen in the venn diagram. The dark orange area in the center at the confluence of all 3 circles reflects the shared variance between <code class="docutils literal notranslate"><span class="pre">X1</span></code> and <code class="docutils literal notranslate"><span class="pre">X2</span></code> on <code class="docutils literal notranslate"><span class="pre">Y</span></code>. If this area becomes bigger, the unique variances become smaller and individually reflect less of the total variance on <code class="docutils literal notranslate"><span class="pre">Y</span></code>.</p>
 <p><img alt="MultipleRegression.png" src="../_images/MultipleRegression.png" /></p>
 <p>One way to evaluate multicollinearity is to examine the pairwise correlations between each regressor. We plot the correlation matrix as a heatmap.</p>
@@ -823,8 +1122,8 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_20_1.png" src="../_images/GLM_Single_Subject_Model_20_1.png" />
 </div>
 </div>
-<div class="section" id="variance-inflation-factor">
-<h4>Variance Inflation Factor<a class="headerlink" href="#variance-inflation-factor" title="Permalink to this headline">¶</a></h4>
+<section id="variance-inflation-factor">
+<h4>Variance Inflation Factor<a class="headerlink" href="#variance-inflation-factor" title="Permalink to this headline">#</a></h4>
 <p>Pairwise correlations will let you know if any regressor is correlated with another regressor. However, we are even more concerned about being able to explain any regressor as a linear combination of the other regressors. For example, <em>can one regressor be explained by three or more of the remaining regressors?</em> The variance inflation factor (VIF) is a metric that can help us detect multicollinearity. Specifically, it is simply the ratio of variance in a model with multiple terms, divided by the variance of a model with only a single term. This ratio reduces to the following formula:</p>
 <div class="math notranslate nohighlight">
 \[VIF_j=\frac{1}{1-R_i^2}\]</div>
@@ -848,18 +1147,18 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_22_1.png" src="../_images/GLM_Single_Subject_Model_22_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="orthogonalization">
-<h4>Orthogonalization<a class="headerlink" href="#orthogonalization" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="orthogonalization">
+<h4>Orthogonalization<a class="headerlink" href="#orthogonalization" title="Permalink to this headline">#</a></h4>
 <p>There are many ways to deal with collinearity. In practice, don’t worry about collinearity between your covariates. The more pernicious issues are collinearity in your experimental design.</p>
 <p>It is commonly thought that using a procedure called orthogonalization should be used to address issues of multicollinearity. In linear algebra, orthogonalization is the process of prioritizing shared variance between regressors to a single regressor. Recall that the standard GLM already accounts for shared variance by removing it from individual regressors. Orthogonalization allows a user to assign that variance to a specific regressor. However, the process of performing this procedure can introduce artifact into the model and often changes the interpretation of the beta weights in unanticipated ways.</p>
 <p><img alt="Orthogonalization.png" src="../_images/Orthogonalization.png" /></p>
 <p>In general, we do not recommend using orthogonalization in most use cases, with the exception of centering regressor variables. We encourage the interested reader to review this very useful <a class="reference external" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0126255">overview</a> of collinearity and orthogonalization by Jeanette Mumford and colleagues.</p>
-</div>
-</div>
-</div>
-<div class="section" id="nuisance-variables">
-<h2>Nuisance Variables<a class="headerlink" href="#nuisance-variables" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="nuisance-variables">
+<h2>Nuisance Variables<a class="headerlink" href="#nuisance-variables" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
@@ -879,8 +1178,8 @@ memory usage: 10.1 KB
 ></iframe>
 </div></div>
 </div>
-<div class="section" id="filtering">
-<h3>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h3>
+<section id="filtering">
+<h3>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">#</a></h3>
 <p>Recall from our signal processing tutorial, that there are often other types of artifacts in our signal that might take the form of slow or fast oscillations. It is common to apply a high pass filter to the data to remove low frequency artifacts. Often this can also be addressed by simply using a few polynomials to model these types of trends. If we were to directly filter the brain data using something like a butterworth filter as we did in our signal processing tutorial, we would also need to apply it to our design matrix to make sure that we don’t have any low frequency drift in experimental design. One easy way to simultaneously perform both of these procedures is to simply build a filter into the design matrix. We will be using a discrete cosine transform (DCT), which is a basis set of cosine regressors of varying frequencies up to a filter cutoff of a specified number of seconds. Many software use 100s or 128s as a default cutoff, but we encourage caution that the filter cutoff isn’t too short for your specific experimental design. Longer trials will require longer filter cutoffs. See this <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1053811900906098">paper</a> for a more technical treatment of using the DCT as a high pass filter in fMRI data analysis. In addition, here is a more detailed discussion about <a class="reference external" href="http://mindhive.mit.edu/node/116">filtering</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -913,9 +1212,9 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_29_0.png" src="../_images/GLM_Single_Subject_Model_29_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="intercepts">
-<h3>Intercepts<a class="headerlink" href="#intercepts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="intercepts">
+<h3>Intercepts<a class="headerlink" href="#intercepts" title="Permalink to this headline">#</a></h3>
 <p>We almost always want to include an intercept in our model. This will usually reflect the baseline, or the average voxel response during the times that are not being modeled as a regressor. It is important to note that you must have some sparsity to your model, meaning that you can’t model every point in time, as this will make your model rank deficient and unestimable.</p>
 <p>If you are concatenating runs and modeling them all together, it is recommended to include a separate intercept for each run, but not for the entire model. This means that the average response within a voxel might differ across runs. You can add an intercept by simply creating a new column of ones (e.g., <code class="docutils literal notranslate"><span class="pre">dm['Intercept]</span> <span class="pre">=</span> <span class="pre">1</span></code>). Here we provide an example using the <code class="docutils literal notranslate"><span class="pre">.add_poly()</span></code> method, which adds an intercept by default.</p>
 <div class="cell docutils container">
@@ -929,9 +1228,9 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_31_0.png" src="../_images/GLM_Single_Subject_Model_31_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="linear-trends">
-<h3>Linear Trends<a class="headerlink" href="#linear-trends" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="linear-trends">
+<h3>Linear Trends<a class="headerlink" href="#linear-trends" title="Permalink to this headline">#</a></h3>
 <p>We also often want to remove any slow drifts in our data.  This might include a linear trend and a quadratic trend. We can also do this with the <code class="docutils literal notranslate"><span class="pre">.add_poly()</span></code> method and adding all trends up to an order of 2 (e.g., quadratic). We typically use this approach rather than applying a high pass filter when working with naturalistic viewing data.</p>
 <p>Notice that these do not appear to be very different from the high pass filter basis set. It’s actually okay if there is collinearity in our covariate regressors. Collinearity is only a problem when it correlates with the task regressors as it means that we will not be able to uniquely model the variance. The DCT can occasionally run into edge artifacts, which can be addressed by the linear trend.</p>
 <div class="cell docutils container">
@@ -945,9 +1244,9 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_33_0.png" src="../_images/GLM_Single_Subject_Model_33_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="noise-covariates">
-<h3>Noise Covariates<a class="headerlink" href="#noise-covariates" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="noise-covariates">
+<h3>Noise Covariates<a class="headerlink" href="#noise-covariates" title="Permalink to this headline">#</a></h3>
 <p>Another important thing to consider is removing variance associated with head motion. Remember the preprocessed data has already realigned each TR in space, but head motion itself can nonlinearly distort the magnetic field. There are several common strategies for trying to remove artifacts associated with head motion. One is using a data driven denoising algorithm like ICA and combining it with a classifer such as FSL’s <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX">FIX</a> module. Another approach is to include the amount of correction that needed to be applied to align each TR. For example, if someone moved a lot in a single TR, there will be a strong change in their realignment parameters. It is common to include the 6 parameters as covariates in your regression model. However, as we already noted, often motion can have a nonlinear relationship with signal intensity, so it is often good to include other transformations of these signals to capture nonlinear signal changes resulting from head motion. We typically center the six realigment parameters (or zscore) and then additionally add a quadratic version, a derivative, and the square of the derivatives, which becomes 24 additional regressors.</p>
 <p>In addition, it is common to model out big changes using a regressor with a single value indicating the timepoint of the movement. This will be zeros along time, with a single value of one at the time point of interest. This effectively removes any variance associated with this single time point. It is important to model each “spike” as a separate regressor as there might be distinct spatial patterns associated with different types of head motions. We strongly recommond against using a single continuous frame displacement metric as is often recommended by the fMRIprep team. This assumes (1) that there is a <em>linear</em> relationship between displacement and voxel activity, and (2) that there is a <em>single</em> spatial generator or pattern associated with frame displacement. As we saw in the ICA noise lab, there might be many different types of head motion artifacts. This procedure of including spikes as nuisance regressors is mathematically equivalent to censoring your data and removing the bad TRs. We think it is important to do this in the context of the GLM as it will also reduce the impact if it happens to covary with your task.</p>
 <p>First, let’s load preprocessed data from one participant.</p>
@@ -1058,10 +1357,10 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_45_0.png" src="../_images/GLM_Single_Subject_Model_45_0.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="smoothing">
-<h2>Smoothing<a class="headerlink" href="#smoothing" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="smoothing">
+<h2>Smoothing<a class="headerlink" href="#smoothing" title="Permalink to this headline">#</a></h2>
 <p>To increase the signal to noise ratio and clean up the data, it is common to apply spatial smoothing to the image.</p>
 <p>Here we will convolve the image with a 3-D gaussian kernel, with a 6mm full width half maximum (FWHM) using the <code class="docutils literal notranslate"><span class="pre">.smooth()</span></code> method.</p>
 <div class="cell docutils container">
@@ -1099,9 +1398,9 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_51_1.png" src="../_images/GLM_Single_Subject_Model_51_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="estimate-glm-for-all-voxels">
-<h2>Estimate GLM for all voxels<a class="headerlink" href="#estimate-glm-for-all-voxels" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="estimate-glm-for-all-voxels">
+<h2>Estimate GLM for all voxels<a class="headerlink" href="#estimate-glm-for-all-voxels" title="Permalink to this headline">#</a></h2>
 <p>Now we are ready to estimate the regression model for all voxels.</p>
 <p>We will assign the design_matrix object to the <code class="docutils literal notranslate"><span class="pre">.X</span></code> attribute of our <code class="docutils literal notranslate"><span class="pre">Brain_Data</span></code> instance.</p>
 <p>Then we simply need to run the <code class="docutils literal notranslate"><span class="pre">.regress()</span></code> method.</p>
@@ -1158,8 +1457,8 @@ memory usage: 10.1 KB
 {"model_id": "6f91755cf56e4335a11b7ee33eb0bd0a", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
-<div class="section" id="save-image">
-<h3>Save Image<a class="headerlink" href="#save-image" title="Permalink to this headline">¶</a></h3>
+<section id="save-image">
+<h3>Save Image<a class="headerlink" href="#save-image" title="Permalink to this headline">#</a></h3>
 <p>We will frequently want to save different brain images we are working with to a nifti file. This is useful for saving intermediate work, or sharing our results with others. This is easy with the <code class="docutils literal notranslate"><span class="pre">.write()</span></code> method. Be sure to specify a path and file name for the file.</p>
 <p><strong>Note</strong>: You can only write to folders where you have permission. Try changing the path to your own directory.</p>
 <div class="cell docutils container">
@@ -1169,10 +1468,10 @@ memory usage: 10.1 KB
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="contrasts">
-<h2>Contrasts<a class="headerlink" href="#contrasts" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="contrasts">
+<h2>Contrasts<a class="headerlink" href="#contrasts" title="Permalink to this headline">#</a></h2>
 <p>Now that we have estimated our model, we will likely want to create contrasts to examine brain activation to different conditions.</p>
 <p>This procedure is identical to those introduced in our GLM tutorial.</p>
 <p>Let’s watch another video by Tor Wager to better understand contrasts at the first-level model stage.</p>
@@ -1234,7 +1533,7 @@ memory usage: 10.1 KB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_rvl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]))</span>
-<span class="n">c_rvl</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">c_rvl</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">.5</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">.5</span><span class="p">]</span>
 
 <span class="n">motor_rvl</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_rvl</span>
 
@@ -1248,45 +1547,45 @@ memory usage: 10.1 KB
 </script></div>
 </div>
 <p>What do you see?</p>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <p>For homework, let’s get a better handle on how to play with our data and test different hypotheses.</p>
-<div class="section" id="which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
-<h3>1. Which regions are more involved with visual compared to auditory sensory processing?<a class="headerlink" href="#which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing" title="Permalink to this headline">¶</a></h3>
+<section id="which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
+<h3>1. Which regions are more involved with visual compared to auditory sensory processing?<a class="headerlink" href="#which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Create a contrast to test this hypothesis</p></li>
 <li><p>plot the results</p></li>
 <li><p>write the file to your output folder.</p></li>
 </ul>
-</div>
-<div class="section" id="which-regions-are-more-involved-in-processing-numbers-compared-to-words">
-<h3>2. Which regions are more involved in processing numbers compared to words?<a class="headerlink" href="#which-regions-are-more-involved-in-processing-numbers-compared-to-words" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="which-regions-are-more-involved-in-processing-numbers-compared-to-words">
+<h3>2. Which regions are more involved in processing numbers compared to words?<a class="headerlink" href="#which-regions-are-more-involved-in-processing-numbers-compared-to-words" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Create a contrast to test this hypothesis</p></li>
 <li><p>plot the results</p></li>
 <li><p>write the file to your output folder.</p></li>
 </ul>
-</div>
-<div class="section" id="which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-e-g-language-and-math">
-<h3>3. Which regions are more involved with motor compared to cognitive processes (e.g., language and math)?<a class="headerlink" href="#which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-e-g-language-and-math" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-e-g-language-and-math">
+<h3>3. Which regions are more involved with motor compared to cognitive processes (e.g., language and math)?<a class="headerlink" href="#which-regions-are-more-involved-with-motor-compared-to-cognitive-processes-e-g-language-and-math" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Create a contrast to test this hypothesis</p></li>
 <li><p>plot the results</p></li>
 <li><p>write the file to your output folder.</p></li>
 </ul>
-</div>
-<div class="section" id="how-are-your-results-impacted-by-different-smoothing-kernels">
-<h3>4. How are your results impacted by different smoothing kernels?<a class="headerlink" href="#how-are-your-results-impacted-by-different-smoothing-kernels" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="how-are-your-results-impacted-by-different-smoothing-kernels">
+<h3>4. How are your results impacted by different smoothing kernels?<a class="headerlink" href="#how-are-your-results-impacted-by-different-smoothing-kernels" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
 <li><p>Pick two different sized smoothing kernels and create two new brain images with each smoothing kernel</p></li>
 <li><p>Pick any contrast of interest to you and evaluate the impact of smoothing on the contrast.</p></li>
 <li><p>plot the results</p></li>
 <li><p>write the file to your output folder.</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1310,67 +1609,51 @@ memory usage: 10.1 KB
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="GLM.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Introduction to the General Linear Model</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="GLM.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to the General Linear Model</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Group_Analysis.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Group Analysis</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="Group_Analysis.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Group Analysis</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Luke Chang<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-          </div>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
 
   </body>
 </html>

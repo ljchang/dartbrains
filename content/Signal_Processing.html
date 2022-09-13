@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Signal Processing Basics &#8212; DartBrains</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,40 +20,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="canonical" href="http://dartbrains.org/content/Signal_Processing.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -59,10 +60,37 @@
     <link rel="next" title="Preprocessing" href="Preprocessing.html" />
     <link rel="prev" title="Introduction to Neuroimaging Data" href="Introduction_to_Neuroimaging_Data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
     
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -71,9 +99,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -91,7 +120,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p class="caption">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Overview
  </span>
@@ -113,7 +142,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Computing Resources
  </span>
@@ -150,7 +179,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course Topics
  </span>
@@ -227,7 +256,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Additional Courses
  </span>
@@ -239,7 +268,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Project Gallery
  </span>
@@ -261,7 +290,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contributing
  </span>
@@ -280,120 +309,262 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/Signal_Processing.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ljchang/dartbrains"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Signal_Processing.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ljchang/dartbrains/edit/master/content/Signal_Processing.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Signal_Processing.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        <a class="jupyterhub-button" href="https://jhub.dartmouth.edu//hub/user-redirect/git-pull?repo=https://github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Signal_Processing.ipynb&branch=master"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
-                data-placement="left"><img class="jupyterhub-button-logo"
-                    src="../_static/images/logo_jupyterhub.svg"
-                    alt="Interact on JupyterHub">JupyterHub</button></a>
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Signal_Processing.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Signal_Processing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Signal_Processing.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Signal_Processing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Signal_Processing.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Signal_Processing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/Signal_Processing.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#time-domain">
    Time Domain
@@ -526,24 +697,172 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Signal Processing Basics</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-domain">
+   Time Domain
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dot-product">
+     Dot Product
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolution">
+     Convolution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#oscillations">
+     Oscillations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-frequency-domains">
+   Time &amp; Frequency Domains
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frequency-domain">
+   Frequency Domain
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discrete-time-fourier-transform">
+     Discrete Time Fourier Transform
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#complex-sine-waves">
+       Complex Sine Waves
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#create-a-filter-bank">
+       Create a filter bank
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#estimate-fourier-coefficients">
+       Estimate Fourier Coefficients
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#visualizing-fourier-coefficients">
+       Visualizing Fourier Coefficients
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inverse-fourier-transform">
+     Inverse Fourier Transform
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fast-fourier-transform">
+     Fast Fourier Transform
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolution-theorem">
+     Convolution Theorem
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filters">
+   Filters
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#high-pass">
+     High Pass
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#low-pass">
+     Low Pass
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bandpass">
+     Bandpass
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#band-stop">
+     Band-Stop
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-1-create-a-simulated-time-series-with-7-different-frequencies-with-noise">
+     Exercise 1. Create a simulated time series with 7 different frequencies with noise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-2-show-that-you-can-identify-each-signal-using-a-fft">
+     Exercise 2. Show that you can identify each signal using a FFT
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-3-remove-one-frequency-with-a-bandstop-filter">
+     Exercise 3. Remove one frequency with a bandstop filter
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original">
+     Exercise 4. Remove frequency with a bandstop filter in the frequency domain and reconstruct the signal in the time domain with the frequency removed and compare it to the original
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="section" id="signal-processing-basics">
-<h1>Signal Processing Basics<a class="headerlink" href="#signal-processing-basics" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="signal-processing-basics">
+<h1>Signal Processing Basics<a class="headerlink" href="#signal-processing-basics" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>In this lab, we will cover the basics of convolution, sine waves, and fourier transforms. This lab is largely based on exercises from Mike X Cohen’s excellent book, <a class="reference external" href="https://www.amazon.com/Analyzing-Neural-Time-Data-Practice/dp/0262019876">Analying Neural Data Analysis: Theory and Practice</a>. If you are interested in learning in more detail about the basics of EEG and time-series analyses I highly recommend his accessible introduction. I also encourage you to watch his accompanying freely available <a class="reference external" href="https://www.youtube.com/channel/UCUR_LsXk7IYyueSnXcNextQ"><em>lecturelets</em></a> to learn more about each topic introduced in this notebook.</p>
-<div class="section" id="time-domain">
-<h2>Time Domain<a class="headerlink" href="#time-domain" title="Permalink to this headline">¶</a></h2>
+<section id="time-domain">
+<h2>Time Domain<a class="headerlink" href="#time-domain" title="Permalink to this headline">#</a></h2>
 <p>First we will work on signals in the time domain.  This requires measuring a signal at a constant interval over time.  The frequency with which we measure a signal is referred to as the sampling frequency.  The units of this are typically described in <span class="math notranslate nohighlight">\(Hz\)</span> - or the number of cycles per second. It is critical that the sampling frequency is consistent over the entire measurement of the time series.</p>
-<div class="section" id="dot-product">
-<h3>Dot Product<a class="headerlink" href="#dot-product" title="Permalink to this headline">¶</a></h3>
+<section id="dot-product">
+<h3>Dot Product<a class="headerlink" href="#dot-product" title="Permalink to this headline">#</a></h3>
 <p>To understand convolution, we first need to familiarize ourselves with the dot product.  The dot product is simply the sum of the elements of a vector weighted by the elements of another vector. This method is commonly used in signal processing, and also in statistics as a measure of similarity between two vectors. Finally, there is also a geometric inrepretation which is a mapping between vectors (i.e., the product of the magnitudes of the two vectors scaled by the cosine of the angle between them). For a more in depth overview of the dot product and its relation to convolution, you can watch this optional <a class="reference external" href="https://youtu.be/rea6M1oagmA">video</a>.</p>
 <p><span class="math notranslate nohighlight">\(dotproduct_{ab}=\sum\limits_{i=1}^n a_i b_i\)</span></p>
 <p>Let’s create some vectors of random numbers and see how the dot product works.  First, the two vectors need to be of the same length.</p>
@@ -593,9 +912,9 @@
 <img alt="../_images/Signal_Processing_5_1.png" src="../_images/Signal_Processing_5_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="convolution">
-<h3>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="convolution">
+<h3>Convolution<a class="headerlink" href="#convolution" title="Permalink to this headline">#</a></h3>
 <p>Convolution in the time domain is an extension of the dot product in which the dot product is computed iteratively over time.  One way to think about it is that one signal weights each time point of the other signal and then slides forward over time.  Let’s call the timeseries variable <em>signal</em> and the other vector the <em>kernel</em>. Importantly, for our purposes, the kernel will almost always be smaller than the signal, otherwise we would only have one scalar value afterwards.</p>
 <p>To gain an intuition of how convolution works, let’s play with some data. First, let’s create a time series of spikes. Then let’s convolve this signal with a boxcar kernel.</p>
 <div class="cell docutils container">
@@ -798,9 +1117,9 @@ Convolved Signal Length: 109
 </div>
 </div>
 <p>If you are interested in a more detailed overview of convolution in the time domain, I encourage you to watch this <a class="reference external" href="https://youtu.be/9Hk-RAIzOaw">video</a> by Mike X Cohen. For more details about convolution and the HRF function, see this <a class="reference external" href="https://practical-neuroimaging.github.io/on_convolution.html">overview</a> using python examples.</p>
-</div>
-<div class="section" id="oscillations">
-<h3>Oscillations<a class="headerlink" href="#oscillations" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="oscillations">
+<h3>Oscillations<a class="headerlink" href="#oscillations" title="Permalink to this headline">#</a></h3>
 <p>Ok, now let’s move on to studying time-varying signals that have the shape of oscillating waves.</p>
 <p>Let’s watch a short video by Mike X Cohen to get some more background on sine waves. Don’t worry too much about the matlab code as we will work through similar Python examples in this notebook.</p>
 <div class="cell docutils container">
@@ -1009,10 +1328,10 @@ Convolved Signal Length: 109
 <img alt="../_images/Signal_Processing_38_1.png" src="../_images/Signal_Processing_38_1.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="time-frequency-domains">
-<h2>Time &amp; Frequency Domains<a class="headerlink" href="#time-frequency-domains" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="time-frequency-domains">
+<h2>Time &amp; Frequency Domains<a class="headerlink" href="#time-frequency-domains" title="Permalink to this headline">#</a></h2>
 <p>We have seen above how to represent signals in the time domain. However, these signals can also be represented in the frequency domain.</p>
 <p>Let’s get started by watching a short video by Mike X Cohen to get an overview of how a signal can be represented in both of these different domains.</p>
 <div class="cell docutils container">
@@ -1032,14 +1351,14 @@ Convolved Signal Length: 109
 ></iframe>
 </div></div>
 </div>
-</div>
-<div class="section" id="frequency-domain">
-<h2>Frequency Domain<a class="headerlink" href="#frequency-domain" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="frequency-domain">
+<h2>Frequency Domain<a class="headerlink" href="#frequency-domain" title="Permalink to this headline">#</a></h2>
 <p>In the previous example, we generated a complex signal composed of multiple sine waves oscillating at different frequencies. Typically in data analysis, we only observe the signal and are trying to uncover the generative processes that gave rise to the signal.  In this section, we will introduce the frequency domain and how we can identify if there are any frequencies oscillating at a consistent frequency in our signal using the fourier transform. The fourier transform is essentially convolving different frequencies of sine waves with our data.</p>
 <p>One important assumption to note is that the fourier transformations assume that your oscillatory signals are stationary, which means that the generative processes giving rise to the oscillations do not vary over time.</p>
 <p>See this <a class="reference external" href="https://youtu.be/rea6M1oagmA">video</a> for a more in depth discussion on stationarity.  In practice, this assumption is rarely true.  Often it can be useful to use other techniques such as wavelets to look at time x frequency representations. We will not be covering wavelets here, but see this series of <a class="reference external" href="https://youtu.be/7ahrcB5HL0k">videos</a> for more information.</p>
-<div class="section" id="discrete-time-fourier-transform">
-<h3>Discrete Time Fourier Transform<a class="headerlink" href="#discrete-time-fourier-transform" title="Permalink to this headline">¶</a></h3>
+<section id="discrete-time-fourier-transform">
+<h3>Discrete Time Fourier Transform<a class="headerlink" href="#discrete-time-fourier-transform" title="Permalink to this headline">#</a></h3>
 <p>We will gain an intution of how the fourier transform works by building our own discrete time fourier transform.</p>
 <p>Let’s watch this short video about the fourier transform by Mike X Cohen. Don’t worry too much about the details of the discussion on the matlab code as we will be exploring these concepts in python below.</p>
 <div class="cell docutils container">
@@ -1063,8 +1382,8 @@ Convolved Signal Length: 109
 <p><span class="math notranslate nohighlight">\(X_f = \sum\limits_{k=0}^{n-1} x_k \cdot e^\frac{-i2\pi fk}{n}\)</span>
 where <span class="math notranslate nohighlight">\(n\)</span> refers to the number of data points in vector <span class="math notranslate nohighlight">\(x\)</span>, and the capital letter <span class="math notranslate nohighlight">\(X_f\)</span> is the fourier coefficient of time series variable <span class="math notranslate nohighlight">\(x\)</span> at frequency <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <p>Essentially, we create a bank of complex sine waves at different frequencies that are linearly spaced. The zero frequency component reflects the mean offset over the entire signal and will simply be zero in our example.</p>
-<div class="section" id="complex-sine-waves">
-<h4>Complex Sine Waves<a class="headerlink" href="#complex-sine-waves" title="Permalink to this headline">¶</a></h4>
+<section id="complex-sine-waves">
+<h4>Complex Sine Waves<a class="headerlink" href="#complex-sine-waves" title="Permalink to this headline">#</a></h4>
 <p>You may have noticed that we are computing <em>complex</em> sine waves using the <code class="docutils literal notranslate"><span class="pre">np.exp</span></code> function instead of the <code class="docutils literal notranslate"><span class="pre">np.sin</span></code> function.</p>
 <div class="math notranslate nohighlight">
 \[\text{complex sine wave} = e^{i(2\pi ft + \theta)}\]</div>
@@ -1113,9 +1432,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_46_0.png" src="../_images/Signal_Processing_46_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="create-a-filter-bank">
-<h4>Create a filter bank<a class="headerlink" href="#create-a-filter-bank" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="create-a-filter-bank">
+<h4>Create a filter bank<a class="headerlink" href="#create-a-filter-bank" title="Permalink to this headline">#</a></h4>
 <p>Ok, now let’s create a bank of n-1 linearly spaced complex sine waves and plot first 5 waves to see their frequencies.</p>
 <p>Remember the first basis function is zero frequency component and reflects the mean offset over the entire signal.</p>
 <div class="cell docutils container">
@@ -1160,9 +1479,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_50_1.png" src="../_images/Signal_Processing_50_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="estimate-fourier-coefficients">
-<h4>Estimate Fourier Coefficients<a class="headerlink" href="#estimate-fourier-coefficients" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="estimate-fourier-coefficients">
+<h4>Estimate Fourier Coefficients<a class="headerlink" href="#estimate-fourier-coefficients" title="Permalink to this headline">#</a></h4>
 <p>Now let’s take the dot product of each of the sine wave basis set with our signal to get the fourier coefficients.</p>
 <p>We can <em>scale</em> the coefficients to be more interpretable by dividing by the number of time points and multiplying by 2. Watch this <a class="reference external" href="https://youtu.be/Ee9btm3tros">video</a> if you’re interested in a more detailed explanation. Basically, this only needs to be done if you want the amplitude to be in the same units as the original data. In practice, this scaling factor will not change your interpretation of the spectrum.</p>
 <div class="cell docutils container">
@@ -1172,9 +1491,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="visualizing-fourier-coefficients">
-<h4>Visualizing Fourier Coefficients<a class="headerlink" href="#visualizing-fourier-coefficients" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="visualizing-fourier-coefficients">
+<h4>Visualizing Fourier Coefficients<a class="headerlink" href="#visualizing-fourier-coefficients" title="Permalink to this headline">#</a></h4>
 <p>Now that we have computed the fourier transform, we might want to examine the results.  The fourier transform provides a 3-D representation of the data including frquency, power, and phase. Typically, the phase information is ignored when plotting the results of a fourier analysis. The traditional way to view the information is plot the data as amplitude on the <em>y-axis</em> and frequency on the <em>x-axis</em>. We will extract amplitude by taking the absolute value of the fourier coefficients. Remember that we are only focusing on the positive frequencies (the 1st half of the sine wave basis functions).</p>
 <p>Here the x axis simply reflects the index of the frequency.  The actual frequency is <span class="math notranslate nohighlight">\(N/2 + 1\)</span> as we are only able estimate frequencies that are half the sampling frequency, this is called the Nyquist frequency. Also, note that we are only plotting the first half of the frequencies. This is because we are only plotting the <em>positive</em> frequencies. We will ignore frequencies above the nyquist frequency (i.e., <span class="math notranslate nohighlight">\(\frac{\text{fs}}{2}\)</span>), which are called negative frequencies. Watch this <a class="reference external" href="https://youtu.be/Nupda1rm01Y">video</a> if you’d like more information about why.</p>
 <p>Watch this <a class="reference external" href="https://youtu.be/oh7WvhlkxnU">video</a> to hear more about frequencies and zero padding.</p>
@@ -1238,10 +1557,10 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 ></iframe>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="inverse-fourier-transform">
-<h3>Inverse Fourier Transform<a class="headerlink" href="#inverse-fourier-transform" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="inverse-fourier-transform">
+<h3>Inverse Fourier Transform<a class="headerlink" href="#inverse-fourier-transform" title="Permalink to this headline">#</a></h3>
 <p>The fourier transform allows you to represent a time series in the frequency domain. This is a lossless operation, meaning that no information in the original signal is lost by the transform. This means that we can reconstruct the original signal by inverting the operation. Thus, we can create a time series with only the frequency domain information using the <em>inverse fourier transform</em>. Watch this <a class="reference external" href="https://youtu.be/HFacSL--vps">video</a> if you would like a more in depth explanation.</p>
 <p><span class="math notranslate nohighlight">\(x_k = \sum\limits_{k=0}^{n-1} X_f \cdot e^\frac{i2\pi fk}{n}\)</span></p>
 <p>Notice that we are computing the dot product between the complex sine wave and the fourier coefficients <span class="math notranslate nohighlight">\(X\)</span> instead of the time series data <span class="math notranslate nohighlight">\(x\)</span>.</p>
@@ -1262,9 +1581,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_60_1.png" src="../_images/Signal_Processing_60_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="fast-fourier-transform">
-<h3>Fast Fourier Transform<a class="headerlink" href="#fast-fourier-transform" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="fast-fourier-transform">
+<h3>Fast Fourier Transform<a class="headerlink" href="#fast-fourier-transform" title="Permalink to this headline">#</a></h3>
 <p>The discrete time fourier transform is useful to understand the relationship between the time and frequency domains. However, in practice this method is rarely used as there are more faster and efficient methods to perform this computation. One popular algorithm is called the fast fourier transform (FFT). This function is also in numpy <code class="docutils literal notranslate"><span class="pre">np.fft.fft</span></code>. Don’t forget to divide by the number of samples to keep the scaling.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1305,15 +1624,15 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_64_1.png" src="../_images/Signal_Processing_64_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="convolution-theorem">
-<h3>Convolution Theorem<a class="headerlink" href="#convolution-theorem" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="convolution-theorem">
+<h3>Convolution Theorem<a class="headerlink" href="#convolution-theorem" title="Permalink to this headline">#</a></h3>
 <p>Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this <a class="reference external" href="https://youtu.be/hj7j4Q8T3Ck">video</a> for an overview of the convolution theorem and convolution in the frequency domain.</p>
 <p><img alt="ConvolutionTheorem.png" src="../_images/ConvolutionTheorem.png" /></p>
-</div>
-</div>
-<div class="section" id="filters">
-<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">#</a></h2>
 <p>Filters can be classified as finite impulse response (FIR) or infinite impulse response (IIR). These terms describe how a filter responds to a single input impulse.  FIR filters have a response that ends at a discrete point in time, while IIR filters have a response that continues indefinitely.</p>
 <p>Filters are constructed in the frequency domain and have several properties that need to be considered.</p>
 <ul class="simple">
@@ -1325,8 +1644,8 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </ul>
 <p>In general, there is a frequency by time tradeoff.  The sharper something is in frequency, the broader it is in time, and vice versa.</p>
 <p>Here we will use IIR butterworth filters as an example.</p>
-<div class="section" id="high-pass">
-<h3>High Pass<a class="headerlink" href="#high-pass" title="Permalink to this headline">¶</a></h3>
+<section id="high-pass">
+<h3>High Pass<a class="headerlink" href="#high-pass" title="Permalink to this headline">#</a></h3>
 <p>High pass filters only allow high frequency signals to remain, effectively <em>removing</em> any low frequency information.</p>
 <p>Here we will construct a high pass butterworth filter and plot it in frequency space.</p>
 <p><strong>Note</strong>: this example requires using scipy 1.2.1+.</p>
@@ -1421,9 +1740,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_74_1.png" src="../_images/Signal_Processing_74_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="low-pass">
-<h3>Low Pass<a class="headerlink" href="#low-pass" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="low-pass">
+<h3>Low Pass<a class="headerlink" href="#low-pass" title="Permalink to this headline">#</a></h3>
 <p>Low pass filters only retain low frequency signals, which <em>removes</em> any high frequency information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1473,9 +1792,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_78_0.png" src="../_images/Signal_Processing_78_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="bandpass">
-<h3>Bandpass<a class="headerlink" href="#bandpass" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="bandpass">
+<h3>Bandpass<a class="headerlink" href="#bandpass" title="Permalink to this headline">#</a></h3>
 <p>Bandpass filters permit retaining only a specific frequency. Morlet wavelets are an example of a bandpass filter.  or example a Morlet wavelet is a gaussian with the peak frequency at the center of a bandpass filter.</p>
 <p>Let’s try selecting removing specific frequencies</p>
 <div class="cell docutils container">
@@ -1506,9 +1825,9 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_80_1.png" src="../_images/Signal_Processing_80_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="band-stop">
-<h3>Band-Stop<a class="headerlink" href="#band-stop" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="band-stop">
+<h3>Band-Stop<a class="headerlink" href="#band-stop" title="Permalink to this headline">#</a></h3>
 <p>Bandstop filters remove a specific frequency from the signal</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1542,24 +1861,24 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <img alt="../_images/Signal_Processing_82_2.png" src="../_images/Signal_Processing_82_2.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exercise-1-create-a-simulated-time-series-with-7-different-frequencies-with-noise">
-<h3>Exercise 1. Create a simulated time series with 7 different frequencies with noise<a class="headerlink" href="#exercise-1-create-a-simulated-time-series-with-7-different-frequencies-with-noise" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="exercise-2-show-that-you-can-identify-each-signal-using-a-fft">
-<h3>Exercise 2. Show that you can identify each signal using a FFT<a class="headerlink" href="#exercise-2-show-that-you-can-identify-each-signal-using-a-fft" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="exercise-3-remove-one-frequency-with-a-bandstop-filter">
-<h3>Exercise 3. Remove one frequency with a bandstop filter<a class="headerlink" href="#exercise-3-remove-one-frequency-with-a-bandstop-filter" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original">
-<h3>Exercise 4. Remove frequency with a bandstop filter in the frequency domain and reconstruct the signal in the time domain with the frequency removed and compare it to the original<a class="headerlink" href="#exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-</div>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<section id="exercise-1-create-a-simulated-time-series-with-7-different-frequencies-with-noise">
+<h3>Exercise 1. Create a simulated time series with 7 different frequencies with noise<a class="headerlink" href="#exercise-1-create-a-simulated-time-series-with-7-different-frequencies-with-noise" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="exercise-2-show-that-you-can-identify-each-signal-using-a-fft">
+<h3>Exercise 2. Show that you can identify each signal using a FFT<a class="headerlink" href="#exercise-2-show-that-you-can-identify-each-signal-using-a-fft" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="exercise-3-remove-one-frequency-with-a-bandstop-filter">
+<h3>Exercise 3. Remove one frequency with a bandstop filter<a class="headerlink" href="#exercise-3-remove-one-frequency-with-a-bandstop-filter" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original">
+<h3>Exercise 4. Remove frequency with a bandstop filter in the frequency domain and reconstruct the signal in the time domain with the frequency removed and compare it to the original<a class="headerlink" href="#exercise-4-remove-frequency-with-a-bandstop-filter-in-the-frequency-domain-and-reconstruct-the-signal-in-the-time-domain-with-the-frequency-removed-and-compare-it-to-the-original" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1583,67 +1902,51 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 
               </div>
               
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="Introduction_to_Neuroimaging_Data.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Introduction to Neuroimaging Data</p>
-            </div>
-        </a>
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Introduction_to_Neuroimaging_Data.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to Neuroimaging Data</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Preprocessing.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Preprocessing</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="Preprocessing.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Preprocessing</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Luke Chang<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-          </div>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
     </div>
-  </footer>
-</main>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
 
   </body>
 </html>

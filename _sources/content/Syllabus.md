@@ -1,23 +1,23 @@
 # Syllabus
 
-## INSTRUCTORS: Fall 2021
+## INSTRUCTORS: Fall 2022
 
 **Professor**: Luke J. Chang, PhD
 
 Email: <luke.j.chang@dartmouth.edu> \
-Office Hours: Tues 12:00-2:20 pm \
+Office Hours: TBA \
 Office: Moore 357
 
 **Teaching Assistant**: Wasita Mahaphanit
 
 Email: <wasita.mahaphanit.gr@dartmouth.edu> \
-Office Hours: Mon 2:00-3:00 pm; Thurs 10:00-11:00 am \
+Office Hours: TBA \
 Office: Moore 233
 
 ## SPACE AND TIME
 
 2A Tue/Thurs: 2:25-4:15 \
-X-Hour Fri: 4:35-5:25 \
+X-Hour Wed: 5:30-6:30 \
 Moore 150
 
 ## CLASS FORMAT
