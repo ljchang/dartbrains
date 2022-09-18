@@ -577,7 +577,7 @@ a[1].set_title('Rotation', fontsize=18)
 # 
 # There are a variety of algorithms to warp subject data into stereotactic space. Linear 12 parameter affine transformation have been increasingly been replaced by more complicated nonlinear normalizations that have hundreds to thousands of parameters. 
 # 
-# One nonlinear algorithm that has performed very well across comparison studies is *diffeomorphic registration*, which can also be inverted so that subject space can be transformed into stereotactic space and back to subject space. This is the core of the [ANTs](http://stnava.github.io/ANTs/) algorithm that is implemented in fmriprep. See this [overview](https://elef.soic.indiana.edu/documentation/0.15.0.dev/examples_built/syn_registration_2d/) for more details.
+# One nonlinear algorithm that has performed very well across comparison studies is *diffeomorphic registration*, which can also be inverted so that subject space can be transformed into stereotactic space and back to subject space. This is the core of the [ANTs](http://stnava.github.io/ANTs/) algorithm that is implemented in fmriprep. See this [overview](https://web.archive.org/web/20210613081645/https://elef.soic.indiana.edu/documentation/0.15.0.dev/examples_built/syn_registration_2d/) for more details.
 # 
 # Let's watch another short video by Martin Lindquist and Tor Wager to learn more about the core preprocessing steps.
 

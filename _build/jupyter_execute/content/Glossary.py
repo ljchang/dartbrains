@@ -161,7 +161,7 @@
 # [np.zeros](https://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html): Return a new array of given shape and type, filled with zeros.
 
 # ## SciPy 
-# [SciPy](https://www.scipy.org/scipylib/index.html) is one of the core packages that make up the SciPy stack. It provides many user-friendly and efficient numerical routines, such as routines for numerical integration, interpolation, optimization, linear algebra, and statistics.
+# [SciPy](https://docs.scipy.org/doc/scipy/) is one of the core packages that make up the SciPy stack. It provides many user-friendly and efficient numerical routines, such as routines for numerical integration, interpolation, optimization, linear algebra, and statistics.
 # 
 # ***
 # 
@@ -284,13 +284,13 @@
 # 
 # ***
 # 
-# [nilearn.plotting.plot_anat](https://nilearn.github.io/modules/generated/nilearn.plotting.plot_anat.html): Plot cuts of an anatomical image (by default 3 cuts: Frontal, Axial, and Lateral)
+# [nilearn.plotting.plot_anat](https://nilearn.github.io/dev/modules/generated/nilearn.plotting.plot_anat.html): Plot cuts of an anatomical image (by default 3 cuts: Frontal, Axial, and Lateral)
 # 
-# [nilearn.plotting.view_img](https://nilearn.github.io/modules/generated/nilearn.plotting.view_img.html):Interactive html viewer of a statistical map, with optional background
+# [nilearn.plotting.view_img](https://nilearn.github.io/dev/modules/generated/nilearn.plotting.view_img.html):Interactive html viewer of a statistical map, with optional background
 # 
-# [nilearn.plotting.plot_glass_brain](https://nilearn.github.io/modules/generated/nilearn.plotting.plot_glass_brain.html):  Plot 2d projections of an ROI/mask image (by default 3 projections: Frontal, Axial, and Lateral). The brain glass schematics are added on top of the image.
+# [nilearn.plotting.plot_glass_brain](https://nilearn.github.io/dev/modules/generated/nilearn.plotting.plot_glass_brain.html):  Plot 2d projections of an ROI/mask image (by default 3 projections: Frontal, Axial, and Lateral). The brain glass schematics are added on top of the image.
 # 
-# [nilearn.plotting.plot_stat_map](https://nilearn.github.io/modules/generated/nilearn.plotting.plot_stat_map.html): Plot cuts of an ROI/mask image (by default 3 cuts: Frontal, Axial, and Lateral)
+# [nilearn.plotting.plot_stat_map](https://nilearn.github.io/dev/modules/generated/nilearn.plotting.plot_stat_map.html): Plot cuts of an ROI/mask image (by default 3 cuts: Frontal, Axial, and Lateral)
 
 # ## nltools
 # [NLTools](https://nltools.org/) is a Python package for analyzing neuroimaging data. It is the analysis engine powering neuro-learn There are tools to perform data manipulation and analyses such as univariate GLMs, predictive multivariate modeling, and representational similarity analyses.
@@ -317,7 +317,7 @@
 # 
 # [Brain_Data.append](https://nltools.org/api.html#nltools.data.Brain_Data.append): Append data to Brain_Data instance
 # 
-# [apply_mask](https://nltools.org/#nltools.data.Brain_Data.apply_mask): Mask Brain_Data instance
+# [apply_mask](https://nltools.org/api.html?highlight=apply+mask#nltools.data.Brain_Data.apply_mask): Mask Brain_Data instance
 # 
 # [Brain_Data.copy](https://nltools.org/api.html#nltools.data.Brain_Data.copy): Create a copy of a Brain_Data instance.
 # 

@@ -11,7 +11,7 @@ Office: Moore 357
 **Teaching Assistant**: Wasita Mahaphanit
 
 Email: <wasita.mahaphanit.gr@dartmouth.edu> \
-Office Hours: TBA \
+Office Hours: Mondays 2-3 pm & Thurs 10-11 am \
 Office: Moore 233
 
 ## SPACE AND TIME

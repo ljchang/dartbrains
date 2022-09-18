@@ -234,7 +234,7 @@ data.affine
 # We will dive deeper into affine transformations in the preprocessing tutorial.
 
 # ## Plotting Data with Nilearn
-# There are many useful tools from the [nilearn](https://nilearn.github.io/index.html) library to help manipulate and visualize neuroimaging data. See their [documentation](https://nilearn.github.io/plotting/index.html#different-plotting-functions) for an example.
+# There are many useful tools from the [nilearn](https://nilearn.github.io/index.html) library to help manipulate and visualize neuroimaging data. See their [documentation](https://nilearn.github.io/dev/plotting/index.html#different-plotting-functions) for an example.
 # 
 # In this section, we will explore a few of their different plotting functions, which can work directly with nibabel instances.
 
