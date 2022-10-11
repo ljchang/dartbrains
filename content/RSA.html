@@ -831,7 +831,7 @@ from <a class="reference external" href="https://www.frontiersin.org/articles/10
 </div>
 </div>
 </div>
-<p>Let’s look at the heatmap of the similarity matrix to see how more red colors indicate greater similarity between patterns within the left motor cortex across conditions.</p>
+<p>Let’s look at the heatmap of the similarity matrix to see how more red colors indicate greater similarity between patterns within the left motor cortex across conditions. The <code class="docutils literal notranslate"><span class="pre">Adjacency</span></code> class only stores the lower triangle for similarity and distance matrices. At the moment, it is incorrectly setting the diagonal to zero when plotting the similarity matrix. The diagonal should be a vector of ones.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">roi</span> <span class="o">=</span> <span class="mi">26</span>

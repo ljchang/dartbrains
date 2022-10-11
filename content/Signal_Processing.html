@@ -1175,6 +1175,16 @@ Convolved Signal Length: 109
 <p>We can also see the impact of different parameters using interactive widgets. Here you can move the sliders to see the impact of varying the amplitude, frequency, and theta parameter on a sine wave. We also show the complex components of the sine wave in the right panel.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">FloatSlider</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">arange</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">imag</span>
 
@@ -1182,7 +1192,6 @@ Convolved Signal Length: 109
     <span class="n">sampling_frequency</span><span class="o">=</span><span class="mi">500</span>
     <span class="n">time</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">sampling_frequency</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">sampling_frequency</span><span class="p">)</span>
     <span class="n">simulation</span> <span class="o">=</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">frequency</span> <span class="o">*</span> <span class="n">time</span> <span class="o">+</span> <span class="n">theta</span><span class="p">)</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">frequency</span> <span class="o">*</span> <span class="n">time</span> <span class="o">+</span> <span class="n">theta</span><span class="p">))</span>
 
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
     <span class="n">gs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.48</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
@@ -1202,7 +1211,7 @@ Convolved Signal Length: 109
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "ee345347b0034675bdcf09bfe609d373", "version_major": 2, "version_minor": 0}
+{"model_id": "a8542b1637264afd99fb1af0129a18bf", "version_major": 2, "version_minor": 0}
 </script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.plot_oscillation(amplitude=5, frequency=5, theta=1)&gt;
 </pre></div>
 </div>
@@ -1235,7 +1244,7 @@ Convolved Signal Length: 109
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_32_0.png" src="../_images/Signal_Processing_32_0.png" />
+<img alt="../_images/Signal_Processing_33_0.png" src="../_images/Signal_Processing_33_0.png" />
 </div>
 </div>
 <p>Let’s add all of those signals together to get a more complex signal.</p>
@@ -1251,7 +1260,7 @@ Convolved Signal Length: 109
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_34_0.png" src="../_images/Signal_Processing_34_0.png" />
+<img alt="../_images/Signal_Processing_35_0.png" src="../_images/Signal_Processing_35_0.png" />
 </div>
 </div>
 <p>What is the effect of changing the sampling frequency on our ability to measure these oscillations?  Try dropping it to be very low (e.g., less than 70 hz.)  Notice that signals will alias when the sampling frequency is below the nyquist frequency of a signal. To observe the oscillations, we need to be sampling at least two times for each oscillation cycle. This will result in a jagged view of the data, but we can still theoretically observe the frequency. Practically, higher sampling rates allow us to better observe the underlying signals.</p>
@@ -1288,8 +1297,8 @@ Convolved Signal Length: 109
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_36_0.png" src="../_images/Signal_Processing_36_0.png" />
-<img alt="../_images/Signal_Processing_36_1.png" src="../_images/Signal_Processing_36_1.png" />
+<img alt="../_images/Signal_Processing_37_0.png" src="../_images/Signal_Processing_37_0.png" />
+<img alt="../_images/Signal_Processing_37_1.png" src="../_images/Signal_Processing_37_1.png" />
 </div>
 </div>
 <p>Notice the jagged lines for frequencies that are above the nyquist frequency? That’s because we don’t have enough samples to accurately see the oscillations.</p>
@@ -1325,7 +1334,7 @@ Convolved Signal Length: 109
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_38_1.png" src="../_images/Signal_Processing_38_1.png" />
+<img alt="../_images/Signal_Processing_39_1.png" src="../_images/Signal_Processing_39_1.png" />
 </div>
 </div>
 </section>
@@ -1429,7 +1438,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_46_0.png" src="../_images/Signal_Processing_46_0.png" />
+<img alt="../_images/Signal_Processing_47_0.png" src="../_images/Signal_Processing_47_0.png" />
 </div>
 </div>
 </section>
@@ -1459,7 +1468,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_48_0.png" src="../_images/Signal_Processing_48_0.png" />
+<img alt="../_images/Signal_Processing_49_0.png" src="../_images/Signal_Processing_49_0.png" />
 </div>
 </div>
 <p>We can visualize all of the sine waves simultaneously using a heatmap representation.  Each row is a different sine wave, and columns reflect time.  The intensity of the value is like if the sine wave was coming towards and away rather than up and down. Notice how it looks like that the second half of the sine waves appear to be a mirror image of the first half.  This is because the first half contain the <em>positive</em> frequencies, while the second half contains the <em>negative</em> frequencies.  Negative frequencies capture sine waves that travel in reverse order around the complex plane compared to that travel forward. This becomes more relevant with the hilbert transform, but for the purposes of this tutorial we will be ignoring the negative frequencies.</p>
@@ -1476,7 +1485,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_50_1.png" src="../_images/Signal_Processing_50_1.png" />
+<img alt="../_images/Signal_Processing_51_1.png" src="../_images/Signal_Processing_51_1.png" />
 </div>
 </div>
 </section>
@@ -1511,7 +1520,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Power spectrum derived from discrete fourier transform&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_54_1.png" src="../_images/Signal_Processing_54_1.png" />
+<img alt="../_images/Signal_Processing_55_1.png" src="../_images/Signal_Processing_55_1.png" />
 </div>
 </div>
 <p>Notice that there are 5 different frequencies that have varying amplitudes. Recall that when we simulated this data we added 5 different sine waves with different frequencies and amplitudes.</p>
@@ -1536,7 +1545,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Power spectrum derived from discrete fourier transform&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_56_1.png" src="../_images/Signal_Processing_56_1.png" />
+<img alt="../_images/Signal_Processing_57_1.png" src="../_images/Signal_Processing_57_1.png" />
 </div>
 </div>
 <p>Ok, now that we’ve created our own discrete fourier transform, let’s learn a few more important details that are important to consider.</p>
@@ -1578,7 +1587,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reconstructed Time Series Signal&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_60_1.png" src="../_images/Signal_Processing_60_1.png" />
+<img alt="../_images/Signal_Processing_61_1.png" src="../_images/Signal_Processing_61_1.png" />
 </div>
 </div>
 </section>
@@ -1603,7 +1612,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Frequency domain representation of signal derived from fast fourier transform&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_62_1.png" src="../_images/Signal_Processing_62_1.png" />
+<img alt="../_images/Signal_Processing_63_1.png" src="../_images/Signal_Processing_63_1.png" />
 </div>
 </div>
 <p>We can also use the <code class="docutils literal notranslate"><span class="pre">ifft</span></code> to perform an inverse fourier transform.</p>
@@ -1621,7 +1630,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reconstructed Time Series Signal&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_64_1.png" src="../_images/Signal_Processing_64_1.png" />
+<img alt="../_images/Signal_Processing_65_1.png" src="../_images/Signal_Processing_65_1.png" />
 </div>
 </div>
 </section>
@@ -1675,7 +1684,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_68_0.png" src="../_images/Signal_Processing_68_0.png" />
+<img alt="../_images/Signal_Processing_69_0.png" src="../_images/Signal_Processing_69_0.png" />
 </div>
 </div>
 <p>Notice how the gain scales from [0,1]?  Filters can be multiplied by the FFT of a signal to apply the filter in the frequency domain. When the resulting signal is transformed back in the time domain using the inverse FFT, the new signal will be filtered. This can be much faster than applying filters in the time domain.</p>
@@ -1694,7 +1703,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_70_0.png" src="../_images/Signal_Processing_70_0.png" />
+<img alt="../_images/Signal_Processing_71_0.png" src="../_images/Signal_Processing_71_0.png" />
 </div>
 </div>
 <p>What does the filter look like in the temporal domain?  Let’s take the inverse FFT and plot it to see what it looks like as a kernel in the temporal domain.  Notice how changing the filter order adds more ripples in the time domain.</p>
@@ -1716,7 +1725,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_72_1.png" src="../_images/Signal_Processing_72_1.png" />
+<img alt="../_images/Signal_Processing_73_1.png" src="../_images/Signal_Processing_73_1.png" />
 </div>
 </div>
 <p>Now let’s apply the filter to our data. We will be applying the filter to the signal in the time domain using the <code class="docutils literal notranslate"><span class="pre">filtfilt</span></code> function. This is a good default option, even though there are several other functions to apply the filter. <code class="docutils literal notranslate"><span class="pre">filtfilt</span></code> applies the filter forward and then in reverse ensuring that there is zero-phase distortion.</p>
@@ -1737,7 +1746,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f95c9a465d0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_74_1.png" src="../_images/Signal_Processing_74_1.png" />
+<img alt="../_images/Signal_Processing_75_1.png" src="../_images/Signal_Processing_75_1.png" />
 </div>
 </div>
 </section>
@@ -1771,7 +1780,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f95b9019c90&gt;
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_76_1.png" src="../_images/Signal_Processing_76_1.png" />
+<img alt="../_images/Signal_Processing_77_1.png" src="../_images/Signal_Processing_77_1.png" />
 </div>
 </div>
 <p>What does the filter look like?</p>
@@ -1789,7 +1798,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Signal_Processing_78_0.png" src="../_images/Signal_Processing_78_0.png" />
+<img alt="../_images/Signal_Processing_79_0.png" src="../_images/Signal_Processing_79_0.png" />
 </div>
 </div>
 </section>
@@ -1822,7 +1831,7 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f95d8e26d50&gt;
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_80_1.png" src="../_images/Signal_Processing_80_1.png" />
+<img alt="../_images/Signal_Processing_81_1.png" src="../_images/Signal_Processing_81_1.png" />
 </div>
 </div>
 </section>
@@ -1857,8 +1866,8 @@ where <span class="math notranslate nohighlight">\(n\)</span> refers to the numb
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f96088bf390&gt;
 </pre></div>
 </div>
-<img alt="../_images/Signal_Processing_82_1.png" src="../_images/Signal_Processing_82_1.png" />
-<img alt="../_images/Signal_Processing_82_2.png" src="../_images/Signal_Processing_82_2.png" />
+<img alt="../_images/Signal_Processing_83_1.png" src="../_images/Signal_Processing_83_1.png" />
+<img alt="../_images/Signal_Processing_83_2.png" src="../_images/Signal_Processing_83_2.png" />
 </div>
 </div>
 </section>

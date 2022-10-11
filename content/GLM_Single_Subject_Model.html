@@ -1235,7 +1235,7 @@ memory usage: 10.1 KB
 <p>Notice that these do not appear to be very different from the high pass filter basis set. It’s actually okay if there is collinearity in our covariate regressors. Collinearity is only a problem when it correlates with the task regressors as it means that we will not be able to uniquely model the variance. The DCT can occasionally run into edge artifacts, which can be addressed by the linear trend.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dm_conv_filt_poly</span> <span class="o">=</span> <span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">add_poly</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include_lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dm_conv_filt_poly</span> <span class="o">=</span> <span class="n">dm_conv_filt</span><span class="o">.</span><span class="n">add_poly</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dm_conv_filt_poly</span><span class="o">.</span><span class="n">heatmap</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1253,7 +1253,7 @@ memory usage: 10.1 KB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sub</span> <span class="o">=</span> <span class="s1">&#39;S01&#39;</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">sub</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">&#39;localizer&#39;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;nii.gz&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">sub</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">&#39;localizer&#39;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;derivatives&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;nii.gz&#39;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1343,7 +1343,7 @@ memory usage: 10.1 KB
 <img alt="../_images/GLM_Single_Subject_Model_43_1.png" src="../_images/GLM_Single_Subject_Model_43_1.png" />
 </div>
 </div>
-<p>For this subject, our spike identification procedure only found a single spike. Let’s add all of these covariate to our design matrix.</p>
+<p>For this subject, our spike identification procedure identified 3 spikes. Two of these spikes look like they are temporally contiguous. Let’s add all of these covariate to our design matrix.</p>
 <p>In this example, we will append each of these additional matrices to our main design matrix.</p>
 <p><strong>Note</strong>: <code class="docutils literal notranslate"><span class="pre">.append()</span></code> requires that all matrices are a design_matrix with the same sampling frequency.</p>
 <div class="cell docutils container">
@@ -1422,7 +1422,7 @@ memory usage: 10.1 KB
 <p>Ok, it’s done! Let’s take a look at the results.</p>
 <p>The stats variable is a dictionary with the main results from the regression: a brain image with all of the betas for each voxel, a correspondign image of t-values, p-values, standard error of the estimate, and residuals.</p>
 <p>Remember we have run the same regression model separately on each voxel of the brain.</p>
-<p>Let’s take a look at one of the regressors. The names of each of them are in the column names of the design matrix, which is in the <code class="docutils literal notranslate"><span class="pre">data.X</span></code> field.  We can print them to see the names. Let’s plot the first one, which is a horizontal checkerboard.</p>
+<p>Let’s take a look at one of the regressors. The names of each of them are in the column names of the design matrix, which is in the <code class="docutils literal notranslate"><span class="pre">data.X</span></code> field.  We can print them to see the names. Let’s plot the first one, which corresponds to <code class="docutils literal notranslate"><span class="pre">video_computation_c0</span></code> or an arithmetic problem presented in the visual domain.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">smoothed</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
