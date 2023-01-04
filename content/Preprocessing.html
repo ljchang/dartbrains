@@ -251,6 +251,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Parcellations.html">
+   An Introduction to Parcellations
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Resampling_Statistics.html">
    Resampling Statistics
   </a>
@@ -292,6 +297,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="2021_Fall.html">
    Fall 2021
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2022_Fall.html">
+   Fall 2022
   </a>
  </li>
 </ul>
@@ -807,7 +817,7 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">FloatSlider</span>
 
 <span class="k">def</span> <span class="nf">plot_rigid_body_transformation</span><span class="p">(</span><span class="n">trans_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">trans_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">trans_z</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rot_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rot_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rot_z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This plot creates an interactive demo to illustrate the parameters of a rigid body transformation&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This plot creates an interactive demo to illustrate the parameters of a rigid body transformation&#39;&#39;&#39;</span>
     <span class="n">fov</span> <span class="o">=</span> <span class="mi">30</span>
     <span class="n">radius</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="n">fov</span><span class="p">,</span> <span class="n">fov</span><span class="p">,</span> <span class="n">fov</span><span class="p">))</span>
@@ -1201,7 +1211,7 @@ c
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_affine_cost</span><span class="p">(</span><span class="n">trans_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">trans_y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This function creates an interactive demo to highlight how a cost function works in image registration.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function creates an interactive demo to highlight how a cost function works in image registration.&#39;&#39;&#39;</span>
     <span class="n">fov</span> <span class="o">=</span> <span class="mi">30</span>
     <span class="n">radius</span> <span class="o">=</span> <span class="mi">15</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="n">fov</span><span class="p">,</span> <span class="n">fov</span><span class="p">))</span>
@@ -1379,7 +1389,7 @@ c
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_gaussian</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Generates a 3D matplotlib plot of a Gaussian distribution&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Generates a 3D matplotlib plot of a Gaussian distribution&#39;&#39;&#39;</span>
     <span class="n">mean</span><span class="o">=</span><span class="mi">0</span>
     <span class="n">domain</span><span class="o">=</span><span class="mi">10</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">domain</span> <span class="o">+</span> <span class="n">mean</span><span class="p">,</span> <span class="n">domain</span> <span class="o">+</span> <span class="n">mean</span><span class="p">,</span> <span class="n">sigma</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>

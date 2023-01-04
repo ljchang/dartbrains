@@ -249,6 +249,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Parcellations.html">
+   An Introduction to Parcellations
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Resampling_Statistics.html">
    Resampling Statistics
   </a>
@@ -290,6 +295,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="2021_Fall.html">
    Fall 2021
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2022_Fall.html">
+   Fall 2022
   </a>
  </li>
 </ul>
@@ -574,9 +584,41 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#installing-datalad">
-     Installing Datalad
+    <a class="reference internal nav-link" href="#installing-datalad-on-mac-and-unix-operating-systems">
+     Installing Datalad on Mac and Unix Operating Systems
     </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-datalad-on-windows-operating-systems">
+     Installing Datalad on Windows Operating Systems
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#python">
+       1) Python
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#git">
+       2) Git
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gitannex">
+       3) GitAnnex
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       4) Datalad
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#windows-path-separators">
+       Windows Path Separators
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#download-data-with-datalad">
@@ -642,9 +684,41 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#installing-datalad">
-     Installing Datalad
+    <a class="reference internal nav-link" href="#installing-datalad-on-mac-and-unix-operating-systems">
+     Installing Datalad on Mac and Unix Operating Systems
     </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#installing-datalad-on-windows-operating-systems">
+     Installing Datalad on Windows Operating Systems
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#python">
+       1) Python
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#git">
+       2) Git
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gitannex">
+       3) GitAnnex
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       4) Datalad
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#windows-path-separators">
+       Windows Path Separators
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#download-data-with-datalad">
@@ -698,7 +772,7 @@ title="Print to PDF"
   <p>(download-data) =</p>
 <section class="tex2jax_ignore mathjax_ignore" id="download-data">
 <h1>Download Data<a class="headerlink" href="#download-data" title="Permalink to this headline">#</a></h1>
-<p><em>Written by Luke Chang</em></p>
+<p><em>Written by Luke Chang &amp; Kevin Ortego</em></p>
 <p>Many of the imaging tutorials throughout this course will use open data from the Pinel Localizer task.</p>
 <p>The Pinel Localizer task was designed to probe several different types of basic cognitive processes, such as visual perception, finger tapping, language, and math. Several of the tasks are cued by reading text on the screen (i.e., visual modality) and also by hearing auditory instructions (i.e., auditory modality). The trials are randomized across conditions and have been optimized to maximize efficiency for a rapid event related design. There are 100 trials in total over a 5-minute scanning session. Read the original <a class="reference external" href="https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91">paper</a> for more specific details about the task and the <a class="reference external" href="https://doi.org/10.1016/j.neuroimage.2015.09.052">dataset paper</a>.</p>
 <p>This dataset is well suited for these tutorials as it is (a) publicly available to anyone in the world, (b) relatively small (only about 5min), and (c) provides many options to create different types of contrasts.</p>
@@ -715,8 +789,8 @@ title="Print to PDF"
 <li><p>All of the DataLad commands can be run within Python using the datalad <a class="reference external" href="http://docs.datalad.org/en/latest/modref.html">python api</a>.</p></li>
 </ol>
 <p>We will only be covering a few basic DataLad functions to get and drop data. We encourage the interested reader to read the very comprehensive DataLad <a class="reference external" href="http://handbook.datalad.org/en/latest/">User Handbook</a> for more details and troubleshooting.</p>
-<section id="installing-datalad">
-<h3>Installing Datalad<a class="headerlink" href="#installing-datalad" title="Permalink to this headline">#</a></h3>
+<section id="installing-datalad-on-mac-and-unix-operating-systems">
+<h3>Installing Datalad on Mac and Unix Operating Systems<a class="headerlink" href="#installing-datalad-on-mac-and-unix-operating-systems" title="Permalink to this headline">#</a></h3>
 <p>DataLad can be easily installed using <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datalad</span></code></p>
 <p>Unfortunately, it currently requires manually installing the <a class="reference external" href="https://git-annex.branchable.com/">git-annex</a> dependency, which is not automatically installed using pip.</p>
@@ -727,7 +801,7 @@ title="Print to PDF"
 <p>For more installation options, we recommend reading the DataLad <a class="reference external" href="https://git-annex.branchable.com/">installation instructions</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install datalad
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>datalad
 </pre></div>
 </div>
 </div>
@@ -767,6 +841,136 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 </div>
 </div>
 </section>
+<section id="installing-datalad-on-windows-operating-systems">
+<h3>Installing Datalad on Windows Operating Systems<a class="headerlink" href="#installing-datalad-on-windows-operating-systems" title="Permalink to this headline">#</a></h3>
+<p>Installing Datalad on Windows can be a little more tricky compared to Unix based operating systems and there are limited tutorials available. Hopefully, windows users will find this tutorial useful.</p>
+<p>DataLad requires several components to work:</p>
+<ol class="simple">
+<li><p><strong>Python</strong></p></li>
+<li><p><strong>Git</strong></p></li>
+<li><p><strong>GitAnnex</strong></p></li>
+<li><p><strong>Datalad</strong></p></li>
+</ol>
+<p>There is a good chance you may already have Python or Git installed on your computer. However, this may be problematic as DataLad requires specific configurations for both Python and Git installations in order to work. These are detailed on the DataLad website, but it can be easy to miss or skip over, especially if you already have some of these packages installed. Here isa summary of what you should check, as well as how to potentially resolve problems without having to reinstall things.  If you don’t have Python or Git installed yet, you can follow these instructions and installation should be relatively straightforward.</p>
+<section id="python">
+<h4>1) Python<a class="headerlink" href="#python" title="Permalink to this headline">#</a></h4>
+<p><strong>If you need to install Python:</strong>
+The <a class="reference external" href="https://www.anaconda.com/products/distribution">Anaconda Distribution</a> has the most relevant packages for scientific computing already included and is widely recommended. Be sure to get Python 3, and the default installer options are generally safe, except <strong>be sure to select the <em>ADD PYTHON TO PATH</em> option</strong>, otherwise Datalad will not work. After you’re done, proceed to Step 2 on Git.</p>
+<p><strong>If you already have Python installed on your computer:</strong></p>
+<ul class="simple">
+<li><p>You may run into problems when installing DataLad if you did not add Python to your Windows path when installing Python.</p></li>
+<li><p>This is especially likely because the Anaconda distribution installer <strong>strongly discourages</strong> you from adding Python to the path when navigating through the installation dialogue.</p></li>
+<li><p>You can check if Python is on your path by doing the following:</p>
+<ul>
+<li><p>Press WindowsKey + x and click “System” in the menu that pops up</p></li>
+<li><p>Scroll down to “Related settings” and click “Advanced system settings”</p></li>
+<li><p>Under the “Advanced” tab, click “Environment Variables”</p></li>
+<li><p>In the “User Variables” pane you should see a variable called “Path” with some values corresponding to the path of your Python installation.</p></li>
+</ul>
+</li>
+<li><p>If Python is on your path, you <em>should</em> be good to go.</p></li>
+<li><p>If Python is not on your path, you have two options:</p>
+<ol class="simple">
+<li><p>Uninstall Python, then reinstall, being sure to select the add Python to Windows path option this time (this option is recommended and guaranteed to work)</p></li>
+<li><p>Try adding Python to your Windows path manually:</p>
+<ul>
+<li><p>If you already installed DataLad, you should uninstall it and reinstall after doing this</p></li>
+<li><p>Instructions for adding Python to your path can be found <a class="reference external" href="https://datatofish.com/add-python-to-windows-path/">here</a>, but what you need to add to the path may differ for different distributions.  For instance, my Anaconda distribution has several other folders listed in its path entry that are not listed for the more basic Python distribution used at the link above.  For completeness if you want to try on your own, my Path has these elements:
++
+C:\Users\MyUserName\anaconda3
+C:\Users\MyUserName\anaconda3\Library\mingw-w64\bin
+C:\Users\MyUserName\anaconda3\Library\usr\bin
+C:\Users\MyUserName\anaconda3\Library\bin
+C:\Users\MyUserName\anaconda3\Scripts</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="git">
+<h4>2) Git<a class="headerlink" href="#git" title="Permalink to this headline">#</a></h4>
+<p><strong>If you don’t have Git already installed</strong>, it can be found <a class="reference external" href="https://git-scm.com/download/win">here</a>. The default installation options are recommended for most things, but be sure to configure the following options when installing:</p>
+<ul class="simple">
+<li><p>Enable <em>Use a TrueType font in all console windows</em></p></li>
+<li><p>Select <em>Git from the command line and also from 3rd-party software</em></p></li>
+<li><p><em>Enable file system caching</em></p></li>
+<li><p><em>Enable symbolic links</em></p></li>
+</ul>
+<p><strong>If you already have Git installed</strong> you should check your configuration settings. You can do so by opening the command prompt and typing:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; git config --list
+</pre></div>
+</div>
+<p>Somewhere in the list of variables that pops up you should see:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>core.fscache = true
+core.symlinks = true
+</pre></div>
+</div>
+<p>If not, run the following commands from command prompt to change those settings:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; git config --global core.symlinks true
+&gt; git config --global core.fscache true
+</pre></div>
+</div>
+<p>The <em><strong>Git from the command line and also from 3rd-party software</strong></em> option is the recommended setting during installation. To check, you can do one of two things:</p>
+<ol class="simple">
+<li><p>Navigate to C:\Program Files\Git\etc\install-options, and check for the line “Path Option: Cmd” within that file, <strong>OR</strong></p></li>
+<li><p>You can check your Windows path to see if Git is on the path (follow the steps described above for checking if Python is on your Windows path). Git will appear under the “System variables” pane under “Path” instead of under the “User variables” pane.</p>
+<ul class="simple">
+<li><p>If it isn’t there, instructions for adding Git to the path can be found <a class="reference external" href="https://www.delftstack.com/howto/git/add-git-to-path-on-windows/#:~:text=Click%20Environment%20Variables%20under%20System,%5Cbin%5Cgit.exe%20.">here</a> but this is untested as to whether it will work correctly, especially if you’ve already installed git-annex and DataLad.</p></li>
+</ul>
+</li>
+</ol>
+<p>Unfortunately, you cannot check whether the <em><strong>Use a TrueType font in all console windows</strong></em> was selected as far as I’m aware, but it is unclear what the implications of not doing that are and whether it would cause DataLad to not work.  If DataLad doesn’t work for you once you get there, it is possible that you will need to reinstall git.</p>
+</section>
+<section id="gitannex">
+<h4>3) GitAnnex<a class="headerlink" href="#gitannex" title="Permalink to this headline">#</a></h4>
+<p><strong>DO NOT INSTALL GIT ANNEX from the GIT-ANNEX website directly</strong>, because this seems not to work.  To be fair, the git-annex people clearly indicate that the Windows installer is in beta and that there are some known issues. Luckily you can use the git-annex installer provided by DataLad, which does work.  Run these three commands from the command line to install git-annex:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; pip install datalad-installer
+&gt; datalad-installer git-annex -m datalad/packages
+&gt; git config --global filter.annex.process &quot;git-annex filter-process&quot;
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h4>4) Datalad<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<p>Installing datalad itself is easy too. Run the following in the command line:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; pip install datalad
+</pre></div>
+</div>
+<p>You are now ready to get started with DataLad! (after you read this <a class="reference external" href="https://handbook.datalad.org/en/latest/intro/windows.html#ohnowindows">general Warning for windows users from DataLad</a>) And as a final tip, DataLad seems to work best on Windows when used via its <a class="reference external" href="http://docs.datalad.org/en/latest/modref.html">Python API</a> which can be easily accessed in Python as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import datalad.api as dl
+</pre></div>
+</div>
+</section>
+<section id="windows-path-separators">
+<h4>Windows Path Separators<a class="headerlink" href="#windows-path-separators" title="Permalink to this headline">#</a></h4>
+<p>When using the DataLad via the command line you will need to first navigate to the folder where the data was installed before you can download the data (this doesn’t matter when using the Python API).</p>
+<p>The <strong>cd</strong> command is used in the command prompt to <strong>c</strong>hange <strong>d</strong>irectory. You might notice how the path separators (‘/’ and ‘' ) are different in the first and second commands. This is a potential issue you might run into when using Windows vs Mac/Unix with Python. The backslash Windows file separator ( \ ) is different from the forward slash used in other operating systems, or on the internet in URLs.  If you’re ever using Python to run DataLad commands, or to load and save any kind of data in Python more generally, you may run into problems if you copy folder paths from Windows File Explorer into Python because they’ll have the wrong separator. You can fix this in your Python scripts by switching all the 's to /’s, or you can use a double \ which also works.</p>
+<ul>
+<li><p>When you open the command prompt, you are in a default directory, which is displayed on the command line. Likely this is “C:\Users\YourUserName&quot; and that will show up in the command line as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  C:\Users\YourUserName&gt; _
+  (which is where the &quot;&gt;&quot; before all the code lines comes from)
+</pre></div>
+</div>
+</li>
+<li><p>If your installed dataset lives at “C:\Users\YourUserName\ClassData\Localizer&quot; you need to navigate to that directory using the cd command before the DataLad ‘get’ command will work, which would look like this in the command line:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  C:\Users\YourUserName&gt; cd ClassData\Localizer
+</pre></div>
+</div>
+</li>
+<li><p>Once you are in the data directory, you don’t have to type the entire filepath, and you can run a command like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  datalad get sub-S01
+</pre></div>
+</div>
+</li>
+<li><p>And in the command line that whole thing would be rendered like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  C:\Users\YourUserName\ClassData\Localizer&gt; datalad get sub-S01
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
 <section id="download-data-with-datalad">
 <h3>Download Data with DataLad<a class="headerlink" href="#download-data-with-datalad" title="Permalink to this headline">#</a></h3>
 <p>The Pinel localizer dataset can be accessed at the following location https://gin.g-node.org/ljchang/Localizer/. To download the Localizer dataset run <code class="docutils literal notranslate"><span class="pre">datalad</span> <span class="pre">install</span> <span class="pre">https://gin.g-node.org/ljchang/Localizer</span></code> in a terminal in the location where you would like to install the dataset. Don’t forget to change the directory to a folder on your local computer. The full dataset is approximately 42gb.</p>
@@ -775,7 +979,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> ~/Dropbox/Dartbrains/data
 
-<span class="o">!</span>datalad install https://gin.g-node.org/ljchang/Localizer
+<span class="o">!</span>datalad<span class="w"> </span>install<span class="w"> </span>https://gin.g-node.org/ljchang/Localizer
 </pre></div>
 </div>
 </div>
@@ -796,7 +1000,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> ~/Dropbox/Dartbrains/data/Localizer
 
-<span class="o">!</span>datalad status --annex
+<span class="o">!</span>datalad<span class="w"> </span>status<span class="w"> </span>--annex
 </pre></div>
 </div>
 </div>
@@ -814,7 +1018,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <p>Now that we have cloned the repository we can grab individual files. For example, suppose we wanted to grab the first subject’s confound regressors generated by fmriprep.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>datalad get participants.tsv
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>datalad<span class="w"> </span>get<span class="w"> </span>participants.tsv
 </pre></div>
 </div>
 </div>
@@ -827,7 +1031,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <p>Now we can check and see how much of the total dataset we have downloaded using <code class="docutils literal notranslate"><span class="pre">datalad</span> <span class="pre">status</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>datalad status --annex all
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>datalad<span class="w"> </span>status<span class="w"> </span>--annex<span class="w"> </span>all
 </pre></div>
 </div>
 </div>
@@ -847,7 +1051,7 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <p>As an example, let’s drop the Localizer participants .tsv file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>datalad drop participants.tsv
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>datalad<span class="w"> </span>drop<span class="w"> </span>participants.tsv
 </pre></div>
 </div>
 </div>
@@ -1327,13 +1531,13 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python37764bitbaseconda668a19539d4e488a990d2e1ac0a9ce49",
+            kernelName: "python3",
             path: "./content"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python37764bitbaseconda668a19539d4e488a990d2e1ac0a9ce49'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               

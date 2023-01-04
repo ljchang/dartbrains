@@ -251,6 +251,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Parcellations.html">
+   An Introduction to Parcellations
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Resampling_Statistics.html">
    Resampling Statistics
   </a>
@@ -292,6 +297,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="2021_Fall.html">
    Fall 2021
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2022_Fall.html">
+   Fall 2022
   </a>
  </li>
 </ul>
@@ -885,7 +895,7 @@ title="Print to PDF"
 <span class="n">face</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="k">def</span> <span class="nf">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Plot a timeseries</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Plot a timeseries</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
 <span class="sd">        data: (np.ndarray) signal varying over time, where each column is a different signal.</span>
@@ -1202,7 +1212,7 @@ title="Print to PDF"
     <span class="n">SS_residual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">predicted_y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="n">SS_residual</span><span class="o">/</span><span class="n">SS_total</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R^2: </span><span class="si">{</span><span class="n">r_square</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">predicted_y</span><span class="p">)</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R^2: </span><span class="si">{</span><span class="n">r_square</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">predicted_y</span><span class="p">)</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1,0 +1,1349 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>An Introduction to Parcellations &#8212; DartBrains</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="http://dartbrains.org/content/Parcellations.html" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Resampling Statistics" href="Resampling_Statistics.html" />
+    <link rel="prev" title="Representational Similarity Analysis" href="RSA.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">DartBrains</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Instructors.html">
+   Instructors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Schedule.html">
+   Schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Computing Resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_JupyterHub.html">
+   Introduction to JupyterHub
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Download_Data.html">
+   Download Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Programming.html">
+   Introduction to programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Pandas.html">
+   Introduction to Pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Plotting.html">
+   Introduction to Plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Glossary.html">
+   Glossary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Topics
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro_to_Neuroimaging.html">
+   Introduction to Neuroimaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Measurement.html">
+   Signal Generation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ICA.html">
+   Separating Signal From Noise With ICA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
+   Introduction to Neuroimaging Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Processing.html">
+   Signal Processing Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Preprocessing.html">
+   Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM.html">
+   Introduction to the General Linear Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM_Single_Subject_Model.html">
+   Modeling Single Subject Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Group_Analysis.html">
+   Group Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Thresholding_Group_Analyses.html">
+   Thresholding Group Analyses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connectivity.html">
+   Connectivity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Multivariate_Prediction.html">
+   Multivariate Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="RSA.html">
+   Representational Similarity Analysis
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   An Introduction to Parcellations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Resampling_Statistics.html">
+   Resampling Statistics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Courses
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://naturalistic-data.org/">
+   Naturalistic Data Analysis
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project Gallery
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="2019_Spring.html">
+   Spring 2019
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Spring.html">
+   Spring 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Fall.html">
+   Fall 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2021_Fall.html">
+   Fall 2021
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2022_Fall.html">
+   Fall 2022
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contributing
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Contributing.html">
+   Contributing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/ljchang/dartbrains">
+   GitHub Repository
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Parcellations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Parcellations.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Parcellations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Parcellations.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Parcellations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/Parcellations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   An Introduction to Parcellations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#neuroimaging-and-spatial-scaling-why-consider-parcellations-a-class-anchor-id-chapter1-a">
+     Neuroimaging and Spatial Scaling: Why consider parcellations
+     <a class="anchor" id="chapter1">
+     </a>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-quick-note-on-labeling">
+     A quick note on labeling:
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-with-parcellations-atlases">
+     Working with Parcellations/Atlases:
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#nilearn">
+       Nilearn:
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#neuroparc">
+       Neuroparc
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#different-types-of-parcellations-and-how-to-access-publicly-available-parcellations">
+     Different types of parcellations and how to access publicly available parcellations:
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#anatomical-vs-functional">
+       Anatomical vs Functional
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#anatomical-atlases">
+         Anatomical Atlases
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#functional-parcellations">
+     Functional parcellations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#structural-parcellations">
+   Structural parcellations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multimodal-parcellations">
+     Multimodal parcellations
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary-of-differences-between-parcellations">
+     Summary of differences between parcellations
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-forms-of-parcellations-not-mentioned-here">
+       Other forms of parcellations not mentioned here
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>An Introduction to Parcellations</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   An Introduction to Parcellations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#neuroimaging-and-spatial-scaling-why-consider-parcellations-a-class-anchor-id-chapter1-a">
+     Neuroimaging and Spatial Scaling: Why consider parcellations
+     <a class="anchor" id="chapter1">
+     </a>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-quick-note-on-labeling">
+     A quick note on labeling:
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#working-with-parcellations-atlases">
+     Working with Parcellations/Atlases:
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#nilearn">
+       Nilearn:
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#neuroparc">
+       Neuroparc
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#different-types-of-parcellations-and-how-to-access-publicly-available-parcellations">
+     Different types of parcellations and how to access publicly available parcellations:
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#anatomical-vs-functional">
+       Anatomical vs Functional
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#anatomical-atlases">
+         Anatomical Atlases
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#functional-parcellations">
+     Functional parcellations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#structural-parcellations">
+   Structural parcellations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multimodal-parcellations">
+     Multimodal parcellations
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary-of-differences-between-parcellations">
+     Summary of differences between parcellations
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-forms-of-parcellations-not-mentioned-here">
+       Other forms of parcellations not mentioned here
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="an-introduction-to-parcellations">
+<h1>An Introduction to Parcellations<a class="headerlink" href="#an-introduction-to-parcellations" title="Permalink to this headline">#</a></h1>
+<p><em>Written By: Clara Sava-Segal &amp; Thomas L. Botch (edited by Luke Chang)</em></p>
+<p>What spatial scale should we use to analyze neuroimaging data? Traditional univariate approaches have focused on analyzing data at the voxel level or averaging activity within a region of interest (ROI). The goal of this tutorial is to provide an introduction to parcellation schemes. We will cover the types of atlases that are available, when to use them, and how to work with them in python.</p>
+<section id="neuroimaging-and-spatial-scaling-why-consider-parcellations-a-class-anchor-id-chapter1-a">
+<h2>Neuroimaging and Spatial Scaling: Why consider parcellations <a class="anchor" id="chapter1"></a><a class="headerlink" href="#neuroimaging-and-spatial-scaling-why-consider-parcellations-a-class-anchor-id-chapter1-a" title="Permalink to this headline">#</a></h2>
+<p>There is vast diversity in the spatial scales at which different psychological and neurological processes are organized. To study these different mechanisms most effectively, the scale of our methods should be consistent with the scale of this organization (for more detail see: <a class="reference external" href="https://academic.oup.com/scan/article/16/8/795/6121195?login=true">Jolly &amp; Chang, 2021</a>).</p>
+<p>Parcellations provide a way to examine the brain at different spatial scales by restricting the number of regions of interest to variable scales as determined by anatomical or functional divisions. We provide extensive detail on anatomical, functional and structural approaches to building parcellations. In general, the goal is to use group together voxels based on either one of these methodological divisions. This grouping of voxels can be either contiguous (voxels that are spatially next to one another in a particular region of the brain) or non-contiguous (voxels that are spatially disjoint, but functionally connected (e.g., resting state networks).</p>
+<p>The table below is a useful discussion comparing ROI (parcellation) approaches to searchlights and whole brain approaches. (From: <a class="reference external" href="https://academic.oup.com/scan/article/16/8/795/6121195?login=true">Jolly &amp; Chang, 2021</a>). The goal of this notebook is to provide extensive detail on how the publicly available parcellations have been generated to give you more insight as to which ones would be better suited for your own research questions.</p>
+<p><img alt="" src="../_images/spatial_feature_selection_table.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@title Run this cell to run hidden code that will be useful below</span>
+<span class="c1">#! pip install nilearn</span>
+<span class="c1">#! pip install nltools</span>
+
+<span class="c1">#! pip install hcp_utils</span>
+<span class="c1">#!pip install --upgrade hcp_utils</span>
+
+<span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="o">!</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>hcp_utils
+<span class="kn">import</span> <span class="nn">hcp_utils</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>hcp_utils
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nltools.data</span> <span class="kn">import</span> <span class="n">Brain_Data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#@title Run this cell to run hidden code that will be useful below</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1">#! pip install nilearn</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1">#! pip install nltools</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1">#! pip install hcp_utils</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1">#!pip install --upgrade hcp_utils</span>
+<span class="ne">----&gt; </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;nilearn&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-quick-note-on-labeling">
+<h2>A quick note on labeling:<a class="headerlink" href="#a-quick-note-on-labeling" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>The terms parcellation, atlas, and template are often used interchangeably, as noted in <a class="reference external" href="https://arxiv.org/pdf/2107.03475.pdf">Moghimi <em>et al</em> 2021</a>. We use their labeling strategy below to describe the three strategies that have been used to generate parcellations:</p></li>
+<li><p><strong>Parcellation</strong>: a division of the gray matter that enumerates what region each gray matter voxel is a part of</p></li>
+<li><p><strong>Atlas</strong>: could be used to refer to anatomical parcellations</p></li>
+<li><p><strong>Template</strong>: the use of a T1-weighted MRI image as the reference for other T1-weighted images</p></li>
+</ul>
+</section>
+<section id="working-with-parcellations-atlases">
+<h2>Working with Parcellations/Atlases:<a class="headerlink" href="#working-with-parcellations-atlases" title="Permalink to this headline">#</a></h2>
+<p>There are two main repositories of anatomical and functional atlases that can programmatically accessed via python packages (e.g., Nilearn and Neuroparc). We briefly detail these below and then will provide code-snippets and plotting suggestions for using these packages as we introduce parcellations below.</p>
+<section id="nilearn">
+<h3>Nilearn:<a class="headerlink" href="#nilearn" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> (Abraham <em>et al</em>, 2014) is a python package that combines tools for neuroimaging and provides command line functions to fetch atlases that make using parcellations easy. Nilearn includes <strong>12</strong> anatomically and functionally defined atlases, including Harvard-Oxford, Schaefer, Yeo and Anatomated Anatomical Labeling (AAL).</p>
+<p>Here is how each of the atlases can be downloaded using python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_harvard_oxford</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_difumo</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_msdl</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_schaefer_2018</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_aal</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_smith_2009</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_surf_destrieux</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_craddock_2012</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_talairach</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_yeo_2011</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_juelich</span>
+<span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_basc_multiscale_2015</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function nilearn.datasets.atlas.fetch_atlas_basc_multiscale_2015(version=&#39;sym&#39;, data_dir=None, url=None, resume=True, verbose=1)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="neuroparc">
+<h3>Neuroparc<a class="headerlink" href="#neuroparc" title="Permalink to this headline">#</a></h3>
+<p>Alternatively, there is also the <a class="reference external" href="https://github.com/neurodata/neuroparc">Neuroparc</a> package, which provides a large repository of standardized atlases (currently <strong>46</strong>; see Table below), which can be used interchangeably. Neuroparc includes details to make <strong>the comparison between atlases</strong> in MNI space easily <a class="reference external" href="https://www.nature.com/articles/s41597-021-00849-3">(Lawrence <em>et al.</em>, 2021)</a>. Importantly, their Github page <a class="reference external" href="https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary">README file</a> provides an excellent summary of how the parcellations where created, their description, and their native space.</p>
+<p>The table below <a class="reference external" href="https://www.nature.com/articles/s41597-021-00849-3">(Lawrence <em>et al.</em>, 2021)</a> includes a list of the parcellations available, the number of ROIs in each depending on the resolution, and whether a anatomical labels are available. Again, if you want further information on these parcellations, we recommend checking out the aforementioned <a class="reference external" href="https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary">README file</a>.</p>
+<p><img alt="" src="../_images/neuroparc_atlas_table.png" /></p>
+<p><img alt="" src="../_images/brainAtlases_color_wRegions.png" /></p>
+</section>
+</section>
+<section id="different-types-of-parcellations-and-how-to-access-publicly-available-parcellations">
+<h2>Different types of parcellations and how to access publicly available parcellations:<a class="headerlink" href="#different-types-of-parcellations-and-how-to-access-publicly-available-parcellations" title="Permalink to this headline">#</a></h2>
+<section id="anatomical-vs-functional">
+<h3>Anatomical vs Functional<a class="headerlink" href="#anatomical-vs-functional" title="Permalink to this headline">#</a></h3>
+<section id="anatomical-atlases">
+<h4>Anatomical Atlases<a class="headerlink" href="#anatomical-atlases" title="Permalink to this headline">#</a></h4>
+<p>With the advent of MRI, atlases have started to rely on neural macrostructures such as sulci or gyri to distinguish regions, with the expectation that this would result in brain regions with voxels that have a shared cytoarchitecture. <strong>The labels in these atlases reflect the spatial location of an anatomical region.</strong></p>
+<p>There are different approaches (Direct vs. Mirroring) to set up and generate an anatomical atlas that are well described in <a class="reference external" href="https://arxiv.org/pdf/2107.03475.pdf">Moghimi <em>et al.</em> 2021</a> if you are interested in reading more. The mirroring approach has become standard practice in most modern fMRI research programs. It entails registering an image that needs to be parcellated to an existent template image that has already been labeled. Each voxel gets the corresponding voxel’s label in the reference image.</p>
+<p>Commonly used and referenced template/reference images include the <a class="reference external" href="http://www.talairach.org/about.html">Talairach template</a> (Talairach and Tournoux, 1988) and the <a class="reference external" href="https://github.com/Jfortin1/MNITemplate">MNI 152 template</a>.</p>
+<p>Two single-subject attempts to automate these procedures were the AAL atlas and the Talairach atlas (described below). “Single-subject” here means that <strong>one individual’s</strong> brain was used as the reference point. Unsurprisingly, this means that the anatomical idiosyncrasies of these individuals are reflected in these template images, but these are still commonly used as you will see below.</p>
+<ol class="simple">
+<li><p><a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/11771995/">AAL-Automatic Anatomical Labeling</a> [Tzourio-Mazoyer <em>et al</em>, 2002]</p></li>
+</ol>
+<ul class="simple">
+<li><p>This <strong>anatomical</strong> atlas provides anatomical landmarks following the sulci in the brain.</p></li>
+<li><p>This is available in both Neuroparc and in Nilearn for easy access (see code below)</p></li>
+<li><p>116 regions</p></li>
+<li><p>Generated from 1 subject</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">plotting</span>
+
+<span class="n">aal</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_aal</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s1">&#39;SPM12&#39;</span><span class="p">)</span>
+<span class="n">aal</span><span class="o">.</span><span class="n">maps</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">aal</span><span class="o">.</span><span class="n">maps</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;AAL&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x179bd93a0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_7_1.png" src="../_images/Parcellations_7_1.png" />
+</div>
+</div>
+<ol class="simple">
+<li><p><a class="reference external" href="http://www.talairach.org/">Talairach Atlas</a> (Talairach and Tournoux, 1988)</p></li>
+</ol>
+<ul class="simple">
+<li><p>This <strong>anatomical</strong> atlas includes the Hemisphere, Lobe, Gyrus, Tissue Type, and Cell Type.</p></li>
+<li><p>This is available in both Neuroparc and in Nilearn for easy access (see below). As you can see in the code snippet below, to specify the level at which you want this anatomical atlas, you can feed that as input into the code.
+“level_name” should be one of [‘hemisphere’, ‘lobe’, ‘gyrus’, ‘tissue’, ‘ba’]</p></li>
+<li><p>110 regions</p></li>
+<li><p>Generated from 1 alcoholic subject post-mortem at age 60</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;hemisphere&#39;</span><span class="p">,</span> <span class="s1">&#39;lobe&#39;</span><span class="p">,</span> <span class="s1">&#39;gyrus&#39;</span><span class="p">,</span> <span class="s1">&#39;tissue&#39;</span><span class="p">,</span> <span class="s1">&#39;ba&#39;</span><span class="p">]:</span>
+  <span class="n">talairach</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_talairach</span><span class="p">(</span><span class="n">level_name</span><span class="o">=</span><span class="n">level</span><span class="p">)</span>
+
+  <span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">talairach</span><span class="o">.</span><span class="n">maps</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Talairach - </span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Parcellations_9_0.png" src="../_images/Parcellations_9_0.png" />
+<img alt="../_images/Parcellations_9_1.png" src="../_images/Parcellations_9_1.png" />
+<img alt="../_images/Parcellations_9_2.png" src="../_images/Parcellations_9_2.png" />
+<img alt="../_images/Parcellations_9_3.png" src="../_images/Parcellations_9_3.png" />
+<img alt="../_images/Parcellations_9_4.png" src="../_images/Parcellations_9_4.png" />
+</div>
+</div>
+<p><strong>Multiple-subject atlases</strong>.
+These atlases use the combination of multiple subjects’ T1 scans as the reference image for mirroring in generating anatomical atlases. Multiple-subject parcelations are thought to be more accurate than single subject parcellations and said to be “probabilistic.”</p>
+<p><strong>Probabilistic</strong> refers to the ability to detect the probability of a voxel belonging in a region of the brain given that that voxel has been assigned using multiple subjects as compare to one.</p>
+<p>There are numerous ways to assign a subject’s data that you want to be parcellated to a probabilistic atlas. One method is to <strong>generate a single reference atlas</strong> in which there is one image registration between the reference image and the to-be-parcellated image. Evidently, this is prone to errors of image registration. In this method, the probability that each voxel in your data belongs to a region in the reference atlas is calculated while also taking into account the surface geometry and image intensity, as reviewed in Moghimi <em>et al.</em> 2021 and posited in Fischl <em>et al.</em> 2002/2004. Importantly, this method has been implemented into <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> and the <a class="reference external" href="http://www.humanconnectomeproject.org/">Human Connectome Project</a> imaging pipeline. The alternative is a <strong>multiple-reference atlases</strong> approach in which each atlas is assigned to the new brain image separately such that the voxel is assigned to its corresponding image based on its assignment across multiple reference atlases.</p>
+<p>To further emphasize, a major obstacle when it comes to anatomical atlases is the degree of idiosyncracy in neuroanatomy as well as the subjective nature of human manual atlases. Importantly, automated algorithms have been generated to bypass the latter and guidelines have been put forth to aid in keeping manual atlases consistent. Likewise, reference atlases exist based on <em>age</em> to deal with changes in neural morphology. We do not include those here.</p>
+<p>Numerous multi-subject atlases have been generated and made publicly available. We describe three of the most commonly used ones below:</p>
+<ol class="simple">
+<li><p><a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Atlases">Harvard-Oxford </a></p></li>
+</ol>
+<ul class="simple">
+<li><p>These are a series of <strong>probabilistic</strong> atlases that cover 48 cortical and 21 subcortical structures using T1-weighted images from 21 male and 16 females that were all healthy. Importantly, these have all been registered into <strong>MNI-152</strong> space making their usage quite simple.</p></li>
+<li><p>These are available in both Nilearn and Neuroparc (see code below).</p></li>
+<li><p>The nilearn function <a class="reference external" href="https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_harvard_oxford.html"><code class="docutils literal notranslate"><span class="pre">fetch_atlas-&lt;name&gt;</span></code></a> requires that you load in the ‘name of the atlas’ that you wish to load as ‘atlas-name’.</p></li>
+<li><p>There are numerous Harvard-Oxford atlases available that can be called through this function. For ease of viewing and deciding which one you are interested in, we recommend looking here: https://neurovault.org/collections/262/. We provide code to load in two sample atlases below - one cortical and one subcortical:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">atlas_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;cort-maxprob-thr0-2mm&#39;</span><span class="p">,</span> <span class="s1">&#39;sub-maxprob-thr0-1mm&#39;</span><span class="p">]:</span>
+
+  <span class="n">harvard_oxford</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_harvard_oxford</span><span class="p">(</span><span class="n">atlas_name</span> <span class="p">)</span>
+
+  <span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">harvard_oxford</span><span class="o">.</span><span class="n">maps</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Harvard-Oxford-</span><span class="si">{</span><span class="n">atlas_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Parcellations_11_0.png" src="../_images/Parcellations_11_0.png" />
+<img alt="../_images/Parcellations_11_1.png" src="../_images/Parcellations_11_1.png" />
+</div>
+</div>
+<ol class="simple">
+<li><p>Desikan-Killiany (Desikan, 2006)</p></li>
+</ol>
+<ul class="simple">
+<li><p>This is a multi-subject, single reference atlas that is part of the <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">Freesurfer software package</a>.</p></li>
+<li><p>It was generated using 30 healthy subjects and 10 subjects with Alzheimer’s (ranging from 19-87 years old) making it apt for use with people of different ages and different degrees of neural atrophy. Due to this, it has also been used beyond fMRI research to localize and visualize electrodes implanted into patients with medically-refractory epilepsy for intracranial recordings (iELVis package <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0165027017300365">link text</a>).</p></li>
+<li><p>Defined by gyri</p></li>
+<li><p>Regions: 68, only cortical</p></li>
+<li><p>Unfortunately, this atlas is not currently available in nilearn, but is a part of Neuroparc in MNI 152 space which we load in below. Notably, there are different options in Neuroparc based on the resolution you are interested in. We load in 1x1x1.</p></li>
+<li><p>Notably, there is also the updated Desikan-Killiany-Tourville (DKT) atlas where regions that were not clearly defined were merged into other regions (total: 62, still only cortical)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nltools</span> <span class="kn">import</span> <span class="n">Brain_Data</span>
+
+<span class="n">desikan_killiany</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="s1">&#39;https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Desikan_space-MNI152NLin6_res-1x1x1.nii.gz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_nifti</span><span class="p">()</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">desikan_killiany</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Desikan-Killiany&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Paired&#39;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x2a0914730&gt;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_13_1.png" src="../_images/Parcellations_13_1.png" />
+</div>
+</div>
+<ol class="simple">
+<li><p>Destrieux Atlas <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1053811910008542">(Destrieux <em>et al.</em> 2010)</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>Defined by gyri and sulci</p></li>
+<li><p>One of the first anatomical atlases to divide the cortex into either sulci or gyri as opposed to just labeling regions based on the gyri with boundaries running between the bottoms of the two neighboring sulci.</p></li>
+<li><p>This atlas is also found in the <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation">Freesurfer software package</a> and is readily available in nilearn (see below) in fsaverage5 space</p></li>
+<li><p>Regions: 74 per hemisphere, only cortical</p></li>
+<li><p>24 healthy subjects</p></li>
+<li><p>This atlas is found in both <a class="reference external" href="https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_surf_destrieux.html">nilearn</a> and Neuroparc</p>
+<ul>
+<li><p>Unlike the examples above, this nilearn function returns a dictionary with the labels for each region and a numpy array for the left and right hemisphere labels (‘map_left’, ‘map_right’), and a description of the dataset</p></li>
+<li><p>Since, this nilearn function does not return a .nii file like the other examples above did, we need to take the surface space (fsaverage) and overlay it with the labels. The code snippet below details how to do this and more information can be found <a class="reference external" href="https://nilearn.github.io/dev/auto_examples/01_plotting/plot_surf_atlas.html">here</a>.</p></li>
+</ul>
+</li>
+</ul>
+<p>Atlas image from Freesurfer. You can note the differences from the DK atlas above visually:</p>
+<p><img alt="" src="../_images/freesurfer_atlas.png" /></p>
+<p><img alt="" src="../_images/destrieux.png" /></p>
+<p>Atlas image from Freesurfer. You can note the differences from the DK atlas above visually:</p>
+<p><img alt="" src="../_images/destrieux.png" /></p>
+<ul class="simple">
+<li><p>![image.png](data:image/png;base64,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)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">destrieux</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_surf_destrieux</span><span class="p">()</span>
+
+<span class="sd">&#39;&#39;&#39; See outputs of the dataset &#39;&#39;&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">destrieux</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="n">atlas</span> <span class="o">=</span> <span class="n">destrieux</span><span class="p">[</span><span class="s1">&#39;map_left&#39;</span><span class="p">]</span>
+<span class="n">fsaverage</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_surf_fsaverage</span><span class="p">()</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_surf_roi</span><span class="p">(</span><span class="n">fsaverage</span><span class="p">[</span><span class="s1">&#39;infl_left&#39;</span><span class="p">],</span> <span class="n">roi_map</span><span class="o">=</span><span class="n">atlas</span><span class="p">,</span>
+                       <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;lateral&#39;</span><span class="p">,</span>
+                       <span class="n">bg_map</span><span class="o">=</span><span class="n">fsaverage</span><span class="p">[</span><span class="s1">&#39;sulc_left&#39;</span><span class="p">],</span> <span class="n">bg_on_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">darkness</span><span class="o">=</span><span class="mf">.2</span><span class="p">,</span> <span class="n">ba</span>  <span class="p">)</span>
+<span class="sd">&#39;&#39;&#39; Note: we chose &#39;infl_left&#39; here to match the image above, but the same image could be plotted on pial surface or at different angles using this plot_surf_roi function&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;labels&#39;, &#39;map_left&#39;, &#39;map_right&#39;, &#39;description&#39;])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot; Note: we chose &#39;infl_left&#39; here to match the image above, but the same image could be plotted on pial surface or at different angles using this plot_surf_roi function&quot;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_16_2.png" src="../_images/Parcellations_16_2.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="functional-parcellations">
+<h2>Functional parcellations<a class="headerlink" href="#functional-parcellations" title="Permalink to this headline">#</a></h2>
+<p>The goal of functional parcellations is to group voxels based on similar function, using either functional activity or functional connectivity as similarity measures. Again, a nice review can be found in <a class="reference external" href="https://arxiv.org/pdf/2107.03475.pdf">Moghimi <em>et al.</em> 2021</a>. The assumption is that functionally distinct brain regions have voxels with shared functional activity and connectivity. For a great discussion of how cortical regions have a ‘connectional fingerprint’ reflecting both observed cell-firing differences and functional imaging activity, see: <a class="reference external" href="https://www.nature.com/articles/nrn893">Passingham, Stephan &amp; Kötter (2002)</a>. A combination of resting state fMRI and task-based fMRI have been used to generate these parcellations. Before discussing the implementation and generation of functional parcellations, we wish to acknowledge a couple of ongoing fields of research:</p>
+<p>Although there is more to determine, it may be that functional activity (as compared to connectivity) would result in parcellations that have higher inter-subject consistency considering that it has been shown that subjects have idiosyncratic connectivity patterns (<a class="reference external" href="https://www.nature.com/articles/nn.4135">Finn <em>et al.</em> 2015</a>). Craddock <em>et al.</em> (2012) conducted a detailed analysis using anatomical atlases (included the Talairach, Harvard-Oxford, and AAL detailed above) to evaluate how well they can reproduce functional connectivity patterns. They identified that the use of many regions in an anatomical atlas (600 or more) more accurately reflects functional connectivity patterns, while using atlases with fewer regions is substandard and less suited if the goal is to understand functional connectivity. For reference, see <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1002/hbm.21333">here</a>.</p>
+<p>Likewise, recent work has explored whether functional parcellations derived from resting-state versus from task-evoked fMRI might differ. Specifically, it has been shown (unsurprisingly) that the functional organization of the brain depends on the task such that a parcellation generated from one task will differ from a parcellation generated from another task (<a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/31740342/">Salehi <em>et al.</em> 2019</a>).</p>
+<p>Signal-to-noise ratio (SNR) varies across the brain, suggesting that the reliability of parcellation results will vary across the brain, as well (Yeo <em>et al.</em> 2011; reviewed in Moghimi <em>et al.</em> 2021). In light of SNR variability, Yeo <em>et al.</em> 2011 proposes that similarity in functional connectivity profiles is superior to functional activity on its own.</p>
+<p>Individual versus group-level parcellations. Individual-level parcellations apply parcellations to an individual’s dataset (typically multi-sessions scans) <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/28728026/">Ex: Braga &amp; Buckner, 2017</a>. Group-level parcellations combine datasets across people. Group-level parcellations capture the common “average brain” and absolve the <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/19787067/">concordance problem</a>. At the same time individual-level parcellations capture idiosyncrasies unique to individual brains and have higher SNR, making it possible to capture inter-individual variability in networks/locations on a smaller, more localized scale (Braga &amp; Buckner, 2017), to predict certain features about the individual (ex: sex - <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1053811917307139">Salehi *et al.*2018</a>) and to link individual differences in neural activity to behavior (Finn <em>et al.,</em> 2015). Notably, <strong>the choice between using a individual-level parcellation or a group-level parcellation depends on the data available and the level of analysis one is interested in.</strong> The construction of a group-level parcellation requires registering the scan of each individual subject into a common space template to look at the one-to-one correspondence between voxels across subjects.</p>
+<p>There are two algorithms (among others) used to generate functional parcelltions: (1) cluster-based, (2) graph-based.
+- Cluster-based algorithms divide voxels into groups that have higher within-group similarity as compared to across-group similarity. Common clustering algorithms include K-means or hierarchical clustering.
+- Graph-based algorithms treat voxels as “nodes” (vertices) and treat the similarity between voxels as “edges” (links). Once these graphs are generated, edges are binarized such that if the strength (similarity) is above a certain pre-determined threshold then it is given a 1, and otherwise a 0.</p>
+<p>Below, we introduce a series of widely used functional parcellations and note which features were used to generate them.</p>
+<ol class="simple">
+<li><p><a class="reference external" href="https://https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3174820/">Yeo parcellation</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>This parcellation divides the cortex based on resting state networks (either 7 or 17) using data from 1000, healthy subjects.</p></li>
+<li><p>It employs a clustering approach</p></li>
+<li><p>Notably, it shows not only localized networks (ex: motor), but also distributed networks that operate across the cortex (ex: Default Mode).</p></li>
+<li><p>This network is also available in the <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation_Yeo2011">Freesurfer package</a></p></li>
+<li><p>This is available in MNI152 space through Nilearn and in Freesurfer space through Neuroparc. We include the <a class="reference external" href="https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_yeo_2011.html">Nilearn function</a> below and show how both the 17 and 7 Network labels can be included.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yeo</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_yeo_2011</span><span class="p">()</span>
+
+<span class="sd">&#39;&#39;&#39; See outputs of the dataset &#39;&#39;&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">yeo</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;thick_7&#39;</span><span class="p">,</span><span class="s1">&#39;thick_17&#39;</span><span class="p">]:</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;thick_&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="n">atlas</span> <span class="o">=</span> <span class="n">yeo</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="c1">#this loads in a .nii file</span>
+  <span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">atlas</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Yeo - </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> Network&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Paired&#39;</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;Note: if you want to keep the canonical Yeo colors for your plotting, there is a &#39;colors_7&#39; txt file available in the nilearn function&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;description&#39;, &#39;thin_7&#39;, &#39;thick_7&#39;, &#39;thin_17&#39;, &#39;thick_17&#39;, &#39;colors_7&#39;, &#39;colors_17&#39;, &#39;anat&#39;])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Note: if you want to keep the canonical Yeo colors for your plotting, there is a &#39;colors_7&#39; txt file available in the nilearn function&quot;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_19_2.png" src="../_images/Parcellations_19_2.png" />
+<img alt="../_images/Parcellations_19_3.png" src="../_images/Parcellations_19_3.png" />
+</div>
+</div>
+<p>The image above plots the network colors so that networks in different hemisphere have the same colors. If you want to split up the networks into 49 ROIs, nilearn includes a useful <code class="docutils literal notranslate"><span class="pre">connected_labels_regions</span></code> function. Further information using the Yeo network in nilearn is detailed <a class="reference external" href="https://nilearn.github.io/auto_examples/06_manipulating_images/plot_extract_regions_labels_image.html">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nilearn.regions</span> <span class="kn">import</span> <span class="n">connected_label_regions</span>
+
+<span class="n">region_labels</span> <span class="o">=</span> <span class="n">connected_label_regions</span><span class="p">(</span><span class="n">atlas</span><span class="p">)</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">region_labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Yeo&#39;</span><span class="p">,</span>
+                  <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Paired&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/nilearn/image/image.py:756: FutureWarning: Image data has type int64, which may cause incompatibilities with other tools. This will error in NiBabel 5.0. This warning can be silenced by passing the dtype argument to Nifti1Image().
+  return klass(data, affine, header=header)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x28eaa0df0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_21_2.png" src="../_images/Parcellations_21_2.png" />
+</div>
+</div>
+<ol class="simple">
+<li><p><a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/28981612/">Schaefer parcellation</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>This parcellation aims to combine (1) local gradient and (2) global similarity approaches by using both <strong>task-based fMRI and resting-state fMRI</strong>. They develop a gradient-weighted Markov Random Field (gwMRF) model.</p></li>
+<li><p>Local gradient approaches look at brusque changes in the functional connectivity patterns, while global similarity approaches cluster based on similar functional connectivity more broadly (such as Yeo).</p></li>
+<li><p>Importantly, the <a class="reference external" href="https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal">Github page</a> for this parcellation is consistently updated and provides the parcellation in Freesurfer space, HCP space, and MNI space.</p></li>
+<li><p>The parcellation also comes with labels from the Yeo 7 resting state network or 17 Network parcellation and can be split into 100, 200, 300, 400, 500, 600, 700, 800, 900, and 1000 parcels depending on user preference. A detailed anatomical description of the functional and structural features of these nodes is included in the publication.</p></li>
+<li><p>It is available both through Nilearn and Neuroparc and we provide example code for how to use the <a class="reference external" href="https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal">Nilearn function</a> below. In Nilearn, the reference space is MNI152.</p></li>
+<li><p>In this case, the number of ROIs (parcels), the network number (7 or 17) and the resolution (1 or 2 mm) needs to be specified.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schaefer</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_schaefer_2018</span><span class="p">()</span>
+
+<span class="sd">&#39;&#39;&#39; See outputs of the dataset &#39;&#39;&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schaefer</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="sd">&#39;&#39;&#39; Change here if you want a different number of rois, networks, or resolution&#39;&#39;&#39;</span>
+<span class="n">n_rois</span><span class="o">=</span><span class="mi">200</span>
+<span class="n">yeo_networks</span><span class="o">=</span><span class="mi">7</span>
+<span class="n">resolution_mm</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="n">dataset_s</span><span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_schaefer_2018</span><span class="p">(</span><span class="n">n_rois</span><span class="p">,</span><span class="n">yeo_networks</span><span class="p">,</span><span class="n">resolution_mm</span><span class="p">)</span>
+<span class="n">atlas</span> <span class="o">=</span> <span class="n">schaefer</span><span class="p">[</span><span class="s1">&#39;maps&#39;</span><span class="p">]</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">atlas</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Schaefer - </span><span class="si">{</span><span class="n">n_rois</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                  <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Paired&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;maps&#39;, &#39;labels&#39;, &#39;description&#39;])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x2a2b9a5e0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_23_2.png" src="../_images/Parcellations_23_2.png" />
+</div>
+</div>
+<ol class="simple">
+<li><p><a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/23747961/">Shen Parcellation</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>The Shen parcellation is a groupwise <strong>graph-theory-based</strong> parcellation. It is also based on <strong>resting state</strong> functional connectivity</p></li>
+<li><p>The parcellation comes with 268 nodes (including subcortical nodes)</p></li>
+<li><p>Unfortunately, it is not found in nilearn or in Neuroparc, but we can find the parcellation on <a class="reference external" href="https://neurovault.org/images/395091/">Neurovault</a>. We use this link in the code snippet below.</p></li>
+<li><p>We highly recommend that users of the Shen parcellation use this <a class="reference external" href="https://bioimagesuiteweb.github.io/bisweb-manual/tools/conncontrol.html">BioImage Suite tool</a> that provides information about how to label each ROI and its network identity.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shen</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="s1">&#39;https://neurovault.org/media/images/8423/shen_2mm_268_parcellation.nii.gz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_nifti</span><span class="p">()</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">shen</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Shen&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Paired&#39;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x2a087f1c0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_25_1.png" src="../_images/Parcellations_25_1.png" />
+</div>
+</div>
+<p>Something of note is that while we usually think of voxels as belonging to one single region (<strong>hard assignment</strong>), but it also possible that a voxel can belong to multiple regions (<strong>soft assignment</strong>). Consider parcellations based on network - (association cortex) regions may be “part of” different networks depending on task. Below, we introduce the idea of multimodal parcellations.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="structural-parcellations">
+<h1>Structural parcellations<a class="headerlink" href="#structural-parcellations" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Structural parcellations reflect the <strong>structural connectivity profile</strong> and rely on diffusion-weighted MR. The connectivity profile of a voxels reflects the probability of that voxel being connected to other voxels via a white matter fiber. They estimate where white matter tracks start and end and their pathways. The premise is that connections reflect functional organization, so cortical regions that are functionally distinct from one another should have different connectivity patterns. However, given that structural parcellations rely on accurate white matter fiber estimation, the limiting factor is the fidelity of the tractography process. There are two main topographic approaches for mapping fibers: (1) deterministic and (2) probabilistic, but the majority use <strong>probabilistic tractography</strong>. Similar methods of clustering (as described under Functional Parcellations) are used to assign boundaries based on connectivity. Importantly, tractography algorithms are biased towards tracts ended on the gyral surface such that parcellations are biased to align with the sulci.</p></li>
+<li><p>For an excellent discussion of how tractography connections compare to retrograde tracer injections in the macaque neocortex, we recommend this excellent publication by <a class="reference external" href="https://www.jneurosci.org/content/36/25/6758">Donahue and colleagues (2016)</a>. They show that tractography confirms the white matter pathways identified with the invasive tracing with high sensitivity, but also discuss limitations in specificity.</p></li>
+<li><p>Below, we present the widely-available and used Glasser parcellation which is multimodal.</p></li>
+</ul>
+<section id="multimodal-parcellations">
+<h2>Multimodal parcellations<a class="headerlink" href="#multimodal-parcellations" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p><a class="reference external" href="https://www.nature.com/articles/nature18933">Glasser parcellation</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>This parcellation splits up the cortical surface in 360 nodes (180 per hemisphere).</p>
+<ul>
+<li><p>A key feature of this parcellation is that they identified new brain areas (97) and 83 known-areas.</p></li>
+</ul>
+</li>
+<li><p>Data from 210 subjects</p></li>
+<li><p>The Glasser parcellation is <strong>multimodal</strong> because as compared to using only (1) anatomy, (2) function, (3)connectivity and (4) topography, it combines complementary information from across these methods, increasing the confidence in the labeling of regions as distinct. The authors combined all four properties using Human Connectome Project MRI data, taking into consideration myelin content and cortical thickness for anatomy, task MRI across 7 tasks for function, and resting state MRI for functional connectivity. The combination of these approaches also led to the use of cortical folding, myelin and resting state fMRI to generate a parcellation with high intersubject cortical alignment.</p></li>
+<li><p>Unsurprisingly, there can be discrepancies between imaging modalities (i.e. the same voxel can be assigned to different regions depending on whether structural or functional connectivity are used). Glasser <em>et al.</em> required that at least two converging modalities were used to assign voxels to regions.</p></li>
+<li><p>We recommend this <a class="reference external" href="https://github.com/brainspaces/glasser360">Github page</a> to access the parcellation</p></li>
+<li><p>Unfortunately, the parcellation is not found in Nilearn, but is in Neuroparc. We load in the parcellation below from Neuroparc.</p></li>
+<li><p>It is notable that the parcellation can be found through the <a class="reference external" href="https://rmldj.github.io/hcp-utils/">Human Connectome Project (HCP) package</a>. The <code class="docutils literal notranslate"><span class="pre">hcp.mmp</span></code> refers to the Glasser (multi-modal parcellation).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atlas_glasser</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="s1">&#39;https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Glasser_space-MNI152NLin6_res-4x4x4.nii.gz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_nifti</span><span class="p">()</span>
+
+<span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">atlas_glasser</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Glasser&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Paired&#39;</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x28eedb460&gt;
+</pre></div>
+</div>
+<img alt="../_images/Parcellations_29_1.png" src="../_images/Parcellations_29_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Rosen &amp; Halgren: https://pubmed.ncbi.nlm.nih.gov/33483325/</p></li>
+</ul>
+</section>
+<section id="summary-of-differences-between-parcellations">
+<h2>Summary of differences between parcellations<a class="headerlink" href="#summary-of-differences-between-parcellations" title="Permalink to this headline">#</a></h2>
+<p>Here, we summarize the information above and note a few additional tools which may be of interest. The choice of parcellation deeply relates to the scale of the researcher’s question of interest (e.g., region vs. network).</p>
+<ul class="simple">
+<li><p>Anatomical parcellations:</p>
+<ul>
+<li><p>Defined based on anatomical landmark (sulci/gyri)</p></li>
+<li><p>Intended to relate to macroscale cytoarchitectural properties</p></li>
+<li><p>Reflects the spatial location of a region</p></li>
+<li><p>Disregards idioisyncracies in brain anatomy and functional-anatomical differences across subjects</p></li>
+</ul>
+</li>
+<li><p>Functional parcellations:</p>
+<ul>
+<li><p>Defined with functional activity/connectivity measures</p></li>
+<li><p>Uses resting-state and/or task-based fMRI</p></li>
+<li><p>Groups regions based on similarity of function based on clustering or graph metrics</p></li>
+<li><p>Can be well-defined at the individual-subject and group level</p></li>
+<li><p>Varying degrees of granularity (anywhere from 100 to 1000 regions)</p></li>
+</ul>
+</li>
+<li><p>Multimodal parcellations:</p>
+<ul>
+<li><p>Combines anatomical, functional, and topographic methods to define parcels</p></li>
+<li><p>Defined at the group-level</p></li>
+</ul>
+</li>
+</ul>
+<section id="other-forms-of-parcellations-not-mentioned-here">
+<h3>Other forms of parcellations not mentioned here<a class="headerlink" href="#other-forms-of-parcellations-not-mentioned-here" title="Permalink to this headline">#</a></h3>
+<p>Other parcellations exist as well:</p>
+<ul class="simple">
+<li><p>Transcriptomics - divide the cortex based on gene-expression</p></li>
+<li><p>Local cytoarchitectures (e.g., agranular, granular, etc)</p></li>
+<li><p>Structural properties (e.g., pial thickness)</p></li>
+</ul>
+<p>For these atlases, we recommend <a class="reference external" href="https://enigma-toolbox.readthedocs.io/en/latest/index.html">the ENIGMA Toolbox</a> - an opensource meta-analysis package including genetic, disease, and structural metrics. For more information, check out (<a class="reference external" href="https://www.nature.com/articles/s41592-021-01186-4">Lariviere et al., 2022</a>).</p>
+<p>Also, there are parcellations derived from meta-analyses of task data such as Neurosynth. A few of these atlases are available on <a class="reference external" href="https://neurovault.org/collections/2099/">Neurovault</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="RSA.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Representational Similarity Analysis</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Resampling_Statistics.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Resampling Statistics</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
