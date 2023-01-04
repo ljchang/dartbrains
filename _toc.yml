@@ -40,6 +40,7 @@ parts:
   - file: content/2020_Spring
   - file: content/2020_Fall
   - file: content/2021_Fall
+  - file: content/2022_Fall
 - caption: Contributing
   chapters:
   - file: content/Contributing
