@@ -29,6 +29,7 @@ parts:
   - file: content/Connectivity
   - file: content/Multivariate_Prediction
   - file: content/RSA
+  - file: content/Parcellations
   - file: content/Resampling_Statistics
 - caption: Additional Courses
   chapters:
