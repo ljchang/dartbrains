@@ -604,8 +604,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#gitannex">
-       3) GitAnnex
+      <a class="reference internal nav-link" href="#git-annex">
+       3) Git Annex
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -704,8 +704,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#gitannex">
-       3) GitAnnex
+      <a class="reference internal nav-link" href="#git-annex">
+       3) Git Annex
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -922,9 +922,10 @@ core.symlinks = true
 </ol>
 <p>Unfortunately, you cannot check whether the <em><strong>Use a TrueType font in all console windows</strong></em> was selected as far as I’m aware, but it is unclear what the implications of not doing that are and whether it would cause DataLad to not work.  If DataLad doesn’t work for you once you get there, it is possible that you will need to reinstall git.</p>
 </section>
-<section id="gitannex">
-<h4>3) GitAnnex<a class="headerlink" href="#gitannex" title="Permalink to this headline">#</a></h4>
-<p><strong>DO NOT INSTALL GIT ANNEX from the GIT-ANNEX website directly</strong>, because this seems not to work.  To be fair, the git-annex people clearly indicate that the Windows installer is in beta and that there are some known issues. Luckily you can use the git-annex installer provided by DataLad, which does work.  Run these three commands from the command line to install git-annex:</p>
+<section id="git-annex">
+<h4>3) Git Annex<a class="headerlink" href="#git-annex" title="Permalink to this headline">#</a></h4>
+<p><strong>DO NOT INSTALL GIT ANNEX directly from their website</strong>, because this does not seem to seem to currently work. The Windows installer is still in beta and that there are some known issues. Luckily you can use the git-annex installer provided by DataLad, which does work.</p>
+<p>Run these three commands from the command line to install git-annex:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; pip install datalad-installer
 &gt; datalad-installer git-annex -m datalad/packages
 &gt; git config --global filter.annex.process &quot;git-annex filter-process&quot;
@@ -945,15 +946,15 @@ core.symlinks = true
 <section id="windows-path-separators">
 <h4>Windows Path Separators<a class="headerlink" href="#windows-path-separators" title="Permalink to this headline">#</a></h4>
 <p>When using the DataLad via the command line you will need to first navigate to the folder where the data was installed before you can download the data (this doesn’t matter when using the Python API).</p>
-<p>The <strong>cd</strong> command is used in the command prompt to <strong>c</strong>hange <strong>d</strong>irectory. You might notice how the path separators (‘/’ and ‘' ) are different in the first and second commands. This is a potential issue you might run into when using Windows vs Mac/Unix with Python. The backslash Windows file separator ( \ ) is different from the forward slash used in other operating systems, or on the internet in URLs.  If you’re ever using Python to run DataLad commands, or to load and save any kind of data in Python more generally, you may run into problems if you copy folder paths from Windows File Explorer into Python because they’ll have the wrong separator. You can fix this in your Python scripts by switching all the 's to /’s, or you can use a double \ which also works.</p>
+<p>The <strong>cd</strong> command is used in the command prompt to <strong>c</strong>hange <strong>d</strong>irectory. You might notice how the path separators (<code class="docutils literal notranslate"><span class="pre">/</span></code> and <code class="docutils literal notranslate"><span class="pre">\\</span></code> ) are different in the first and second commands. This is a potential issue you might run into when using Windows vs Mac/Unix with Python. The backslash Windows file separator <code class="docutils literal notranslate"><span class="pre">\</span></code>  is different from the forward slash <code class="docutils literal notranslate"><span class="pre">/</span></code> used in other operating systems, or on URLs.  If you’re ever using Python to run DataLad commands, or to load and save any kind of data in Python more generally, you may run into problems if you copy folder paths from Windows File Explorer into Python because they’ll have the wrong separator. You can fix this in your Python scripts by switching all the <code class="docutils literal notranslate"><span class="pre">/</span></code> to <code class="docutils literal notranslate"><span class="pre">\</span></code>, or you can use a double <code class="docutils literal notranslate"><span class="pre">\\</span></code> which also works.</p>
 <ul>
-<li><p>When you open the command prompt, you are in a default directory, which is displayed on the command line. Likely this is “C:\Users\YourUserName&quot; and that will show up in the command line as:</p>
+<li><p>When you open the command prompt, you are in a default directory, which is displayed on the command line. Likely this is <code class="docutils literal notranslate"><span class="pre">C:\Users\YourUserName\\</span></code> and that will show up in the command line as:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  C:\Users\YourUserName&gt; _
   (which is where the &quot;&gt;&quot; before all the code lines comes from)
 </pre></div>
 </div>
 </li>
-<li><p>If your installed dataset lives at “C:\Users\YourUserName\ClassData\Localizer&quot; you need to navigate to that directory using the cd command before the DataLad ‘get’ command will work, which would look like this in the command line:</p>
+<li><p>If your installed dataset lives at <code class="docutils literal notranslate"><span class="pre">C:\Users\YourUserName\ClassData\Localizer\\</span></code> you need to navigate to that directory using the cd command before the DataLad <code class="docutils literal notranslate"><span class="pre">get</span></code> command will work, which would look like this in the command line:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  C:\Users\YourUserName&gt; cd ClassData\Localizer
 </pre></div>
 </div>
