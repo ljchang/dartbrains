@@ -1,0 +1,1044 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Independent Components Analysis &#8212; DartBrains</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_ICA.html" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Connectivity" href="Connectivity.html" />
+    <link rel="prev" title="Thresholding Group Analyses" href="Thresholding_Group_Analyses.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">DartBrains</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Instructors.html">
+   Instructors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Schedule.html">
+   Schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Computing Resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_JupyterHub.html">
+   Introduction to JupyterHub
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Download_Data.html">
+   Download Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Programming.html">
+   Introduction to programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Pandas.html">
+   Introduction to Pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Plotting.html">
+   Introduction to Plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Glossary.html">
+   Glossary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Topics
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro_to_Neuroimaging.html">
+   Introduction to Neuroimaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Measurement.html">
+   Signal Generation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ICA.html">
+   Separating Signal From Noise With ICA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
+   Introduction to Neuroimaging Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Processing.html">
+   Signal Processing Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Preprocessing.html">
+   Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM.html">
+   Introduction to the General Linear Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM_Single_Subject_Model.html">
+   Modeling Single Subject Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Group_Analysis.html">
+   Group Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Thresholding_Group_Analyses.html">
+   Thresholding Group Analyses
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to Independent Components Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connectivity.html">
+   Connectivity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Multivariate_Prediction.html">
+   Multivariate Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="RSA.html">
+   Representational Similarity Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Parcellations.html">
+   Introduction to Parcellations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Resampling_Statistics.html">
+   Resampling Statistics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Courses
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://naturalistic-data.org/">
+   Naturalistic Data Analysis
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project Gallery
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="2019_Spring.html">
+   Spring 2019
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Spring.html">
+   Spring 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Fall.html">
+   Fall 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2021_Fall.html">
+   Fall 2021
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2022_Fall.html">
+   Fall 2022
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contributing
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Contributing.html">
+   Contributing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/ljchang/dartbrains">
+   GitHub Repository
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_ICA.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_ICA.ipynb&branch=master"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_ICA.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_ICA.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_ICA.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/Introduction_to_ICA.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-ica-in-python">
+   Using ICA in Python
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#let-s-try-it-out">
+   Let’s try it out!
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#other-considerations">
+   Other considerations
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to Independent Components Analysis</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-ica-in-python">
+   Using ICA in Python
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#let-s-try-it-out">
+   Let’s try it out!
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#other-considerations">
+   Other considerations
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-independent-components-analysis">
+<h1>Introduction to Independent Components Analysis<a class="headerlink" href="#introduction-to-independent-components-analysis" title="Permalink to this headline">#</a></h1>
+<p><em>Written by Yong Hoon Chung, Lindsey Tepfer, &amp; Luke Chang</em></p>
+<p>Functional magnetic resonance imaging (fMRI) data contains a number of signals beyond those elicited by our tasks (e.g. movement, breathing, even noise coming from the scanner itself). Our preprocessing and denoising methods aim to mitigate the influence of these artifactual signals. But what if there about signals that we can’t directly measure? For example, what if there is a scanner artifact that is unrelated to head motion or a scanner spike? ICA can be used to potentially identify such artifactual signals, and also neural processes related to tasks.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Independent_component_analysis">Independent Component Analysis</a> (ICA) is a data-driven technique that is commonly used in performing blind source separation, which involves decomposing signals measured across multiple channels into additive independent non-Gaussian signals <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/6796129">(Bell &amp; Sejnowski, 1995)</a>. For example, imagine if we had an array of microphones recording conversations at a party and assume that there are no delays or echoes. Because speech signals are independent and non-Gaussian, ICA can be used to separate each person’s voice that might be measured across multiple microphones. The maximum number of independent signals that can be decomposed is limited by the number of recorded channels. For a more in depth version of how to implement an ICA algorithm from scratch, check out this <a class="reference external" href="https://towardsdatascience.com/independent-component-analysis-ica-in-python-a0ef0db0955e">Medium article</a>.</p>
+<p>ICA has been useful to uncover signals measured via fMRI. In particular, ICA has been applied to identify common signals across a group using the <a class="reference external" href="https://github.com/trendscenter/gift">GIFT toolbox</a> in SPM <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.1048">(Calhoun et al., 2001)</a> or the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC">Melodic Toolbox</a> in FSL <a class="reference external" href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2005.1634">(Beckmann et al., 2005)</a>. When applied to brain imaging, ICA can be used to identify either spatial or temporal patterns. However, because most brain imaging studies measure activity from many more voxels than observed TRs, spatial ICA has been the dominant approach <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1097-0193(1998)6:3%3C160::AID-HBM5%3E3.0.CO;2-1">(McKeown et al., 1998)</a> compared to temporal ICA, which is more commonly used in analyzing EEG data as there are typically many more observations in time compared to the limited number of scalp electrodes <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.94.20.10979">(Makeig et al., 1997)</a>.</p>
+<p>In this tutorial, we will demonstrate how to apply spatial and temporal ICA to a simulated fMRI experiment.</p>
+<section id="using-ica-in-python">
+<h2>Using ICA in Python<a class="headerlink" href="#using-ica-in-python" title="Permalink to this headline">#</a></h2>
+<p>There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x/y/z spatial dimensions and then using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html">Scikit-Learn</a>. Alternatively, ICA can be directly applied to neuroimaging data using <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA">nilearn</a> or <a class="reference external" href="https://https://nltools.org/index.html">nltools</a>. ICA can be applied to EEG data in python using the <a class="reference external" href="https://mne.tools/stable/index.html">MNE toolbox</a></p>
+</section>
+<section id="let-s-try-it-out">
+<h2>Let’s try it out!<a class="headerlink" href="#let-s-try-it-out" title="Permalink to this headline">#</a></h2>
+<p>To demonstrate how to use ICA with brain imaging data, we will created simulated data. We will build on the examples from the <a class="reference external" href="https://dartbrains.org/content/GLM.html">GLM tutorial</a>. Imagine a hypothetical experiment in which a participant views images of faces for 5 trials in one condition and images of houses for 5 trials in a separate condition. Past research has demonstrated that the fusiform face area (FFA) appears to selectively respond to faces <a class="reference external" href="https://www.jneurosci.org/content/jneuro/17/11/4302.full.pdf">Kanwisher et al., 1997</a>, while the parahippocampal place area (PPA) seems to more selectively respond to houses <a class="reference external" href="https://www.cell.com/fulltext/S0896-6273(00)80546-2">(Aguirre et al., 1998)</a>.</p>
+<p>Let’s simulate data for a hypothetical subject participating in this experiment. The participant was hypothetically scanned for 200 TRs where the TR length is 2000ms. We will create bilateral spherical masks in the PPA and FFA and create signal in the FFA responding to face trials and signal in the PPA responding to house trials.</p>
+<p>We will first import some python modules and define the parameters of our simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">nltools</span> <span class="kn">import</span> <span class="n">Brain_Data</span><span class="p">,</span> <span class="n">Design_Matrix</span>
+<span class="kn">from</span> <span class="nn">nltools.mask</span> <span class="kn">import</span> <span class="n">create_sphere</span>
+<span class="kn">from</span> <span class="nn">nltools.utils</span> <span class="kn">import</span> <span class="n">get_anatomical</span>
+
+<span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">n_trial</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">tr</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.75</span>
+<span class="n">signal_intensity</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s create bilateral masks for the ppa and fusiform regions. We will use spheres with a radius of 5 voxels centered on each region of interest (ROI).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ffa</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">create_sphere</span><span class="p">([</span><span class="mi">44</span><span class="p">,</span> <span class="o">-</span><span class="mi">55</span><span class="p">,</span> <span class="o">-</span><span class="mi">22</span><span class="p">]))</span> <span class="o">+</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">create_sphere</span><span class="p">([</span><span class="o">-</span><span class="mi">44</span><span class="p">,</span> <span class="o">-</span><span class="mi">55</span><span class="p">,</span> <span class="o">-</span><span class="mi">22</span><span class="p">]))</span>
+<span class="n">ffa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;FFA&#39;</span><span class="p">)</span>
+
+<span class="n">ppa</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">create_sphere</span><span class="p">([</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">]))</span> <span class="o">+</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">create_sphere</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">]))</span>
+<span class="n">ppa</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;PPA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/nilearn/image/resampling.py:273: UserWarning: Resampling binary images with continuous or linear interpolation. This might lead to unexpected results. You might consider using nearest interpolation instead.
+  warnings.warn(&quot;Resampling binary images with continuous or &quot;
+/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/nilearn/image/resampling.py:273: UserWarning: Resampling binary images with continuous or linear interpolation. This might lead to unexpected results. You might consider using nearest interpolation instead.
+  warnings.warn(&quot;Resampling binary images with continuous or &quot;
+/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/nilearn/image/resampling.py:273: UserWarning: Resampling binary images with continuous or linear interpolation. This might lead to unexpected results. You might consider using nearest interpolation instead.
+  warnings.warn(&quot;Resampling binary images with continuous or &quot;
+/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/nilearn/image/resampling.py:273: UserWarning: Resampling binary images with continuous or linear interpolation. This might lead to unexpected results. You might consider using nearest interpolation instead.
+  warnings.warn(&quot;Resampling binary images with continuous or &quot;
+</pre></div>
+</div>
+<img alt="../_images/Introduction_to_ICA_5_1.png" src="../_images/Introduction_to_ICA_5_1.png" />
+<img alt="../_images/Introduction_to_ICA_5_2.png" src="../_images/Introduction_to_ICA_5_2.png" />
+</div>
+</div>
+<p>Next, let’s simulate an actual brain response for each region. We will create an impulse response for one TR for each trial of viewing a face or a house and then convolve these responses with a canonical double gamma hemodynamic response function (HRF).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ffa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity</span>
+<span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">ffa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity</span>
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">ppa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">ffa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">ppa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;FFA&#39;</span><span class="p">,</span> <span class="s1">&#39;PPA&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;TR&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Signal Intensity&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Introduction_to_ICA_7_0.png" src="../_images/Introduction_to_ICA_7_0.png" />
+</div>
+</div>
+<p>Finally, we need to place these brain responses to faces and houses in the FFA and PPA masks. We will add random Gaussian noise to each TR independently for each voxel.</p>
+<p>Now let’s plot the average voxel activity over time from our simulated participant data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize an empty brain for 200 TRs</span>
+<span class="n">simulated_data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">get_anatomical</span><span class="p">())</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">n_tr</span><span class="p">,</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">shape</span><span class="p">()[</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="c1"># Add brain signal to each ROI</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Add Noise to each voxel and TR</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma</span>
+
+<span class="c1"># Plot average voxel activity over time</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Introduction_to_ICA_9_0.png" src="../_images/Introduction_to_ICA_9_0.png" />
+</div>
+</div>
+<p>There are many ways to improve this simulation by adding additional properties that we know about the brain. For example, we could add real physiological artifacts such as respiration or cardiac signals. We could also add autocorrelation within a voxel. We could add scanner drifts or spikes. For now we will just be using this very simple example.</p>
+<p>Now, let’s try to use spatial ICA to identify two independent components from our simulated participant’s data based on our hypothetical experiment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decomposed_voxels</span> <span class="o">=</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ica&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;voxels&#39;</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+  
+  <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+  <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 2&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">)</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Component 2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/sklearn/decomposition/_fastica.py:494: FutureWarning: Starting in v1.3, whiten=&#39;unit-variance&#39; will be used by default.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/Introduction_to_ICA_11_1.png" src="../_images/Introduction_to_ICA_11_1.png" />
+</div>
+</div>
+<p>ICA was able to successfully identify signals in the PPA and FFA corresponding to timecourses associated with viewing each trial. The spatial maps indicate the weights to project each voxel’s activity into the latent timeseries. The time series for each spatial map can be seen in the third panel.  Notice how ICA identified the correct voxels and timepoints, but it may have gotten the signs incorrect. In this example Component 1 is negative, but Component 2 is positive. ICA is only able to resolve independent signals, but these signals are invariant to the sign.</p>
+<p>We could also transpose our data and run a temporal ICA by switching the <code class="docutils literal notranslate"><span class="pre">axis</span></code> flag to <code class="docutils literal notranslate"><span class="pre">images</span></code> from <code class="docutils literal notranslate"><span class="pre">voxels</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decomposed_voxels</span> <span class="o">=</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ica&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+  <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+  <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 2&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">)</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+  <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Component 2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/sklearn/decomposition/_fastica.py:494: FutureWarning: Starting in v1.3, whiten=&#39;unit-variance&#39; will be used by default.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/Introduction_to_ICA_13_1.png" src="../_images/Introduction_to_ICA_13_1.png" />
+</div>
+</div>
+<p>When the signals are independent and have a relatively high signal to noise ratio (SNR), both spatial and temporal ICA are able to successfully recover our simulated signals.</p>
+<p><strong>What about other types of scenarios when the temporal signals are more intertwined?</strong></p>
+<p>Let’s simulate a slightly different scenario to explore this more. Here we will now give different signal intensities to the face and house signals. Let’s also assume that their might be a weaker response in the FFA in viewing houses, but this signal might be slightly delayed by one TR as perceiving a house might be slightly slower than perceiving a face.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">n_trial</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">tr</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.75</span>
+<span class="n">signal_intensity_1</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">signal_intensity_2</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">simulated_data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">get_anatomical</span><span class="p">())</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">n_tr</span><span class="p">,</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">shape</span><span class="p">()[</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ffa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_1</span>
+<span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">ffa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
+<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">ppa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Add Noise</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma</span>
+
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">ffa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">ppa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;FFA&#39;</span><span class="p">,</span> <span class="s1">&#39;PPA&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;TR&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Signal Intensity&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Introduction_to_ICA_15_0.png" src="../_images/Introduction_to_ICA_15_0.png" />
+</div>
+</div>
+<p>Notice how our simulated brain responses reflect the goals of the simulation?</p>
+<p>Now, let’s see how well spatial and temporal ICA are able to to recover these signals</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ica_mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;voxels&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">]:</span>
+  
+  <span class="n">decomposed_voxels</span> <span class="o">=</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ica&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">ica_mode</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+  <span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+    
+    <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 2&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Component 2&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ICA Mode = </span><span class="si">{</span><span class="n">ica_mode</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/sklearn/decomposition/_fastica.py:494: FutureWarning: Starting in v1.3, whiten=&#39;unit-variance&#39; will be used by default.
+  warnings.warn(
+/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/sklearn/decomposition/_fastica.py:494: FutureWarning: Starting in v1.3, whiten=&#39;unit-variance&#39; will be used by default.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/Introduction_to_ICA_17_1.png" src="../_images/Introduction_to_ICA_17_1.png" />
+<img alt="../_images/Introduction_to_ICA_17_2.png" src="../_images/Introduction_to_ICA_17_2.png" />
+</div>
+</div>
+<p>Both spatial and temporal ICA are able to successfully recover the signals. However, there are some slight nuances to how well they perform in this specific simulation. Notice how in the the spatial ICA is able to successfully identify the different spatial signals and the correpsonding signals. Temporal ICA also does a good job, but one of the components is introducing an artifact where it is unable to fully decouple the spatial contributions of the face response from the house response. It goes up for Faces, but then down for houses.</p>
+<p>What about other situations, where temporal signals might be more intermixed within ROIs. Here we are going to build on the previous simulation, but will now mix these face or house signals witin each respective ROI.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">n_trial</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">tr</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.75</span>
+<span class="n">signal_intensity_1</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">signal_intensity_2</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">simulated_data</span> <span class="o">=</span> <span class="n">Brain_Data</span><span class="p">(</span><span class="n">get_anatomical</span><span class="p">())</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">n_tr</span><span class="p">,</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">shape</span><span class="p">()[</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ffa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_1</span>
+<span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">ffa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
+<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">ppa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+
+
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Add Noise</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">ffa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">ppa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;FFA&#39;</span><span class="p">,</span> <span class="s1">&#39;PPA&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;TR&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Signal Intensity&#39;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Introduction_to_ICA_20_0.png" src="../_images/Introduction_to_ICA_20_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ica_mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;voxels&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">]:</span>
+  
+  <span class="n">decomposed_voxels</span> <span class="o">=</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;ica&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">ica_mode</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+  <span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+    
+    <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">colorbar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Component 2&#39;</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposed_voxels</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensity&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Component 2&#39;</span><span class="p">])</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ICA Mode = </span><span class="si">{</span><span class="n">ica_mode</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/sklearn/decomposition/_fastica.py:494: FutureWarning: Starting in v1.3, whiten=&#39;unit-variance&#39; will be used by default.
+  warnings.warn(
+/Users/lukechang/opt/anaconda3/lib/python3.9/site-packages/sklearn/decomposition/_fastica.py:494: FutureWarning: Starting in v1.3, whiten=&#39;unit-variance&#39; will be used by default.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/Introduction_to_ICA_21_1.png" src="../_images/Introduction_to_ICA_21_1.png" />
+<img alt="../_images/Introduction_to_ICA_21_2.png" src="../_images/Introduction_to_ICA_21_2.png" />
+</div>
+</div>
+<p>Again, both spatial and temporal ICA are performing relatively well, but there are some subtle differences. Temporal ICA is able to successfully, resolve the time courses coming from each spatial region, but spatial ICA is able to see that the spatial signals for each ROI should go together, but is doing a relatively poorer job at identifying the unique time courses. Notice how the weights in the FFA are different for the two signals, but temporal ICA breaks apart the regions better.</p>
+</section>
+<section id="other-considerations">
+<h2>Other considerations<a class="headerlink" href="#other-considerations" title="Permalink to this headline">#</a></h2>
+<p>Typical ICA approaches don’t account for inter-subject variability, and as a result, the underlying signals and networks may be mis-characterized and thus generate group-differences that aren’t really there (false positive) or fail to detect differences amongst groups that are actually there (false negative).  We recommend using either GIFT or Melodic for performing group ICA.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Thresholding_Group_Analyses.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Thresholding Group Analyses</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Connectivity.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Connectivity</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

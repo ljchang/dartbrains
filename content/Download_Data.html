@@ -234,6 +234,11 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_ICA.html">
+   Introduction to Independent Components Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Connectivity.html">
    Connectivity
   </a>
@@ -620,12 +625,12 @@ title="Print to PDF"
      </li>
     </ul>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#download-data-with-datalad">
-     Download Data with DataLad
-    </a>
-   </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-data-with-datalad">
+   Download Data with DataLad
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#datalad-basics">
@@ -720,12 +725,12 @@ title="Print to PDF"
      </li>
     </ul>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#download-data-with-datalad">
-     Download Data with DataLad
-    </a>
-   </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-data-with-datalad">
+   Download Data with DataLad
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#datalad-basics">
@@ -857,11 +862,11 @@ Requirement already satisfied: smmap&lt;4,&gt;=3.0.1 in /Users/lukechang/anacond
 <p><strong>If you need to install Python:</strong>
 The <a class="reference external" href="https://www.anaconda.com/products/distribution">Anaconda Distribution</a> has the most relevant packages for scientific computing already included and is widely recommended. Be sure to get Python 3, and the default installer options are generally safe, except <strong>be sure to select the <em>ADD PYTHON TO PATH</em> option</strong>, otherwise Datalad will not work. After you’re done, proceed to Step 2 on Git.</p>
 <p><strong>If you already have Python installed on your computer:</strong></p>
-<ul class="simple">
+<ul>
 <li><p>You may run into problems when installing DataLad if you did not add Python to your Windows path when installing Python.</p></li>
 <li><p>This is especially likely because the Anaconda distribution installer <strong>strongly discourages</strong> you from adding Python to the path when navigating through the installation dialogue.</p></li>
 <li><p>You can check if Python is on your path by doing the following:</p>
-<ul>
+<ul class="simple">
 <li><p>Press WindowsKey + x and click “System” in the menu that pops up</p></li>
 <li><p>Scroll down to “Related settings” and click “Advanced system settings”</p></li>
 <li><p>Under the “Advanced” tab, click “Environment Variables”</p></li>
@@ -870,18 +875,20 @@ The <a class="reference external" href="https://www.anaconda.com/products/distri
 </li>
 <li><p>If Python is on your path, you <em>should</em> be good to go.</p></li>
 <li><p>If Python is not on your path, you have two options:</p>
-<ol class="simple">
+<ol>
 <li><p>Uninstall Python, then reinstall, being sure to select the add Python to Windows path option this time (this option is recommended and guaranteed to work)</p></li>
 <li><p>Try adding Python to your Windows path manually:</p>
 <ul>
 <li><p>If you already installed DataLad, you should uninstall it and reinstall after doing this</p></li>
-<li><p>Instructions for adding Python to your path can be found <a class="reference external" href="https://datatofish.com/add-python-to-windows-path/">here</a>, but what you need to add to the path may differ for different distributions.  For instance, my Anaconda distribution has several other folders listed in its path entry that are not listed for the more basic Python distribution used at the link above.  For completeness if you want to try on your own, my Path has these elements:
-+
-C:\Users\MyUserName\anaconda3
-C:\Users\MyUserName\anaconda3\Library\mingw-w64\bin
-C:\Users\MyUserName\anaconda3\Library\usr\bin
-C:\Users\MyUserName\anaconda3\Library\bin
-C:\Users\MyUserName\anaconda3\Scripts</p></li>
+<li><p>Instructions for adding Python to your path can be found <a class="reference external" href="https://datatofish.com/add-python-to-windows-path/">here</a>, but what you need to add to the path may differ for different distributions.  For instance, my Anaconda distribution has several other folders listed in its path entry that are not listed for the more basic Python distribution used at the link above.  For completeness if you want to try on your own, my Path has these elements:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">MyUserName</span>\<span class="n">anaconda3</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">MyUserName</span>\<span class="n">anaconda3</span>\<span class="n">Library</span>\<span class="n">mingw</span><span class="o">-</span><span class="n">w64</span>\<span class="nb">bin</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">MyUserName</span>\<span class="n">anaconda3</span>\<span class="n">Library</span>\<span class="n">usr</span>\<span class="nb">bin</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">MyUserName</span>\<span class="n">anaconda3</span>\<span class="n">Library</span>\<span class="nb">bin</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">MyUserName</span>\<span class="n">anaconda3</span>\<span class="n">Scripts</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </li>
 </ol>
@@ -960,7 +967,7 @@ core.symlinks = true
 </div>
 </li>
 <li><p>Once you are in the data directory, you don’t have to type the entire filepath, and you can run a command like</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  datalad get sub-S01
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  datalad get sub-S01`
 </pre></div>
 </div>
 </li>
@@ -972,8 +979,9 @@ core.symlinks = true
 </ul>
 </section>
 </section>
+</section>
 <section id="download-data-with-datalad">
-<h3>Download Data with DataLad<a class="headerlink" href="#download-data-with-datalad" title="Permalink to this headline">#</a></h3>
+<h2>Download Data with DataLad<a class="headerlink" href="#download-data-with-datalad" title="Permalink to this headline">#</a></h2>
 <p>The Pinel localizer dataset can be accessed at the following location https://gin.g-node.org/ljchang/Localizer/. To download the Localizer dataset run <code class="docutils literal notranslate"><span class="pre">datalad</span> <span class="pre">install</span> <span class="pre">https://gin.g-node.org/ljchang/Localizer</span></code> in a terminal in the location where you would like to install the dataset. Don’t forget to change the directory to a folder on your local computer. The full dataset is approximately 42gb.</p>
 <p>You can run this from the notebook using the <code class="docutils literal notranslate"><span class="pre">!</span></code> cell magic.</p>
 <div class="cell docutils container">
@@ -991,7 +999,6 @@ core.symlinks = true
 </div>
 </div>
 </div>
-</section>
 </section>
 <section id="datalad-basics">
 <h2>Datalad Basics<a class="headerlink" href="#datalad-basics" title="Permalink to this headline">#</a></h2>
