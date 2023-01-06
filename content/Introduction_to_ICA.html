@@ -589,8 +589,18 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#let-s-try-it-out">
-   Let’s try it out!
+  <a class="reference internal nav-link" href="#simple-simulation">
+   Simple simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-signals">
+   Simulation with overlapping temporal signals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-and-spatial-signals">
+   Simulation with overlapping temporal and spatial signals
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -623,8 +633,18 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#let-s-try-it-out">
-   Let’s try it out!
+  <a class="reference internal nav-link" href="#simple-simulation">
+   Simple simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-signals">
+   Simulation with overlapping temporal signals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-and-spatial-signals">
+   Simulation with overlapping temporal and spatial signals
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -645,18 +665,19 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-independent-components-analysis">
 <h1>Introduction to Independent Components Analysis<a class="headerlink" href="#introduction-to-independent-components-analysis" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Yong Hoon Chung, Lindsey Tepfer, &amp; Luke Chang</em></p>
-<p>Functional magnetic resonance imaging (fMRI) data contains a number of signals beyond those elicited by our tasks (e.g. movement, breathing, even noise coming from the scanner itself). Our preprocessing and denoising methods aim to mitigate the influence of these artifactual signals. But what if there about signals that we can’t directly measure? For example, what if there is a scanner artifact that is unrelated to head motion or a scanner spike? ICA can be used to potentially identify such artifactual signals, and also neural processes related to tasks.</p>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Independent_component_analysis">Independent Component Analysis</a> (ICA) is a data-driven technique that is commonly used in performing blind source separation, which involves decomposing signals measured across multiple channels into additive independent non-Gaussian signals <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/6796129">(Bell &amp; Sejnowski, 1995)</a>. For example, imagine if we had an array of microphones recording conversations at a party and assume that there are no delays or echoes. Because speech signals are independent and non-Gaussian, ICA can be used to separate each person’s voice that might be measured across multiple microphones. The maximum number of independent signals that can be decomposed is limited by the number of recorded channels. For a more in depth version of how to implement an ICA algorithm from scratch, check out this <a class="reference external" href="https://towardsdatascience.com/independent-component-analysis-ica-in-python-a0ef0db0955e">Medium article</a>.</p>
-<p>ICA has been useful to uncover signals measured via fMRI. In particular, ICA has been applied to identify common signals across a group using the <a class="reference external" href="https://github.com/trendscenter/gift">GIFT toolbox</a> in SPM <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.1048">(Calhoun et al., 2001)</a> or the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC">Melodic Toolbox</a> in FSL <a class="reference external" href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2005.1634">(Beckmann et al., 2005)</a>. When applied to brain imaging, ICA can be used to identify either spatial or temporal patterns. However, because most brain imaging studies measure activity from many more voxels than observed TRs, spatial ICA has been the dominant approach <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1097-0193(1998)6:3%3C160::AID-HBM5%3E3.0.CO;2-1">(McKeown et al., 1998)</a> compared to temporal ICA, which is more commonly used in analyzing EEG data as there are typically many more observations in time compared to the limited number of scalp electrodes <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.94.20.10979">(Makeig et al., 1997)</a>.</p>
+<p>Functional magnetic resonance imaging (fMRI) data contains a number of signals that can be elicited by an experimental task and also endogenous generated. In addition, there are signals that may be more artifactual in nature such as head movement, breathing, and even noise coming from the scanner itself. Our preprocessing and denoising methods aim to mitigate the influence of these artifactual signals, but what if there about signals that we can’t directly measure? ICA can be used to identify brain signals without directly knowing when or where they might be occurring.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Independent_component_analysis">Independent Component Analysis</a> (ICA) is a data-driven technique that is commonly used in performing blind source separation, which involves decomposing signals measured across multiple channels into additive independent non-Gaussian signals <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/6796129">(Bell &amp; Sejnowski, 1995)</a>. For example, imagine if we had an array of microphones recording conversations at a party and assume that there are no delays or echoes in the room. Because speech signals are independent and non-Gaussian, ICA can theoretically be used to identify each person’s voice as long as there are less speakers than microphones. For a more in depth version of how to implement an ICA algorithm from scratch, check out this <a class="reference external" href="https://towardsdatascience.com/independent-component-analysis-ica-in-python-a0ef0db0955e">Medium article</a>.</p>
+<p>ICA has been successfully used to uncover signals measured via fMRI. In particular, ICA has been applied to identify common signals across a group using the <a class="reference external" href="https://github.com/trendscenter/gift">GIFT toolbox</a> in SPM <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.1048">(Calhoun et al., 2001)</a> and the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC">Melodic Toolbox</a> in FSL <a class="reference external" href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2005.1634">(Beckmann et al., 2005)</a>. When applied to brain imaging, ICA can be used to identify either spatial or temporal patterns. However, because most brain imaging studies measure activity from many more voxels than observed TRs, spatial ICA has been the dominant approach <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1097-0193(1998)6:3%3C160::AID-HBM5%3E3.0.CO;2-1">(McKeown et al., 1998)</a> compared to temporal ICA, which is more commonly used in analyzing EEG data as there are typically many more observations in time compared to the limited number of scalp electrodes <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.94.20.10979">(Makeig et al., 1997)</a>.</p>
 <p>In this tutorial, we will demonstrate how to apply spatial and temporal ICA to a simulated fMRI experiment.</p>
 <section id="using-ica-in-python">
 <h2>Using ICA in Python<a class="headerlink" href="#using-ica-in-python" title="Permalink to this headline">#</a></h2>
-<p>There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x/y/z spatial dimensions and then using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html">Scikit-Learn</a>. Alternatively, ICA can be directly applied to neuroimaging data using <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA">nilearn</a> or <a class="reference external" href="https://https://nltools.org/index.html">nltools</a>. ICA can be applied to EEG data in python using the <a class="reference external" href="https://mne.tools/stable/index.html">MNE toolbox</a></p>
+<p>There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x,y,z spatial dimensions and then using any of the ICA algorithms distributed by <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html">Scikit-Learn</a>. Alternatively, ICA can be directly applied to neuroimaging data using <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA">nilearn</a> or <a class="reference external" href="https://https://nltools.org/index.html">nltools</a>. ICA can also be applied to EEG data in python using the <a class="reference external" href="https://mne.tools/stable/index.html">MNE toolbox</a>.</p>
+<p><strong>Let’s try it out!</strong></p>
 </section>
-<section id="let-s-try-it-out">
-<h2>Let’s try it out!<a class="headerlink" href="#let-s-try-it-out" title="Permalink to this headline">#</a></h2>
-<p>To demonstrate how to use ICA with brain imaging data, we will created simulated data. We will build on the examples from the <a class="reference external" href="https://dartbrains.org/content/GLM.html">GLM tutorial</a>. Imagine a hypothetical experiment in which a participant views images of faces for 5 trials in one condition and images of houses for 5 trials in a separate condition. Past research has demonstrated that the fusiform face area (FFA) appears to selectively respond to faces <a class="reference external" href="https://www.jneurosci.org/content/jneuro/17/11/4302.full.pdf">Kanwisher et al., 1997</a>, while the parahippocampal place area (PPA) seems to more selectively respond to houses <a class="reference external" href="https://www.cell.com/fulltext/S0896-6273(00)80546-2">(Aguirre et al., 1998)</a>.</p>
-<p>Let’s simulate data for a hypothetical subject participating in this experiment. The participant was hypothetically scanned for 200 TRs where the TR length is 2000ms. We will create bilateral spherical masks in the PPA and FFA and create signal in the FFA responding to face trials and signal in the PPA responding to house trials.</p>
+<section id="simple-simulation">
+<h2>Simple simulation<a class="headerlink" href="#simple-simulation" title="Permalink to this headline">#</a></h2>
+<p>To demonstrate how to use ICA with brain imaging data, we will simulate data from a hypothetical experiment building on the example from the <a class="reference external" href="https://dartbrains.org/content/GLM.html">GLM tutorial</a>. Imagine an experiment in which a participant views images of faces for 5 trials in one condition and images of houses for 5 trials in a separate condition. Past research has demonstrated that the fusiform face area (FFA) appears to selectively respond to faces <a class="reference external" href="https://www.jneurosci.org/content/jneuro/17/11/4302.full.pdf">Kanwisher et al., 1997</a>, while the parahippocampal place area (PPA) seems to more selectively respond to houses <a class="reference external" href="https://www.cell.com/fulltext/S0896-6273(00)80546-2">(Aguirre et al., 1998)</a>.</p>
+<p>Let’s simulate data for a subject participating in this hypothetical experiment. The participant was scanned for 200 TRs where the TR length is 2000ms. We will create bilateral spherical masks in the PPA and FFA and create signal in the FFA responding to face trials and signal in the PPA responding to house trials.</p>
 <p>We will first import some python modules and define the parameters of our simulation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -741,7 +762,7 @@ title="Print to PDF"
 <span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
 
 <span class="c1"># Add Noise to each voxel and TR</span>
-<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma</span>
 
 <span class="c1"># Plot average voxel activity over time</span>
 <span class="n">simulated_data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -752,7 +773,7 @@ title="Print to PDF"
 <img alt="../_images/Introduction_to_ICA_9_0.png" src="../_images/Introduction_to_ICA_9_0.png" />
 </div>
 </div>
-<p>There are many ways to improve this simulation by adding additional properties that we know about the brain. For example, we could add real physiological artifacts such as respiration or cardiac signals. We could also add autocorrelation within a voxel. We could add scanner drifts or spikes. For now we will just be using this very simple example.</p>
+<p>As you can see, there is a small amount of signal in both the PPA and FFA ROIs that stands out among the noise. There are of course many ways to improve this simulation by adding additional properties that we know about the brain. For example, we could add real physiological artifacts such as respiration or cardiac signals. We could also add autocorrelation within a voxel, or scanner drifts and spikes. For now we will just be using this very simple example.</p>
 <p>Now, let’s try to use spatial ICA to identify two independent components from our simulated participant’s data based on our hypothetical experiment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -807,6 +828,9 @@ title="Print to PDF"
 </div>
 <p>When the signals are independent and have a relatively high signal to noise ratio (SNR), both spatial and temporal ICA are able to successfully recover our simulated signals.</p>
 <p><strong>What about other types of scenarios when the temporal signals are more intertwined?</strong></p>
+</section>
+<section id="simulation-with-overlapping-temporal-signals">
+<h2>Simulation with overlapping temporal signals<a class="headerlink" href="#simulation-with-overlapping-temporal-signals" title="Permalink to this headline">#</a></h2>
 <p>Let’s simulate a slightly different scenario to explore this more. Here we will now give different signal intensities to the face and house signals. Let’s also assume that their might be a weaker response in the FFA in viewing houses, but this signal might be slightly delayed by one TR as perceiving a house might be slightly slower than perceiving a face.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -884,7 +908,10 @@ title="Print to PDF"
 </div>
 </div>
 <p>Both spatial and temporal ICA are able to successfully recover the signals. However, there are some slight nuances to how well they perform in this specific simulation. Notice how in the the spatial ICA is able to successfully identify the different spatial signals and the correpsonding signals. Temporal ICA also does a good job, but one of the components is introducing an artifact where it is unable to fully decouple the spatial contributions of the face response from the house response. It goes up for Faces, but then down for houses.</p>
-<p>What about other situations, where temporal signals might be more intermixed within ROIs. Here we are going to build on the previous simulation, but will now mix these face or house signals witin each respective ROI.</p>
+</section>
+<section id="simulation-with-overlapping-temporal-and-spatial-signals">
+<h2>Simulation with overlapping temporal and spatial signals<a class="headerlink" href="#simulation-with-overlapping-temporal-and-spatial-signals" title="Permalink to this headline">#</a></h2>
+<p><strong>What about other situations, where temporal signals might be more intermixed within ROIs?</strong> Here we are going to build on the previous simulation, but will now mix these face or house signals witin each respective ROI.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
