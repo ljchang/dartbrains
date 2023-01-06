@@ -26,8 +26,8 @@ parts:
   - file: content/GLM_Single_Subject_Model
   - file: content/Group_Analysis
   - file: content/Thresholding_Group_Analyses
-  - file: content/Introduction_to_ICA
   - file: content/Connectivity
+  - file: content/Introduction_to_ICA
   - file: content/Multivariate_Prediction
   - file: content/RSA
   - file: content/Parcellations
