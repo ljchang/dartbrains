@@ -55,8 +55,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Connectivity" href="Connectivity.html" />
-    <link rel="prev" title="Thresholding Group Analyses" href="Thresholding_Group_Analyses.html" />
+    <link rel="next" title="Multivariate Prediction" href="Multivariate_Prediction.html" />
+    <link rel="prev" title="Connectivity" href="Connectivity.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -233,14 +233,14 @@ const thebe_selector_output = ".output, .cell_output"
    Thresholding Group Analyses
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Connectivity.html">
    Connectivity
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to Independent Components Analysis
   </a>
  </li>
  <li class="toctree-l1">
@@ -666,8 +666,8 @@ title="Print to PDF"
 <h1>Introduction to Independent Components Analysis<a class="headerlink" href="#introduction-to-independent-components-analysis" title="Permalink to this headline">#</a></h1>
 <p><em>Written by Yong Hoon Chung, Lindsey Tepfer, &amp; Luke Chang</em></p>
 <p>Functional magnetic resonance imaging (fMRI) data contains a number of signals that can be elicited by an experimental task and also endogenous generated. In addition, there are signals that may be more artifactual in nature such as head movement, breathing, and even noise coming from the scanner itself. Our preprocessing and denoising methods aim to mitigate the influence of these artifactual signals, but what if there about signals that we can’t directly measure? ICA can be used to identify brain signals without directly knowing when or where they might be occurring.</p>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Independent_component_analysis">Independent Component Analysis</a> (ICA) is a data-driven technique that is commonly used in performing blind source separation, which involves decomposing signals measured across multiple channels into additive independent non-Gaussian signals <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/6796129">(Bell &amp; Sejnowski, 1995)</a>. For example, imagine if we had an array of microphones recording conversations at a party and assume that there are no delays or echoes in the room. Because speech signals are independent and non-Gaussian, ICA can theoretically be used to identify each person’s voice as long as there are less speakers than microphones. For a more in depth version of how to implement an ICA algorithm from scratch, check out this <a class="reference external" href="https://towardsdatascience.com/independent-component-analysis-ica-in-python-a0ef0db0955e">Medium article</a>.</p>
-<p>ICA has been successfully used to uncover signals measured via fMRI. In particular, ICA has been applied to identify common signals across a group using the <a class="reference external" href="https://github.com/trendscenter/gift">GIFT toolbox</a> in SPM <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.1048">(Calhoun et al., 2001)</a> and the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC">Melodic Toolbox</a> in FSL <a class="reference external" href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2005.1634">(Beckmann et al., 2005)</a>. When applied to brain imaging, ICA can be used to identify either spatial or temporal patterns. However, because most brain imaging studies measure activity from many more voxels than observed TRs, spatial ICA has been the dominant approach <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1097-0193(1998)6:3%3C160::AID-HBM5%3E3.0.CO;2-1">(McKeown et al., 1998)</a> compared to temporal ICA, which is more commonly used in analyzing EEG data as there are typically many more observations in time compared to the limited number of scalp electrodes <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.94.20.10979">(Makeig et al., 1997)</a>.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Independent_component_analysis">Independent Component Analysis</a> (ICA) is a data-driven technique that is commonly used in performing blind source separation, which involves decomposing signals measured across multiple channels into additive independent non-Gaussian signals <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/6796129">(Bell &amp; Sejnowski, 1995)</a>. For example, imagine if we had an array of microphones recording conversations at a party and assume that there are no delays or echoes in the room. Because speech signals are independent and non-Gaussian, ICA can theoretically be used to identify each person’s voice as long as there are less speakers than microphones.</p>
+<p>ICA has been successfully used to uncover signals measured via fMRI. In particular, ICA has been applied to identify common signals across a group using the <a class="reference external" href="https://github.com/trendscenter/gift">GIFT toolbox</a> in SPM <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.1048">(Calhoun et al., 2001)</a> and the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC">Melodic Toolbox</a> in FSL <a class="reference external" href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2005.1634">(Beckmann et al., 2005)</a>. When applied to brain imaging, ICA can be used to identify either spatial or temporal patterns. However, because most brain imaging studies measure activity from many more voxels than observed TRs, spatial ICA has been the dominant approach <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1097-0193(1998)6:3%3C160::AID-HBM5%3E3.0.CO;2-1">(McKeown et al., 1998)</a> compared to temporal ICA, which is more commonly used in analyzing EEG data as there are typically many more observations in time compared to the limited number of scalp electrodes <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.94.20.10979">(Makeig et al., 1997)</a>. You may recall that we have discussed ICA in other contexts such as our <a class="reference internal" href="ICA.html"><span class="doc std std-doc">separating signal from noise exercise</span></a> and also in the <a class="reference internal" href="Connectivity.html#multivariate-decomposition"><span class="std std-ref">multivariate decomposition</span></a> subsection of the <a class="reference internal" href="Connectivity.html"><span class="doc std std-doc">connectivity</span></a> tutorial. For a more in depth version of how to implement an ICA algorithm in Python from scratch, check out this <a class="reference external" href="https://towardsdatascience.com/independent-component-analysis-ica-in-python-a0ef0db0955e">Medium article</a>.</p>
 <p>In this tutorial, we will demonstrate how to apply spatial and temporal ICA to a simulated fMRI experiment.</p>
 <section id="using-ica-in-python">
 <h2>Using ICA in Python<a class="headerlink" href="#using-ica-in-python" title="Permalink to this headline">#</a></h2>
@@ -1051,17 +1051,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Thresholding_Group_Analyses.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="Connectivity.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Thresholding Group Analyses</p>
+            <p class="prev-next-title">Connectivity</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="Connectivity.html" title="next page">
+    <a class='right-next' id="next-link" href="Multivariate_Prediction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Connectivity</p>
+        <p class="prev-next-title">Multivariate Prediction</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
