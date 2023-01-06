@@ -595,12 +595,12 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">
-   Overlapping temporal signals Simulation
+   Overlapping temporal signals simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overlapping-temporal-and-spatial-signals-simulation">
-   Overlapping temporal and spatial signals Simulation
+  <a class="reference internal nav-link" href="#overlapping-spatial-signals-simulation">
+   Overlapping spatial signals simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -639,12 +639,12 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">
-   Overlapping temporal signals Simulation
+   Overlapping temporal signals simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overlapping-temporal-and-spatial-signals-simulation">
-   Overlapping temporal and spatial signals Simulation
+  <a class="reference internal nav-link" href="#overlapping-spatial-signals-simulation">
+   Overlapping spatial signals simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -831,7 +831,7 @@ title="Print to PDF"
 <p><em>What about other types of scenarios when the temporal signals are more intertwined?</em></p>
 </section>
 <section id="overlapping-temporal-signals-simulation">
-<h2>Overlapping temporal signals Simulation<a class="headerlink" href="#overlapping-temporal-signals-simulation" title="Permalink to this headline">#</a></h2>
+<h2>Overlapping temporal signals simulation<a class="headerlink" href="#overlapping-temporal-signals-simulation" title="Permalink to this headline">#</a></h2>
 <p>Let’s simulate a slightly different scenario to explore this more. Here we will now give different signal intensities to the face and house signals. Let’s also assume that there might be a weaker response in the PPA when viewing faces, but this signal might be slightly delayed by one TR as perceiving a house could be slower than perceiving a face.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -927,8 +927,8 @@ title="Print to PDF"
 </div>
 <p>Both spatial and temporal ICA are able to successfully recover the signals. However, there are some slight nuances to how well they perform in this specific simulation. Notice how the spatial ICA is able to successfully identify the different spatial signals and the corresponding signals. Temporal ICA does not work quite as well in this example. Component 1 includes activity in both the FFA and PPA regions. Component 2 only has weights in the FFA, but goes up in the Face condition and down in the House condition.</p>
 </section>
-<section id="overlapping-temporal-and-spatial-signals-simulation">
-<h2>Overlapping temporal and spatial signals Simulation<a class="headerlink" href="#overlapping-temporal-and-spatial-signals-simulation" title="Permalink to this headline">#</a></h2>
+<section id="overlapping-spatial-signals-simulation">
+<h2>Overlapping spatial signals simulation<a class="headerlink" href="#overlapping-spatial-signals-simulation" title="Permalink to this headline">#</a></h2>
 <p><em>What about other situations, where temporal signals might be more intermixed <strong>within</strong> ROIs?</em></p>
 <p>In our final simulation we will include populations of voxels in the FFA that purely respond to faces, and a population of PPA voxels that selectively respond to houses. This is identicial to the first simulation. However, we are now also including a population of voxels in the FFA that weakly respond to both faces <strong>and</strong> houses.</p>
 <div class="cell docutils container">
