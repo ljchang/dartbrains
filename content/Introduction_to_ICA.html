@@ -594,13 +594,13 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-signals">
-   Simulation with overlapping temporal signals
+  <a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">
+   Overlapping temporal signals Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-and-spatial-signals">
-   Simulation with overlapping temporal and spatial signals
+  <a class="reference internal nav-link" href="#overlapping-temporal-and-spatial-signals-simulation">
+   Overlapping temporal and spatial signals Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -638,13 +638,13 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-signals">
-   Simulation with overlapping temporal signals
+  <a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">
+   Overlapping temporal signals Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulation-with-overlapping-temporal-and-spatial-signals">
-   Simulation with overlapping temporal and spatial signals
+  <a class="reference internal nav-link" href="#overlapping-temporal-and-spatial-signals-simulation">
+   Overlapping temporal and spatial signals Simulation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -672,7 +672,7 @@ title="Print to PDF"
 <section id="using-ica-in-python">
 <h2>Using ICA in Python<a class="headerlink" href="#using-ica-in-python" title="Permalink to this headline">#</a></h2>
 <p>There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x,y,z spatial dimensions and then using any of the ICA algorithms distributed by <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html">Scikit-Learn</a>. Alternatively, ICA can be directly applied to neuroimaging data using <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA">nilearn</a> or <a class="reference external" href="https://https://nltools.org/index.html">nltools</a>. ICA can also be applied to EEG data in python using the <a class="reference external" href="https://mne.tools/stable/index.html">MNE toolbox</a>.</p>
-<p><strong>Let’s try it out!</strong></p>
+<p><em>Let’s try it out!</em></p>
 </section>
 <section id="simple-simulation">
 <h2>Simple simulation<a class="headerlink" href="#simple-simulation" title="Permalink to this headline">#</a></h2>
@@ -688,6 +688,7 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">nltools</span> <span class="kn">import</span> <span class="n">Brain_Data</span><span class="p">,</span> <span class="n">Design_Matrix</span>
 <span class="kn">from</span> <span class="nn">nltools.mask</span> <span class="kn">import</span> <span class="n">create_sphere</span>
 <span class="kn">from</span> <span class="nn">nltools.utils</span> <span class="kn">import</span> <span class="n">get_anatomical</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span>
 
 <span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="n">n_trial</span> <span class="o">=</span> <span class="mi">5</span>
@@ -827,11 +828,11 @@ title="Print to PDF"
 </div>
 </div>
 <p>When the signals are independent and have a relatively high signal to noise ratio (SNR), both spatial and temporal ICA are able to successfully recover our simulated signals.</p>
-<p><strong>What about other types of scenarios when the temporal signals are more intertwined?</strong></p>
+<p><em>What about other types of scenarios when the temporal signals are more intertwined?</em></p>
 </section>
-<section id="simulation-with-overlapping-temporal-signals">
-<h2>Simulation with overlapping temporal signals<a class="headerlink" href="#simulation-with-overlapping-temporal-signals" title="Permalink to this headline">#</a></h2>
-<p>Let’s simulate a slightly different scenario to explore this more. Here we will now give different signal intensities to the face and house signals. Let’s also assume that their might be a weaker response in the FFA in viewing houses, but this signal might be slightly delayed by one TR as perceiving a house might be slightly slower than perceiving a face.</p>
+<section id="overlapping-temporal-signals-simulation">
+<h2>Overlapping temporal signals Simulation<a class="headerlink" href="#overlapping-temporal-signals-simulation" title="Permalink to this headline">#</a></h2>
+<p>Let’s simulate a slightly different scenario to explore this more. Here we will now give different signal intensities to the face and house signals. Let’s also assume that there might be a weaker response in the PPA when viewing faces, but this signal might be slightly delayed by one TR as perceiving a house could be slower than perceiving a face.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
@@ -875,6 +876,23 @@ title="Print to PDF"
 </div>
 </div>
 <p>Notice how our simulated brain responses reflect the goals of the simulation?</p>
+<p>These signals are now no longer independent and have a correlation of r=0.49.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="p">,</span> <span class="n">ppa_signal</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">combined</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Faces&#39;</span><span class="p">,</span> <span class="s1">&#39;Houses&#39;</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">combined</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Faces&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Houses&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;r = </span><span class="si">{</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1">.02</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;red&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(2, 0, &#39;r = 0.49&#39;)
+</pre></div>
+</div>
+<img alt="../_images/Introduction_to_ICA_17_1.png" src="../_images/Introduction_to_ICA_17_1.png" />
+</div>
+</div>
 <p>Now, let’s see how well spatial and temporal ICA are able to to recover these signals</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -903,15 +921,16 @@ title="Print to PDF"
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_17_1.png" src="../_images/Introduction_to_ICA_17_1.png" />
-<img alt="../_images/Introduction_to_ICA_17_2.png" src="../_images/Introduction_to_ICA_17_2.png" />
+<img alt="../_images/Introduction_to_ICA_19_1.png" src="../_images/Introduction_to_ICA_19_1.png" />
+<img alt="../_images/Introduction_to_ICA_19_2.png" src="../_images/Introduction_to_ICA_19_2.png" />
 </div>
 </div>
-<p>Both spatial and temporal ICA are able to successfully recover the signals. However, there are some slight nuances to how well they perform in this specific simulation. Notice how in the the spatial ICA is able to successfully identify the different spatial signals and the correpsonding signals. Temporal ICA also does a good job, but one of the components is introducing an artifact where it is unable to fully decouple the spatial contributions of the face response from the house response. It goes up for Faces, but then down for houses.</p>
+<p>Both spatial and temporal ICA are able to successfully recover the signals. However, there are some slight nuances to how well they perform in this specific simulation. Notice how the spatial ICA is able to successfully identify the different spatial signals and the corresponding signals. Temporal ICA does not work quite as well in this example. Component 1 includes activity in both the FFA and PPA regions. Component 2 only has weights in the FFA, but goes up in the Face condition and down in the House condition.</p>
 </section>
-<section id="simulation-with-overlapping-temporal-and-spatial-signals">
-<h2>Simulation with overlapping temporal and spatial signals<a class="headerlink" href="#simulation-with-overlapping-temporal-and-spatial-signals" title="Permalink to this headline">#</a></h2>
-<p><strong>What about other situations, where temporal signals might be more intermixed within ROIs?</strong> Here we are going to build on the previous simulation, but will now mix these face or house signals witin each respective ROI.</p>
+<section id="overlapping-temporal-and-spatial-signals-simulation">
+<h2>Overlapping temporal and spatial signals Simulation<a class="headerlink" href="#overlapping-temporal-and-spatial-signals-simulation" title="Permalink to this headline">#</a></h2>
+<p><em>What about other situations, where temporal signals might be more intermixed <strong>within</strong> ROIs?</em></p>
+<p>In our final simulation we will include populations of voxels in the FFA that purely respond to faces, and a population of PPA voxels that selectively respond to houses. This is identicial to the first simulation. However, we are now also including a population of voxels in the FFA that weakly respond to both faces <strong>and</strong> houses.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_tr</span> <span class="o">=</span> <span class="mi">200</span>
@@ -929,19 +948,21 @@ title="Print to PDF"
 <span class="n">ffa_signal</span> <span class="o">=</span> <span class="n">ffa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
 
 <span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
-<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
-<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
-<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">ppa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
+<span class="n">ppa_signal</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_1</span>
+<span class="n">ppa_signal</span> <span class="o">=</span> <span class="n">ppa_signal</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>
+
+<span class="n">ppa_signal_2</span> <span class="o">=</span> <span class="n">Design_Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">sampling_freq</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">tr</span><span class="p">)</span>
+<span class="n">ppa_signal_2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
+<span class="n">ppa_signal_2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_tr</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_tr</span><span class="o">/</span><span class="n">n_trial</span><span class="p">))]</span> <span class="o">=</span> <span class="n">signal_intensity_2</span>
+<span class="n">ppa_signal_2</span> <span class="o">=</span> <span class="n">ppa_signal_2</span><span class="o">.</span><span class="n">convolve</span><span class="p">()</span>    
 
 
 <span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal_2</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
                                                  <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ffa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                                                 <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal_2</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">ffa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ppa_signal</span><span class="o">.</span><span class="n">T</span><span class="p">]</span><span class="o">*</span><span class="n">ppa</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
 <span class="c1"># Add Noise</span>
 <span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">simulated_data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma</span>
 
@@ -949,7 +970,8 @@ title="Print to PDF"
     <span class="n">f</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
     <span class="n">ffa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
     <span class="n">ppa_signal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">a</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;FFA&#39;</span><span class="p">,</span> <span class="s1">&#39;PPA&#39;</span><span class="p">])</span>
+    <span class="n">ppa_signal_2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;FFA&#39;</span><span class="p">,</span><span class="s1">&#39;PPA&#39;</span><span class="p">,</span><span class="s1">&#39;FFA_Mixed&#39;</span><span class="p">])</span>
     <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;TR&#39;</span><span class="p">)</span>
     <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Signal Intensity&#39;</span><span class="p">)</span>
     
@@ -957,7 +979,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_ICA_20_0.png" src="../_images/Introduction_to_ICA_20_0.png" />
+<img alt="../_images/Introduction_to_ICA_21_0.png" src="../_images/Introduction_to_ICA_21_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -987,15 +1009,18 @@ title="Print to PDF"
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_21_1.png" src="../_images/Introduction_to_ICA_21_1.png" />
-<img alt="../_images/Introduction_to_ICA_21_2.png" src="../_images/Introduction_to_ICA_21_2.png" />
+<img alt="../_images/Introduction_to_ICA_22_1.png" src="../_images/Introduction_to_ICA_22_1.png" />
+<img alt="../_images/Introduction_to_ICA_22_2.png" src="../_images/Introduction_to_ICA_22_2.png" />
 </div>
 </div>
-<p>Again, both spatial and temporal ICA are performing relatively well, but there are some subtle differences. Temporal ICA is able to successfully, resolve the time courses coming from each spatial region, but spatial ICA is able to see that the spatial signals for each ROI should go together, but is doing a relatively poorer job at identifying the unique time courses. Notice how the weights in the FFA are different for the two signals, but temporal ICA breaks apart the regions better.</p>
+<p>In this simulation, we see a different pattern of results. Spatial ICA seems to to do the best job in this simulation. Component 2 appears to include voxels that only respond to faces and it correctly identifies that half of theese voxels have a stronger response to faces compared to the other half. Component 1 identifies voxels that responds to houses and includes all of the voxels in the PPA and half of the voxels in the FFA.</p>
+<p>Temporal ICA finds a different pattern of results. Similar to spatial ICA, Component 1 includes voxels in the PPA and FFA. However, the time course of this component does not differentiate between faces and houses, instead it goes up for both faces and houses. Component 2 goes up for faces and down for houses, even though this was not a feature of the simulation. It introduces a spatial artifact such that it includes voxels with negative weights in the PPA.</p>
+<p>There are of course an infinite number of possible ways real brain activity could manifest, but these types of simulations allow us to better understand how different analytic approaches might work in different contexts.</p>
+<p><em>Can you think of another simulation that might be able to show how spatial and temporal ICA might perform differently?</em></p>
 </section>
 <section id="other-considerations">
 <h2>Other considerations<a class="headerlink" href="#other-considerations" title="Permalink to this headline">#</a></h2>
-<p>Typical ICA approaches don’t account for inter-subject variability, and as a result, the underlying signals and networks may be mis-characterized and thus generate group-differences that aren’t really there (false positive) or fail to detect differences amongst groups that are actually there (false negative).  We recommend using either GIFT or Melodic for performing group ICA.</p>
+<p>Typical ICA approaches don’t account for inter-subject variability, and as a result, the underlying signals and networks may be mis-characterized and thus generate group-differences that aren’t really there (false positive) or fail to detect differences amongst groups that are actually there (false negative).  We recommend using either GIFT or Melodic or nilearn for performing group ICA.</p>
 </section>
 </section>
 
