@@ -1,0 +1,869 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Running fMRIPrep on High Performance Computing Systems &#8212; DartBrains</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="http://dartbrains.org/content/fmriprep_on_discovery.html" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-138270939-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">DartBrains</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Instructors.html">
+   Instructors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Syllabus.html">
+   Syllabus
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Schedule.html">
+   Schedule
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Computing Resources
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_JupyterHub.html">
+   Introduction to JupyterHub
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Download_Data.html">
+   Download Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Programming.html">
+   Introduction to programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Pandas.html">
+   Introduction to Pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Plotting.html">
+   Introduction to Plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Glossary.html">
+   Glossary
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Topics
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro_to_Neuroimaging.html">
+   Introduction to Neuroimaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Measurement.html">
+   Signal Generation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ICA.html">
+   Separating Signal From Noise With ICA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
+   Introduction to Neuroimaging Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Signal_Processing.html">
+   Signal Processing Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Preprocessing.html">
+   Preprocessing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM.html">
+   Introduction to the General Linear Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GLM_Single_Subject_Model.html">
+   Modeling Single Subject Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Group_Analysis.html">
+   Group Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Thresholding_Group_Analyses.html">
+   Thresholding Group Analyses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Connectivity.html">
+   Connectivity
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_ICA.html">
+   Introduction to Independent Components Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Multivariate_Prediction.html">
+   Multivariate Prediction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="RSA.html">
+   Representational Similarity Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Parcellations.html">
+   Introduction to Parcellations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Resampling_Statistics.html">
+   Resampling Statistics
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Courses
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://naturalistic-data.org/">
+   Naturalistic Data Analysis
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Project Gallery
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="2019_Spring.html">
+   Spring 2019
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Spring.html">
+   Spring 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2020_Fall.html">
+   Fall 2020
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2021_Fall.html">
+   Fall 2021
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2022_Fall.html">
+   Fall 2022
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contributing
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Contributing.html">
+   Contributing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/ljchang/dartbrains">
+   GitHub Repository
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ljchang/dartbrains"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/fmriprep_on_discovery.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ljchang/dartbrains/edit/master/content/fmriprep_on_discovery.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/fmriprep_on_discovery.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basics">
+   Basics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#accessing-data-in-rolando">
+     Accessing Data in Rolando
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#download-data-with-datalad">
+     Download Data with DataLad
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-discovery">
+     Using Discovery
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#logging-on-to-discovery">
+       Logging on to Discovery
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preprocessing-with-fmriprep">
+     Preprocessing with fmriprep
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-before-running-fmriprep">
+   Set-up before running fMRIPrep
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#singularity">
+     Singularity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#freesurfer-licence">
+     FreeSurfer licence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-fmriprep">
+   Run fMRIPrep
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference-and-resources">
+   Reference and resources
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Running fMRIPrep on High Performance Computing Systems</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basics">
+   Basics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#accessing-data-in-rolando">
+     Accessing Data in Rolando
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#download-data-with-datalad">
+     Download Data with DataLad
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-discovery">
+     Using Discovery
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#logging-on-to-discovery">
+       Logging on to Discovery
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preprocessing-with-fmriprep">
+     Preprocessing with fmriprep
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up-before-running-fmriprep">
+   Set-up before running fMRIPrep
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#singularity">
+     Singularity
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#freesurfer-licence">
+     FreeSurfer licence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-fmriprep">
+   Run fMRIPrep
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference-and-resources">
+   Reference and resources
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="running-fmriprep-on-high-performance-computing-systems">
+<h1>Running fMRIPrep on High Performance Computing Systems<a class="headerlink" href="#running-fmriprep-on-high-performance-computing-systems" title="Permalink to this headline">#</a></h1>
+<p><em>Written by Mijin Kwon, Era Wu, &amp; Luke Chang</em></p>
+<p><a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/">fmriprep</a> is a data preprocessing pipeline for preprocessing fMRI data that was developed by a team at the <a class="reference external" href="http://reproducibility.stanford.edu/">Center for Reproducible Research</a> led by Russ Poldrack and Chris Gorgolewski. Fmriprep was designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols, requires minimal user input, and provides easily interpretable and comprehensive error and output reporting. Fmriprep performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that are ready for data analysis. Additional information about using fmriprep can be found on <a class="reference external" href="https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep">Andy Jahn’s Brain Book</a> and also <a class="reference external" href="https://neurostars.org/tag/fmriprep">neurostars</a>.</p>
+<p>In this tutorial, we will discuss how to run fmriprep on a high performance computing system (HPC) using the <a class="reference external" href="https://rc.dartmouth.edu/index.php/discovery-overview/">Discovery system</a> at Dartmouth as an example. Dartmouth students will need to <a class="reference external" href="https://rcweb.dartmouth.edu/accounts/">request an account</a> if you don’t yet already have access to the system. We also recommend being added to the DBIC group to access our department nodes.</p>
+<section id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">#</a></h2>
+<section id="accessing-data-in-rolando">
+<h3>Accessing Data in Rolando<a class="headerlink" href="#accessing-data-in-rolando" title="Permalink to this headline">#</a></h3>
+<p>At the Dartmouth Brain Imaging Center (DBIC), all data collected on the scanner is copied to Rolando (rolando.cns.dartmouth.edu). To gain access to rolando, you will need to request an account from the DBIC systems administrator (Andrew Connolly andrew.c.connolly&#64;dartmouth.edu). More details can be found here: https://dbic-handbook.readthedocs.io/en/latest/mri/dataaccess.html. Converting your dataset into the <a class="reference external" href="https://bids.neuroimaging.io/">BIDS format</a> can be done using <a class="reference external" href="https://heudiconv.readthedocs.io/en/latest/">heudiconv</a> after speaking with <a class="reference external" href="https://centerforopenneuroscience.org/whoweare">Yarik Halchenko</a>. This is still in the process of being fully automated.</p>
+</section>
+<section id="download-data-with-datalad">
+<h3>Download Data with DataLad<a class="headerlink" href="#download-data-with-datalad" title="Permalink to this headline">#</a></h3>
+<p>For this tutorial, we can use download sample data using <a class="reference external" href="http://handbook.datalad.org/en/latest/">datalad</a> with the <a class="reference internal" href="Download_Data.html"><span class="doc std std-doc">Download Data</span></a> tutorial.</p>
+</section>
+<section id="using-discovery">
+<h3>Using Discovery<a class="headerlink" href="#using-discovery" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://rc.dartmouth.edu/index.php/discovery-overview/">Discovery</a> is a High Performance Computing system at Dartmouth. You will log on to a headnode and then will submit jobs as a scheduled batch job or an interactive job via the [SLURM] scheduler. Questions about Discovery can be directed to <a class="reference external" href="https://rc.dartmouth.edu/index.php/contact-us/">Research Computing</a>.</p>
+<p>You will need to be on the Dartmouth network to have permission to login in to the Discovery head nodes. If you are on campus, use the eduroam wifi. Otherwise you will need to use <a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/?CategoryID=17668">VPN</a>.</p>
+<section id="logging-on-to-discovery">
+<h4>Logging on to Discovery<a class="headerlink" href="#logging-on-to-discovery" title="Permalink to this headline">#</a></h4>
+<p>The discovery system can be accessed via <code class="docutils literal notranslate"><span class="pre">ssh</span></code> using a terminal. There are a number of options depending on what you intend to do. For example, the <code class="docutils literal notranslate"><span class="pre">-X</span></code> or <code class="docutils literal notranslate"><span class="pre">-Y</span></code> flag can can enable X11 forwarding in case you would like to have graphics enabled. This can be useful for using GUIs such as FSL or matlab. You can also tunnel into a <a class="reference external" href="https://www.askpbs.org/t/how-do-i-run-a-jupyter-notebook-server-on-discovery/37/3">Jupyter server</a> launched on an <a class="reference external" href="https://www.askpbs.org/t/how-do-i-submit-an-interactive-job/36">interactive job</a>.</p>
+<p>● Linux: ssh -X username&#64;discovery.dartmouth.edu</p>
+<p>● Mac: ssh -Y username&#64;discovery.dartmouth.edu<br />
+- Install Xquartz for graphical interface</p>
+<p>● Windows:
+- MobaXterm built in Xserver and sftp (free and recommended)
+- Ssh secure shell or putty</p>
+</section>
+</section>
+<section id="preprocessing-with-fmriprep">
+<h3>Preprocessing with fmriprep<a class="headerlink" href="#preprocessing-with-fmriprep" title="Permalink to this headline">#</a></h3>
+<p>fmriprep is an fMRI data preprocessing pipeline that is discussed throughout the course in the <span class="xref myst">fmriprep</span> subsection of the <a class="reference internal" href="Preprocessing.html"><span class="doc std std-doc">preprocessing</span></a> and also the <a class="reference internal" href="Download_Data.html"><span class="doc std std-doc">download data</span></a> tutorial.</p>
+</section>
+</section>
+<section id="set-up-before-running-fmriprep">
+<h2>Set-up before running fMRIPrep<a class="headerlink" href="#set-up-before-running-fmriprep" title="Permalink to this headline">#</a></h2>
+<p>fmriprep requires numerous software dependencies, which can be tricky to install. We recommend using containers created by the fmriprep developers to avoid dealing with software installation issues. If you are working on your own computer and have root access to your machine, we recommend using the <a class="reference external" href="https://fmriprep.org/en/1.5.9/docker.html">docker container</a>. If you are running your preprocessing on discovery or a computer where you do not have root access, we recommend using the <a class="reference external" href="https://fmriprep.org/en/1.5.9/singularity.html">singularity container</a>.</p>
+<section id="singularity">
+<h3>Singularity<a class="headerlink" href="#singularity" title="Permalink to this headline">#</a></h3>
+<p>In this example, we will use singularity to run fmriprep on Discovery as Docker containers are not permitted on HPC systems due to required root access permissions. Singularity is already available on Disocver, so you shouldn’t need to install anything else to get the container to work. If you have a docker container, you can convert this into a singularity container following this <a class="reference external" href="https://www.askpbs.org/t/how-do-i-use-docker-on-discovery/51">tutorial</a>.</p>
+<p>You should also ask other members of your lab as there is a high likilihood that there is already a working container in your lab’s shared storage folder.</p>
+<p>For this course, we have fmriprep singularity containers available in the DBIC folder <code class="docutils literal notranslate"><span class="pre">/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep/fmriprep-21.0.1.simg</span></code>.</p>
+</section>
+<section id="freesurfer-licence">
+<h3>FreeSurfer licence<a class="headerlink" href="#freesurfer-licence" title="Permalink to this headline">#</a></h3>
+<p>Once installing or locating (if your lab already has a singularitly container shared across the lab) fMRIPrep, you also need to register on the FreeSurfer website, download the FreeSurfer license key (<code class="docutils literal notranslate"><span class="pre">license.txt</span></code> file) and save it under <code class="docutils literal notranslate"><span class="pre">/YOUR-DATA-DIRECTORY/derivative</span></code>. Again, if your lab is already using fMRIPrep, this is also likely to be already saved in your lab space along with the singularity container.</p>
+<p>For this course, we have fmriprep singularity containers available in the DBIC folder <code class="docutils literal notranslate"><span class="pre">/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep/license.txt</span></code>.</p>
+</section>
+</section>
+<section id="run-fmriprep">
+<h2>Run fMRIPrep<a class="headerlink" href="#run-fmriprep" title="Permalink to this headline">#</a></h2>
+<p>Once you have finished setting everything, you are ready to run fMRIPrep on Discovery.</p>
+<ol class="simple">
+<li><p>First, you will need to log on to a discovery headnode. The headnode is a way for you to browse, edit, copy, and move files, edit scripts and submit jobs to the slurm scheduler. <strong>You should never be running fmriprep on a headnode!</strong>.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">#netID#&#64;discovery.dartmouth.edu</span></code></p>
+<ol class="simple">
+<li><p>Second, you will need to decide if you are going to run your fmriprep job as an interactive job or as a scheduled batch job on slurm. <a class="reference external" href="https://www.askpbs.org/t/how-do-i-submit-an-interactive-job/36">Interactive jobs</a> means that you request computational resources from slurm that you can directly interact with. This is useful if you want to develop or test your script on Discovery. You can also interactively work with jupyter notebooks using interactive jobs following <a class="reference external" href="https://www.askpbs.org/t/how-do-i-run-a-jupyter-notebook-server-on-discovery/37">this</a> tutorial. Alternatively, you can submit a batch job, in which you will tell slurm to run a specific batch script when resources are available. This job will have access to resources available in your shell such as your python distribution. It is important to remember that all batch jobs need to include loading data, what you want to do with the data, and explicitly writing out anything you want to save during the job for later. fmriprep is designed to run a job for a single subject. You could choose to loop over subjects within your batchscript, which means that subjects will be run serially. You could submit multiple jobs for each subject. Alternatively, you could submit a <a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132181">job array</a>, which will run multiple jobs in parallel depending on how many resources are available. We recommend using job arrays for the fastest and most efficient use of Discovery resources.</p></li>
+<li><p>Third, you will need to create your batchscript. Below is an example bash script (<code class="docutils literal notranslate"><span class="pre">example_slurm_fmriprep.sh</span></code>) that you can customize according to what you need for you data. You can find more about different options that can be modified on <a class="reference external" href="https://fmriprep.org/en/stable/usage.html">this page</a> in the offical fMRIPrep documentation.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+# Name of the job (* specify job name)
+#SBATCH --job-name= YOUR-JOB-NAME
+
+# Number of compute nodes
+#SBATCH --nodes=1
+
+# Number of CPUs per task
+#SBATCH --cpus-per-task=8
+
+# Request memory
+#SBATCH --mem-per-cpu=4gb
+
+# save logs (change YOUR-DIRECTORY to where you want to save logs)
+#SBATCH --output=/YOUR-DIRECTORY/fmriprep_log.txt
+
+# Walltime (job duration)
+#SBATCH --time=24:00:00
+
+# Array jobs (* change the range according to # of subject; % = number of active tasks)
+#SBATCH --array=1-10%5
+
+# Email notifications (*comma-separated options: BEGIN,END,FAIL)
+#SBATCH --mail-type=BEGIN,END,FAIL
+
+# Account to use (*change to any other account you are affiliated with)
+#SBATCH --account=dbic
+
+# Parameters
+participants=(01 02 03 04 05 06 07 08 09 10)
+PARTICIPANT_LABEL=${participants[(${SLURM_ARRAY_TASK_ID} - 1)]}
+BIDS_DIR= /PATH-TO-YOUR-DATA-DIRECTORY/
+OUTPUT_DIR=/PATH-TO-YOUR-OUTPUT-DIRECTORY/
+WORK_DIR=/PATH-TO-YOUR-WORKING-DIRECTORY/
+FMRIPREP_IMG=/PATH-TO-FMRIPREP-CONTAINER/fmriprep-21.0.1.simg
+FREESURFER_LICENSE=/PATH-TO-FREESURFER-LICENSE/license.txt
+echo &quot;array id: &quot; ${SLURM_ARRAY_TASK_ID}, &quot;subject id: &quot; ${PARTICIPANT_LABEL}
+
+singularity run
+		--cleanenv \
+		-B ${BIDS_DIR}:/data \
+                -B ${WORK_DIR}:/work \
+        $FMRIPREP_IMG $BIDS_DIR $OUTPUT_DIR \
+        participant --participant_label $PARTICIPANT_LABEL 
+        -w $WORK_DIR \
+        --nprocs 8 \
+        --write-graph \
+        --fs-license-file $FREESURFER_LICENSE \
+        --ignore slicetiming \
+        --fs-no-reconall \
+</pre></div>
+</div>
+<p>There might be other flags to customize your preprocessing depending on what you want to do.  For example, you might want discard the first 10 acquisitions (i.e., disdaqs) <code class="docutils literal notranslate"><span class="pre">--dummy-scans</span> <span class="pre">10</span></code>, or skip the bids validation <code class="docutils literal notranslate"><span class="pre">--skip-bids-validation</span></code>.</p>
+<ol class="simple">
+<li><p>Fourth, you will want to submit a job to slurm to run your batchscript as job array.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sbatch</span> <span class="pre">example_slurm_fmriprep.sh</span></code></p>
+<p>You can monitor the status of your job with <code class="docutils literal notranslate"><span class="pre">squeue</span></code>, modify your job with <code class="docutils literal notranslate"><span class="pre">scontrol</span></code>, or cancel your job with <code class="docutils literal notranslate"><span class="pre">scancel</span></code>.</p>
+<p>Here is a helpful list of <a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625">slurm commands</a> that can be used on discovery.</p>
+<ol class="simple">
+<li><p>Finally, you should receive an email when your job completes and you can you can see the output of your preprocessing in <code class="docutils literal notranslate"><span class="pre">/YOUR-DATA-FOLDER/bids/derivatives/fmriprep/</span></code>.</p></li>
+</ol>
+</section>
+<section id="reference-and-resources">
+<h2>Reference and resources<a class="headerlink" href="#reference-and-resources" title="Permalink to this headline">#</a></h2>
+<p>This tutorial is an output based on a lot of existing resources related to this topic. Here are the list of references and resources that we referred to:</p>
+<p><a class="reference external" href="https://fmriprep.org/en/stable/index.html">fMRIPrep</a>
+<a class="reference external" href="https://www.nipreps.org/">NeuroImaging PREProcessing toolS (NiPreps)</a>
+<a class="reference external" href="https://rc.dartmouth.edu/">Research computing at Dartmouth</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://rc.dartmouth.edu/index.php/discovery-overview/">Discovery overview</a>
+<a class="reference external" href="https://dbic-handbook.readthedocs.io/en/latest/">DBIC Handbook</a>
+<a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625">Slurm overview at Darmouth Service Portal</a>
+<a class="reference external" href="https://dartbrains.org/">DartBrain</a>
+<a class="reference external" href="http://handbook.datalad.org/en/latest/">Datalad Handbook</a>
+<a class="reference external" href="https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep">Andy Jahn’s Brain Book</a>
+<a class="reference external" href="https://slurm.schedmd.com/">Slurm documentation</a></p></li>
+<li><p><a class="reference external" href="https://slurm.schedmd.com/pdfs/summary.pdf">Slurm key command list</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Luke Chang<br/>
+  
+      &copy; Copyright 2021.<br/>
+    <div class="extra_footer">
+      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
