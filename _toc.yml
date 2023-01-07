@@ -13,6 +13,7 @@ parts:
   - file: content/Introduction_to_Programming
   - file: content/Introduction_to_Pandas
   - file: content/Introduction_to_Plotting
+  - file: fmriprep_on_discovery
   - file: content/Glossary
 - caption: Course Topics
   chapters:
