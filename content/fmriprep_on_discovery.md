@@ -1,4 +1,5 @@
-# Running fMRIPrep on High Performance Computing Systems
+# Running fMRIPrep on HPC
+
 *Written by Mijin Kwon, Era Wu, & Luke Chang*
 
 [fmriprep](https://fmriprep.readthedocs.io/en/stable/) is a data preprocessing pipeline for preprocessing fMRI data that was developed by a team at the [Center for Reproducible Research](http://reproducibility.stanford.edu/) led by Russ Poldrack and Chris Gorgolewski. Fmriprep was designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols, requires minimal user input, and provides easily interpretable and comprehensive error and output reporting. Fmriprep performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that are ready for data analysis. Additional information about using fmriprep can be found on [Andy Jahn's Brain Book](https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep) and also [neurostars](https://neurostars.org/tag/fmriprep).
