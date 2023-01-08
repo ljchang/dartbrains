@@ -578,6 +578,33 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#run-fmriprep">
    Run fMRIPrep
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#log-on-to-discovery">
+     Log on to Discovery
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decide-job-type">
+     Decide Job Type
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-batchscript">
+     Create Batchscript
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#submit-job">
+     Submit Job
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inspect-results">
+     Inspect Results
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#reference-and-resources">
@@ -658,6 +685,33 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#run-fmriprep">
    Run fMRIPrep
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#log-on-to-discovery">
+     Log on to Discovery
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decide-job-type">
+     Decide Job Type
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-batchscript">
+     Create Batchscript
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#submit-job">
+     Submit Job
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inspect-results">
+     Inspect Results
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#reference-and-resources">
@@ -727,14 +781,18 @@ title="Print to PDF"
 <section id="run-fmriprep">
 <h2>Run fMRIPrep<a class="headerlink" href="#run-fmriprep" title="Permalink to this headline">#</a></h2>
 <p>Once you have finished setting everything, you are ready to run fMRIPrep on Discovery.</p>
-<ol class="simple">
-<li><p>First, you will need to log on to a discovery headnode. The headnode is a way for you to browse, edit, copy, and move files, edit scripts and submit jobs to the slurm scheduler. <strong>You should never be running fmriprep on a headnode!</strong>.</p></li>
-</ol>
+<section id="log-on-to-discovery">
+<h3>Log on to Discovery<a class="headerlink" href="#log-on-to-discovery" title="Permalink to this headline">#</a></h3>
+<p>First, you will need to log on to a discovery headnode. The headnode is a way for you to browse, edit, copy, and move files, edit scripts and submit jobs to the slurm scheduler. <strong>You should never be running fmriprep on a headnode!</strong>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">#netID#&#64;discovery.dartmouth.edu</span></code></p>
-<ol class="simple">
-<li><p>Second, you will need to decide if you are going to run your fmriprep job as an interactive job or as a scheduled batch job on slurm. <a class="reference external" href="https://www.askpbs.org/t/how-do-i-submit-an-interactive-job/36">Interactive jobs</a> means that you request computational resources from slurm that you can directly interact with. This is useful if you want to develop or test your script on Discovery. You can also interactively work with jupyter notebooks using interactive jobs following <a class="reference external" href="https://www.askpbs.org/t/how-do-i-run-a-jupyter-notebook-server-on-discovery/37">this</a> tutorial. Alternatively, you can submit a batch job, in which you will tell slurm to run a specific batch script when resources are available. This job will have access to resources available in your shell such as your python distribution. It is important to remember that all batch jobs need to include loading data, what you want to do with the data, and explicitly writing out anything you want to save during the job for later. fmriprep is designed to run a job for a single subject. You could choose to loop over subjects within your batchscript, which means that subjects will be run serially. You could submit multiple jobs for each subject. Alternatively, you could submit a <a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132181">job array</a>, which will run multiple jobs in parallel depending on how many resources are available. We recommend using job arrays for the fastest and most efficient use of Discovery resources.</p></li>
-<li><p>Third, you will need to create your batchscript. Below is an example bash script (<code class="docutils literal notranslate"><span class="pre">example_slurm_fmriprep.sh</span></code>) that you can customize according to what you need for you data. You can find more about different options that can be modified on <a class="reference external" href="https://fmriprep.org/en/stable/usage.html">this page</a> in the offical fMRIPrep documentation.</p></li>
-</ol>
+</section>
+<section id="decide-job-type">
+<h3>Decide Job Type<a class="headerlink" href="#decide-job-type" title="Permalink to this headline">#</a></h3>
+<p>Second, you will need to decide if you are going to run your fmriprep job as an interactive job or as a scheduled batch job on slurm. <a class="reference external" href="https://www.askpbs.org/t/how-do-i-submit-an-interactive-job/36">Interactive jobs</a> means that you request computational resources from slurm that you can directly interact with. This is useful if you want to develop or test your script on Discovery. You can also interactively work with jupyter notebooks using interactive jobs following <a class="reference external" href="https://www.askpbs.org/t/how-do-i-run-a-jupyter-notebook-server-on-discovery/37">this</a> tutorial. Alternatively, you can submit a batch job, in which you will tell slurm to run a specific batch script when resources are available. This job will have access to resources available in your shell such as your python distribution. It is important to remember that all batch jobs need to include loading data, what you want to do with the data, and explicitly writing out anything you want to save during the job for later. fmriprep is designed to run a job for a single subject. You could choose to loop over subjects within your batchscript, which means that subjects will be run serially. You could submit multiple jobs for each subject. Alternatively, you could submit a <a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132181">job array</a>, which will run multiple jobs in parallel depending on how many resources are available. We recommend using job arrays for the fastest and most efficient use of Discovery resources.</p>
+</section>
+<section id="create-batchscript">
+<h3>Create Batchscript<a class="headerlink" href="#create-batchscript" title="Permalink to this headline">#</a></h3>
+<p>Third, you will need to create your batchscript. Below is an example bash script (<code class="docutils literal notranslate"><span class="pre">example_slurm_fmriprep.sh</span></code>) that you can customize according to what you need for you data. You can find more about different options that can be modified on <a class="reference external" href="https://fmriprep.org/en/stable/usage.html">this page</a> in the offical fMRIPrep documentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 
 # Name of the job (* specify job name)
@@ -775,8 +833,8 @@ FREESURFER_LICENSE=/PATH-TO-FREESURFER-LICENSE/license.txt
 echo &quot;array id: &quot; ${SLURM_ARRAY_TASK_ID}, &quot;subject id: &quot; ${PARTICIPANT_LABEL}
 
 singularity run
-		--cleanenv \
-		-B ${BIDS_DIR}:/data \
+                --cleanenv \
+                -B ${BIDS_DIR}:/data \
                 -B ${WORK_DIR}:/work \
         $FMRIPREP_IMG $BIDS_DIR $OUTPUT_DIR \
         participant --participant_label $PARTICIPANT_LABEL 
@@ -789,30 +847,33 @@ singularity run
 </pre></div>
 </div>
 <p>There might be other flags to customize your preprocessing depending on what you want to do.  For example, you might want discard the first 10 acquisitions (i.e., disdaqs) <code class="docutils literal notranslate"><span class="pre">--dummy-scans</span> <span class="pre">10</span></code>, or skip the bids validation <code class="docutils literal notranslate"><span class="pre">--skip-bids-validation</span></code>.</p>
-<ol class="simple">
-<li><p>Fourth, you will want to submit a job to slurm to run your batchscript as job array.</p></li>
-</ol>
+</section>
+<section id="submit-job">
+<h3>Submit Job<a class="headerlink" href="#submit-job" title="Permalink to this headline">#</a></h3>
+<p>Fourth, you will want to submit a job to slurm to run your batchscript as job array.</p>
 <p><code class="docutils literal notranslate"><span class="pre">sbatch</span> <span class="pre">example_slurm_fmriprep.sh</span></code></p>
 <p>You can monitor the status of your job with <code class="docutils literal notranslate"><span class="pre">squeue</span></code>, modify your job with <code class="docutils literal notranslate"><span class="pre">scontrol</span></code>, or cancel your job with <code class="docutils literal notranslate"><span class="pre">scancel</span></code>.</p>
 <p>Here is a helpful list of <a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625">slurm commands</a> that can be used on discovery.</p>
-<ol class="simple">
-<li><p>Finally, you should receive an email when your job completes and you can you can see the output of your preprocessing in <code class="docutils literal notranslate"><span class="pre">/YOUR-DATA-FOLDER/bids/derivatives/fmriprep/</span></code>.</p></li>
-</ol>
+</section>
+<section id="inspect-results">
+<h3>Inspect Results<a class="headerlink" href="#inspect-results" title="Permalink to this headline">#</a></h3>
+<p>Finally, you should receive an email when your job completes and you can you can see the output of your preprocessing in <code class="docutils literal notranslate"><span class="pre">/YOUR-DATA-FOLDER/bids/derivatives/fmriprep/</span></code>.</p>
+</section>
 </section>
 <section id="reference-and-resources">
 <h2>Reference and resources<a class="headerlink" href="#reference-and-resources" title="Permalink to this headline">#</a></h2>
 <p>This tutorial is an output based on a lot of existing resources related to this topic. Here are the list of references and resources that we referred to:</p>
-<p><a class="reference external" href="https://fmriprep.org/en/stable/index.html">fMRIPrep</a>
-<a class="reference external" href="https://www.nipreps.org/">NeuroImaging PREProcessing toolS (NiPreps)</a>
-<a class="reference external" href="https://rc.dartmouth.edu/">Research computing at Dartmouth</a></p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://rc.dartmouth.edu/index.php/discovery-overview/">Discovery overview</a>
-<a class="reference external" href="https://dbic-handbook.readthedocs.io/en/latest/">DBIC Handbook</a>
-<a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625">Slurm overview at Darmouth Service Portal</a>
-<a class="reference external" href="https://dartbrains.org/">DartBrain</a>
-<a class="reference external" href="http://handbook.datalad.org/en/latest/">Datalad Handbook</a>
-<a class="reference external" href="https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep">Andy Jahn’s Brain Book</a>
-<a class="reference external" href="https://slurm.schedmd.com/">Slurm documentation</a></p></li>
+<li><p><a class="reference external" href="https://fmriprep.org/en/stable/index.html">fMRIPrep</a></p></li>
+<li><p><a class="reference external" href="https://www.nipreps.org/">NeuroImaging PREProcessing toolS (NiPreps)</a></p></li>
+<li><p><a class="reference external" href="https://rc.dartmouth.edu/">Research computing at Dartmouth</a></p></li>
+<li><p><a class="reference external" href="https://rc.dartmouth.edu/index.php/discovery-overview/">Discovery overview</a></p></li>
+<li><p><a class="reference external" href="https://dbic-handbook.readthedocs.io/en/latest/">DBIC Handbook</a></p></li>
+<li><p><a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625">Slurm overview at Darmouth Service Portal</a></p></li>
+<li><p><a class="reference external" href="https://dartbrains.org/">DartBrain</a></p></li>
+<li><p><a class="reference external" href="http://handbook.datalad.org/en/latest/">Datalad Handbook</a></p></li>
+<li><p><a class="reference external" href="https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep">Andy Jahn’s Brain Book</a></p></li>
+<li><p><a class="reference external" href="https://slurm.schedmd.com/">Slurm documentation</a></p></li>
 <li><p><a class="reference external" href="https://slurm.schedmd.com/pdfs/summary.pdf">Slurm key command list</a></p></li>
 </ul>
 </section>
