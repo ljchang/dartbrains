@@ -60,14 +60,17 @@ For this course, we have fmriprep singularity containers available in the DBIC f
 
 Once you have finished setting everything, you are ready to run fMRIPrep on Discovery.
 
-1. First, you will need to log on to a discovery headnode. The headnode is a way for you to browse, edit, copy, and move files, edit scripts and submit jobs to the slurm scheduler. **You should never be running fmriprep on a headnode!**.
+### Log on to Discovery
+First, you will need to log on to a discovery headnode. The headnode is a way for you to browse, edit, copy, and move files, edit scripts and submit jobs to the slurm scheduler. **You should never be running fmriprep on a headnode!**.
 
-  ```ssh #netID#@discovery.dartmouth.edu```
+```ssh #netID#@discovery.dartmouth.edu```
 
-2. Second, you will need to decide if you are going to run your fmriprep job as an interactive job or as a scheduled batch job on slurm. [Interactive jobs](https://www.askpbs.org/t/how-do-i-submit-an-interactive-job/36) means that you request computational resources from slurm that you can directly interact with. This is useful if you want to develop or test your script on Discovery. You can also interactively work with jupyter notebooks using interactive jobs following [this](https://www.askpbs.org/t/how-do-i-run-a-jupyter-notebook-server-on-discovery/37) tutorial. Alternatively, you can submit a batch job, in which you will tell slurm to run a specific batch script when resources are available. This job will have access to resources available in your shell such as your python distribution. It is important to remember that all batch jobs need to include loading data, what you want to do with the data, and explicitly writing out anything you want to save during the job for later. fmriprep is designed to run a job for a single subject. You could choose to loop over subjects within your batchscript, which means that subjects will be run serially. You could submit multiple jobs for each subject. Alternatively, you could submit a [job array](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132181), which will run multiple jobs in parallel depending on how many resources are available. We recommend using job arrays for the fastest and most efficient use of Discovery resources. 
+### Decide Job Type
+Second, you will need to decide if you are going to run your fmriprep job as an interactive job or as a scheduled batch job on slurm. [Interactive jobs](https://www.askpbs.org/t/how-do-i-submit-an-interactive-job/36) means that you request computational resources from slurm that you can directly interact with. This is useful if you want to develop or test your script on Discovery. You can also interactively work with jupyter notebooks using interactive jobs following [this](https://www.askpbs.org/t/how-do-i-run-a-jupyter-notebook-server-on-discovery/37) tutorial. Alternatively, you can submit a batch job, in which you will tell slurm to run a specific batch script when resources are available. This job will have access to resources available in your shell such as your python distribution. It is important to remember that all batch jobs need to include loading data, what you want to do with the data, and explicitly writing out anything you want to save during the job for later. fmriprep is designed to run a job for a single subject. You could choose to loop over subjects within your batchscript, which means that subjects will be run serially. You could submit multiple jobs for each subject. Alternatively, you could submit a [job array](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132181), which will run multiple jobs in parallel depending on how many resources are available. We recommend using job arrays for the fastest and most efficient use of Discovery resources. 
 
 
-3. Third, you will need to create your batchscript. Below is an example bash script (`example_slurm_fmriprep.sh`) that you can customize according to what you need for you data. You can find more about different options that can be modified on [this page](https://fmriprep.org/en/stable/usage.html) in the offical fMRIPrep documentation.
+### Create Batchscript
+Third, you will need to create your batchscript. Below is an example bash script (`example_slurm_fmriprep.sh`) that you can customize according to what you need for you data. You can find more about different options that can be modified on [this page](https://fmriprep.org/en/stable/usage.html) in the offical fMRIPrep documentation.
 
 
 ```
@@ -111,8 +114,8 @@ FREESURFER_LICENSE=/PATH-TO-FREESURFER-LICENSE/license.txt
 echo "array id: " ${SLURM_ARRAY_TASK_ID}, "subject id: " ${PARTICIPANT_LABEL}
 
 singularity run
-		--cleanenv \
-		-B ${BIDS_DIR}:/data \
+                --cleanenv \
+                -B ${BIDS_DIR}:/data \
                 -B ${WORK_DIR}:/work \
         $FMRIPREP_IMG $BIDS_DIR $OUTPUT_DIR \
         participant --participant_label $PARTICIPANT_LABEL 
@@ -127,7 +130,8 @@ singularity run
 There might be other flags to customize your preprocessing depending on what you want to do.  For example, you might want discard the first 10 acquisitions (i.e., disdaqs) `--dummy-scans 10`, or skip the bids validation `--skip-bids-validation`.
 
 
-4. Fourth, you will want to submit a job to slurm to run your batchscript as job array. 
+### Submit Job
+Fourth, you will want to submit a job to slurm to run your batchscript as job array. 
 
 ```sbatch example_slurm_fmriprep.sh```
 
@@ -135,21 +139,22 @@ You can monitor the status of your job with `squeue`, modify your job with `scon
 
 Here is a helpful list of [slurm commands](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625) that can be used on discovery. 
 
-5. Finally, you should receive an email when your job completes and you can you can see the output of your preprocessing in `/YOUR-DATA-FOLDER/bids/derivatives/fmriprep/`.
+### Inspect Results
+Finally, you should receive an email when your job completes and you can you can see the output of your preprocessing in `/YOUR-DATA-FOLDER/bids/derivatives/fmriprep/`.
 
 
 ## Reference and resources
 
 This tutorial is an output based on a lot of existing resources related to this topic. Here are the list of references and resources that we referred to:
 
-[fMRIPrep](https://fmriprep.org/en/stable/index.html)
-[NeuroImaging PREProcessing toolS (NiPreps)](https://www.nipreps.org/)
-[Research computing at Dartmouth](https://rc.dartmouth.edu/)
+* [fMRIPrep](https://fmriprep.org/en/stable/index.html)
+* [NeuroImaging PREProcessing toolS (NiPreps)](https://www.nipreps.org/)
+* [Research computing at Dartmouth](https://rc.dartmouth.edu/)
 * [Discovery overview](https://rc.dartmouth.edu/index.php/discovery-overview/)
-[DBIC Handbook](https://dbic-handbook.readthedocs.io/en/latest/)
-[Slurm overview at Darmouth Service Portal](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625)
-[DartBrain](https://dartbrains.org/)
-[Datalad Handbook](http://handbook.datalad.org/en/latest/)
-[Andy Jahn's Brain Book](https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep)
-[Slurm documentation](https://slurm.schedmd.com/)
+* [DBIC Handbook](https://dbic-handbook.readthedocs.io/en/latest/)
+* [Slurm overview at Darmouth Service Portal](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=132625)
+* [DartBrain](https://dartbrains.org/)
+* [Datalad Handbook](http://handbook.datalad.org/en/latest/)
+* [Andy Jahn's Brain Book](https://andysbrainbook.readthedocs.io/en/latest/OpenScience/OS/fMRIPrep.html#fmriprep)
+* [Slurm documentation](https://slurm.schedmd.com/)
 * [Slurm key command list](https://slurm.schedmd.com/pdfs/summary.pdf)
