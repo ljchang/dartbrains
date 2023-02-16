@@ -54,7 +54,7 @@ For this course, we have fmriprep singularity containers available in the DBIC f
 ### FreeSurfer licence
 Once installing or locating (if your lab already has a singularitly container shared across the lab) fMRIPrep, you also need to register on the FreeSurfer website, download the FreeSurfer license key (`license.txt` file) and save it under `/YOUR-DATA-DIRECTORY/derivative`. Again, if your lab is already using fMRIPrep, this is also likely to be already saved in your lab space along with the singularity container. 
 
-For this course, we have fmriprep singularity containers available in the DBIC folder `/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep/license.txt`.
+For this course, we have a freesurfer license available in the DBIC folder `/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep/license.txt`.
 
 ## Run fMRIPrep
 
@@ -71,6 +71,8 @@ Second, you will need to decide if you are going to run your fmriprep job as an 
 
 ### Create Batchscript
 Third, you will need to create your batchscript. Below is an example bash script (`example_slurm_fmriprep.sh`) that you can customize according to what you need for you data. You can find more about different options that can be modified on [this page](https://fmriprep.org/en/stable/usage.html) in the offical fMRIPrep documentation.
+
+One suggestion is to have a folder with your container and freesurfer license file. For example, `FMRIPREP_RESOURCES_PATH=/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep`.
 
 
 ```
@@ -90,11 +92,12 @@ Third, you will need to create your batchscript. Below is an example bash script
 
 # save logs (change YOUR-DIRECTORY to where you want to save logs)
 #SBATCH --output=/YOUR-DIRECTORY/fmriprep_log.txt
+#SBATCH --error=/YOUR-DIRECTORY/fmriprep_error.txt
 
 # Walltime (job duration)
 #SBATCH --time=24:00:00
 
-# Array jobs (* change the range according to # of subject; % = number of active tasks)
+# Array jobs (* change the range according to # of subject; % = number of active job array tasks)
 #SBATCH --array=1-10%5
 
 # Email notifications (*comma-separated options: BEGIN,END,FAIL)
@@ -109,20 +112,21 @@ PARTICIPANT_LABEL=${participants[(${SLURM_ARRAY_TASK_ID} - 1)]}
 BIDS_DIR= /PATH-TO-YOUR-DATA-DIRECTORY/
 OUTPUT_DIR=/PATH-TO-YOUR-OUTPUT-DIRECTORY/
 WORK_DIR=/PATH-TO-YOUR-WORKING-DIRECTORY/
-FMRIPREP_IMG=/PATH-TO-FMRIPREP-CONTAINER/fmriprep-21.0.1.simg
-FREESURFER_LICENSE=/PATH-TO-FREESURFER-LICENSE/license.txt
+FMRIPREP_RESOURCES_PATH = /PATH-TO-YOUR-DIRECTORY-WITH_CONTAINER_AND_LICENSE/
+
 echo "array id: " ${SLURM_ARRAY_TASK_ID}, "subject id: " ${PARTICIPANT_LABEL}
 
-singularity run
+singularity run \
                 --cleanenv \
+                -B ${FMRIPREP_RESOURCES_PATH}:/ \
                 -B ${BIDS_DIR}:/data \
                 -B ${WORK_DIR}:/work \
-        $FMRIPREP_IMG $BIDS_DIR $OUTPUT_DIR \
-        participant --participant_label $PARTICIPANT_LABEL 
+        ${FMRIPREP_RESOURCES_PATH}/fmriprep-21.0.1.simg $BIDS_DIR $OUTPUT_DIR \
+        participant --participant_label $PARTICIPANT_LABEL \
         -w $WORK_DIR \
         --nprocs 8 \
         --write-graph \
-        --fs-license-file $FREESURFER_LICENSE \
+        --fs-license-file ${FMRIPREP_RESOURCES_PATH}/license.txt \
         --ignore slicetiming \
         --fs-no-reconall \
 ```

@@ -775,7 +775,7 @@ title="Print to PDF"
 <section id="freesurfer-licence">
 <h3>FreeSurfer licence<a class="headerlink" href="#freesurfer-licence" title="Permalink to this headline">#</a></h3>
 <p>Once installing or locating (if your lab already has a singularitly container shared across the lab) fMRIPrep, you also need to register on the FreeSurfer website, download the FreeSurfer license key (<code class="docutils literal notranslate"><span class="pre">license.txt</span></code> file) and save it under <code class="docutils literal notranslate"><span class="pre">/YOUR-DATA-DIRECTORY/derivative</span></code>. Again, if your lab is already using fMRIPrep, this is also likely to be already saved in your lab space along with the singularity container.</p>
-<p>For this course, we have fmriprep singularity containers available in the DBIC folder <code class="docutils literal notranslate"><span class="pre">/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep/license.txt</span></code>.</p>
+<p>For this course, we have a freesurfer license available in the DBIC folder <code class="docutils literal notranslate"><span class="pre">/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep/license.txt</span></code>.</p>
 </section>
 </section>
 <section id="run-fmriprep">
@@ -793,6 +793,7 @@ title="Print to PDF"
 <section id="create-batchscript">
 <h3>Create Batchscript<a class="headerlink" href="#create-batchscript" title="Permalink to this headline">#</a></h3>
 <p>Third, you will need to create your batchscript. Below is an example bash script (<code class="docutils literal notranslate"><span class="pre">example_slurm_fmriprep.sh</span></code>) that you can customize according to what you need for you data. You can find more about different options that can be modified on <a class="reference external" href="https://fmriprep.org/en/stable/usage.html">this page</a> in the offical fMRIPrep documentation.</p>
+<p>One suggestion is to have a folder with your container and freesurfer license file. For example, <code class="docutils literal notranslate"><span class="pre">FMRIPREP_RESOURCES_PATH=/dartfs/rc/lab/D/DBIC/DBIC/psych160/resources/fmriprep</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 
 # Name of the job (* specify job name)
@@ -809,11 +810,12 @@ title="Print to PDF"
 
 # save logs (change YOUR-DIRECTORY to where you want to save logs)
 #SBATCH --output=/YOUR-DIRECTORY/fmriprep_log.txt
+#SBATCH --error=/YOUR-DIRECTORY/fmriprep_error.txt
 
 # Walltime (job duration)
 #SBATCH --time=24:00:00
 
-# Array jobs (* change the range according to # of subject; % = number of active tasks)
+# Array jobs (* change the range according to # of subject; % = number of active job array tasks)
 #SBATCH --array=1-10%5
 
 # Email notifications (*comma-separated options: BEGIN,END,FAIL)
@@ -828,20 +830,21 @@ PARTICIPANT_LABEL=${participants[(${SLURM_ARRAY_TASK_ID} - 1)]}
 BIDS_DIR= /PATH-TO-YOUR-DATA-DIRECTORY/
 OUTPUT_DIR=/PATH-TO-YOUR-OUTPUT-DIRECTORY/
 WORK_DIR=/PATH-TO-YOUR-WORKING-DIRECTORY/
-FMRIPREP_IMG=/PATH-TO-FMRIPREP-CONTAINER/fmriprep-21.0.1.simg
-FREESURFER_LICENSE=/PATH-TO-FREESURFER-LICENSE/license.txt
+FMRIPREP_RESOURCES_PATH = /PATH-TO-YOUR-DIRECTORY-WITH_CONTAINER_AND_LICENSE/
+
 echo &quot;array id: &quot; ${SLURM_ARRAY_TASK_ID}, &quot;subject id: &quot; ${PARTICIPANT_LABEL}
 
-singularity run
+singularity run \
                 --cleanenv \
+                -B ${FMRIPREP_RESOURCES_PATH}:/ \
                 -B ${BIDS_DIR}:/data \
                 -B ${WORK_DIR}:/work \
-        $FMRIPREP_IMG $BIDS_DIR $OUTPUT_DIR \
-        participant --participant_label $PARTICIPANT_LABEL 
+        ${FMRIPREP_RESOURCES_PATH}/fmriprep-21.0.1.simg $BIDS_DIR $OUTPUT_DIR \
+        participant --participant_label $PARTICIPANT_LABEL \
         -w $WORK_DIR \
         --nprocs 8 \
         --write-graph \
-        --fs-license-file $FREESURFER_LICENSE \
+        --fs-license-file ${FMRIPREP_RESOURCES_PATH}/license.txt \
         --ignore slicetiming \
         --fs-no-reconall \
 </pre></div>
@@ -891,7 +894,7 @@ singularity run
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./content"
         },
         predefinedOutput: true
