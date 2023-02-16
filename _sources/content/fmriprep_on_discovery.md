@@ -121,9 +121,10 @@ singularity run \
                 -B ${FMRIPREP_RESOURCES_PATH}:/ \
                 -B ${BIDS_DIR}:/data \
                 -B ${WORK_DIR}:/work \
-        ${FMRIPREP_RESOURCES_PATH}/fmriprep-21.0.1.simg $BIDS_DIR $OUTPUT_DIR \
+                -B ${OUTPUT_DIR}:/output \
+        ${FMRIPREP_RESOURCES_PATH}/fmriprep-21.0.1.simg /data /output \
         participant --participant_label $PARTICIPANT_LABEL \
-        -w $WORK_DIR \
+        -w /work \
         --nprocs 8 \
         --write-graph \
         --fs-license-file ${FMRIPREP_RESOURCES_PATH}/license.txt \
