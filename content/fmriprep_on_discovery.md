@@ -118,7 +118,7 @@ echo "array id: " ${SLURM_ARRAY_TASK_ID}, "subject id: " ${PARTICIPANT_LABEL}
 
 singularity run \
                 --cleanenv \
-                -B ${FMRIPREP_RESOURCES_PATH}:/ \
+                -B ${FMRIPREP_RESOURCES_PATH}:/resources \
                 -B ${BIDS_DIR}:/data \
                 -B ${WORK_DIR}:/work \
                 -B ${OUTPUT_DIR}:/output \
@@ -127,7 +127,7 @@ singularity run \
         -w /work \
         --nprocs 8 \
         --write-graph \
-        --fs-license-file ${FMRIPREP_RESOURCES_PATH}/license.txt \
+        --fs-license-file /resources/license.txt \
         --ignore slicetiming \
         --fs-no-reconall \
 ```
