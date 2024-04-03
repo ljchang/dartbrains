@@ -566,11 +566,11 @@ document.write(`
 <p><em>Written by Courtney Jiminez &amp; Luke Chang</em></p>
 <section id="what-is-high-performance-computing">
 <h2>What is High Performance Computing?<a class="headerlink" href="#what-is-high-performance-computing" title="Permalink to this heading">#</a></h2>
-<p>https://www.youtube.com/watch?v=nIBu1EFYmBU 00:13 - 01:21</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=nIBu1EFYmBU">https://www.youtube.com/watch?v=nIBu1EFYmBU</a> 00:13 - 01:21</p>
 </section>
 <section id="hpcs-at-dartmouth">
 <h2>HPCs at Dartmouth<a class="headerlink" href="#hpcs-at-dartmouth" title="Permalink to this heading">#</a></h2>
-<p>https://rc.dartmouth.edu/index.php/discoveryhpc/</p>
+<p><a class="reference external" href="https://rc.dartmouth.edu/index.php/discoveryhpc/">https://rc.dartmouth.edu/index.php/discoveryhpc/</a></p>
 <section id="discovery-cluster">
 <h3>Discovery Cluster<a class="headerlink" href="#discovery-cluster" title="Permalink to this heading">#</a></h3>
 <p>Where is Discovery located? In the basement of Baker Berry! In a huge room full of servers. Racks of computers. Each computer is a node - newer nodes have 32 cores with 8GB per core. Used by all Departments (PBS, CS, Physics &amp; Astronomy, etc.)</p>
@@ -584,16 +584,16 @@ document.write(`
 <section id="research-computing-team">
 <h3>Research Computing Team<a class="headerlink" href="#research-computing-team" title="Permalink to this heading">#</a></h3>
 <p>Centralized high-performance computing system group.</p>
-<p>services.dartmouth.edu - where help/request forms are for research computing (try searching for Discovery, SLURM, etc.) Locally written documentation for things that people have problems with.</p>
+<p><a class="reference external" href="http://services.dartmouth.edu">services.dartmouth.edu</a> - where help/request forms are for research computing (try searching for Discovery, SLURM, etc.) Locally written documentation for things that people have problems with.</p>
 <p>Simple, basic examples of what you can do with the scheduler.</p>
-<p>If you have a Discovery question, should go to services.dartmouth.edu, search for a key word, see if it’s already written up. If you have that question, likely a bunch of others did as well, and RC has tried to answer it within the Dartmouth context.</p>
-<p>research.computing&#64;dartmouth.edu with questions.</p>
-<p>https://services.dartmouth.edu</p>
+<p>If you have a Discovery question, should go to <a class="reference external" href="http://services.dartmouth.edu">services.dartmouth.edu</a>, search for a key word, see if it’s already written up. If you have that question, likely a bunch of others did as well, and RC has tried to answer it within the Dartmouth context.</p>
+<p><a class="reference external" href="mailto:research&#46;computing&#37;&#52;&#48;dartmouth&#46;edu">research<span>&#46;</span>computing<span>&#64;</span>dartmouth<span>&#46;</span>edu</a> with questions.</p>
+<p><a class="reference external" href="https://services.dartmouth.edu">https://services.dartmouth.edu</a></p>
 </section>
 <section id="dbic-resources-on-discovery">
 <h3>DBIC Resources on Discovery<a class="headerlink" href="#dbic-resources-on-discovery" title="Permalink to this heading">#</a></h3>
 <p>DBIC owns 15 nodes (16 cores?) on Discovery. Acess to ~1200 CPUs (Luke, what is this x5 multiplier? How do we go from 15x16=240 to 1200 CPUs?)</p>
-<p>DBIC Node (Ndoli): high-RAM node (1.5 TB), 20-24 CPUs. Can only access it by directly logging in. UserID&#64;ndoli.dartmouth.edu (not available on scheduler).</p>
+<p>DBIC Node (Ndoli): high-RAM node (1.5 TB), 20-24 CPUs. Can only access it by directly logging in. <a class="reference external" href="mailto:UserID&#37;&#52;&#48;ndoli&#46;dartmouth&#46;edu">UserID<span>&#64;</span>ndoli<span>&#46;</span>dartmouth<span>&#46;</span>edu</a> (not available on scheduler).</p>
 </section>
 <section id="pbs-hpcs">
 <h3>PBS HPCs<a class="headerlink" href="#pbs-hpcs" title="Permalink to this heading">#</a></h3>
@@ -639,7 +639,7 @@ OpenVPN</p>
 <p>see AskPBS</p>
 <p>know what they are when you run into a problem and google it LOL</p>
 <p>can also just ask research computing to update your permissions</p>
-<p>https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=88459</p>
+<p><a class="reference external" href="https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=88459">https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=88459</a></p>
 </section>
 </section>
 <section id="where-is-my-data-stored-on-discovery">
@@ -736,8 +736,8 @@ Submit a script.</p>
 <p>TASKS/NODES (PROCESSES/NODE) - if your job is a call to one program (even if multi-threaded), it just does one task - only need 1 core here (which is the default). Never need more than 1 unless running an MPI job that knows how to run in parallel.</p>
 <p>CPUs/TASK (CORES/PROCESS) - can request more than 1 for multi-threaded/multi-process jobs. (e.g. fMRIprep can run multi-threaded, can specify 16 cpus/threads)</p>
 <p>RAM - hardest thing to estimate. Ideally you run a similar job in an unrestricted system and use top to see how much memory it allocates for the job, then request similar amount.</p>
-<p>Walltime (doesn’t hurt too much to overestimate but don’t get wild LOL - will keep others’ jobs from starting). Noticed your job isn’t finished but walltime is running out? Can extend walltime (for up to 30 days!) but need to ask research computing to do this. Email research.computing&#64;dartmouth.edu. You can use the SBATCH qnotify directive to let you know a certain amont of time before your job terminates.</p>
-<p>Other SBATCH directives: check out this link. https://slurm.schedmd.com/sbatch.html</p>
+<p>Walltime (doesn’t hurt too much to overestimate but don’t get wild LOL - will keep others’ jobs from starting). Noticed your job isn’t finished but walltime is running out? Can extend walltime (for up to 30 days!) but need to ask research computing to do this. Email <a class="reference external" href="mailto:research&#46;computing&#37;&#52;&#48;dartmouth&#46;edu">research<span>&#46;</span>computing<span>&#64;</span>dartmouth<span>&#46;</span>edu</a>. You can use the SBATCH qnotify directive to let you know a certain amont of time before your job terminates.</p>
+<p>Other SBATCH directives: check out this link. <a class="reference external" href="https://slurm.schedmd.com/sbatch.html">https://slurm.schedmd.com/sbatch.html</a></p>
 </section>
 <section id="arrays-running-multiple-batch-jobs-at-once">
 <h3>Arrays: Running Multiple Batch Jobs at Once<a class="headerlink" href="#arrays-running-multiple-batch-jobs-at-once" title="Permalink to this heading">#</a></h3>
@@ -764,7 +764,7 @@ sacct</p>
 </section>
 <section id="can-i-use-jupyter-notebook-on-discovery">
 <h2>Can I use Jupyter Notebook on Discovery?<a class="headerlink" href="#can-i-use-jupyter-notebook-on-discovery" title="Permalink to this heading">#</a></h2>
-<p>AskPBS.org link</p>
+<p><a class="reference external" href="http://AskPBS.org">AskPBS.org</a> link</p>
 </section>
 <section id="have-additional-discovery-questions">
 <h2>Have Additional Discovery Questions?<a class="headerlink" href="#have-additional-discovery-questions" title="Permalink to this heading">#</a></h2>
@@ -773,7 +773,7 @@ sacct</p>
 </section>
 <section id="dbic-handbook">
 <h3>DBIC Handbook<a class="headerlink" href="#dbic-handbook" title="Permalink to this heading">#</a></h3>
-<p>https://dbic-handbook.readthedocs.io/en/latest/discovery.html</p>
+<p><a class="reference external" href="https://dbic-handbook.readthedocs.io/en/latest/discovery.html">https://dbic-handbook.readthedocs.io/en/latest/discovery.html</a></p>
 </section>
 </section>
 <section id="references">
