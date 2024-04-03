@@ -1,50 +1,69 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Preprocessing &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,726 +72,469 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Preprocessing';</script>
     <link rel="canonical" href="http://dartbrains.org/content/Preprocessing.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Introduction to the General Linear Model" href="GLM.html" />
     <link rel="prev" title="Signal Processing Basics" href="Signal_Processing.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Pandas.html">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Plotting.html">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM.html">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Thresholding_Group_Analyses.html">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_ICA.html">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Parcellations.html">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Preprocessing.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Preprocessing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Preprocessing.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Preprocessing.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Preprocessing.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Preprocessing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Preprocessing.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Preprocessing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Preprocessing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Preprocessing.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Preprocessing.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/Preprocessing.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-transformations">
-   Image Transformations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cost-functions">
-   Cost Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#realignment">
-   Realignment
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spatial-normalization">
-   Spatial Normalization
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spatial-normalization-of-the-anatomical-t1w-reference">
-     Spatial normalization of the anatomical T1w reference
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#alignment-of-functional-and-anatomical-mri-data">
-     Alignment of functional and anatomical MRI data
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spatial-smoothing">
-   Spatial Smoothing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fmriprep">
-   fmriprep
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running-fmriprep">
-     Running fmriprep
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#quick-primer-on-high-performance-computing">
-     Quick primer on High Performance Computing
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fmriprep-output">
-     fmriprep output
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#limitations-of-fmriprep">
-   Limitations of fmriprep
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1-inspect-html-output-of-other-participants">
-     Exercise 1. Inspect HTML output of other participants.
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Preprocessing</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-transformations">
-   Image Transformations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cost-functions">
-   Cost Functions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#realignment">
-   Realignment
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spatial-normalization">
-   Spatial Normalization
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spatial-normalization-of-the-anatomical-t1w-reference">
-     Spatial normalization of the anatomical T1w reference
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#alignment-of-functional-and-anatomical-mri-data">
-     Alignment of functional and anatomical MRI data
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spatial-smoothing">
-   Spatial Smoothing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fmriprep">
-   fmriprep
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#running-fmriprep">
-     Running fmriprep
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#quick-primer-on-high-performance-computing">
-     Quick primer on High Performance Computing
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fmriprep-output">
-     fmriprep output
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#limitations-of-fmriprep">
-   Limitations of fmriprep
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1-inspect-html-output-of-other-participants">
-     Exercise 1. Inspect HTML output of other participants.
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Preprocessing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-transformations">Image Transformations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-functions">Cost Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#realignment">Realignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-normalization">Spatial Normalization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-normalization-of-the-anatomical-t1w-reference">Spatial normalization of the anatomical T1w reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment-of-functional-and-anatomical-mri-data">Alignment of functional and anatomical MRI data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-smoothing">Spatial Smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fmriprep">fmriprep</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-fmriprep">Running fmriprep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-primer-on-high-performance-computing">Quick primer on High Performance Computing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fmriprep-output">fmriprep output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-fmriprep">Limitations of fmriprep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-inspect-html-output-of-other-participants">Exercise 1. Inspect HTML output of other participants.</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="preprocessing">
-<h1>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">#</a></h1>
+<h1>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this heading">#</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>Being able to study brain activity associated with cognitive processes in humans is an amazing achievement. However, as we have noted throughout this course, there is an extraordinary amount of noise and a very low levels of signal, which makes it difficult to make inferences about the function of the brain using this BOLD imaging. A critical step before we can perform any analyses is to do our best to remove as much of the noise as possible. The series of steps to remove noise comprise our <em>neuroimaging data <strong>preprocessing</strong> pipeline</em>. See slides on our preprocessing lecture <a class="reference download internal" download="" href="../_downloads/4f1be4fb1329b970e6978c30eaa405d9/Preprocessing.pdf"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
 <p><img alt="preprocessing" src="../_images/preprocessing.png" /></p>
@@ -795,17 +557,17 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/Qc3rRaJWOc4"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/Qc3rRaJWOc4"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <section id="image-transformations">
-<h2>Image Transformations<a class="headerlink" href="#image-transformations" title="Permalink to this headline">#</a></h2>
+<h2>Image Transformations<a class="headerlink" href="#image-transformations" title="Permalink to this heading">#</a></h2>
 <p>Ok, now let’s dive deeper into how we can transform images into different spaces using linear transformations.</p>
 <p>Recall from our introduction to neuroimaging data lab, that neuroimaging data is typically stored in a nifti container, which contains a 3D or 4D matrix of the voxel intensities and also an affine matrix, which provides instructions for how to transform the matrix into another space.</p>
 <p>Let’s create an interactive plot using ipywidgets so that we can get an intuition for how these affine matrices can be used to transform a 3D image.</p>
@@ -879,9 +641,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "31816ba76de64c04bd7cc2752a50c81e", "version_major": 2, "version_minor": 0}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.plot_rigid_body_affine_transformation(trans_x=0, trans_y=0, trans_z=0, rot_x=0, rot_y=0, rot_z=0)&gt;
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "31816ba76de64c04bd7cc2752a50c81e", "version_major": 2, "version_minor": 0}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.plot_rigid_body_affine_transformation(trans_x=0, trans_y=0, trans_z=0, rot_x=0, rot_y=0, rot_z=0)&gt;
 </pre></div>
 </div>
 </div>
@@ -1213,7 +973,7 @@ c
 <p>Applying different affine transformations allows us to rotate, reflect, scale, and shear the image.</p>
 </section>
 <section id="cost-functions">
-<h2>Cost Functions<a class="headerlink" href="#cost-functions" title="Permalink to this headline">#</a></h2>
+<h2>Cost Functions<a class="headerlink" href="#cost-functions" title="Permalink to this heading">#</a></h2>
 <p>Now that we have learned how affine transformations can be applied to transform images into different spaces, how can we use this to register one brain image to another image?</p>
 <p>The key is to identify a way to quantify how aligned the two images are to each other. Our visual systems are very good at identifying when two images are aligned, however, we need to create an alignment measure. These measures are often called <em>cost functions</em>.</p>
 <p>There are many different types of cost functions depending on the types of images that are being aligned. For example, a common cost function is called minimizing the sum of the squared differences and is similar to how regression lines are fit to minimize deviations from the observed data. This measure works best if the images are of the same type and have roughly equivalent signal intensities.</p>
@@ -1270,48 +1030,46 @@ c
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c29a30c767a34b3d89438bf11b16075a", "version_major": 2, "version_minor": 0}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.plot_affine_cost(trans_x=0, trans_y=0)&gt;
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c29a30c767a34b3d89438bf11b16075a", "version_major": 2, "version_minor": 0}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.plot_affine_cost(trans_x=0, trans_y=0)&gt;
 </pre></div>
 </div>
 </div>
 </div>
 <p><img alt="costfunction" src="../_images/Cost_Function.gif" /></p>
 <p>You probably had to move the sliders around back and forth until you were able to reduce the sum of squared error to zero. This cost function increases exponentially the further you are away from your target. The process of minimizing (or sometimes maximizing) cost functions to identify the best fitting parameters is called <em>optimization</em> and is a concept that is core to fitting models to data across many different disciplines.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:center head"><p>Cost Function</p></th>
-<th class="text-align:center head"><p>Use Case</p></th>
-<th class="text-align:center head"><p>Example</p></th>
+<tr class="row-odd"><th class="head text-center"><p>Cost Function</p></th>
+<th class="head text-center"><p>Use Case</p></th>
+<th class="head text-center"><p>Example</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:center"><p>Sum of Squared Error</p></td>
-<td class="text-align:center"><p>Images of same modality and scaling</p></td>
-<td class="text-align:center"><p>Two T2* images</p></td>
+<tr class="row-even"><td class="text-center"><p>Sum of Squared Error</p></td>
+<td class="text-center"><p>Images of same modality and scaling</p></td>
+<td class="text-center"><p>Two T2* images</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:center"><p>Normalized correlation</p></td>
-<td class="text-align:center"><p>Images of same modality</p></td>
-<td class="text-align:center"><p>two T1 images</p></td>
+<tr class="row-odd"><td class="text-center"><p>Normalized correlation</p></td>
+<td class="text-center"><p>Images of same modality</p></td>
+<td class="text-center"><p>two T1 images</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:center"><p>Correlation ratio</p></td>
-<td class="text-align:center"><p>Any modality</p></td>
-<td class="text-align:center"><p>T1 and FLAIR</p></td>
+<tr class="row-even"><td class="text-center"><p>Correlation ratio</p></td>
+<td class="text-center"><p>Any modality</p></td>
+<td class="text-center"><p>T1 and FLAIR</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:center"><p>Mutual information or normalized mutual information</p></td>
-<td class="text-align:center"><p>Any modality</p></td>
-<td class="text-align:center"><p>T1 and CT</p></td>
+<tr class="row-odd"><td class="text-center"><p>Mutual information or normalized mutual information</p></td>
+<td class="text-center"><p>Any modality</p></td>
+<td class="text-center"><p>T1 and CT</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:center"><p>Boundary Based Registration</p></td>
-<td class="text-align:center"><p>Images with some contrast across boundaries of interest</p></td>
-<td class="text-align:center"><p>EPI and T1</p></td>
+<tr class="row-even"><td class="text-center"><p>Boundary Based Registration</p></td>
+<td class="text-center"><p>Images with some contrast across boundaries of interest</p></td>
+<td class="text-center"><p>EPI and T1</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="realignment">
-<h2>Realignment<a class="headerlink" href="#realignment" title="Permalink to this headline">#</a></h2>
+<h2>Realignment<a class="headerlink" href="#realignment" title="Permalink to this heading">#</a></h2>
 <p>Now let’s put everything we learned together to understand how we can correct for head motion in functional images that occurred during a scanning session. It is extremely important to make sure that a specific voxel has the same 3D coordinate across all time points to be able to model neural processes. This of course is made difficult by the fact that participants move during a scanning session and also in between runs.</p>
 <p>Realignment is the preprocessing step in which a rigid body transformation is applied to each volume to align them to a common space. One typically needs to choose a reference volume, which might be the first, middle, or last volume, or the mean of all volumes.</p>
 <p>Let’s look at an example of the translation and rotation parameters after running realignment on our first subject.</p>
@@ -1347,13 +1105,13 @@ c
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Rotation&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Preprocessing_11_1.png" src="../_images/Preprocessing_11_1.png" />
+<img alt="../_images/e18a85325c653f895d37aea5cdf75018a4abf52ebd49f167c7709588f6a99cde.png" src="../_images/e18a85325c653f895d37aea5cdf75018a4abf52ebd49f167c7709588f6a99cde.png" />
 </div>
 </div>
 <p>Don’t forget that even though we can approximately put each volume into a similar position with realignment that head motion always distorts the magnetic field and can lead to nonlinear changes in signal intensity that will not be addressed by this procedure. In the resting-state literature, where many analyses are based on functional connectivity, head motion can lead to spurious correlations. Some researchers choose to exclude any subject that moved more than certain amount. Other’s choose to remove the impact of these time points in their data through removing the volumes via <em>scrubbing</em> or modeling out the volume with a dummy code in the first level general linear models.</p>
 </section>
 <section id="spatial-normalization">
-<h2>Spatial Normalization<a class="headerlink" href="#spatial-normalization" title="Permalink to this headline">#</a></h2>
+<h2>Spatial Normalization<a class="headerlink" href="#spatial-normalization" title="Permalink to this heading">#</a></h2>
 <p>There are several other preprocessing steps that involve image registration. The main one is called <em>spatial normalization</em>, in which each subject’s brain data is warped into a common stereotactic space. Talaraich is an older space, that has been subsumed by various standards developed by the Montreal Neurological Institute.</p>
 <p>There are a variety of algorithms to warp subject data into stereotactic space. Linear 12 parameter affine transformation have been increasingly been replaced by more complicated nonlinear normalizations that have hundreds to thousands of parameters.</p>
 <p>One nonlinear algorithm that has performed very well across comparison studies is <em>diffeomorphic registration</em>, which can also be inverted so that subject space can be transformed into stereotactic space and back to subject space. This is the core of the <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> algorithm that is implemented in fmriprep. See this <a class="reference external" href="https://web.archive.org/web/20210613081645/https://elef.soic.indiana.edu/documentation/0.15.0.dev/examples_built/syn_registration_2d/">overview</a> for more details.</p>
@@ -1366,14 +1124,14 @@ c
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/qamRGWSC-6g"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/qamRGWSC-6g"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <p>There are many different steps involved in the spatial normalization process and these details vary widely across various imaging software packages. We will briefly discuss some of the steps involved in the anatomical preprocessing pipeline implemented by fMRIprep and will be showing example figures from the output generated by the pipeline.</p>
 <p>First, brains are extracted from the skull and surrounding dura mater. You can check and see how well the algorithm performed by examining the red outline.</p>
@@ -1381,18 +1139,18 @@ c
 <p>Next, the anatomical images are segmented into different tissue types, these tissue maps are used for various types of analyses, including providing a grey matter mask to reduce the computational time in estimating statistics. In addition, they provide masks to aid in extracting average activity in CSF, or white matter, which might be used as covariates in the statistical analyses to account for physiological noise.
 <img alt="normalization" src="../_images/T1_segmentation.png" /></p>
 <section id="spatial-normalization-of-the-anatomical-t1w-reference">
-<h3>Spatial normalization of the anatomical T1w reference<a class="headerlink" href="#spatial-normalization-of-the-anatomical-t1w-reference" title="Permalink to this headline">#</a></h3>
+<h3>Spatial normalization of the anatomical T1w reference<a class="headerlink" href="#spatial-normalization-of-the-anatomical-t1w-reference" title="Permalink to this heading">#</a></h3>
 <p>fmriprep uses the <a class="reference external" href="http://stnava.github.io/ANTs/">ANTs</a> to perform nonlinear spatial normaliziation. It is easy to check to see how well the algorithm performed by viewing the results of aligning the T1w reference to the stereotactic reference space. Hover on the panels with the mouse pointer to transition between both spaces. We are using the MNI152NLin2009cAsym template.
 <img alt="normalization" src="../_images/sub-S01_space-MNI152NLin2009cAsym_T1w.svg" /></p>
 </section>
 <section id="alignment-of-functional-and-anatomical-mri-data">
-<h3>Alignment of functional and anatomical MRI data<a class="headerlink" href="#alignment-of-functional-and-anatomical-mri-data" title="Permalink to this headline">#</a></h3>
+<h3>Alignment of functional and anatomical MRI data<a class="headerlink" href="#alignment-of-functional-and-anatomical-mri-data" title="Permalink to this heading">#</a></h3>
 <p>Next, we can evaluate the quality of alignment of the functional data to the anatomical T1 image. FSL <code class="docutils literal notranslate"><span class="pre">flirt</span></code> was used to generate transformations from EPI-space to T1w-space - The white matter mask calculated with FSL <code class="docutils literal notranslate"><span class="pre">fast</span></code> (brain tissue segmentation) was used for BBR. Note that Nearest Neighbor interpolation is used in the reportlets in order to highlight potential spin-history and other artifacts, whereas final images are resampled using Lanczos interpolation. Notice these images are much blurrier and show some distortion compared to the T1s.
 <img alt="epi" src="../_images/sub-S01_task-localizer_desc-flirtbbr_bold.svg" /></p>
 </section>
 </section>
 <section id="spatial-smoothing">
-<h2>Spatial Smoothing<a class="headerlink" href="#spatial-smoothing" title="Permalink to this headline">#</a></h2>
+<h2>Spatial Smoothing<a class="headerlink" href="#spatial-smoothing" title="Permalink to this heading">#</a></h2>
 <p>The last step we will cover in the preprocessing pipeline is <em>spatial smoothing</em>. This step involves applying a filter to the image, which removes high frequency spatial information. This step is identical to convolving a kernel to a 1-D signal that we covered in the <a class="reference internal" href="Signal_Processing.html"><span class="doc">Signal Processing Basics</span></a> lab, but the kernel here is a 3-D Gaussian kernel. The amount of smoothing is determined by specifying the width of the distribution (i.e., the standard deviation) using the Full Width at Half Maximum (FWHM) parameter.</p>
 <p>Why we would want to decrease our image resolution with spatial smoothing after we tried very hard to increase our resolution at the data acquisition stage? This is because this step may help increase the signal to noise ratio by reducing the impact of partial volume effects, residual anatomical differences following normalization, and other aliasing from applying spatial transformation.</p>
 <p>Here is what a 3D gaussian kernel looks like.</p>
@@ -1428,12 +1186,12 @@ c
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Preprocessing_17_0.png" src="../_images/Preprocessing_17_0.png" />
+<img alt="../_images/244a93866758ebfed988bcf0d04fad772134b02b2d9e9827595a3137bbf1132a.png" src="../_images/244a93866758ebfed988bcf0d04fad772134b02b2d9e9827595a3137bbf1132a.png" />
 </div>
 </div>
 </section>
 <section id="fmriprep">
-<span id="id1"></span><h2>fmriprep<a class="headerlink" href="#fmriprep" title="Permalink to this headline">#</a></h2>
+<span id="id1"></span><h2>fmriprep<a class="headerlink" href="#fmriprep" title="Permalink to this heading">#</a></h2>
 <p>Throughout this lab and course, you have frequently heard about <a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/">fmriprep</a>, which is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that was developed by a team at the <a class="reference external" href="http://reproducibility.stanford.edu/">Center for Reproducible Research</a> led by Russ Poldrack and Chris Gorgolewski. Fmriprep was designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols, requires minimal user input, and provides easily interpretable and comprehensive error and output reporting. Fmriprep performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that are ready for data analysis.</p>
 <p>fmriprep was built on top of <a class="reference external" href="https://nipype.readthedocs.io/en/latest/">nipype</a>, which is a tool to build preprocessing pipelines in python using graphs. This provides a completely flexible way to create custom pipelines using any type of software while also facilitating easy parallelization of steps across the pipeline on high performance computing platforms. Nipype is completely flexible, but has a fairly steep learning curve and is best for researchers who have strong opinions about how they want to preprocess their data, or are working with nonstandard data that might require adjusting the preprocessing steps or parameters. In practice, most researchers typically use similar preprocessing steps and do not need to tweak the pipelines very often. In addition, many researchers do not fully understand how each preprocessing step will impact their results and would prefer if somebody else picked suitable defaults based on current best practices in the literature. The fmriprep pipeline uses a combination of tools from well-known software packages, including FSL_, ANTs_, FreeSurfer_ and AFNI_. This pipeline was designed to provide the best software implementation for each state of preprocessing, and is quickly being updated as methods evolve and bugs are discovered by a growing user base.</p>
 <p>This tool allows you to easily do the following:</p>
@@ -1448,7 +1206,7 @@ c
 </ul>
 <p><img alt="image.png" src="../_images/fmriprep.png" /></p>
 <section id="running-fmriprep">
-<h3>Running fmriprep<a class="headerlink" href="#running-fmriprep" title="Permalink to this headline">#</a></h3>
+<h3>Running fmriprep<a class="headerlink" href="#running-fmriprep" title="Permalink to this heading">#</a></h3>
 <p>Running fmriprep is a (mostly) trivial process of running a single line in the command line specifying a few choices and locations for the output data. One of the annoying things about older neuroimaging software that was developed by academics is that the packages were developed using many different development environments and on different operating systems (e.g., unix, windows, mac). It can be a nightmare getting some of these packages to install on more modern computing systems. As fmriprep uses many different packages, they have made it much easier to circumvent the time-consuming process of installing many different packages by releasing a <a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/docker.html">docker container</a> that contains everything you need to run the pipeline.</p>
 <p>Unfortunately, our AWS cloud instances running our jupyter server are not equipped with enough computational resources to run fmriprep at this time. However, if you’re interested in running this on your local computer, here is the code you could use to run it in a jupyter notebook, or even better in the command line on a high performance computing environment.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
@@ -1465,7 +1223,7 @@ for sub in subs:
 </div>
 </section>
 <section id="quick-primer-on-high-performance-computing">
-<h3>Quick primer on High Performance Computing<a class="headerlink" href="#quick-primer-on-high-performance-computing" title="Permalink to this headline">#</a></h3>
+<h3>Quick primer on High Performance Computing<a class="headerlink" href="#quick-primer-on-high-performance-computing" title="Permalink to this heading">#</a></h3>
 <p>We could run fmriprep on our computer, but this could take a long time if we have a lot of participants. Because we have a limited amount of computational resources on our laptops (e.g., cpus, and memory), we would have to run each participant sequentially. For example, if we had 50 participants, it would take 50 times longer to run all participants than a single one.</p>
 <p>Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been installed in racks. Below is a picture of what Dartmouth’s <a class="reference external" href="https://rc.dartmouth.edu/index.php/discovery-overview/">Discovery cluster</a> looks like:</p>
 <p><img alt="discovery" src="../_images/hpc.png" /></p>
@@ -1474,7 +1232,7 @@ for sub in subs:
 <p><strong>NOTE</strong>: For this class, we will only be using the jupyterhub server, but if you end up working in a lab in the future, you will need to request access to the <em>discovery</em> system using this <a class="reference external" href="https://rcweb.dartmouth.edu/accounts/">link</a>.</p>
 </section>
 <section id="fmriprep-output">
-<h3>fmriprep output<a class="headerlink" href="#fmriprep-output" title="Permalink to this headline">#</a></h3>
+<h3>fmriprep output<a class="headerlink" href="#fmriprep-output" title="Permalink to this heading">#</a></h3>
 <p>You can see a summary of the operations fmriprep performed by examining the .html files in the <code class="docutils literal notranslate"><span class="pre">derivatives/fmriprep</span></code> folder within the <code class="docutils literal notranslate"><span class="pre">localizer</span></code> data directory.</p>
 <p>We will load the first subject’s output file. Spend some time looking at the outputs and feel free to examine other subjects as well. Currently, the first 10 subjects should be available on the jupyterhub.</p>
 <div class="cell docutils container">
@@ -1491,15 +1249,15 @@ for sub in subs:
 </section>
 </section>
 <section id="limitations-of-fmriprep">
-<h2>Limitations of fmriprep<a class="headerlink" href="#limitations-of-fmriprep" title="Permalink to this headline">#</a></h2>
+<h2>Limitations of fmriprep<a class="headerlink" href="#limitations-of-fmriprep" title="Permalink to this heading">#</a></h2>
 <p>In general, we recommend using this pipeline if you want a sensible default. Considerable thought has gone into selecting reasonable default parameters and selecting preprocessing steps based on best practices in the field (as determined by the developers). This is not necessarily the case for any of the default settings in any of the more conventional software packages (e.g., spm, fsl, afni, etc).</p>
 <p>However, there is an important tradeoff in using this tool. On the one hand, it’s nice in that it is incredibly straightforward to use (one line of code!), has excellent documentation, and is actively being developed to fix bugs and improve the overall functionality. There is also a growing user base to ask questions.  <a class="reference external" href="https://neurostars.org/">Neurostars</a> is an excellent forum to post questions and learn from others. On the other hand, fmriprep, is unfortunately in its current state not easily customizable. If you disagree with the developers about the order or specific preprocessing steps, it is very difficult to modify. Future versions will hopefully be more modular and easier to make custom pipelines.  If you need this type of customizability we strongly recommend using nipype over fmriprep.</p>
 <p>In practice, it’s alway a little bit finicky to get everything set up on a particular system. Sometimes you might run into issues with a specific missing file like the <a class="reference external" href="https://fmriprep.readthedocs.io/en/stable/usage.html#the-freesurfer-license">freesurfer license</a> even if you’re not using it. You might also run into issues with the format of the data that might have some conflicts with the <a class="reference external" href="https://github.com/bids-standard/bids-validator">bids-validator</a>. In our experience, there is always some frustrations getting this to work, but it’s very nice once it’s done.</p>
 </section>
 <section id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <section id="exercise-1-inspect-html-output-of-other-participants">
-<h3>Exercise 1. Inspect HTML output of other participants.<a class="headerlink" href="#exercise-1-inspect-html-output-of-other-participants" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 1. Inspect HTML output of other participants.<a class="headerlink" href="#exercise-1-inspect-html-output-of-other-participants" title="Permalink to this heading">#</a></h3>
 <p>For this exercise, you will need to navigate to the derivatives folder containing the fmriprep preprocessed data <code class="docutils literal notranslate"><span class="pre">../data/data/localizer/derivatives/fmriprep</span></code> and inspect the html output of other subjects (ie., not ‘S01’). Did the preprocessing steps works? are there any issues with the data that we should be concerned about?</p>
 </section>
 </section>
@@ -1525,53 +1283,124 @@ for sub in subs:
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Signal_Processing.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Signal Processing Basics</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Signal_Processing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Signal Processing Basics</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="GLM.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="GLM.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Introduction to the General Linear Model</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-transformations">Image Transformations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cost-functions">Cost Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#realignment">Realignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-normalization">Spatial Normalization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-normalization-of-the-anatomical-t1w-reference">Spatial normalization of the anatomical T1w reference</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alignment-of-functional-and-anatomical-mri-data">Alignment of functional and anatomical MRI data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-smoothing">Spatial Smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fmriprep">fmriprep</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-fmriprep">Running fmriprep</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-primer-on-high-performance-computing">Quick primer on High Performance Computing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fmriprep-output">fmriprep output</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-fmriprep">Limitations of fmriprep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-inspect-html-output-of-other-participants">Exercise 1. Inspect HTML output of other participants.</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

@@ -1,50 +1,69 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Introduction to the General Linear Model &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,760 +72,470 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/GLM';</script>
     <link rel="canonical" href="http://dartbrains.org/content/GLM.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Modeling Single Subject Data" href="GLM_Single_Subject_Model.html" />
     <link rel="prev" title="Preprocessing" href="Preprocessing.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Pandas.html">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Plotting.html">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Thresholding_Group_Analyses.html">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_ICA.html">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Parcellations.html">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/GLM.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/GLM.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/GLM.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/GLM.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/GLM.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/GLM.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/GLM.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/GLM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/GLM.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/GLM.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/GLM.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/GLM.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#are-you-ready-for-this">
-   Are you ready for this?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulate-a-voxel-time-course">
-   Simulate a voxel time course
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#construct-design-matrix">
-   Construct Design Matrix
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#estimate-glm">
-   Estimate GLM
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#standard-errors">
-     Standard Errors
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#explained-variance">
-     Explained Variance
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#standard-error-of-beta-estimates">
-     Standard Error of
-     <span class="math notranslate nohighlight">
-      \(\beta\)
-     </span>
-     estimates
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#statistical-significance">
-     Statistical Significance
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contrasts">
-     Contrasts
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#efficiency">
-     Efficiency
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#varying-the-inter-trial-interval-with-jittering">
-     Varying the Inter-Trial Interval with Jittering
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#autocorrelation">
-     Autocorrelation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude">
-     Exercise 1. What happens when we vary the signal amplitude?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2-what-happens-when-we-vary-the-noise">
-     Exercise 2. What happens when we vary the noise?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-3-how-many-trials-do-we-need">
-     Exercise 3. How many trials do we need?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration">
-     Exercise 4. What is the impact of the stimulus duration?
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to the General Linear Model</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#are-you-ready-for-this">
-   Are you ready for this?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulate-a-voxel-time-course">
-   Simulate a voxel time course
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#construct-design-matrix">
-   Construct Design Matrix
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#estimate-glm">
-   Estimate GLM
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#standard-errors">
-     Standard Errors
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#explained-variance">
-     Explained Variance
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#standard-error-of-beta-estimates">
-     Standard Error of
-     <span class="math notranslate nohighlight">
-      \(\beta\)
-     </span>
-     estimates
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#statistical-significance">
-     Statistical Significance
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contrasts">
-     Contrasts
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#efficiency">
-     Efficiency
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#varying-the-inter-trial-interval-with-jittering">
-     Varying the Inter-Trial Interval with Jittering
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#autocorrelation">
-     Autocorrelation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude">
-     Exercise 1. What happens when we vary the signal amplitude?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2-what-happens-when-we-vary-the-noise">
-     Exercise 2. What happens when we vary the noise?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-3-how-many-trials-do-we-need">
-     Exercise 3. How many trials do we need?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration">
-     Exercise 4. What is the impact of the stimulus duration?
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to the General Linear Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-you-ready-for-this">Are you ready for this?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-a-voxel-time-course">Simulate a voxel time course</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-design-matrix">Construct Design Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-glm">Estimate GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-errors">Standard Errors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explained-variance">Explained Variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error-of-beta-estimates">Standard Error of <span class="math notranslate nohighlight">\(\beta\)</span> estimates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-significance">Statistical Significance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contrasts">Contrasts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#efficiency">Efficiency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#varying-the-inter-trial-interval-with-jittering">Varying the Inter-Trial Interval with Jittering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelation">Autocorrelation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude">Exercise 1. What happens when we vary the signal amplitude?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-what-happens-when-we-vary-the-noise">Exercise 2. What happens when we vary the noise?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-how-many-trials-do-we-need">Exercise 3. How many trials do we need?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration">Exercise 4. What is the impact of the stimulus duration?</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-the-general-linear-model">
-<h1>Introduction to the General Linear Model<a class="headerlink" href="#introduction-to-the-general-linear-model" title="Permalink to this headline">#</a></h1>
+<h1>Introduction to the General Linear Model<a class="headerlink" href="#introduction-to-the-general-linear-model" title="Permalink to this heading">#</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>This tutorial provides an introduction for how the general linear model (GLM) can be used to make inferences about brain responses in a single subject. We will explore the statistics in the context of a simple hypothetical experiment using simulated data.</p>
 <p>In this lab we will cover:</p>
@@ -828,14 +557,14 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/GDkLQuV4he4"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/GDkLQuV4he4"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -845,17 +574,17 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/OyLKMb9FNhg"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/OyLKMb9FNhg"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <section id="are-you-ready-for-this">
-<h2>Are you ready for this?<a class="headerlink" href="#are-you-ready-for-this" title="Permalink to this headline">#</a></h2>
+<h2>Are you ready for this?<a class="headerlink" href="#are-you-ready-for-this" title="Permalink to this heading">#</a></h2>
 <p>This lab assumes that you have some basic background knowledge in statistics from an introductory course. If you are already feeling overwhelmed from Tor Wager’s videos and think you might need to slow down and refresh some basic concepts and lingo, I highly encourage you to watch Jeannette Mumford’s crash course in statistics. These are certainly not required, but she is a wonderful teacher and watching her videos will provide an additional explanation of the core concepts needed to understand the GLM. You could watch these in one sitting, or go back and forth with working through the notebooks. There is so much to know in statistics and people can often feel lost because the concepts are certainly not intuitive. For example, even though advanced statistics have been an important part of my own work, I still find it helpful to periodically revisit core concepts. In general, I find that learning neuroimaging is an iterative process. In the beginning, it is important to get a broad understanding of the key steps and how neuroimaging can be used to make inferences, but as you progress in your training you will have plenty of opportunities to zoom into specific steps to learn more about particular details and nuances that you may not have fully appreciated the first time around.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://youtu.be/apt8uAgtgdY">Basic statistics terminology</a> This video gently introduces some of the key concepts that provide the foundation for statistics.</p></li>
@@ -892,7 +621,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="simulate-a-voxel-time-course">
-<h2>Simulate a voxel time course<a class="headerlink" href="#simulate-a-voxel-time-course" title="Permalink to this headline">#</a></h2>
+<h2>Simulate a voxel time course<a class="headerlink" href="#simulate-a-voxel-time-course" title="Permalink to this heading">#</a></h2>
 <p>To generate an intuition for how we use the GLM to make inferences in fMRI data analysis, we will simulate a time series for a single voxel. A simulation means that we will be generating synthetic data that will resemble real data. However, because we know the ground truth of the signal, we can evaluate how well we can recover the true signal using a general linear model. Throughout this course, we frequently rely on simulations to gain an intuition for how a particular preprocessing step or statistic works. This is important because it reinforces the assumptions behind the operation (which are rarely met in real data), and also provides a method to learn how to answer your own questions by generating your own simulations.</p>
 <p>Imagine that we are interested in identifying which region of the brain is involved in processing faces. To explore this question, we could show participants a bunch of different types of faces. Each presentation of a face will be a <em>trial</em>. Let’s simulate what a design might look like with 5 face trials.</p>
 <p>First, we will need to specify the number of volumes in the time series. Then we need to specify the timepoint, in which a face is presented.</p>
@@ -927,7 +656,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_7_0.png" src="../_images/GLM_7_0.png" />
+<img alt="../_images/48696551bfa2f5467ea6057209a4aeefa14f134d252172a0099c183a87462ab7.png" src="../_images/48696551bfa2f5467ea6057209a4aeefa14f134d252172a0099c183a87462ab7.png" />
 </div>
 </div>
 <p>We now have 5 events where a face is shown for 2 seconds (i.e., one TR). If we scanned someone with this design, we might expect to see any region involved in processing faces increase in activation around the time of the face presentation. How would we know which of these regions, if any, <em>selectively</em> process faces? Many of the regions we would observe are likely involved in processing <em>any</em> visual stimulus, and not specifically faces.</p>
@@ -954,7 +683,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_9_0.png" src="../_images/GLM_9_0.png" />
+<img alt="../_images/2a1c14bb9c10c5dc470548afc0a833e328e6a539868bbad8b84a9d86f7afceae.png" src="../_images/2a1c14bb9c10c5dc470548afc0a833e328e6a539868bbad8b84a9d86f7afceae.png" />
 </div>
 </div>
 <p>Let’s imagine that in a voxel processing face specific information we might expect to see a larger activation in response to faces. Maybe two times bigger?</p>
@@ -977,7 +706,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_11_0.png" src="../_images/GLM_11_0.png" />
+<img alt="../_images/2e7b98748473d7b4fede2c0eb9523634740769d4ecd9d8f7388adcb2b645f9ca.png" src="../_images/2e7b98748473d7b4fede2c0eb9523634740769d4ecd9d8f7388adcb2b645f9ca.png" />
 </div>
 </div>
 <p>Ok, now we have two conditions that are alternating over time.</p>
@@ -996,7 +725,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time&#39;)
 </pre></div>
 </div>
-<img alt="../_images/GLM_13_1.png" src="../_images/GLM_13_1.png" />
+<img alt="../_images/4c5cd130ddfe0e8372284ee91491f20d40fa4e760eb10dcb2eefedd25c24ecd3.png" src="../_images/4c5cd130ddfe0e8372284ee91491f20d40fa4e760eb10dcb2eefedd25c24ecd3.png" />
 </div>
 </div>
 <p>We will use <code class="docutils literal notranslate"><span class="pre">np.convolve</span></code> from numpy to perform the convolution.  The length of the convolved data will be the length of the time series plus the length of the kernel minus 1. To make sure everything is the same length, we will chop off the extra time off the convolved time series using <code class="docutils literal notranslate"><span class="pre">mode='same'</span></code>.</p>
@@ -1011,7 +740,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_15_0.png" src="../_images/GLM_15_0.png" />
+<img alt="../_images/efb4484f775651906437ec4f5f220fd3b581d93c2b88e32d68bcc2e333bfe36d.png" src="../_images/efb4484f775651906437ec4f5f220fd3b581d93c2b88e32d68bcc2e333bfe36d.png" />
 </div>
 </div>
 <p>While this might reflect the expected HRF response to a single event, real data is much noiser. It is easy to add different types of noise. For example, there might be a low frequency drift, autocorrelation, or possibly some aliased physiological artifacts.</p>
@@ -1030,7 +759,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_17_0.png" src="../_images/GLM_17_0.png" />
+<img alt="../_images/1acd4f707e2759e2997cb67ee2735b9674cf8819478d545c66439aeeb48e5eee.png" src="../_images/1acd4f707e2759e2997cb67ee2735b9674cf8819478d545c66439aeeb48e5eee.png" />
 </div>
 </div>
 <p>Now this is looking much more like real BOLD activity.</p>
@@ -1044,12 +773,12 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_19_0.png" src="../_images/GLM_19_0.png" />
+<img alt="../_images/aaa2b08fbfecedecbe5f2ee558f53966a8dcbacd86cf9c3a72833cb0d6a96a0c.png" src="../_images/aaa2b08fbfecedecbe5f2ee558f53966a8dcbacd86cf9c3a72833cb0d6a96a0c.png" />
 </div>
 </div>
 </section>
 <section id="construct-design-matrix">
-<h2>Construct Design Matrix<a class="headerlink" href="#construct-design-matrix" title="Permalink to this headline">#</a></h2>
+<h2>Construct Design Matrix<a class="headerlink" href="#construct-design-matrix" title="Permalink to this heading">#</a></h2>
 <p>Now that we have our simulated voxel timeseries, let’s try and see if we can recover the original signal using a general linear model in the form of:</p>
 <div class="math notranslate nohighlight">
 \[Y = X\beta + \epsilon\]</div>
@@ -1072,7 +801,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_22_0.png" src="../_images/GLM_22_0.png" />
+<img alt="../_images/6d610582bbeb856dcd1dbf21e635ab230de99994076a8440b88a827fbd841996.png" src="../_images/6d610582bbeb856dcd1dbf21e635ab230de99994076a8440b88a827fbd841996.png" />
 </div>
 </div>
 <p>We can write our model out so that it is very clear what we are doing.</p>
@@ -1098,12 +827,12 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/GLM_24_0.png" src="../_images/GLM_24_0.png" />
+<img alt="../_images/8ff082d3047a968d3e09f270cf5c99c70cbe824b893382bb681509cf29c5c633.png" src="../_images/8ff082d3047a968d3e09f270cf5c99c70cbe824b893382bb681509cf29c5c633.png" />
 </div>
 </div>
 </section>
 <section id="estimate-glm">
-<h2>Estimate GLM<a class="headerlink" href="#estimate-glm" title="Permalink to this headline">#</a></h2>
+<h2>Estimate GLM<a class="headerlink" href="#estimate-glm" title="Permalink to this heading">#</a></h2>
 <p>Now that have created our simulated voxel timeseries <span class="math notranslate nohighlight">\(Y\)</span> and our design matrix <span class="math notranslate nohighlight">\(X\)</span>, we need to fit our model to the data by estimating the three <span class="math notranslate nohighlight">\(\beta\)</span> parameters.</p>
 <p>There are several ways to estimate the parameters for our general linear model. The Ordinary Least Squares (OLS) estimator finds the <span class="math notranslate nohighlight">\(\hat\beta\)</span> hyperplane that minimizes the error between the observed <span class="math notranslate nohighlight">\(Y\)</span> and predicted <span class="math notranslate nohighlight">\(\hat Y\)</span>.</p>
 <p>This can be formulated using linear algebra as:</p>
@@ -1136,7 +865,7 @@ title="Print to PDF"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>beta Faces - beta Objects: 0.95
 </pre></div>
 </div>
-<img alt="../_images/GLM_26_1.png" src="../_images/GLM_26_1.png" />
+<img alt="../_images/4ddfed6cded5e8fabf3bd06323572422d00e6c0a000eed17b7d2f1bc9acafa37.png" src="../_images/4ddfed6cded5e8fabf3bd06323572422d00e6c0a000eed17b7d2f1bc9acafa37.png" />
 </div>
 </div>
 <p>We can see that our model is working pretty well. We did not add a mean to the simulated timeseries, so our estimator correctly figures out that the intercept parameter should be zero. The model also correctly figured out that the scaling parameter for the faces regressor was 2, and 1 for the objects regressor, with the difference between them equal to approximately 1.</p>
@@ -1163,12 +892,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Residual&#39;)
 </pre></div>
 </div>
-<img alt="../_images/GLM_28_1.png" src="../_images/GLM_28_1.png" />
-<img alt="../_images/GLM_28_2.png" src="../_images/GLM_28_2.png" />
+<img alt="../_images/aaa006b62ae5d5fc7c8d8c8799f7f13a46027ecf61f7479aeaf63a67df312ba1.png" src="../_images/aaa006b62ae5d5fc7c8d8c8799f7f13a46027ecf61f7479aeaf63a67df312ba1.png" />
+<img alt="../_images/34ed42e3b7a8a47a69612d8d4764b39fc3844f793a108cd6a3bb2e5b6aa2c1ac.png" src="../_images/34ed42e3b7a8a47a69612d8d4764b39fc3844f793a108cd6a3bb2e5b6aa2c1ac.png" />
 </div>
 </div>
 <section id="standard-errors">
-<h3>Standard Errors<a class="headerlink" href="#standard-errors" title="Permalink to this headline">#</a></h3>
+<h3>Standard Errors<a class="headerlink" href="#standard-errors" title="Permalink to this heading">#</a></h3>
 <p>As you can see, we are doing a reasonable job recovering the original signals.</p>
 <p>You may recall that we specified 3 parameters in our simulation</p>
 <ul class="simple">
@@ -1203,12 +932,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Prediction Error&#39;)
 </pre></div>
 </div>
-<img alt="../_images/GLM_30_2.png" src="../_images/GLM_30_2.png" />
+<img alt="../_images/13a63836b851261db7626fc19d058b15d5f23b0223e8fc3964b49605c92f04e9.png" src="../_images/13a63836b851261db7626fc19d058b15d5f23b0223e8fc3964b49605c92f04e9.png" />
 </div>
 </div>
 </section>
 <section id="explained-variance">
-<h3>Explained Variance<a class="headerlink" href="#explained-variance" title="Permalink to this headline">#</a></h3>
+<h3>Explained Variance<a class="headerlink" href="#explained-variance" title="Permalink to this heading">#</a></h3>
 <p>Sometimes we want a single metric to quantify overall how well our model was able to explain variance in the data. There are many metrics that can provide a quantitative measure of <em>goodness of fit</em>.</p>
 <p>Here we will calculate <span class="math notranslate nohighlight">\(R^2\)</span> using the following formula:</p>
 <div class="math notranslate nohighlight">
@@ -1234,7 +963,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="standard-error-of-beta-estimates">
-<h3>Standard Error of <span class="math notranslate nohighlight">\(\beta\)</span> estimates<a class="headerlink" href="#standard-error-of-beta-estimates" title="Permalink to this headline">#</a></h3>
+<h3>Standard Error of <span class="math notranslate nohighlight">\(\beta\)</span> estimates<a class="headerlink" href="#standard-error-of-beta-estimates" title="Permalink to this heading">#</a></h3>
 <p>We can also estimate the uncertainty of regression coefficients. The uncertainty of the beta parameters is quantified as a standard error around each specific estimate.</p>
 <div class="math notranslate nohighlight">
 \[\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma\]</div>
@@ -1253,12 +982,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Beta Value&#39;)
 </pre></div>
 </div>
-<img alt="../_images/GLM_35_1.png" src="../_images/GLM_35_1.png" />
+<img alt="../_images/acf7f2bb2043e18f09f3cd7297dcc95a05008f41cb4a8d692be54e1adac6c942.png" src="../_images/acf7f2bb2043e18f09f3cd7297dcc95a05008f41cb4a8d692be54e1adac6c942.png" />
 </div>
 </div>
 </section>
 <section id="statistical-significance">
-<h3>Statistical Significance<a class="headerlink" href="#statistical-significance" title="Permalink to this headline">#</a></h3>
+<h3>Statistical Significance<a class="headerlink" href="#statistical-significance" title="Permalink to this heading">#</a></h3>
 <p>We could also perform a hypothesis test to evaluate if any of the regressors are statistically different from zero.</p>
 <p>This exercise is simply meant to provide parallels to common statistical jargon. In practice, this is actually rarely done in neuroimaging analysis as we are typically more interested in making statistical inferences across the population rather than within a single participant.</p>
 <p>The formula for calculating a t-statistic is very simple:</p>
@@ -1302,12 +1031,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x7fe020f135d0&gt;
 </pre></div>
 </div>
-<img alt="../_images/GLM_39_2.png" src="../_images/GLM_39_2.png" />
+<img alt="../_images/1c875c859156d7e00b45163685940c46ef033785e8d0b26b30aaf3b1f1c13073.png" src="../_images/1c875c859156d7e00b45163685940c46ef033785e8d0b26b30aaf3b1f1c13073.png" />
 </div>
 </div>
 </section>
 <section id="contrasts">
-<h3>Contrasts<a class="headerlink" href="#contrasts" title="Permalink to this headline">#</a></h3>
+<h3>Contrasts<a class="headerlink" href="#contrasts" title="Permalink to this heading">#</a></h3>
 <p>Contrasts are a very important concept in fMRI data analysis as they provide the statistical inference underlying the subtraction method of making inferences.</p>
 <p>Let’s watch a short video by Tor Wager on contrasts. We will also spend much more time on contrasts in the group analysis tutorial. We also recommend watching Jeannette Mumford’s <a class="reference external" href="https://www.youtube.com/watch?v=yLgPpmXVVbs">overview</a> of contrasts for a more statistical perspective.</p>
 <div class="cell docutils container">
@@ -1318,14 +1047,14 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/7MibM1ATai4"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/7MibM1ATai4"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <p>Contrasts describe a linear combination of variables in a regression model whose coefficients add up to zero. This allows us to flexibly compare different experimental conditions.</p>
 <p>For example, suppose we just wanted to know the magnitude of an effect for a single condition, such as the brain response to faces. We would create a contrast code that isolates the effect size (i.e., <span class="math notranslate nohighlight">\(\beta\)</span> estimate for the face regressor)</p>
@@ -1358,12 +1087,12 @@ title="Print to PDF"
  (&#39;[0, 1, 0]&#39;, 1.9456541063752513)}
 </pre></div>
 </div>
-<img alt="../_images/GLM_43_1.png" src="../_images/GLM_43_1.png" />
+<img alt="../_images/e29dcaae6e3e8cf1e534403d2b78bf678bc560ea5ed25d45978b44f5933f18af.png" src="../_images/e29dcaae6e3e8cf1e534403d2b78bf678bc560ea5ed25d45978b44f5933f18af.png" />
 </div>
 </div>
 </section>
 <section id="efficiency">
-<h3>Efficiency<a class="headerlink" href="#efficiency" title="Permalink to this headline">#</a></h3>
+<h3>Efficiency<a class="headerlink" href="#efficiency" title="Permalink to this heading">#</a></h3>
 <p>We can estimate the efficiency, or the quality of an estimator for a specific experimental design or a hypothesis testing procedure. Efficiency is related to power, or the ability to detect an effect should one exist. However, unlike power, we can estimate efficiency from our design matrix and do not actually need to know the standard error for the model (unlike with power calculations). Specifically, efficiency is defined as the inverse of the sum of the estimator variances. For a more detailed explanation and general experimental design recommendations see this <a class="reference external" href="http://imaging.mrc-cbu.cam.ac.uk/imaging/DesignEfficiency">overview</a> by Rik Henson, or this <a class="reference external" href="https://theclevermachine.wordpress.com/tag/fmri-design-efficiency/">blog post</a> on efficiency in experimental designs.</p>
 <div class="math notranslate nohighlight">
 \[e(c\hat\beta) = \frac{1}{c(X^TX)^{-1}c^T}\]</div>
@@ -1390,7 +1119,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="varying-the-inter-trial-interval-with-jittering">
-<h3>Varying the Inter-Trial Interval with Jittering<a class="headerlink" href="#varying-the-inter-trial-interval-with-jittering" title="Permalink to this headline">#</a></h3>
+<h3>Varying the Inter-Trial Interval with Jittering<a class="headerlink" href="#varying-the-inter-trial-interval-with-jittering" title="Permalink to this heading">#</a></h3>
 <p>All of the examples so far have used a fixed inter-trial interval. However, in real experiments it is almost always a good idea to vary the inter-trial interval using jitter. This helps to decouple the slice acquisition with the experimental design to better sample the hemodynamic response over multiple trials. In addition, this can help reduce the temporal correlation between regressors modeling events that may be sequentially dependent. For example, there may be multiple parts of a trial. For example, imagine an associative learning experiment in which a cue predicts an outcome. As the cue epoch will always temporally precede the outcome epoch, it can be beneficial to temporally decouple these epochs to reduce collinearity in the design matrix, which will increase the efficiency of the experimental design. Finally, adding jitter to the inter-trial interval may help reduce participant’s ability to temporally predict when the next event will happen, which may be desireable depending on the psychological question of interest.</p>
 <p>Here is an example for how to add jitter to our simulated experiment.</p>
 <div class="cell docutils container">
@@ -1433,37 +1162,37 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.5597167760964403, 2.066820546582558, 1.1233445684652128]
 </pre></div>
 </div>
-<img alt="../_images/GLM_47_1.png" src="../_images/GLM_47_1.png" />
+<img alt="../_images/0732b9df59ea86b32fcc2c854a805a184fa6ea1d3af970b5499b0542e87320c8.png" src="../_images/0732b9df59ea86b32fcc2c854a805a184fa6ea1d3af970b5499b0542e87320c8.png" />
 </div>
 </div>
 </section>
 <section id="autocorrelation">
-<h3>Autocorrelation<a class="headerlink" href="#autocorrelation" title="Permalink to this headline">#</a></h3>
+<h3>Autocorrelation<a class="headerlink" href="#autocorrelation" title="Permalink to this heading">#</a></h3>
 <p>The BOLD signal has some intrinsic autocorrelation that varies with the length of the TR. Different software packages have provided varying solutions to this problem. For example, SPM implements an AR(1) model, which means that it trys to account for the fact that the signal is consistently correlated (i.e., autoregressive) with one lag. In practice, these will rarely change the beta estimates, but rather will adjust our standard errors around the estimates. As we will discuss soon, most group level analyses ignore these subject level, or first-level errors anyway. It is debatable if this is actually a good practice, but it reduces the importance of accounting for autocorrelation when looking at group level statistics in standard experimental design.</p>
 <p>Another important thing to note is that there is some evidence that the AR(1) model can actually increase false positives, especially in shorter TRs.  See this <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1053811912003825">paper</a> by Anders Ekland and colleagues for more details. Also, this is a helpful <a class="reference external" href="https://mandymejia.com/2016/11/06/how-to-efficiently-prewhiten-fmri-timeseries-the-right-way/">blog post</a> discussing prewhitening.</p>
 <p>For the scope of this course we will largely be ignoring this issue, but I will plan to add some examples and simulations in the future.  For now, I encourage you to watch this video on <a class="reference external" href="https://www.youtube.com/watch?v=Mb9LDzvhecY&amp;list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&amp;index=24">AR models</a> if you are interested in learning more about this topic.</p>
 </section>
 </section>
 <section id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <p>For our homework exercises, let’s use the simulation to answer questions we might have about experimental design.</p>
 <section id="exercise-1-what-happens-when-we-vary-the-signal-amplitude">
-<h3>Exercise 1. What happens when we vary the signal amplitude?<a class="headerlink" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 1. What happens when we vary the signal amplitude?<a class="headerlink" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude" title="Permalink to this heading">#</a></h3>
 <p>Some signals will be very strong and others weaker. How does the model fit change when the signal amplitudes are stronger and weaker?</p>
 <p>In this exercise, make a plot showing how the <span class="math notranslate nohighlight">\(r^2\)</span> changes over 3 different levels of signal intensity.</p>
 </section>
 <section id="exercise-2-what-happens-when-we-vary-the-noise">
-<h3>Exercise 2. What happens when we vary the noise?<a class="headerlink" href="#exercise-2-what-happens-when-we-vary-the-noise" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 2. What happens when we vary the noise?<a class="headerlink" href="#exercise-2-what-happens-when-we-vary-the-noise" title="Permalink to this heading">#</a></h3>
 <p>How does the amount of noise in the data impact our model fits?</p>
 <p>In this exercise, make a plot showing the <span class="math notranslate nohighlight">\(r^2\)</span> for 3 different levels of simulated noise.</p>
 </section>
 <section id="exercise-3-how-many-trials-do-we-need">
-<h3>Exercise 3. How many trials do we need?<a class="headerlink" href="#exercise-3-how-many-trials-do-we-need" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 3. How many trials do we need?<a class="headerlink" href="#exercise-3-how-many-trials-do-we-need" title="Permalink to this heading">#</a></h3>
 <p>A common question in experimental design is determining the optimal number of trials.</p>
 <p>In this exercise, try evaluating how 3 different numbers of trials might impact the contrast efficiency.</p>
 </section>
 <section id="exercise-4-what-is-the-impact-of-the-stimulus-duration">
-<h3>Exercise 4. What is the impact of the stimulus duration?<a class="headerlink" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 4. What is the impact of the stimulus duration?<a class="headerlink" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration" title="Permalink to this heading">#</a></h3>
 <p>What if one condition simply results in processes that systematically take longer than the other condition?</p>
 <p>In this exercise, let’s try to answer this question by creating a simulation where the signal intensity between the two condition is identical, but one simply has a longer duration (i.e., the duration has more TRs than the other condition).</p>
 <p>Make a plot showing what happens to the <span class="math notranslate nohighlight">\(\beta\)</span> estimates.</p>
@@ -1491,53 +1220,125 @@ title="Print to PDF"
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Preprocessing.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Preprocessing</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Preprocessing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Preprocessing</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="GLM_Single_Subject_Model.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="GLM_Single_Subject_Model.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Modeling Single Subject Data</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-you-ready-for-this">Are you ready for this?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-a-voxel-time-course">Simulate a voxel time course</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-design-matrix">Construct Design Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimate-glm">Estimate GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-errors">Standard Errors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explained-variance">Explained Variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error-of-beta-estimates">Standard Error of <span class="math notranslate nohighlight">\(\beta\)</span> estimates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-significance">Statistical Significance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contrasts">Contrasts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#efficiency">Efficiency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#varying-the-inter-trial-interval-with-jittering">Varying the Inter-Trial Interval with Jittering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autocorrelation">Autocorrelation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-what-happens-when-we-vary-the-signal-amplitude">Exercise 1. What happens when we vary the signal amplitude?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-what-happens-when-we-vary-the-noise">Exercise 2. What happens when we vary the noise?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-how-many-trials-do-we-need">Exercise 3. How many trials do we need?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-what-is-the-impact-of-the-stimulus-duration">Exercise 4. What is the impact of the stimulus duration?</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

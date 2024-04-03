@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>High Performance Computing at Dartmouth &#8212; DartBrains</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Introduction_to_Discovery';</script>
+    <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_Discovery.html" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Discovery.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Discovery.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Discovery.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Discovery.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Discovery.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Introduction_to_Discovery.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>High Performance Computing at Dartmouth</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-high-performance-computing">What is High Performance Computing?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpcs-at-dartmouth">HPCs at Dartmouth</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discovery-cluster">Discovery Cluster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-layout">System Layout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#research-computing-team">Research Computing Team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dbic-resources-on-discovery">DBIC Resources on Discovery</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pbs-hpcs">PBS HPCs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-access-discovery">How do I access Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#need-to-be-on-campus-network">Need to be on Campus Network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ssh-from-terminal">SSH From Terminal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-navigate-discovery">How do I navigate Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linux">Linux</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bash">BASH</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-editors">Text Editors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bashrc-bash-profile">.bashrc .bash_profile</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#acl-permissions">ACL Permissions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-is-my-data-stored-on-discovery">Where is my data stored on Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dart-fs-file-system">Dart-FS File System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scratch-space">Scratch Space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transferring-data-to-discovery">Transferring Data to Discovery</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-manage-software-on-discovery">How do I manage software on Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conda">Conda</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#containers">Containers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-run-jobs-on-discovery">How do I run jobs on Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm">SLURM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-slurm-commands">Common SLURM Commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requesting-resources">Requesting Resources</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-batch-jobs">Running Batch Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-running-multiple-batch-jobs-at-once">Arrays: Running Multiple Batch Jobs at Once</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-interactive-jobs">Running Interactive Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-jobs">Monitoring Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scheduler-etiquette">Scheduler Etiquette</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#can-i-use-jupyter-notebook-on-discovery">Can I use Jupyter Notebook on Discovery?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#have-additional-discovery-questions">Have Additional Discovery Questions?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#askpbs">AskPBS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dbic-handbook">DBIC Handbook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="high-performance-computing-at-dartmouth">
+<h1>High Performance Computing at Dartmouth<a class="headerlink" href="#high-performance-computing-at-dartmouth" title="Permalink to this heading">#</a></h1>
+<p><em>Written by Courtney Jiminez &amp; Luke Chang</em></p>
+<section id="what-is-high-performance-computing">
+<h2>What is High Performance Computing?<a class="headerlink" href="#what-is-high-performance-computing" title="Permalink to this heading">#</a></h2>
+<p>https://www.youtube.com/watch?v=nIBu1EFYmBU 00:13 - 01:21</p>
+</section>
+<section id="hpcs-at-dartmouth">
+<h2>HPCs at Dartmouth<a class="headerlink" href="#hpcs-at-dartmouth" title="Permalink to this heading">#</a></h2>
+<p>https://rc.dartmouth.edu/index.php/discoveryhpc/</p>
+<section id="discovery-cluster">
+<h3>Discovery Cluster<a class="headerlink" href="#discovery-cluster" title="Permalink to this heading">#</a></h3>
+<p>Where is Discovery located? In the basement of Baker Berry! In a huge room full of servers. Racks of computers. Each computer is a node - newer nodes have 32 cores with 8GB per core. Used by all Departments (PBS, CS, Physics &amp; Astronomy, etc.)</p>
+</section>
+<section id="system-layout">
+<h3>System Layout<a class="headerlink" href="#system-layout" title="Permalink to this heading">#</a></h3>
+<p>Head Node: what you log-on to when you SSH in with your NetID. Can edit code, submit jobs to scheduler from head node - but DON’T want to run jobs from head node. If the head node computer resources get tied up in running jobs, it can keep others from logging in/opening or copying files, etc.</p>
+<p>CPU Node: can’t directly log into these - can schedule jobs from head node that get executed on CPU nodes by the scheduler, but can’t directly log on (unless interactive node).</p>
+<p>Storage?</p>
+</section>
+<section id="research-computing-team">
+<h3>Research Computing Team<a class="headerlink" href="#research-computing-team" title="Permalink to this heading">#</a></h3>
+<p>Centralized high-performance computing system group.</p>
+<p>services.dartmouth.edu - where help/request forms are for research computing (try searching for Discovery, SLURM, etc.) Locally written documentation for things that people have problems with.</p>
+<p>Simple, basic examples of what you can do with the scheduler.</p>
+<p>If you have a Discovery question, should go to services.dartmouth.edu, search for a key word, see if it’s already written up. If you have that question, likely a bunch of others did as well, and RC has tried to answer it within the Dartmouth context.</p>
+<p>research.computing&#64;dartmouth.edu with questions.</p>
+<p>https://services.dartmouth.edu</p>
+</section>
+<section id="dbic-resources-on-discovery">
+<h3>DBIC Resources on Discovery<a class="headerlink" href="#dbic-resources-on-discovery" title="Permalink to this heading">#</a></h3>
+<p>DBIC owns 15 nodes (16 cores?) on Discovery. Acess to ~1200 CPUs (Luke, what is this x5 multiplier? How do we go from 15x16=240 to 1200 CPUs?)</p>
+<p>DBIC Node (Ndoli): high-RAM node (1.5 TB), 20-24 CPUs. Can only access it by directly logging in. UserID&#64;ndoli.dartmouth.edu (not available on scheduler).</p>
+</section>
+<section id="pbs-hpcs">
+<h3>PBS HPCs<a class="headerlink" href="#pbs-hpcs" title="Permalink to this heading">#</a></h3>
+<p>Dr. Zeus? LOL. Still availalbe - 2-3 nodes, 64 cores, 5-12 GB RAM per core (1.5 TB). Not <em>realy</em> maintained. 30-40 TB storage (likely completely full?) Primarily used by Social Area.</p>
+<p>Hydra - Haxby Lab.</p>
+</section>
+</section>
+<section id="how-do-i-access-discovery">
+<h2>How do I access Discovery?<a class="headerlink" href="#how-do-i-access-discovery" title="Permalink to this heading">#</a></h2>
+<section id="need-to-be-on-campus-network">
+<h3>Need to be on Campus Network<a class="headerlink" href="#need-to-be-on-campus-network" title="Permalink to this heading">#</a></h3>
+<p>Eduroam
+OpenVPN</p>
+</section>
+<section id="ssh-from-terminal">
+<h3>SSH From Terminal<a class="headerlink" href="#ssh-from-terminal" title="Permalink to this heading">#</a></h3>
+<p>Can’t use Key Pairs.</p>
+</section>
+</section>
+<section id="how-do-i-navigate-discovery">
+<h2>How do I navigate Discovery?<a class="headerlink" href="#how-do-i-navigate-discovery" title="Permalink to this heading">#</a></h2>
+<section id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="bash">
+<h3>BASH<a class="headerlink" href="#bash" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="text-editors">
+<h3>Text Editors<a class="headerlink" href="#text-editors" title="Permalink to this heading">#</a></h3>
+<p>VIM/Nano</p>
+</section>
+<section id="bashrc-bash-profile">
+<h3>.bashrc .bash_profile<a class="headerlink" href="#bashrc-bash-profile" title="Permalink to this heading">#</a></h3>
+<p>when you login.</p>
+<p>don’t load modules automatically.</p>
+</section>
+<section id="acl-permissions">
+<h3>ACL Permissions<a class="headerlink" href="#acl-permissions" title="Permalink to this heading">#</a></h3>
+<p>ls -al</p>
+<p>horribly confusing and annoying. 14 different permissions.</p>
+<p>listacl -v foldername</p>
+<p>POSIX permissions don’t apply :(</p>
+<p>see AskPBS</p>
+<p>know what they are when you run into a problem and google it LOL</p>
+<p>can also just ask research computing to update your permissions</p>
+<p>https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=88459</p>
+</section>
+</section>
+<section id="where-is-my-data-stored-on-discovery">
+<h2>Where is my data stored on Discovery?<a class="headerlink" href="#where-is-my-data-stored-on-discovery" title="Permalink to this heading">#</a></h2>
+<section id="dart-fs-file-system">
+<h3>Dart-FS File System<a class="headerlink" href="#dart-fs-file-system" title="Permalink to this heading">#</a></h3>
+<p>DBIC has some storage.</p>
+<p>Lab Storage: For the most part, each lab is responsible for buying their own storage on Discovery (~$120/TB/year)</p>
+<p>Personal Storage: 50GB in Home Directory</p>
+</section>
+<section id="scratch-space">
+<h3>Scratch Space<a class="headerlink" href="#scratch-space" title="Permalink to this heading">#</a></h3>
+<p>LOCAL SCRATCH
+local scratch space on every node of discovery (1 TB), much faster than network storage so if your job needs to keep any amount of state information/files it’d help if you wrote it on /scratch. can then copy things from /sratch to dart-fs at the end of your script - clean up any temp files in local scratch at end of script as well. Can make a big difference in some sorts of jobs. Worth noting that local scratch isn’t managed - may not be a lot of room on it, but everything gets purged after ~45 days. Usually there’s a good amount of space (not too many people use it), but a chance you could end up running a job on a node where the local scratch is a little full.</p>
+<p>GLOBAL SCRATCH
+We also have a GLOBAL SCRATCH dart-fs-hpc/scratch but it is not any faster than just accessing lab share on dart-fs etc.</p>
+</section>
+<section id="transferring-data-to-discovery">
+<h3>Transferring Data to Discovery<a class="headerlink" href="#transferring-data-to-discovery" title="Permalink to this heading">#</a></h3>
+<p>Moving Data from the Command Line:</p>
+<p>scp, rsync - don’t do this from the head (login) node! run interactive job</p>
+<p>datalad? dbic handbook</p>
+</section>
+</section>
+<section id="how-do-i-manage-software-on-discovery">
+<h2>How do I manage software on Discovery?<a class="headerlink" href="#how-do-i-manage-software-on-discovery" title="Permalink to this heading">#</a></h2>
+<section id="modules">
+<h3>Modules<a class="headerlink" href="#modules" title="Permalink to this heading">#</a></h3>
+<p>Modules are software that are already installed on Discovery (Python, R, FSL). Module commands allow you to modify your environment on Discovery.</p>
+<p>If you want more control over the software you are using, can always build your own modules in your home/lab directory.</p>
+<p>You can load these software modules when you want to use these programs. Can do manually (module load command).</p>
+<p>Can see a list of modules by using ‘module avail’ command.</p>
+<p>module load
+module avail
+module list
+module unload
+module purge</p>
+<p>weird* - if you’ve loaded a module, then submit a job, the batch job inherits the environment from which it was submitted - can avoid this by:</p>
+<p>using the #!/bin/bash -l flag in shebang line of sbatch job script. this sets up a log-in environment (reads bashrc profile)</p>
+<p>putting module purge at the start of each job script and then load specific modules you need</p>
+</section>
+<section id="conda">
+<h3>Conda<a class="headerlink" href="#conda" title="Permalink to this heading">#</a></h3>
+<p>A way to install additional Python/R packages to your computing environment on the cluster. Don’t need any privilieges - installs dependencies, creates separate environments to avoid conflicts.</p>
+<p>Configured inside .bashrc profile - so if using with a SBATCH script, shebang line needs -l flag (#!/bin/sh -l). This results in the SBATCH script reading your .bashrc and .bashprofile scripts and behaving like your log-in shell. Without, .bashrc doens’t get read and Conda isn’t available. SBATCH script inherits current environment.</p>
+</section>
+<section id="containers">
+<h3>Containers<a class="headerlink" href="#containers" title="Permalink to this heading">#</a></h3>
+<p>A reproducible environment in which you control what software is in it. Can load container onto the cluster, run scripts that use software in that container.</p>
+<p>Docker is most popular container, but requires ROOT ACCESS to the computer it is being run on. Therefore, can’t use Docker on Discovery.</p>
+<p>Singularity - can be run on the cluster (doesn’t require ROOT ACCESS). Can convert a Docker container to a Singularity container, etc.</p>
+<p>Can build them in home/lab directories.</p>
+<p>YCRC Workshop</p>
+</section>
+</section>
+<section id="how-do-i-run-jobs-on-discovery">
+<h2>How do I run jobs on Discovery?<a class="headerlink" href="#how-do-i-run-jobs-on-discovery" title="Permalink to this heading">#</a></h2>
+<section id="slurm">
+<h3>SLURM<a class="headerlink" href="#slurm" title="Permalink to this heading">#</a></h3>
+<p>SLURM is an open source, free and very flexible scheduler.</p>
+<p>SLURM is the SCHEDULER for Discovery - it is in control of a whole bunch of computers. When we submit jobs, we request a certain number of CPUs, a certain amount of RAM, and specify how long the job will take. The scheduler decides which computer to run that job on. Potentially 1000s of people submitting jobs, and scheduler is trying to optimize resource allocation.</p>
+</section>
+<section id="common-slurm-commands">
+<h3>Common SLURM Commands<a class="headerlink" href="#common-slurm-commands" title="Permalink to this heading">#</a></h3>
+<p>SBATCH -</p>
+<p>SRUN -</p>
+<p>SQUEUE - SLURM function that will list everything in the queue for your SLURM account (DBIC group). SQUEUE will show what is running, who owns it, and what is queued. Will also show WHY it’s queued (e.g. group limit reached).</p>
+<p>SCANCEL -</p>
+<p>SACCTMGR - show associations, to find out what your scheduling limits are.</p>
+<p>SSTAT -</p>
+<p>SINFO -</p>
+<p>SACCT -</p>
+<p>SEFF - doesn’t really work well for array jobs.</p>
+</section>
+<section id="requesting-resources">
+<h3>Requesting Resources<a class="headerlink" href="#requesting-resources" title="Permalink to this heading">#</a></h3>
+<p>How do I know how many CPUs, how much RAM, and how much time I’ll need for my job?</p>
+<p>If not enough CPUs, will take longer. If not enough RAM, job will error out. If you request TOO MANY resources, system will give you what you ask for (and you’ll be charged $$) which may limit where your job can run and other’s jobs from running.</p>
+<p>NEED TO SPECIFY: CPU count, Memory, Walltime.
+If you don’t, the scheduler allocates 1 CPU, 4 GB RAM, and 1 hour.</p>
+<p>Limits for a given Resource Pool:
+CPU:
+WALLTIME:</p>
+<p>DBIC pool: allowed to use a certain number of CPUs concurrently, submit jobs for a number of total day’s run time. If limit is hit, nobody in group can submit jobs until something finishes.</p>
+<p>Intended to keep one group from occupying entire cluster.</p>
+<p>If you submit a job (and haveb’nt reached a limit cap), scheduler should take about 30 seconds to decide where to put your job. If it doesn’t start immediately, job goes into a queue.</p>
+</section>
+<section id="running-batch-jobs">
+<h3>Running Batch Jobs<a class="headerlink" href="#running-batch-jobs" title="Permalink to this heading">#</a></h3>
+<p>Most jobs on clusters are batch jobs. Text files that get run as a script.
+Submit a script.</p>
+<p>You submit a job by preparing a small shell script that has SBATCH directives. Script can be written in any shell you like but most examples use BASH - whatever you specify in shebang line (#!/bin/bash). SBATCH stops parsing script at first uncommented line.</p>
+<p>NODES (never need &gt; 1 node) -</p>
+<p>TASKS/NODES (PROCESSES/NODE) - if your job is a call to one program (even if multi-threaded), it just does one task - only need 1 core here (which is the default). Never need more than 1 unless running an MPI job that knows how to run in parallel.</p>
+<p>CPUs/TASK (CORES/PROCESS) - can request more than 1 for multi-threaded/multi-process jobs. (e.g. fMRIprep can run multi-threaded, can specify 16 cpus/threads)</p>
+<p>RAM - hardest thing to estimate. Ideally you run a similar job in an unrestricted system and use top to see how much memory it allocates for the job, then request similar amount.</p>
+<p>Walltime (doesn’t hurt too much to overestimate but don’t get wild LOL - will keep others’ jobs from starting). Noticed your job isn’t finished but walltime is running out? Can extend walltime (for up to 30 days!) but need to ask research computing to do this. Email research.computing&#64;dartmouth.edu. You can use the SBATCH qnotify directive to let you know a certain amont of time before your job terminates.</p>
+<p>Other SBATCH directives: check out this link. https://slurm.schedmd.com/sbatch.html</p>
+</section>
+<section id="arrays-running-multiple-batch-jobs-at-once">
+<h3>Arrays: Running Multiple Batch Jobs at Once<a class="headerlink" href="#arrays-running-multiple-batch-jobs-at-once" title="Permalink to this heading">#</a></h3>
+<p>Job Arrays - if you have a lot of jobs you want to run that are veyr similar but differ on some parameter given to a differnet program or perhaps a data input file, then you can submit one job script with a job array that specifies the different variable for each job. Will launch the amount of jobs specified by the number of different variables listed in the array. (SID example). Can throttle - say no more than 10 at a time (nice to others :), will get to them as earlier jobs finish).</p>
+</section>
+<section id="running-interactive-jobs">
+<h3>Running Interactive Jobs<a class="headerlink" href="#running-interactive-jobs" title="Permalink to this heading">#</a></h3>
+<p>Like a remote session - useful for development, debugging, or interactive coding environments (R, Python, Matlab).</p>
+</section>
+<section id="monitoring-jobs">
+<h3>Monitoring Jobs<a class="headerlink" href="#monitoring-jobs" title="Permalink to this heading">#</a></h3>
+<p>while it’s running:
+launch job - use squeue to see where it’s running - then ssh to that node and use top or htop to see resource use.
+scontrol</p>
+<p>after it’s finished:
+seff
+sacct</p>
+</section>
+<section id="scheduler-etiquette">
+<h3>Scheduler Etiquette<a class="headerlink" href="#scheduler-etiquette" title="Permalink to this heading">#</a></h3>
+<p>How can I figure out who’s running jobs on Discovery? SLURM scheduling command - squeue: lists all active jobs on the cluster.</p>
+<p>User ID - dartmouth lookup</p>
+</section>
+</section>
+<section id="can-i-use-jupyter-notebook-on-discovery">
+<h2>Can I use Jupyter Notebook on Discovery?<a class="headerlink" href="#can-i-use-jupyter-notebook-on-discovery" title="Permalink to this heading">#</a></h2>
+<p>AskPBS.org link</p>
+</section>
+<section id="have-additional-discovery-questions">
+<h2>Have Additional Discovery Questions?<a class="headerlink" href="#have-additional-discovery-questions" title="Permalink to this heading">#</a></h2>
+<section id="askpbs">
+<h3>AskPBS<a class="headerlink" href="#askpbs" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dbic-handbook">
+<h3>DBIC Handbook<a class="headerlink" href="#dbic-handbook" title="Permalink to this heading">#</a></h3>
+<p>https://dbic-handbook.readthedocs.io/en/latest/discovery.html</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<p>Knowledge Base</p>
+<p>DBIC Handbook</p>
+<p>YCRC YouTube</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-high-performance-computing">What is High Performance Computing?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpcs-at-dartmouth">HPCs at Dartmouth</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discovery-cluster">Discovery Cluster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-layout">System Layout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#research-computing-team">Research Computing Team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dbic-resources-on-discovery">DBIC Resources on Discovery</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pbs-hpcs">PBS HPCs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-access-discovery">How do I access Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#need-to-be-on-campus-network">Need to be on Campus Network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ssh-from-terminal">SSH From Terminal</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-navigate-discovery">How do I navigate Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linux">Linux</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bash">BASH</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-editors">Text Editors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bashrc-bash-profile">.bashrc .bash_profile</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#acl-permissions">ACL Permissions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-is-my-data-stored-on-discovery">Where is my data stored on Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dart-fs-file-system">Dart-FS File System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scratch-space">Scratch Space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transferring-data-to-discovery">Transferring Data to Discovery</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-manage-software-on-discovery">How do I manage software on Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">Modules</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conda">Conda</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#containers">Containers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-run-jobs-on-discovery">How do I run jobs on Discovery?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm">SLURM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-slurm-commands">Common SLURM Commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requesting-resources">Requesting Resources</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-batch-jobs">Running Batch Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-running-multiple-batch-jobs-at-once">Arrays: Running Multiple Batch Jobs at Once</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-interactive-jobs">Running Interactive Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-jobs">Monitoring Jobs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scheduler-etiquette">Scheduler Etiquette</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#can-i-use-jupyter-notebook-on-discovery">Can I use Jupyter Notebook on Discovery?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#have-additional-discovery-questions">Have Additional Discovery Questions?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#askpbs">AskPBS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dbic-handbook">DBIC Handbook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

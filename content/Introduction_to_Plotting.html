@@ -1,50 +1,69 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Introduction to Plotting &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,828 +72,486 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Introduction_to_Plotting';</script>
     <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_Plotting.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Running fMRIPrep on HPC" href="fmriprep_on_discovery.html" />
     <link rel="prev" title="Introduction to Pandas" href="Introduction_to_Pandas.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Pandas.html">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM.html">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Thresholding_Group_Analyses.html">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_ICA.html">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Parcellations.html">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Plotting.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Plotting.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Plotting.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Plotting.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Plotting.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Plotting.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Plotting.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Plotting.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Introduction_to_Plotting.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Plotting.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Plotting.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/Introduction_to_Plotting.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#matplotlib-key-concepts">
-   Matplotlib Key Concepts
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#lineplot">
-     Lineplot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scatterplot">
-     Scatterplot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#histogram">
-     Histogram
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bar-plot">
-     Bar Plot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#d-plots">
-     3D Plots
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#customization">
-     Customization
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#layouts">
-     Layouts
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#saving-plots">
-     Saving Plots
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#seaborn">
-   Seaborn
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scatterplots">
-     Scatterplots
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#factor-plots">
-     Factor plots
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#heatmaps">
-     Heatmaps
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pandas">
-   Pandas
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Scatterplot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#generating-bar-errorbar-plots-in-pandas">
-     Generating bar - errorbar plots in Pandas
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#interactive-plots">
-   Interactive Plots
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plotly">
-     Plotly
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bokeh">
-     Bokeh
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#altair">
-     Altair
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1">
-     Exercise 1
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2">
-     Exercise 2
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to Plotting</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#matplotlib-key-concepts">
-   Matplotlib Key Concepts
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#lineplot">
-     Lineplot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scatterplot">
-     Scatterplot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#histogram">
-     Histogram
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bar-plot">
-     Bar Plot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#d-plots">
-     3D Plots
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#customization">
-     Customization
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#layouts">
-     Layouts
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#saving-plots">
-     Saving Plots
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#seaborn">
-   Seaborn
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#scatterplots">
-     Scatterplots
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#factor-plots">
-     Factor plots
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#heatmaps">
-     Heatmaps
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pandas">
-   Pandas
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Scatterplot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#generating-bar-errorbar-plots-in-pandas">
-     Generating bar - errorbar plots in Pandas
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#interactive-plots">
-   Interactive Plots
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#plotly">
-     Plotly
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bokeh">
-     Bokeh
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#altair">
-     Altair
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1">
-     Exercise 1
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2">
-     Exercise 2
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Plotting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matplotlib-key-concepts">Matplotlib Key Concepts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lineplot">Lineplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scatterplot">Scatterplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-plot">Bar Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-plots">3D Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layouts">Layouts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-plots">Saving Plots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seaborn">Seaborn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scatterplots">Scatterplots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#factor-plots">Factor plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmaps">Heatmaps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas">Pandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Scatterplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-bar-errorbar-plots-in-pandas">Generating bar - errorbar plots in Pandas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-plots">Interactive Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotly">Plotly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bokeh">Bokeh</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair">Altair</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-plotting">
-<h1>Introduction to Plotting<a class="headerlink" href="#introduction-to-plotting" title="Permalink to this headline">#</a></h1>
+<h1>Introduction to Plotting<a class="headerlink" href="#introduction-to-plotting" title="Permalink to this heading">#</a></h1>
 <p><em>Written by Luke Chang &amp; Jin Cheong</em></p>
 <p>In this lab, we will introduce the basics of plotting in python using the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> and <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> packages. Matlotlib is probably the most popular python package for 2D graphics and has a nice tradeoff between ease of use and customizability. We will be working with the <code class="docutils literal notranslate"><span class="pre">pyplot</span></code> interface, which is an object-oriented plotting library based on plotting in Matlab. Many graphics libraries are built on top of matplotlib, and have tried to make plotting even easier. One library that is very nice to generate plots similar to how analyses are performed is <a class="reference external" href="https://seaborn.pydata.org/examples/index.html">seaborn</a>. There are many great tutorials online. Here are a few that I found to be helpful from <a class="reference external" href="https://github.com/neurohackademy/visualization-in-python/blob/master/visualization-in-python.ipynb">neurohackademy</a>, <a class="reference external" href="http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/04.00-Introduction-To-Matplotlib.ipynb">Jake Vanderplas</a>, and <a class="reference external" href="https://github.com/rougier/matplotlib-tutorial">rougier</a>.</p>
 <section id="matplotlib-key-concepts">
-<h2>Matplotlib Key Concepts<a class="headerlink" href="#matplotlib-key-concepts" title="Permalink to this headline">#</a></h2>
+<h2>Matplotlib Key Concepts<a class="headerlink" href="#matplotlib-key-concepts" title="Permalink to this heading">#</a></h2>
 <p>There are a few different types of concepts in the <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> framework.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Figure</span></code>: Essentially the canvas, which contains the plots</p></li>
@@ -897,7 +574,7 @@ title="Print to PDF"
 </div>
 </div>
 <section id="lineplot">
-<h3>Lineplot<a class="headerlink" href="#lineplot" title="Permalink to this headline">#</a></h3>
+<h3>Lineplot<a class="headerlink" href="#lineplot" title="Permalink to this heading">#</a></h3>
 <p>First, let’s generate some numbers and create a basic lineplot.</p>
 <p>In this example, we plot:</p>
 <p><span class="math notranslate nohighlight">\(y = x^2\)</span></p>
@@ -914,12 +591,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f7f1053e450&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_3_1.png" src="../_images/Introduction_to_Plotting_3_1.png" />
+<img alt="../_images/0744cb867c82154fb24e3f65bf37c20b5c4644197356a4dd91de003a6b35f2f9.png" src="../_images/0744cb867c82154fb24e3f65bf37c20b5c4644197356a4dd91de003a6b35f2f9.png" />
 </div>
 </div>
 </section>
 <section id="scatterplot">
-<h3>Scatterplot<a class="headerlink" href="#scatterplot" title="Permalink to this headline">#</a></h3>
+<h3>Scatterplot<a class="headerlink" href="#scatterplot" title="Permalink to this heading">#</a></h3>
 <p>We can also plot associations between two different variables using a scatterplot. In this example, we will simulate correlated data with <span class="math notranslate nohighlight">\(\mathcal{N}(0,1)\)</span> using <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code> and create a scatterplot. Try playing with the covariance values to change the degree of association.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -939,12 +616,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f7f4b304550&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_5_1.png" src="../_images/Introduction_to_Plotting_5_1.png" />
+<img alt="../_images/91bfa9712793bf4fe21f3d775746d9d74fa690fdfbab0919d279b15b81cda019.png" src="../_images/91bfa9712793bf4fe21f3d775746d9d74fa690fdfbab0919d279b15b81cda019.png" />
 </div>
 </div>
 </section>
 <section id="histogram">
-<h3>Histogram<a class="headerlink" href="#histogram" title="Permalink to this headline">#</a></h3>
+<h3>Histogram<a class="headerlink" href="#histogram" title="Permalink to this heading">#</a></h3>
 <p>We can also plot the distribution of a variable using a histogram.</p>
 <p>Let’s see if the data we simulated above are actually normally distributed.</p>
 <div class="cell docutils container">
@@ -961,7 +638,7 @@ title="Print to PDF"
  &lt;a list of 10 Patch objects&gt;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_7_1.png" src="../_images/Introduction_to_Plotting_7_1.png" />
+<img alt="../_images/5263029556aef87be15e35b556735bf8aa62bed93727e19c502668333e511118.png" src="../_images/5263029556aef87be15e35b556735bf8aa62bed93727e19c502668333e511118.png" />
 </div>
 </div>
 <p>We can also plot overlaying histograms. Let’s simulate more data, but shift the mean of one by 3.</p>
@@ -987,12 +664,12 @@ title="Print to PDF"
  &lt;a list of 2 Lists of Patches objects&gt;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_9_1.png" src="../_images/Introduction_to_Plotting_9_1.png" />
+<img alt="../_images/ae97fb3a39bc93230bea69718d771b5101a2b7c3705c5ff5dd16039644077994.png" src="../_images/ae97fb3a39bc93230bea69718d771b5101a2b7c3705c5ff5dd16039644077994.png" />
 </div>
 </div>
 </section>
 <section id="bar-plot">
-<h3>Bar Plot<a class="headerlink" href="#bar-plot" title="Permalink to this headline">#</a></h3>
+<h3>Bar Plot<a class="headerlink" href="#bar-plot" title="Permalink to this heading">#</a></h3>
 <p>We can also plot the same data as a bar plot to emphasize the difference in the means of the distributions. To create a bar plot, we need to specify the bar names and the heights of the bars.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1004,12 +681,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 2 artists&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_11_1.png" src="../_images/Introduction_to_Plotting_11_1.png" />
+<img alt="../_images/3f8b812a7e1932b09b8f449f74f5c8a993c5a1505ba0e5a97b245edc73c29588.png" src="../_images/3f8b812a7e1932b09b8f449f74f5c8a993c5a1505ba0e5a97b245edc73c29588.png" />
 </div>
 </div>
 </section>
 <section id="d-plots">
-<h3>3D Plots<a class="headerlink" href="#d-plots" title="Permalink to this headline">#</a></h3>
+<h3>3D Plots<a class="headerlink" href="#d-plots" title="Permalink to this heading">#</a></h3>
 <p>We can also plot in 3 dimensions with <code class="docutils literal notranslate"><span class="pre">mplot3d</span></code>. Here we will simulate 3 different variables with different correlations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1040,12 +717,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x7f7f087ed750&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_13_1.png" src="../_images/Introduction_to_Plotting_13_1.png" />
+<img alt="../_images/c7dc546d05195b66671cf5f347bb420077c6d3daaa8ee355209f9ecdbd0b9fef.png" src="../_images/c7dc546d05195b66671cf5f347bb420077c6d3daaa8ee355209f9ecdbd0b9fef.png" />
 </div>
 </div>
 </section>
 <section id="customization">
-<h3>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">#</a></h3>
+<h3>Customization<a class="headerlink" href="#customization" title="Permalink to this heading">#</a></h3>
 <p>One of the nice things about matplotlib is that everything is customizable.</p>
 <p>Let’s go back to our first scatterplot and show how we can customize it to make it easier to read.</p>
 <p>We can specify the type of <code class="docutils literal notranslate"><span class="pre">marker</span></code>, the <code class="docutils literal notranslate"><span class="pre">color</span></code>, the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> transparency, and the size of the dots with <code class="docutils literal notranslate"><span class="pre">s</span></code>.</p>
@@ -1074,12 +751,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(-2, 2, &#39;r=0.9&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_15_1.png" src="../_images/Introduction_to_Plotting_15_1.png" />
+<img alt="../_images/e5747a3e62379b0e98108fd9586c8da94de9e47319a111efc9bd460858575c37.png" src="../_images/e5747a3e62379b0e98108fd9586c8da94de9e47319a111efc9bd460858575c37.png" />
 </div>
 </div>
 </section>
 <section id="layouts">
-<h3>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">#</a></h3>
+<h3>Layouts<a class="headerlink" href="#layouts" title="Permalink to this heading">#</a></h3>
 <p>The easiest way to make customized layouts that can include multiple panels of a plot are with <code class="docutils literal notranslate"><span class="pre">subplot</span></code>.</p>
 <p><img alt="subplot" src="../_images/subplot.png" /></p>
 <p>There are two different ways to index. One is by adding a subplot. The first number is the number of rows, the second is the number of columns, and the third is the index number.</p>
@@ -1128,12 +805,12 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_Plotting_17_0.png" src="../_images/Introduction_to_Plotting_17_0.png" />
+<img alt="../_images/7949171399d0a82424b274bdfb37b93bd6c6c268cb7c0fd9d3713fe4c8d5ed06.png" src="../_images/7949171399d0a82424b274bdfb37b93bd6c6c268cb7c0fd9d3713fe4c8d5ed06.png" />
 </div>
 </div>
 </section>
 <section id="saving-plots">
-<h3>Saving Plots<a class="headerlink" href="#saving-plots" title="Permalink to this headline">#</a></h3>
+<h3>Saving Plots<a class="headerlink" href="#saving-plots" title="Permalink to this heading">#</a></h3>
 <p>Plots can be saved to disk using the <code class="docutils literal notranslate"><span class="pre">savefig</span></code> command. There are lots of ways to customize the saved plot. I typically save rasterized versions as <code class="docutils literal notranslate"><span class="pre">.png</span></code> and vectorized versions as <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>. Don’t forget to specify a path where you want the file written to.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1152,12 +829,12 @@ title="Print to PDF"
 </section>
 </section>
 <section id="seaborn">
-<h2>Seaborn<a class="headerlink" href="#seaborn" title="Permalink to this headline">#</a></h2>
+<h2>Seaborn<a class="headerlink" href="#seaborn" title="Permalink to this heading">#</a></h2>
 <p><a class="reference external" href="https://seaborn.pydata.org/index.html">Seaborn</a> is a plotting library built on Matplotlib that has many pre-configured plots that are often used for visualization.
 Other great tutorials about seaborn are <a class="reference external" href="http://nbviewer.jupyter.org/github/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/04.14-Visualization-With-Seaborn.ipynb">here</a></p>
 <p>Most seaborn plots can be customized using the standard matplotlib commands, though be sure to look at the docstrings first as often there are already keywords within each type of plot to do what you want.</p>
 <section id="scatterplots">
-<h3>Scatterplots<a class="headerlink" href="#scatterplots" title="Permalink to this headline">#</a></h3>
+<h3>Scatterplots<a class="headerlink" href="#scatterplots" title="Permalink to this heading">#</a></h3>
 <p>There are many variants of each type of plot that you might like to use. For example, <code class="docutils literal notranslate"><span class="pre">scatterplot</span></code>, <code class="docutils literal notranslate"><span class="pre">regplot</span></code>, <code class="docutils literal notranslate"><span class="pre">jointplot</span></code>.</p>
 <p>Let’s update our simulation code a little bit to make this easier.</p>
 <div class="cell docutils container">
@@ -1178,7 +855,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Scatterplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_22_1.png" src="../_images/Introduction_to_Plotting_22_1.png" />
+<img alt="../_images/2c85289ab31f30952b7e90031303401c42dfa7cc0837d0fab2a36fcea63fde5a.png" src="../_images/2c85289ab31f30952b7e90031303401c42dfa7cc0837d0fab2a36fcea63fde5a.png" />
 </div>
 </div>
 <p>We can add regression lines with <code class="docutils literal notranslate"><span class="pre">regplot</span></code>.</p>
@@ -1193,7 +870,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Scatterplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_24_1.png" src="../_images/Introduction_to_Plotting_24_1.png" />
+<img alt="../_images/45782693752d3ce063a64b4edb6e2267437ff9804a49e2609052e53afce20a8f.png" src="../_images/45782693752d3ce063a64b4edb6e2267437ff9804a49e2609052e53afce20a8f.png" />
 </div>
 </div>
 <p>We can add histograms to show the distributions of x and y with <code class="docutils literal notranslate"><span class="pre">jointplot</span></code>.</p>
@@ -1208,7 +885,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Jointplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_26_1.png" src="../_images/Introduction_to_Plotting_26_1.png" />
+<img alt="../_images/7b300567779476eeea91cdbc7fc87dea258be97a307110e1cf709ad4ae4b2980.png" src="../_images/7b300567779476eeea91cdbc7fc87dea258be97a307110e1cf709ad4ae4b2980.png" />
 </div>
 </div>
 <p>We can create a quick way to view relations between multiple variables using <code class="docutils literal notranslate"><span class="pre">pairplot</span></code>.</p>
@@ -1224,12 +901,12 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f7f28b75d10&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_28_1.png" src="../_images/Introduction_to_Plotting_28_1.png" />
+<img alt="../_images/2e0ff401ae1b70884f810b4e94fb8621ca1bfc673f0bd57ca7ed452df20b5ebe.png" src="../_images/2e0ff401ae1b70884f810b4e94fb8621ca1bfc673f0bd57ca7ed452df20b5ebe.png" />
 </div>
 </div>
 </section>
 <section id="factor-plots">
-<h3>Factor plots<a class="headerlink" href="#factor-plots" title="Permalink to this headline">#</a></h3>
+<h3>Factor plots<a class="headerlink" href="#factor-plots" title="Permalink to this heading">#</a></h3>
 <p>Factor plots allow you to visualize the distribution of parameters in different forms such as point, bar, or violin graphs.</p>
 <p>One important thing to note is that the data needs to be in the long format. Let’s quickly simulate some data to plot.</p>
 <p>Here are some possible values for kind : {point, bar, count, box, violin, strip}</p>
@@ -1254,7 +931,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Catplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_30_1.png" src="../_images/Introduction_to_Plotting_30_1.png" />
+<img alt="../_images/9ee97e3533f21da5f0b7933c0a052676342e371dcc5f66caac2d5029ac6da751.png" src="../_images/9ee97e3533f21da5f0b7933c0a052676342e371dcc5f66caac2d5029ac6da751.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1268,7 +945,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Swarmplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_31_1.png" src="../_images/Introduction_to_Plotting_31_1.png" />
+<img alt="../_images/c5adcc65a51f035ff0f0eafeaf17f818fe43ff67f7a670c2a1edf765621c5f59.png" src="../_images/c5adcc65a51f035ff0f0eafeaf17f818fe43ff67f7a670c2a1edf765621c5f59.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1282,7 +959,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Swarmplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_32_1.png" src="../_images/Introduction_to_Plotting_32_1.png" />
+<img alt="../_images/85dee28621059add51a4440cca1b537cc55a22f43eae4e10dd22f4ad11e738ab.png" src="../_images/85dee28621059add51a4440cca1b537cc55a22f43eae4e10dd22f4ad11e738ab.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1296,12 +973,12 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Violinplot&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_33_1.png" src="../_images/Introduction_to_Plotting_33_1.png" />
+<img alt="../_images/7ff53be030c20708c6e2d663c872cee2cadb2939e22f6132eceee6aae0a84915.png" src="../_images/7ff53be030c20708c6e2d663c872cee2cadb2939e22f6132eceee6aae0a84915.png" />
 </div>
 </div>
 </section>
 <section id="heatmaps">
-<h3>Heatmaps<a class="headerlink" href="#heatmaps" title="Permalink to this headline">#</a></h3>
+<h3>Heatmaps<a class="headerlink" href="#heatmaps" title="Permalink to this heading">#</a></h3>
 <p>Heatmap plots allow you to visualize matrices such as correlation matrices that show relationships across multiple variables.</p>
 <p>Let’s create a dataset with different relationships between variables. We can quickly calculate the correlation between these variables and visualize it with a heatmap</p>
 <div class="cell docutils container">
@@ -1318,7 +995,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f7f09b933d0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_35_1.png" src="../_images/Introduction_to_Plotting_35_1.png" />
+<img alt="../_images/78aa04aea423b191eb98fbe4018e34171d04d30d01c566a04a80e399a1d8b340.png" src="../_images/78aa04aea423b191eb98fbe4018e34171d04d30d01c566a04a80e399a1d8b340.png" />
 </div>
 </div>
 <p>Like all other plots, we can also customize heatmaps.</p>
@@ -1333,7 +1010,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Correlation Matrix&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_37_1.png" src="../_images/Introduction_to_Plotting_37_1.png" />
+<img alt="../_images/ca956970c57c7552e56d080eb4f998e0597bf2805537fe37620e9932c34e36b0.png" src="../_images/ca956970c57c7552e56d080eb4f998e0597bf2805537fe37620e9932c34e36b0.png" />
 </div>
 </div>
 <p>There is also a neat type of heatmap that will also reorganize your variable based on clustering.</p>
@@ -1348,13 +1025,13 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Clustermap&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_39_1.png" src="../_images/Introduction_to_Plotting_39_1.png" />
+<img alt="../_images/2bb4429ac7de4bd98035f2ef8f239835f9d471a464f2fa3b5bda94159b980a6f.png" src="../_images/2bb4429ac7de4bd98035f2ef8f239835f9d471a464f2fa3b5bda94159b980a6f.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="pandas">
-<h2>Pandas<a class="headerlink" href="#pandas" title="Permalink to this headline">#</a></h2>
+<h2>Pandas<a class="headerlink" href="#pandas" title="Permalink to this heading">#</a></h2>
 <p>We introduced <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> in a previous tutorial. It can also call matplotlib to quickly generate plots.</p>
 <p>We will use the same dataset used in that tutorial to generate some plots using <code class="docutils literal notranslate"><span class="pre">pd.Dataframe</span></code>.</p>
 <div class="cell docutils container">
@@ -1393,11 +1070,11 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a1d97f320&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_44_1.png" src="../_images/Introduction_to_Plotting_44_1.png" />
+<img alt="../_images/ece6d1ed0d54f38c82f972c5a428948aa6f36110369a05a324c816018c74c15c.png" src="../_images/ece6d1ed0d54f38c82f972c5a428948aa6f36110369a05a324c816018c74c15c.png" />
 </div>
 </div>
 <section id="id1">
-<h3>Scatterplot<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<h3>Scatterplot<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;years&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;years&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;salary&#39;</span><span class="p">)</span>
@@ -1408,7 +1085,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a1dc9df28&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_46_1.png" src="../_images/Introduction_to_Plotting_46_1.png" />
+<img alt="../_images/0b1cfb350dfe040268e4f7b4560356840416f9ee2edfd6a762998a938b0011c5.png" src="../_images/0b1cfb350dfe040268e4f7b4560356840416f9ee2edfd6a762998a938b0011c5.png" />
 </div>
 </div>
 <p>Now plot all four categories</p>
@@ -1427,13 +1104,13 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a1dedb128&gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Plotting_48_1.png" src="../_images/Introduction_to_Plotting_48_1.png" />
+<img alt="../_images/901a820f5ae2fda8688629bd275621fc4354de5acd887386704375727c64ca5f.png" src="../_images/901a820f5ae2fda8688629bd275621fc4354de5acd887386704375727c64ca5f.png" />
 </div>
 </div>
 <p>The problem is that it treats department as a continuous variable.</p>
 </section>
 <section id="generating-bar-errorbar-plots-in-pandas">
-<h3>Generating bar - errorbar plots in Pandas<a class="headerlink" href="#generating-bar-errorbar-plots-in-pandas" title="Permalink to this headline">#</a></h3>
+<h3>Generating bar - errorbar plots in Pandas<a class="headerlink" href="#generating-bar-errorbar-plots-in-pandas" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">means</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span>
@@ -1443,30 +1120,30 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_Plotting_51_0.png" src="../_images/Introduction_to_Plotting_51_0.png" />
+<img alt="../_images/b88ac5b573409d64847c2638b7b9819029a630949aa099e27c6fd3e2db425c58.png" src="../_images/b88ac5b573409d64847c2638b7b9819029a630949aa099e27c6fd3e2db425c58.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="interactive-plots">
-<h2>Interactive Plots<a class="headerlink" href="#interactive-plots" title="Permalink to this headline">#</a></h2>
+<h2>Interactive Plots<a class="headerlink" href="#interactive-plots" title="Permalink to this heading">#</a></h2>
 <p>Interactive data visualizations are an exciting development and are likely to continue to grow in popularity with the rapid developments in web frontend frameworks. Covering these libraries is beyond the scope of this tutorial, but I highly encourage you to check them out. Some of them are surprisingly easy to use and make exploring your data and sharing your results much more fun.</p>
 <p>It is possible to add some basic interactivity to the plotting libraries covered in this tutorial in jupyter notebooks with <a class="reference external" href="https://ipywidgets.readthedocs.io/en/latest/">ipywidgets</a>. You will see a few examples of this in other tutorials.</p>
 <section id="plotly">
-<h3>Plotly<a class="headerlink" href="#plotly" title="Permalink to this headline">#</a></h3>
+<h3>Plotly<a class="headerlink" href="#plotly" title="Permalink to this heading">#</a></h3>
 <p><a class="reference external" href="https://plotly.com/python/">Plotly</a> is an graphing library to make interactive plots.</p>
 </section>
 <section id="bokeh">
-<h3>Bokeh<a class="headerlink" href="#bokeh" title="Permalink to this headline">#</a></h3>
+<h3>Bokeh<a class="headerlink" href="#bokeh" title="Permalink to this heading">#</a></h3>
 <p><a class="reference external" href="https://docs.bokeh.org/en/latest/index.html">Bokeh</a> is an interactive visualization library</p>
 </section>
 <section id="altair">
-<h3>Altair<a class="headerlink" href="#altair" title="Permalink to this headline">#</a></h3>
+<h3>Altair<a class="headerlink" href="#altair" title="Permalink to this heading">#</a></h3>
 <p><a class="reference external" href="https://altair-viz.github.io/">Altair</a> is a declarative statistical visualization library for Python based on Vega</p>
 </section>
 </section>
 <section id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <p>The following exercises uses the dataset “salary_exercise.csv” adapted from material available <a class="reference external" href="http://data.princeton.edu/wws509/datasets/#salary">here</a></p>
 <p>These are the salary data used in Weisberg’s book, consisting of observations on six variables for 52 tenure-track professors in a small college. The variables are:</p>
 <ul class="simple">
@@ -1482,7 +1159,7 @@ Other great tutorials about seaborn are <a class="reference external" href="http
 </ul>
 <p>Reference: S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.</p>
 <section id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this heading">#</a></h3>
 <p>Recreate the plot shown in figure.<br />
 On the left is a correlation of all parameters of only the male professors.<br />
 On the right is the same but only for female professors.<br />
@@ -1506,12 +1183,12 @@ Place titles for each plot as shown, and your name as the main title.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_Plotting_55_0.png" src="../_images/Introduction_to_Plotting_55_0.png" />
+<img alt="../_images/b2fa1906693f49101aa5e05f0261349f6b947c11fd59bc02f3b871b5050ab583.png" src="../_images/b2fa1906693f49101aa5e05f0261349f6b947c11fd59bc02f3b871b5050ab583.png" />
 </div>
 </div>
 </section>
 <section id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this heading">#</a></h3>
 <p>Recreate the following plot from the salary_exercise.csv dataset.<br />
 Create a 1 x 2 subplot.<br />
 On the left is a bar-errorbar of salary per gender.<br />
@@ -1539,7 +1216,7 @@ Add your name as the main title of the plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_Plotting_57_0.png" src="../_images/Introduction_to_Plotting_57_0.png" />
+<img alt="../_images/f4716586576cc668dd85b5ad8b738ea80c76a5251f30946309e96f3db01e696d.png" src="../_images/f4716586576cc668dd85b5ad8b738ea80c76a5251f30946309e96f3db01e696d.png" />
 </div>
 </div>
 </section>
@@ -1566,53 +1243,137 @@ Add your name as the main title of the plot.</p>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Introduction_to_Pandas.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Introduction to Pandas</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Introduction_to_Pandas.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Pandas</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="fmriprep_on_discovery.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="fmriprep_on_discovery.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Running fMRIPrep on HPC</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matplotlib-key-concepts">Matplotlib Key Concepts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lineplot">Lineplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scatterplot">Scatterplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-plot">Bar Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-plots">3D Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layouts">Layouts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-plots">Saving Plots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seaborn">Seaborn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scatterplots">Scatterplots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#factor-plots">Factor plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmaps">Heatmaps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas">Pandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Scatterplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-bar-errorbar-plots-in-pandas">Generating bar - errorbar plots in Pandas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-plots">Interactive Plots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotly">Plotly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bokeh">Bokeh</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair">Altair</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

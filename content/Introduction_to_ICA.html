@@ -1,686 +1,535 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Introduction to Independent Components Analysis &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Introduction_to_ICA';</script>
     <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_ICA.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Multivariate Prediction" href="Multivariate_Prediction.html" />
     <link rel="prev" title="Connectivity" href="Connectivity.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Pandas.html">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Plotting.html">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM.html">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Thresholding_Group_Analyses.html">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Parcellations.html">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_ICA.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_ICA.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_ICA.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_ICA.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_ICA.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_ICA.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_ICA.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_ICA.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Introduction_to_ICA.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_ICA.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_ICA.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/Introduction_to_ICA.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-ica-in-python">
-   Using ICA in Python
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simple-simulation">
-   Simple simulation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">
-   Overlapping temporal signals simulation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overlapping-spatial-signals-simulation">
-   Overlapping spatial signals simulation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#other-considerations">
-   Other considerations
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to Independent Components Analysis</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-ica-in-python">
-   Using ICA in Python
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simple-simulation">
-   Simple simulation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">
-   Overlapping temporal signals simulation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overlapping-spatial-signals-simulation">
-   Overlapping spatial signals simulation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#other-considerations">
-   Other considerations
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Independent Components Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-ica-in-python">Using ICA in Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-simulation">Simple simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">Overlapping temporal signals simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-spatial-signals-simulation">Overlapping spatial signals simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-considerations">Other considerations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-independent-components-analysis">
-<h1>Introduction to Independent Components Analysis<a class="headerlink" href="#introduction-to-independent-components-analysis" title="Permalink to this headline">#</a></h1>
+<h1>Introduction to Independent Components Analysis<a class="headerlink" href="#introduction-to-independent-components-analysis" title="Permalink to this heading">#</a></h1>
 <p><em>Written by Yong Hoon Chung, Lindsey Tepfer, &amp; Luke Chang</em></p>
 <p>Functional magnetic resonance imaging (fMRI) data contains a number of signals that can be elicited by an experimental task and also endogenous generated. In addition, there are signals that may be more artifactual in nature such as head movement, breathing, and even noise coming from the scanner itself. Our preprocessing and denoising methods aim to mitigate the influence of these artifactual signals, but what if there about signals that we can’t directly measure? ICA can be used to identify brain signals without directly knowing when or where they might be occurring.</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Independent_component_analysis">Independent Component Analysis</a> (ICA) is a data-driven technique that is commonly used in performing blind source separation, which involves decomposing signals measured across multiple channels into additive independent non-Gaussian signals <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/6796129">(Bell &amp; Sejnowski, 1995)</a>. For example, imagine if we had an array of microphones recording conversations at a party and assume that there are no delays or echoes in the room. Because speech signals are independent and non-Gaussian, ICA can theoretically be used to identify each person’s voice as long as there are less speakers than microphones.</p>
 <p>ICA has been successfully used to uncover signals measured via fMRI. In particular, ICA has been applied to identify common signals across a group using the <a class="reference external" href="https://github.com/trendscenter/gift">GIFT toolbox</a> in SPM <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/hbm.1048">(Calhoun et al., 2001)</a> and the <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/MELODIC">Melodic Toolbox</a> in FSL <a class="reference external" href="https://royalsocietypublishing.org/doi/full/10.1098/rstb.2005.1634">(Beckmann et al., 2005)</a>. When applied to brain imaging, ICA can be used to identify either spatial or temporal patterns. However, because most brain imaging studies measure activity from many more voxels than observed TRs, spatial ICA has been the dominant approach <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1097-0193(1998)6:3%3C160::AID-HBM5%3E3.0.CO;2-1">(McKeown et al., 1998)</a> compared to temporal ICA, which is more commonly used in analyzing EEG data as there are typically many more observations in time compared to the limited number of scalp electrodes <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.94.20.10979">(Makeig et al., 1997)</a>. You may recall that we have discussed ICA in other contexts such as our <a class="reference internal" href="ICA.html"><span class="doc std std-doc">separating signal from noise exercise</span></a> and also in the <a class="reference internal" href="Connectivity.html#multivariate-decomposition"><span class="std std-ref">multivariate decomposition</span></a> subsection of the <a class="reference internal" href="Connectivity.html"><span class="doc std std-doc">connectivity</span></a> tutorial. For a more in depth version of how to implement an ICA algorithm in Python from scratch, check out this <a class="reference external" href="https://towardsdatascience.com/independent-component-analysis-ica-in-python-a0ef0db0955e">Medium article</a>.</p>
 <p>In this tutorial, we will demonstrate how to apply spatial and temporal ICA to a simulated fMRI experiment.</p>
 <section id="using-ica-in-python">
-<h2>Using ICA in Python<a class="headerlink" href="#using-ica-in-python" title="Permalink to this headline">#</a></h2>
+<h2>Using ICA in Python<a class="headerlink" href="#using-ica-in-python" title="Permalink to this heading">#</a></h2>
 <p>There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x,y,z spatial dimensions and then using any of the ICA algorithms distributed by <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html">Scikit-Learn</a>. Alternatively, ICA can be directly applied to neuroimaging data using <a class="reference external" href="https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA">nilearn</a> or <a class="reference external" href="https://https://nltools.org/index.html">nltools</a>. ICA can also be applied to EEG data in python using the <a class="reference external" href="https://mne.tools/stable/index.html">MNE toolbox</a>.</p>
 <p><em>Let’s try it out!</em></p>
 </section>
 <section id="simple-simulation">
-<h2>Simple simulation<a class="headerlink" href="#simple-simulation" title="Permalink to this headline">#</a></h2>
+<h2>Simple simulation<a class="headerlink" href="#simple-simulation" title="Permalink to this heading">#</a></h2>
 <p>To demonstrate how to use ICA with brain imaging data, we will simulate data from a hypothetical experiment building on the example from the <a class="reference external" href="https://dartbrains.org/content/GLM.html">GLM tutorial</a>. Imagine an experiment in which a participant views images of faces for 5 trials in one condition and images of houses for 5 trials in a separate condition. Past research has demonstrated that the fusiform face area (FFA) appears to selectively respond to faces <a class="reference external" href="https://www.jneurosci.org/content/jneuro/17/11/4302.full.pdf">Kanwisher et al., 1997</a>, while the parahippocampal place area (PPA) seems to more selectively respond to houses <a class="reference external" href="https://www.cell.com/fulltext/S0896-6273(00)80546-2">(Aguirre et al., 1998)</a>.</p>
 <p>Let’s simulate data for a subject participating in this hypothetical experiment. The participant was scanned for 200 TRs where the TR length is 2000ms. We will create bilateral spherical masks in the PPA and FFA and create signal in the FFA responding to face trials and signal in the PPA responding to house trials.</p>
 <p>We will first import some python modules and define the parameters of our simulation.</p>
@@ -726,8 +575,8 @@ title="Print to PDF"
   warnings.warn(&quot;Resampling binary images with continuous or &quot;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_5_1.png" src="../_images/Introduction_to_ICA_5_1.png" />
-<img alt="../_images/Introduction_to_ICA_5_2.png" src="../_images/Introduction_to_ICA_5_2.png" />
+<img alt="../_images/4116865989c74b2b4c5610103b3dc02263d1325f6b12b746371d0de90024fbc2.png" src="../_images/4116865989c74b2b4c5610103b3dc02263d1325f6b12b746371d0de90024fbc2.png" />
+<img alt="../_images/d4abd5f9fd0cb34ecaace1af57d986a35a5aba0fc4d25201a8507863d03b1c7c.png" src="../_images/d4abd5f9fd0cb34ecaace1af57d986a35a5aba0fc4d25201a8507863d03b1c7c.png" />
 </div>
 </div>
 <p>Next, let’s simulate an actual brain response for each region. We will create an impulse response for one TR for each trial of viewing a face or a house and then convolve these responses with a canonical double gamma hemodynamic response function (HRF).</p>
@@ -752,7 +601,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_ICA_7_0.png" src="../_images/Introduction_to_ICA_7_0.png" />
+<img alt="../_images/1214c922274c80e16009780085b8b0f03b68c9e97e47d3e94d769387048b0046.png" src="../_images/1214c922274c80e16009780085b8b0f03b68c9e97e47d3e94d769387048b0046.png" />
 </div>
 </div>
 <p>Finally, we need to place these brain responses to faces and houses in the FFA and PPA masks. We will add random Gaussian noise to each TR independently for each voxel.</p>
@@ -776,7 +625,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_ICA_9_0.png" src="../_images/Introduction_to_ICA_9_0.png" />
+<img alt="../_images/afee245c9d56048c73a3250932eb8f8fdc1b9357bef3d00bc25251c3e2ad9f0c.png" src="../_images/afee245c9d56048c73a3250932eb8f8fdc1b9357bef3d00bc25251c3e2ad9f0c.png" />
 </div>
 </div>
 <p>As you can see, there is a small amount of signal in both the PPA and FFA ROIs that stands out among the noise. There are of course many ways to improve this simulation by adding additional properties that we know about the brain. For example, we could add real physiological artifacts such as respiration or cardiac signals. We could also add autocorrelation within a voxel, or scanner drifts and spikes. For now we will just be using this very simple example.</p>
@@ -803,7 +652,7 @@ title="Print to PDF"
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_11_1.png" src="../_images/Introduction_to_ICA_11_1.png" />
+<img alt="../_images/d24ad288801a9c1a436b452d36c5031512ff49ad8a530869a3a54645c1a17f11.png" src="../_images/d24ad288801a9c1a436b452d36c5031512ff49ad8a530869a3a54645c1a17f11.png" />
 </div>
 </div>
 <p>ICA was able to successfully identify signals in the PPA and FFA corresponding to timecourses associated with viewing each trial. The spatial maps indicate the weights to project each voxel’s activity into the latent timeseries. The time series for each spatial map can be seen in the third panel.  Notice how ICA identified the correct voxels and timepoints, but it may have gotten the signs incorrect. In this example Component 1 is negative, but Component 2 is positive. ICA is only able to resolve independent signals, but these signals are invariant to the sign.</p>
@@ -829,14 +678,14 @@ title="Print to PDF"
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_13_1.png" src="../_images/Introduction_to_ICA_13_1.png" />
+<img alt="../_images/ac24a63b1c8f6812808e24ab4bcdd279fcd128832b3329f0dae61e3812cfac92.png" src="../_images/ac24a63b1c8f6812808e24ab4bcdd279fcd128832b3329f0dae61e3812cfac92.png" />
 </div>
 </div>
 <p>When the signals are independent and have a relatively high signal to noise ratio (SNR), both spatial and temporal ICA are able to successfully recover our simulated signals.</p>
 <p><em>What about other types of scenarios when the temporal signals are more intertwined?</em></p>
 </section>
 <section id="overlapping-temporal-signals-simulation">
-<h2>Overlapping temporal signals simulation<a class="headerlink" href="#overlapping-temporal-signals-simulation" title="Permalink to this headline">#</a></h2>
+<h2>Overlapping temporal signals simulation<a class="headerlink" href="#overlapping-temporal-signals-simulation" title="Permalink to this heading">#</a></h2>
 <p>Let’s simulate a slightly different scenario to explore this more. Here we will now give different signal intensities to the face and house signals. Let’s also assume that there might be a weaker response in the PPA when viewing faces, but this signal might be slightly delayed by one TR as perceiving a house could be slower than perceiving a face.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -877,7 +726,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_ICA_15_0.png" src="../_images/Introduction_to_ICA_15_0.png" />
+<img alt="../_images/f1531c8addb3c77ab81c965e8d01c27a8aebfcb8d2dd514580b026e330877552.png" src="../_images/f1531c8addb3c77ab81c965e8d01c27a8aebfcb8d2dd514580b026e330877552.png" />
 </div>
 </div>
 <p>Notice how our simulated brain responses reflect the goals of the simulation?</p>
@@ -895,7 +744,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(2, 0, &#39;r = 0.49&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_17_1.png" src="../_images/Introduction_to_ICA_17_1.png" />
+<img alt="../_images/10ca37163f9846087ed9442e1a2aa48218a5246c5871c94c3aa9be5edec94caf.png" src="../_images/10ca37163f9846087ed9442e1a2aa48218a5246c5871c94c3aa9be5edec94caf.png" />
 </div>
 </div>
 <p>Now, let’s see how well spatial and temporal ICA are able to to recover these signals</p>
@@ -926,14 +775,14 @@ title="Print to PDF"
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_19_1.png" src="../_images/Introduction_to_ICA_19_1.png" />
-<img alt="../_images/Introduction_to_ICA_19_2.png" src="../_images/Introduction_to_ICA_19_2.png" />
+<img alt="../_images/0e19443118e29f2560fab2097b7f942b09da8d4d677ea7ab3b1492ef9b5fc346.png" src="../_images/0e19443118e29f2560fab2097b7f942b09da8d4d677ea7ab3b1492ef9b5fc346.png" />
+<img alt="../_images/1d47bef1644387572d5f13c28e32608f1a6544b4de0c201566a566daac3d610a.png" src="../_images/1d47bef1644387572d5f13c28e32608f1a6544b4de0c201566a566daac3d610a.png" />
 </div>
 </div>
 <p>Both spatial and temporal ICA are able to successfully recover the signals. However, there are some slight nuances to how well they perform in this specific simulation. Notice how the spatial ICA is able to successfully identify the different spatial signals and the corresponding signals. Temporal ICA does not work quite as well in this example. Component 1 includes activity in both the FFA and PPA regions. Component 2 only has weights in the FFA, but goes up in the Face condition and down in the House condition.</p>
 </section>
 <section id="overlapping-spatial-signals-simulation">
-<h2>Overlapping spatial signals simulation<a class="headerlink" href="#overlapping-spatial-signals-simulation" title="Permalink to this headline">#</a></h2>
+<h2>Overlapping spatial signals simulation<a class="headerlink" href="#overlapping-spatial-signals-simulation" title="Permalink to this heading">#</a></h2>
 <p><em>What about other situations, where temporal signals might be more intermixed <strong>within</strong> ROIs?</em></p>
 <p>In our final simulation we will include populations of voxels in the FFA that purely respond to faces, and a population of PPA voxels that selectively respond to houses. This is identicial to the first simulation. However, we are now also including a population of voxels in the FFA that weakly respond to both faces <strong>and</strong> houses.</p>
 <div class="cell docutils container">
@@ -984,7 +833,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Introduction_to_ICA_21_0.png" src="../_images/Introduction_to_ICA_21_0.png" />
+<img alt="../_images/fccacc845339918ffb87856d78f7358829b11da2eb81e5b83d4e8d0633d4ae37.png" src="../_images/fccacc845339918ffb87856d78f7358829b11da2eb81e5b83d4e8d0633d4ae37.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1014,8 +863,8 @@ title="Print to PDF"
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_ICA_22_1.png" src="../_images/Introduction_to_ICA_22_1.png" />
-<img alt="../_images/Introduction_to_ICA_22_2.png" src="../_images/Introduction_to_ICA_22_2.png" />
+<img alt="../_images/467a77189a2f1bec7685013c8b5a34b1fa7da569776591378d99863a5f537bac.png" src="../_images/467a77189a2f1bec7685013c8b5a34b1fa7da569776591378d99863a5f537bac.png" />
+<img alt="../_images/9de4ca4a69eda3cf8d13db68e990f5070aee3838515f3881be5dce68dd911c32.png" src="../_images/9de4ca4a69eda3cf8d13db68e990f5070aee3838515f3881be5dce68dd911c32.png" />
 </div>
 </div>
 <p>In this simulation, we see a different pattern of results. Spatial ICA seems to to do the best job in this simulation. Component 2 appears to include voxels that only respond to faces and it correctly identifies that half of theese voxels have a stronger response to faces compared to the other half. Component 1 identifies voxels that responds to houses and includes all of the voxels in the PPA and half of the voxels in the FFA.</p>
@@ -1024,7 +873,7 @@ title="Print to PDF"
 <p><em>Can you think of another simulation that might be able to show how spatial and temporal ICA might perform differently?</em></p>
 </section>
 <section id="other-considerations">
-<h2>Other considerations<a class="headerlink" href="#other-considerations" title="Permalink to this headline">#</a></h2>
+<h2>Other considerations<a class="headerlink" href="#other-considerations" title="Permalink to this heading">#</a></h2>
 <p>Typical ICA approaches don’t account for inter-subject variability, and as a result, the underlying signals and networks may be mis-characterized and thus generate group-differences that aren’t really there (false positive) or fail to detect differences amongst groups that are actually there (false negative).  We recommend using either GIFT or Melodic or nilearn for performing group ICA.</p>
 </section>
 </section>
@@ -1049,53 +898,109 @@ title="Print to PDF"
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Connectivity.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Connectivity</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Connectivity.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Connectivity</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Multivariate_Prediction.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Multivariate_Prediction.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Multivariate Prediction</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-ica-in-python">Using ICA in Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-simulation">Simple simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-temporal-signals-simulation">Overlapping temporal signals simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overlapping-spatial-signals-simulation">Overlapping spatial signals simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-considerations">Other considerations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

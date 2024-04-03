@@ -1,50 +1,69 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Thresholding Group Analyses &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -53,706 +72,467 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Thresholding_Group_Analyses';</script>
     <link rel="canonical" href="http://dartbrains.org/content/Thresholding_Group_Analyses.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Connectivity" href="Connectivity.html" />
     <link rel="prev" title="Group Analysis" href="Group_Analysis.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Pandas.html">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Plotting.html">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM.html">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_ICA.html">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Parcellations.html">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Thresholding_Group_Analyses.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Thresholding_Group_Analyses.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Thresholding_Group_Analyses.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Thresholding_Group_Analyses.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Thresholding_Group_Analyses.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Thresholding_Group_Analyses.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Thresholding_Group_Analyses.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Thresholding_Group_Analyses.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Thresholding_Group_Analyses.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Thresholding_Group_Analyses.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Thresholding_Group_Analyses.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/Thresholding_Group_Analyses.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulations">
-   Simulations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#family-wise-error-rate">
-   Family Wise Error Rate
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cluster-extent">
-     Cluster Extent
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#threshold-free-cluster-extent">
-     Threshold Free Cluster Extent
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#parametric-simulations">
-     Parametric simulations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nonparametric-approaches">
-     Nonparametric approaches
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#false-discovery-rate-fdr">
-   False Discovery Rate (FDR)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#thresholding-brain-maps">
-     Thresholding Brain Maps
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1-bonferroni-correction-simulation">
-     Exercise 1. Bonferroni Correction Simulation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
-     Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words">
-     Exercise 3. Which regions are more involved in processing numbers compared to words?
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Thresholding Group Analyses</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#simulations">
-   Simulations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#family-wise-error-rate">
-   Family Wise Error Rate
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cluster-extent">
-     Cluster Extent
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#threshold-free-cluster-extent">
-     Threshold Free Cluster Extent
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#parametric-simulations">
-     Parametric simulations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nonparametric-approaches">
-     Nonparametric approaches
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#false-discovery-rate-fdr">
-   False Discovery Rate (FDR)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#thresholding-brain-maps">
-     Thresholding Brain Maps
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises">
-   Exercises
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1-bonferroni-correction-simulation">
-     Exercise 1. Bonferroni Correction Simulation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
-     Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words">
-     Exercise 3. Which regions are more involved in processing numbers compared to words?
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Thresholding Group Analyses</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulations">Simulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#family-wise-error-rate">Family Wise Error Rate</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-extent">Cluster Extent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-free-cluster-extent">Threshold Free Cluster Extent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-simulations">Parametric simulations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nonparametric-approaches">Nonparametric approaches</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#false-discovery-rate-fdr">False Discovery Rate (FDR)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-brain-maps">Thresholding Brain Maps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-bonferroni-correction-simulation">Exercise 1. Bonferroni Correction Simulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words">Exercise 3. Which regions are more involved in processing numbers compared to words?</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="thresholding-group-analyses">
-<h1>Thresholding Group Analyses<a class="headerlink" href="#thresholding-group-analyses" title="Permalink to this headline">#</a></h1>
+<h1>Thresholding Group Analyses<a class="headerlink" href="#thresholding-group-analyses" title="Permalink to this heading">#</a></h1>
 <p><em>Written by Luke Chang</em></p>
 <p>Now that we have learned how to estimate a single-subject model, create contrasts, and run a group-level analysis, the next important topic to cover is how we can threshold these group maps. This is not as straightforward as it might seem as we need to be able to correct for multiple comparisons.</p>
 <p>In this tutorial, we will cover how we go from modeling brain responses in each voxel for a single participant to making inferences about the group. We will cover the following topics:</p>
@@ -773,14 +553,14 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/AalIM9-5-Pk"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/AalIM9-5-Pk"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <p>The primary goal in fMRI data analysis is to make inferences about how the brain processes information. These inferences can be in the form of predictions, but most often we are testing hypotheses about whether a particular region of the brain is involved in a specific type of process. This requires rejecting a <span class="math notranslate nohighlight">\(H_0\)</span> hypothesis (i.e., that there is no effect). Null hypothesis testing is traditionally performed by specifying contrasts between different conditions of an experimental design and assessing if these differences between conditions are reliably present across many participants. There are two main types of errors in null-hypothesis testing.</p>
 <p><em>Type I error</em></p>
@@ -799,7 +579,7 @@ title="Print to PDF"
 <p>This should probably be no surprise to anyone, but fMRI studies are expensive and inherently underpowered. Here is a simulation by Jeannette Mumford to show approximately how many participants you would need to achieve 80% power assuming a specific effect size in your contrast.</p>
 <p><img alt="fmri_power.png" src="../_images/fmri_power.png" /></p>
 <section id="simulations">
-<h2>Simulations<a class="headerlink" href="#simulations" title="Permalink to this headline">#</a></h2>
+<h2>Simulations<a class="headerlink" href="#simulations" title="Permalink to this heading">#</a></h2>
 <p>Let’s explore the concept of false positives to get an intuition about what the overall goals and issues are in controlling for multiple tests.</p>
 <p>Let’s load the modules we need for this tutorial. We will be using the SimulateGrid class which contains everything we need to run all of the simulations.</p>
 <div class="cell docutils container">
@@ -835,7 +615,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_6_0.png" src="../_images/Thresholding_Group_Analyses_6_0.png" />
+<img alt="../_images/0519f2516078fd34757dae67df72042fd83bb3c644fa7768ed5a14541d8ecbe1.png" src="../_images/0519f2516078fd34757dae67df72042fd83bb3c644fa7768ed5a14541d8ecbe1.png" />
 </div>
 </div>
 <p>Each subject’s simulated data is on a 100 x 100 grid. Think of this as a slice from their brain, where each pixel corresponds to the same spatial location across all participants. We have generated random noise separately for each subject. We have not added any true signal in this simulation yet.</p>
@@ -854,7 +634,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;T Values&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_8_1.png" src="../_images/Thresholding_Group_Analyses_8_1.png" />
+<img alt="../_images/4ab2fc53c4d4c409844aebf4480c94f42346093ea35feaf116ff7a1f9e242a56.png" src="../_images/4ab2fc53c4d4c409844aebf4480c94f42346093ea35feaf116ff7a1f9e242a56.png" />
 </div>
 </div>
 <p>Even though there was no signal in this simulation, you can see that there are a number of pixels in the grid that exceed a t-value above 2 and below -2, which is the approximate cutoff for p &lt; 0.05. These are all false positives.</p>
@@ -870,7 +650,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_10_0.png" src="../_images/Thresholding_Group_Analyses_10_0.png" />
+<img alt="../_images/6ecf1064cd6c4c5ea1b0bad3ebe90db14fefb60d60f64fb96cc330bcf836da7b.png" src="../_images/6ecf1064cd6c4c5ea1b0bad3ebe90db14fefb60d60f64fb96cc330bcf836da7b.png" />
 </div>
 </div>
 <p>The left panel is the average over all of the participants. The middle panel show voxels that exceed the statistical threshold. The right panel is the overall false-positive rate across the 100 simulations.</p>
@@ -885,7 +665,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_12_0.png" src="../_images/Thresholding_Group_Analyses_12_0.png" />
+<img alt="../_images/f5d6c695c4fbe0f3468170c1a5c479de59c111f8b478cb08375972b4afa9aa04.png" src="../_images/f5d6c695c4fbe0f3468170c1a5c479de59c111f8b478cb08375972b4afa9aa04.png" />
 </div>
 </div>
 <p>This simulation shows that examining fewer numbers of voxels will yield considerably less false positives. One common approach to controlling for multiple tests involves only looking for voxels within a specific region of interest (e.g., small volume correction), or looking at average activation within a larger region (e.g., ROI based analyses).</p>
@@ -899,7 +679,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_14_0.png" src="../_images/Thresholding_Group_Analyses_14_0.png" />
+<img alt="../_images/127913a1e97f9c88b6ee0f17bf39dfe58b7489c9108efb1eba500b6d4d0202e5.png" src="../_images/127913a1e97f9c88b6ee0f17bf39dfe58b7489c9108efb1eba500b6d4d0202e5.png" />
 </div>
 </div>
 <p>You can see that this dramatically decreases the number of false positives to the point that some of the simulations no longer contain any false positives.</p>
@@ -931,7 +711,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7feb9fc76290&gt;
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_16_1.png" src="../_images/Thresholding_Group_Analyses_16_1.png" />
+<img alt="../_images/721327e9c2dcf71cdbce9606ad7394dd1e9c7ff4459a5702837e8d8300bb6075.png" src="../_images/721327e9c2dcf71cdbce9606ad7394dd1e9c7ff4459a5702837e8d8300bb6075.png" />
 </div>
 </div>
 <p>As you can see, the false positive rate is close to our alpha starting at a threshold of about 6.2. This means that when we test a hypothesis over 10,000 independent voxels, we can be confident that we will only observe false positives in approximately 5 out of 100 experiments. This means that we are effectively controlling the family wise error rate (FWER).</p>
@@ -944,7 +724,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_18_0.png" src="../_images/Thresholding_Group_Analyses_18_0.png" />
+<img alt="../_images/92c90bf9e44119febba3d9b8475a213e6e7587703d282ba53ccdeeade052aafc.png" src="../_images/92c90bf9e44119febba3d9b8475a213e6e7587703d282ba53ccdeeade052aafc.png" />
 </div>
 </div>
 <p>Notice, that we are now observing a false positive rate of approximately .05, though this number will slightly change each time you run the simulation.</p>
@@ -960,7 +740,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_20_0.png" src="../_images/Thresholding_Group_Analyses_20_0.png" />
+<img alt="../_images/941f77d259d08ce511c7fbc8d2f56079cade0431b6df9899aa97cd8580b49d43.png" src="../_images/941f77d259d08ce511c7fbc8d2f56079cade0431b6df9899aa97cd8580b49d43.png" />
 </div>
 </div>
 <p>This seems like a great way to ensure that we minimize our false positives.</p>
@@ -980,7 +760,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Thresholding_Group_Analyses_22_0.png" src="../_images/Thresholding_Group_Analyses_22_0.png" />
+<img alt="../_images/2bc69668edb8e778a9a3dd3a7b76699389b154774982a79ee24f9941739d4c5d.png" src="../_images/2bc69668edb8e778a9a3dd3a7b76699389b154774982a79ee24f9941739d4c5d.png" />
 </div>
 </div>
 <p>Here we show how many voxels were identified using the bonferroni correction.</p>
@@ -989,7 +769,7 @@ title="Print to PDF"
 <p>This simulation highlights the main issue with using bonferroni correction in practice. The threshold is so conservative that the magnitude of an effect needs to be unreasonably large to survive correction over hundreds of thousands of voxels.</p>
 </section>
 <section id="family-wise-error-rate">
-<h2>Family Wise Error Rate<a class="headerlink" href="#family-wise-error-rate" title="Permalink to this headline">#</a></h2>
+<h2>Family Wise Error Rate<a class="headerlink" href="#family-wise-error-rate" title="Permalink to this heading">#</a></h2>
 <p>At this point you may be wondering if it even makes sense to assume that each test is independent. It seems reasonable to expect some degree of spatial correlation in our data. Our simulation is a good example of this as we have a square that contains signal across contiguous voxels. In practice, most of our functional neuroanatomy that we are investigating is larger than a single voxel and our spatial smoothing preprocessing step increase the spatial correlation.</p>
 <p>It can be shown that the Bonferroni correction is overally conservative in the presence of spatial dependence and results in a decreased power to detect voxels that are truly active.</p>
 <p>Let’s watch a video by Martin Lindquist to learn more about different ways to control for the Family Wise Error Rate.</p>
@@ -1001,17 +781,17 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/MxQeEdVNihg"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/MxQeEdVNihg"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <section id="cluster-extent">
-<h3>Cluster Extent<a class="headerlink" href="#cluster-extent" title="Permalink to this headline">#</a></h3>
+<h3>Cluster Extent<a class="headerlink" href="#cluster-extent" title="Permalink to this heading">#</a></h3>
 <p>Another approach to controlling the FWER is called cluster correction, or cluster extent. In this approach, the goal is to identify a threshold such that the maximum statistic exceeds it at a specified alpha. The distribution of the maximum statistic can be approximated using Gaussian Random Field Theory (RFT), which attempts to account for the spatial dependence of the data.</p>
 <p><img alt="fwer.png" src="../_images/fwer.png" /></p>
 <p>This requires specifying an initial threshold to determine the <em>Euler Characteristic</em> or the number of blobs minus the number of holes in the thresholded image. The number of voxels in the blob and the overall smoothness can be used to calculate something called <em>resels</em> or resolution elements and can be effectively thought of as the spatial units that need to be controlled for using FWER. We won’t be going into too much detail with this approach as the mathematical details are somewhat complicated. In practice, if the image is smooth and the number of subjects is high enough (around 20), cluster correction seems to provide control closer to the true false positive rate than Bonferroni correction. Though we won’t be spending time simulating this today, I encourage you to check out this Python <a class="reference external" href="https://matthew-brett.github.io/teaching/random_fields.html">simulation</a> by Matthew Brett and this <a class="reference external" href="https://www.fil.ion.ucl.ac.uk/spm/doc/books/hbf2/pdfs/Ch14.pdf">chapter</a> for an introduction to random field theory.</p>
@@ -1021,15 +801,15 @@ title="Print to PDF"
 <p>There are several other popular FWER approaches to correcting for multiple tests that try to address these issues.</p>
 </section>
 <section id="threshold-free-cluster-extent">
-<h3>Threshold Free Cluster Extent<a class="headerlink" href="#threshold-free-cluster-extent" title="Permalink to this headline">#</a></h3>
+<h3>Threshold Free Cluster Extent<a class="headerlink" href="#threshold-free-cluster-extent" title="Permalink to this heading">#</a></h3>
 <p>One interesting solution to the issue of finding an initial threshold seems to be addressed by the threshold free cluster enhancement method presented in <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1053811908002978?via%3Dihub">Smith &amp; Nichols, 2009</a>. In this approach, the authors propose a way to combine cluster extent and voxel height into a single metric that does not require specifying a specific initial threshold. It essentially involves calculating the integral of the overall product of a signal intensity and spatial extent over multiple thresholds. It has been shown to perform particularly well when combined with non-parameteric resampling approaches such as <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide">randomise</a> in FSL. This method is implemented in FSL and also in <a class="reference external" href="https://github.com/markallenthornton/MatlabTFCE">Matlab</a> by Mark Thornton. For more details about this approach check out this <a class="reference external" href="http://markallenthornton.com/blog/matlab-tfce/">blog post</a> by Mark Thornton, this <a class="reference external" href="https://mumfordbrainstats.tumblr.com/post/130127249926/paper-overview-threshold-free-cluster-enhancement">video</a> by Jeanette Mumford, and the original <a class="reference external" href="https://www.fmrib.ox.ac.uk/datasets/techrep/tr08ss1/tr08ss1.pdf">technical report</a>.</p>
 </section>
 <section id="parametric-simulations">
-<h3>Parametric simulations<a class="headerlink" href="#parametric-simulations" title="Permalink to this headline">#</a></h3>
+<h3>Parametric simulations<a class="headerlink" href="#parametric-simulations" title="Permalink to this heading">#</a></h3>
 <p>One approach to estimating the inherent smoothness in the data, or it’s spatial autocorrelation, is using parametric simulations. This was the approach originally adopted in AFNI’s AlphaSim/3DClustSim. After it was <a class="reference external" href="https://www.pnas.org/content/113/28/7900">demonstrated</a> that real fMRI data was not adequately modeled by a standard Gaussian distribution, the AFNI group quickly updated their software and implemented a range of different algorithms in their <a class="reference external" href="https://afni.nimh.nih.gov/pub/dist/doc/program_help/3dClustSim.html">3DClustSim</a> tool. See this <a class="reference external" href="https://www.biorxiv.org/content/10.1101/065862v1">paper</a> for an overview of these changes.</p>
 </section>
 <section id="nonparametric-approaches">
-<h3>Nonparametric approaches<a class="headerlink" href="#nonparametric-approaches" title="Permalink to this headline">#</a></h3>
+<h3>Nonparametric approaches<a class="headerlink" href="#nonparametric-approaches" title="Permalink to this heading">#</a></h3>
 <p>As an alternative to RFT, nonparametric methods use the data themselves to find the appropriate distribution. These methods can provide substantial improvements in power and validity, particularly with small sample sizes, so we recommend these in general over cluster extent. These tests can verify the validity of the less computationally expensive parametric approaches. However, it is important to note that this is much more computationally expensive as 5-10k permutations need to be run at every voxel. The FSL tool <a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide">randomise</a> is probably the current gold standard and there are versions that run on GPUs, such as <a class="reference external" href="https://github.com/wanderine/BROCCOLI">BROCCOLI</a> to speed up the computation time.</p>
 <p>Here we will run a simulation using a one-sample permutation test (i.e., sign test) on our data. We will make the grid much smaller to speed up the simulation and will decrease the number of simulations by an order of magnitude, but you will see that it is still very slow (5,000 permutations times 9 voxels times 10 simulations). This approach makes no distributional assumptions, but still requires correcting for multiple tests using either FWER or FDR approaches. Don’t worry about running this cell if it is taking too long.</p>
 <div class="cell docutils container">
@@ -1049,7 +829,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="false-discovery-rate-fdr">
-<h2>False Discovery Rate (FDR)<a class="headerlink" href="#false-discovery-rate-fdr" title="Permalink to this headline">#</a></h2>
+<h2>False Discovery Rate (FDR)<a class="headerlink" href="#false-discovery-rate-fdr" title="Permalink to this heading">#</a></h2>
 <p>You may be wondering why we need to control for <em>any</em> false positive when testing across hundreds of thousands of voxels. Surely a few are okay as long as they don’t overwhelm the true signal.</p>
 <p>Let’s learn about the False Discovery Rate (FDR) from another video by Martin Lindquist.</p>
 <div class="cell docutils container">
@@ -1060,18 +840,18 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/W9ogBO4GEzA"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/W9ogBO4GEzA"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <p>The <em>false discovery rate</em> (FDR) is a more recent development in multiple testing correction originally described by <a class="reference external" href="https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1995.tb02031.x">Benjamini &amp; Hochberg, 1995</a>. While FWER is the probability of any false positives occurring in a family of tests, the FDR is the expected proportion of false positives among significant tests.</p>
 <p>The FDR is fairly straightforward to calculate.</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>We select a desired limit <span class="math notranslate nohighlight">\(q\)</span> on FDR, which is the proportion of false positives we are okay with observing (e.g., 5/100 tests or 0.05).</p></li>
 <li><p>We rank all of the p-values over all the voxels from the smallest to largest.</p></li>
 <li><p>We find the threshold <span class="math notranslate nohighlight">\(r\)</span> such that <span class="math notranslate nohighlight">\(p \leq i/m * q\)</span></p></li>
@@ -1098,7 +878,7 @@ title="Print to PDF"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FDR q &lt; 0.05 corresponds to p-value of 0.00030256885357668906
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_31_1.png" src="../_images/Thresholding_Group_Analyses_31_1.png" />
+<img alt="../_images/6f4f40bf91a1a29d54fe47eaf49a811affc2f8d0b0d57b340b9bc911fc8de85e.png" src="../_images/6f4f40bf91a1a29d54fe47eaf49a811affc2f8d0b0d57b340b9bc911fc8de85e.png" />
 </div>
 </div>
 <p>Okay, using FDR of q &lt; 0.05 for our simulation identifies a p-value threshold of p &lt; 0.00034. This is more liberal than the bonferroni threshold of p &lt; 0.000005 and allows us to recover much more signal as a consequence. You can see that at this threshold there are more false positives, which leads to a much higher overall false positive rate. Remember, this metric is only used for calculating the family wise error rate and indicates the presence of <em>any</em> false positive across each of our 100 simulations.</p>
@@ -1116,12 +896,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;False Discovery Rate of Simulations&#39;)
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_33_1.png" src="../_images/Thresholding_Group_Analyses_33_1.png" />
+<img alt="../_images/87f618c2ed63dd49ddf1062fd9b78321bd0ae6fc1f8ef8f8abd486802aade569.png" src="../_images/87f618c2ed63dd49ddf1062fd9b78321bd0ae6fc1f8ef8f8abd486802aade569.png" />
 </div>
 </div>
 <p>In our 100 simulations, the majority had a false discovery rate below our q &lt; 0.05.</p>
 <section id="thresholding-brain-maps">
-<h3>Thresholding Brain Maps<a class="headerlink" href="#thresholding-brain-maps" title="Permalink to this headline">#</a></h3>
+<h3>Thresholding Brain Maps<a class="headerlink" href="#thresholding-brain-maps" title="Permalink to this heading">#</a></h3>
 <p>In the remainder of the tutorial, we will move from simulation to playing with real data.</p>
 <p>Let’s watch another video by Tor Wager on how multiple comparison approaches are used in practice, highlighting some of the pitfalls with some of the different approaches.</p>
 <div class="cell docutils container">
@@ -1132,14 +912,14 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<iframe
-    width="400"
-    height="300"
-    src="https://www.youtube.com/embed/N7Iittt8HrU"
-    frameborder="0"
-    allowfullscreen
-></iframe>
-</div></div>
+        <iframe
+            width="400"
+            height="300"
+            src="https://www.youtube.com/embed/N7Iittt8HrU"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        </div></div>
 </div>
 <p>We will be exploring two simple and fast ways to threshold your group analyses.</p>
 <p>First, we will simply threshold based on selecting an arbitrary statistical threshold. The values are completely arbitrary, but it is common to start with something like p &lt; .001. We call this <em>uncorrected</em> because this is simply the threshold for any voxel as we are not controlling for multiple tests.</p>
@@ -1160,7 +940,7 @@ title="Print to PDF"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>threshold is ignored for simple axial plots
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_38_1.png" src="../_images/Thresholding_Group_Analyses_38_1.png" />
+<img alt="../_images/aa4c229ee4a2dbbe633ffb3aacd7772656e2e34e50d7d571d8f3a07ad49e1bb1.png" src="../_images/aa4c229ee4a2dbbe633ffb3aacd7772656e2e34e50d7d571d8f3a07ad49e1bb1.png" />
 </div>
 </div>
 <p>We see some significant activations in visual cortex, but we also see strong t-tests in the auditory cortex.</p>
@@ -1177,7 +957,7 @@ title="Print to PDF"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>threshold is ignored for simple axial plots
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_41_1.png" src="../_images/Thresholding_Group_Analyses_41_1.png" />
+<img alt="../_images/7bb92672826550b78f4c57911982f96c6f1f35a9931aed6afa09072347c62823.png" src="../_images/7bb92672826550b78f4c57911982f96c6f1f35a9931aed6afa09072347c62823.png" />
 </div>
 </div>
 <p>You can see that at least for this particular contrast, the FDR threshold appears to be more liberal than p &lt; 0.001 uncorrected.</p>
@@ -1200,7 +980,7 @@ title="Print to PDF"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>threshold is ignored for simple axial plots
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_43_1.png" src="../_images/Thresholding_Group_Analyses_43_1.png" />
+<img alt="../_images/eb2e12f05c9309a873016a4bd289d0801a517b12686a44cdb6a8e009f942b28d.png" src="../_images/eb2e12f05c9309a873016a4bd289d0801a517b12686a44cdb6a8e009f942b28d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1214,7 +994,7 @@ title="Print to PDF"
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>threshold is ignored for simple axial plots
 </pre></div>
 </div>
-<img alt="../_images/Thresholding_Group_Analyses_44_1.png" src="../_images/Thresholding_Group_Analyses_44_1.png" />
+<img alt="../_images/ecbff885157e14e4c67689d9c7e045a3a1baffa058bc51b1e4b9f3a0fcece5ff.png" src="../_images/ecbff885157e14e4c67689d9c7e045a3a1baffa058bc51b1e4b9f3a0fcece5ff.png" />
 </div>
 </div>
 <p>Looks like there are some significant differences that survive in early visual cortex and also in other regions of the brain.</p>
@@ -1223,13 +1003,13 @@ title="Print to PDF"
 </section>
 </section>
 <section id="exercises">
-<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <section id="exercise-1-bonferroni-correction-simulation">
-<h3>Exercise 1. Bonferroni Correction Simulation<a class="headerlink" href="#exercise-1-bonferroni-correction-simulation" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 1. Bonferroni Correction Simulation<a class="headerlink" href="#exercise-1-bonferroni-correction-simulation" title="Permalink to this heading">#</a></h3>
 <p>Using the Grid Simulation code above, try to find how much larger the signal needs to be using a Bonferroni Correction until we can recover 100% of the true signal, while controlling a family wise error false-positive rate of p &lt; 0.05.</p>
 </section>
 <section id="exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">
-<h3>Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?<a class="headerlink" href="#exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?<a class="headerlink" href="#exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>run a group level t-test and threshold using an uncorrected voxel-wise threshold of p &lt; 0.05, p &lt; 0.005, and p &lt; 0.001.</p></li>
 <li><p>plot each of the results</p></li>
@@ -1237,7 +1017,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words">
-<h3>Exercise 3. Which regions are more involved in processing numbers compared to words?<a class="headerlink" href="#exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 3. Which regions are more involved in processing numbers compared to words?<a class="headerlink" href="#exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>run a group level t-test, using a correcte FDR threshold of q &lt; 0.05.</p></li>
 <li><p>plot the results</p></li>
@@ -1267,53 +1047,122 @@ title="Print to PDF"
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Group_Analysis.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Group Analysis</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Group_Analysis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Group Analysis</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Connectivity.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Connectivity.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Connectivity</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulations">Simulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#family-wise-error-rate">Family Wise Error Rate</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-extent">Cluster Extent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#threshold-free-cluster-extent">Threshold Free Cluster Extent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-simulations">Parametric simulations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nonparametric-approaches">Nonparametric approaches</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#false-discovery-rate-fdr">False Discovery Rate (FDR)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-brain-maps">Thresholding Brain Maps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-bonferroni-correction-simulation">Exercise 1. Bonferroni Correction Simulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-which-regions-are-more-involved-with-visual-compared-to-auditory-sensory-processing">Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-which-regions-are-more-involved-in-processing-numbers-compared-to-words">Exercise 3. Which regions are more involved in processing numbers compared to words?</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

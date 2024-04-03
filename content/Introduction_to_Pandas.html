@@ -1,976 +1,574 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Introduction to Pandas &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Introduction_to_Pandas';</script>
     <link rel="canonical" href="http://dartbrains.org/content/Introduction_to_Pandas.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Introduction to Plotting" href="Introduction_to_Plotting.html" />
     <link rel="prev" title="Introduction to programming" href="Introduction_to_Programming.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Plotting.html">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM.html">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Thresholding_Group_Analyses.html">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_ICA.html">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Parcellations.html">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parcellations.html">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Pandas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Introduction_to_Pandas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Pandas.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Introduction_to_Pandas.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Pandas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Introduction_to_Pandas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Pandas.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Pandas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Introduction_to_Pandas.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Introduction_to_Pandas.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Introduction_to_Pandas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/Introduction_to_Pandas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pandas-objects">
-   Pandas Objects
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#series">
-     Series
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dataframe">
-     DataFrame
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loading-data">
-   Loading Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ways-to-check-the-dataframe">
-     Ways to check the dataframe
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#describing-the-data">
-     Describing the data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dealing-with-missing-values">
-     Dealing with missing values
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-new-columns">
-     Create New Columns
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#indexing-and-slicing-data">
-   Indexing and slicing Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#indexing-with-keys">
-     Indexing with Keys
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#indexing-with-integers">
-     Indexing with Integers
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#indexing-with-booleans">
-     Indexing with booleans
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#numpy-indexing">
-     Numpy indexing
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#renaming">
-   Renaming
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#renaming-columns">
-     Renaming Columns
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#renaming-rows">
-     Renaming Rows
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#operations">
-   Operations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#merging-data">
-   Merging Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#concatenation">
-     Concatenation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#append">
-     Append
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#merge">
-     Merge
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#grouping">
-   Grouping
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#groupby">
-     Groupby
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#transform">
-     Transform
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reshaping-data">
-   Reshaping Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#melt">
-     Melt
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pivot">
-     Pivot
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises-homework">
-   Exercises ( Homework)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1">
-     Exercise 1
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2">
-     Exercise 2
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-3">
-     Exercise 3
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to Pandas</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pandas-objects">
-   Pandas Objects
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#series">
-     Series
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dataframe">
-     DataFrame
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loading-data">
-   Loading Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#ways-to-check-the-dataframe">
-     Ways to check the dataframe
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#describing-the-data">
-     Describing the data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dealing-with-missing-values">
-     Dealing with missing values
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-new-columns">
-     Create New Columns
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#indexing-and-slicing-data">
-   Indexing and slicing Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#indexing-with-keys">
-     Indexing with Keys
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#indexing-with-integers">
-     Indexing with Integers
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#indexing-with-booleans">
-     Indexing with booleans
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#numpy-indexing">
-     Numpy indexing
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#renaming">
-   Renaming
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#renaming-columns">
-     Renaming Columns
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#renaming-rows">
-     Renaming Rows
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#operations">
-   Operations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#merging-data">
-   Merging Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#concatenation">
-     Concatenation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#append">
-     Append
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#merge">
-     Merge
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#grouping">
-   Grouping
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#groupby">
-     Groupby
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#transform">
-     Transform
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#reshaping-data">
-   Reshaping Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#melt">
-     Melt
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pivot">
-     Pivot
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exercises-homework">
-   Exercises ( Homework)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1">
-     Exercise 1
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2">
-     Exercise 2
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-3">
-     Exercise 3
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Pandas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-objects">Pandas Objects</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe">DataFrame</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ways-to-check-the-dataframe">Ways to check the dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#describing-the-data">Describing the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-values">Dealing with missing values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-new-columns">Create New Columns</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-and-slicing-data">Indexing and slicing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-keys">Indexing with Keys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-integers">Indexing with Integers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-booleans">Indexing with booleans</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-indexing">Numpy indexing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming">Renaming</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming Columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-rows">Renaming Rows</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operations">Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-data">Merging Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenation">Concatenation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge">Merge</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping">Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupby">Groupby</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform">Transform</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melt">Melt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot">Pivot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises-homework">Exercises ( Homework)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">Exercise 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-pandas">
-<h1>Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this headline">#</a></h1>
+<h1>Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this heading">#</a></h1>
 <p><em>Written by Luke Chang &amp; Jin Cheong</em></p>
 <p>Analyzing data requires being facile with manipulating and transforming datasets to be able to test specific hypotheses. Data come in all different types of flavors and there are many different tools in the Python ecosystem to work with pretty much any type of data you might encounter. For example, you might be interested in working with functional neuroimaging data that is four dimensional. Three dimensional matrices contain brain activations in space, and these data can change over time in the 4th dimension. This type of data is well suited for <a class="reference external" href="https://numpy.org/">numpy</a> and specialized brain imaging packages such as <a class="reference external" href="https://nilearn.github.io/">nilearn</a>. The majority of data, however, is typically in some version of a two-dimensional observations by features format as might be seen in an excel spreadsheet, a SQL table, or in a comma delimited format (i.e., csv).</p>
 <p>In Python, the <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> library is a powerful tool to work with this type of data. This is a very large library with a tremendous amount of functionality. In this tutorial, we will cover the basics of how to load and manipulate data and will focus on common to data munging tasks.</p>
 <p>For those interested in diving deeper into Pandas, there are many online resources. There is the <a class="reference external" href="https://pandas.pydata.org/">Pandas online documention</a>, <a class="reference external" href="https://stackoverflow.com/questions/tagged/pandas">stackoverflow</a>, and <a class="reference external" href="https://medium.com/search?q=pandas">medium blogposts</a>. I highly recommend  Jake Vanderplas’s terrific <a class="reference external" href="https://jakevdp.github.io/PythonDataScienceHandbook/">Python Data Science Handbook</a>.   In addition, here is a brief <a class="reference external" href="https://neurohackademy.org/course/complex-data-structures/">video</a> by Tal Yarkoni providing a useful introduction to pandas.</p>
 <p>After the tutorial you will have the chance to apply the methods to a new set of data.</p>
 <section id="pandas-objects">
-<h2>Pandas Objects<a class="headerlink" href="#pandas-objects" title="Permalink to this headline">#</a></h2>
+<h2>Pandas Objects<a class="headerlink" href="#pandas-objects" title="Permalink to this heading">#</a></h2>
 <p>Pandas has several objects that are commonly used (i.e., Series, DataFrame, Index). At it’s core, Pandas Objects are enhanced numpy arrays where columns and rows can have special names and there are lots of methods to operate on the data. See Jake Vanderplas’s <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.01-Introducing-Pandas-Objects.ipynb">tutorial</a> for a more in depth overview.</p>
 <section id="series">
-<h3>Series<a class="headerlink" href="#series" title="Permalink to this headline">#</a></h3>
+<h3>Series<a class="headerlink" href="#series" title="Permalink to this heading">#</a></h3>
 <p>A pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> is a one-dimensional array of indexed data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1028,7 +626,7 @@ dtype: int64
 </div>
 </section>
 <section id="dataframe">
-<h3>DataFrame<a class="headerlink" href="#dataframe" title="Permalink to this headline">#</a></h3>
+<h3>DataFrame<a class="headerlink" href="#dataframe" title="Permalink to this heading">#</a></h3>
 <p>If a <code class="docutils literal notranslate"><span class="pre">Series</span></code> is a one-dimensional indexed array, the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is a two-dimensional indexed array. It can be thought of as a collection of Series objects, where each Series represents a column, or as an enhanced 2D numpy array.</p>
 <p>In a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, the index refers to labels for each row, while columns describe each column.</p>
 <p>First, let’s create a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> using random numbers generated from numpy.</p>
@@ -1068,33 +666,33 @@ dtype: int64
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.126463</td>
-      <td>0.901287</td>
-      <td>0.487618</td>
+      <td>0.828627</td>
+      <td>0.860628</td>
+      <td>0.239354</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.033185</td>
-      <td>0.287304</td>
-      <td>0.773930</td>
+      <td>0.701561</td>
+      <td>0.990040</td>
+      <td>0.955123</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.069269</td>
-      <td>0.793656</td>
-      <td>0.025462</td>
+      <td>0.526356</td>
+      <td>0.573977</td>
+      <td>0.854763</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.228061</td>
-      <td>0.559880</td>
-      <td>0.473307</td>
+      <td>0.360077</td>
+      <td>0.396195</td>
+      <td>0.303766</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.261735</td>
-      <td>0.353904</td>
-      <td>0.880351</td>
+      <td>0.188879</td>
+      <td>0.446423</td>
+      <td>0.063622</td>
     </tr>
   </tbody>
 </table>
@@ -1135,33 +733,33 @@ dtype: int64
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.720483</td>
-      <td>0.350045</td>
-      <td>0.538831</td>
+      <td>0.493188</td>
+      <td>0.513151</td>
+      <td>0.500130</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.877044</td>
-      <td>0.308761</td>
-      <td>0.786224</td>
+      <td>0.706082</td>
+      <td>0.967668</td>
+      <td>0.762955</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.399717</td>
-      <td>0.683241</td>
-      <td>0.878268</td>
+      <td>0.853237</td>
+      <td>0.361205</td>
+      <td>0.297108</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.565219</td>
-      <td>0.719122</td>
-      <td>0.410798</td>
+      <td>0.021289</td>
+      <td>0.920400</td>
+      <td>0.609904</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.165874</td>
-      <td>0.667780</td>
-      <td>0.820636</td>
+      <td>0.917379</td>
+      <td>0.207424</td>
+      <td>0.451640</td>
     </tr>
   </tbody>
 </table>
@@ -1280,13 +878,457 @@ dtype: int64
 </section>
 </section>
 <section id="loading-data">
-<h2>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this headline">#</a></h2>
+<h2>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this heading">#</a></h2>
 <p>Loading data is fairly straightfoward in Pandas. Type <code class="docutils literal notranslate"><span class="pre">pd.read</span></code> then press tab to see a list of functions that can load specific file formats such as: csv, excel, spss, and sql.</p>
 <p>In this example, we will use <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code> to load a .csv file into a dataframe.
 Note that read_csv() has many options that can be used to make sure you load the data correctly. You can explore the docstrings for a function to get more information about the inputs and general useage guidelines by running <code class="docutils literal notranslate"><span class="pre">pd.read_csv?</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.read_csv<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Red">Signature:</span>
+pd<span class=" -Color -Color-Blue">.</span>read_csv<span class=" -Color -Color-Blue">(</span>
+    filepath_or_buffer<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;FilePath | ReadCsvBuffer[bytes] | ReadCsvBuffer[str]&#39;,</span>
+    <span class=" -Color -Color-Blue">*,</span>
+    sep<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    delimiter<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    header<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&quot;int | Sequence[int] | None | Literal[&#39;infer&#39;]&quot;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;infer&#39;,</span>
+    names<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;Sequence[Hashable] | None | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    index_col<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;IndexLabel | Literal[False] | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    usecols<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;UsecolsArgType&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    dtype<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;DtypeArg | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    engine<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;CSVEngine | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    converters<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;Mapping[Hashable, Callable] | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    true_values<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;list | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    false_values<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;list | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    skipinitialspace<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">False</span><span class=" -Color -Color-Blue">,</span>
+    skiprows<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;list[int] | int | Callable[[Hashable], bool] | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    skipfooter<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;int&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">0</span><span class=" -Color -Color-Blue">,</span>
+    nrows<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;int | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    na_values<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;Hashable | Iterable[Hashable] | Mapping[Hashable, Iterable[Hashable]] | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    keep_default_na<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">True</span><span class=" -Color -Color-Blue">,</span>
+    na_filter<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">True</span><span class=" -Color -Color-Blue">,</span>
+    verbose<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    skip_blank_lines<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">True</span><span class=" -Color -Color-Blue">,</span>
+    parse_dates<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool | Sequence[Hashable] | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    infer_datetime_format<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    keep_date_col<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    date_parser<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;Callable | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    date_format<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | dict[Hashable, str] | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    dayfirst<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">False</span><span class=" -Color -Color-Blue">,</span>
+    cache_dates<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">True</span><span class=" -Color -Color-Blue">,</span>
+    iterator<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">False</span><span class=" -Color -Color-Blue">,</span>
+    chunksize<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;int | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    compression<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;CompressionOptions&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;infer&#39;,</span>
+    thousands<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    decimal<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;.&#39;,</span>
+    lineterminator<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    quotechar<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;&quot;&#39;,</span>
+    quoting<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;int&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Cyan">0</span><span class=" -Color -Color-Blue">,</span>
+    doublequote<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">True</span><span class=" -Color -Color-Blue">,</span>
+    escapechar<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    comment<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    encoding<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    encoding_errors<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;strict&#39;,</span>
+    dialect<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str | csv.Dialect | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    on_bad_lines<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;str&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&#39;error&#39;,</span>
+    delim_whitespace<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+    low_memory<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">True</span><span class=" -Color -Color-Blue">,</span>
+    memory_map<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;bool&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">False</span><span class=" -Color -Color-Blue">,</span>
+    float_precision<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&quot;Literal[&#39;high&#39;, &#39;legacy&#39;] | None&quot;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    storage_options<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;StorageOptions | None&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Green">None</span><span class=" -Color -Color-Blue">,</span>
+    dtype_backend<span class=" -Color -Color-Blue">:</span> <span class=" -Color -Color-Blue">&#39;DtypeBackend | lib.NoDefault&#39;</span> <span class=" -Color -Color-Blue">=</span> <span class=" -Color -Color-Blue">&lt;</span>no_default<span class=" -Color -Color-Blue">&gt;,</span>
+<span class=" -Color -Color-Blue">)</span> <span class=" -Color -Color-Blue">-&gt;</span> <span class=" -Color -Color-Blue">&#39;DataFrame | TextFileReader&#39;</span>
+<span class=" -Color -Color-Red">Docstring:</span>
+Read a comma-separated values (csv) file into DataFrame.
+
+Also supports optionally iterating or breaking of the file
+into chunks.
+
+Additional help can be found in the online docs for
+`IO Tools &lt;https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html&gt;`_.
+
+Parameters
+----------
+filepath_or_buffer : str, path object or file-like object
+    Any valid string path is acceptable. The string could be a URL. Valid
+    URL schemes include http, ftp, s3, gs, and file. For file URLs, a host is
+    expected. A local file could be: file://localhost/path/to/table.csv.
+
+    If you want to pass in a path object, pandas accepts any ``os.PathLike``.
+
+    By file-like object, we refer to objects with a ``read()`` method, such as
+    a file handle (e.g. via builtin ``open`` function) or ``StringIO``.
+sep : str, default &#39;,&#39;
+    Character or regex pattern to treat as the delimiter. If ``sep=None``, the
+    C engine cannot automatically detect
+    the separator, but the Python parsing engine can, meaning the latter will
+    be used and automatically detect the separator from only the first valid
+    row of the file by Python&#39;s builtin sniffer tool, ``csv.Sniffer``.
+    In addition, separators longer than 1 character and different from
+    ``&#39;\s+&#39;`` will be interpreted as regular expressions and will also force
+    the use of the Python parsing engine. Note that regex delimiters are prone
+    to ignoring quoted data. Regex example: ``&#39;\r\t&#39;``.
+delimiter : str, optional
+    Alias for ``sep``.
+header : int, Sequence of int, &#39;infer&#39; or None, default &#39;infer&#39;
+    Row number(s) containing column labels and marking the start of the
+    data (zero-indexed). Default behavior is to infer the column names: if no ``names``
+    are passed the behavior is identical to ``header=0`` and column
+    names are inferred from the first line of the file, if column
+    names are passed explicitly to ``names`` then the behavior is identical to
+    ``header=None``. Explicitly pass ``header=0`` to be able to
+    replace existing names. The header can be a list of integers that
+    specify row locations for a :class:`~pandas.MultiIndex` on the columns
+    e.g. ``[0, 1, 3]``. Intervening rows that are not specified will be
+    skipped (e.g. 2 in this example is skipped). Note that this
+    parameter ignores commented lines and empty lines if
+    ``skip_blank_lines=True``, so ``header=0`` denotes the first line of
+    data rather than the first line of the file.
+names : Sequence of Hashable, optional
+    Sequence of column labels to apply. If the file contains a header row,
+    then you should explicitly pass ``header=0`` to override the column names.
+    Duplicates in this list are not allowed.
+index_col : Hashable, Sequence of Hashable or False, optional
+  Column(s) to use as row label(s), denoted either by column labels or column
+  indices.  If a sequence of labels or indices is given, :class:`~pandas.MultiIndex`
+  will be formed for the row labels.
+
+  Note: ``index_col=False`` can be used to force pandas to *not* use the first
+  column as the index, e.g., when you have a malformed file with delimiters at
+  the end of each line.
+usecols : Sequence of Hashable or Callable, optional
+    Subset of columns to select, denoted either by column labels or column indices.
+    If list-like, all elements must either
+    be positional (i.e. integer indices into the document columns) or strings
+    that correspond to column names provided either by the user in ``names`` or
+    inferred from the document header row(s). If ``names`` are given, the document
+    header row(s) are not taken into account. For example, a valid list-like
+    ``usecols`` parameter would be ``[0, 1, 2]`` or ``[&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;]``.
+    Element order is ignored, so ``usecols=[0, 1]`` is the same as ``[1, 0]``.
+    To instantiate a :class:`~pandas.DataFrame` from ``data`` with element order
+    preserved use ``pd.read_csv(data, usecols=[&#39;foo&#39;, &#39;bar&#39;])[[&#39;foo&#39;, &#39;bar&#39;]]``
+    for columns in ``[&#39;foo&#39;, &#39;bar&#39;]`` order or
+    ``pd.read_csv(data, usecols=[&#39;foo&#39;, &#39;bar&#39;])[[&#39;bar&#39;, &#39;foo&#39;]]``
+    for ``[&#39;bar&#39;, &#39;foo&#39;]`` order.
+
+    If callable, the callable function will be evaluated against the column
+    names, returning names where the callable function evaluates to ``True``. An
+    example of a valid callable argument would be ``lambda x: x.upper() in
+    [&#39;AAA&#39;, &#39;BBB&#39;, &#39;DDD&#39;]``. Using this parameter results in much faster
+    parsing time and lower memory usage.
+dtype : dtype or dict of {Hashable : dtype}, optional
+    Data type(s) to apply to either the whole dataset or individual columns.
+    E.g., ``{&#39;a&#39;: np.float64, &#39;b&#39;: np.int32, &#39;c&#39;: &#39;Int64&#39;}``
+    Use ``str`` or ``object`` together with suitable ``na_values`` settings
+    to preserve and not interpret ``dtype``.
+    If ``converters`` are specified, they will be applied INSTEAD
+    of ``dtype`` conversion.
+
+    .. versionadded:: 1.5.0
+
+        Support for ``defaultdict`` was added. Specify a ``defaultdict`` as input where
+        the default determines the ``dtype`` of the columns which are not explicitly
+        listed.
+engine : {&#39;c&#39;, &#39;python&#39;, &#39;pyarrow&#39;}, optional
+    Parser engine to use. The C and pyarrow engines are faster, while the python engine
+    is currently more feature-complete. Multithreading is currently only supported by
+    the pyarrow engine.
+
+    .. versionadded:: 1.4.0
+
+        The &#39;pyarrow&#39; engine was added as an *experimental* engine, and some features
+        are unsupported, or may not work correctly, with this engine.
+converters : dict of {Hashable : Callable}, optional
+    Functions for converting values in specified columns. Keys can either
+    be column labels or column indices.
+true_values : list, optional
+    Values to consider as ``True`` in addition to case-insensitive variants of &#39;True&#39;.
+false_values : list, optional
+    Values to consider as ``False`` in addition to case-insensitive variants of &#39;False&#39;.
+skipinitialspace : bool, default False
+    Skip spaces after delimiter.
+skiprows : int, list of int or Callable, optional
+    Line numbers to skip (0-indexed) or number of lines to skip (``int``)
+    at the start of the file.
+
+    If callable, the callable function will be evaluated against the row
+    indices, returning ``True`` if the row should be skipped and ``False`` otherwise.
+    An example of a valid callable argument would be ``lambda x: x in [0, 2]``.
+skipfooter : int, default 0
+    Number of lines at bottom of file to skip (Unsupported with ``engine=&#39;c&#39;``).
+nrows : int, optional
+    Number of rows of file to read. Useful for reading pieces of large files.
+na_values : Hashable, Iterable of Hashable or dict of {Hashable : Iterable}, optional
+    Additional strings to recognize as ``NA``/``NaN``. If ``dict`` passed, specific
+    per-column ``NA`` values.  By default the following values are interpreted as
+    ``NaN``: &quot; &quot;, &quot;#N/A&quot;, &quot;#N/A N/A&quot;, &quot;#NA&quot;, &quot;-1.#IND&quot;, &quot;-1.#QNAN&quot;, &quot;-NaN&quot;, &quot;-nan&quot;,
+    &quot;1.#IND&quot;, &quot;1.#QNAN&quot;, &quot;&lt;NA&gt;&quot;, &quot;N/A&quot;, &quot;NA&quot;, &quot;NULL&quot;, &quot;NaN&quot;, &quot;None&quot;,
+    &quot;n/a&quot;, &quot;nan&quot;, &quot;null &quot;.
+
+keep_default_na : bool, default True
+    Whether or not to include the default ``NaN`` values when parsing the data.
+    Depending on whether ``na_values`` is passed in, the behavior is as follows:
+
+    * If ``keep_default_na`` is ``True``, and ``na_values`` are specified, ``na_values``
+      is appended to the default ``NaN`` values used for parsing.
+    * If ``keep_default_na`` is ``True``, and ``na_values`` are not specified, only
+      the default ``NaN`` values are used for parsing.
+    * If ``keep_default_na`` is ``False``, and ``na_values`` are specified, only
+      the ``NaN`` values specified ``na_values`` are used for parsing.
+    * If ``keep_default_na`` is ``False``, and ``na_values`` are not specified, no
+      strings will be parsed as ``NaN``.
+
+    Note that if ``na_filter`` is passed in as ``False``, the ``keep_default_na`` and
+    ``na_values`` parameters will be ignored.
+na_filter : bool, default True
+    Detect missing value markers (empty strings and the value of ``na_values``). In
+    data without any ``NA`` values, passing ``na_filter=False`` can improve the
+    performance of reading a large file.
+verbose : bool, default False
+    Indicate number of ``NA`` values placed in non-numeric columns.
+
+    .. deprecated:: 2.2.0
+skip_blank_lines : bool, default True
+    If ``True``, skip over blank lines rather than interpreting as ``NaN`` values.
+parse_dates : bool, list of Hashable, list of lists or dict of {Hashable : list}, default False
+    The behavior is as follows:
+
+    * ``bool``. If ``True`` -&gt; try parsing the index. Note: Automatically set to
+      ``True`` if ``date_format`` or ``date_parser`` arguments have been passed.
+    * ``list`` of ``int`` or names. e.g. If ``[1, 2, 3]`` -&gt; try parsing columns 1, 2, 3
+      each as a separate date column.
+    * ``list`` of ``list``. e.g.  If ``[[1, 3]]`` -&gt; combine columns 1 and 3 and parse
+      as a single date column. Values are joined with a space before parsing.
+    * ``dict``, e.g. ``{&#39;foo&#39; : [1, 3]}`` -&gt; parse columns 1, 3 as date and call
+      result &#39;foo&#39;. Values are joined with a space before parsing.
+
+    If a column or index cannot be represented as an array of ``datetime``,
+    say because of an unparsable value or a mixture of timezones, the column
+    or index will be returned unaltered as an ``object`` data type. For
+    non-standard ``datetime`` parsing, use :func:`~pandas.to_datetime` after
+    :func:`~pandas.read_csv`.
+
+    Note: A fast-path exists for iso8601-formatted dates.
+infer_datetime_format : bool, default False
+    If ``True`` and ``parse_dates`` is enabled, pandas will attempt to infer the
+    format of the ``datetime`` strings in the columns, and if it can be inferred,
+    switch to a faster method of parsing them. In some cases this can increase
+    the parsing speed by 5-10x.
+
+    .. deprecated:: 2.0.0
+        A strict version of this argument is now the default, passing it has no effect.
+
+keep_date_col : bool, default False
+    If ``True`` and ``parse_dates`` specifies combining multiple columns then
+    keep the original columns.
+date_parser : Callable, optional
+    Function to use for converting a sequence of string columns to an array of
+    ``datetime`` instances. The default uses ``dateutil.parser.parser`` to do the
+    conversion. pandas will try to call ``date_parser`` in three different ways,
+    advancing to the next if an exception occurs: 1) Pass one or more arrays
+    (as defined by ``parse_dates``) as arguments; 2) concatenate (row-wise) the
+    string values from the columns defined by ``parse_dates`` into a single array
+    and pass that; and 3) call ``date_parser`` once for each row using one or
+    more strings (corresponding to the columns defined by ``parse_dates``) as
+    arguments.
+
+    .. deprecated:: 2.0.0
+       Use ``date_format`` instead, or read in as ``object`` and then apply
+       :func:`~pandas.to_datetime` as-needed.
+date_format : str or dict of column -&gt; format, optional
+    Format to use for parsing dates when used in conjunction with ``parse_dates``.
+    The strftime to parse time, e.g. :const:`&quot;%d/%m/%Y&quot;`. See
+    `strftime documentation
+    &lt;https://docs.python.org/3/library/datetime.html
+    #strftime-and-strptime-behavior&gt;`_ for more information on choices, though
+    note that :const:`&quot;%f&quot;` will parse all the way up to nanoseconds.
+    You can also pass:
+
+    - &quot;ISO8601&quot;, to parse any `ISO8601 &lt;https://en.wikipedia.org/wiki/ISO_8601&gt;`_
+        time string (not necessarily in exactly the same format);
+    - &quot;mixed&quot;, to infer the format for each element individually. This is risky,
+        and you should probably use it along with `dayfirst`.
+
+    .. versionadded:: 2.0.0
+dayfirst : bool, default False
+    DD/MM format dates, international and European format.
+cache_dates : bool, default True
+    If ``True``, use a cache of unique, converted dates to apply the ``datetime``
+    conversion. May produce significant speed-up when parsing duplicate
+    date strings, especially ones with timezone offsets.
+
+iterator : bool, default False
+    Return ``TextFileReader`` object for iteration or getting chunks with
+    ``get_chunk()``.
+chunksize : int, optional
+    Number of lines to read from the file per chunk. Passing a value will cause the
+    function to return a ``TextFileReader`` object for iteration.
+    See the `IO Tools docs
+    &lt;https://pandas.pydata.org/pandas-docs/stable/io.html#io-chunking&gt;`_
+    for more information on ``iterator`` and ``chunksize``.
+
+compression : str or dict, default &#39;infer&#39;
+    For on-the-fly decompression of on-disk data. If &#39;infer&#39; and &#39;filepath_or_buffer&#39; is
+    path-like, then detect compression from the following extensions: &#39;.gz&#39;,
+    &#39;.bz2&#39;, &#39;.zip&#39;, &#39;.xz&#39;, &#39;.zst&#39;, &#39;.tar&#39;, &#39;.tar.gz&#39;, &#39;.tar.xz&#39; or &#39;.tar.bz2&#39;
+    (otherwise no compression).
+    If using &#39;zip&#39; or &#39;tar&#39;, the ZIP file must contain only one data file to be read in.
+    Set to ``None`` for no decompression.
+    Can also be a dict with key ``&#39;method&#39;`` set
+    to one of {``&#39;zip&#39;``, ``&#39;gzip&#39;``, ``&#39;bz2&#39;``, ``&#39;zstd&#39;``, ``&#39;xz&#39;``, ``&#39;tar&#39;``} and
+    other key-value pairs are forwarded to
+    ``zipfile.ZipFile``, ``gzip.GzipFile``,
+    ``bz2.BZ2File``, ``zstandard.ZstdDecompressor``, ``lzma.LZMAFile`` or
+    ``tarfile.TarFile``, respectively.
+    As an example, the following could be passed for Zstandard decompression using a
+    custom compression dictionary:
+    ``compression={&#39;method&#39;: &#39;zstd&#39;, &#39;dict_data&#39;: my_compression_dict}``.
+
+    .. versionadded:: 1.5.0
+        Added support for `.tar` files.
+
+    .. versionchanged:: 1.4.0 Zstandard support.
+
+thousands : str (length 1), optional
+    Character acting as the thousands separator in numerical values.
+decimal : str (length 1), default &#39;.&#39;
+    Character to recognize as decimal point (e.g., use &#39;,&#39; for European data).
+lineterminator : str (length 1), optional
+    Character used to denote a line break. Only valid with C parser.
+quotechar : str (length 1), optional
+    Character used to denote the start and end of a quoted item. Quoted
+    items can include the ``delimiter`` and it will be ignored.
+quoting : {0 or csv.QUOTE_MINIMAL, 1 or csv.QUOTE_ALL, 2 or csv.QUOTE_NONNUMERIC, 3 or csv.QUOTE_NONE}, default csv.QUOTE_MINIMAL
+    Control field quoting behavior per ``csv.QUOTE_*`` constants. Default is
+    ``csv.QUOTE_MINIMAL`` (i.e., 0) which implies that only fields containing special
+    characters are quoted (e.g., characters defined in ``quotechar``, ``delimiter``,
+    or ``lineterminator``.
+doublequote : bool, default True
+   When ``quotechar`` is specified and ``quoting`` is not ``QUOTE_NONE``, indicate
+   whether or not to interpret two consecutive ``quotechar`` elements INSIDE a
+   field as a single ``quotechar`` element.
+escapechar : str (length 1), optional
+    Character used to escape other characters.
+comment : str (length 1), optional
+    Character indicating that the remainder of line should not be parsed.
+    If found at the beginning
+    of a line, the line will be ignored altogether. This parameter must be a
+    single character. Like empty lines (as long as ``skip_blank_lines=True``),
+    fully commented lines are ignored by the parameter ``header`` but not by
+    ``skiprows``. For example, if ``comment=&#39;#&#39;``, parsing
+    ``#empty\na,b,c\n1,2,3`` with ``header=0`` will result in ``&#39;a,b,c&#39;`` being
+    treated as the header.
+encoding : str, optional, default &#39;utf-8&#39;
+    Encoding to use for UTF when reading/writing (ex. ``&#39;utf-8&#39;``). `List of Python
+    standard encodings
+    &lt;https://docs.python.org/3/library/codecs.html#standard-encodings&gt;`_ .
+
+encoding_errors : str, optional, default &#39;strict&#39;
+    How encoding errors are treated. `List of possible values
+    &lt;https://docs.python.org/3/library/codecs.html#error-handlers&gt;`_ .
+
+    .. versionadded:: 1.3.0
+
+dialect : str or csv.Dialect, optional
+    If provided, this parameter will override values (default or not) for the
+    following parameters: ``delimiter``, ``doublequote``, ``escapechar``,
+    ``skipinitialspace``, ``quotechar``, and ``quoting``. If it is necessary to
+    override values, a ``ParserWarning`` will be issued. See ``csv.Dialect``
+    documentation for more details.
+on_bad_lines : {&#39;error&#39;, &#39;warn&#39;, &#39;skip&#39;} or Callable, default &#39;error&#39;
+    Specifies what to do upon encountering a bad line (a line with too many fields).
+    Allowed values are :
+
+    - ``&#39;error&#39;``, raise an Exception when a bad line is encountered.
+    - ``&#39;warn&#39;``, raise a warning when a bad line is encountered and skip that line.
+    - ``&#39;skip&#39;``, skip bad lines without raising or warning when they are encountered.
+
+    .. versionadded:: 1.3.0
+
+    .. versionadded:: 1.4.0
+
+        - Callable, function with signature
+          ``(bad_line: list[str]) -&gt; list[str] | None`` that will process a single
+          bad line. ``bad_line`` is a list of strings split by the ``sep``.
+          If the function returns ``None``, the bad line will be ignored.
+          If the function returns a new ``list`` of strings with more elements than
+          expected, a ``ParserWarning`` will be emitted while dropping extra elements.
+          Only supported when ``engine=&#39;python&#39;``
+
+    .. versionchanged:: 2.2.0
+
+        - Callable, function with signature
+          as described in `pyarrow documentation
+          &lt;https://arrow.apache.org/docs/python/generated/pyarrow.csv.ParseOptions.html
+          #pyarrow.csv.ParseOptions.invalid_row_handler&gt;`_ when ``engine=&#39;pyarrow&#39;``
+
+delim_whitespace : bool, default False
+    Specifies whether or not whitespace (e.g. ``&#39; &#39;`` or ``&#39;\t&#39;``) will be
+    used as the ``sep`` delimiter. Equivalent to setting ``sep=&#39;\s+&#39;``. If this option
+    is set to ``True``, nothing should be passed in for the ``delimiter``
+    parameter.
+
+    .. deprecated:: 2.2.0
+        Use ``sep=&quot;\s+&quot;`` instead.
+low_memory : bool, default True
+    Internally process the file in chunks, resulting in lower memory use
+    while parsing, but possibly mixed type inference.  To ensure no mixed
+    types either set ``False``, or specify the type with the ``dtype`` parameter.
+    Note that the entire file is read into a single :class:`~pandas.DataFrame`
+    regardless, use the ``chunksize`` or ``iterator`` parameter to return the data in
+    chunks. (Only valid with C parser).
+memory_map : bool, default False
+    If a filepath is provided for ``filepath_or_buffer``, map the file object
+    directly onto memory and access the data directly from there. Using this
+    option can improve performance because there is no longer any I/O overhead.
+float_precision : {&#39;high&#39;, &#39;legacy&#39;, &#39;round_trip&#39;}, optional
+    Specifies which converter the C engine should use for floating-point
+    values. The options are ``None`` or ``&#39;high&#39;`` for the ordinary converter,
+    ``&#39;legacy&#39;`` for the original lower precision pandas converter, and
+    ``&#39;round_trip&#39;`` for the round-trip converter.
+
+storage_options : dict, optional
+    Extra options that make sense for a particular storage connection, e.g.
+    host, port, username, password, etc. For HTTP(S) URLs the key-value pairs
+    are forwarded to ``urllib.request.Request`` as header options. For other
+    URLs (e.g. starting with &quot;s3://&quot;, and &quot;gcs://&quot;) the key-value pairs are
+    forwarded to ``fsspec.open``. Please see ``fsspec`` and ``urllib`` for more
+    details, and for more examples on storage options refer `here
+    &lt;https://pandas.pydata.org/docs/user_guide/io.html?
+    highlight=storage_options#reading-writing-remote-files&gt;`_.
+
+dtype_backend : {&#39;numpy_nullable&#39;, &#39;pyarrow&#39;}, default &#39;numpy_nullable&#39;
+    Back-end data type applied to the resultant :class:`DataFrame`
+    (still experimental). Behaviour is as follows:
+
+    * ``&quot;numpy_nullable&quot;``: returns nullable-dtype-backed :class:`DataFrame`
+      (default).
+    * ``&quot;pyarrow&quot;``: returns pyarrow-backed nullable :class:`ArrowDtype`
+      DataFrame.
+
+    .. versionadded:: 2.0
+
+Returns
+-------
+DataFrame or TextFileReader
+    A comma-separated values (csv) file is returned as two-dimensional
+    data structure with labeled axes.
+
+See Also
+--------
+DataFrame.to_csv : Write DataFrame to a comma-separated values (csv) file.
+read_table : Read general delimited file into DataFrame.
+read_fwf : Read a table of fixed-width formatted lines into DataFrame.
+
+Examples
+--------
+&gt;&gt;&gt; pd.read_csv(&#39;data.csv&#39;)  # doctest: +SKIP
+<span class=" -Color -Color-Red">File:</span>      /opt/anaconda3/envs/py312/lib/python3.12/site-packages/pandas/io/parsers/readers.py
+<span class=" -Color -Color-Red">Type:</span>      function
 </pre></div>
 </div>
 </div>
@@ -1300,7 +1342,7 @@ Note that read_csv() has many options that can be used to make sure you load the
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/Users/lukechang/Dropbox/Dartbrains/Notebooks&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/Users/lukechang/Github/dartbrains/content&#39;
 </pre></div>
 </div>
 </div>
@@ -1312,140 +1354,9 @@ Note that read_csv() has many options that can be used to make sure you load the
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>salary</th>
-      <th>gender</th>
-      <th>departm</th>
-      <th>years</th>
-      <th>age</th>
-      <th>publications</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>86285</td>
-      <td>0</td>
-      <td>bio</td>
-      <td>26.0</td>
-      <td>64.0</td>
-      <td>72</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>77125</td>
-      <td>0</td>
-      <td>bio</td>
-      <td>28.0</td>
-      <td>58.0</td>
-      <td>43</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>71922</td>
-      <td>0</td>
-      <td>bio</td>
-      <td>10.0</td>
-      <td>38.0</td>
-      <td>23</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>70499</td>
-      <td>0</td>
-      <td>bio</td>
-      <td>16.0</td>
-      <td>46.0</td>
-      <td>64</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>66624</td>
-      <td>0</td>
-      <td>bio</td>
-      <td>11.0</td>
-      <td>41.0</td>
-      <td>23</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>72</th>
-      <td>53662</td>
-      <td>1</td>
-      <td>neuro</td>
-      <td>1.0</td>
-      <td>31.0</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>73</th>
-      <td>57185</td>
-      <td>1</td>
-      <td>stat</td>
-      <td>9.0</td>
-      <td>39.0</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>52254</td>
-      <td>1</td>
-      <td>stat</td>
-      <td>2.0</td>
-      <td>32.0</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>75</th>
-      <td>61885</td>
-      <td>1</td>
-      <td>math</td>
-      <td>23.0</td>
-      <td>60.0</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>76</th>
-      <td>49542</td>
-      <td>1</td>
-      <td>math</td>
-      <td>3.0</td>
-      <td>33.0</td>
-      <td>5</td>
-    </tr>
-  </tbody>
-</table>
-<p>77 rows × 6 columns</p>
-</div></div></div>
 </div>
 <section id="ways-to-check-the-dataframe">
-<h3>Ways to check the dataframe<a class="headerlink" href="#ways-to-check-the-dataframe" title="Permalink to this headline">#</a></h3>
+<h3>Ways to check the dataframe<a class="headerlink" href="#ways-to-check-the-dataframe" title="Permalink to this heading">#</a></h3>
 <p>There are many ways to examine your dataframe. One easy way is to just call the dataframe variable itself.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1734,7 +1645,7 @@ Name: salary, dtype: int64
 </div>
 </section>
 <section id="describing-the-data">
-<h3>Describing the data<a class="headerlink" href="#describing-the-data" title="Permalink to this headline">#</a></h3>
+<h3>Describing the data<a class="headerlink" href="#describing-the-data" title="Permalink to this heading">#</a></h3>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method to get a quick summary of the continuous values of the data frame. We will <code class="docutils literal notranslate"><span class="pre">.transpose()</span></code> the output to make it slightly easier to read.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1857,10 +1768,11 @@ Name: departm, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    67
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gender
+0    67
 1     9
 2     1
-Name: gender, dtype: int64
+Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -1876,16 +1788,17 @@ Name: gender, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    67
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gender
+0    67
 1     9
-Name: gender, dtype: int64
+Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="dealing-with-missing-values">
-<h3>Dealing with missing values<a class="headerlink" href="#dealing-with-missing-values" title="Permalink to this headline">#</a></h3>
+<h3>Dealing with missing values<a class="headerlink" href="#dealing-with-missing-values" title="Permalink to this heading">#</a></h3>
 <p>Data are always messy and often have lots of missing values. There are many different ways, in which missing data might present <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>, or <code class="docutils literal notranslate"><span class="pre">NA</span></code>, Sometimes researchers code missing values with specific numeric codes such as 999999. It is important to find these as they can screw up your analyses if they are hiding in your data.</p>
 <p>If the missing values are using a standard pandas or numpy value such as <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>, or <code class="docutils literal notranslate"><span class="pre">NA</span></code>, we can identify where the missing values are as booleans using the <code class="docutils literal notranslate"><span class="pre">isnull()</span></code> method.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">isnull()</span></code> method will return a dataframe with True/False values on whether a datapoint is null or not a number (nan).</p>
@@ -2252,11 +2165,11 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/1379821321.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+  df.dropna(inplace=True)
 </pre></div>
 </div>
 </div>
@@ -2288,7 +2201,7 @@ dtype: int64
 </div>
 </section>
 <section id="create-new-columns">
-<h3>Create New Columns<a class="headerlink" href="#create-new-columns" title="Permalink to this headline">#</a></h3>
+<h3>Create New Columns<a class="headerlink" href="#create-new-columns" title="Permalink to this heading">#</a></h3>
 <p>You can create new columns to fit your needs.
 For instance you can set initialize a new column with zeros.</p>
 <div class="cell docutils container">
@@ -2298,12 +2211,12 @@ For instance you can set initialize a new column with zeros.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/2945664157.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+  df[&#39;pubperyear&#39;] = 0
 </pre></div>
 </div>
 </div>
@@ -2316,12 +2229,12 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/1818352125.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+  df[&#39;pubperyear&#39;] = df[&#39;publications&#39;]/df[&#39;years&#39;]
 </pre></div>
 </div>
 </div>
@@ -2329,10 +2242,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section id="indexing-and-slicing-data">
-<h2>Indexing and slicing Data<a class="headerlink" href="#indexing-and-slicing-data" title="Permalink to this headline">#</a></h2>
+<h2>Indexing and slicing Data<a class="headerlink" href="#indexing-and-slicing-data" title="Permalink to this heading">#</a></h2>
 <p>Indexing in Pandas can be tricky. There are many ways to index in pandas, for this tutorial we will focus on four: loc, iloc, boolean, and indexing numpy values. For a more in depth overview see Jake Vanderplas’s tutorial](https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.02-Data-Indexing-and-Selection.ipynb), where he also covers more advanced topics, such as <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.05-Hierarchical-Indexing.ipynb">hierarchical indexing</a>.</p>
 <section id="indexing-with-keys">
-<h3>Indexing with Keys<a class="headerlink" href="#indexing-with-keys" title="Permalink to this headline">#</a></h3>
+<h3>Indexing with Keys<a class="headerlink" href="#indexing-with-keys" title="Permalink to this heading">#</a></h3>
 <p>First, we will cover indexing with keys using the <code class="docutils literal notranslate"><span class="pre">.loc</span></code> method. This method references the explicit index with a key name. It works for both index names and also column names. Note that often the keys for rows are integers by default.</p>
 <p>In this example, we will return rows 10-20 on the salary column.</p>
 <div class="cell docutils container">
@@ -2449,7 +2362,7 @@ Name: salary, dtype: int64
 </div>
 </section>
 <section id="indexing-with-integers">
-<h3>Indexing with Integers<a class="headerlink" href="#indexing-with-integers" title="Permalink to this headline">#</a></h3>
+<h3>Indexing with Integers<a class="headerlink" href="#indexing-with-integers" title="Permalink to this heading">#</a></h3>
 <p>Next we wil try <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>.  This method references the implicit python index using integer indexing (starting from 0, exclusive of last number).  You can think of this like row by column indexing using integers.</p>
 <p>For example, let’s grab the first 3 rows and columns.</p>
 <div class="cell docutils container">
@@ -2516,7 +2429,7 @@ Name: salary, dtype: int64
 </div>
 </section>
 <section id="indexing-with-booleans">
-<h3>Indexing with booleans<a class="headerlink" href="#indexing-with-booleans" title="Permalink to this headline">#</a></h3>
+<h3>Indexing with booleans<a class="headerlink" href="#indexing-with-booleans" title="Permalink to this heading">#</a></h3>
 <p>Boolean or logical indexing is useful if you need to sort the data based on some True or False value.</p>
 <p>For instance, who are the people with salaries greater than 90K but lower than 100K ?</p>
 <div class="cell docutils container">
@@ -2640,7 +2553,7 @@ Name: salary, dtype: int64
 </div>
 </section>
 <section id="numpy-indexing">
-<h3>Numpy indexing<a class="headerlink" href="#numpy-indexing" title="Permalink to this headline">#</a></h3>
+<h3>Numpy indexing<a class="headerlink" href="#numpy-indexing" title="Permalink to this heading">#</a></h3>
 <p>Finally, you can also return a numpy matrix from a pandas data frame by accessing the <code class="docutils literal notranslate"><span class="pre">.values</span></code> property. This returns a numpy array that can be indexed using numpy integer indexing and slicing.</p>
 <p>As an example, let’s grab the last 10 rows and the first 3 columns.</p>
 <div class="cell docutils container">
@@ -2667,10 +2580,10 @@ Name: salary, dtype: int64
 </section>
 </section>
 <section id="renaming">
-<h2>Renaming<a class="headerlink" href="#renaming" title="Permalink to this headline">#</a></h2>
+<h2>Renaming<a class="headerlink" href="#renaming" title="Permalink to this heading">#</a></h2>
 <p>Part of cleaning up the data is renaming with more sensible names. This is easy to do with Pandas.</p>
 <section id="renaming-columns">
-<h3>Renaming Columns<a class="headerlink" href="#renaming-columns" title="Permalink to this headline">#</a></h3>
+<h3>Renaming Columns<a class="headerlink" href="#renaming-columns" title="Permalink to this heading">#</a></h3>
 <p>We can rename columns with the <code class="docutils literal notranslate"><span class="pre">.rename</span></code> method by passing in a dictionary using the <code class="docutils literal notranslate"><span class="pre">{'Old</span> <span class="pre">Name':'New</span> <span class="pre">Name'}</span></code>. We either need to assigne the result to a new variable or add <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2679,18 +2592,18 @@ Name: salary, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/pandas/core/frame.py:4133: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/144029972.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  errors=errors,
+  df.rename({&#39;departm&#39;:&#39;department&#39;,&#39;pubperyear&#39;:&#39;pub_per_year&#39;}, axis=1, inplace=True)
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="renaming-rows">
-<h3>Renaming Rows<a class="headerlink" href="#renaming-rows" title="Permalink to this headline">#</a></h3>
+<h3>Renaming Rows<a class="headerlink" href="#renaming-rows" title="Permalink to this heading">#</a></h3>
 <p>Often we may want to change the coding scheme for a variable. For example, it is hard to remember what zeros and ones mean in the gender variable. We can make this easier by changing these with a dictionary <code class="docutils literal notranslate"><span class="pre">{0:'male',</span> <span class="pre">1:'female'}</span></code> with the <code class="docutils literal notranslate"><span class="pre">replace</span></code> method. We can do this <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code> or we can assign it to a new variable. As an example, we will assign this to a new variable to also retain the original lablels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2701,12 +2614,12 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/1691057888.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+  df[&#39;gender_name&#39;] = df[&#39;gender&#39;].replace({0:&#39;male&#39;, 1:&#39;female&#39;})
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -2800,7 +2713,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section id="operations">
-<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">#</a></h2>
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this heading">#</a></h2>
 <p>One of the really fun things about pandas once you get the hang of it is how easy it is to perform operations on the data. It is trivial to compute simple summaries of the data. We can also leverage the object-oriented nature of a pandas object, we can chain together multiple commands.</p>
 <p>For example, let’s grab the mean of a few columns.</p>
 <div class="cell docutils container">
@@ -2828,16 +2741,16 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fea789a8810&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
 </pre></div>
 </div>
-<img alt="../_images/Introduction_to_Pandas_79_1.png" src="../_images/Introduction_to_Pandas_79_1.png" />
+<img alt="../_images/1469326550c0694ca648046124375b690930246e3fd1c0b64815d1851f36a06d.png" src="../_images/1469326550c0694ca648046124375b690930246e3fd1c0b64815d1851f36a06d.png" />
 </div>
 </div>
-<p>Perhaps we want to see if there are any correlations in our dataset. We can do this with the <code class="docutils literal notranslate"><span class="pre">.corr</span></code> method.</p>
+<p>Perhaps we want to see if there are any correlations in our dataset. We can do this with the <code class="docutils literal notranslate"><span class="pre">.corr</span></code> method. More recent versions of Pandas might produce an error if there are any columns containing string data. To avoid this issue set <code class="docutils literal notranslate"><span class="pre">numeric_only=True</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2929,11 +2842,11 @@ dtype: float64
 </div>
 </section>
 <section id="merging-data">
-<h2>Merging Data<a class="headerlink" href="#merging-data" title="Permalink to this headline">#</a></h2>
+<h2>Merging Data<a class="headerlink" href="#merging-data" title="Permalink to this heading">#</a></h2>
 <p>Another common data manipulation goal is to merge datasets. There are multiple ways to do this in pandas, we will cover concatenation, append, and merge.</p>
 <section id="concatenation">
-<h3>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this headline">#</a></h3>
-<p>Concatenation describes the process of <em>stacking</em> dataframes together. The main thing to consider is to make sure that the shapes of the two dataframes are the same as well as the index labels. For example, if we wanted to vertically stack two dataframe, they need to have the same column names.</p>
+<h3>Concatenation<a class="headerlink" href="#concatenation" title="Permalink to this heading">#</a></h3>
+<p>Concatenation describes the process of <em>stacking</em> dataframes together. Older versions of pandas also had an <code class="docutils literal notranslate"><span class="pre">.append()</span></code> method, which has been deprecated since pandas 1.4. The main thing to consider is to make sure that the shapes of the two dataframes are the same as well as the index labels. For example, if we wanted to vertically stack two dataframe, they need to have the same column names.</p>
 <p>Remember that we previously created two separate dataframes for males and females?  Let’s put them back together using the <code class="docutils literal notranslate"><span class="pre">pd.concat</span></code> method. Note how the index of this output retains the old index.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3169,87 +3082,8 @@ dtype: float64
 </div></div></div>
 </div>
 </section>
-<section id="append">
-<h3>Append<a class="headerlink" href="#append" title="Permalink to this headline">#</a></h3>
-<p>We can also combine datasets by appending new data to the end of a dataframe.</p>
-<p>Suppose we want to append a new data entry of an additional participant onto the <code class="docutils literal notranslate"><span class="pre">df3</span></code> dataframe. Notice that we need to specify to <code class="docutils literal notranslate"><span class="pre">ignore_index=True</span></code> and also that we need to assign the new dataframe back to a variable. This operation is not done in place.</p>
-<p>For more information about concatenation and appending see Jake Vanderplas’s <a class="reference external" href="https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/03.06-Concat-And-Append.ipynb">tutorial</a>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="s1">&#39;salary&#39;</span><span class="p">:</span><span class="mi">100000</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span><span class="mi">38</span><span class="p">,</span> <span class="s1">&#39;publications&#39;</span><span class="p">:</span><span class="mi">46</span><span class="p">})</span>
-<span class="n">df3</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">df3</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>salary</th>
-      <th>gender</th>
-      <th>age</th>
-      <th>publications</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>70</th>
-      <td>57185</td>
-      <td>1</td>
-      <td>39.0</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>71</th>
-      <td>52254</td>
-      <td>1</td>
-      <td>32.0</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>72</th>
-      <td>61885</td>
-      <td>1</td>
-      <td>60.0</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>73</th>
-      <td>49542</td>
-      <td>1</td>
-      <td>33.0</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>100000</td>
-      <td>1</td>
-      <td>38.0</td>
-      <td>46</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-</section>
 <section id="merge">
-<h3>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">#</a></h3>
+<h3>Merge<a class="headerlink" href="#merge" title="Permalink to this heading">#</a></h3>
 <p>The most powerful method of merging data is using the <code class="docutils literal notranslate"><span class="pre">pd.merge</span></code> method. This allows you to merge datasets of different shapes and sizes on specific variables that match. This is very common when you need to merge multiple sql tables together for example.</p>
 <p>In this example, we are creating two separate data frames that have different states and columns and will merge on the <code class="docutils literal notranslate"><span class="pre">State</span></code> column.</p>
 <p>First, we will only retain rows where there is a match across dataframes, using <code class="docutils literal notranslate"><span class="pre">how=inner</span></code>. This is equivalent to an ‘and’ join in sql.</p>
@@ -3372,18 +3206,18 @@ dtype: float64
 </section>
 </section>
 <section id="grouping">
-<h2>Grouping<a class="headerlink" href="#grouping" title="Permalink to this headline">#</a></h2>
+<h2>Grouping<a class="headerlink" href="#grouping" title="Permalink to this heading">#</a></h2>
 <p>We’ve seen above that it is very easy to summarize data over columns using the builtin functions such as <code class="docutils literal notranslate"><span class="pre">pd.mean()</span></code>. Sometimes we are interested in summarizing data over different groups of rows. For example, what is the mean of participants in Condition A compared to Condition B?</p>
 <p>This is suprisingly easy to compute in pandas using the <code class="docutils literal notranslate"><span class="pre">groupby</span></code> operator, where we aggregate data using a specific operation over different labels.</p>
 <p>One useful way to conceptualize this is using the <strong>Split, Apply, Combine</strong> operation (similar to map-reduce).</p>
 <p><img alt="" src="../_images/split-apply-combine.png" /></p>
 <p>This figure is taken from Jake Vanderplas’s tutorial and highlights how input data can be <em>split</em> on some key and then an operation such as sum can be <em>applied</em> separately to each split. Finally, the results of the applied function for each key can be <em>combined</em> into a new data frame.</p>
 <section id="groupby">
-<h3>Groupby<a class="headerlink" href="#groupby" title="Permalink to this headline">#</a></h3>
-<p>In this example, we will use the <code class="docutils literal notranslate"><span class="pre">groupby</span></code> operator to split the data based on gender labels and separately calculate the mean for each group.</p>
+<h3>Groupby<a class="headerlink" href="#groupby" title="Permalink to this heading">#</a></h3>
+<p>In this example, we will use the <code class="docutils literal notranslate"><span class="pre">groupby</span></code> operator to split the data based on gender labels and separately calculate the mean for each group. Note that newer versions of pandas might throw an error if you try to perform a numeric computation such as <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> on a dataframe containing columns of string data. Use the flag <code class="docutils literal notranslate"><span class="pre">numeric_only=True</span></code> to avoid this issue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;gender_name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;gender_name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3449,7 +3283,7 @@ dtype: float64
 <p>Other default aggregation methods include <code class="docutils literal notranslate"><span class="pre">.count()</span></code>, <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>, <code class="docutils literal notranslate"><span class="pre">.median()</span></code>, <code class="docutils literal notranslate"><span class="pre">.min()</span></code>, <code class="docutils literal notranslate"><span class="pre">.max()</span></code>, <code class="docutils literal notranslate"><span class="pre">.std()</span></code>, <code class="docutils literal notranslate"><span class="pre">.var()</span></code>, and <code class="docutils literal notranslate"><span class="pre">.sum()</span></code></p>
 </section>
 <section id="transform">
-<h3>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">#</a></h3>
+<h3>Transform<a class="headerlink" href="#transform" title="Permalink to this heading">#</a></h3>
 <p>While the split, apply, combine operation that we just demonstrated is extremely usefuly to quickly summarize data based on a grouping key, the resulting data frame is compressed to one row per grouping label.</p>
 <p>Sometimes, we would like to perform an operation over groups, but retain the original data shape. One common example is standardizing data within a subject or grouping variable. Normally, you might think to loop over subject ids and separately z-score or center a variable and then recombine the subject data using a vertical concatenation operation.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">transform</span></code> method in pandas can make this much easier and faster!</p>
@@ -3457,18 +3291,18 @@ dtype: float64
 <p>We can do this by using the <code class="docutils literal notranslate"><span class="pre">groupby(key)</span></code> method chained with the <code class="docutils literal notranslate"><span class="pre">.transform(function)</span></code> method. It will group the dataframe by the key column, perform the “function” transformation of the data and return data in same format. We can then assign the results to a new column in the dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary_dept_z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">)[</span><span class="s1">&#39;salary&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;std&#39;</span><span class="p">)[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary_dept_z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;std&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/2225281835.py:1: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+  df[&#39;salary_dept_z&#39;] = (df[&#39;salary&#39;] - df[&#39;salary&#39;].groupby(df[&#39;department&#39;]).transform(&#39;mean&#39;))/df[&#39;salary&#39;].groupby(df[&#39;department&#39;]).transform(&#39;std&#39;)
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -3577,12 +3411,12 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/lukechang/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: SettingWithCopyWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/5b/m183lc3x27n9krrzz85z2x1c0000gn/T/ipykernel_28379/94412960.py:3: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  This is separate from the ipykernel package so we can avoid doing imports until
+  df[&#39;salary_dept_z&#39;] = df[&#39;salary&#39;].groupby(df[&#39;department&#39;]).transform(calc_zscore)
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -3683,11 +3517,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section id="reshaping-data">
-<h2>Reshaping Data<a class="headerlink" href="#reshaping-data" title="Permalink to this headline">#</a></h2>
+<h2>Reshaping Data<a class="headerlink" href="#reshaping-data" title="Permalink to this heading">#</a></h2>
 <p>The last topic we will cover in this tutorial is reshaping data. Data is often in the form of observations by features, in which there is a single row for each independent observation of data and a separate column for each feature of the data. This is commonly referred to as as the <em>wide</em> format. However, when running regression or plotting in libraries such as seaborn, we often want our data in the <em>long</em> format, in which each grouping variable is specified in a separate column.</p>
 <p>In this section we cover how to go from wide to long using the <code class="docutils literal notranslate"><span class="pre">melt</span></code> operation and from long to wide using the <code class="docutils literal notranslate"><span class="pre">pivot</span></code> function.</p>
 <section id="melt">
-<h3>Melt<a class="headerlink" href="#melt" title="Permalink to this headline">#</a></h3>
+<h3>Melt<a class="headerlink" href="#melt" title="Permalink to this heading">#</a></h3>
 <p>To <code class="docutils literal notranslate"><span class="pre">melt</span></code> a dataframe into the long format, we need to specify which variables are the <code class="docutils literal notranslate"><span class="pre">id_vars</span></code>, which ones should be combined into a <code class="docutils literal notranslate"><span class="pre">value_var</span></code>, and finally, what we should label the column name for the <code class="docutils literal notranslate"><span class="pre">value_var</span></code>, and also for the <code class="docutils literal notranslate"><span class="pre">var_name</span></code>. We will call the values ‘Ratings’ and variables ‘Condition’.</p>
 <p>First, we need to create a dataset to play with.</p>
 <div class="cell docutils container">
@@ -3726,37 +3560,37 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <tr>
       <th>0</th>
       <td>1.0</td>
-      <td>0.330666</td>
-      <td>0.893955</td>
-      <td>0.524217</td>
+      <td>0.288893</td>
+      <td>0.189514</td>
+      <td>0.662512</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.0</td>
-      <td>0.881766</td>
-      <td>0.722020</td>
-      <td>0.895915</td>
+      <td>0.494610</td>
+      <td>0.012093</td>
+      <td>0.181321</td>
     </tr>
     <tr>
       <th>2</th>
       <td>3.0</td>
-      <td>0.804144</td>
-      <td>0.316754</td>
-      <td>0.357837</td>
+      <td>0.631140</td>
+      <td>0.999889</td>
+      <td>0.113135</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4.0</td>
-      <td>0.830743</td>
-      <td>0.550464</td>
-      <td>0.704257</td>
+      <td>0.584941</td>
+      <td>0.987392</td>
+      <td>0.176449</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5.0</td>
-      <td>0.881331</td>
-      <td>0.755053</td>
-      <td>0.811475</td>
+      <td>0.967856</td>
+      <td>0.157259</td>
+      <td>0.465654</td>
     </tr>
   </tbody>
 </table>
@@ -3799,91 +3633,91 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <th>0</th>
       <td>1.0</td>
       <td>A</td>
-      <td>0.330666</td>
+      <td>0.288893</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2.0</td>
       <td>A</td>
-      <td>0.881766</td>
+      <td>0.494610</td>
     </tr>
     <tr>
       <th>2</th>
       <td>3.0</td>
       <td>A</td>
-      <td>0.804144</td>
+      <td>0.631140</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4.0</td>
       <td>A</td>
-      <td>0.830743</td>
+      <td>0.584941</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5.0</td>
       <td>A</td>
-      <td>0.881331</td>
+      <td>0.967856</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1.0</td>
       <td>B</td>
-      <td>0.893955</td>
+      <td>0.189514</td>
     </tr>
     <tr>
       <th>6</th>
       <td>2.0</td>
       <td>B</td>
-      <td>0.722020</td>
+      <td>0.012093</td>
     </tr>
     <tr>
       <th>7</th>
       <td>3.0</td>
       <td>B</td>
-      <td>0.316754</td>
+      <td>0.999889</td>
     </tr>
     <tr>
       <th>8</th>
       <td>4.0</td>
       <td>B</td>
-      <td>0.550464</td>
+      <td>0.987392</td>
     </tr>
     <tr>
       <th>9</th>
       <td>5.0</td>
       <td>B</td>
-      <td>0.755053</td>
+      <td>0.157259</td>
     </tr>
     <tr>
       <th>10</th>
       <td>1.0</td>
       <td>C</td>
-      <td>0.524217</td>
+      <td>0.662512</td>
     </tr>
     <tr>
       <th>11</th>
       <td>2.0</td>
       <td>C</td>
-      <td>0.895915</td>
+      <td>0.181321</td>
     </tr>
     <tr>
       <th>12</th>
       <td>3.0</td>
       <td>C</td>
-      <td>0.357837</td>
+      <td>0.113135</td>
     </tr>
     <tr>
       <th>13</th>
       <td>4.0</td>
       <td>C</td>
-      <td>0.704257</td>
+      <td>0.176449</td>
     </tr>
     <tr>
       <th>14</th>
       <td>5.0</td>
       <td>C</td>
-      <td>0.811475</td>
+      <td>0.465654</td>
     </tr>
   </tbody>
 </table>
@@ -3892,7 +3726,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>Notice how the id variable is repeated for each condition?</p>
 </section>
 <section id="pivot">
-<h3>Pivot<a class="headerlink" href="#pivot" title="Permalink to this headline">#</a></h3>
+<h3>Pivot<a class="headerlink" href="#pivot" title="Permalink to this heading">#</a></h3>
 <p>We can also go back to the wide data format from a long dataframe using <code class="docutils literal notranslate"><span class="pre">pivot</span></code>. We just need to specify the variable containing the labels which will become the <code class="docutils literal notranslate"><span class="pre">columns</span></code> and the <code class="docutils literal notranslate"><span class="pre">values</span></code> column that will be broken into separate columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3934,33 +3768,33 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
   <tbody>
     <tr>
       <th>1.0</th>
-      <td>0.330666</td>
-      <td>0.893955</td>
-      <td>0.524217</td>
+      <td>0.288893</td>
+      <td>0.189514</td>
+      <td>0.662512</td>
     </tr>
     <tr>
       <th>2.0</th>
-      <td>0.881766</td>
-      <td>0.722020</td>
-      <td>0.895915</td>
+      <td>0.494610</td>
+      <td>0.012093</td>
+      <td>0.181321</td>
     </tr>
     <tr>
       <th>3.0</th>
-      <td>0.804144</td>
-      <td>0.316754</td>
-      <td>0.357837</td>
+      <td>0.631140</td>
+      <td>0.999889</td>
+      <td>0.113135</td>
     </tr>
     <tr>
       <th>4.0</th>
-      <td>0.830743</td>
-      <td>0.550464</td>
-      <td>0.704257</td>
+      <td>0.584941</td>
+      <td>0.987392</td>
+      <td>0.176449</td>
     </tr>
     <tr>
       <th>5.0</th>
-      <td>0.881331</td>
-      <td>0.755053</td>
-      <td>0.811475</td>
+      <td>0.967856</td>
+      <td>0.157259</td>
+      <td>0.465654</td>
     </tr>
   </tbody>
 </table>
@@ -3969,7 +3803,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 </section>
 <section id="exercises-homework">
-<h2>Exercises ( Homework)<a class="headerlink" href="#exercises-homework" title="Permalink to this headline">#</a></h2>
+<h2>Exercises ( Homework)<a class="headerlink" href="#exercises-homework" title="Permalink to this heading">#</a></h2>
 <p>The following exercises uses the dataset “salary_exercise.csv” adapted from material available <a class="reference external" href="http://data.princeton.edu/wws509/datasets/#salary">here</a></p>
 <p>These are the salary data used in Weisberg’s book, consisting of observations on six variables for 52 tenure-track professors in a small college. The variables are:</p>
 <ul class="simple">
@@ -3985,7 +3819,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </ul>
 <p>Reference: S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.</p>
 <section id="exercise-1">
-<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this heading">#</a></h3>
 <p>Read the salary_exercise.csv into a dataframe, and change the column names to a more readable format such as sex, rank, yearsinrank, degree, yearssinceHD, and salary.</p>
 <p>Clean the data by excluding rows with any missing value.</p>
 <p>What are the overall mean, standard deviation, min, and maximum of professors’ salary?</p>
@@ -3998,11 +3832,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </section>
 <section id="exercise-2">
-<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this heading">#</a></h3>
 <p>Create two separate dataframes based on the type of degree. Now calculate the mean salary of the 5 oldest professors of each degree type.</p>
 </section>
 <section id="exercise-3">
-<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">#</a></h3>
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this heading">#</a></h3>
 <p>What is the correlation between the standardized salary <em>across</em> all ranks and the standardized salary <em>within</em> ranks?</p>
 </section>
 </section>
@@ -4017,64 +3851,161 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "py312"
         },
         kernelOptions: {
-            name: "python3",
+            name: "py312",
             path: "./content"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'py312'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Introduction_to_Programming.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Introduction to programming</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Introduction_to_Programming.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to programming</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Introduction_to_Plotting.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Introduction_to_Plotting.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Introduction to Plotting</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-objects">Pandas Objects</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe">DataFrame</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ways-to-check-the-dataframe">Ways to check the dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#describing-the-data">Describing the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-missing-values">Dealing with missing values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-new-columns">Create New Columns</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-and-slicing-data">Indexing and slicing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-keys">Indexing with Keys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-integers">Indexing with Integers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-booleans">Indexing with booleans</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-indexing">Numpy indexing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming">Renaming</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming Columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-rows">Renaming Rows</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operations">Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-data">Merging Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenation">Concatenation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge">Merge</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping">Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groupby">Groupby</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform">Transform</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melt">Melt</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot">Pivot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises-homework">Exercises ( Homework)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">Exercise 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">Exercise 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

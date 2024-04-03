@@ -1,757 +1,546 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Introduction to Parcellations &#8212; DartBrains</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138270939-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-138270939-1');
+            </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Parcellations';</script>
     <link rel="canonical" href="http://dartbrains.org/content/Parcellations.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Resampling Statistics" href="Resampling_Statistics.html" />
     <link rel="prev" title="Representational Similarity Analysis" href="RSA.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-<script>
-                        window.ga = window.ga || function () {
-                            (ga.q = ga.q || []).push(arguments) };
-                        ga.l = +new Date;
-                        ga('create', 'UA-138270939-1', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/dartbrains_logo_square_transparent.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">DartBrains</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Overview
- </span>
-</p>
+    
+    
+    <img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-light" alt="DartBrains - Home"/>
+    <script>document.write(`<img src="../_static/dartbrains_logo_square_transparent.png" class="logo__image only-dark" alt="DartBrains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Instructors.html">
-   Instructors
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Syllabus.html">
-   Syllabus
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Schedule.html">
-   Schedule
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Instructors.html">Instructors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schedule.html">Schedule</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Computing Resources
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Computing Resources</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_JupyterHub.html">
-   Introduction to JupyterHub
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Download_Data.html">
-   Download Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Programming.html">
-   Introduction to programming
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Pandas.html">
-   Introduction to Pandas
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Plotting.html">
-   Introduction to Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="fmriprep_on_discovery.html">
-   Running fMRIPrep on HPC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Glossary.html">
-   Glossary
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_JupyterHub.html">Introduction to JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Download_Data.html">Download Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Programming.html">Introduction to programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Pandas.html">Introduction to Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Plotting.html">Introduction to Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fmriprep_on_discovery.html">Running fMRIPrep on HPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Glossary.html">Glossary</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Course Topics
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Topics</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Intro_to_Neuroimaging.html">
-   Introduction to Neuroimaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Measurement.html">
-   Signal Generation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="ICA.html">
-   Separating Signal From Noise With ICA
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">
-   Introduction to Neuroimaging Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Signal_Processing.html">
-   Signal Processing Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Preprocessing.html">
-   Preprocessing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM.html">
-   Introduction to the General Linear Model
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GLM_Single_Subject_Model.html">
-   Modeling Single Subject Data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Group_Analysis.html">
-   Group Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Thresholding_Group_Analyses.html">
-   Thresholding Group Analyses
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Connectivity.html">
-   Connectivity
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_ICA.html">
-   Introduction to Independent Components Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Multivariate_Prediction.html">
-   Multivariate Prediction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="RSA.html">
-   Representational Similarity Analysis
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to Parcellations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Resampling_Statistics.html">
-   Resampling Statistics
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Neuroimaging.html">Introduction to Neuroimaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Measurement.html">Signal Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ICA.html">Separating Signal From Noise With ICA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_Neuroimaging_Data.html">Introduction to Neuroimaging Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal_Processing.html">Signal Processing Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM.html">Introduction to the General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GLM_Single_Subject_Model.html">Modeling Single Subject Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Group_Analysis.html">Group Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Thresholding_Group_Analyses.html">Thresholding Group Analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Connectivity.html">Connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction_to_ICA.html">Introduction to Independent Components Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Multivariate_Prediction.html">Multivariate Prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RSA.html">Representational Similarity Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Parcellations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Resampling_Statistics.html">Resampling Statistics</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Additional Courses
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Courses</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference external" href="http://naturalistic-data.org/">
-   Naturalistic Data Analysis
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference external" href="http://naturalistic-data.org/">Naturalistic Data Analysis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Project Gallery
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Gallery</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2019_Spring.html">
-   Spring 2019
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Spring.html">
-   Spring 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2020_Fall.html">
-   Fall 2020
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2021_Fall.html">
-   Fall 2021
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_Fall.html">
-   Fall 2022
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2019_Spring.html">Spring 2019</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Spring.html">Spring 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020_Fall.html">Fall 2020</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021_Fall.html">Fall 2021</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_Fall.html">Fall 2022</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Contributing
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Contributing.html">
-   Contributing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference external" href="https://github.com/ljchang/dartbrains">
-   GitHub Repository
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="Contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/ljchang/dartbrains">GitHub Repository</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Post questions to <a href='https://www.askpbs.org/c/dartbrains'>DartBrains Discourse</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Parcellations.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/ljchang/dartbrains/master?urlpath=tree/content/Parcellations.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Parcellations.ipynb&branch=master"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on JupyterHub"
+      
+      
+      
+      <li><a href="https://jhub.dartmouth.edu/hub/user-redirect/git-pull?repo=https%3A//github.com/ljchang/dartbrains&urlpath=tree/dartbrains/content/Parcellations.ipynb&branch=master" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_jupyterhub.svg">
   </span>
-<span class="headerbtn__text-container">JupyterHub</span>
+<span class="btn__text-container">JupyterHub</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Parcellations.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/ljchang/dartbrains/blob/master/content/Parcellations.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/edit/master/content/Parcellations.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Parcellations.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Parcellations.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/ljchang/dartbrains"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/issues/new?title=Issue%20on%20page%20%2Fcontent/Parcellations.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/ljchang/dartbrains/edit/master/content/Parcellations.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/content/Parcellations.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spatial-scales">
-   Spatial Scales
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-quick-note-on-labeling">
-   A quick note on labeling:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#accessing-parcellations-atlases">
-   Accessing Parcellations/Atlases:
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nilearn">
-     Nilearn:
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#neuroparc">
-     Neuroparc
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parcellations-schemes">
-   Parcellations Schemes
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#anatomical-atlases">
-     Anatomical Atlases
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#functional-parcellations">
-     Functional parcellations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#structural-parcellations">
-     Structural parcellations
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#summary-of-differences-between-parcellations">
-   Summary of differences between parcellations
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#other-forms-of-parcellations-not-mentioned-here">
-     Other forms of parcellations not mentioned here
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to Parcellations</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spatial-scales">
-   Spatial Scales
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-quick-note-on-labeling">
-   A quick note on labeling:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#accessing-parcellations-atlases">
-   Accessing Parcellations/Atlases:
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nilearn">
-     Nilearn:
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#neuroparc">
-     Neuroparc
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#parcellations-schemes">
-   Parcellations Schemes
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#anatomical-atlases">
-     Anatomical Atlases
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#functional-parcellations">
-     Functional parcellations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#structural-parcellations">
-     Structural parcellations
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#summary-of-differences-between-parcellations">
-   Summary of differences between parcellations
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#other-forms-of-parcellations-not-mentioned-here">
-     Other forms of parcellations not mentioned here
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Parcellations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-scales">Spatial Scales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quick-note-on-labeling">A quick note on labeling:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-parcellations-atlases">Accessing Parcellations/Atlases:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilearn">Nilearn:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neuroparc">Neuroparc</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parcellations-schemes">Parcellations Schemes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomical-atlases">Anatomical Atlases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functional-parcellations">Functional parcellations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-parcellations">Structural parcellations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-differences-between-parcellations">Summary of differences between parcellations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-forms-of-parcellations-not-mentioned-here">Other forms of parcellations not mentioned here</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-parcellations">
-<h1>Introduction to Parcellations<a class="headerlink" href="#introduction-to-parcellations" title="Permalink to this headline">#</a></h1>
+<h1>Introduction to Parcellations<a class="headerlink" href="#introduction-to-parcellations" title="Permalink to this heading">#</a></h1>
 <p><em>Written By: Clara Sava-Segal &amp; Thomas L. Botch (edited by Luke Chang)</em></p>
 <p>What spatial scale should we use to analyze neuroimaging data? Traditional univariate approaches have focused on analyzing data at the voxel level or averaging activity within a region of interest (ROI). However, multivariate approaches tend to work with larger spatial scales (e.g., searchlights, ROIs, resting state networks, &amp; parcellations). The goal of this tutorial is to provide an introduction to parcellation schemes. We will cover the types of atlases that are available, when to use them, and how to work with them in python.</p>
 <section id="spatial-scales">
-<h2>Spatial Scales<a class="headerlink" href="#spatial-scales" title="Permalink to this headline">#</a></h2>
+<h2>Spatial Scales<a class="headerlink" href="#spatial-scales" title="Permalink to this heading">#</a></h2>
 <p>There is vast diversity in the spatial scales at which different psychological and neurological processes are organized. To study these different mechanisms most effectively, the scale of our methods should be consistent with the scale of this organization (for more detail see: <a class="reference external" href="https://academic.oup.com/scan/article/16/8/795/6121195?login=true">Jolly &amp; Chang, 2021</a>).</p>
 <p>Parcellations provide a way to examine the brain at different spatial scales by restricting the number of regions of interest to variable scales as determined by anatomical or functional divisions. We provide extensive detail on anatomical, functional and structural approaches to building parcellations. In general, the goal is to use group together voxels based on either one of these methodological divisions. This grouping of voxels can be either contiguous (voxels that are spatially next to one another in a particular region of the brain) or non-contiguous (voxels that are spatially disjoint, but functionally connected (e.g., resting state networks).</p>
 <p>The table below is a useful discussion comparing ROI (parcellation) approaches to searchlights and whole brain approaches. (From: <a class="reference external" href="https://academic.oup.com/scan/article/16/8/795/6121195?login=true">Jolly &amp; Chang, 2021</a>). The goal of this notebook is to provide extensive detail on how the publicly available parcellations have been generated to give you more insight as to which ones would be better suited for your own research questions.</p>
 <p><img alt="" src="../_images/spatial_feature_selection_table.png" /></p>
 </section>
 <section id="a-quick-note-on-labeling">
-<h2>A quick note on labeling:<a class="headerlink" href="#a-quick-note-on-labeling" title="Permalink to this headline">#</a></h2>
+<h2>A quick note on labeling:<a class="headerlink" href="#a-quick-note-on-labeling" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>The terms parcellation, atlas, and template are often used interchangeably, as noted in <a class="reference external" href="https://arxiv.org/pdf/2107.03475.pdf">Moghimi <em>et al</em> 2021</a>. We use their labeling strategy below to describe the three strategies that have been used to generate parcellations:</p></li>
 <li><p><strong>Parcellation</strong>: a division of the gray matter that enumerates what region each gray matter voxel is a part of</p></li>
@@ -760,10 +549,10 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="accessing-parcellations-atlases">
-<h2>Accessing Parcellations/Atlases:<a class="headerlink" href="#accessing-parcellations-atlases" title="Permalink to this headline">#</a></h2>
+<h2>Accessing Parcellations/Atlases:<a class="headerlink" href="#accessing-parcellations-atlases" title="Permalink to this heading">#</a></h2>
 <p>There are two main repositories of anatomical and functional atlases that can programmatically accessed via python packages (e.g., Nilearn and Neuroparc). We briefly detail these below and then will provide code-snippets and plotting suggestions for using these packages as we introduce parcellations below.</p>
 <section id="nilearn">
-<h3>Nilearn:<a class="headerlink" href="#nilearn" title="Permalink to this headline">#</a></h3>
+<h3>Nilearn:<a class="headerlink" href="#nilearn" title="Permalink to this heading">#</a></h3>
 <p><a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> (Abraham <em>et al</em>, 2014) is a python package that combines tools for neuroimaging and provides command line functions to fetch atlases that make using parcellations easy. Nilearn includes <strong>12</strong> anatomically and functionally defined atlases, including Harvard-Oxford, Schaefer, Yeo and Anatomated Anatomical Labeling (AAL).</p>
 <p>Here is how each of the atlases can be downloaded using python.</p>
 <div class="cell docutils container">
@@ -793,7 +582,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="neuroparc">
-<h3>Neuroparc<a class="headerlink" href="#neuroparc" title="Permalink to this headline">#</a></h3>
+<h3>Neuroparc<a class="headerlink" href="#neuroparc" title="Permalink to this heading">#</a></h3>
 <p>Alternatively, there is also the <a class="reference external" href="https://github.com/neurodata/neuroparc">Neuroparc</a> package, which provides a large repository of standardized atlases (currently <strong>46</strong>; see Table below), which can be used interchangeably. Neuroparc includes details to make <strong>the comparison between atlases</strong> in MNI space easily <a class="reference external" href="https://www.nature.com/articles/s41597-021-00849-3">(Lawrence <em>et al.</em>, 2021)</a>. Importantly, their Github page <a class="reference external" href="https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary">README file</a> provides an excellent summary of how the parcellations where created, their description, and their native space.</p>
 <p>The table below <a class="reference external" href="https://www.nature.com/articles/s41597-021-00849-3">(Lawrence <em>et al.</em>, 2021)</a> includes a list of the parcellations available, the number of ROIs in each depending on the resolution, and whether a anatomical labels are available. Again, if you want further information on these parcellations, we recommend checking out the aforementioned <a class="reference external" href="https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary">README file</a>.</p>
 <p><img alt="" src="../_images/neuroparc_atlas_table.png" /></p>
@@ -801,14 +590,14 @@ title="Print to PDF"
 </section>
 </section>
 <section id="parcellations-schemes">
-<h2>Parcellations Schemes<a class="headerlink" href="#parcellations-schemes" title="Permalink to this headline">#</a></h2>
+<h2>Parcellations Schemes<a class="headerlink" href="#parcellations-schemes" title="Permalink to this heading">#</a></h2>
 <section id="anatomical-atlases">
-<h3>Anatomical Atlases<a class="headerlink" href="#anatomical-atlases" title="Permalink to this headline">#</a></h3>
+<h3>Anatomical Atlases<a class="headerlink" href="#anatomical-atlases" title="Permalink to this heading">#</a></h3>
 <p>With the advent of MRI, atlases have started to rely on neural macrostructures such as sulci or gyri to distinguish regions, with the expectation that this would result in brain regions with voxels that have a shared cytoarchitecture. <strong>The labels in these atlases reflect the spatial location of an anatomical region.</strong></p>
 <p>There are different approaches (Direct vs. Mirroring) to set up and generate an anatomical atlas that are well described in <a class="reference external" href="https://arxiv.org/pdf/2107.03475.pdf">Moghimi <em>et al.</em> 2021</a> if you are interested in reading more. The mirroring approach has become standard practice in most modern fMRI research programs. It entails registering an image that needs to be parcellated to an existent template image that has already been labeled. Each voxel gets the corresponding voxel’s label in the reference image.</p>
 <p>Commonly used and referenced template/reference images include the <a class="reference external" href="http://www.talairach.org/about.html">Talairach template</a> (Talairach and Tournoux, 1988) and the <a class="reference external" href="https://github.com/Jfortin1/MNITemplate">MNI 152 template</a>.</p>
 <p>Two single-subject attempts to automate these procedures were the AAL atlas and the Talairach atlas (described below). “Single-subject” here means that <strong>one individual’s</strong> brain was used as the reference point. Unsurprisingly, this means that the anatomical idiosyncrasies of these individuals are reflected in these template images, but these are still commonly used as you will see below.</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/11771995/">AAL-Automatic Anatomical Labeling</a> [Tzourio-Mazoyer <em>et al</em>, 2002]</p></li>
 </ol>
 <ul class="simple">
@@ -832,10 +621,10 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x179bd93a0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_5_1.png" src="../_images/Parcellations_5_1.png" />
+<img alt="../_images/1247510ee792cda851edbfa461d74a0ea5b98f047cd3df3c37a8e092f9462d49.png" src="../_images/1247510ee792cda851edbfa461d74a0ea5b98f047cd3df3c37a8e092f9462d49.png" />
 </div>
 </div>
-<ol class="simple">
+<ol class="arabic simple" start="2">
 <li><p><a class="reference external" href="http://www.talairach.org/">Talairach Atlas</a> (Talairach and Tournoux, 1988)</p></li>
 </ol>
 <ul class="simple">
@@ -855,18 +644,18 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Parcellations_7_0.png" src="../_images/Parcellations_7_0.png" />
-<img alt="../_images/Parcellations_7_1.png" src="../_images/Parcellations_7_1.png" />
-<img alt="../_images/Parcellations_7_2.png" src="../_images/Parcellations_7_2.png" />
-<img alt="../_images/Parcellations_7_3.png" src="../_images/Parcellations_7_3.png" />
-<img alt="../_images/Parcellations_7_4.png" src="../_images/Parcellations_7_4.png" />
+<img alt="../_images/82fd789c70dd9bda12b546642d667ebd8e9159bd2e2f304ce99680d4ae748cbe.png" src="../_images/82fd789c70dd9bda12b546642d667ebd8e9159bd2e2f304ce99680d4ae748cbe.png" />
+<img alt="../_images/3e44200cb803515960da9a9fd332b493ee2fad691745c907a971f15f22d8ed03.png" src="../_images/3e44200cb803515960da9a9fd332b493ee2fad691745c907a971f15f22d8ed03.png" />
+<img alt="../_images/87f6239b805f3ef50274b94b16b23ec0670c08c97cc9dc2ac980d439efbbceb9.png" src="../_images/87f6239b805f3ef50274b94b16b23ec0670c08c97cc9dc2ac980d439efbbceb9.png" />
+<img alt="../_images/2d89012ba7e48d24ed43f787ca0cfa91d512a42321a3a63f56593c27a368e03b.png" src="../_images/2d89012ba7e48d24ed43f787ca0cfa91d512a42321a3a63f56593c27a368e03b.png" />
+<img alt="../_images/010cd6467bf0116c48b729b442ee7213a0194c5fd72835f1118566c274c8354b.png" src="../_images/010cd6467bf0116c48b729b442ee7213a0194c5fd72835f1118566c274c8354b.png" />
 </div>
 </div>
 <p><strong>Multiple-subject atlases</strong> use the combination of multiple subjects’ T1 scans as the reference image for mirroring in generating anatomical atlases. Multiple-subject parcelations are thought to be more accurate than single subject parcellations and tend to be <strong>probabilistic</strong> in that they describe the probability of a voxel belonging to a specific region of the brain based on multiple subjects.</p>
 <p>There are numerous ways to assign a subject’s data that you want to be parcellated to a probabilistic atlas. One method is to <strong>generate a single reference atlas</strong> in which there is one image registration between the reference image and the to-be-parcellated image. Evidently, this is prone to errors of image registration. In this method, the probability that each voxel in your data belongs to a region in the reference atlas is calculated while also taking into account the surface geometry and image intensity, as reviewed in Moghimi <em>et al.</em> 2021 and posited in Fischl <em>et al.</em> 2002/2004. Importantly, this method has been implemented into <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/">FreeSurfer</a> and the <a class="reference external" href="http://www.humanconnectomeproject.org/">Human Connectome Project</a> imaging pipeline. The alternative is a <strong>multiple-reference atlases</strong> approach in which each atlas is assigned to the new brain image separately such that the voxel is assigned to its corresponding image based on its assignment across multiple reference atlases.</p>
 <p>To further emphasize, a major obstacle when it comes to anatomical atlases is the degree of idiosyncracy in neuroanatomy as well as the subjective nature of human manual atlases. Importantly, automated algorithms have been generated to bypass the latter and guidelines have been put forth to aid in keeping manual atlases consistent. Likewise, reference atlases exist based on <em>age</em> to deal with changes in neural morphology. We do not include those here.</p>
 <p>Numerous multi-subject atlases have been generated and made publicly available. We describe three of the most commonly used ones below:</p>
-<ol class="simple">
+<ol class="arabic simple" start="3">
 <li><p><a class="reference external" href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Atlases">Harvard-Oxford </a></p></li>
 </ol>
 <ul class="simple">
@@ -886,11 +675,11 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Parcellations_9_0.png" src="../_images/Parcellations_9_0.png" />
-<img alt="../_images/Parcellations_9_1.png" src="../_images/Parcellations_9_1.png" />
+<img alt="../_images/78c75c7447bd3cd4af2ce965f191fe20b7403d7cf175b557baff0b5740d90502.png" src="../_images/78c75c7447bd3cd4af2ce965f191fe20b7403d7cf175b557baff0b5740d90502.png" />
+<img alt="../_images/9a4f0a04d01a21d2656059b61fba346f6e2ddf491a552c667d0c620a7b194c6a.png" src="../_images/9a4f0a04d01a21d2656059b61fba346f6e2ddf491a552c667d0c620a7b194c6a.png" />
 </div>
 </div>
-<ol class="simple">
+<ol class="arabic simple" start="4">
 <li><p>Desikan-Killiany (Desikan, 2006)</p></li>
 </ol>
 <ul class="simple">
@@ -915,10 +704,10 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x2a0914730&gt;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_11_1.png" src="../_images/Parcellations_11_1.png" />
+<img alt="../_images/b1c9ca30c241ed7cbfc88a875f72e724ce5a413befa8f92d551ec56f7ea0fd53.png" src="../_images/b1c9ca30c241ed7cbfc88a875f72e724ce5a413befa8f92d551ec56f7ea0fd53.png" />
 </div>
 </div>
-<ol class="simple">
+<ol class="arabic simple" start="5">
 <li><p>Destrieux Atlas <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1053811910008542">(Destrieux <em>et al.</em> 2010)</a></p></li>
 </ol>
 <ul class="simple">
@@ -961,12 +750,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot; Note: we chose &#39;infl_left&#39; here to match the image above, but the same image could be plotted on pial surface or at different angles using this plot_surf_roi function&quot;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_13_2.png" src="../_images/Parcellations_13_2.png" />
+<img alt="../_images/a937547e34e61beb724b19d8f7ffe3957a902fc795d911da73947d315c0273a9.png" src="../_images/a937547e34e61beb724b19d8f7ffe3957a902fc795d911da73947d315c0273a9.png" />
 </div>
 </div>
 </section>
 <section id="functional-parcellations">
-<h3>Functional parcellations<a class="headerlink" href="#functional-parcellations" title="Permalink to this headline">#</a></h3>
+<h3>Functional parcellations<a class="headerlink" href="#functional-parcellations" title="Permalink to this heading">#</a></h3>
 <p>The goal of functional parcellations is to group voxels based on similar function, using either functional activity or functional connectivity as similarity measures. Again, a nice review can be found in <a class="reference external" href="https://arxiv.org/pdf/2107.03475.pdf">Moghimi <em>et al.</em> 2021</a>. The assumption is that functionally distinct brain regions have voxels with shared functional activity and connectivity. For a great discussion of how cortical regions have a ‘connectional fingerprint’ reflecting both observed cell-firing differences and functional imaging activity, see: <a class="reference external" href="https://www.nature.com/articles/nrn893">Passingham, Stephan &amp; Kötter (2002)</a>. A combination of resting state fMRI and task-based fMRI have been used to generate these parcellations. Before discussing the implementation and generation of functional parcellations, we wish to acknowledge a couple of ongoing fields of research:</p>
 <p>Although there is more to determine, it may be that functional activity (as compared to connectivity) would result in parcellations that have higher inter-subject consistency considering that it has been shown that subjects have idiosyncratic connectivity patterns (<a class="reference external" href="https://www.nature.com/articles/nn.4135">Finn <em>et al.</em> 2015</a>). Craddock <em>et al.</em> (2012) conducted a detailed analysis using anatomical atlases (included the Talairach, Harvard-Oxford, and AAL detailed above) to evaluate how well they can reproduce functional connectivity patterns. They identified that the use of many regions in an anatomical atlas (600 or more) more accurately reflects functional connectivity patterns, while using atlases with fewer regions is substandard and less suited if the goal is to understand functional connectivity. For reference, see <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1002/hbm.21333">here</a>.</p>
 <p>Likewise, recent work has explored whether functional parcellations derived from resting-state versus from task-evoked fMRI might differ. Specifically, it has been shown (unsurprisingly) that the functional organization of the brain depends on the task such that a parcellation generated from one task will differ from a parcellation generated from another task (<a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/31740342/">Salehi <em>et al.</em> 2019</a>).</p>
@@ -978,7 +767,7 @@ title="Print to PDF"
 </pre></div>
 </div>
 <p>Below, we introduce a series of widely used functional parcellations and note which features were used to generate them.</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><a class="reference external" href="https://https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3174820/">Yeo parcellation</a></p></li>
 </ol>
 <ul class="simple">
@@ -1011,8 +800,8 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;Note: if you want to keep the canonical Yeo colors for your plotting, there is a &#39;colors_7&#39; txt file available in the nilearn function&quot;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_16_2.png" src="../_images/Parcellations_16_2.png" />
-<img alt="../_images/Parcellations_16_3.png" src="../_images/Parcellations_16_3.png" />
+<img alt="../_images/a33b594e7eae4c512057e5aad0212be406c63f995d8eef4d47624cd9d0f80c6f.png" src="../_images/a33b594e7eae4c512057e5aad0212be406c63f995d8eef4d47624cd9d0f80c6f.png" />
+<img alt="../_images/d4ea1861e24d2c5f507c5dfb16c8dbdf6e156adaec0fc1e22b9d84005fbc745d.png" src="../_images/d4ea1861e24d2c5f507c5dfb16c8dbdf6e156adaec0fc1e22b9d84005fbc745d.png" />
 </div>
 </div>
 <p>The image above plots the network colors so that networks in different hemisphere have the same colors. If you want to split up the networks into 49 ROIs, nilearn includes a useful <code class="docutils literal notranslate"><span class="pre">connected_labels_regions</span></code> function. Further information using the Yeo network in nilearn is detailed <a class="reference external" href="https://nilearn.github.io/auto_examples/06_manipulating_images/plot_extract_regions_labels_image.html">here</a>.</p>
@@ -1035,10 +824,10 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x28eaa0df0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_18_2.png" src="../_images/Parcellations_18_2.png" />
+<img alt="../_images/e622cee3f53ef0f14ee7bba76baf518a5c3f4d2dcc3d0489d7ba67884a3266ec.png" src="../_images/e622cee3f53ef0f14ee7bba76baf518a5c3f4d2dcc3d0489d7ba67884a3266ec.png" />
 </div>
 </div>
-<ol class="simple">
+<ol class="arabic simple" start="2">
 <li><p><a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/28981612/">Schaefer parcellation</a></p></li>
 </ol>
 <ul class="simple">
@@ -1076,10 +865,10 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x2a2b9a5e0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_20_2.png" src="../_images/Parcellations_20_2.png" />
+<img alt="../_images/91dd8733e2eef7a6478be836b5130eb8c41aaa0b9db68629e537c5039dd977ca.png" src="../_images/91dd8733e2eef7a6478be836b5130eb8c41aaa0b9db68629e537c5039dd977ca.png" />
 </div>
 </div>
-<ol class="simple">
+<ol class="arabic simple" start="3">
 <li><p><a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/23747961/">Shen Parcellation</a></p></li>
 </ol>
 <ul class="simple">
@@ -1100,19 +889,19 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x2a087f1c0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_22_1.png" src="../_images/Parcellations_22_1.png" />
+<img alt="../_images/cd26912be6a0a4ff04c6454b3ec36cf15fc8993fe53c7d986aa7f408781401ae.png" src="../_images/cd26912be6a0a4ff04c6454b3ec36cf15fc8993fe53c7d986aa7f408781401ae.png" />
 </div>
 </div>
 <p>Something of note is that while we usually think of voxels as belonging to one single region (<strong>hard assignment</strong>), but it also possible that a voxel can belong to multiple regions (<strong>soft assignment</strong>). Consider parcellations based on network - (association cortex) regions may be “part of” different networks depending on task. Below, we introduce the idea of multimodal parcellations.</p>
 </section>
 <section id="structural-parcellations">
-<h3>Structural parcellations<a class="headerlink" href="#structural-parcellations" title="Permalink to this headline">#</a></h3>
+<h3>Structural parcellations<a class="headerlink" href="#structural-parcellations" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Structural parcellations reflect the <strong>structural connectivity profile</strong> and rely on diffusion-weighted MR. The connectivity profile of a voxels reflects the probability of that voxel being connected to other voxels via a white matter fiber. They estimate where white matter tracks start and end and their pathways. The premise is that connections reflect functional organization, so cortical regions that are functionally distinct from one another should have different connectivity patterns. However, given that structural parcellations rely on accurate white matter fiber estimation, the limiting factor is the fidelity of the tractography process. There are two main topographic approaches for mapping fibers: (1) deterministic and (2) probabilistic, but the majority use <strong>probabilistic tractography</strong>. Similar methods of clustering (as described under Functional Parcellations) are used to assign boundaries based on connectivity. Importantly, tractography algorithms are biased towards tracts ended on the gyral surface such that parcellations are biased to align with the sulci.</p></li>
 <li><p>For an excellent discussion of how tractography connections compare to retrograde tracer injections in the macaque neocortex, we recommend this excellent publication by <a class="reference external" href="https://www.jneurosci.org/content/36/25/6758">Donahue and colleagues (2016)</a>. They show that tractography confirms the white matter pathways identified with the invasive tracing with high sensitivity, but also discuss limitations in specificity.</p></li>
 <li><p>Below, we present the widely-available and used Glasser parcellation which is multimodal.</p></li>
 </ul>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><a class="reference external" href="https://www.nature.com/articles/nature18933">Glasser parcellation</a></p></li>
 </ol>
 <ul class="simple">
@@ -1140,7 +929,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;nilearn.plotting.displays._slicers.OrthoSlicer at 0x28eedb460&gt;
 </pre></div>
 </div>
-<img alt="../_images/Parcellations_25_1.png" src="../_images/Parcellations_25_1.png" />
+<img alt="../_images/b08730969b0573e6dfc1474f60d7c495c85765d508286a52af1b8b4153eb1fdf.png" src="../_images/b08730969b0573e6dfc1474f60d7c495c85765d508286a52af1b8b4153eb1fdf.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1149,7 +938,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="summary-of-differences-between-parcellations">
-<h2>Summary of differences between parcellations<a class="headerlink" href="#summary-of-differences-between-parcellations" title="Permalink to this headline">#</a></h2>
+<h2>Summary of differences between parcellations<a class="headerlink" href="#summary-of-differences-between-parcellations" title="Permalink to this heading">#</a></h2>
 <p>Here, we summarize the information above and note a few additional tools which may be of interest. The choice of parcellation deeply relates to the scale of the researcher’s question of interest (e.g., region vs. network).</p>
 <ul class="simple">
 <li><p>Anatomical parcellations:</p>
@@ -1177,7 +966,7 @@ title="Print to PDF"
 </li>
 </ul>
 <section id="other-forms-of-parcellations-not-mentioned-here">
-<h3>Other forms of parcellations not mentioned here<a class="headerlink" href="#other-forms-of-parcellations-not-mentioned-here" title="Permalink to this headline">#</a></h3>
+<h3>Other forms of parcellations not mentioned here<a class="headerlink" href="#other-forms-of-parcellations-not-mentioned-here" title="Permalink to this heading">#</a></h3>
 <p>Other parcellations exist as well:</p>
 <ul class="simple">
 <li><p>Transcriptomics - divide the cortex based on gene-expression</p></li>
@@ -1210,53 +999,121 @@ title="Print to PDF"
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="RSA.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Representational Similarity Analysis</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="RSA.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Representational Similarity Analysis</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Resampling_Statistics.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Resampling_Statistics.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Resampling Statistics</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-scales">Spatial Scales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quick-note-on-labeling">A quick note on labeling:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-parcellations-atlases">Accessing Parcellations/Atlases:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilearn">Nilearn:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neuroparc">Neuroparc</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parcellations-schemes">Parcellations Schemes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomical-atlases">Anatomical Atlases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functional-parcellations">Functional parcellations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-parcellations">Structural parcellations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-differences-between-parcellations">Summary of differences between parcellations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-forms-of-parcellations-not-mentioned-here">Other forms of parcellations not mentioned here</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Luke Chang<br/>
-  
-      &copy; Copyright 2021.<br/>
-    <div class="extra_footer">
-      Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
-    </div>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Luke Chang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Supported by an NSF CAREER Award 1848370, <a href='https://rc.dartmouth.edu/'>Dartmouth Research Computing</a>, and the <a href='https://dcal.dartmouth.edu/about/impact/experiential-learning'>Dartmouth Center for the Advancement of Learning</a>.
 </div>
+  </div>
+  
+</div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
