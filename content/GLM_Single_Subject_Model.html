@@ -1077,6 +1077,17 @@ memory usage: 10.1 KB
 <img alt="../_images/b398f2671618d411b8f16f9ba60298a299f41645c99b821341feaf6155ba6ddc.png" src="../_images/b398f2671618d411b8f16f9ba60298a299f41645c99b821341feaf6155ba6ddc.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>```{note}
+Multicollineary as discussed above can lead to unstable estimates of the regression coefficients, particularly for the regressors of interest. Multicollinearity between covariates of no interest tends to be less of a problem because we generally are just interested in explaining noise in our model and are rarely interested in interpreting the individual covariate beta coefficients. However, in cases of extreme collinearity, the model may become rank deficient, which can lead to difficulty with even fitting the model. 
+
+A simple fix to this problem is to use the `.clean()` method. This method will remove any columns that are perfectly collinear with other columns in the design matrix.
+```
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="smoothing">
