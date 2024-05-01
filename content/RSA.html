@@ -602,7 +602,7 @@ from <a class="reference external" href="https://www.frontiersin.org/articles/10
 <section id="single-subject-pattern-similarity">
 <h3>Single Subject Pattern Similarity<a class="headerlink" href="#single-subject-pattern-similarity" title="Permalink to this heading">#</a></h3>
 <p>Recall that in the Single Subject Model Lab that we ran single subject models for 10 different regressors for the Pinel Localizer task.  In this tutorial, we will use our results to learn how to conduct RSA style analyses.</p>
-<p>First, let’s get a list of all of the subject IDs and load the beta values from each condition for a single subject into a <code class="docutils literal notranslate"><span class="pre">Brain_Data</span></code> object.</p>
+<p>First, let’s get a list of all of the subject IDs and load the beta values from each condition for a single subject into a <code class="docutils literal notranslate"><span class="pre">Brain_Data</span></code> object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this <a class="reference internal" href="Group_Analysis.html#content-group-analysis-labels"><span class="std std-ref">code</span></a> for reference from the group analysis tutorial.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sub</span> <span class="o">=</span> <span class="s1">&#39;S01&#39;</span>
