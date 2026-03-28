@@ -37,7 +37,7 @@ The discovery system can be accessed via `ssh` using a terminal. There are a num
 
 ### Preprocessing with fmriprep
 
-fmriprep is an fMRI data preprocessing pipeline that is discussed throughout the course in the [fmriprep](fmriprep) subsection of the [preprocessing](Preprocessing.ipynb) and also the [download data](Download_Data.ipynb) tutorial.
+fmriprep is an fMRI data preprocessing pipeline that is discussed throughout the course in the [fmriprep](#preprocessing-with-fmriprep) subsection of the [preprocessing](Preprocessing.ipynb) and also the [download data](Download_Data.ipynb) tutorial.
 
 ## Set-up before running fMRIPrep
 

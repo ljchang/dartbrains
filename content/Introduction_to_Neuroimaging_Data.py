@@ -83,7 +83,7 @@ def _(mo):
 
     The dataset we will be working with has already been converted to the BIDS format (see download localizer tutorial).
 
-    You may need to install [pybids]() to query the BIDS datasets using following command `!pip install pybids`.
+    You may need to install [pybids](https://github.com/bids-standard/pybids) to query the BIDS datasets using following command `!pip install pybids`.
     """)
     return
 
@@ -213,7 +213,7 @@ def _(layout):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    It looks like there is only one task associated with this dataset called *localizer*. Look at the [Download Data](download-data) page for more information about this task. We can query all of the files associated with this task. Let's look at the first 10.
+    It looks like there is only one task associated with this dataset called *localizer*. Look at the [Download Data](Download_Data.ipynb) page for more information about this task. We can query all of the files associated with this task. Let's look at the first 10.
     """)
     return
 

@@ -517,7 +517,7 @@ def _(ds, glob, localizer_path, os):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To get the python packages for the course be sure to read the installation {ref}`instructions <python-packages>` in the {doc}`../content/Introduction_to_JupyterHub` tutorial.
+    To get the python packages for the course, install the dependencies listed in the [pyproject.toml](https://github.com/ljchang/dartbrains/blob/v2-marimo-migration/pyproject.toml) using `uv sync`.
     """)
     return
 

@@ -450,7 +450,7 @@ def _(mo):
 
     To do this type of analysis, we typically use what are called *multivariate decomposition* methods, which attempt to factorize a data set (i.e., time by voxels) into a lower dimensional set of components, where each has their own unique time course.
 
-    The most common decomposition methods or Principal Components Analysis (PCA) and Independent Components Analysis (ICA). You may recall that we have already played with ICA in the beginning of the course in the {doc}`../content/ICA` lab.
+    The most common decomposition methods or Principal Components Analysis (PCA) and Independent Components Analysis (ICA). You may recall that we have already played with ICA in the beginning of the course in the [ICA](ICA.ipynb) lab.
 
     Let's learn more about the details of decomposition by watching a short video by Martin Lindquist.
     """)

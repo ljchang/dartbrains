@@ -17,9 +17,9 @@ def _(mo):
     # Separating Signal From Noise With ICA
     *Written by Luke Chang*
 
-    In this tutorial we will use ICA to explore which signals in our imaging data might be real signal or artifacts. We cover ICA in more depth in the [multivariate-decomposition] subsection of the [connectivity](Connectivity.ipynb) tutorial and also using simulations in the [ICA](Introduction_to_ICA.ipynb) tutorial.
+    In this tutorial we will use ICA to explore which signals in our imaging data might be real signal or artifacts. We cover ICA in more depth in the [multivariate decomposition](Connectivity.ipynb) subsection of the [connectivity](Connectivity.ipynb) tutorial and also using simulations in the [ICA](Introduction_to_ICA.ipynb) tutorial.
 
-    To run this tutorial, we will be working with data that has already been preprocessed. *If you are in Psych60, this has already been done for you*. If you reading this online, then I recommend reading the {ref}`preprocessing tutorial <run-preprocessing>`, or downloading the data using the {doc}`datalad <../content/Download_Data>` tutorial.
+    To run this tutorial, we will be working with data that has already been preprocessed. *If you are in Psych60, this has already been done for you*. If you reading this online, then I recommend reading the [preprocessing tutorial](Preprocessing.ipynb), or downloading the data using the [Download Data](Download_Data.ipynb) tutorial.
 
     For a brief overview of types of artifacts that might be present in your data, I recommend watching this video by Tor Wager and Martin Lindquist.
     """)
