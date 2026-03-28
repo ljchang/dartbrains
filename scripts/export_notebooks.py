@@ -14,11 +14,11 @@ CONTENT_DIR = Path(__file__).parent.parent / "content"
 
 
 def is_marimo_notebook(path: Path) -> bool:
-    """Check if a .py file is a marimo notebook (starts with 'import marimo')."""
+    """Check if a .py file is a marimo notebook (contains 'import marimo')."""
     try:
         with open(path) as f:
-            first_line = f.readline().strip()
-        return first_line == "import marimo"
+            content = f.read(1024)  # read first 1KB
+        return "import marimo" in content
     except Exception:
         return False
 
