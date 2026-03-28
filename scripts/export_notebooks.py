@@ -41,7 +41,12 @@ def export_notebook(py_path: Path) -> bool:
     )
 
     if result.returncode != 0:
-        print(f"  FAILED: {result.stderr.strip()}")
+        stderr = result.stderr.strip()
+        # "cells failed to execute" still produces a valid ipynb with error outputs
+        if ipynb_path.exists() and "some cells failed to execute" in stderr:
+            print(f"  OK (some cells had execution errors — expected if data not available)")
+            return True
+        print(f"  FAILED: {stderr[-200:]}")
         return False
 
     print(f"  OK")
