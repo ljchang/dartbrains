@@ -286,12 +286,7 @@ def _(mo):
     return
 
 
-app._unparsable_cell(
-    r"""
-    data?
-    """,
-    name="_"
-)
+app.cell()(lambda: help(data))
 
 
 @app.cell(hide_code=True)

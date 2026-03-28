@@ -241,7 +241,7 @@ app._unparsable_cell(
     plot = plotting.plot_surf_roi(fsaverage['infl_left'], roi_map=atlas,
                            hemi='left', view='lateral',
                            bg_map=fsaverage['sulc_left'], bg_on_data=True,
-                           darkness=.2, ba  )
+                           darkness=.2)
     ''' Note: we chose 'infl_left' here to match the image above, but the same image could be plotted on pial surface or at different angles using this plot_surf_roi function'''
     """,
     name="_"

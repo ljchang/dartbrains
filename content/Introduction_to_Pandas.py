@@ -175,12 +175,7 @@ def _(mo):
     return
 
 
-app._unparsable_cell(
-    r"""
-    pd.read_csv?
-    """,
-    name="_"
-)
+app.cell()(lambda: help(pd.read_csv))
 
 
 @app.cell(hide_code=True)
