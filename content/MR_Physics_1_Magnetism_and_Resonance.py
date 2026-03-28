@@ -58,14 +58,6 @@ def _():
     from Code.mr_widgets import CompassWidget, NetMagnetizationWidget, PrecessionWidget
 
     return (
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/MR_Physics_1_Magnetism_and_Resonance.py) to run code, interact with widgets, and modify examples.
-    """)
-    return
         CompassWidget,
         GAMMA,
         GAMMA_H,
@@ -78,6 +70,14 @@ def _(mo):
         mo,
         np,
     )
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/MR_Physics_1_Magnetism_and_Resonance.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
 
 
 @app.cell(hide_code=True)
