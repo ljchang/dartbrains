@@ -32,3 +32,8 @@ dependencies = [
 build = [
     "jupyter-book",
 ]
+
+[dependency-groups]
+build = [
+    "jupyter-book>=2.1.2",
+]

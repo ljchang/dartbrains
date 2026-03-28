@@ -1,0 +1,70 @@
+version: 1
+
+project:
+  title: DartBrains
+  authors:
+    - name: Luke Chang
+  copyright: '2024'
+  description: An open-access introduction to functional neuroimaging analysis in Python
+  github: https://github.com/ljchang/dartbrains
+  license: CC-BY-SA-4.0
+  toc:
+    - file: content/intro.md
+    - title: Course Overview
+      children:
+        - file: content/Instructors.md
+        - file: content/Syllabus.md
+        - file: content/Schedule.md
+    - title: Getting Started
+      children:
+        - file: content/Introduction_to_Programming.ipynb
+        - file: content/Introduction_to_Pandas.ipynb
+        - file: content/Introduction_to_Plotting.ipynb
+        - file: content/Download_Data.ipynb
+        - file: content/Glossary.ipynb
+    - title: MR Physics & Imaging
+      children:
+        - file: content/MR_Physics_1_Magnetism_and_Resonance.ipynb
+        - file: content/MR_Physics_2_Signal_and_Contrast.ipynb
+        - file: content/MR_Physics_3_Imaging_and_fMRI.ipynb
+    - title: Neuroimaging Analysis
+      children:
+        - file: content/Intro_to_Neuroimaging.md
+        - file: content/Introduction_to_Neuroimaging_Data.ipynb
+        - file: content/Signal_Processing.ipynb
+        - file: content/Preprocessing.ipynb
+        - file: content/GLM.ipynb
+        - file: content/GLM_Single_Subject_Model.ipynb
+        - file: content/Group_Analysis.ipynb
+        - file: content/Thresholding_Group_Analyses.ipynb
+    - title: Advanced Methods
+      children:
+        - file: content/Connectivity.ipynb
+        - file: content/Introduction_to_ICA.ipynb
+        - file: content/Multivariate_Prediction.ipynb
+        - file: content/RSA.ipynb
+        - file: content/Parcellations.ipynb
+        - file: content/Resampling_Statistics.ipynb
+    - title: Additional Resources
+      children:
+        - file: content/fmriprep_on_discovery.md
+        - url: http://naturalistic-data.org/
+          title: Naturalistic Data Analysis
+    - title: Project Gallery
+      children:
+        - file: content/2019_Spring.md
+        - file: content/2020_Spring.md
+        - file: content/2020_Fall.md
+        - file: content/2021_Fall.md
+        - file: content/2022_Fall.md
+    - title: Contributing
+      children:
+        - file: content/Contributing.md
+        - url: https://github.com/ljchang/dartbrains
+          title: GitHub Repository
+
+site:
+  template: book-theme
+  options:
+    logo: images/logo/dartbrains_logo_square_transparent.png
+    favicon: images/logo/favicon.ico
