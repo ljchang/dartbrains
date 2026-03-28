@@ -229,11 +229,11 @@ def _(mo):
     return
 
 
-app._unparsable_cell(
-    r"""
+@app.cell
+def _(datasets, plotting):
     destrieux = datasets.fetch_atlas_surf_destrieux()
 
-    ''' See outputs of the dataset '''
+    # See outputs of the dataset
     print(destrieux.keys())
 
     atlas = destrieux['map_left']
@@ -242,10 +242,10 @@ app._unparsable_cell(
                            hemi='left', view='lateral',
                            bg_map=fsaverage['sulc_left'], bg_on_data=True,
                            darkness=.2)
-    ''' Note: we chose 'infl_left' here to match the image above, but the same image could be plotted on pial surface or at different angles using this plot_surf_roi function'''
-    """,
-    name="_"
-)
+    # Note: we chose 'infl_left' here to match the image above, but the same
+    # image could be plotted on pial surface or at different angles using
+    # this plot_surf_roi function
+    return (atlas, destrieux, fsaverage, plot)
 
 
 @app.cell(hide_code=True)
