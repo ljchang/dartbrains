@@ -52,3 +52,21 @@ htmlcov/
 .tox
 .tox/*
 .DS_Store
+
+# Build artifacts #
+###################
+_build/
+
+# Python environment #
+######################
+.venv/
+__pycache__/
+*.pyc
+
+# Generated ipynb from marimo export #
+#######################################
+content/*.ipynb
+
+# marimo cache #
+################
+__marimo__/
