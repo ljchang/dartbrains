@@ -32,6 +32,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Introduction_to_ICA.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Using ICA in Python
 
     There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x,y,z spatial dimensions and then using any of the ICA algorithms distributed by [Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html). Alternatively, ICA can be directly applied to neuroimaging data using [nilearn](https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA) or [nltools](https://https://nltools.org/index.html). ICA can also be applied to EEG data in python using the [MNE toolbox](https://mne.tools/stable/index.html).

@@ -53,6 +53,14 @@ def _():
     from Code.mr_widgets import EncodingWidget, KSpaceWidget, ConvolutionWidget
 
     return (
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/MR_Physics_3_Imaging_and_fMRI.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
         ConvolutionWidget,
         EncodingWidget,
         GAMMA_H,

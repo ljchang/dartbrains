@@ -34,6 +34,14 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Introduction_to_Plotting.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
+
+
 @app.cell
 def _():
     # '%matplotlib inline' command supported automatically in marimo

@@ -49,6 +49,14 @@ def _():
     from Code.mr_widgets import PrecessionWidget, SpinEnsembleWidget
 
     return (
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/MR_Physics_2_Signal_and_Contrast.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
         PrecessionWidget,
         SpinEnsembleWidget,
         TISSUE_PROPERTIES,

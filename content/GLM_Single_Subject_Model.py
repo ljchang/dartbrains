@@ -40,6 +40,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/GLM_Single_Subject_Model.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Building a Design Matrix
 
     First, we will learn the basics of how to build a design matrix for our GLM.

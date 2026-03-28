@@ -35,6 +35,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Parcellations.py) to run code, interact with widgets, and modify examples.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## A quick note on labeling:
 
     - The terms parcellation, atlas, and template are often used interchangeably, as noted in [Moghimi *et al* 2021](https://arxiv.org/pdf/2107.03475.pdf). We use their labeling strategy below to describe the three strategies that have been used to generate parcellations:
