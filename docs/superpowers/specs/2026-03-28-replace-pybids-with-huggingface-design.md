@@ -110,12 +110,19 @@ Actually, this notebook accesses beta files via `glob.glob(os.path.join(data_dir
   - `layout.get(subject=subject, suffix='events')[0].path` → `get_file(subject, 'raw', 'events', '.tsv')`
 
 ### Introduction_to_Neuroimaging_Data.py
-- This is the tutorial that teaches BIDS concepts using pybids. **Major rewrite needed:**
+- This is the tutorial that teaches BIDS concepts using pybids. **Major rewrite needed.**
+- **Keep and expand the BIDS educational content:**
+  - Explain what BIDS is and why it matters (standardization, reproducibility, tool compatibility)
+  - Walk through the directory structure: `sub-XX/anat/`, `sub-XX/func/`, `derivatives/`
+  - Explain the naming convention: `sub-S01_task-localizer_bold.nii.gz` (entity-label pairs)
+  - Explain key sidecar files: `_events.tsv`, `_bold.json`, `dataset_description.json`, `participants.tsv`
+  - Show the actual structure of the dartbrains/localizer dataset on HuggingFace as a concrete example
+- **Replace pybids querying with HuggingFace access:**
   - Remove BIDSLayout/pybids teaching section
-  - Replace with teaching HuggingFace dataset access
+  - Show how to use `Code.data` helpers to access the same files
   - Show `hf_hub_download` for individual files
   - Show `load_dataset("dartbrains/localizer", "betas")` for bulk access
-  - Keep BIDS structure explanation (it's educational)
+- The BIDS structure knowledge remains essential — students need to understand the file organization even when using HuggingFace to download the files
 
 ### Download_Data.py
 - Add new HuggingFace section at the top (before DataLad)
