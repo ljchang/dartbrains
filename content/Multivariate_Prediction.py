@@ -121,23 +121,22 @@ def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
-    import glob
+    import sys
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
     from nltools.data import Brain_Data
     from nltools.mask import expand_mask
-    from bids import BIDSLayout, BIDSValidator
     from nilearn.plotting import view_img_on_surf
+    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    from Code.data import get_subjects, get_file
 
-    data_dir = '../data/localizer'
-    layout = BIDSLayout(data_dir, derivatives=True)
     return (
         Brain_Data,
-        data_dir,
         expand_mask,
-        glob,
+        get_file,
+        get_subjects,
         np,
         os,
         pd,
@@ -156,13 +155,12 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, data_dir, glob, os):
-    left_file_list = glob.glob(os.path.join(data_dir, 'derivatives','fmriprep', '*','func','*_video_left*.nii.gz'))
-    left_file_list.sort() 
+def _(Brain_Data, get_file, get_subjects):
+    _sub_list = get_subjects()
+    left_file_list = [get_file(sub, 'betas', 'video_left_hand') for sub in _sub_list]
     left = Brain_Data(left_file_list)
 
-    right_file_list = glob.glob(os.path.join(data_dir, 'derivatives','fmriprep', '*','func','*_video_right*.nii.gz'))
-    right_file_list.sort()
+    right_file_list = [get_file(sub, 'betas', 'video_right_hand') for sub in _sub_list]
     right = Brain_Data(right_file_list)
 
     data = left.append(right)

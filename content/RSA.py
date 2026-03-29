@@ -110,7 +110,7 @@ def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
-    import glob
+    import sys
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -120,19 +120,18 @@ def _():
     from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map, view_img_on_surf, view_img
-    from bids import BIDSLayout, BIDSValidator
+    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    from Code.data import get_subjects, get_file, CONDITIONS
 
-    data_dir = '../data/localizer'
-    layout = BIDSLayout(data_dir, derivatives=True)
     return (
         Adjacency,
         Brain_Data,
-        data_dir,
+        CONDITIONS,
         expand_mask,
         fdr,
         fisher_r_to_z,
-        glob,
-        layout,
+        get_file,
+        get_subjects,
         np,
         one_sample_permutation,
         os,
@@ -158,12 +157,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, data_dir, glob, os):
+def _(Brain_Data, CONDITIONS, get_file):
     _sub = 'S01'
-    _file_list = glob.glob(os.path.join(data_dir, 'derivatives', 'betas', f'{_sub}*'))
-    _file_list = [x for x in _file_list if f'{_sub}_betas.nii.gz' not in x]
-    _file_list.sort()
-    conditions = [os.path.basename(x).split(f'{_sub}_beta_')[1].split('.nii.gz')[0] for x in _file_list]
+    _file_list = [get_file(_sub, 'betas', cond) for cond in CONDITIONS]
+    conditions = CONDITIONS
     beta = Brain_Data(_file_list)
     return beta, conditions
 
@@ -377,15 +374,13 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, data_dir, glob, layout, mask_x, motor, os, pd):
-    sub_list = layout.get_subjects(scope='derivatives')
+def _(Brain_Data, CONDITIONS, get_file, get_subjects, mask_x, motor, pd):
+    sub_list = get_subjects()
     all_sub_similarity = {}
     all_sub_motor_rsa = {}
     for _sub in sub_list:
-        _file_list = glob.glob(os.path.join(data_dir, 'derivatives', 'fmriprep', f'sub-{_sub}', 'func', '*denoised*.nii.gz'))
-        _file_list = [x for x in _file_list if 'betas' not in x]
-        _file_list.sort()
-        conditions_1 = [os.path.basename(x).split(f'sub-{_sub}_')[1].split('_denoised')[0] for x in _file_list]
+        _file_list = [get_file(_sub, 'betas', cond) for cond in CONDITIONS]
+        conditions_1 = CONDITIONS
         beta_1 = Brain_Data(_file_list)
         sub_pattern = []
         motor_sim_r_1 = []
