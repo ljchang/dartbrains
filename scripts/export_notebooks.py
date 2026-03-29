@@ -85,30 +85,26 @@ def postprocess_ipynb(ipynb_path: Path):
         if tags:
             cell.setdefault("metadata", {})["tags"] = sorted(tags)
 
-    # Remove duplicate title from first markdown cell
-    # JB2 extracts the # heading for frontmatter, so having it in the body duplicates it
+    # Remove *Written by Author* from first markdown cell
+    # JB2 shows author in frontmatter, so the attribution line duplicates it
     for cell in nb["cells"]:
         if cell["cell_type"] == "markdown":
             source = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
-            # Strip leading # Title and *Written by Author* lines
             lines = source.split("\n")
             new_lines = []
-            skip_until_content = True
             for line in lines:
-                if skip_until_content:
-                    # Skip the # Title line
-                    if re.match(r"^#\s+", line):
-                        continue
-                    # Skip empty lines after title
-                    if line.strip() == "":
-                        continue
-                    # Skip *Written by ...* author attribution
-                    if re.match(r"^\*Written by .+\*$", line.strip()):
-                        continue
-                    skip_until_content = False
+                # Skip *Written by ...* author lines
+                if re.match(r"^\*Written by .+\*$", line.strip()):
+                    continue
+                # Skip *Written By ...* (case variant)
+                if re.match(r"^\*Written By.+\*$", line.strip()):
+                    continue
                 new_lines.append(line)
-            if new_lines != lines:
-                cell["source"] = "\n".join(new_lines)
+            # Remove any resulting double blank lines
+            cleaned = "\n".join(new_lines)
+            cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+            if cleaned != source:
+                cell["source"] = cleaned
             break  # Only process the first markdown cell
 
     # Convert molab blockquote to a compact badge-style link
