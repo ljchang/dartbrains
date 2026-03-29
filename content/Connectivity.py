@@ -85,7 +85,6 @@ def _(mo):
 def _():
     # '%matplotlib inline' command supported automatically in marimo
 
-    import os
     import glob
     import numpy as np
     import pandas as pd
@@ -101,25 +100,25 @@ def _():
     from copy import deepcopy
     import networkx as nx
     from nilearn.plotting import plot_stat_map, view_img_on_surf
-    from bids import BIDSLayout, BIDSValidator
     import nibabel as nib
-
-    base_dir = '..'
-    data_dir = os.path.join(base_dir, 'data', 'localizer')
-    layout = BIDSLayout(data_dir, derivatives=True)
+    import sys
+    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_tr, load_events, load_confounds, get_subjects
     return (
         Adjacency,
         Brain_Data,
         Design_Matrix,
-        base_dir,
         component_viewer,
         expand_mask,
-        layout,
+        get_file,
+        get_subjects,
+        get_tr,
+        load_confounds,
+        load_events,
         nib,
         np,
         nx,
         onsets_to_dm,
-        os,
         pairwise_distances,
         pd,
         plt,
@@ -139,10 +138,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, layout):
+def _(Brain_Data, get_file):
     sub = 'S01'
     _fwhm = 6
-    data = Brain_Data(layout.get(subject=sub, task='localizer', scope='derivatives', suffix='bold', extension='nii.gz', return_type='file')[0])
+    data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
     smoothed = data.smooth(fwhm=_fwhm)
     return data, smoothed, sub
 
@@ -230,17 +229,16 @@ def _(mo):
 def _(
     Brain_Data,
     Design_Matrix,
-    base_dir,
     data,
-    layout,
-    os,
+    get_tr,
+    load_confounds,
     pd,
     smoothed,
     sub,
     vmpfc,
     zscore,
 ):
-    tr = layout.get_tr()
+    tr = get_tr()
     _fwhm = 6
     n_tr = len(data)
 
@@ -250,11 +248,11 @@ def _(
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1 / tr)
     vmpfc_1 = zscore(pd.DataFrame(vmpfc, columns=['vmpfc']))
-    _csf_mask = Brain_Data(os.path.join(base_dir, 'masks', 'csf.nii.gz'))
+    _csf_mask = Brain_Data('../masks/csf.nii.gz')
     _csf_mask = _csf_mask.threshold(upper=0.7, binarize=True)
     csf = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
-    _covariates = pd.read_csv(layout.get(subject=sub, scope='derivatives', extension='.tsv')[0].path, sep='\t')
+    _covariates = load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov = make_motion_covariates(_mc, tr)
     dm = Design_Matrix(pd.concat([vmpfc_1, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
@@ -294,8 +292,8 @@ def _(mo):
 
 
 @app.cell
-def _(layout, nib):
-    nib.load(layout.get(subject='S01', scope='raw', suffix='bold')[0].path)
+def _(get_file, nib):
+    nib.load(get_file('S01', 'derivatives', 'bold'))
     return
 
 
@@ -303,7 +301,9 @@ def _(layout, nib):
 def _(
     Design_Matrix,
     csf,
-    layout,
+    get_file,
+    get_tr,
+    load_events,
     mc_cov,
     nib,
     onsets_to_dm,
@@ -312,14 +312,14 @@ def _(
     tr,
     vmpfc_1,
 ):
-    def load_bids_events(layout, subject):
+    def load_bids_events(subject):
         """Create a design_matrix instance from BIDS event file"""
-        tr = layout.get_tr()
-        n_tr = nib.load(layout.get(subject=subject, scope='raw', suffix='bold')[0].path).shape[-1]
-        onsets = pd.read_csv(layout.get(subject=subject, suffix='events')[0].path, sep='\t')
+        tr = get_tr()
+        n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
+        onsets = load_events(subject)
         onsets.columns = ['Onset', 'Duration', 'Stim']
         return onsets_to_dm(onsets, sampling_freq=1 / tr, run_length=n_tr)
-    dm_1 = load_bids_events(layout, 'S01')
+    dm_1 = load_bids_events('S01')
     motor_variables = ['video_left_hand', 'audio_left_hand', 'video_right_hand', 'audio_right_hand']
     ppi_dm = dm_1.drop(motor_variables, axis=1)
     ppi_dm['motor'] = pd.Series(dm_1.loc[:, motor_variables].sum(axis=1))
@@ -492,10 +492,8 @@ def _(mo):
 def _(
     Brain_Data,
     Design_Matrix,
-    base_dir,
-    layout,
+    load_confounds,
     make_motion_covariates,
-    os,
     pd,
     smoothed,
     sub,
@@ -503,10 +501,10 @@ def _(
     vmpfc_1,
     zscore,
 ):
-    _csf_mask = Brain_Data(os.path.join(base_dir, 'masks', 'csf.nii.gz'))
+    _csf_mask = Brain_Data('../masks/csf.nii.gz')
     csf_1 = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes_1 = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
-    _covariates = pd.read_csv(layout.get(subject=sub, scope='derivatives', extension='.tsv')[0].path, sep='\t')
+    _covariates = load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov_1 = make_motion_covariates(_mc, tr)
     dm_2 = Design_Matrix(pd.concat([vmpfc_1, csf_1, mc_cov_1, spikes_1.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
@@ -542,8 +540,8 @@ def _(mo):
 
 
 @app.cell
-def _(component_viewer, layout, pca_stats_output):
-    component_viewer(pca_stats_output, tr=layout.get_tr())
+def _(component_viewer, get_tr, pca_stats_output):
+    component_viewer(pca_stats_output, tr=get_tr())
     return
 
 
