@@ -37,3 +37,6 @@ build = [
 build = [
     "jupyter-book>=2.1.2",
 ]
+
+[tool.uv.sources]
+nltools = { git = "https://github.com/cosanlab/nltools", rev = "uv-refactor" }
