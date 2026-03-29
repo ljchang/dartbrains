@@ -19,6 +19,7 @@ project:
       children:
         - file: content/Introduction_to_Programming.ipynb
         - file: content/Introduction_to_Pandas.ipynb
+        - file: content/Introduction_to_Polars.ipynb
         - file: content/Introduction_to_Plotting.ipynb
         - file: content/Download_Data.ipynb
         - file: content/Glossary.ipynb

@@ -26,6 +26,7 @@ dependencies = [
     "scipy>=1.17.1",
     "seaborn",
     "networkx",
+    "polars>=1.39.3",
 ]
 
 [project.optional-dependencies]
