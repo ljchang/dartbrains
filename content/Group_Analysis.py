@@ -128,6 +128,7 @@ def _(mo):
 def _():
     import os
     import glob
+    import sys
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -137,6 +138,8 @@ def _():
     from nltools.stats import regress
     from nltools.external import glover_hrf
     from scipy.stats import ttest_1samp
+    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
     def plot_timeseries(data, linewidth=3, labels=None, axes=True):
         _f, _a = plt.subplots(figsize=(20, 5))
@@ -163,6 +166,9 @@ def _():
     plot_timeseries(np.vstack([sim1, sim2]).T, labels=['Signal', 'Noisy Signal'])
     return (
         Brain_Data,
+        CONDITIONS,
+        get_file,
+        get_subjects,
         glob,
         np,
         os,
@@ -334,32 +340,29 @@ def _(mo):
 
     ```
     import os
-    from glob import glob
+    import sys
     from tqdm import tqdm
     import pandas as pd
     import numpy as np
     import nibabel as nib
     from nltools.stats import zscore, regress, find_spikes
     from nltools.data import Brain_Data, Design_Matrix
-    from bids import BIDSLayout, BIDSValidator
     from nltools.file_reader import onsets_to_dm
-    from nltools.data import Brain_Data, Design_Matrix
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
+    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
-    data_dir = '../data/localizer'
-    layout = BIDSLayout(data_dir, derivatives=True)
-
-    tr = layout.get_tr()
+    tr = get_tr()
     fwhm = 6
     spike_cutoff = 3
 
-    def load_bids_events(layout, subject):
+    def load_bids_events(subject):
         '''Create a design_matrix instance from BIDS event file'''
 
-        tr = layout.get_RepetitionTime()[0]
-        n_tr = nib.load(layout.get(subject=subject, scope='derivatives', suffix='bold', return_type='filename', extension='nii.gz')[0]).shape[-1]
+        tr = get_tr()
+        n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
 
-        onsets = pd.read_csv(layout.get(subject=subject, suffix='events')[0].path, sep='\t')
+        onsets = load_events(subject)
         onsets.columns = ['Onset', 'Duration', 'Stim']
         return onsets_to_dm(onsets, sampling_freq=1/tr, run_length=n_tr)
 
@@ -369,15 +372,11 @@ def _(mo):
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1/tr)
 
-    # Create output folder if it doesn't exist yet
-    if not os.path.exists('../data/localizer/derivatives/betas'):
-        os.mkdir('../data/localizer/derivatives/betas')
-
-    for sub in tqdm(layout.get_subjects(scope='derivatives')):
-        data = Brain_Data(layout.get(subject=sub, scope='derivatives', suffix='bold', extension='nii.gz', return_type='file')[0])
+    for sub in tqdm(get_subjects()):
+        data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
         data = data.smooth(fwhm=fwhm)
-        dm = load_bids_events(layout, sub)
-        covariates = pd.read_csv(layout.get(subject=sub, scope='derivatives', extension='.tsv')[0].path, sep='\t')
+        dm = load_bids_events(sub)
+        covariates = load_confounds(sub)
         mc_cov = make_motion_covariates(covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']])
         spikes = data.find_spikes(global_spike_cutoff=spike_cutoff, diff_spike_cutoff=spike_cutoff)
         dm_cov = dm.convolve().add_dct_basis(duration=128).add_poly(order=1, include_lower=True)
@@ -386,11 +385,11 @@ def _(mo):
         stats = data.regress()
 
         # Write out all betas
-        stats['beta'].write(f'../data/localizer/derivatives/betas/{sub}_betas.nii.gz')
+        stats['beta'].write(f'{sub}_betas.nii.gz')
 
         # Write out separate beta for each condition
         for i, name in enumerate([x[:-3] for x in dm_cov.columns[:10]]):
-            stats['beta'][i].write(f'../data/localizer/derivatives/betas/{sub}_beta_{name}.nii.gz')
+            stats['beta'][i].write(f'{sub}_beta_{name}.nii.gz')
     ```
 
     Now, we are ready to run our first group analyses!
@@ -413,10 +412,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, data_dir, glob, os):
+def _(Brain_Data, get_file, get_subjects):
     con1_name = 'horizontal_checkerboard'
-    con1_file_list = glob.glob(os.path.join(data_dir, 'derivatives', 'fmriprep', '*', 'func', f'sub*_{con1_name}*nii.gz'))
-    con1_file_list.sort()
+    con1_file_list = [get_file(sub, 'betas', con1_name) for sub in get_subjects()]
     con1_dat = Brain_Data(con1_file_list)
     return (con1_dat,)
 
@@ -484,10 +482,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, con1_dat, data_dir, glob, os):
+def _(Brain_Data, con1_dat, get_file, get_subjects):
     con2_name = 'vertical_checkerboard'
-    con2_file_list = glob.glob(os.path.join(data_dir, 'derivatives','fmriprep','*', 'func', f'sub*_{con2_name}*nii.gz'))
-    con2_file_list.sort()
+    con2_file_list = [get_file(sub, 'betas', con2_name) for sub in get_subjects()]
     con2_dat = Brain_Data(con2_file_list)
 
     con1_v_con2 = con1_dat-con2_dat
