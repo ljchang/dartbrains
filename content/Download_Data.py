@@ -56,6 +56,110 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## Downloading Data from HuggingFace (Recommended)
+
+    The Pinel Localizer dataset is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer). This is the recommended way to access the data for this course. Files are downloaded automatically and cached locally — no extra tools needed.
+
+    ### Using the Course Helper Module
+
+    The `Code.data` module provides convenient functions to download and access any file in the dataset:
+    """)
+    return
+
+
+@app.cell
+def _():
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_subjects, load_events, get_tr, REPO_ID
+
+    # List all subjects
+    print(f"Subjects: {get_subjects()}")
+    print(f"TR: {get_tr()} seconds")
+
+    # Download a preprocessed BOLD file (cached after first download)
+    bold_path = get_file('S01', 'derivatives', 'bold')
+    print(f"\nBOLD file path: {bold_path}")
+    return (REPO_ID, get_file, get_subjects, load_events)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Loading Event Timing Data
+
+    Each subject's task events (stimulus onsets, durations, and conditions) can be loaded directly as a DataFrame:
+    """)
+    return
+
+
+@app.cell
+def _(load_events):
+    events = load_events('S01')
+    events.head(10)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Direct File Access
+
+    You can also download any file directly from HuggingFace using `hf_hub_download`:
+    """)
+    return
+
+
+@app.cell
+def _(REPO_ID):
+    from huggingface_hub import hf_hub_download
+
+    # Download a specific beta map
+    path = hf_hub_download(
+        repo_id=REPO_ID,
+        filename="derivatives/betas/S01_betas.nii.gz",
+        repo_type="dataset",
+    )
+    print(f"Downloaded to: {path}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Bulk Loading with the `datasets` Library
+
+    For loading all beta maps or events at once, use the `datasets` library:
+    """)
+    return
+
+
+@app.cell
+def _():
+    from datasets import load_dataset
+
+    ds = load_dataset("dartbrains/localizer", "betas")
+    print(f"Loaded {len(ds['train'])} beta maps")
+    print(f"First entry: subject={ds['train'][0]['subject']}, condition={ds['train'][0]['condition']}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ---
+
+    ## Downloading Data with DataLad (Legacy)
+
+    The dataset is also available via [DataLad](https://www.datalad.org/) from the GIN repository. This was the original download method and still works as an alternative.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## DataLad
 
     The easist way to access the data is using [DataLad](https://www.datalad.org/), which is an open source version control system for data built on top of [git-annex](https://git-annex.branchable.com/). Think of it like git for data. It provides a handy command line interface for downloading data, tracking changes, and sharing it with others.
