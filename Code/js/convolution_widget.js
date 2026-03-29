@@ -293,7 +293,7 @@ export default {
 
     return () => {
       cancelAnimationFrame(animId);
-      model.off("change:pattern");
+      model.off && model.off("change:pattern");
     };
   },
 };

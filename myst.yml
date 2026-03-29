@@ -58,6 +58,9 @@ project:
         - file: content/2020_Fall.md
         - file: content/2021_Fall.md
         - file: content/2022_Fall.md
+    - title: Tests
+      children:
+        - file: content/widget_test.md
     - title: Contributing
       children:
         - file: content/Contributing.md

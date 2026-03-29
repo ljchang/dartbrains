@@ -364,8 +364,8 @@ export default {
     // --- Cleanup ---
     return () => {
       cancelAnimationFrame(animId);
-      model.off("change:sequence_type");
-      model.off("change:speed");
+      model.off && model.off("change:sequence_type");
+      model.off && model.off("change:speed");
     };
   },
 };

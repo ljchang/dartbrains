@@ -307,7 +307,7 @@ export default {
 
     return () => {
       cancelAnimationFrame(animId);
-      model.off("change:mask_type");
+      model.off && model.off("change:mask_type");
     };
   },
 };

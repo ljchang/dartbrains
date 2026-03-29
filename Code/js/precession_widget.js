@@ -408,11 +408,11 @@ export default {
     // --- Cleanup ---
     return () => {
       cancelAnimationFrame(animId);
-      model.off("change:flip_angle");
-      model.off("change:b0");
-      model.off("change:show_relaxation");
-      model.off("change:t1");
-      model.off("change:t2");
+      model.off && model.off("change:flip_angle");
+      model.off && model.off("change:b0");
+      model.off && model.off("change:show_relaxation");
+      model.off && model.off("change:t1");
+      model.off && model.off("change:t2");
       renderer.dispose();
       controls.dispose();
       scene.traverse((obj) => {

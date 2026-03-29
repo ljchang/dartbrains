@@ -6,6 +6,33 @@ export default {
     const SIZE = 380;
     const DPR = Math.min(window.devicePixelRatio, 2);
 
+    // --- Built-in controls (work in both marimo and MyST) ---
+    const controls = document.createElement("div");
+    controls.style.cssText = "display:flex;align-items:center;gap:12px;margin-bottom:10px;font-family:system-ui,sans-serif;font-size:14px;";
+    const sliderLabel = document.createElement("label");
+    sliderLabel.textContent = "B\u2080 field strength (mT): ";
+    sliderLabel.style.fontWeight = "500";
+    const slider = document.createElement("input");
+    slider.type = "range";
+    slider.min = "0";
+    slider.max = "5";
+    slider.step = "0.1";
+    slider.value = String(model.get("b0") || 3.0);
+    slider.style.cssText = "flex:1;max-width:300px;";
+    const valSpan = document.createElement("span");
+    valSpan.textContent = Number(slider.value).toFixed(1);
+    valSpan.style.cssText = "min-width:30px;font-variant-numeric:tabular-nums;";
+    slider.addEventListener("input", () => {
+      const v = parseFloat(slider.value);
+      valSpan.textContent = v.toFixed(1);
+      model.set("b0", v);
+      if (model.save_changes) model.save_changes();
+    });
+    sliderLabel.appendChild(slider);
+    controls.appendChild(sliderLabel);
+    controls.appendChild(valSpan);
+    el.appendChild(controls);
+
     const wrapper = document.createElement("div");
     wrapper.style.display = "flex";
     wrapper.style.gap = "12px";
