@@ -70,6 +70,65 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## Installing Python with uv (Recommended)
+
+    [uv](https://docs.astral.sh/uv/) is a fast, modern Python package manager that handles both installing Python itself and managing project dependencies.
+
+    ### Install uv
+
+    **macOS / Linux:**
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+
+    **Windows:**
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    ```
+
+    ### Set up the DartBrains project
+
+    ```bash
+    # Clone the repository
+    git clone https://github.com/ljchang/dartbrains.git
+    cd dartbrains
+
+    # Install Python and all dependencies (this one command does everything)
+    uv sync
+
+    # Open a notebook
+    uv run marimo edit content/Introduction_to_Programming.py
+    ```
+
+    `uv sync` reads the `pyproject.toml` file and automatically installs the correct Python version (3.13) and all required packages. No need to manually install Python or create virtual environments — uv handles it all.
+
+    ### Running Python with uv
+
+    To run any Python script or command with the project's dependencies available:
+
+    ```bash
+    uv run python my_script.py
+    uv run marimo edit content/any_notebook.py
+    ```
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ---
+
+    ## Installing Python with Conda (Legacy)
+
+    If you prefer using Conda for package management, the following instructions still work.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Package Management
     Package managment in Python has been dramatically improving.  Anaconda has it's own package manager called 'conda'.  Use this if you would like to install a new module as it is optimized to work with anaconda.
 
