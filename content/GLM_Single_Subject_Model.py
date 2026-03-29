@@ -62,6 +62,8 @@ def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
+    import sys
+    sys.path.insert(0, '..')
     import glob
     import numpy as np
     import pandas as pd
@@ -71,16 +73,17 @@ def _():
     from nltools.file_reader import onsets_to_dm
     from nltools.stats import regress, zscore
     from nltools.data import Brain_Data, Design_Matrix
-    from nltools.stats import find_spikes 
+    from nltools.stats import find_spikes
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
-    from bids import BIDSLayout, BIDSValidator
+    from Code.data import get_file, get_tr, load_events, get_subjects
 
-    data_dir = '../data/localizer'
-    layout = BIDSLayout(data_dir, derivatives=True)
     return (
         Brain_Data,
         Design_Matrix,
-        layout,
+        get_file,
+        get_subjects,
+        get_tr,
+        load_events,
         nib,
         np,
         onsets_to_dm,
@@ -100,18 +103,18 @@ def _(mo):
 
 
 @app.cell
-def _(layout, nib, onsets_to_dm, pd):
-    def load_bids_events(layout, subject):
+def _(get_tr, get_file, load_events, nib, onsets_to_dm):
+    def load_bids_events(subject):
         '''Create a design_matrix instance from BIDS event file'''
-    
-        tr = layout.get_tr()
-        n_tr = nib.load(layout.get(subject=subject, scope='raw', suffix='bold')[0].path).shape[-1]
 
-        onsets = pd.read_csv(layout.get(subject=subject, suffix='events')[0].path, sep='\t')
+        tr = get_tr()
+        n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
+
+        onsets = load_events(subject)
         onsets.columns = ['Onset', 'Duration', 'Stim']
         return onsets_to_dm(onsets, sampling_freq=1/tr, run_length=n_tr)
 
-    dm = load_bids_events(layout, 'S01')
+    dm = load_bids_events('S01')
     return (dm,)
 
 
@@ -379,9 +382,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, layout):
+def _(Brain_Data, get_file):
     sub = 'S01'
-    data = Brain_Data(layout.get(subject=sub, task='localizer', scope='derivatives', suffix='bold', extension='nii.gz', return_type='file'))
+    data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
     return data, sub
 
 
@@ -394,8 +397,8 @@ def _(mo):
 
 
 @app.cell
-def _(layout, pd, plt, zscore):
-    covariates = pd.read_csv(layout.get(subject='S01', scope='derivatives', extension='.tsv')[0].path, sep='\t')
+def _(get_file, pd, plt, zscore):
+    covariates = pd.read_csv(get_file('S01', 'derivatives', 'confounds'), sep='\t')
 
     mc = covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']]
 
@@ -415,14 +418,14 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, layout, mc, pd, sns, zscore):
+def _(Design_Matrix, get_tr, mc, pd, sns, zscore):
     def make_motion_covariates(mc, tr):
         z_mc = zscore(mc)
         all_mc = pd.concat([z_mc, z_mc**2, z_mc.diff(), z_mc.diff()**2], axis=1)
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1/tr)
 
-    tr = layout.get_tr()
+    tr = get_tr()
     mc_cov = make_motion_covariates(mc, tr)
 
     sns.heatmap(mc_cov)
