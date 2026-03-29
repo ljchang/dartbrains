@@ -7,7 +7,11 @@ project:
   copyright: '2024'
   description: An open-access introduction to functional neuroimaging analysis in Python
   github: https://github.com/ljchang/dartbrains
-  license: CC-BY-SA-4.0
+  license:
+    content:
+      id: CC-BY-SA-4.0
+    code:
+      id: MIT
   toc:
     - file: content/intro.md
     - title: Course Overview

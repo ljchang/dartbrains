@@ -6,6 +6,8 @@ Usage:
     python scripts/export_notebooks.py content/GLM.py  # export one
 """
 
+import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -50,7 +52,86 @@ def export_notebook(py_path: Path) -> bool:
         return False
 
     print(f"  OK")
+
+    # Post-process the exported ipynb for JB2 compatibility
+    postprocess_ipynb(ipynb_path)
     return True
+
+
+def postprocess_ipynb(ipynb_path: Path):
+    """Fix exported ipynb for Jupyter Book 2 rendering.
+
+    - Translate marimo hide_code metadata to JB2 'hide-input' tags
+    - Remove duplicate title/author from first markdown cell (JB2 shows these in frontmatter)
+    - Convert molab blockquote link to a badge-style HTML
+    """
+    with open(ipynb_path) as f:
+        nb = json.load(f)
+
+    for i, cell in enumerate(nb["cells"]):
+        meta = cell.get("metadata", {})
+        marimo_config = meta.get("marimo", {}).get("config", {})
+        tags = set(meta.get("tags", []))
+
+        # Translate marimo hide_code to JB2 tags
+        if marimo_config.get("hide_code"):
+            if cell["cell_type"] == "code":
+                # First code cell (imports) should be fully hidden
+                if i == 0:
+                    tags.add("remove-cell")
+                else:
+                    tags.add("hide-input")
+
+        if tags:
+            cell.setdefault("metadata", {})["tags"] = sorted(tags)
+
+    # Remove duplicate title from first markdown cell
+    # JB2 extracts the # heading for frontmatter, so having it in the body duplicates it
+    for cell in nb["cells"]:
+        if cell["cell_type"] == "markdown":
+            source = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+            # Strip leading # Title and *Written by Author* lines
+            lines = source.split("\n")
+            new_lines = []
+            skip_until_content = True
+            for line in lines:
+                if skip_until_content:
+                    # Skip the # Title line
+                    if re.match(r"^#\s+", line):
+                        continue
+                    # Skip empty lines after title
+                    if line.strip() == "":
+                        continue
+                    # Skip *Written by ...* author attribution
+                    if re.match(r"^\*Written by .+\*$", line.strip()):
+                        continue
+                    skip_until_content = False
+                new_lines.append(line)
+            if new_lines != lines:
+                cell["source"] = "\n".join(new_lines)
+            break  # Only process the first markdown cell
+
+    # Convert molab blockquote to a compact badge-style link
+    for cell in nb["cells"]:
+        if cell["cell_type"] == "markdown":
+            source = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+            if "Open this notebook in molab" in source:
+                # Extract the URL
+                match = re.search(r'\[Open this notebook in molab\]\((https://[^)]+)\)', source)
+                if match:
+                    url = match.group(1)
+                    cell["source"] = (
+                        f'<a href="{url}" target="_blank" '
+                        f'style="display:inline-flex;align-items:center;gap:6px;'
+                        f'padding:6px 14px;border-radius:6px;background:#f0f0f0;'
+                        f'color:#333;text-decoration:none;font-size:14px;'
+                        f'border:1px solid #ddd;margin:8px 0;">'
+                        f'\U0001f680 <strong>Open in molab</strong> — '
+                        f'run code &amp; interact with widgets</a>'
+                    )
+
+    with open(ipynb_path, "w") as f:
+        json.dump(nb, f, indent=1)
 
 
 def main():
