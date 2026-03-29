@@ -53,7 +53,7 @@ def _(mo):
 
     For this course, I have chosen to focus on tools developed in Python as it is an easy to learn programming language, has excellent tools, works well on distributed computing systems, has great ways to disseminate information (e.g., jupyter notebooks, jupyter-book, etc), and is free! If you are just getting started, I would spend some time working with [NiLearn](https://nilearn.github.io/) and [Brainiak](https://brainiak.org/), which have a lot of functionality, are very well tested, are reasonably computationally efficient, and most importantly have lots of documentation and tutorials to get started.
 
-    We will be using many packages throughout the course such as [PyBids](https://bids-standard.github.io/pybids/) to navigate neuroimaging datasets, [fmriprep](https://fmriprep.readthedocs.io/en/stable/) to perform preprocessing, and [nltools](https://nltools.org/), which is a package developed in my lab, to do basic data manipulation and analysis. NLtools is built using many other toolboxes such as [nibabel](https://nipy.org/nibabel/) and [nilearn](https://nilearn.github.io/), and we will also be using these frequently throughout the course.
+    We will be using many packages throughout the course such as [fmriprep](https://fmriprep.readthedocs.io/en/stable/) to perform preprocessing, and [nltools](https://nltools.org/), which is a package developed in my lab, to do basic data manipulation and analysis. NLtools is built using many other toolboxes such as [nibabel](https://nipy.org/nibabel/) and [nilearn](https://nilearn.github.io/), and we will also be using these frequently throughout the course. We access datasets hosted on [HuggingFace Hub](https://huggingface.co/) using lightweight helper functions that download files on demand.
     """)
     return
 
@@ -79,11 +79,9 @@ def _(mo):
 
     Not only can using this specification be useful within labs to have a set way of structuring data, but it can also be useful when collaborating across labs, developing and utilizing software, and publishing data.
 
-    In addition, because this is a consistent format, it is possible to have a python package to make it easy to query a dataset. We recommend using [pybids](https://github.com/bids-standard/pybids).
+    In addition, because this is a consistent format, it is possible to write tools that programmatically navigate and query a dataset. One popular tool is [pybids](https://github.com/bids-standard/pybids), which can index an entire BIDS directory on disk. In this course, we use lightweight helper functions in `Code.data` that download individual files on demand from HuggingFace Hub.
 
-    The dataset we will be working with has already been converted to the BIDS format (see download localizer tutorial).
-
-    You may need to install [pybids](https://github.com/bids-standard/pybids) to query the BIDS datasets using following command `!pip install pybids`.
+    The dataset we will be working with has already been converted to the BIDS format and is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer).
     """)
     return
 
@@ -91,93 +89,94 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### The `BIDSLayout`
-    [Pybids](https://github.com/bids-standard/pybids) is a package to help query and navigate a neuroimaging dataset that is in the BIDs format. At the core of pybids is the `BIDSLayout` object. A `BIDSLayout` is a lightweight Python class that represents a BIDS project file tree and provides a variety of helpful methods for querying and manipulating BIDS files. While the BIDSLayout initializer has a large number of arguments you can use to control the way files are indexed and accessed, you will most commonly initialize a BIDSLayout by passing in the BIDS dataset root location as a single argument.
+    ### Accessing the Dataset
 
-    Notice we are setting `derivatives=True`. This means the layout will also index the derivatives sub folder, which might contain preprocessed data, analyses, or other user generated files.
+    The Localizer dataset is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer) in BIDS format. We provide helper functions in `Code.data` that download files on demand and cache them locally:
+
+    ```python
+    from Code.data import get_file, get_subjects, load_events
+
+    # Get the preprocessed BOLD file for subject S01
+    bold_path = get_file('S01', 'derivatives', 'bold')
+
+    # Get a list of all subjects
+    subjects = get_subjects()  # ['S01', 'S02', ..., 'S20']
+
+    # Load event timing for a subject
+    events = load_events('S01')
+    ```
+
+    Files are downloaded from HuggingFace Hub the first time you request them and cached locally for subsequent use.
     """)
     return
 
 
 @app.cell
 def _():
-    from bids import BIDSLayout, BIDSValidator
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
+    from huggingface_hub import hf_hub_download
     import os
 
-    data_dir = '../data/localizer'
-    layout = BIDSLayout(data_dir, derivatives=True)
-    layout
-    return data_dir, layout, os
+    return get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS, hf_hub_download, os
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    When we initialize a BIDSLayout, all of the files and metadata found under the specified root folder are indexed. This can take a few seconds (or, for very large datasets, a minute or two). Once initialization is complete, we can start querying the BIDSLayout in various ways. The main query method is `.get()`. If we call .`get()` with no additional arguments, we get back a list of all the BIDS files in our dataset.
-
-    Let's return the first 10 files
+    With a BIDS dataset, we often want to know which subjects are available, and retrieve specific files by subject, data type, and scope (raw vs. derivatives). Let's start by listing the subjects in the dataset.
     """)
     return
 
 
 @app.cell
-def _(layout):
-    layout.get()[:10]
-    return
+def _(get_subjects):
+    subjects = get_subjects()
+    subjects[:10]
+    return (subjects,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    As you can see, just a generic `.get()` call gives us *all* of the files. We will definitely want to be a bit more specific. We can specify the type of data we would like to query. For example, suppose we want to return the first 10 subject ids.
+    We can also retrieve the path to a specific file. For example, let's get the preprocessed BOLD file for the first 10 subjects. The `get_file` function downloads the file from HuggingFace Hub on first access and returns the local cached path.
     """)
     return
 
 
 @app.cell
-def _(layout):
-    layout.get(target='subject', return_type='id', scope='derivatives')[:10]
-    return
+def _(get_file, get_subjects):
+    bold_files = [get_file(sub, 'derivatives', 'bold') for sub in get_subjects()[:10]]
+    bold_files
+    return (bold_files,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Or perhaps, we would like to get the file names for the raw bold functional nifti images for the first 10 subjects. We can filter files in the `raw` or `derivatives`, using `scope` keyword.`scope='raw'`, to only query raw bold nifti files.
+    In a BIDS dataset, each file follows a structured naming convention. For example, a preprocessed BOLD file is named:
+
+    `sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz`
+
+    The key-value pairs (`sub-S01`, `task-localizer`, `space-...`, `desc-preproc`) are called **entities** and they encode metadata directly in the filename. This is one of the core design principles of BIDS: you can understand what a file contains just by reading its name.
+
+    Common BIDS entities include:
+    - `sub-<label>`: Subject identifier
+    - `task-<label>`: Task name
+    - `space-<label>`: Reference space (e.g., MNI152NLin2009cAsym)
+    - `desc-<label>`: Description (e.g., preproc for preprocessed)
+    - `suffix`: The type of data (bold, T1w, events, etc.)
+
+    Let's look at the path for a single file to see this structure.
     """)
     return
 
 
 @app.cell
-def _(layout):
-    layout.get(target='subject', scope='raw', suffix='bold', return_type='file')[:10]
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    When you call .get() on a BIDSLayout, the default returned values are objects of class BIDSFile. A BIDSFile is a lightweight container for individual files in a BIDS dataset.
-
-    Here are some of the attributes and methods available to us in a BIDSFile (note that some of these are only available for certain subclasses of BIDSFile; e.g., you can't call get_image() on a BIDSFile that doesn't correspond to an image file!):
-
-    - .path: The full path of the associated file
-    - .filename: The associated file's filename (without directory)
-    - .dirname: The directory containing the file
-    - .get_entities(): Returns information about entities associated with this BIDSFile (optionally including metadata)
-    - .get_image(): Returns the file contents as a nibabel image (only works for image files)
-    - .get_df(): Get file contents as a pandas DataFrame (only works for TSV files)
-    - .get_metadata(): Returns a dictionary of all metadata found in associated JSON files
-    - .get_associations(): Returns a list of all files associated with this one in some way
-
-    Let's explore the first file in a little more detail.
-    """)
-    return
-
-
-@app.cell
-def _(layout):
-    f = layout.get()[0]
+def _(get_file):
+    f = get_file('S01', 'derivatives', 'bold')
     f
     return (f,)
 
@@ -185,72 +184,18 @@ def _(layout):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    If we wanted to get the path of the file, we can use `.path`.
+    This dataset contains a single task called *localizer*. Look at the [Download Data](Download_Data.ipynb) page for more information about this task.
+
+    We can also retrieve event files that describe the experimental conditions and their timing. Let's load the events for the first subject.
     """)
     return
 
 
 @app.cell
-def _(f):
-    f.path
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    Suppose we were interested in getting a list of tasks included in the dataset.
-    """)
-    return
-
-
-@app.cell
-def _(layout):
-    layout.get_task()
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    It looks like there is only one task associated with this dataset called *localizer*. Look at the [Download Data](Download_Data.ipynb) page for more information about this task. We can query all of the files associated with this task. Let's look at the first 10.
-    """)
-    return
-
-
-@app.cell
-def _(layout):
-    layout.get(task='localizer', suffix='bold', scope='raw')[:10]
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    Notice that there are nifti and event files. We can get the filename for the first particant's functional run
-    """)
-    return
-
-
-@app.cell
-def _(layout):
-    f_1 = layout.get(task='localizer')[0].filename
-    f_1
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    If you want a summary of all the files in your BIDSLayout, but don't want to have to iterate BIDSFile objects and extract their entities, you can get a nice bird's-eye view of your dataset using the `to_df()` method.
-    """)
-    return
-
-
-@app.cell
-def _(layout):
-    layout.to_df()
-    return
+def _(load_events):
+    events_df = load_events('S01')
+    events_df.head(10)
+    return (events_df,)
 
 
 @app.cell(hide_code=True)
@@ -265,16 +210,16 @@ def _(mo):
 
     We will be loading an anatomical image from subject S01 from the localizer [dataset](../content/Download_Data).  See this [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more information about this dataset.
 
-    We will use pybids to grab subject S01's T1 image.
+    We will use our `get_file` helper to grab subject S01's T1 image.
     """)
     return
 
 
 @app.cell
-def _(layout):
+def _(get_file):
     import nibabel as nib
 
-    data = nib.load(layout.get(subject='S01', scope='derivatives', suffix='T1w', return_type='file', extension='nii.gz')[1])
+    data = nib.load(get_file('S01', 'derivatives', 'T1w'))
     return (data,)
 
 
@@ -286,7 +231,10 @@ def _(mo):
     return
 
 
-app.cell()(lambda: help(data))
+@app.cell
+def _(data):
+    help(data)
+    return
 
 
 @app.cell(hide_code=True)
@@ -524,9 +472,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, data_dir, os):
-    sub = 'sub-S01'
-    data_1 = Brain_Data(os.path.join(data_dir, 'derivatives', 'fmriprep', sub, 'func', f'{sub}_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'))
+def _(Brain_Data, get_file):
+    data_1 = Brain_Data(get_file('S01', 'derivatives', 'bold'))
     return (data_1,)
 
 
@@ -854,7 +801,7 @@ def _(mo):
     ### Exercise 1
     A few subjects have already been preprocessed with fMRI prep.
 
-    Use pybids to figure out which subjects have been preprocessed.
+    Use `get_subjects()` to figure out which subjects are available in the dataset.
     """)
     return
 
