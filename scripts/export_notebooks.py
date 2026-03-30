@@ -199,8 +199,58 @@ def transform_accordion_cells(cells):
     return new_cells
 
 
+def _extract_callout_md(callout_block):
+    """Extract a MyST admonition from a mo.callout(...) block string.
+
+    Returns a markdown string like ':::{note}\ncontent\n:::' or None if parsing fails.
+    """
+    # Extract kind
+    kind_match = re.search(r'kind\s*=\s*["\'](\w+)["\']', callout_block)
+    kind = kind_match.group(1) if kind_match else "note"
+    myst_kind = CALLOUT_KIND_MAP.get(kind, "note")
+
+    # Try triple-quoted content first: mo.md(r"""...""") or mo.md("""...""")
+    content_match = re.search(r'mo\.md\s*\(\s*r?"""(.*?)"""', callout_block, re.DOTALL)
+    if not content_match:
+        content_match = re.search(r"mo\.md\s*\(\s*r?'''(.*?)'''", callout_block, re.DOTALL)
+
+    if content_match:
+        content = content_match.group(1).strip()
+    else:
+        # Try concatenated strings: mo.md("line1" "line2" f"line3")
+        # Find all string literals inside the mo.md(...) call
+        md_start = callout_block.find("mo.md(")
+        if md_start == -1:
+            return None
+        # Extract all quoted strings after mo.md(
+        strings = re.findall(r'[f]?"([^"]*)"', callout_block[md_start:])
+        if not strings:
+            strings = re.findall(r"[f]?'([^']*)'", callout_block[md_start:])
+        if not strings:
+            return None
+        content = "".join(strings)
+
+    # Dedent
+    lines = content.split('\n')
+    if lines:
+        indents = [len(line) - len(line.lstrip()) for line in lines if line.strip()]
+        min_indent = min(indents) if indents else 0
+        lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+        content = '\n'.join(lines)
+
+    # Clean up f-string artifacts (e.g., {_b0:.1f} → use defaults)
+    content = re.sub(r'\{[^}]+\}', '...', content) if '{_' in content or '{_' in content else content
+
+    return f':::{{{myst_kind}}}\n{content}\n:::'
+
+
 def transform_callout_cells(cells):
-    """Replace code cells that are purely mo.callout(...) with MyST admonitions."""
+    """Extract mo.callout(...) from code cells and emit as MyST admonitions.
+
+    Handles both:
+    - Standalone callout cells (callout is the only expression)
+    - Embedded callouts inside mo.vstack/mo.hstack layouts
+    """
     new_cells = []
     for cell in cells:
         if cell["cell_type"] != "code":
@@ -209,36 +259,60 @@ def transform_callout_cells(cells):
 
         src = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
 
-        # Only transform cells where mo.callout is the primary expression
-        # Skip cells that mix callout with layout (vstack, etc.)
-        if "mo.callout" not in src or "mo.vstack" in src or "mo.hstack" in src:
+        if "mo.callout" not in src:
             new_cells.append(cell)
             continue
 
-        kind_match = re.search(r'kind\s*=\s*["\'](\w+)["\']', src)
-        kind = kind_match.group(1) if kind_match else "note"
-        myst_kind = CALLOUT_KIND_MAP.get(kind, "note")
+        # Find all mo.callout(...) blocks in the cell
+        # Use a bracket-matching approach to extract each callout
+        callout_mds = []
+        idx = 0
+        while True:
+            start = src.find("mo.callout(", idx)
+            if start == -1:
+                break
+            # Find matching closing paren by counting brackets
+            depth = 0
+            end = start
+            for j in range(start, len(src)):
+                if src[j] == '(':
+                    depth += 1
+                elif src[j] == ')':
+                    depth -= 1
+                    if depth == 0:
+                        end = j + 1
+                        break
+            callout_block = src[start:end]
+            md = _extract_callout_md(callout_block)
+            if md:
+                callout_mds.append(md)
+            idx = end
 
-        content_match = re.search(r'mo\.md\s*\(\s*r?"""(.*?)"""', src, re.DOTALL)
-        if not content_match:
-            content_match = re.search(r"mo\.md\s*\(\s*r?'(.*?)'", src, re.DOTALL)
-        if not content_match:
+        if not callout_mds:
             new_cells.append(cell)
             continue
 
-        content = content_match.group(1).strip()
-        lines = content.split('\n')
-        if lines:
-            indents = [len(line) - len(line.lstrip()) for line in lines if line.strip()]
-            min_indent = min(indents) if indents else 0
-            lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
-            content = '\n'.join(lines)
+        # Check if cell is ONLY a callout (no other logic)
+        is_standalone = "mo.vstack" not in src and "mo.hstack" not in src
 
-        new_cells.append({
-            "cell_type": "markdown",
-            "metadata": {},
-            "source": f':::{{{myst_kind}}}\n{content}\n:::',
-        })
+        if is_standalone:
+            # Replace the entire cell with admonition(s)
+            for md in callout_mds:
+                new_cells.append({
+                    "cell_type": "markdown",
+                    "metadata": {},
+                    "source": md,
+                })
+        else:
+            # Keep the original cell (it has other content like widgets/plots)
+            new_cells.append(cell)
+            # Emit callouts as separate markdown cells after it
+            for md in callout_mds:
+                new_cells.append({
+                    "cell_type": "markdown",
+                    "metadata": {},
+                    "source": md,
+                })
 
     return new_cells
 
@@ -371,9 +445,10 @@ def postprocess_ipynb(ipynb_path: Path):
                     )
 
     # Apply marimo→JB2 transforms
+    # Callouts first — extract from vstack cells BEFORE anywidget replaces them
+    nb["cells"] = transform_callout_cells(nb["cells"])
     nb["cells"] = transform_anywidget_cells(nb["cells"])
     nb["cells"] = transform_accordion_cells(nb["cells"])
-    nb["cells"] = transform_callout_cells(nb["cells"])
     nb["cells"] = inject_plotly_renderer(nb["cells"])
     nb["cells"] = tag_slider_only_cells(nb["cells"])
 
