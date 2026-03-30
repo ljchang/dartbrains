@@ -61,6 +61,7 @@ project:
     - title: Tests
       children:
         - file: content/widget_test.md
+        - file: content/widget_test_ipynb.ipynb
     - title: Contributing
       children:
         - file: content/Contributing.md
