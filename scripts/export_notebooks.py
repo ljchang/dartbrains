@@ -14,6 +14,44 @@ from pathlib import Path
 
 CONTENT_DIR = Path(__file__).parent.parent / "content"
 
+# Widget class name → JS file mapping for {anywidget} directive
+WIDGET_JS_MAP = {
+    "CompassWidget": "compass_widget.js",
+    "NetMagnetizationWidget": "net_magnetization_widget.js",
+    "PrecessionWidget": "precession_widget.js",
+    "SpinEnsembleWidget": "spin_ensemble_widget.js",
+    "KSpaceWidget": "kspace_widget.js",
+    "EncodingWidget": "encoding_widget.js",
+    "ConvolutionWidget": "convolution_widget.js",
+    "TransformCubeWidget": "transform_cube_widget.js",
+    "CostFunctionWidget": "cost_function_widget.js",
+    "SmoothingWidget": "smoothing_widget.js",
+}
+
+WIDGET_DEFAULTS = {
+    "CompassWidget": {"b0": 3.0},
+    "NetMagnetizationWidget": {"n_protons": 100, "b0_on": False},
+    "PrecessionWidget": {"b0": 3.0, "flip_angle": 90.0, "t1": 0.0, "t2": 0.0, "show_relaxation": False, "paused": False},
+    "SpinEnsembleWidget": {"sequence_type": "spin_echo", "speed": 1.0},
+    "KSpaceWidget": {"mask_type": "full", "radius_fraction": 1.0, "speed": 1.0},
+    "EncodingWidget": {"speed": 1.0},
+    "ConvolutionWidget": {"pattern": "block", "speed": 1.0},
+    "TransformCubeWidget": {"tx": 0, "ty": 0, "tz": 0, "rot_x": 0, "rot_y": 0, "rot_z": 0, "scale_x": 1.0, "scale_y": 1.0, "scale_z": 1.0},
+    "CostFunctionWidget": {"trans_x": 0, "trans_y": 0},
+    "SmoothingWidget": {"fwhm": 0},
+}
+
+CALLOUT_KIND_MAP = {
+    "info": "note",
+    "note": "note",
+    "success": "tip",
+    "tip": "tip",
+    "warn": "warning",
+    "warning": "warning",
+    "danger": "danger",
+    "error": "danger",
+}
+
 
 def is_marimo_notebook(path: Path) -> bool:
     """Check if a .py file is a marimo notebook (contains 'import marimo')."""
@@ -56,6 +94,212 @@ def export_notebook(py_path: Path) -> bool:
     # Post-process the exported ipynb for JB2 compatibility
     postprocess_ipynb(ipynb_path)
     return True
+
+
+def transform_anywidget_cells(cells):
+    """Replace code cells containing mo.ui.anywidget(Widget(...)) with {anywidget} markdown directives."""
+    new_cells = []
+    for cell in cells:
+        if cell["cell_type"] != "code":
+            new_cells.append(cell)
+            continue
+
+        src = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+
+        if "mo.ui.anywidget" not in src:
+            new_cells.append(cell)
+            continue
+
+        # Find the widget class being instantiated
+        widget_match = None
+        for widget_name, js_file in WIDGET_JS_MAP.items():
+            if widget_name in src:
+                widget_match = (widget_name, js_file)
+                break
+
+        if not widget_match:
+            new_cells.append(cell)
+            continue
+
+        widget_name, js_file = widget_match
+        model = dict(WIDGET_DEFAULTS.get(widget_name, {}))
+
+        # Try to extract explicit literal kwargs from constructor
+        constructor_pattern = re.compile(rf'{widget_name}\s*\((.*?)\)', re.DOTALL)
+        constructor_match = constructor_pattern.search(src)
+        if constructor_match:
+            args_str = constructor_match.group(1)
+            for kv_match in re.finditer(r'(\w+)\s*=\s*([^,\)]+)', args_str):
+                key = kv_match.group(1)
+                val_str = kv_match.group(2).strip()
+                try:
+                    if val_str in ('True', 'False'):
+                        model[key] = val_str == 'True'
+                    elif val_str.replace('.', '').replace('-', '').isdigit():
+                        model[key] = float(val_str) if '.' in val_str else int(val_str)
+                    elif val_str.startswith('"') or val_str.startswith("'"):
+                        model[key] = val_str.strip("\"'")
+                except (ValueError, SyntaxError):
+                    pass
+
+        model_json = json.dumps(model, indent=2)
+        directive_md = f':::{{anywidget}} /Code/js/{js_file}\n{model_json}\n:::'
+
+        new_cells.append({
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": directive_md,
+        })
+
+    return new_cells
+
+
+def transform_accordion_cells(cells):
+    """Replace code cells containing mo.accordion({...}) with MyST dropdown admonitions."""
+    new_cells = []
+    for cell in cells:
+        if cell["cell_type"] != "code":
+            new_cells.append(cell)
+            continue
+
+        src = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+
+        if "mo.accordion" not in src:
+            new_cells.append(cell)
+            continue
+
+        title_match = re.search(r'["\']([^"\']+)["\']\s*:\s*mo\.md\s*\(', src)
+        if not title_match:
+            new_cells.append(cell)
+            continue
+
+        title = title_match.group(1)
+
+        content_match = re.search(r'mo\.md\s*\(\s*r?"""(.*?)"""', src, re.DOTALL)
+        if not content_match:
+            content_match = re.search(r"mo\.md\s*\(\s*r?'''(.*?)'''", src, re.DOTALL)
+        if not content_match:
+            new_cells.append(cell)
+            continue
+
+        content = content_match.group(1).strip()
+        lines = content.split('\n')
+        if lines:
+            indents = [len(line) - len(line.lstrip()) for line in lines if line.strip()]
+            min_indent = min(indents) if indents else 0
+            lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+            content = '\n'.join(lines)
+
+        new_cells.append({
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": f':::{{admonition}} {title}\n:class: dropdown\n\n{content}\n:::',
+        })
+
+    return new_cells
+
+
+def transform_callout_cells(cells):
+    """Replace code cells that are purely mo.callout(...) with MyST admonitions."""
+    new_cells = []
+    for cell in cells:
+        if cell["cell_type"] != "code":
+            new_cells.append(cell)
+            continue
+
+        src = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+
+        # Only transform cells where mo.callout is the primary expression
+        # Skip cells that mix callout with layout (vstack, etc.)
+        if "mo.callout" not in src or "mo.vstack" in src or "mo.hstack" in src:
+            new_cells.append(cell)
+            continue
+
+        kind_match = re.search(r'kind\s*=\s*["\'](\w+)["\']', src)
+        kind = kind_match.group(1) if kind_match else "note"
+        myst_kind = CALLOUT_KIND_MAP.get(kind, "note")
+
+        content_match = re.search(r'mo\.md\s*\(\s*r?"""(.*?)"""', src, re.DOTALL)
+        if not content_match:
+            content_match = re.search(r"mo\.md\s*\(\s*r?'(.*?)'", src, re.DOTALL)
+        if not content_match:
+            new_cells.append(cell)
+            continue
+
+        content = content_match.group(1).strip()
+        lines = content.split('\n')
+        if lines:
+            indents = [len(line) - len(line.lstrip()) for line in lines if line.strip()]
+            min_indent = min(indents) if indents else 0
+            lines = [line[min_indent:] if len(line) >= min_indent else line for line in lines]
+            content = '\n'.join(lines)
+
+        new_cells.append({
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": f':::{{{myst_kind}}}\n{content}\n:::',
+        })
+
+    return new_cells
+
+
+def inject_plotly_renderer(cells):
+    """If any cell imports plotly, inject the notebook_connected renderer setting."""
+    has_plotly = any(
+        "import plotly" in (c["source"] if isinstance(c["source"], str) else "".join(c["source"]))
+        for c in cells if c["cell_type"] == "code"
+    )
+    if not has_plotly:
+        return cells
+
+    for cell in cells:
+        if cell["cell_type"] == "code":
+            src = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+            if "import plotly" in src:
+                renderer_line = '\nimport plotly.io as _pio\n_pio.renderers.default = "notebook_connected+plotly_mimetype"\n'
+                cell["source"] = src + renderer_line
+                break
+
+    return cells
+
+
+def tag_slider_only_cells(cells):
+    """Tag cells that only define mo.ui.slider/switch/dropdown with remove-cell
+    if their associated widget was converted to an {anywidget} directive."""
+    has_converted_widgets = any(
+        "{anywidget}" in (c["source"] if isinstance(c["source"], str) else "".join(c["source"]))
+        for c in cells if c["cell_type"] == "markdown"
+    )
+    if not has_converted_widgets:
+        return cells
+
+    slider_patterns = ['mo.ui.slider', 'mo.ui.switch', 'mo.ui.dropdown']
+
+    for cell in cells:
+        if cell["cell_type"] != "code":
+            continue
+        src = cell["source"] if isinstance(cell["source"], str) else "".join(cell["source"])
+
+        if not any(p in src for p in slider_patterns):
+            continue
+
+        # Check if cell ONLY defines UI controls (no other substantial logic)
+        lines = [l.strip() for l in src.strip().split('\n') if l.strip() and not l.strip().startswith('#')]
+        is_ui_only = all(
+            any(p in line for p in slider_patterns + [
+                ')', '(', 'label=', 'start=', 'stop=', 'step=', 'value=',
+                'full_width=', 'options=', '=', '_slider', '_toggle', '_select',
+                '_dropdown', '_switch',
+            ])
+            for line in lines
+        )
+
+        if is_ui_only:
+            tags = set(cell.get("metadata", {}).get("tags", []))
+            tags.add("remove-cell")
+            cell.setdefault("metadata", {})["tags"] = sorted(tags)
+
+    return cells
 
 
 def postprocess_ipynb(ipynb_path: Path):
@@ -125,6 +369,13 @@ def postprocess_ipynb(ipynb_path: Path):
                         f'\U0001f680 <strong>Open in molab</strong> — '
                         f'run code &amp; interact with widgets</a>'
                     )
+
+    # Apply marimo→JB2 transforms
+    nb["cells"] = transform_anywidget_cells(nb["cells"])
+    nb["cells"] = transform_accordion_cells(nb["cells"])
+    nb["cells"] = transform_callout_cells(nb["cells"])
+    nb["cells"] = inject_plotly_renderer(nb["cells"])
+    nb["cells"] = tag_slider_only_cells(nb["cells"])
 
     with open(ipynb_path, "w") as f:
         json.dump(nb, f, indent=1)
