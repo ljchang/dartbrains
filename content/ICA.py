@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.22.4"
 app = marimo.App()
 
 
@@ -34,11 +34,14 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
-    from IPython.display import YouTubeVideo
-
-    YouTubeVideo('7Kk_RsGycHs')
+@app.cell(hide_code=True)
+def _(mo):
+    mo.Html("""
+    <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/7Kk_RsGycHs"
+        frameborder="0" allowfullscreen>
+    </iframe>
+    """)
     return
 
 
@@ -53,23 +56,24 @@ def _(mo):
 
 @app.cell
 def _():
-    # '%matplotlib inline' command supported automatically in marimo
-
-    import os
-    import glob
+    import sys
     import numpy as np
-    import pandas as pd
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+    from numpy.fft import fft, fftfreq
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
     from nltools.data import Brain_Data
-    from nltools.plotting import component_viewer
+    from nilearn.plotting import view_img
+    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_tr
 
-    base_dir = '../data/localizer/derivatives/preproc/fmriprep'
-    base_dir = '/Users/lukechang/Dropbox/Dartbrains/Data/preproc/fmriprep'
+    return Brain_Data, fft, fftfreq, get_file, get_tr, go, make_subplots, np, view_img
+
+
+@app.cell
+def _(Brain_Data, get_file):
     sub = 'S01'
-
-    data = Brain_Data(os.path.join(base_dir, f'sub-{sub}','func', f'sub-{sub}_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'))
-    return component_viewer, data
+    data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
+    return (data,)
 
 
 @app.cell(hide_code=True)
@@ -84,10 +88,12 @@ def _(mo):
 
 
 @app.cell
-def _(data):
-    data_1 = data.filter(sampling_freq=1 / 2.4, high_pass=1 / 128)
-    data_1 = data_1.smooth(6)
-    return (data_1,)
+def _(data, get_tr, mo):
+    tr = get_tr()
+    with mo.persistent_cache("ica_preprocess"):
+        data_1 = data.filter(sampling_freq=1 / tr, high_pass=1 / 128)
+        data_1 = data_1.smooth(6)
+    return data_1, tr
 
 
 @app.cell(hide_code=True)
@@ -104,9 +110,9 @@ def _(mo):
 
 
 @app.cell
-def _(data_1):
-    tr = 2.4
-    output = data_1.decompose(algorithm='ica', n_components=30, axis='images', whiten=True)
+def _(data_1, mo):
+    with mo.persistent_cache("ica_decompose"):
+        output = data_1.decompose(algorithm='ica', n_components=30, axis='images', whiten='unit-variance')
     return (output,)
 
 
@@ -115,9 +121,9 @@ def _(mo):
     mo.md(r"""
     ## Viewing Components
 
-    We will use the interactive `component_viewer` from nltools to explore the results of the analysis. This viewer uses ipywidgets to select the `Component` to view and also the threshold. You can manually enter a component number to view or scroll up and down.
+    We will use an interactive component viewer to explore the results of the analysis. Use the **Component** slider to select which component to view and the **Threshold** slider to control the display threshold. The plot updates automatically when you change either slider.
 
-    Components have been standardized, this allows us to threshold the brain in terms of standard deviations. For example, the default threshold of 2.0, means that any voxel that loads on the component greater or less than 2 standard deviations will be overlaid on the standard brain. You can play with different thresholds to be more or less inclusive - a threshold of 0 will overlay all of the voxels. If you play with any of the numbers, make sure you press tab to update the plot.
+    Components have been standardized, this allows us to threshold the brain in terms of standard deviations. For example, the default threshold of 2.0, means that any voxel that loads on the component greater or less than 2 standard deviations will be overlaid on the standard brain. You can play with different thresholds to be more or less inclusive - a threshold of 0 will overlay all of the voxels.
 
     The second plot is the time course of the voxels that load on the component. The x-axis is in TRs, which for this dataset is 2.4 sec.
 
@@ -128,9 +134,80 @@ def _(mo):
     return
 
 
-@app.cell
-def _(component_viewer, output):
-    component_viewer(output, tr=2.4)
+@app.cell(hide_code=True)
+def _(mo, output):
+    component_slider = mo.ui.slider(
+        start=0, stop=len(output['components']) - 1, step=1,
+        value=0, label="Component", show_value=True,
+    )
+    threshold_slider = mo.ui.slider(
+        start=0.0, stop=4.0, step=0.1,
+        value=2.0, label="Threshold", show_value=True,
+    )
+    mo.hstack([component_slider, threshold_slider], justify="start", gap=2)
+    return component_slider, threshold_slider
+
+
+@app.cell(hide_code=True)
+def _(component_slider, fft, fftfreq, go, make_subplots, mo, np, output, threshold_slider, tr, view_img):
+    _component = component_slider.value
+    _threshold = threshold_slider.value
+
+    # Brain viewer: z-score the component, let view_img handle threshold display
+    _comp = output['components'][_component]
+    _zscored = (_comp - _comp.mean()) * (1 / _comp.std())
+    _brain_html = view_img(
+        _zscored.to_nifti(),
+        threshold=_threshold,
+        black_bg=True,
+        symmetric_cmap=True,
+        title=f'Component {_component}/{len(output["components"])}',
+    )
+
+    # Plotly: timecourse + power spectrum
+    _timecourse = output['weights'][:, _component]
+    _y = fft(_timecourse)
+    _f = fftfreq(len(_y), d=tr)
+    _freq_mask = _f > 0
+
+    _fig = make_subplots(
+        rows=1, cols=2,
+        subplot_titles=(f'Timecourse (TR={tr}s)', 'Power Spectrum'),
+        horizontal_spacing=0.18,
+    )
+    _fig.add_trace(
+        go.Scatter(
+            x=list(range(len(_timecourse))),
+            y=_timecourse,
+            mode='lines',
+            line=dict(color='#EF553B', width=2),
+            name='Timecourse',
+            hovertemplate='TR: %{x}<br>Intensity: %{y:.4f}<extra></extra>',
+        ),
+        row=1, col=1,
+    )
+    _fig.add_trace(
+        go.Scatter(
+            x=_f[_freq_mask],
+            y=np.abs(_y)[_freq_mask] ** 2,
+            mode='lines',
+            line=dict(color='#636EFA', width=2),
+            name='Power',
+            hovertemplate='Freq: %{x:.4f} Hz<br>Power: %{y:.4e}<extra></extra>',
+        ),
+        row=1, col=2,
+    )
+    _fig.update_xaxes(title_text='TR', row=1, col=1)
+    _fig.update_yaxes(title_text='Intensity (AU)', row=1, col=1)
+    _fig.update_xaxes(title_text='Frequency (Hz)', row=1, col=2)
+    _fig.update_yaxes(title_text='Power', row=1, col=2)
+    _fig.update_layout(
+        height=280,
+        showlegend=False,
+        margin=dict(t=40, b=50, l=70, r=30),
+    )
+
+    mo.vstack([mo.Html(_brain_html._repr_html_()), _fig], gap=0.5)
     return
 
 

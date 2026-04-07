@@ -27,6 +27,7 @@ dependencies = [
     "seaborn",
     "networkx",
     "polars>=1.39.3",
+    "ipyniivue>=2.4.4",
 ]
 
 [project.optional-dependencies]
