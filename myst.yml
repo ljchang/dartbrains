@@ -22,7 +22,7 @@ project:
         - file: content/Introduction_to_Polars.ipynb
         - file: content/Introduction_to_Plotting.ipynb
         - file: content/Download_Data.ipynb
-        - file: content/Glossary.ipynb
+        - file: content/Glossary.md
     - title: MR Physics & Imaging
       children:
         - file: content/MR_Physics_1_Magnetism_and_Resonance.ipynb
