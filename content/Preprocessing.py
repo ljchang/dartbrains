@@ -50,8 +50,13 @@ def _():
     from Code.mr_widgets import TransformCubeWidget, CostFunctionWidget, SmoothingWidget
 
     IMG_DIR = _ROOT / "images" / "preprocessing"
-
-    return CostFunctionWidget, IMG_DIR, SmoothingWidget, TransformCubeWidget, mo
+    return (
+        CostFunctionWidget,
+        IMG_DIR,
+        SmoothingWidget,
+        TransformCubeWidget,
+        mo,
+    )
 
 
 @app.cell(hide_code=True)
@@ -295,7 +300,7 @@ def _(IMG_DIR, mo):
 
         Let's look at an example of the translation and rotation parameters after running realignment on our first subject.
         """),
-        mo.image(str(IMG_DIR / "head_motion.png")),
+        mo.image(str(IMG_DIR / "realignment_parameters.png")),
         mo.md(r"""
         Don't forget that even though we can approximately put each volume into a similar position with realignment, head motion always distorts the magnetic field and can lead to nonlinear changes in signal intensity that will not be addressed by this procedure. In the resting-state literature, where many analyses are based on functional connectivity, head motion can lead to spurious correlations. Some researchers choose to exclude any subject that moved more than a certain amount. Others choose to remove the impact of these time points in their data through removing the volumes via *scrubbing* or modeling out the volume with a dummy code in the first level general linear models.
         """),
@@ -345,19 +350,39 @@ def _(IMG_DIR, mo):
         Next, the anatomical images are segmented into different tissue types. These tissue maps are used for various types of analyses, including providing a grey matter mask to reduce the computational time in estimating statistics. In addition, they provide masks to aid in extracting average activity in CSF, or white matter, which might be used as covariates in the statistical analyses to account for physiological noise.
         """),
         mo.image(str(IMG_DIR / "T1_segmentation.png")),
-        mo.md(r"""
-        ### Spatial normalization of the anatomical T1w reference
-
-        fmriprep uses [ANTs](http://stnava.github.io/ANTs/) to perform nonlinear spatial normalization. It is easy to check to see how well the algorithm performed by viewing the results of aligning the T1w reference to the stereotactic reference space. Hover on the panels with the mouse pointer to transition between both spaces. We are using the MNI152NLin2009cAsym template.
-        """),
-        mo.image(str(IMG_DIR / "sub-S01_space-MNI152NLin2009cAsym_T1w.svg")),
-        mo.md(r"""
-        ### Alignment of functional and anatomical MRI data
-
-        Next, we can evaluate the quality of alignment of the functional data to the anatomical T1 image. FSL `flirt` was used to generate transformations from EPI-space to T1w-space — the white matter mask calculated with FSL `fast` (brain tissue segmentation) was used for BBR. Note that Nearest Neighbor interpolation is used in the reportlets in order to highlight potential spin-history and other artifacts, whereas final images are resampled using Lanczos interpolation. Notice these images are much blurrier and show some distortion compared to the T1s.
-        """),
-        mo.image(str(IMG_DIR / "sub-S01_task-localizer_desc-flirtbbr_bold.svg")),
     ])
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Spatial normalization of the anatomical T1w reference
+
+    fmriprep uses [ANTs](http://stnava.github.io/ANTs/) to perform nonlinear spatial normalization. It is easy to check to see how well the algorithm performed by viewing the results of aligning the T1w reference to the stereotactic reference space. Hover on the panels with the mouse pointer to transition between both spaces. We are using the MNI152NLin2009cAsym template.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(IMG_DIR, mo):
+    mo.Html(f'<div style="max-width:100%">{(IMG_DIR / "sub-S01_space-MNI152NLin2009cAsym_T1w.svg").read_text()}</div>')
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Alignment of functional and anatomical MRI data
+
+    Next, we can evaluate the quality of alignment of the functional data to the anatomical T1 image. FSL `flirt` was used to generate transformations from EPI-space to T1w-space — the white matter mask calculated with FSL `fast` (brain tissue segmentation) was used for BBR. Note that Nearest Neighbor interpolation is used in the reportlets in order to highlight potential spin-history and other artifacts, whereas final images are resampled using Lanczos interpolation. Notice these images are much blurrier and show some distortion compared to the T1s.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(IMG_DIR, mo):
+    mo.Html(f'<div style="max-width:100%">{(IMG_DIR / "sub-S01_task-localizer_desc-flirtbbr_bold.svg").read_text()}</div>')
     return
 
 
@@ -423,7 +448,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import numpy as _np
     import matplotlib.pyplot as _plt
@@ -522,6 +547,8 @@ def _(IMG_DIR, mo):
         In order to submit a job, you can create a Portable Batch System (PBS) script that sets up the parameters (e.g., how much time you want your script to run, specifying directory to run, etc) and submits your job to a queue.
 
         **NOTE**: If you end up working in a lab in the future, you will likely need to request access to a system like *discovery* using [this type of link](https://rcweb.dartmouth.edu/accounts/).
+
+        For a detailed walkthrough of running fmriprep on Dartmouth's Discovery cluster — SLURM scripts, data access on Rolando, and environment setup — see the companion tutorial: [Running fMRIPrep on HPC](./fmriprep_on_discovery.md).
         """),
     ])
     return
@@ -567,31 +594,8 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ---
-    ## Summary
-
-    | Step | What it does | Key parameters |
-    |------|-------------|----------------|
-    | **Realignment** | Corrects head motion between volumes | 6 DOF rigid body |
-    | **Slice timing** | Corrects for sequential slice acquisition | Reference slice |
-    | **Coregistration** | Aligns functional to anatomical | BBR cost function |
-    | **Normalization** | Warps to standard space (MNI) | Nonlinear (ANTs) |
-    | **Smoothing** | Blurs image to increase SNR | FWHM (typically 6mm) |
-
-    **Key principles:**
-    - Each resampling step introduces interpolation error -- minimize the
-      number of separate resampling steps
-    - fMRIPrep combines multiple transforms into a single resampling step
-    - Always inspect QC reports before trusting preprocessed data
-    - Motion is the #1 enemy of fMRI -- no amount of preprocessing fully
-      removes its effects
-
-    **Next:** The preprocessed data is now ready for statistical analysis
-    using the General Linear Model (GLM).
-    """)
+@app.cell
+def _():
     return
 
 
