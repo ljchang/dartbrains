@@ -5,34 +5,36 @@ app = marimo.App(width="medium", app_title="Preprocessing")
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    # Preprocessing
-    *Written by Luke Chang*
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        # Preprocessing
+        *Written by Luke Chang*
 
-    Being able to study brain activity associated with cognitive processes
-    in humans is an amazing achievement. However, there is an extraordinary
-    amount of noise and very low levels of signal, which makes it difficult
-    to make inferences about brain function using BOLD imaging. A critical
-    step before any analysis is to remove as much noise as possible. The
-    series of steps to remove noise comprise our *neuroimaging data
-    **preprocessing** pipeline*. See slides on our preprocessing lecture [here](../images/lectures/Preprocessing.pdf).
+        Being able to study brain activity associated with cognitive processes
+        in humans is an amazing achievement. However, there is an extraordinary
+        amount of noise and very low levels of signal, which makes it difficult
+        to make inferences about brain function using BOLD imaging. A critical
+        step before any analysis is to remove as much noise as possible. The
+        series of steps to remove noise comprise our *neuroimaging data
+        **preprocessing** pipeline*. See slides on our preprocessing lecture [here](../images/lectures/Preprocessing.pdf).
+        """),
+        mo.image(str(IMG_DIR / "preprocessing.png")),
+        mo.md(r"""
+        In this lab, we will go over the basics of preprocessing fMRI data using the [fmriprep](https://fmriprep.org/) preprocessing pipeline. We will cover:
 
-    ![preprocessing](../images/preprocessing/preprocessing.png)
+        - **Image transformations** (rigid body and affine)
+        - **Cost functions** for image registration
+        - **Head motion correction** (realignment)
+        - **Spatial normalization**
+        - **Spatial smoothing**
+        - **fMRIPrep** automated preprocessing pipeline
 
-    In this lab, we will go over the basics of preprocessing fMRI data using the [fmriprep](https://fmriprep.org/) preprocessing pipeline. We will cover:
+        There are other preprocessing steps that are also common, but not necessarily performed by all labs such as slice timing and distortion correction. We will not be discussing these in depth outside of the videos.
 
-    - **Image transformations** (rigid body and affine)
-    - **Cost functions** for image registration
-    - **Head motion correction** (realignment)
-    - **Spatial normalization**
-    - **Spatial smoothing**
-    - **fMRIPrep** automated preprocessing pipeline
-
-    There are other preprocessing steps that are also common, but not necessarily performed by all labs such as slice timing and distortion correction. We will not be discussing these in depth outside of the videos.
-
-    Let’s start with watching a short video by Martin Lindquist to get a general overview of the main steps of preprocessing and the basics of how to transform images and register them to other images.
-    """)
+        Let’s start with watching a short video by Martin Lindquist to get a general overview of the main steps of preprocessing and the basics of how to transform images and register them to other images.
+        """),
+    ])
     return
 
 
@@ -43,10 +45,13 @@ def _():
     import plotly.graph_objects as go
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    _ROOT = Path(__file__).resolve().parent.parent
+    sys.path.insert(0, str(_ROOT))
     from Code.mr_widgets import TransformCubeWidget, CostFunctionWidget, SmoothingWidget
 
-    return CostFunctionWidget, SmoothingWidget, TransformCubeWidget, mo
+    IMG_DIR = _ROOT / "images" / "preprocessing"
+
+    return CostFunctionWidget, IMG_DIR, SmoothingWidget, TransformCubeWidget, mo
 
 
 @app.cell(hide_code=True)
@@ -278,21 +283,23 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ---
-    ## Realignment
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ---
+        ## Realignment
 
-    Now let's put everything we learned together to understand how we can correct for head motion in functional images that occurred during a scanning session. It is extremely important to make sure that a specific voxel has the same 3D coordinate across all time points to be able to model neural processes. This of course is made difficult by the fact that participants move during a scanning session and also in between runs.
+        Now let's put everything we learned together to understand how we can correct for head motion in functional images that occurred during a scanning session. It is extremely important to make sure that a specific voxel has the same 3D coordinate across all time points to be able to model neural processes. This of course is made difficult by the fact that participants move during a scanning session and also in between runs.
 
-    Realignment is the preprocessing step in which a rigid body transformation is applied to each volume to align them to a common space. One typically needs to choose a reference volume, which might be the first, middle, or last volume, or the mean of all volumes.
+        Realignment is the preprocessing step in which a rigid body transformation is applied to each volume to align them to a common space. One typically needs to choose a reference volume, which might be the first, middle, or last volume, or the mean of all volumes.
 
-    Let's look at an example of the translation and rotation parameters after running realignment on our first subject.
-
-    ![head_motion](../images/preprocessing/head_motion.png)
-
-    Don't forget that even though we can approximately put each volume into a similar position with realignment, head motion always distorts the magnetic field and can lead to nonlinear changes in signal intensity that will not be addressed by this procedure. In the resting-state literature, where many analyses are based on functional connectivity, head motion can lead to spurious correlations. Some researchers choose to exclude any subject that moved more than a certain amount. Others choose to remove the impact of these time points in their data through removing the volumes via *scrubbing* or modeling out the volume with a dummy code in the first level general linear models.
-    """)
+        Let's look at an example of the translation and rotation parameters after running realignment on our first subject.
+        """),
+        mo.image(str(IMG_DIR / "head_motion.png")),
+        mo.md(r"""
+        Don't forget that even though we can approximately put each volume into a similar position with realignment, head motion always distorts the magnetic field and can lead to nonlinear changes in signal intensity that will not be addressed by this procedure. In the resting-state literature, where many analyses are based on functional connectivity, head motion can lead to spurious correlations. Some researchers choose to exclude any subject that moved more than a certain amount. Others choose to remove the impact of these time points in their data through removing the volumes via *scrubbing* or modeling out the volume with a dummy code in the first level general linear models.
+        """),
+    ])
     return
 
 
@@ -326,30 +333,31 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    There are many different steps involved in the spatial normalization process and these details vary widely across various imaging software packages. We will briefly discuss some of the steps involved in the anatomical preprocessing pipeline implemented by fMRIprep and will be showing example figures from the output generated by the pipeline.
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        There are many different steps involved in the spatial normalization process and these details vary widely across various imaging software packages. We will briefly discuss some of the steps involved in the anatomical preprocessing pipeline implemented by fMRIprep and will be showing example figures from the output generated by the pipeline.
 
-    First, brains are extracted from the skull and surrounding dura mater. You can check and see how well the algorithm performed by examining the red outline.
+        First, brains are extracted from the skull and surrounding dura mater. You can check and see how well the algorithm performed by examining the red outline.
+        """),
+        mo.image(str(IMG_DIR / "T1_normalization.png")),
+        mo.md(r"""
+        Next, the anatomical images are segmented into different tissue types. These tissue maps are used for various types of analyses, including providing a grey matter mask to reduce the computational time in estimating statistics. In addition, they provide masks to aid in extracting average activity in CSF, or white matter, which might be used as covariates in the statistical analyses to account for physiological noise.
+        """),
+        mo.image(str(IMG_DIR / "T1_segmentation.png")),
+        mo.md(r"""
+        ### Spatial normalization of the anatomical T1w reference
 
-    ![normalization](../images/preprocessing/T1_normalization.png)
+        fmriprep uses [ANTs](http://stnava.github.io/ANTs/) to perform nonlinear spatial normalization. It is easy to check to see how well the algorithm performed by viewing the results of aligning the T1w reference to the stereotactic reference space. Hover on the panels with the mouse pointer to transition between both spaces. We are using the MNI152NLin2009cAsym template.
+        """),
+        mo.image(str(IMG_DIR / "sub-S01_space-MNI152NLin2009cAsym_T1w.svg")),
+        mo.md(r"""
+        ### Alignment of functional and anatomical MRI data
 
-    Next, the anatomical images are segmented into different tissue types. These tissue maps are used for various types of analyses, including providing a grey matter mask to reduce the computational time in estimating statistics. In addition, they provide masks to aid in extracting average activity in CSF, or white matter, which might be used as covariates in the statistical analyses to account for physiological noise.
-
-    ![segmentation](../images/preprocessing/T1_segmentation.png)
-
-    ### Spatial normalization of the anatomical T1w reference
-
-    fmriprep uses [ANTs](http://stnava.github.io/ANTs/) to perform nonlinear spatial normalization. It is easy to check to see how well the algorithm performed by viewing the results of aligning the T1w reference to the stereotactic reference space. Hover on the panels with the mouse pointer to transition between both spaces. We are using the MNI152NLin2009cAsym template.
-
-    ![mni_normalization](../images/preprocessing/sub-S01_space-MNI152NLin2009cAsym_T1w.svg)
-
-    ### Alignment of functional and anatomical MRI data
-
-    Next, we can evaluate the quality of alignment of the functional data to the anatomical T1 image. FSL `flirt` was used to generate transformations from EPI-space to T1w-space — the white matter mask calculated with FSL `fast` (brain tissue segmentation) was used for BBR. Note that Nearest Neighbor interpolation is used in the reportlets in order to highlight potential spin-history and other artifacts, whereas final images are resampled using Lanczos interpolation. Notice these images are much blurrier and show some distortion compared to the T1s.
-
-    ![epi_alignment](../images/preprocessing/sub-S01_task-localizer_desc-flirtbbr_bold.svg)
-    """)
+        Next, we can evaluate the quality of alignment of the functional data to the anatomical T1 image. FSL `flirt` was used to generate transformations from EPI-space to T1w-space — the white matter mask calculated with FSL `fast` (brain tissue segmentation) was used for BBR. Note that Nearest Neighbor interpolation is used in the reportlets in order to highlight potential spin-history and other artifacts, whereas final images are resampled using Lanczos interpolation. Notice these images are much blurrier and show some distortion compared to the T1s.
+        """),
+        mo.image(str(IMG_DIR / "sub-S01_task-localizer_desc-flirtbbr_bold.svg")),
+    ])
     return
 
 
@@ -447,27 +455,28 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ---
-    ## fmriprep
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ---
+        ## fmriprep
 
-    Throughout this lab and course, you have frequently heard about [fmriprep](https://fmriprep.readthedocs.io/en/stable/), which is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that was developed by a team at the [Center for Reproducible Research](http://reproducibility.stanford.edu/) led by Russ Poldrack and Chris Gorgolewski. Fmriprep was designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols, requires minimal user input, and provides easily interpretable and comprehensive error and output reporting. Fmriprep performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that are ready for data analysis.
+        Throughout this lab and course, you have frequently heard about [fmriprep](https://fmriprep.readthedocs.io/en/stable/), which is a functional magnetic resonance imaging (fMRI) data preprocessing pipeline that was developed by a team at the [Center for Reproducible Research](http://reproducibility.stanford.edu/) led by Russ Poldrack and Chris Gorgolewski. Fmriprep was designed to provide an easily accessible, state-of-the-art interface that is robust to variations in scan acquisition protocols, requires minimal user input, and provides easily interpretable and comprehensive error and output reporting. Fmriprep performs basic processing steps (coregistration, normalization, unwarping, noise component extraction, segmentation, skullstripping etc.) providing outputs that are ready for data analysis.
 
-    fmriprep was built on top of [nipype](https://nipype.readthedocs.io/en/latest/), which is a tool to build preprocessing pipelines in python using graphs. This provides a completely flexible way to create custom pipelines using any type of software while also facilitating easy parallelization of steps across the pipeline on high performance computing platforms. Nipype is completely flexible, but has a fairly steep learning curve and is best for researchers who have strong opinions about how they want to preprocess their data, or are working with nonstandard data that might require adjusting the preprocessing steps or parameters. In practice, most researchers typically use similar preprocessing steps and do not need to tweak the pipelines very often. In addition, many researchers do not fully understand how each preprocessing step will impact their results and would prefer if somebody else picked suitable defaults based on current best practices in the literature. The fmriprep pipeline uses a combination of tools from well-known software packages, including FSL, ANTs, FreeSurfer and AFNI. This pipeline was designed to provide the best software implementation for each stage of preprocessing, and is quickly being updated as methods evolve and bugs are discovered by a growing user base.
+        fmriprep was built on top of [nipype](https://nipype.readthedocs.io/en/latest/), which is a tool to build preprocessing pipelines in python using graphs. This provides a completely flexible way to create custom pipelines using any type of software while also facilitating easy parallelization of steps across the pipeline on high performance computing platforms. Nipype is completely flexible, but has a fairly steep learning curve and is best for researchers who have strong opinions about how they want to preprocess their data, or are working with nonstandard data that might require adjusting the preprocessing steps or parameters. In practice, most researchers typically use similar preprocessing steps and do not need to tweak the pipelines very often. In addition, many researchers do not fully understand how each preprocessing step will impact their results and would prefer if somebody else picked suitable defaults based on current best practices in the literature. The fmriprep pipeline uses a combination of tools from well-known software packages, including FSL, ANTs, FreeSurfer and AFNI. This pipeline was designed to provide the best software implementation for each stage of preprocessing, and is quickly being updated as methods evolve and bugs are discovered by a growing user base.
 
-    This tool allows you to easily do the following:
+        This tool allows you to easily do the following:
 
-    - Take fMRI data from raw to fully preprocessed form.
-    - Implement tools from different software packages.
-    - Achieve optimal data processing quality by using the best tools available.
-    - Generate preprocessing quality reports, with which the user can easily identify outliers.
-    - Receive verbose output concerning the stage of preprocessing for each subject, including meaningful errors.
-    - Automate and parallelize processing steps, which provides a significant speed-up from typical linear, manual processing.
-    - More information and documentation can be found at [https://fmriprep.readthedocs.io/](https://fmriprep.readthedocs.io/)
-
-    ![fmriprep](../images/preprocessing/fmriprep.png)
-    """)
+        - Take fMRI data from raw to fully preprocessed form.
+        - Implement tools from different software packages.
+        - Achieve optimal data processing quality by using the best tools available.
+        - Generate preprocessing quality reports, with which the user can easily identify outliers.
+        - Receive verbose output concerning the stage of preprocessing for each subject, including meaningful errors.
+        - Automate and parallelize processing steps, which provides a significant speed-up from typical linear, manual processing.
+        - More information and documentation can be found at [https://fmriprep.readthedocs.io/](https://fmriprep.readthedocs.io/)
+        """),
+        mo.image(str(IMG_DIR / "fmriprep.png")),
+    ])
     return
 
 
@@ -497,22 +506,24 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Quick primer on High Performance Computing
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ### Quick primer on High Performance Computing
 
-    We could run fmriprep on our computer, but this could take a long time if we have a lot of participants. Because we have a limited amount of computational resources on our laptops (e.g., cpus, and memory), we would have to run each participant sequentially. For example, if we had 50 participants, it would take 50 times longer to run all participants than a single one.
+        We could run fmriprep on our computer, but this could take a long time if we have a lot of participants. Because we have a limited amount of computational resources on our laptops (e.g., cpus, and memory), we would have to run each participant sequentially. For example, if we had 50 participants, it would take 50 times longer to run all participants than a single one.
 
-    Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been installed in racks. Below is a picture of what Dartmouth's [Discovery cluster](https://rc.dartmouth.edu/index.php/discovery-overview/) looks like:
+        Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been installed in racks. Below is a picture of what Dartmouth's [Discovery cluster](https://rc.dartmouth.edu/index.php/discovery-overview/) looks like:
+        """),
+        mo.image(str(IMG_DIR / "hpc.png")),
+        mo.md(r"""
+        A cluster is simply a collection of nodes. A node can be thought of as an individual computer. Each node contains processors, which encompass multiple cores. Discovery contains 3000+ cores, which is certainly a lot more than your laptop!
 
-    ![discovery](../images/preprocessing/hpc.png)
+        In order to submit a job, you can create a Portable Batch System (PBS) script that sets up the parameters (e.g., how much time you want your script to run, specifying directory to run, etc) and submits your job to a queue.
 
-    A cluster is simply a collection of nodes. A node can be thought of as an individual computer. Each node contains processors, which encompass multiple cores. Discovery contains 3000+ cores, which is certainly a lot more than your laptop!
-
-    In order to submit a job, you can create a Portable Batch System (PBS) script that sets up the parameters (e.g., how much time you want your script to run, specifying directory to run, etc) and submits your job to a queue.
-
-    **NOTE**: If you end up working in a lab in the future, you will likely need to request access to a system like *discovery* using [this type of link](https://rcweb.dartmouth.edu/accounts/).
-    """)
+        **NOTE**: If you end up working in a lab in the future, you will likely need to request access to a system like *discovery* using [this type of link](https://rcweb.dartmouth.edu/accounts/).
+        """),
+    ])
     return
 
 
