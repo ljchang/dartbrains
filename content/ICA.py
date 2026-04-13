@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.22.4"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
@@ -66,7 +66,17 @@ def _():
     sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
     from Code.data import get_file, get_tr
 
-    return Brain_Data, fft, fftfreq, get_file, get_tr, go, make_subplots, np, view_img
+    return (
+        Brain_Data,
+        fft,
+        fftfreq,
+        get_file,
+        get_tr,
+        go,
+        make_subplots,
+        np,
+        view_img,
+    )
 
 
 @app.cell
@@ -149,7 +159,19 @@ def _(mo, output):
 
 
 @app.cell(hide_code=True)
-def _(component_slider, fft, fftfreq, go, make_subplots, mo, np, output, threshold_slider, tr, view_img):
+def _(
+    component_slider,
+    fft,
+    fftfreq,
+    go,
+    make_subplots,
+    mo,
+    np,
+    output,
+    threshold_slider,
+    tr,
+    view_img,
+):
     _component = component_slider.value
     _threshold = threshold_slider.value
 

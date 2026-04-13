@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.22.4"
 app = marimo.App()
 
 
@@ -66,7 +66,7 @@ def _(mo):
     Recently, there has been growing interest to share datasets across labs and even on public repositories such as [openneuro](https://openneuro.org/). In order to make this a successful enterprise, it is necessary to have some standards in how the data are named and organized. Historically, each lab has used their own idiosyncratic conventions, which can make it difficult for outsiders to analyze. In the past few years, there have been heroic efforts by the neuroimaging community to create a standardized file organization and naming practices. This specification is called **BIDS** for [Brain Imaging Dataset Specification](http://bids.neuroimaging.io/).
 
     As you can imagine, individuals have their own distinct method of organizing their files. Think about how you keep track of your files on your personal laptop (versus your friend). This may be okay in the personal realm, but in science, it's best if anyone (especially  yourself 6 months from now!) can follow your work and know *which* files mean *what* by their titles.
-
+    |
     Here's an example of non-Bids versus BIDS dataset found in [this paper](https://www.nature.com/articles/sdata201644):
 
     ![file_tree](../images/brain_data/file_tree.jpg)
@@ -120,7 +120,7 @@ def _():
     from huggingface_hub import hf_hub_download
     import os
 
-    return get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS, hf_hub_download, os
+    return get_file, get_subjects, load_events
 
 
 @app.cell(hide_code=True)
@@ -135,7 +135,7 @@ def _(mo):
 def _(get_subjects):
     subjects = get_subjects()
     subjects[:10]
-    return (subjects,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -150,7 +150,7 @@ def _(mo):
 def _(get_file, get_subjects):
     bold_files = [get_file(sub, 'derivatives', 'bold') for sub in get_subjects()[:10]]
     bold_files
-    return (bold_files,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -178,7 +178,7 @@ def _(mo):
 def _(get_file):
     f = get_file('S01', 'derivatives', 'bold')
     f
-    return (f,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -195,7 +195,7 @@ def _(mo):
 def _(load_events):
     events_df = load_events('S01')
     events_df.head(10)
-    return (events_df,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -402,6 +402,7 @@ def _(mo):
 @app.cell
 def _(amygdala_mask, plot_glass_brain):
     plot_glass_brain(amygdala_mask)
+
     return
 
 
