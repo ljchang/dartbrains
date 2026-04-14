@@ -74,3 +74,6 @@ __marimo__/
 # Notebook-generated artifacts #
 #################################
 MyFirstPlot.png
+content/*.nii
+content/*.nii.gz
+content/Tmp_*

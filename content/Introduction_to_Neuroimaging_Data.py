@@ -120,6 +120,37 @@ def _(IMG_DIR, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ### The `derivatives/` folder
+
+    BIDS makes a strict separation between **raw data** (what came off the scanner) and **derivatives** (anything produced by running a pipeline on that raw data). Raw files live in the top-level subject folders (`sub-S01/func/`, `sub-S01/anat/`, …), and derived files live in a sibling `derivatives/` directory:
+
+    ```
+    localizer/
+    ├── sub-S01/
+    │   ├── anat/sub-S01_T1w.nii.gz
+    │   └── func/sub-S01_task-localizer_bold.nii.gz
+    ├── sub-S02/ …
+    └── derivatives/
+        └── fmriprep/
+            ├── sub-S01/
+            │   ├── anat/sub-S01_desc-preproc_T1w.nii.gz
+            │   └── func/sub-S01_task-localizer_desc-preproc_bold.nii.gz
+            │   └── func/sub-S01_task-localizer_desc-confounds_timeseries.tsv
+            └── sub-S01.html
+    ```
+
+    Each pipeline gets its own subfolder under `derivatives/` (e.g. `derivatives/fmriprep/`, `derivatives/freesurfer/`, `derivatives/mriqc/`), which means you can run multiple pipelines on the same dataset without them colliding. This separation also makes it trivial to delete and re-run a pipeline — you never accidentally nuke raw data.
+
+    Derivative files follow BIDS naming conventions but add a `desc-` entity describing the processing variant — e.g. `desc-preproc_bold.nii.gz` for the preprocessed BOLD timeseries, `desc-brain_mask.nii.gz` for the brain mask, `desc-confounds_timeseries.tsv` for the motion and physiological regressors. This convention keeps filenames self-describing: you can tell at a glance what stage of processing a file represents.
+
+    In this course, our `Code.data.get_file()` helper takes a `scope` argument that distinguishes between raw and derivative data: `scope='raw'` pulls from `sub-S01/`, `scope='derivatives'` pulls from `derivatives/fmriprep/sub-S01/`. The helper downloads on demand from HuggingFace and caches locally, so you don't need the full directory structure on disk.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ### Accessing the Dataset
 
     The Localizer dataset is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer) in BIDS format. We provide helper functions in `Code.data` that download files on demand and cache them locally:
