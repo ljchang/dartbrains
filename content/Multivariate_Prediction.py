@@ -7,8 +7,11 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "multivariate"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell(hide_code=True)
@@ -300,8 +303,9 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
     ### Cross-Validation
 
     Clearly, our model is overfitting our training data. The next thing we need to do is to estimate how well our model will generalize to *new* data.  Ideally, we would have left out some data to test after we are done training and tuning our models.  This is called **holdout data** and should only be tested once when you are ready to write up your paper.
@@ -309,15 +313,16 @@ def _(mo):
     However, we don't always have the luxury of having so much extra data and also we might want to tune our model using different algorithms, features, or adjusting hyperparameters of the model.
 
     The best way to do this, is to use **cross-validation**. The idea behind this is to subdivide the data into training and testing partitions - k-folds cross-validation is a common method - divide the data into $k$ separate folds and use all of the data except for one fold to train the model and then test the model using the left out fold. We iterate over this process for each fold. For example, consider k=2 or split-half cross-validation.
-
-    ![cv.png](../images/multivariate/cv.png)
-
+    """),
+        mo.image(str(IMG_DIR / "cv.png")),
+        mo.md(r"""
     We divide the data into two partitions. We estimate the model using half of the data and test it on the other half and then evaluate how well the model performed. As you can see from this simulation, the model will almost always fit the training data better than the test data, because it is overfitting to the noise inherent to the training data, which is presumably independent across folds. More training data will lead to better estimation. This means that a k > 2 will usually result in better model estimates. When k=number of subjects, we call this *leave-one-subject-out* cross-validation.
 
     One key concept to note is that it is very important to ensure that the data is independent across folds or this will lead to a biased and usually overly optimistic generalization. This can happen if you have multiple data from the same participant. You will need to make sure that the data from the same participants are held out together. We can do this by passing a vector of group labels to make sure that data within the same group are held out together. Another approach is to make sure that the data is equally representative across folds. We can use something called stratified sampling to achieve this (see [here](http://cosanlab.com/static/papers/Changetal2015PLoSBiology.pdf) for more details)
 
     Let's add cross-validation to our SVM model.  We will start with $k=5$, and will pass a vector indicating subject labels as our grouping variable.
-    """)
+    """),
+    ])
     return
 
 

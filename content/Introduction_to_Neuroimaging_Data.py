@@ -1,14 +1,40 @@
 import marimo
 
-__generated_with = "0.22.4"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
+    from pathlib import Path
+    import os
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
+    from huggingface_hub import hf_hub_download
+    import nibabel as nib
+    import matplotlib.pyplot as plt
+    from nilearn.plotting import view_img, plot_glass_brain, plot_anat, plot_epi, plot_stat_map
+    from nltools.data import Brain_Data
+    from nltools.utils import get_anatomical
 
-    return (mo,)
+    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "brain_data"
+    return (
+        Brain_Data,
+        IMG_DIR,
+        get_anatomical,
+        get_file,
+        get_subjects,
+        load_events,
+        mo,
+        nib,
+        plot_anat,
+        plot_glass_brain,
+        plot_stat_map,
+        plt,
+        view_img,
+    )
 
 
 @app.cell(hide_code=True)
@@ -31,11 +57,14 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
-    from IPython.display import YouTubeVideo
-
-    YouTubeVideo('OuRdQJMU5ro')
+@app.cell(hide_code=True)
+def _(mo):
+    mo.Html("""<iframe
+          width="560" height="315"
+          src="https://www.youtube.com/embed/OuRdQJMU5ro"
+          frameborder="0" allowfullscreen>
+      </iframe>
+      """)
     return
 
 
@@ -53,36 +82,38 @@ def _(mo):
 
     For this course, I have chosen to focus on tools developed in Python as it is an easy to learn programming language, has excellent tools, works well on distributed computing systems, has great ways to disseminate information (e.g., jupyter notebooks, jupyter-book, etc), and is free! If you are just getting started, I would spend some time working with [NiLearn](https://nilearn.github.io/) and [Brainiak](https://brainiak.org/), which have a lot of functionality, are very well tested, are reasonably computationally efficient, and most importantly have lots of documentation and tutorials to get started.
 
-    We will be using many packages throughout the course such as [fmriprep](https://fmriprep.readthedocs.io/en/stable/) to perform preprocessing, and [nltools](https://nltools.org/), which is a package developed in my lab, to do basic data manipulation and analysis. NLtools is built using many other toolboxes such as [nibabel](https://nipy.org/nibabel/) and [nilearn](https://nilearn.github.io/), and we will also be using these frequently throughout the course. We access datasets hosted on [HuggingFace Hub](https://huggingface.co/) using lightweight helper functions that download files on demand.
+    We will be using many packages throughout the course such as [fmriprep](https://fmriprep.readthedocs.io/en/stable/) to perform preprocessing, and [nltools](https://nltools.org/), which is a package developed in my lab, to do basic data manipulation and analysis. NLtools is built using many other toolboxes such as [nibabel](https://nipy.org/nibabel/) and [nilearn](https://nilearn.github.io/), and we will also be using these frequently throughout the course.
     """)
     return
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## BIDS: Brain Imaging Dataset Specification
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ## BIDS: Brain Imaging Dataset Specification
 
-    Recently, there has been growing interest to share datasets across labs and even on public repositories such as [openneuro](https://openneuro.org/). In order to make this a successful enterprise, it is necessary to have some standards in how the data are named and organized. Historically, each lab has used their own idiosyncratic conventions, which can make it difficult for outsiders to analyze. In the past few years, there have been heroic efforts by the neuroimaging community to create a standardized file organization and naming practices. This specification is called **BIDS** for [Brain Imaging Dataset Specification](http://bids.neuroimaging.io/).
+        Recently, there has been growing interest to share datasets across labs and even on public repositories such as [openneuro](https://openneuro.org/). In order to make this a successful enterprise, it is necessary to have some standards in how the data are named and organized. Historically, each lab has used their own idiosyncratic conventions, which can make it difficult for outsiders to analyze. In the past few years, there have been heroic efforts by the neuroimaging community to create a standardized file organization and naming practices. This specification is called **BIDS** for [Brain Imaging Dataset Specification](http://bids.neuroimaging.io/).
 
-    As you can imagine, individuals have their own distinct method of organizing their files. Think about how you keep track of your files on your personal laptop (versus your friend). This may be okay in the personal realm, but in science, it's best if anyone (especially  yourself 6 months from now!) can follow your work and know *which* files mean *what* by their titles.
-    |
-    Here's an example of non-Bids versus BIDS dataset found in [this paper](https://www.nature.com/articles/sdata201644):
+        As you can imagine, individuals have their own distinct method of organizing their files. Think about how you keep track of your files on your personal laptop (versus your friend). This may be okay in the personal realm, but in science, it's best if anyone (especially  yourself 6 months from now!) can follow your work and know *which* files mean *what* by their titles.
 
-    ![file_tree](../images/brain_data/file_tree.jpg)
+        Here's an example of non-Bids versus BIDS dataset found in [this paper](https://www.nature.com/articles/sdata201644):
+        """),
+        mo.image(str(IMG_DIR / "file_tree.jpg")),
+        mo.md(r"""
+        Here are a few major differences between the two datasets:
 
-    Here are a few major differences between the two datasets:
+        1. In BIDS, files are in nifti format (not dicoms).
+        2. In BIDS, scans are broken up into separate folders by type of scan(functional versus anatomical versus diffusion weighted) for each subject.
+        3. In BIDS, JSON files are included that contain descriptive information about the scans (e.g., acquisition parameters)
 
-    1. In BIDS, files are in nifti format (not dicoms).
-    2. In BIDS, scans are broken up into separate folders by type of scan(functional versus anatomical versus diffusion weighted) for each subject.
-    3. In BIDS, JSON files are included that contain descriptive information about the scans (e.g., acquisition parameters)
+        Not only can using this specification be useful within labs to have a set way of structuring data, but it can also be useful when collaborating across labs, developing and utilizing software, and publishing data.
 
-    Not only can using this specification be useful within labs to have a set way of structuring data, but it can also be useful when collaborating across labs, developing and utilizing software, and publishing data.
+        In addition, because this is a consistent format, it is possible to write tools that programmatically navigate and query a dataset. One popular tool is [pybids](https://github.com/bids-standard/pybids), which can index an entire BIDS directory on disk. In this course, we use lightweight helper functions in `Code.data` that download individual files on demand from HuggingFace Hub.
 
-    In addition, because this is a consistent format, it is possible to write tools that programmatically navigate and query a dataset. One popular tool is [pybids](https://github.com/bids-standard/pybids), which can index an entire BIDS directory on disk. In this course, we use lightweight helper functions in `Code.data` that download individual files on demand from HuggingFace Hub.
-
-    The dataset we will be working with has already been converted to the BIDS format and is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer).
-    """)
+        The dataset we will be working with has already been converted to the BIDS format and is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer).
+        """),
+    ])
     return
 
 
@@ -109,18 +140,6 @@ def _(mo):
     Files are downloaded from HuggingFace Hub the first time you request them and cached locally for subsequent use.
     """)
     return
-
-
-@app.cell
-def _():
-    import sys
-    from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
-    from huggingface_hub import hf_hub_download
-    import os
-
-    return get_file, get_subjects, load_events
 
 
 @app.cell(hide_code=True)
@@ -216,9 +235,7 @@ def _(mo):
 
 
 @app.cell
-def _(get_file):
-    import nibabel as nib
-
+def _(get_file, nib):
     data = nib.load(get_file('S01', 'derivatives', 'T1w'))
     return (data,)
 
@@ -262,13 +279,10 @@ def _(mo):
 
 
 @app.cell
-def _(data):
-    # '%matplotlib inline' command supported automatically in marimo
-
-    import matplotlib.pyplot as plt
+def _(data, plt):
 
     plt.imshow(data.get_fdata()[:,:,50])
-    return (plt,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -323,22 +337,64 @@ def _(mo):
     There are many useful tools from the [nilearn](https://nilearn.github.io/index.html) library to help manipulate and visualize neuroimaging data. See their [documentation](https://nilearn.github.io/dev/plotting/index.html#different-plotting-functions) for an example.
 
     In this section, we will explore a few of their different plotting functions, which can work directly with nibabel instances.
+
+    ### A note on displaying plots in marimo
+
+    Marimo renders the **last expression** of each cell. Unlike Jupyter, it
+    doesn't automatically call `_repr_html_` on opaque return objects, so
+    `plot_anat(data)` or `plt.imshow(...)` alone will just print the object's
+    repr string (e.g. `<OrthoSlicer object at 0x...>`) instead of a figure.
+
+    No `%matplotlib inline` equivalent is needed — marimo always renders real
+    `Figure` objects inline. You just have to make sure the last line of the
+    cell **is** a Figure (or an HTML component). Three patterns, in order of
+    recommendation:
+
+    **1. Create the figure, pass it in, return it** *(preferred)*
+
+    ```python
+    fig, ax = plt.subplots(figsize=(12, 4))
+    plot_anat(data, axes=ax)
+    fig
+    ```
+
+    - Explicit figure handle — safe across reactive re-runs
+    - You control size, DPI, subplot layout
+    - A couple extra lines per cell
+
+    **2. Call the plotting function, then plt.gcf() (quick fix)**
+
+    ```python
+    plot_anat(data)
+    plt.gcf()
+    ```
+
+    - One-line escape hatch — easy to retrofit
+    - gcf() returns whichever figure pyplot touched most recently, which
+    can be surprising when cells re-execute out of order in a reactive
+    notebook
+    - No control over figure dimensions
+
+    **3. mo.Html(view.get_iframe()) for nilearn interactive views**
+
+    ```python
+    mo.Html(view_img(data).get_iframe())
+    ```
+
+    Used for view_img, view_connectome, view_surf — these return a
+    nilearn HTMLDocument with embedded JavaScript. The get_iframe() call
+    sandboxes the viewer into its own iframe so its JS doesn't collide with
+    marimo's. Use .html instead of .get_iframe() if you want it inline in
+    the main DOM and are sure there are no JS conflicts.
     """)
     return
 
 
 @app.cell
-def _():
-    # '%matplotlib inline' command supported automatically in marimo
-
-    from nilearn.plotting import view_img, plot_glass_brain, plot_anat, plot_epi
-
-    return plot_anat, plot_glass_brain, view_img
-
-
-@app.cell
-def _(data, plot_anat):
-    plot_anat(data)
+def _(data, plot_anat, plt):
+    _fig, _ax = plt.subplots(figsize=(12, 4))
+    plot_anat(data, axes=_ax)
+    _fig
     return
 
 
@@ -351,8 +407,9 @@ def _(mo):
 
 
 @app.cell
-def _(data, plot_anat):
+def _(data, plot_anat, plt):
     plot_anat(data, draw_cross=False, display_mode='z')
+    plt.gcf()
     return
 
 
@@ -383,12 +440,11 @@ def _(mo):
 
 
 @app.cell
-def _(data, view_img):
-    from nltools.data import Brain_Data
+def _(Brain_Data, data, view_img):
     amygdala_mask = Brain_Data('https://neurovault.org/media/images/1290/FSL_BAmyg_thr0.nii.gz').to_nifti()
 
     view_img(amygdala_mask, data)
-    return Brain_Data, amygdala_mask
+    return (amygdala_mask,)
 
 
 @app.cell(hide_code=True)
@@ -400,9 +456,9 @@ def _(mo):
 
 
 @app.cell
-def _(amygdala_mask, plot_glass_brain):
+def _(amygdala_mask, plot_glass_brain, plt):
     plot_glass_brain(amygdala_mask)
-
+    plt.gcf()
     return
 
 
@@ -425,8 +481,7 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data):
-    from nltools.utils import get_anatomical
+def _(Brain_Data, get_anatomical):
     anat = Brain_Data(get_anatomical())
     anat
     return (anat,)
@@ -741,8 +796,9 @@ def _(mo):
 
 
 @app.cell
-def _(data_1):
-    f_2 = data_1.mean().plot()
+def _(data_1, plot_stat_map, plt):
+    f_2 = plot_stat_map(data_1.mean().to_nifti())
+    plt.gcf()
     return
 
 
@@ -769,8 +825,9 @@ def _(mo):
 
 
 @app.cell
-def _(data_1, plot_glass_brain):
+def _(data_1, plot_glass_brain, plt):
     plot_glass_brain(data_1.mean().to_nifti())
+    plt.gcf()
     return
 
 

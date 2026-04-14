@@ -7,8 +7,11 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "glm"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell(hide_code=True)
@@ -96,17 +99,18 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Simulate a voxel time course
-    To generate an intuition for how we use the GLM to make inferences in fMRI data analysis, we will simulate a time series for a single voxel. A simulation means that we will be generating synthetic data that will resemble real data. However, because we know the ground truth of the signal, we can evaluate how well we can recover the true signal using a general linear model. Throughout this course, we frequently rely on simulations to gain an intuition for how a particular preprocessing step or statistic works. This is important because it reinforces the assumptions behind the operation (which are rarely met in real data), and also provides a method to learn how to answer your own questions by generating your own simulations.
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ## Simulate a voxel time course
+        To generate an intuition for how we use the GLM to make inferences in fMRI data analysis, we will simulate a time series for a single voxel. A simulation means that we will be generating synthetic data that will resemble real data. However, because we know the ground truth of the signal, we can evaluate how well we can recover the true signal using a general linear model. Throughout this course, we frequently rely on simulations to gain an intuition for how a particular preprocessing step or statistic works. This is important because it reinforces the assumptions behind the operation (which are rarely met in real data), and also provides a method to learn how to answer your own questions by generating your own simulations.
 
-    Imagine that we are interested in identifying which region of the brain is involved in processing faces. To explore this question, we could show participants a bunch of different types of faces. Each presentation of a face will be a *trial*. Let's simulate what a design might look like with 5 face trials.
+        Imagine that we are interested in identifying which region of the brain is involved in processing faces. To explore this question, we could show participants a bunch of different types of faces. Each presentation of a face will be a *trial*. Let's simulate what a design might look like with 5 face trials.
 
-    First, we will need to specify the number of volumes in the time series. Then we need to specify the timepoint, in which a face is presented.
-
-    ![faces](../images/glm/faces.png)
-    """)
+        First, we will need to specify the number of volumes in the time series. Then we need to specify the timepoint, in which a face is presented.
+        """),
+        mo.image(str(IMG_DIR / "faces.png")),
+    ])
     return
 
 
@@ -139,26 +143,28 @@ def _(np, plt):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    We now have 5 events where a face is shown for 2 seconds (i.e., one TR). If we scanned someone with this design, we might expect to see any region involved in processing faces increase in activation around the time of the face presentation. How would we know which of these regions, if any, *selectively* process faces? Many of the regions we would observe are likely involved in processing *any* visual stimulus, and not specifically faces.
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        We now have 5 events where a face is shown for 2 seconds (i.e., one TR). If we scanned someone with this design, we might expect to see any region involved in processing faces increase in activation around the time of the face presentation. How would we know which of these regions, if any, *selectively* process faces? Many of the regions we would observe are likely involved in processing *any* visual stimulus, and not specifically faces.
 
-    To rule out this potential confound, we would need at least one other condition that would serve as a visual control. Something that might have similar properties to a face, but isn't a face.
+        To rule out this potential confound, we would need at least one other condition that would serve as a visual control. Something that might have similar properties to a face, but isn't a face.
 
-    One possibility is to create a visual stimulus that has all of the same visual properties in terms of luminance and color, but no longer resembles a face. Here is an example of the same faces that have been Fourier transformed, phase-scrambled, and inverse Fourier transformed. These pictures have essentially identical low level visual properties, but are clearly not faces.
+        One possibility is to create a visual stimulus that has all of the same visual properties in terms of luminance and color, but no longer resembles a face. Here is an example of the same faces that have been Fourier transformed, phase-scrambled, and inverse Fourier transformed. These pictures have essentially identical low level visual properties, but are clearly not faces.
+        """),
+        mo.image(str(IMG_DIR / "phase_scrambled.png")),
+        mo.md(r"""
+        However, one might argue that faces are a type of object, and regions that are involved in higher visual processing such as object recognition might not be selective to processing faces. To rule out this possibility, we would need to add an additional visual control such as objects.
+        """),
+        mo.image(str(IMG_DIR / "objects.png")),
+        mo.md(r"""
+        Both of these conditions could serve as a different type of visual control. To keep things simple, let's start with pictures of objects as it controls for low level visual features, but also more complex object processing.
 
-    ![phase](../images/glm/phase_scrambled.png)
+        To demonstrate that a region is processing faces and not simply lower level visual properties or objects more generally, we can search for regions that are selectively more activated in response to viewing faces relative to objects. This is called a *contrast* and is the basic principle of the subtraction method for controlling for potential experimental confounds. Because BOLD fMRI is a relative and not absolute measure of brain activity, the subtraction method is a key aspect of experimental design.
 
-    However, one might argue that faces are a type of object, and regions that are involved in higher visual processing such as object recognition might not be selective to processing faces. To rule out this possibility, we would need to add an additional visual control such as objects.
-
-    ![objects](../images/glm/objects.png)
-
-    Both of these conditions could serve as a different type of visual control. To keep things simple, let's start with pictures of objects as it controls for low level visual features, but also more complex object processing.
-
-    To demonstrate that a region is processing faces and not simply lower level visual properties or objects more generally, we can search for regions that are selectively more activated in response to viewing faces relative to objects. This is called a *contrast* and is the basic principle of the subtraction method for controlling for potential experimental confounds. Because BOLD fMRI is a relative and not absolute measure of brain activity, the subtraction method is a key aspect of experimental design.
-
-    Figures are from Huettel, Song, & McCarthy (2008)
-    """)
+        Figures are from Huettel, Song, & McCarthy (2008)
+        """),
+    ])
     return
 
 

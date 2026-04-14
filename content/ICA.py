@@ -7,8 +7,11 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "ica"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell(hide_code=True)
@@ -234,10 +237,8 @@ def _(
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ![](../images/ica/ica_viewer_demo.gif)
-    """)
+def _(IMG_DIR, mo):
+    mo.image(str(IMG_DIR / "ica_viewer_demo.gif"))
     return
 
 

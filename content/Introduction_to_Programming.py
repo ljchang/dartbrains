@@ -11,8 +11,11 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "programming"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell
@@ -31,17 +34,18 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    # Introduction to programming
-    _Written by Luke Chang_
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        # Introduction to programming
+        _Written by Luke Chang_
 
-    In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing [Python 3.7](https://www.anaconda.com/distribution/).  For those who prefer a more configurable IDE, [Pycharm](https://www.jetbrains.com/pycharm/) is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for [conducting research](http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/).  You can use python for [stimulus presentation](http://www.psychopy.org/), [data analysis](http://statsmodels.sourceforge.net/), [machine-learning](http://scikit-learn.org/stable/), [scraping data](https://www.crummy.com/software/BeautifulSoup/), creating websites with [flask](http://flask.pocoo.org/) or [django](https://www.djangoproject.com/), or [neuroimaging data analysis](http://nipy.org/).
+        In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing [Python 3.7](https://www.anaconda.com/distribution/).  For those who prefer a more configurable IDE, [Pycharm](https://www.jetbrains.com/pycharm/) is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for [conducting research](http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/).  You can use python for [stimulus presentation](http://www.psychopy.org/), [data analysis](http://statsmodels.sourceforge.net/), [machine-learning](http://scikit-learn.org/stable/), [scraping data](https://www.crummy.com/software/BeautifulSoup/), creating websites with [flask](http://flask.pocoo.org/) or [django](https://www.djangoproject.com/), or [neuroimaging data analysis](http://nipy.org/).
 
-    There are lots of free useful resources to learn how to use python and various modules.  See [Jeremy Manning's](https://github.com/ContextLab/cs-for-psych) or [Yaroslav Halchenko's](https://github.com/dartmouth-pbs/psyc161) excellent Dartmouth courses.  [Codeacademy](https://www.codecademy.com/) is a great interactive tutorial.  [Stack Overflow](http://stackoverflow.com/) is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.
-
-    ![](../images/programming/programming_growth.png)
-    """)
+        There are lots of free useful resources to learn how to use python and various modules.  See [Jeremy Manning's](https://github.com/ContextLab/cs-for-psych) or [Yaroslav Halchenko's](https://github.com/dartmouth-pbs/psyc161) excellent Dartmouth courses.  [Codeacademy](https://www.codecademy.com/) is a great interactive tutorial.  [Stack Overflow](http://stackoverflow.com/) is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.
+        """),
+        mo.image(str(IMG_DIR / "programming_growth.png")),
+    ])
     return
 
 

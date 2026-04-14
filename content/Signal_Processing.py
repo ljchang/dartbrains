@@ -7,10 +7,14 @@ with app.setup(hide_code=True):
     import marimo as mo
     import numpy as np
     import matplotlib.pyplot as plt
+    from pathlib import Path
     from numpy import sin, pi, arange, exp, real, imag
     from numpy.fft import fft, ifft, fftfreq
     from scipy.special import gamma as gamma_func
     from scipy.signal import butter, filtfilt, freqz, sosfreqz
+
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "signal_processing"
 
     def youtube(video_id):
         return mo.Html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allowfullscreen></iframe>')
@@ -853,15 +857,17 @@ def fft_section(combined_signal, dft_freq_axis):
 
 @app.cell(hide_code=True)
 def ct_md():
-    mo.md(r"""
-    ### Convolution Theorem
+    mo.vstack([
+        mo.md(r"""
+        ### Convolution Theorem
 
-    Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [Video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
-
-    ![ConvolutionTheorem.png](../images/signal_processing/ConvolutionTheorem.png)
-
-    Let's prove it:
-    """)
+        Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [Video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
+        """),
+        mo.image(str(IMG_DIR / "ConvolutionTheorem.png")),
+        mo.md(r"""
+        Let's prove it:
+        """),
+    ])
     return
 
 

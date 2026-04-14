@@ -7,8 +7,11 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "plotting"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell(hide_code=True)
@@ -203,26 +206,28 @@ def _(np, plt):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Layouts
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ### Layouts
 
-    The easiest way to make customized layouts that can include multiple panels of a plot are with `subplot`.
+        The easiest way to make customized layouts that can include multiple panels of a plot are with `subplot`.
+        """),
+        mo.image(str(IMG_DIR / "subplot.png")),
+        mo.md(r"""
+        There are two different ways to index. One is by adding a subplot. The first number is the number of rows, the second is the number of columns, and the third is the index number.
 
-    ![subplot](../images/plotting/subplot.png)
+        I personally prefer to index directly into the `ax` object with rows and columns as I find it more intuitive.
 
-    There are two different ways to index. One is by adding a subplot. The first number is the number of rows, the second is the number of columns, and the third is the index number.
+        You can do even more advanced layouts with panels of different sizes using [gridspec](https://matplotlib.org/3.2.1/tutorials/intermediate/gridspec.html).
 
-    I personally prefer to index directly into the `ax` object with rows and columns as I find it more intuitive.
+        Let's make our simulation code into a function and use subplots to plot multiple panels.
 
-    You can do even more advanced layouts with panels of different sizes using [gridspec](https://matplotlib.org/3.2.1/tutorials/intermediate/gridspec.html).
+        We specify the number of rows and columns when we initialize the plot. We can also play with the size of the plot. Here we tell matplotlib that the x and y axes will be shared across the different panels. Finally, `plt.tight_layout()` helps keep everything formatted and organized nicely.
 
-    Let's make our simulation code into a function and use subplots to plot multiple panels.
-
-    We specify the number of rows and columns when we initialize the plot. We can also play with the size of the plot. Here we tell matplotlib that the x and y axes will be shared across the different panels. Finally, `plt.tight_layout()` helps keep everything formatted and organized nicely.
-
-    When modifying `axes` we need to use the `set_{}` command rather than just the command itself. For example, `ax[0,0].set_xlabel('X')` rather than `plt.xlabel('X')`.
-    """)
+        When modifying `axes` we need to use the `set_{}` command rather than just the command itself. For example, `ax[0,0].set_xlabel('X')` rather than `plt.xlabel('X')`.
+        """),
+    ])
     return
 
 
@@ -602,17 +607,18 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 1
-    Recreate the plot shown in figure.
-    On the left is a correlation of all parameters of only the male professors.
-    On the right is the same but only for female professors.
-    The colormap code used is `RdBu_r`. Read the Docstrings on sns.heatmap or search the internet to figure out how to change the colormap, scale the colorbar, and create square line boundaries.
-    Place titles for each plot as shown, and your name as the main title.
-
-    ![](../images/plotting/hw2-3.png)
-    """)
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ### Exercise 1
+        Recreate the plot shown in figure.
+        On the left is a correlation of all parameters of only the male professors.
+        On the right is the same but only for female professors.
+        The colormap code used is `RdBu_r`. Read the Docstrings on sns.heatmap or search the internet to figure out how to change the colormap, scale the colorbar, and create square line boundaries.
+        Place titles for each plot as shown, and your name as the main title.
+        """),
+        mo.image(str(IMG_DIR / "hw2-3.png")),
+    ])
     return
 
 
@@ -629,20 +635,21 @@ def _(pd, plt, sns):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 2
-    Recreate the following plot from the salary_exercise.csv dataset.
-    Create a 1 x 2 subplot.
-    On the left is a bar-errorbar of salary per gender.
-    On the right is a scatterplot of salary on y-axis and years in rank on the x-axis.
-    Set the axis limits as shown in the picture and modify their lables.
-    Add axis label names.
-    Add a legend for the scatterplot and place it at a bottom-right location.
-    Add your name as the main title of the plot.
-
-    ![](../images/plotting/hw2-4.png)
-    """)
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ### Exercise 2
+        Recreate the following plot from the salary_exercise.csv dataset.
+        Create a 1 x 2 subplot.
+        On the left is a bar-errorbar of salary per gender.
+        On the right is a scatterplot of salary on y-axis and years in rank on the x-axis.
+        Set the axis limits as shown in the picture and modify their lables.
+        Add axis label names.
+        Add a legend for the scatterplot and place it at a bottom-right location.
+        Add your name as the main title of the plot.
+        """),
+        mo.image(str(IMG_DIR / "hw2-4.png")),
+    ])
     return
 
 

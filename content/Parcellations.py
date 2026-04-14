@@ -7,28 +7,32 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "parcellations"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    # Introduction to Parcellations
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        # Introduction to Parcellations
 
-    *Written By: Clara Sava-Segal & Thomas L. Botch (edited by Luke Chang)*
+        *Written By: Clara Sava-Segal & Thomas L. Botch (edited by Luke Chang)*
 
-    What spatial scale should we use to analyze neuroimaging data? Traditional univariate approaches have focused on analyzing data at the voxel level or averaging activity within a region of interest (ROI). However, multivariate approaches tend to work with larger spatial scales (e.g., searchlights, ROIs, resting state networks, & parcellations). The goal of this tutorial is to provide an introduction to parcellation schemes. We will cover the types of atlases that are available, when to use them, and how to work with them in python.
+        What spatial scale should we use to analyze neuroimaging data? Traditional univariate approaches have focused on analyzing data at the voxel level or averaging activity within a region of interest (ROI). However, multivariate approaches tend to work with larger spatial scales (e.g., searchlights, ROIs, resting state networks, & parcellations). The goal of this tutorial is to provide an introduction to parcellation schemes. We will cover the types of atlases that are available, when to use them, and how to work with them in python.
 
-    ## Spatial Scales
-    There is vast diversity in the spatial scales at which different psychological and neurological processes are organized. To study these different mechanisms most effectively, the scale of our methods should be consistent with the scale of this organization (for more detail see: [Jolly & Chang, 2021](https://academic.oup.com/scan/article/16/8/795/6121195?login=true)).
+        ## Spatial Scales
+        There is vast diversity in the spatial scales at which different psychological and neurological processes are organized. To study these different mechanisms most effectively, the scale of our methods should be consistent with the scale of this organization (for more detail see: [Jolly & Chang, 2021](https://academic.oup.com/scan/article/16/8/795/6121195?login=true)).
 
-    Parcellations provide a way to examine the brain at different spatial scales by restricting the number of regions of interest to variable scales as determined by anatomical or functional divisions. We provide extensive detail on anatomical, functional and structural approaches to building parcellations. In general, the goal is to use group together voxels based on either one of these methodological divisions. This grouping of voxels can be either contiguous (voxels that are spatially next to one another in a particular region of the brain) or non-contiguous (voxels that are spatially disjoint, but functionally connected (e.g., resting state networks).
+        Parcellations provide a way to examine the brain at different spatial scales by restricting the number of regions of interest to variable scales as determined by anatomical or functional divisions. We provide extensive detail on anatomical, functional and structural approaches to building parcellations. In general, the goal is to use group together voxels based on either one of these methodological divisions. This grouping of voxels can be either contiguous (voxels that are spatially next to one another in a particular region of the brain) or non-contiguous (voxels that are spatially disjoint, but functionally connected (e.g., resting state networks).
 
-    The table below is a useful discussion comparing ROI (parcellation) approaches to searchlights and whole brain approaches. (From: [Jolly & Chang, 2021](https://academic.oup.com/scan/article/16/8/795/6121195?login=true)). The goal of this notebook is to provide extensive detail on how the publicly available parcellations have been generated to give you more insight as to which ones would be better suited for your own research questions.
-
-    ![](../images/parcellations/spatial_feature_selection_table.png)
-    """)
+        The table below is a useful discussion comparing ROI (parcellation) approaches to searchlights and whole brain approaches. (From: [Jolly & Chang, 2021](https://academic.oup.com/scan/article/16/8/795/6121195?login=true)). The goal of this notebook is to provide extensive detail on how the publicly available parcellations have been generated to give you more insight as to which ones would be better suited for your own research questions.
+        """),
+        mo.image(str(IMG_DIR / "spatial_feature_selection_table.png")),
+    ])
     return
 
 
@@ -81,18 +85,18 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Neuroparc
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ### Neuroparc
 
-    Alternatively, there is also the [Neuroparc](https://github.com/neurodata/neuroparc) package, which provides a large repository of standardized atlases (currently **46**; see Table below), which can be used interchangeably. Neuroparc includes details to make **the comparison between atlases** in MNI space easily [(Lawrence *et al.*, 2021)](https://www.nature.com/articles/s41597-021-00849-3). Importantly, their Github page [README file](https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary) provides an excellent summary of how the parcellations where created, their description, and their native space.
+        Alternatively, there is also the [Neuroparc](https://github.com/neurodata/neuroparc) package, which provides a large repository of standardized atlases (currently **46**; see Table below), which can be used interchangeably. Neuroparc includes details to make **the comparison between atlases** in MNI space easily [(Lawrence *et al.*, 2021)](https://www.nature.com/articles/s41597-021-00849-3). Importantly, their Github page [README file](https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary) provides an excellent summary of how the parcellations where created, their description, and their native space.
 
-    The table below [(Lawrence *et al.*, 2021)](https://www.nature.com/articles/s41597-021-00849-3) includes a list of the parcellations available, the number of ROIs in each depending on the resolution, and whether a anatomical labels are available. Again, if you want further information on these parcellations, we recommend checking out the aforementioned [README file](https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary).
-
-    ![](../images/parcellations/neuroparc_atlas_table.png)
-
-    ![](../images/parcellations/brainAtlases_color_wRegions.png)
-    """)
+        The table below [(Lawrence *et al.*, 2021)](https://www.nature.com/articles/s41597-021-00849-3) includes a list of the parcellations available, the number of ROIs in each depending on the resolution, and whether a anatomical labels are available. Again, if you want further information on these parcellations, we recommend checking out the aforementioned [README file](https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary).
+        """),
+        mo.image(str(IMG_DIR / "neuroparc_atlas_table.png")),
+        mo.image(str(IMG_DIR / "brainAtlases_color_wRegions.png")),
+    ])
     return
 
 
@@ -207,25 +211,25 @@ def _(plotting):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    5. Destrieux Atlas [(Destrieux *et al.* 2010)](https://www.sciencedirect.com/science/article/pii/S1053811910008542)
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        5. Destrieux Atlas [(Destrieux *et al.* 2010)](https://www.sciencedirect.com/science/article/pii/S1053811910008542)
 
-    - Defined by gyri and sulci
-    - One of the first anatomical atlases to divide the cortex into either sulci or gyri as opposed to just labeling regions based on the gyri with boundaries running between the bottoms of the two neighboring sulci.
-    - This atlas is also found in the [Freesurfer software package](https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation) and is readily available in nilearn (see below) in fsaverage5 space
-    - Regions: 74 per hemisphere, only cortical
-    - 24 healthy subjects
-    - This atlas is found in both [nilearn](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_surf_destrieux.html) and Neuroparc
-        - Unlike the examples above, this nilearn function returns a dictionary with the labels for each region and a numpy array for the left and right hemisphere labels ('map_left', 'map_right'), and a description of the dataset
-        - Since, this nilearn function does not return a .nii file like the other examples above did, we need to take the surface space (fsaverage) and overlay it with the labels. The code snippet below details how to do this and more information can be found [here](https://nilearn.github.io/dev/auto_examples/01_plotting/plot_surf_atlas.html).
+        - Defined by gyri and sulci
+        - One of the first anatomical atlases to divide the cortex into either sulci or gyri as opposed to just labeling regions based on the gyri with boundaries running between the bottoms of the two neighboring sulci.
+        - This atlas is also found in the [Freesurfer software package](https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation) and is readily available in nilearn (see below) in fsaverage5 space
+        - Regions: 74 per hemisphere, only cortical
+        - 24 healthy subjects
+        - This atlas is found in both [nilearn](https://nilearn.github.io/modules/generated/nilearn.datasets.fetch_atlas_surf_destrieux.html) and Neuroparc
+            - Unlike the examples above, this nilearn function returns a dictionary with the labels for each region and a numpy array for the left and right hemisphere labels ('map_left', 'map_right'), and a description of the dataset
+            - Since, this nilearn function does not return a .nii file like the other examples above did, we need to take the surface space (fsaverage) and overlay it with the labels. The code snippet below details how to do this and more information can be found [here](https://nilearn.github.io/dev/auto_examples/01_plotting/plot_surf_atlas.html).
 
-    Atlas image from Freesurfer. You can note the differences from the DK atlas above visually:
-
-    ![](../images/parcellations/freesurfer_atlas.png)
-
-    ![](../images/parcellations/destrieux.png)
-    """)
+        Atlas image from Freesurfer. You can note the differences from the DK atlas above visually:
+        """),
+        mo.image(str(IMG_DIR / "freesurfer_atlas.png")),
+        mo.image(str(IMG_DIR / "destrieux.png")),
+    ])
     return
 
 

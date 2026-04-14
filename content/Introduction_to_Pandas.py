@@ -7,8 +7,11 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    IMG_DIR = _ROOT / "images" / "pandas"
 
-    return (mo,)
+    return IMG_DIR, mo
 
 
 @app.cell(hide_code=True)
@@ -791,19 +794,21 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Grouping
-    We've seen above that it is very easy to summarize data over columns using the builtin functions such as `pd.mean()`. Sometimes we are interested in summarizing data over different groups of rows. For example, what is the mean of participants in Condition A compared to Condition B?
+def _(IMG_DIR, mo):
+    mo.vstack([
+        mo.md(r"""
+        ## Grouping
+        We've seen above that it is very easy to summarize data over columns using the builtin functions such as `pd.mean()`. Sometimes we are interested in summarizing data over different groups of rows. For example, what is the mean of participants in Condition A compared to Condition B?
 
-    This is suprisingly easy to compute in pandas using the `groupby` operator, where we aggregate data using a specific operation over different labels.
+        This is suprisingly easy to compute in pandas using the `groupby` operator, where we aggregate data using a specific operation over different labels.
 
-    One useful way to conceptualize this is using the **Split, Apply, Combine** operation (similar to map-reduce).
-
-    ![](../images/pandas/split-apply-combine.png)
-
-    This figure is taken from Jake Vanderplas's tutorial and highlights how input data can be *split* on some key and then an operation such as sum can be *applied* separately to each split. Finally, the results of the applied function for each key can be *combined* into a new data frame.
-    """)
+        One useful way to conceptualize this is using the **Split, Apply, Combine** operation (similar to map-reduce).
+        """),
+        mo.image(str(IMG_DIR / "split-apply-combine.png")),
+        mo.md(r"""
+        This figure is taken from Jake Vanderplas's tutorial and highlights how input data can be *split* on some key and then an operation such as sum can be *applied* separately to each split. Finally, the results of the applied function for each key can be *combined* into a new data frame.
+        """),
+    ])
     return
 
 
