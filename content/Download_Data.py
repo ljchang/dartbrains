@@ -1,10 +1,16 @@
 # /// script
-# dependencies = ["datalad"]
+# requires-python = ">=3.13"
+# dependencies = [
+#     "datalad",
+#     "huggingface-hub==1.10.2",
+#     "marimo>=0.23.1",
+#     "pandas==3.0.2",
+# ]
 # ///
 
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
@@ -33,7 +39,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    (download-data) =
     # Download Data
 
     *Written by Luke Chang & Kevin Ortego*
@@ -46,7 +51,7 @@ def _(mo):
 
     There are a total of 94 subjects available, but we will primarily only be working with a smaller subset of about 15.
 
-    Though the data is being shared on the [OSF website](https://osf.io/vhtf6/files/), we recommend downloading it from our [g-node repository](https://gin.g-node.org/ljchang/Localizer) as we have fixed a few issues with BIDS formatting and have also performed preprocessing using fmriprep.
+    Though the data is being shared on the [OSF website](https://osf.io/vhtf6/files/), we recommend downloading it from our huggingface repository as we have fixed a few issues with BIDS formatting and have also performed preprocessing using fmriprep. We also have a legacy [g-node repository](https://gin.g-node.org/ljchang/Localizer) that uses datalad, but it is currently very slow.
 
     In this notebook, we will walk through how to access the datset using DataLad. Note, that the entire dataset is fairly large (~42gb), but the tutorials will mostly only be working with a small portion of the data (5.8gb), so there is no need to download the entire thing. If you are taking the Psych60 course at Dartmouth, we have already made the data available on the jupyterhub server.
     """)
@@ -81,7 +86,7 @@ def _():
     # Download a preprocessed BOLD file (cached after first download)
     bold_path = get_file('S01', 'derivatives', 'bold')
     print(f"\nBOLD file path: {bold_path}")
-    return (REPO_ID, get_file, get_subjects, load_events)
+    return Path, REPO_ID, load_events
 
 
 @app.cell(hide_code=True)
@@ -131,9 +136,11 @@ def _(mo):
         mo.md(r"""
         ### Browsing the Dataset as a BIDS Tree
 
-        `hf_hub_download` and `get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to type.
+        `hf_hub_download` and `get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to access.
 
         If you'd rather browse the dataset like a normal BIDS directory — `cd` into it, `ls` subjects, drag it into a file explorer, point external tools at it — the cleanest pattern is to download a full snapshot and symlink it to a friendly location of your choice.
+
+         First, pull the snapshot. Files you've already cached with `get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
         """),
         mo.callout(
             mo.md(
@@ -150,9 +157,6 @@ def _(mo):
             ),
             kind="warn",
         ),
-        mo.md(r"""
-        First, pull the snapshot. Files you've already cached with `get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
-        """),
     ])
     return
 
@@ -178,9 +182,7 @@ def _(mo):
 
 
 @app.cell
-def _(snapshot_path):
-    from pathlib import Path
-
+def _(Path, snapshot_path):
     bids_root = Path.home() / "data" / "localizer"
     bids_root.parent.mkdir(parents=True, exist_ok=True)
 
@@ -237,7 +239,7 @@ def _():
     ds = load_dataset("dartbrains/localizer", "betas")
     print(f"Loaded {len(ds['train'])} beta maps")
     print(f"First entry: subject={ds['train'][0]['subject']}, condition={ds['train'][0]['condition']}")
-    return
+    return (ds,)
 
 
 @app.cell(hide_code=True)
