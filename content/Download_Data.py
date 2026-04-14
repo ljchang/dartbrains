@@ -127,15 +127,33 @@ def _(REPO_ID):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(r"""
-    ### Browsing the Dataset as a BIDS Tree
+    mo.vstack([
+        mo.md(r"""
+        ### Browsing the Dataset as a BIDS Tree
 
-    `hf_hub_download` and `get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to type.
+        `hf_hub_download` and `get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to type.
 
-    If you'd rather browse the dataset like a normal BIDS directory — `cd` into it, `ls` subjects, drag it into a file explorer, point external tools at it — the cleanest pattern is to download a full snapshot and symlink it to a friendly location of your choice.
-
-    First, pull the snapshot. Files you've already cached with `get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
-    """)
+        If you'd rather browse the dataset like a normal BIDS directory — `cd` into it, `ls` subjects, drag it into a file explorer, point external tools at it — the cleanest pattern is to download a full snapshot and symlink it to a friendly location of your choice.
+        """),
+        mo.callout(
+            mo.md(
+                "**Windows quickstart:** symlink creation requires elevated privileges by default on Windows. "
+                "Two paths forward:\n\n"
+                "1. **Enable Developer Mode** (Settings → Privacy & Security → For developers → *Developer Mode = On*) "
+                "so symlinks work without admin elevation. One-time toggle.\n\n"
+                "2. **Skip symlinks entirely** by using `local_dir_use_symlinks=False` in the `snapshot_download` "
+                "call shown below. This copies the bytes (uses ~5 GB extra disk) but works under any user "
+                "account.\n\n"
+                "If you're doing serious neuroimaging work on Windows, we strongly recommend running everything "
+                "inside [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) — symlinks behave like "
+                "Linux there, and most neuro tooling assumes a POSIX environment."
+            ),
+            kind="warn",
+        ),
+        mo.md(r"""
+        First, pull the snapshot. Files you've already cached with `get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
+        """),
+    ])
     return
 
 
