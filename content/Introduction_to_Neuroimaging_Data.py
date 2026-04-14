@@ -347,7 +347,7 @@ def _(mo):
 @app.cell
 def _(data, plt):
 
-    plt.imshow(data.get_fdata()[:,:,50])
+    plt.imshow(data.get_fdata()[:,:,50], cmap='RdBu_r')
     return
 
 
@@ -951,6 +951,11 @@ def _(mo):
 
     We are often interested in identifying outliers in our data. In this exercise, find any image that is outside 95% of all images based on global intensity (i.e., zscore greater than 2) from 'S01' and plot each one.
     """)
+    return
+
+
+@app.cell
+def _():
     return
 
 
