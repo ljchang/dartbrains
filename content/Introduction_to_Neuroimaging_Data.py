@@ -88,32 +88,43 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.vstack([
-        mo.md(r"""
-        ## BIDS: Brain Imaging Dataset Specification
+def _(mo):
+    mo.md(r"""
+    ## BIDS: Brain Imaging Dataset Specification
 
-        Recently, there has been growing interest to share datasets across labs and even on public repositories such as [openneuro](https://openneuro.org/). In order to make this a successful enterprise, it is necessary to have some standards in how the data are named and organized. Historically, each lab has used their own idiosyncratic conventions, which can make it difficult for outsiders to analyze. In the past few years, there have been heroic efforts by the neuroimaging community to create a standardized file organization and naming practices. This specification is called **BIDS** for [Brain Imaging Dataset Specification](http://bids.neuroimaging.io/).
+    Recently, there has been growing interest to share datasets across labs and even on public repositories such as [openneuro](https://openneuro.org/). In order to make this a successful enterprise, it is necessary to have some standards in how the data are named and organized. Historically, each lab has used their own idiosyncratic conventions, which can make it difficult for outsiders to analyze. In the past few years, there have been heroic efforts by the neuroimaging community to create a standardized file organization and naming practices. This specification is called **BIDS** for [Brain Imaging Dataset Specification](http://bids.neuroimaging.io/).
 
-        As you can imagine, individuals have their own distinct method of organizing their files. Think about how you keep track of your files on your personal laptop (versus your friend). This may be okay in the personal realm, but in science, it's best if anyone (especially  yourself 6 months from now!) can follow your work and know *which* files mean *what* by their titles.
+    As you can imagine, individuals have their own distinct method of organizing their files. Think about how you keep track of your files on your personal laptop (versus your friend). This may be okay in the personal realm, but in science, it's best if anyone (especially yourself 6 months from now!) can follow your work and know *which* files mean *what* by their titles.
 
-        Here's an example of non-Bids versus BIDS dataset found in [this paper](https://www.nature.com/articles/sdata201644):
-        """),
-        mo.image(str(IMG_DIR / "file_tree.jpg")),
-        mo.md(r"""
-        Here are a few major differences between the two datasets:
+    Our course dataset — the [dartbrains/localizer](https://huggingface.co/datasets/dartbrains/localizer) dataset on HuggingFace — follows the BIDS layout. Here's the top-level structure of the raw side:
 
-        1. In BIDS, files are in nifti format (not dicoms).
-        2. In BIDS, scans are broken up into separate folders by type of scan(functional versus anatomical versus diffusion weighted) for each subject.
-        3. In BIDS, JSON files are included that contain descriptive information about the scans (e.g., acquisition parameters)
+    ```
+    localizer/
+    ├── dataset_description.json     # dataset name, BIDS version, authors
+    ├── participants.tsv             # one row per subject (age, sex, …)
+    ├── participants.json            # column descriptions for participants.tsv
+    ├── task-localizer_bold.json     # task-level acquisition params (TR, slice timing, …)
+    ├── README.md
+    ├── sub-S01/
+    │   ├── anat/
+    │   │   └── metadata.csv
+    │   └── func/
+    │       ├── sub-S01_task-localizer_events.tsv   # stimulus onsets, durations, conditions
+    │       └── metadata.csv
+    ├── sub-S02/ …
+    ├── sub-S20/
+    └── derivatives/                 # processed outputs (see next section)
+    ```
 
-        Not only can using this specification be useful within labs to have a set way of structuring data, but it can also be useful when collaborating across labs, developing and utilizing software, and publishing data.
+    A few things to notice:
 
-        In addition, because this is a consistent format, it is possible to write tools that programmatically navigate and query a dataset. One popular tool is [pybids](https://github.com/bids-standard/pybids), which can index an entire BIDS directory on disk. In this course, we use lightweight helper functions in `Code.data` that download individual files on demand from HuggingFace Hub.
+    1. **Files are in NIfTI format**, not raw DICOMs. (In this dataset the raw `.nii.gz` files aren't hosted to keep the download small — only the `events.tsv` per subject lives under raw, with the preprocessed scans available under `derivatives/`. A complete BIDS dataset would include `sub-S01/anat/sub-S01_T1w.nii.gz` and `sub-S01/func/sub-S01_task-localizer_bold.nii.gz` here.)
+    2. **Scans are broken up by modality** — `anat/`, `func/`, `dwi/`, `fmap/` — for each subject.
+    3. **Filenames carry metadata** as `key-value` *entities* separated by underscores: `sub-S01_task-localizer_events.tsv` tells you the subject, task, and content type at a glance.
+    4. **Sidecar JSON files** describe acquisition parameters in a machine-readable format (echo time, slice timing, phase encoding direction, …), either alongside each scan or "inherited" from a top-level file like `task-localizer_bold.json`.
 
-        The dataset we will be working with has already been converted to the BIDS format and is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer).
-        """),
-    ])
+    Not only does this specification standardize within labs, it also makes collaboration, software development, and data publishing dramatically easier. Because the format is consistent, tools like [pybids](https://github.com/bids-standard/pybids) can programmatically index and query an entire BIDS directory. In this course, we use lightweight helper functions in `Code.data` that download individual files on demand from HuggingFace Hub.
+    """)
     return
 
 
@@ -122,28 +133,52 @@ def _(mo):
     mo.md(r"""
     ### The `derivatives/` folder
 
-    BIDS makes a strict separation between **raw data** (what came off the scanner) and **derivatives** (anything produced by running a pipeline on that raw data). Raw files live in the top-level subject folders (`sub-S01/func/`, `sub-S01/anat/`, …), and derived files live in a sibling `derivatives/` directory:
+    BIDS makes a strict separation between **raw data** (what came off the scanner) and **derivatives** (anything produced by running a pipeline on that raw data). Derived files live in a sibling `derivatives/` directory, with one subfolder per pipeline. Here's the actual layout for our dataset:
 
     ```
-    localizer/
-    ├── sub-S01/
-    │   ├── anat/sub-S01_T1w.nii.gz
-    │   └── func/sub-S01_task-localizer_bold.nii.gz
-    ├── sub-S02/ …
-    └── derivatives/
-        └── fmriprep/
-            ├── sub-S01/
-            │   ├── anat/sub-S01_desc-preproc_T1w.nii.gz
-            │   └── func/sub-S01_task-localizer_desc-preproc_bold.nii.gz
-            │   └── func/sub-S01_task-localizer_desc-confounds_timeseries.tsv
-            └── sub-S01.html
+    localizer/derivatives/
+    ├── fmriprep/
+    │   ├── dataset_description.json
+    │   ├── sub-S01.html             # per-subject QC report
+    │   ├── sub-S01/
+    │   │   ├── anat/
+    │   │   │   ├── sub-S01_desc-preproc_T1w.nii.gz                        # T1 in native space
+    │   │   │   ├── sub-S01_desc-brain_mask.nii.gz                         # brain mask, native
+    │   │   │   ├── sub-S01_dseg.nii.gz                                    # tissue segmentation
+    │   │   │   ├── sub-S01_label-{GM,WM,CSF}_probseg.nii.gz               # tissue probabilities
+    │   │   │   ├── sub-S01_from-T1w_to-MNI152NLin2009cAsym_mode-image_xfm.h5   # forward transform
+    │   │   │   ├── sub-S01_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5   # inverse transform
+    │   │   │   ├── sub-S01_space-MNI152NLin2009cAsym_desc-preproc_T1w.nii.gz   # T1 in MNI space
+    │   │   │   └── sub-S01_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+    │   │   ├── func/
+    │   │   │   ├── sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+    │   │   │   ├── sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+    │   │   │   ├── sub-S01_task-localizer_space-MNI152NLin2009cAsym_boldref.nii.gz
+    │   │   │   └── sub-S01_task-localizer_desc-confounds_regressors.tsv  # motion + physio regressors
+    │   │   └── figures/             # QC SVGs (carpetplot, flirtbbr, dseg, …)
+    │   ├── sub-S02/ …
+    │   └── logs/CITATION.{bib,html,md,tex}
+    └── betas/                       # condition-level GLM estimates
+        ├── S01_beta_audio_computation.nii.gz
+        ├── S01_beta_audio_left_hand.nii.gz
+        │   …  (10 conditions per subject)
+        ├── S01_betas.nii.gz         # stacked 4D image (10 conditions)
+        ├── S02_beta_…
+        └── …
     ```
 
-    Each pipeline gets its own subfolder under `derivatives/` (e.g. `derivatives/fmriprep/`, `derivatives/freesurfer/`, `derivatives/mriqc/`), which means you can run multiple pipelines on the same dataset without them colliding. This separation also makes it trivial to delete and re-run a pipeline — you never accidentally nuke raw data.
+    Each pipeline gets its own subfolder under `derivatives/` (here: `fmriprep/` for preprocessing and `betas/` for our first-level GLM outputs; other common ones are `freesurfer/`, `mriqc/`, `xcp_d/`). This means you can run multiple pipelines on the same dataset without them colliding, and deleting and re-running a pipeline never risks the raw data.
 
-    Derivative files follow BIDS naming conventions but add a `desc-` entity describing the processing variant — e.g. `desc-preproc_bold.nii.gz` for the preprocessed BOLD timeseries, `desc-brain_mask.nii.gz` for the brain mask, `desc-confounds_timeseries.tsv` for the motion and physiological regressors. This convention keeps filenames self-describing: you can tell at a glance what stage of processing a file represents.
+    Derivative files follow BIDS naming conventions but add **entities** that describe the processing variant. The most important ones to recognize:
 
-    In this course, our `Code.data.get_file()` helper takes a `scope` argument that distinguishes between raw and derivative data: `scope='raw'` pulls from `sub-S01/`, `scope='derivatives'` pulls from `derivatives/fmriprep/sub-S01/`. The helper downloads on demand from HuggingFace and caches locally, so you don't need the full directory structure on disk.
+    - `desc-` describes *what kind of derivative* — `desc-preproc_bold` is the preprocessed BOLD timeseries; `desc-brain_mask` is a brain mask; `desc-confounds_regressors` is the confounds TSV.
+    - `space-` identifies the *coordinate space* — `space-MNI152NLin2009cAsym` means the file has been warped into the MNI152 nonlinear 2009c asymmetric template; absence of `space-` means native subject space.
+    - `from-`/`to-` on `xfm.h5` files describe the *direction of a transform* (T1w → MNI for forward warps, MNI → T1w for inverse).
+    - `label-` distinguishes *tissue classes* on segmentation outputs (GM, WM, CSF).
+
+    These conventions keep filenames self-describing: `sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz` tells you it's subject S01's localizer task, preprocessed and resampled into MNI space — without opening the file.
+
+    In this course, our `Code.data.get_file()` helper takes a `scope` argument that distinguishes raw from derivative data: `scope='raw'` pulls from `sub-S01/`, `scope='derivatives'` pulls from `derivatives/fmriprep/sub-S01/`, and `scope='betas'` pulls from `derivatives/betas/`. The helper downloads on demand from HuggingFace and caches locally, so you don't need the full directory structure on disk.
     """)
     return
 

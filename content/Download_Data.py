@@ -128,6 +128,83 @@ def _(REPO_ID):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ### Browsing the Dataset as a BIDS Tree
+
+    `hf_hub_download` and `get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to type.
+
+    If you'd rather browse the dataset like a normal BIDS directory — `cd` into it, `ls` subjects, drag it into a file explorer, point external tools at it — the cleanest pattern is to download a full snapshot and symlink it to a friendly location of your choice.
+
+    First, pull the snapshot. Files you've already cached with `get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
+    """)
+    return
+
+
+@app.cell
+def _(REPO_ID):
+    from huggingface_hub import snapshot_download
+
+    snapshot_path = snapshot_download(
+        repo_id=REPO_ID,
+        repo_type="dataset",
+    )
+    print(f"Snapshot lives at:\n  {snapshot_path}")
+    return (snapshot_path,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Now create a symlink from somewhere convenient (e.g. `~/data/localizer`) pointing at the snapshot. The symlink takes ~no disk space and lets you treat the cached data as if it lived in `~/data/localizer`:
+    """)
+    return
+
+
+@app.cell
+def _(snapshot_path):
+    from pathlib import Path
+
+    bids_root = Path.home() / "data" / "localizer"
+    bids_root.parent.mkdir(parents=True, exist_ok=True)
+
+    if bids_root.exists() or bids_root.is_symlink():
+        bids_root.unlink()  # replace any stale symlink
+    bids_root.symlink_to(snapshot_path)
+
+    print(f"Browse the BIDS tree at: {bids_root}")
+    return (bids_root,)
+
+
+@app.cell
+def _(bids_root):
+    # Sanity check — list the top-level entries
+    for _entry in sorted(bids_root.iterdir())[:10]:
+        print(_entry.name)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    A few practical notes:
+
+    - **Reuses the cache.** Both the snapshot folder and your symlink target ultimately point at the same content-addressed blobs. Files aren't duplicated, and `huggingface_hub` won't re-download anything you already have.
+    - **Lazy fetch + symlink in one step.** If you'd rather have `huggingface_hub` materialize the tree directly at your chosen path (without going through `snapshot_download`'s default cache location), pass `local_dir=` and `local_dir_use_symlinks=True`:
+      ```python
+      snapshot_download(
+          repo_id="dartbrains/localizer", repo_type="dataset",
+          local_dir="~/data/localizer", local_dir_use_symlinks=True,
+      )
+      ```
+      With `local_dir_use_symlinks=True` (the default on macOS/Linux), `~/data/localizer` will contain symlinks to the cached blobs — same end state, no extra disk usage.
+    - **Windows caveat.** Symlinks on Windows require either developer mode enabled or admin privileges. If you hit a permission error, pass `local_dir_use_symlinks=False` to copy the bytes instead (uses ~the size of the snapshot in extra disk space).
+    - **Updating.** If the dataset is updated on HuggingFace, re-run `snapshot_download` — it pulls only the changed blobs and updates the snapshot folder. Your symlink still points to the right place.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ### Bulk Loading with the `datasets` Library
 
     For loading all beta maps or events at once, use the `datasets` library:
