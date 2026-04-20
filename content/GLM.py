@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
@@ -10,7 +10,6 @@ def _():
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "glm"
-
     return IMG_DIR, mo
 
 
@@ -123,23 +122,25 @@ def _(np, plt):
 
     def plot_timeseries(data, labels=None, linewidth=3):
         """Plot a timeseries
-    
+
         Args:
             data: (np.ndarray) signal varying over time, where each column is a different signal.
             labels: (list) labels which need to correspond to the number of columns.
             linewidth: (int) thickness of line
         """
-        plt.figure(figsize=(20, 5))
-        plt.plot(data, linewidth=linewidth)
-        plt.ylabel('Intensity', fontsize=18)
-        plt.xlabel('Time', fontsize=18)
+        fig, ax = plt.subplots(figsize=(20, 5))
+        ax.plot(data, linewidth=linewidth)
+        ax.set_ylabel('Intensity', fontsize=18)
+        ax.set_xlabel('Time', fontsize=18)
         plt.tight_layout()
         if labels is not None:
             if len(labels) != data.shape[1]:
                 raise ValueError('Need to have the same number of labels as columns in data.')
-            plt.legend(labels, fontsize=18)
+            ax.legend(labels, fontsize=18)
+        return fig  # ← this is the key change
+
     plot_timeseries(face)
-    return (plot_timeseries,)
+    return face, plot_timeseries
 
 
 @app.cell(hide_code=True)
@@ -165,6 +166,12 @@ def _(IMG_DIR, mo):
         Figures are from Huettel, Song, & McCarthy (2008)
         """),
     ])
+    return
+
+
+@app.cell
+def _(face, plot_timeseries):
+    plot_timeseries(face)
     return
 
 
@@ -774,6 +781,11 @@ def _(mo):
 
     Make a plot showing what happens to the $\beta$ estimates.
     """)
+    return
+
+
+@app.cell
+def _():
     return
 
 
