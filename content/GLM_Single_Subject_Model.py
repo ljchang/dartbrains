@@ -150,7 +150,7 @@ def _(mo):
 
 @app.cell
 def _(dm):
-    dm.head()
+    dm
     return
 
 
@@ -203,7 +203,6 @@ def _(dm, plt):
     dm_conv.convolved = [f"{c}_c0" for c in dm_conv.convolved]
     dm_conv.heatmap()
     plt.gcf()
-
     return (dm_conv,)
 
 
@@ -486,7 +485,7 @@ def _(mo):
 
 @app.cell
 def _(Design_Matrix, data, plt, tr):
-    spikes = data.find_spikes(global_spike_cutoff=2.5, diff_spike_cutoff=2.5)
+    spikes = data.find_spikes(global_spike_cutoff=2, diff_spike_cutoff=2.5)
     _f, _a = plt.subplots(figsize=(15, 3))
     spikes = Design_Matrix(spikes.iloc[:, 1:], sampling_freq=1 / tr)
     spikes.plot(ax=_a, linewidth=2)

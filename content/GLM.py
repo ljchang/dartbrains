@@ -388,6 +388,7 @@ def _(X, Y, np, plt):
     a[3].set_title('Objects', fontsize=20)
     plt.gca().invert_yaxis()
     plt.tight_layout()
+    plt.gcf()
     return
 
 
@@ -430,8 +431,9 @@ def _(X, Y, np, plt):
     plt.bar(['Intercept','Faces', 'Objects'], beta)
     plt.xlabel('Regressor', fontsize=18)
     plt.ylabel('Beta Value', fontsize=18)
-
     print(f'beta Faces - beta Objects: {beta[1]-beta[2]:.2}')
+    plt.gcf()
+
     return beta, ols_estimator
 
 
@@ -558,6 +560,7 @@ def _(mo):
 def _(X, beta, np, plt, standard_error_of_estimate):
     std_error = np.sqrt(np.diag((np.linalg.pinv(np.dot(X.T, X))))) * standard_error_of_estimate
 
+
     plt.bar(['Intercept','Faces', 'Objects'], beta, yerr = std_error)
     plt.xlabel('Regressor', fontsize=18)
     plt.ylabel('Beta Value', fontsize=18)
@@ -588,6 +591,7 @@ def _(mo):
 def _(beta, std_error):
     t = beta/std_error
     t
+
     return (t,)
 
 
@@ -745,8 +749,9 @@ def _(
     predicted_y_1 = np.dot(X_1, beta_1)
     predicted_sigma = np.std(residual)
     _predicted_ts = np.vstack([Y_1, predicted_y_1]).T
+    print([contrast_efficiency(X_1, x) for x in [c1_1, c2_1, c3_1]])
     plot_timeseries(_predicted_ts, labels=['Simulated Voxel', 'Predicted Voxel'])
-    [contrast_efficiency(X_1, x) for x in [c1_1, c2_1, c3_1]]
+
     return
 
 
