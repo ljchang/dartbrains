@@ -43,10 +43,15 @@ def _(mo):
 
 @app.cell
 def _():
-    from IPython.display import YouTubeVideo
+    import sys
+    from pathlib import Path
+    _ROOT = Path(__file__).resolve().parent.parent
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
+    from Code.notebook_utils import youtube
 
-    YouTubeVideo('__cOYPifDWk')
-    return (YouTubeVideo,)
+    youtube('__cOYPifDWk')
+    return (youtube,)
 
 
 @app.cell(hide_code=True)
@@ -74,8 +79,8 @@ def _(mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('-abMLQSjMSI')
+def _(youtube):
+    youtube('-abMLQSjMSI')
     return
 
 
@@ -109,8 +114,8 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('-yaHTygR9b8')
+def _(youtube):
+    youtube('-yaHTygR9b8')
     return
 
 

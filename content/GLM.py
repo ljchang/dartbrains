@@ -1,17 +1,25 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
-    import marimo as mo
+    import sys
     from pathlib import Path
+
+    import marimo as mo
+
     _ROOT = Path(__file__).resolve().parent.parent
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
+
+    from Code.notebook_utils import youtube
+
     IMG_DIR = _ROOT / "images" / "glm"
 
-    return IMG_DIR, mo
+    return IMG_DIR, mo, youtube
 
 
 @app.cell(hide_code=True)
@@ -21,7 +29,7 @@ def _(mo):
 
     *Written by Luke Chang*
 
-    This tutorial provides an introduction for how the general linear model (GLM) can be used to make inferences about brain responses in a single subject. We will explore the statistics in the context of a simple hypothetical experiment using simulated data.
+    This tutorial provides an introduction to how the general linear model (GLM) can be used to make inferences about brain responses in a single subject. We will explore the statistics in the context of a simple hypothetical experiment using simulated data.
 
     In this lab we will cover:
     - How to use a GLM to test psychological hypotheses.
@@ -32,6 +40,7 @@ def _(mo):
 
     Let's start by watching two short videos introducing the general linear model by Tor Wager and how this can be applied to fMRI.
     """)
+
     return
 
 
@@ -43,17 +52,15 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
-    from IPython.display import YouTubeVideo
-
-    YouTubeVideo('GDkLQuV4he4')
-    return (YouTubeVideo,)
+@app.cell(hide_code=True)
+def _(youtube):
+    youtube("GDkLQuV4he4")
+    return
 
 
-@app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('OyLKMb9FNhg')
+@app.cell(hide_code=True)
+def _(youtube):
+    youtube("OyLKMb9FNhg")
     return
 
 
@@ -61,16 +68,21 @@ def _(YouTubeVideo):
 def _(mo):
     mo.md(r"""
     ## Are you ready for this?
-    This lab assumes that you have some basic background knowledge in statistics from an introductory course. If you are already feeling overwhelmed from Tor Wager's videos and think you might need to slow down and refresh some basic concepts and lingo, I highly encourage you to watch Jeannette Mumford's crash course in statistics. These are certainly not required, but she is a wonderful teacher and watching her videos will provide an additional explanation of the core concepts needed to understand the GLM. You could watch these in one sitting, or go back and forth with working through the notebooks. There is so much to know in statistics and people can often feel lost because the concepts are certainly not intuitive. For example, even though advanced statistics have been an important part of my own work, I still find it helpful to periodically revisit core concepts. In general, I find that learning neuroimaging is an iterative process. In the beginning, it is important to get a broad understanding of the key steps and how neuroimaging can be used to make inferences, but as you progress in your training you will have plenty of opportunities to zoom into specific steps to learn more about particular details and nuances that you may not have fully appreciated the first time around.
+
+    This lab assumes that you have some basic background knowledge in statistics from an introductory course. If you are already feeling overwhelmed from Tor Wager's videos and think you might need to slow down and refresh some basic concepts and lingo, I highly encourage you to watch Jeannette Mumford's crash course in statistics. These are certainly not required, but she is a wonderful teacher and watching her videos will provide an additional explanation of the core concepts needed to understand the GLM. You could watch these in one sitting, or go back and forth with working through the notebooks.
+
+    There is so much to know in statistics and people can often feel lost because the concepts are certainly not intuitive. For example, even though advanced statistics have been an important part of my own work, I still find it helpful to periodically revisit core concepts. In general, I find that learning neuroimaging is an iterative process. In the beginning, it is important to get a broad understanding of the key steps and how neuroimaging can be used to make inferences, but as you progress in your training you will have plenty of opportunities to zoom into specific steps to learn more about particular details and nuances that you may not have fully appreciated the first time around.
+
     - [Basic statistics terminology](https://youtu.be/apt8uAgtgdY) This video gently introduces some of the key concepts that provide the foundation for statistics.
     - [Simple Linear Regression](https://www.youtube.com/watch?v=yLgPpmXVVbs) This video explains how a regression works using a single variable.
     - [Matrix Algebra Basics](https://www.youtube.com/watch?v=fkZj8QoYjq8) This video provides the background linear algebra needed for understanding the GLM.
     - [Multiple Linear Regression](https://www.youtube.com/watch?v=qdOG7YMolmA) This video explains how multiple regression works using linear algebra.
     - [Hypothesis Testing](https://www.youtube.com/watch?v=ULeg3DH3g9w) This video covers the basics of hypothesis testing.
     - [Contrasts in Linear Models](https://www.youtube.com/watch?v=yLgPpmXVVbs&t=631s) This video provides an overview of how to test hypotheses using contrasts in the context of the GLM.
-    - [Intepreting Regression Parameters](https://www.youtube.com/watch?v=uClfe4pLrCo) This video covers how to interpret the results from a regression analysis.
-    - [Mean Centering Regressors](https://www.youtube.com/watch?v=K4S576j90N8) This video covers a more subtle detail of why you might consider mean centering your continuour regression variables.
+    - [Interpreting Regression Parameters](https://www.youtube.com/watch?v=uClfe4pLrCo) This video covers how to interpret the results from a regression analysis.
+    - [Mean Centering Regressors](https://www.youtube.com/watch?v=K4S576j90N8) This video covers a more subtle detail of why you might consider mean centering your continuous regression variables.
     """)
+
     return
 
 
@@ -91,11 +103,13 @@ def _():
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
+    import plotly.graph_objects as go
     import seaborn as sns
     from nltools.stats import regress
     from nltools.external import glover_hrf
 
-    return glover_hrf, np, plt, sns
+
+    return glover_hrf, go, np, plt, sns
 
 
 @app.cell(hide_code=True)
@@ -115,29 +129,47 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(np, plt):
+def _(go, np):
     n_tr = 200
     _n_trial = 5
     face = np.zeros(n_tr)
     face[np.arange(10, n_tr, int(n_tr / _n_trial))] = 1
 
-    def plot_timeseries(data, labels=None, linewidth=3):
-        """Plot a timeseries
-    
+    def plot_timeseries(data, labels=None, title=None, linewidth=2):
+        """Plot a timeseries as an interactive plotly figure.
+
         Args:
-            data: (np.ndarray) signal varying over time, where each column is a different signal.
-            labels: (list) labels which need to correspond to the number of columns.
-            linewidth: (int) thickness of line
+            data: 1D or 2D array; for 2D each column is a separate signal.
+            labels: trace labels; must match the number of columns when 2D.
+            title: optional figure title.
+            linewidth: trace width in pixels.
         """
-        plt.figure(figsize=(20, 5))
-        plt.plot(data, linewidth=linewidth)
-        plt.ylabel('Intensity', fontsize=18)
-        plt.xlabel('Time', fontsize=18)
-        plt.tight_layout()
-        if labels is not None:
-            if len(labels) != data.shape[1]:
-                raise ValueError('Need to have the same number of labels as columns in data.')
-            plt.legend(labels, fontsize=18)
+        arr = np.asarray(data)
+        if arr.ndim == 1:
+            arr = arr[:, None]
+        n_series = arr.shape[1]
+        if labels is not None and len(labels) != n_series:
+            raise ValueError("Need to have the same number of labels as columns in data.")
+        x = np.arange(arr.shape[0])
+        fig = go.Figure()
+        for i in range(n_series):
+            fig.add_trace(go.Scatter(
+                x=x, y=arr[:, i], mode="lines",
+                name=labels[i] if labels is not None else f"Signal {i + 1}",
+                line=dict(width=linewidth),
+                hovertemplate="t=%{x}<br>y=%{y:.3f}<extra></extra>",
+            ))
+        fig.update_layout(
+            title=title,
+            xaxis_title="Time (TR)",
+            yaxis_title="Intensity",
+            hovermode="x unified",
+            height=350,
+            margin=dict(l=60, r=20, t=40 if title else 20, b=50),
+            showlegend=labels is not None or n_series > 1,
+        )
+        return fig
+
     plot_timeseries(face)
     return (plot_timeseries,)
 
@@ -186,8 +218,9 @@ def _(mo):
     mo.md(r"""
     Let's imagine that in a voxel processing face specific information we might expect to see a larger activation in response to faces. Maybe two times bigger?
 
-    In our simulation, these two values are parameters we are specifying to generate the data. Specifically they refer to the amplitude of the response to Faces and Houses within a particular region of the brain.
+    In our simulation, these two values are parameters we are specifying to generate the data. Specifically they refer to the amplitude of the response to Faces and Objects within a particular region of the brain.
     """)
+
     return
 
 
@@ -211,8 +244,9 @@ def _(mo):
     mo.md(r"""
     Ok, now we have two conditions that are alternating over time.
 
-    We know that the brain has a delayed hemodynamic response to events that has a particular shape, so we will need to convolve these events with an appropriate HRF function. Here, we will use the double-gamma HRF function.
+    We know that the brain has a delayed hemodynamic response to events that has a particular shape, so we will need to convolve these events with an appropriate hemodynamic response function (HRF). Here, we will use the double-gamma HRF.
     """)
+
     return
 
 
@@ -229,8 +263,9 @@ def _(glover_hrf, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We will use `np.convolve` from numpy to perform the convolution.  The length of the convolved data will be the length of the time series plus the length of the kernel minus 1. To make sure everything is the same length, we will chop off the extra time off the convolved time series using `mode='same'`.
+    We will use `np.convolve` from numpy to perform the convolution.  The length of the convolved data will be the length of the time series plus the length of the kernel minus 1. To make sure everything is the same length, we will chop off the extra time from the convolved time series using `mode='same'`.
     """)
+
     return
 
 
@@ -246,7 +281,7 @@ def _(face_2, hrf, np, obj_1, plot_timeseries):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    While this might reflect the expected HRF response to a single event, real data is much noiser. It is easy to add different types of noise. For example, there might be a low frequency drift, autocorrelation, or possibly some aliased physiological artifacts.
+    While this might reflect the expected HRF response to a single event, real data is much noisier. It is easy to add different types of noise. For example, there might be a low frequency drift, autocorrelation, or possibly some aliased physiological artifacts.
 
     For now, let's start with something simple, like independent white noise drawn from a random Gaussian distribution
 
@@ -254,6 +289,7 @@ def _(mo):
 
     where $\mu = 0$ and $\sigma = 0.15$
     """)
+
     return
 
 
@@ -301,10 +337,11 @@ def _(mo):
 
     where $Y$ is our observed voxel time series. $X$ is our model or design matrix, and is where we will specify a predicted response to each condition. $\beta$ is a vector of values that we will estimate to scale our model. $\epsilon$ is independent gaussian noise. This model is linear because we can decompose $Y$ into a set of features or independent variables that are scaled by an estimated $\beta$ parameter and summed together. The $\epsilon$ parameter is not usually known and can also be estimated.
 
-    You may be wondering how our model is distinct from our simulated data. Remember when we simulated the data we specified 3 parameters - face amplitude, object amplitude, and $\epsilon$, we could have also added a mean, but for now, let's just assume that it is zero. When we fit our model to the simulated data, we should in theory be able to almost perfectly recover these three parameters.
+    You may be wondering how our model is distinct from our simulated data. Remember when we simulated the data we specified 3 parameters — face amplitude, object amplitude, and $\epsilon$. We could have also added a mean, but for now, let's just assume that it is zero. When we fit our model to the simulated data, we should in theory be able to almost perfectly recover these three parameters.
 
     Now let's build a design matrix $X$ using an intercept, and a regressor indicating the onset of each condition, convolved with the hemodynamic response function (HRF).
     """)
+
     return
 
 
@@ -329,10 +366,11 @@ def _(mo):
 
     $$Voxel = \beta_0 \cdot Intercept + \beta_1 \cdot Faces + \beta_2 \cdot Objects + \epsilon$$
 
-    We can also make a plot and rotate the timeseries, to better reflect the equation.
+    We can also plot each regressor in our design matrix to better reflect the equation.
 
     It should be clear how each of these components relate to the regression equation.
     """)
+
     return
 
 
@@ -358,7 +396,7 @@ def _(mo):
     mo.md(r"""
     ## Estimate GLM
 
-    Now that have created our simulated voxel timeseries $Y$ and our design matrix $X$, we need to fit our model to the data by estimating the three $\beta$ parameters.
+    Now that we have created our simulated voxel timeseries $Y$ and our design matrix $X$, we need to fit our model to the data by estimating the three $\beta$ parameters.
 
     There are several ways to estimate the parameters for our general linear model. The Ordinary Least Squares (OLS) estimator finds the $\hat\beta$ hyperplane that minimizes the error between the observed $Y$ and predicted $\hat Y$.
 
@@ -366,9 +404,9 @@ def _(mo):
 
     $$\hat{\beta} = (X^T X)^{-1}X^TY$$
 
-    There is also maximum likelihood estimator, which should produce an almost identical result to the ordinary least squares estimator when the error terms are normally distributed.
+    There is also a maximum likelihood estimator, which should produce an almost identical result to the ordinary least squares estimator when the error terms are normally distributed.
 
-    $$L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt(2\pi\sigma^2)} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}$$
+    $$L(\beta, \sigma^2 | Y, X) = \displaystyle \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi\sigma^2}} \cdot e^{-\frac{(Y_i - \beta X_i)^2}{2\sigma^2}}$$
 
     where
 
@@ -378,6 +416,7 @@ def _(mo):
 
     For a more in depth overview of GLM estimation, watch this [video](https://www.youtube.com/watch?v=Ab-5AbJ8gAs) by Tor Wager and Martin Lindquist.
     """)
+
     return
 
 
@@ -411,14 +450,18 @@ def _(mo):
 
 
 @app.cell
-def _(X, Y, beta, np, plot_timeseries, plt):
+def _(X, Y, beta, np, plot_timeseries):
     predicted_y = np.dot(X, beta)
-    _predicted_ts = np.vstack([Y, predicted_y]).T
-    plot_timeseries(_predicted_ts, labels=['Simulated Voxel', 'Predicted Voxel'])
     residual = Y - predicted_y
-    plot_timeseries(residual)
-    plt.title('Residual', fontsize=20)
+    _predicted_ts = np.vstack([Y, predicted_y]).T
+    plot_timeseries(_predicted_ts, labels=["Simulated Voxel", "Predicted Voxel"])
     return predicted_y, residual
+
+
+@app.cell(hide_code=True)
+def _(plot_timeseries, residual):
+    plot_timeseries(residual, title="Residual")
+    return
 
 
 @app.cell(hide_code=True)
@@ -505,8 +548,9 @@ def _(mo):
 
     $$\sigma = \sqrt{diag((X^TX)^{-1})} \cdot \hat \sigma$$
 
-    This is essentially a confidence interval around the $\beta_j$ estimate. One standard error, $1*\hat \sigma$ is approximately equivalent to a 68% confidence interval, while $2*\hat\sigma$ is approximately a 95% confidence interval.
+    This is essentially a confidence interval around the $\beta_j$ estimate. One standard error, $\hat\sigma$, is approximately equivalent to a 68% confidence interval, while $1.96\,\hat\sigma$ is approximately a 95% confidence interval.
     """)
+
     return
 
 
@@ -550,10 +594,11 @@ def _(beta, std_error):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Just like in intro statistics, we could find the p-value that corresponds to a particular t-statistic using the t-distribution. We will load the t distribution from `scipy.stats` and calculate the corresponding p-values using the survival function or  $1- cdf$, which requires specifying the degrees of freedom (df), which is $n-1$. We multiply these values by 2 to calculated a two-tailed test.
+    Just like in intro statistics, we could find the p-value that corresponds to a particular t-statistic using the t-distribution. We will load the t distribution from `scipy.stats` and calculate the corresponding p-values using the survival function or  $1- cdf$, which requires specifying the degrees of freedom (df), which is $n-1$. We multiply these values by 2 to calculate a two-tailed test.
 
     You can see that the intercept $\beta$ is not significant, but the face and object regressors are well below `p < 0.05`.
     """)
+
     return
 
 
@@ -581,16 +626,16 @@ def _(mo):
     return
 
 
-@app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('7MibM1ATai4')
+@app.cell(hide_code=True)
+def _(youtube):
+    youtube('7MibM1ATai4')
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Contrasts describe a linear combination of variables in a regression model whose coefficients add up to zero. This allows us to flexibly compare different experimental conditions.
+    A contrast is a linear combination of regression coefficients that lets us flexibly test hypotheses about our experimental conditions. Some contrasts isolate a single effect (like the brain response to faces alone), while others compare conditions using weights that sum to zero (like faces vs. objects).
 
     For example, suppose we just wanted to know the magnitude of an effect for a single condition, such as the brain response to faces. We would create a contrast code that isolates the effect size (i.e., $\beta$ estimate for the face regressor)
 
@@ -610,10 +655,11 @@ def _(mo):
 
     [0, 1, -1]
 
-    More simply, we are calculating the magnitude of the effect of the difference between viewing faces and objects in a single voxel.
+    Notice that this last contrast has weights that sum to zero — this is what makes it a proper *comparison* between conditions. More simply, we are calculating the magnitude of the effect of the difference between viewing faces and objects in a single voxel.
 
     To make this a little bit more clear, we will show a graphical representation of the design matrix to make it obvious what we are contrasting.
     """)
+
     return
 
 
@@ -659,10 +705,11 @@ def _(X, np):
 def _(mo):
     mo.md(r"""
     ### Varying the Inter-Trial Interval with Jittering
-    All of the examples so far have used a fixed inter-trial interval. However, in real experiments it is almost always a good idea to vary the inter-trial interval using jitter. This helps to decouple the slice acquisition with the experimental design to better sample the hemodynamic response over multiple trials. In addition, this can help reduce the temporal correlation between regressors modeling events that may be sequentially dependent. For example, there may be multiple parts of a trial. For example, imagine an associative learning experiment in which a cue predicts an outcome. As the cue epoch will always temporally precede the outcome epoch, it can be beneficial to temporally decouple these epochs to reduce collinearity in the design matrix, which will increase the efficiency of the experimental design. Finally, adding jitter to the inter-trial interval may help reduce participant's ability to temporally predict when the next event will happen, which may be desireable depending on the psychological question of interest.
+    All of the examples so far have used a fixed inter-trial interval. However, in real experiments it is almost always a good idea to vary the inter-trial interval using jitter. This helps to decouple the slice acquisition with the experimental design to better sample the hemodynamic response over multiple trials. In addition, this can help reduce the temporal correlation between regressors modeling events that may be sequentially dependent. For example, there may be multiple parts of a trial. For example, imagine an associative learning experiment in which a cue predicts an outcome. As the cue epoch will always temporally precede the outcome epoch, it can be beneficial to temporally decouple these epochs to reduce collinearity in the design matrix, which will increase the efficiency of the experimental design. Finally, adding jitter to the inter-trial interval may help reduce participant's ability to temporally predict when the next event will happen, which may be desirable depending on the psychological question of interest.
 
     Here is an example for how to add jitter to our simulated experiment.
     """)
+
     return
 
 
@@ -708,12 +755,13 @@ def _(mo):
     mo.md(r"""
     ### Autocorrelation
 
-    The BOLD signal has some intrinsic autocorrelation that varies with the length of the TR. Different software packages have provided varying solutions to this problem. For example, SPM implements an AR(1) model, which means that it trys to account for the fact that the signal is consistently correlated (i.e., autoregressive) with one lag. In practice, these will rarely change the beta estimates, but rather will adjust our standard errors around the estimates. As we will discuss soon, most group level analyses ignore these subject level, or first-level errors anyway. It is debatable if this is actually a good practice, but it reduces the importance of accounting for autocorrelation when looking at group level statistics in standard experimental design.
+    The BOLD signal has some intrinsic autocorrelation that varies with the length of the TR. Different software packages have provided varying solutions to this problem. For example, SPM implements an AR(1) model, which means that it tries to account for the fact that the signal is consistently correlated (i.e., autoregressive) with one lag. In practice, these will rarely change the beta estimates, but rather will adjust our standard errors around the estimates. As we will discuss soon, most group level analyses ignore these subject level, or first-level errors anyway. It is debatable if this is actually a good practice, but it reduces the importance of accounting for autocorrelation when looking at group level statistics in standard experimental design.
 
-    Another important thing to note is that there is some evidence that the AR(1) model can actually increase false positives, especially in shorter TRs.  See this [paper](https://www.sciencedirect.com/science/article/pii/S1053811912003825) by Anders Ekland and colleagues for more details. Also, this is a helpful [blog post](https://mandymejia.com/2016/11/06/how-to-efficiently-prewhiten-fmri-timeseries-the-right-way/) discussing prewhitening.
+    Another important thing to note is that there is some evidence that the AR(1) model can actually increase false positives, especially in shorter TRs.  See this [paper](https://www.sciencedirect.com/science/article/pii/S1053811912003825) by Anders Eklund and colleagues for more details. Also, this is a helpful [blog post](https://mandymejia.com/2016/11/06/how-to-efficiently-prewhiten-fmri-timeseries-the-right-way/) discussing prewhitening.
 
     For the scope of this course we will largely be ignoring this issue, but I will plan to add some examples and simulations in the future.  For now, I encourage you to watch this video on [AR models](https://www.youtube.com/watch?v=Mb9LDzvhecY&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=24) if you are interested in learning more about this topic.
     """)
+
     return
 
 
@@ -774,6 +822,11 @@ def _(mo):
 
     Make a plot showing what happens to the $\beta$ estimates.
     """)
+    return
+
+
+@app.cell
+def _():
     return
 
 

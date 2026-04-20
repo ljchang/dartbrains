@@ -1,16 +1,15 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "single_subject"
-
     return IMG_DIR, mo
 
 
@@ -79,12 +78,13 @@ def _():
     from nltools.stats import find_spikes
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
     from Code.data import get_file, get_tr, load_events, get_subjects
+    from Code.notebook_utils import youtube
+
 
     return (
         Brain_Data,
         Design_Matrix,
         get_file,
-        get_subjects,
         get_tr,
         load_events,
         nib,
@@ -93,6 +93,7 @@ def _():
         pd,
         plt,
         sns,
+        youtube,
         zscore,
     )
 
@@ -100,13 +101,13 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To build the design matrix, we will be using the Design_Matrix class from the nltools toolbox.  First, we use pandas to load the text file that contains the onset and duration for each condition of the task. Rows reflect measurements in time sampled at 1/tr cycles per second. Columns reflect distinct conditions. Conditions are either on or off. We then cast this Pandas DataFrame as a Design_Matrix object. Be sure to specify the sampling frequency, which is $\frac{1}{tr}$.
+    To build the design matrix, we will be using the `Design_Matrix` class from the `nltools` toolbox. We load the BIDS events file (onsets, durations, and condition labels) and then call `onsets_to_dm` to turn it into a `Design_Matrix` with one row per TR and one column per condition. We pass `TR=tr` so the function knows how to align event timing (in seconds) to the scan's sampling grid, and `hrf_model=None` because we want to see the raw onset regressors first — we will convolve them with the HRF ourselves in a later step.
     """)
     return
 
 
 @app.cell
-def _(get_tr, get_file, load_events, nib, onsets_to_dm):
+def _(get_file, get_tr, load_events, nib, onsets_to_dm):
     def load_bids_events(subject):
         '''Create a design_matrix instance from BIDS event file'''
 
@@ -114,8 +115,10 @@ def _(get_tr, get_file, load_events, nib, onsets_to_dm):
         n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
 
         onsets = load_events(subject)
-        onsets.columns = ['Onset', 'Duration', 'Stim']
-        return onsets_to_dm(onsets, sampling_freq=1/tr, run_length=n_tr)
+        dm = onsets_to_dm(onsets, run_length=n_tr, TR=tr, hrf_model=None)
+        # nilearn auto-adds a 'constant' intercept; drop it so .add_poly() later
+        # is the single source of the intercept (avoids a rank-deficient design).
+        return dm.drop(columns='constant')
 
     dm = load_bids_events('S01')
     return (dm,)
@@ -177,8 +180,9 @@ def _(mo):
 
 
 @app.cell
-def _(dm):
+def _(dm, plt):
     dm.heatmap()
+    plt.gcf()
     return
 
 
@@ -192,16 +196,21 @@ def _(mo):
 
 
 @app.cell
-def _(dm):
+def _(dm, plt):
     dm_conv = dm.convolve()
+    # nltools .convolve() appends '_c0' to column names but leaves .convolved with the
+    # pre-suffix names, which breaks .regress() later. Keep .convolved in sync with columns.
+    dm_conv.convolved = [f"{c}_c0" for c in dm_conv.convolved]
     dm_conv.heatmap()
+    plt.gcf()
+
     return (dm_conv,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    You can see that each of the regressors is now  bit blurrier and now has the shape of an HRF function. We can plot a single regoressor to see this more clearly using the `.plot()` method.
+    You can see that each of the regressors is now a bit blurrier and now has the shape of an HRF function. We can plot a single regressor to see this more clearly using the `.plot()` method.
     """)
     return
 
@@ -255,9 +264,9 @@ def _(mo):
     #### Variance Inflation Factor
     Pairwise correlations will let you know if any regressor is correlated with another regressor. However, we are even more concerned about being able to explain any regressor as a linear combination of the other regressors. For example, *can one regressor be explained by three or more of the remaining regressors?* The variance inflation factor (VIF) is a metric that can help us detect multicollinearity. Specifically, it is simply the ratio of variance in a model with multiple terms, divided by the variance of a model with only a single term. This ratio reduces to the following formula:
 
-    $$VIF_j=\frac{1}{1-R_i^2}$$
+    $$VIF_j=\frac{1}{1-R_j^2}$$
 
-    Where $R_j^2$ is the $R^2$ value obtained by regressing the $jth$ predictor on the remaining predictors. This means that each regressor $j$ will have it's own variance inflation factor.
+    Where $R_j^2$ is the $R^2$ value obtained by regressing the $jth$ predictor on the remaining predictors. This means that each regressor $j$ will have its own variance inflation factor.
 
     How should we interpret the VIF values?
 
@@ -304,11 +313,9 @@ def _(mo):
 
 
 @app.cell
-def _():
-    from IPython.display import YouTubeVideo
-
-    YouTubeVideo('DEtwsFdFwYc')
-    return (YouTubeVideo,)
+def _(youtube):
+    youtube('DEtwsFdFwYc')
+    return
 
 
 @app.cell(hide_code=True)
@@ -333,9 +340,10 @@ def _(dm_conv_filt):
 
 
 @app.cell
-def _(dm_conv):
+def _(dm_conv, plt):
     dm_conv_filt_1 = dm_conv.add_dct_basis(duration=128)
     dm_conv_filt_1.heatmap()
+    plt.gcf()
     return (dm_conv_filt_1,)
 
 
@@ -345,15 +353,16 @@ def _(mo):
     ### Intercepts
     We almost always want to include an intercept in our model. This will usually reflect the baseline, or the average voxel response during the times that are not being modeled as a regressor. It is important to note that you must have some sparsity to your model, meaning that you can't model every point in time, as this will make your model rank deficient and unestimable.
 
-    If you are concatenating runs and modeling them all together, it is recommended to include a separate intercept for each run, but not for the entire model. This means that the average response within a voxel might differ across runs. You can add an intercept by simply creating a new column of ones (e.g., `dm['Intercept] = 1`). Here we provide an example using the `.add_poly()` method, which adds an intercept by default.
+    If you are concatenating runs and modeling them all together, it is recommended to include a separate intercept for each run rather than a single intercept spanning the full concatenated model. This means that the average response within a voxel might differ across runs. You can add an intercept by simply creating a new column of ones (e.g., `dm['Intercept'] = 1`). Here we provide an example using the `.add_poly()` method, which adds an intercept by default.
     """)
     return
 
 
 @app.cell
-def _(dm_conv_filt_1):
+def _(dm_conv_filt_1, plt):
     dm_conv_filt_poly = dm_conv_filt_1.add_poly()
     dm_conv_filt_poly.heatmap()
+    plt.gcf()
     return
 
 
@@ -369,9 +378,10 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1):
+def _(dm_conv_filt_1, plt):
     dm_conv_filt_poly_1 = dm_conv_filt_1.add_poly(order=2, include_lower=True)
     dm_conv_filt_poly_1.heatmap()
+    plt.gcf()
     return (dm_conv_filt_poly_1,)
 
 
@@ -379,9 +389,9 @@ def _(dm_conv_filt_1):
 def _(mo):
     mo.md(r"""
     ### Noise Covariates
-    Another important thing to consider is removing variance associated with head motion. Remember the preprocessed data has already realigned each TR in space, but head motion itself can nonlinearly distort the magnetic field. There are several common strategies for trying to remove artifacts associated with head motion. One is using a data driven denoising algorithm like ICA and combining it with a classifer such as FSL's [FIX](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX) module. Another approach is to include the amount of correction that needed to be applied to align each TR. For example, if someone moved a lot in a single TR, there will be a strong change in their realignment parameters. It is common to include the 6 parameters as covariates in your regression model. However, as we already noted, often motion can have a nonlinear relationship with signal intensity, so it is often good to include other transformations of these signals to capture nonlinear signal changes resulting from head motion. We typically center the six realigment parameters (or zscore) and then additionally add a quadratic version, a derivative, and the square of the derivatives, which becomes 24 additional regressors.
+    Another important thing to consider is removing variance associated with head motion. Remember the preprocessed data has already realigned each TR in space, but head motion itself can nonlinearly distort the magnetic field. There are several common strategies for trying to remove artifacts associated with head motion. One is using a data driven denoising algorithm like ICA and combining it with a classifer such as FSL's [FIX](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FIX) module. Another approach is to include the alignment correction applied to each TR as a covariate. For example, if someone moved a lot in a single TR, there will be a strong change in their realignment parameters. It is common to include the 6 parameters as covariates in your regression model. However, as we already noted, often motion can have a nonlinear relationship with signal intensity, so it is often good to include other transformations of these signals to capture nonlinear signal changes resulting from head motion. We typically center the six realignment parameters (or zscore) and then additionally add a quadratic version, a derivative, and the square of the derivatives, which becomes 24 additional regressors.
 
-    In addition, it is common to model out big changes using a regressor with a single value indicating the timepoint of the movement. This will be zeros along time, with a single value of one at the time point of interest. This effectively removes any variance associated with this single time point. It is important to model each "spike" as a separate regressor as there might be distinct spatial patterns associated with different types of head motions. We strongly recommond against using a single continuous frame displacement metric as is often recommended by the fMRIprep team. This assumes (1) that there is a *linear* relationship between displacement and voxel activity, and (2) that there is a *single* spatial generator or pattern associated with frame displacement. As we saw in the ICA noise lab, there might be many different types of head motion artifacts. This procedure of including spikes as nuisance regressors is mathematically equivalent to censoring your data and removing the bad TRs. We think it is important to do this in the context of the GLM as it will also reduce the impact if it happens to covary with your task.
+    In addition, it is common to model out big changes using a regressor with a single value indicating the timepoint of the movement. This will be zeros along time, with a single value of one at the time point of interest. This effectively removes any variance associated with this single time point. It is important to model each "spike" as a separate regressor as there might be distinct spatial patterns associated with different types of head motions. We strongly recommend against using a single continuous frame displacement metric as is often recommended by the fMRIprep team. This assumes (1) that there is a *linear* relationship between displacement and voxel activity, and (2) that there is a *single* spatial generator or pattern associated with frame displacement. As we saw in the ICA noise lab, there might be many different types of head motion artifacts. This procedure of including spikes as nuisance regressors is mathematically equivalent to censoring your data and removing the bad TRs. We think it is important to do this in the context of the GLM as it will also reduce the impact if it happens to covary with your task.
 
     First, let's load preprocessed data from one participant.
     """)
@@ -428,7 +438,13 @@ def _(mo):
 def _(Design_Matrix, get_tr, mc, pd, sns, zscore):
     def make_motion_covariates(mc, tr):
         z_mc = zscore(mc)
-        all_mc = pd.concat([z_mc, z_mc**2, z_mc.diff(), z_mc.diff()**2], axis=1)
+        z_mc_sq = z_mc ** 2
+        z_mc_sq.columns = [f"{c}_sq" for c in z_mc.columns]
+        z_mc_diff = z_mc.diff()
+        z_mc_diff.columns = [f"{c}_diff" for c in z_mc.columns]
+        z_mc_diff_sq = z_mc.diff() ** 2
+        z_mc_diff_sq.columns = [f"{c}_diff_sq" for c in z_mc.columns]
+        all_mc = pd.concat([z_mc, z_mc_sq, z_mc_diff, z_mc_diff_sq], axis=1)
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1/tr)
 
@@ -480,7 +496,7 @@ def _(Design_Matrix, data, plt, tr):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    For this subject, our spike identification procedure identified 3 spikes. Two of these spikes look like they are temporally contiguous. Let's add all of these covariate to our design matrix.
+    For this subject, our spike identification procedure identified 3 spikes. Two of these spikes look like they are temporally contiguous. Let's add all of these covariates to our design matrix.
 
     In this example, we will append each of these additional matrices to our main design matrix.
 
@@ -490,20 +506,19 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_poly_1, mc_cov, pd, spikes):
-    dm_conv_filt_poly_cov = pd.concat([dm_conv_filt_poly_1, mc_cov, spikes], axis=1)
+def _(dm_conv_filt_poly_1, mc_cov, plt, spikes):
+    dm_conv_filt_poly_cov = dm_conv_filt_poly_1.append([mc_cov, spikes], axis=1)
     dm_conv_filt_poly_cov.heatmap(cmap='RdBu_r', vmin=-1, vmax=1)
+    plt.gcf()
     return (dm_conv_filt_poly_cov,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ```{note}
-    As discussed above, multicollineary can lead to unstable estimates of the regression coefficients, which is particularly important to keep in mind for regressors of interest. Multicollinearity between covariates of no interest tends to be less of a problem because we generally are just interested in explaining noise in our model and are rarely interested in interpreting the individual covariate beta coefficients. However, in cases of extreme collinearity, the model may become rank deficient, which can lead to difficulty with even fitting the model.
+    **Note**: As discussed above, multicollinearity can lead to unstable estimates of the regression coefficients, which is particularly important to keep in mind for regressors of interest. Multicollinearity between covariates of no interest tends to be less of a problem because we generally are just interested in explaining noise in our model and are rarely interested in interpreting the individual covariate beta coefficients. However, in cases of extreme collinearity, the model may become rank deficient, which can lead to difficulty with even fitting the model.
 
     A simple fix to this problem is to use the `.clean()` method. This method will remove any columns that are perfectly collinear with other columns in the design matrix.
-    ```
     """)
     return
 
@@ -543,13 +558,13 @@ def _(mo):
 
 @app.cell
 def _(data):
-    data.mean().plot()
+    data.mean().iplot()
     return
 
 
 @app.cell
 def _(smoothed):
-    smoothed.mean().plot()
+    smoothed.mean().iplot()
     return
 
 
@@ -580,7 +595,7 @@ def _(mo):
     mo.md(r"""
     Ok, it's done! Let's take a look at the results.
 
-    The stats variable is a dictionary with the main results from the regression: a brain image with all of the betas for each voxel, a correspondign image of t-values, p-values, standard error of the estimate, and residuals.
+    The stats variable is a dictionary with the main results from the regression: a brain image with all of the betas for each voxel, a corresponding image of t-values, p-values, standard error of the estimate, and residuals.
 
     Remember we have run the same regression model separately on each voxel of the brain.
 
@@ -643,8 +658,8 @@ def _(mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('7MibM1ATai4')
+def _(youtube):
+    youtube('7MibM1ATai4')
     return
 
 

@@ -4,6 +4,7 @@ __generated_with = "0.23.1"
 app = marimo.App(width="medium")
 
 with app.setup(hide_code=True):
+    import sys
     import marimo as mo
     import numpy as np
     import matplotlib.pyplot as plt
@@ -14,10 +15,11 @@ with app.setup(hide_code=True):
     from scipy.signal import butter, filtfilt, freqz, sosfreqz
 
     _ROOT = Path(__file__).resolve().parent.parent
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
     IMG_DIR = _ROOT / "images" / "signal_processing"
 
-    def youtube(video_id):
-        return mo.Html(f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allowfullscreen></iframe>')
+    from Code.notebook_utils import youtube
 
     def glover_hrf(tr_val, oversampling=1):
         _dt = tr_val / oversampling
