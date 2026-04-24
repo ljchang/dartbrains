@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -10,7 +10,6 @@ def _():
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "group_analysis"
-
     return IMG_DIR, mo
 
 
@@ -36,7 +35,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Group_Analysis.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -179,12 +177,9 @@ def _():
     plot_timeseries(np.vstack([sim1, sim2]).T, labels=['Signal', 'Noisy Signal'])
     return (
         Brain_Data,
-        CONDITIONS,
         get_file,
         get_subjects,
-        glob,
         np,
-        os,
         pd,
         plot_timeseries,
         plt,

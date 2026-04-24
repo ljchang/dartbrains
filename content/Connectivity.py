@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -10,7 +10,6 @@ def _():
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "connectivity"
-
     return IMG_DIR, mo
 
 
@@ -46,7 +45,6 @@ def _(IMG_DIR, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Connectivity.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -109,6 +107,7 @@ def _():
     import sys
     sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
     from Code.data import get_file, get_tr, load_events, load_confounds, get_subjects
+
     return (
         Adjacency,
         Brain_Data,
@@ -116,7 +115,6 @@ def _():
         component_viewer,
         expand_mask,
         get_file,
-        get_subjects,
         get_tr,
         load_confounds,
         load_events,

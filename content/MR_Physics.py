@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.22.4"
+__generated_with = "0.23.2"
 app = marimo.App(
     width="medium",
     app_title="MR Physics: From Protons to Brain Images",
@@ -96,7 +96,6 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/MR_Physics.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -849,7 +848,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     bloch_t1_slider = mo.ui.slider(
-    
+
         start=200, stop=4000, step=100, value=1300,
         label="T\u2081 (ms)",
     )

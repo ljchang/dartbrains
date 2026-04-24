@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -18,7 +18,6 @@ def _():
     from Code.notebook_utils import youtube
 
     IMG_DIR = _ROOT / "images" / "glm"
-
     return IMG_DIR, mo, youtube
 
 
@@ -40,14 +39,12 @@ def _(mo):
 
     Let's start by watching two short videos introducing the general linear model by Tor Wager and how this can be applied to fMRI.
     """)
-
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/GLM.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -82,7 +79,6 @@ def _(mo):
     - [Interpreting Regression Parameters](https://www.youtube.com/watch?v=uClfe4pLrCo) This video covers how to interpret the results from a regression analysis.
     - [Mean Centering Regressors](https://www.youtube.com/watch?v=K4S576j90N8) This video covers a more subtle detail of why you might consider mean centering your continuous regression variables.
     """)
-
     return
 
 
@@ -220,7 +216,6 @@ def _(mo):
 
     In our simulation, these two values are parameters we are specifying to generate the data. Specifically they refer to the amplitude of the response to Faces and Objects within a particular region of the brain.
     """)
-
     return
 
 
@@ -246,7 +241,6 @@ def _(mo):
 
     We know that the brain has a delayed hemodynamic response to events that has a particular shape, so we will need to convolve these events with an appropriate hemodynamic response function (HRF). Here, we will use the double-gamma HRF.
     """)
-
     return
 
 
@@ -265,7 +259,6 @@ def _(mo):
     mo.md(r"""
     We will use `np.convolve` from numpy to perform the convolution.  The length of the convolved data will be the length of the time series plus the length of the kernel minus 1. To make sure everything is the same length, we will chop off the extra time from the convolved time series using `mode='same'`.
     """)
-
     return
 
 
@@ -289,7 +282,6 @@ def _(mo):
 
     where $\mu = 0$ and $\sigma = 0.15$
     """)
-
     return
 
 
@@ -341,7 +333,6 @@ def _(mo):
 
     Now let's build a design matrix $X$ using an intercept, and a regressor indicating the onset of each condition, convolved with the hemodynamic response function (HRF).
     """)
-
     return
 
 
@@ -370,7 +361,6 @@ def _(mo):
 
     It should be clear how each of these components relate to the regression equation.
     """)
-
     return
 
 
@@ -417,7 +407,6 @@ def _(mo):
 
     For a more in depth overview of GLM estimation, watch this [video](https://www.youtube.com/watch?v=Ab-5AbJ8gAs) by Tor Wager and Martin Lindquist.
     """)
-
     return
 
 
@@ -433,7 +422,6 @@ def _(X, Y, np, plt):
     plt.ylabel('Beta Value', fontsize=18)
     print(f'beta Faces - beta Objects: {beta[1]-beta[2]:.2}')
     plt.gcf()
-
     return beta, ols_estimator
 
 
@@ -552,7 +540,6 @@ def _(mo):
 
     This is essentially a confidence interval around the $\beta_j$ estimate. One standard error, $\hat\sigma$, is approximately equivalent to a 68% confidence interval, while $1.96\,\hat\sigma$ is approximately a 95% confidence interval.
     """)
-
     return
 
 
@@ -591,7 +578,6 @@ def _(mo):
 def _(beta, std_error):
     t = beta/std_error
     t
-
     return (t,)
 
 
@@ -602,7 +588,6 @@ def _(mo):
 
     You can see that the intercept $\beta$ is not significant, but the face and object regressors are well below `p < 0.05`.
     """)
-
     return
 
 
@@ -663,7 +648,6 @@ def _(mo):
 
     To make this a little bit more clear, we will show a graphical representation of the design matrix to make it obvious what we are contrasting.
     """)
-
     return
 
 
@@ -713,7 +697,6 @@ def _(mo):
 
     Here is an example for how to add jitter to our simulated experiment.
     """)
-
     return
 
 
@@ -751,7 +734,6 @@ def _(
     _predicted_ts = np.vstack([Y_1, predicted_y_1]).T
     print([contrast_efficiency(X_1, x) for x in [c1_1, c2_1, c3_1]])
     plot_timeseries(_predicted_ts, labels=['Simulated Voxel', 'Predicted Voxel'])
-
     return
 
 
@@ -766,7 +748,6 @@ def _(mo):
 
     For the scope of this course we will largely be ignoring this issue, but I will plan to add some examples and simulations in the future.  For now, I encourage you to watch this video on [AR models](https://www.youtube.com/watch?v=Mb9LDzvhecY&list=PLfXA4opIOVrGHncHRxI3Qa5GeCSudwmxM&index=24) if you are interested in learning more about this topic.
     """)
-
     return
 
 

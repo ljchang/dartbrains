@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -10,7 +10,6 @@ def _():
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "pandas"
-
     return IMG_DIR, mo
 
 
@@ -35,7 +34,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Introduction_to_Pandas.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -176,9 +174,6 @@ def _(mo):
     Note that read_csv() has many options that can be used to make sure you load the data correctly. You can explore the docstrings for a function to get more information about the inputs and general useage guidelines by running `pd.read_csv?`
     """)
     return
-
-
-app.cell()(lambda: help(pd.read_csv))
 
 
 @app.cell(hide_code=True)

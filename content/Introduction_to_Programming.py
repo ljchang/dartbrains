@@ -4,7 +4,7 @@
 
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -14,7 +14,6 @@ def _():
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "programming"
-
     return IMG_DIR, mo
 
 
@@ -28,7 +27,6 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Introduction_to_Programming.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -358,7 +356,7 @@ def _():
 
     if n is None:
         print("n is None")
-    
+
     if n is not None:
         print("n is not None")
     return

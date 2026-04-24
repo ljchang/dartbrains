@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -22,7 +22,6 @@ def _():
     IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "brain_data"
     return (
         Brain_Data,
-        IMG_DIR,
         get_anatomical,
         get_file,
         get_subjects,
@@ -52,7 +51,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Introduction_to_Neuroimaging_Data.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -293,7 +291,7 @@ def _(mo):
 
     nibabel objects can be initialized by simply pointing to a nifti file even if it is compressed through gzip.  First, we will import the nibabel module as `nib` (short and sweet so that we don't have to type so much when using the tool).  I'm also including a path to where the data file is located so that I don't have to constantly type this.  It is easy to change this on your own computer.
 
-    We will be loading an anatomical image from subject S01 from the localizer [dataset](../content/Download_Data).  See this [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more information about this dataset.
+    We will be loading an anatomical image from subject S01 from the localizer [dataset](Download_Data.md).  See this [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more information about this dataset.
 
     We will use our `get_file` helper to grab subject S01's T1 image.
     """)

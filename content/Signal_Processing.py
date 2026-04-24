@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.1"
+__generated_with = "0.23.2"
 app = marimo.App(width="medium")
 
 with app.setup(hide_code=True):
@@ -43,8 +43,6 @@ def intro():
 
     In this lab, we will cover the basics of convolution, sine waves, and fourier transforms. This lab is largely based on exercises from Mike X Cohen's excellent book, [Analyzing Neural Data Analysis: Theory and Practice](https://www.amazon.com/Analyzing-Neural-Time-Data-Practice/dp/0262019876). If you are interested in learning in more detail about the basics of EEG and time-series analyses I highly recommend his accessible introduction. I also encourage you to watch his accompanying freely available [*lecturelets*](https://www.youtube.com/channel/UCUR_LsXk7IYyueSnXcNextQ) to learn more about each topic introduced in this notebook.
 
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Signal_Processing.py) to run code, interact with widgets, and modify examples.
-
     ## Time Domain
 
     First we will work on signals in the time domain. This requires measuring a signal at a constant interval over time. The frequency with which we measure a signal is referred to as the sampling frequency. The units of this are typically described in $Hz$ - or the number of cycles per second. It is critical that the sampling frequency is consistent over the entire measurement of the time series.
@@ -69,7 +67,6 @@ def dot_product():
     _ax.set_xlabel("A", fontsize=18)
     _ax.set_title("Scatterplot", fontsize=18)
     mo.vstack([mo.md(f"**Dot Product:** {np.dot(dot_a, _b)}"), _fig])
-
     return (dot_a,)
 
 

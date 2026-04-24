@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.2"
 app = marimo.App()
 
 
@@ -10,7 +10,6 @@ def _():
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "parcellations"
-
     return IMG_DIR, mo
 
 
@@ -39,7 +38,6 @@ def _(IMG_DIR, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Parcellations.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -249,7 +247,7 @@ def _(datasets, plotting):
     # Note: we chose 'infl_left' here to match the image above, but the same
     # image could be plotted on pial surface or at different angles using
     # this plot_surf_roi function
-    return (atlas, destrieux, fsaverage, plot)
+    return (atlas,)
 
 
 @app.cell(hide_code=True)
@@ -461,7 +459,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
- 
+
     """)
     return
 

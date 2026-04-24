@@ -56,6 +56,9 @@ htmlcov/
 # Build artifacts #
 ###################
 _build/
+_site/
+_site_src/
+.marimo_book_cache/
 
 # Python environment #
 ######################
@@ -74,6 +77,16 @@ __marimo__/
 # Notebook-generated artifacts #
 #################################
 MyFirstPlot.png
-content/*.nii
-content/*.nii.gz
-content/Tmp_*
+# NIfTI volumes can land anywhere the notebook code runs (content/, repo
+# root, scripts/, ...) so broaden these from content-only to everywhere.
+*.nii
+*.nii.gz
+Tmp_*
+
+# Agent tool caches #
+#####################
+.claude/
+.playwright-mcp/
+
+# One-off session screenshots — delete these when they accumulate.
+mr_physics_current.png

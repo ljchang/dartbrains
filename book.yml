@@ -1,0 +1,137 @@
+# Full dartbrains TOC for marimo-book.
+# Mirrors the structure of myst.yml but references .py marimo sources
+# directly (the generated .ipynb files are deleted once marimo-book produces
+# a stable build on this branch).
+
+title: DartBrains
+description: An open-access introduction to functional neuroimaging analysis in Python
+authors:
+  - name: Luke Chang
+    affiliation: Dartmouth College
+copyright: "2024"
+license: CC-BY-SA-4.0
+repo: https://github.com/ljchang/dartbrains
+branch: v2-marimo-migration
+
+logo: images/logo/dartbrains_logo_square_transparent.png
+favicon: images/logo/favicon.ico
+
+theme:
+  palette:
+    primary: "#00693E"   # Dartmouth green
+    accent:  "#A5D75F"
+  font:
+    text: Source Sans Pro
+    code: JetBrains Mono
+
+launch_buttons:
+  molab: true
+  github: true
+  download: true
+
+# Per-widget-class default state. Mirrors WIDGET_DEFAULTS in the retired
+# scripts/export_notebooks.py so each anywidget's JS sees a sensible value
+# when it calls model.get("key") on initial render.
+widget_defaults:
+  CompassWidget:
+    b0: 3.0
+  NetMagnetizationWidget:
+    n_protons: 100
+    b0_on: false
+  PrecessionWidget:
+    b0: 3.0
+    flip_angle: 90.0
+    t1: 0.0
+    t2: 0.0
+    show_relaxation: false
+    paused: false
+  SpinEnsembleWidget:
+    sequence_type: spin_echo
+    speed: 1.0
+  KSpaceWidget:
+    mask_type: full
+    radius_fraction: 1.0
+    speed: 1.0
+  EncodingWidget:
+    speed: 1.0
+  ConvolutionWidget:
+    pattern: block
+    speed: 1.0
+  TransformCubeWidget:
+    tx: 0
+    ty: 0
+    tz: 0
+    rot_x: 0
+    rot_y: 0
+    rot_z: 0
+    scale_x: 1.0
+    scale_y: 1.0
+    scale_z: 1.0
+  CostFunctionWidget:
+    trans_x: 0
+    trans_y: 0
+  SmoothingWidget:
+    fwhm: 0
+
+toc:
+  - file: content/intro.md
+
+  - section: Course Overview
+    children:
+      - file: content/Instructors.md
+      - file: content/Syllabus.md
+      - file: content/Schedule.md
+
+  - section: Getting Started
+    children:
+      - file: content/Introduction_to_Programming.py
+      - file: content/Introduction_to_Pandas.py
+      - file: content/Introduction_to_Polars.py
+      - file: content/Introduction_to_Plotting.py
+      - file: content/Download_Data.py
+      - file: content/Glossary.md
+
+  - section: MR Physics & Imaging
+    children:
+      - file: content/MR_Physics.py
+
+  - section: Neuroimaging Analysis
+    children:
+      - file: content/Intro_to_Neuroimaging.md
+      - file: content/Introduction_to_Neuroimaging_Data.py
+      - file: content/Signal_Processing.py
+      - file: content/Preprocessing.py
+      - file: content/GLM.py
+      - file: content/GLM_Single_Subject_Model.py
+      - file: content/Group_Analysis.py
+      - file: content/Thresholding_Group_Analyses.py
+
+  - section: Advanced Methods
+    children:
+      - file: content/Connectivity.py
+      - file: content/ICA.py
+      - file: content/Introduction_to_ICA.py
+      - file: content/Multivariate_Prediction.py
+      - file: content/RSA.py
+      - file: content/Parcellations.py
+      - file: content/Resampling_Statistics.py
+
+  - section: Additional Resources
+    children:
+      - file: content/fmriprep_on_discovery.md
+      - url: http://naturalistic-data.org/
+        title: Naturalistic Data Analysis
+
+  - section: Project Gallery
+    children:
+      - file: content/2019_Spring.md
+      - file: content/2020_Spring.md
+      - file: content/2020_Fall.md
+      - file: content/2021_Fall.md
+      - file: content/2022_Fall.md
+
+  - section: Contributing
+    children:
+      - file: content/Contributing.md
+      - url: https://github.com/ljchang/dartbrains
+        title: GitHub Repository

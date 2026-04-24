@@ -1,12 +1,13 @@
 import marimo
 
-__generated_with = "0.21.1"
+__generated_with = "0.23.2"
 app = marimo.App(width="medium", app_title="Introduction to Polars")
 
 
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 
@@ -36,7 +37,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    > **Interactive version:** [Open this notebook in molab](https://molab.marimo.io/github/ljchang/dartbrains/blob/v2-marimo-migration/content/Introduction_to_Polars.py) to run code, interact with widgets, and modify examples.
     """)
     return
 
@@ -45,7 +45,8 @@ def _(mo):
 def _():
     import polars as pl
     import numpy as np
-    return (pl, np)
+
+    return np, pl
 
 
 @app.cell(hide_code=True)
@@ -73,7 +74,7 @@ def _(pl):
     # Create a Series from a list of integers
     ages = pl.Series("age", [25, 30, 35, 40, 45])
     ages
-    return (ages,)
+    return
 
 
 @app.cell
@@ -81,7 +82,7 @@ def _(pl):
     # Create a Series with an explicit type
     scores = pl.Series("score", [88.5, 92.0, 76.3, 95.1], dtype=pl.Float32)
     scores
-    return (scores,)
+    return
 
 
 @app.cell
@@ -89,7 +90,7 @@ def _(pl):
     # String Series
     names = pl.Series("name", ["Alice", "Bob", "Charlie", "Diana"])
     names
-    return (names,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -113,11 +114,11 @@ def _(pl):
         "salary": [50000, 60000, 70000, 80000],
     })
     df_example
-    return (df_example,)
+    return
 
 
 @app.cell
-def _(pl, np):
+def _(np, pl):
     # Create a DataFrame from numpy arrays
     rng = np.random.default_rng(42)
     df_from_numpy = pl.DataFrame({
@@ -125,7 +126,7 @@ def _(pl, np):
         "y": rng.normal(0, 1, 5),
     })
     df_from_numpy
-    return (df_from_numpy,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -145,7 +146,7 @@ def _(pl):
     url = "https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv"
     df = pl.read_csv(url)
     df
-    return (df, url)
+    return df, url
 
 
 @app.cell(hide_code=True)
@@ -245,7 +246,7 @@ def _(df):
     df_no_nulls = df.drop_nulls()
     print(f"Original rows: {df.shape[0]}, After dropping nulls: {df_no_nulls.shape[0]}")
     df_no_nulls
-    return (df_no_nulls,)
+    return
 
 
 @app.cell
@@ -256,7 +257,7 @@ def _(df, pl):
         pl.col("age").fill_null(strategy="mean"),
     )
     df_filled.null_count()
-    return (df_filled,)
+    return
 
 
 @app.cell
@@ -347,7 +348,7 @@ def _(df, pl):
         (pl.col("salary") / 1000).round(1).alias("salary_thousands"),
     )
     df_enhanced.head()
-    return (df_enhanced,)
+    return
 
 
 @app.cell
@@ -359,11 +360,11 @@ def _(df, pl):
         (pl.col("age") - pl.col("years")).alias("age_at_start"),
     )
     df_multi.head()
-    return (df_multi,)
+    return
 
 
 @app.cell
-def _(df, pl):
+def _(df):
     # The original DataFrame is unchanged (immutability)
     print("Original columns:", df.columns)
     df.head(3)
@@ -381,7 +382,7 @@ def _(mo):
 
 
 @app.cell
-def _(df, pl):
+def _(df):
     # Select specific columns by name
     df.select("salary", "departm", "gender")
     return
@@ -451,7 +452,7 @@ def _(df):
         "years": "years_experience",
     })
     df_renamed.head(3)
-    return (df_renamed,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -538,25 +539,25 @@ def _(pl):
         "dept_code": ["bio", "chem", "neuro", "math", "geol"],
         "annual_budget": [500000, 750000, 900000, 300000, 400000],
     })
-    return (departments, budgets)
+    return budgets, departments
 
 
 @app.cell
-def _(departments, budgets):
+def _(budgets, departments):
     # Inner join: only keeps rows where the key exists in both DataFrames
     departments.join(budgets, on="dept_code", how="inner")
     return
 
 
 @app.cell
-def _(departments, budgets):
+def _(budgets, departments):
     # Left join: keeps all rows from the left DataFrame
     departments.join(budgets, on="dept_code", how="left")
     return
 
 
 @app.cell
-def _(departments, budgets):
+def _(budgets, departments):
     # Full outer join: keeps all rows from both DataFrames
     departments.join(budgets, on="dept_code", how="full", coalesce=True)
     return
@@ -568,7 +569,7 @@ def _(pl):
     df_a = pl.DataFrame({"name": ["Alice", "Bob"], "score": [90, 85]})
     df_b = pl.DataFrame({"name": ["Charlie", "Diana"], "score": [78, 92]})
     pl.concat([df_a, df_b])
-    return (df_a, df_b)
+    return
 
 
 @app.cell
@@ -577,7 +578,7 @@ def _(pl):
     df_left = pl.DataFrame({"name": ["Alice", "Bob"], "age": [25, 30]})
     df_right = pl.DataFrame({"salary": [50000, 60000], "dept": ["bio", "chem"]})
     pl.concat([df_left, df_right], how="horizontal")
-    return (df_left, df_right)
+    return
 
 
 @app.cell(hide_code=True)
@@ -652,7 +653,7 @@ def _(df, pl):
         .alias("pct_of_dept_mean"),
     )
     df_pct.sort("pct_of_dept_mean", descending=True).head(10)
-    return (df_pct,)
+    return
 
 
 @app.cell
@@ -786,7 +787,7 @@ def _(df, pl):
         .collect()
     )
     result
-    return (result,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -810,7 +811,6 @@ def _(mo):
 @app.cell
 def _():
     # Your code here
-
     return
 
 
@@ -825,7 +825,6 @@ def _(mo):
 @app.cell
 def _():
     # Your code here
-
     return
 
 
@@ -840,7 +839,6 @@ def _(mo):
 @app.cell
 def _():
     # Your code here
-
     return
 
 
