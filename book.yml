@@ -101,6 +101,7 @@ toc:
       - file: content/Intro_to_Neuroimaging.md
       - file: content/Introduction_to_Neuroimaging_Data.py
       - file: content/Signal_Processing.py
+        mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
       - file: content/Preprocessing.py
         mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
       - file: content/GLM.py
