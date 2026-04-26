@@ -45,7 +45,18 @@ def _():
     import plotly.graph_objects as go
     import sys
     from pathlib import Path
-    _ROOT = Path(__file__).resolve().parent.parent
+    # Locate the repo root so we can find sibling images/ + Code/. Under
+    # MarimoIslandGenerator (WASM build), both __file__ and
+    # mo.notebook_dir() resolve to marimo-internal paths (.venv/bin/),
+    # so we walk up from cwd looking for a marker file. Falls back to cwd
+    # in marimo-edit (where cwd is already the project root).
+    def _find_root() -> Path:
+        for candidate in (Path.cwd(), *Path.cwd().resolve().parents):
+            if (candidate / "book.yml").exists() or (candidate / "Code").is_dir():
+                return candidate
+        return Path.cwd()
+
+    _ROOT = _find_root()
     sys.path.insert(0, str(_ROOT))
     from Code.mr_widgets import TransformCubeWidget, CostFunctionWidget, SmoothingWidget
 
