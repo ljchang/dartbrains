@@ -94,6 +94,7 @@ toc:
   - section: MR Physics & Imaging
     children:
       - file: content/MR_Physics.py
+        mode: wasm   # 33 widgets, joint-heavy → WASM gives full reactivity
 
   - section: Neuroimaging Analysis
     children:
@@ -101,6 +102,7 @@ toc:
       - file: content/Introduction_to_Neuroimaging_Data.py
       - file: content/Signal_Processing.py
       - file: content/Preprocessing.py
+        mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
       - file: content/GLM.py
       - file: content/GLM_Single_Subject_Model.py
       - file: content/Group_Analysis.py
