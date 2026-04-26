@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = Path(__file__).resolve().parent.parent
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     IMG_DIR = _ROOT / "images" / "rsa"
     return IMG_DIR, mo
 
@@ -130,7 +130,7 @@ def _():
     from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map, view_img_on_surf, view_img
-    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_subjects, get_file, CONDITIONS
 
     return (

@@ -50,7 +50,7 @@ def _():
     from plotly.subplots import make_subplots
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.mr_simulations import (
         GAMMA_H, GAMMA, TISSUE_PROPERTIES,
         rotation_x, rotation_y, rotation_z,

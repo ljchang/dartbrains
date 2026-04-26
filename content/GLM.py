@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -11,7 +11,7 @@ def _():
 
     import marimo as mo
 
-    _ROOT = Path(__file__).resolve().parent.parent
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     if str(_ROOT) not in sys.path:
         sys.path.insert(0, str(_ROOT))
 

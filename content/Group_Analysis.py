@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = Path(__file__).resolve().parent.parent
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     IMG_DIR = _ROOT / "images" / "group_analysis"
     return IMG_DIR, mo
 
@@ -43,7 +43,7 @@ def _(mo):
 def _():
     import sys
     from pathlib import Path
-    _ROOT = Path(__file__).resolve().parent.parent
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     if str(_ROOT) not in sys.path:
         sys.path.insert(0, str(_ROOT))
     from Code.notebook_utils import youtube
@@ -149,7 +149,7 @@ def _():
     from nltools.stats import regress
     from nltools.external import glover_hrf
     from scipy.stats import ttest_1samp
-    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
     def plot_timeseries(data, linewidth=3, labels=None, axes=True):
@@ -359,7 +359,7 @@ def _(mo):
     from nltools.data import Brain_Data, Design_Matrix
     from nltools.file_reader import onsets_to_dm
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
-    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
     tr = get_tr()

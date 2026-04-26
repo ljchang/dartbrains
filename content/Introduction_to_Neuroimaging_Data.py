@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -10,7 +10,7 @@ def _():
     from pathlib import Path
     import os
     import sys
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
     from huggingface_hub import hf_hub_download
     import nibabel as nib
@@ -19,7 +19,7 @@ def _():
     from nltools.data import Brain_Data
     from nltools.utils import get_anatomical
 
-    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "brain_data"
+    IMG_DIR = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir()) / "images" / "brain_data"
     return (
         Brain_Data,
         get_anatomical,

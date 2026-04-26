@@ -14,7 +14,7 @@ with app.setup(hide_code=True):
     from scipy.special import gamma as gamma_func
     from scipy.signal import butter, filtfilt, freqz, sosfreqz
 
-    _ROOT = Path(__file__).resolve().parent.parent
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     if str(_ROOT) not in sys.path:
         sys.path.insert(0, str(_ROOT))
     IMG_DIR = _ROOT / "images" / "signal_processing"

@@ -10,7 +10,7 @@
 
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -75,7 +75,7 @@ def _(mo):
 def _():
     import sys
     from pathlib import Path
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_subjects, load_events, get_tr, REPO_ID
 
     # List all subjects

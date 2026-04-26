@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = Path(__file__).resolve().parent.parent
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     IMG_DIR = _ROOT / "images" / "ica"
     return IMG_DIR, mo
 
@@ -64,7 +64,7 @@ def _():
     from plotly.subplots import make_subplots
     from nltools.data import Brain_Data
     from nilearn.plotting import view_img
-    sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parent.parent))
+    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_tr
 
     return (
