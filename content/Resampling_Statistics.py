@@ -1,10 +1,10 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
 
@@ -33,6 +33,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+ 
     """)
     return
 
@@ -57,16 +58,66 @@ def _():
     import seaborn as sns
     import matplotlib.pyplot as plt
     import pandas as pd
+    import plotly.graph_objects as go
+    from scipy.stats import gaussian_kde
+
+
+    def plot_distribution(traces, *, title=None, xlabel='Value', ylabel='Density', vlines=None, height=400):
+        """Plot one or more distributions as histogram + KDE on a plotly figure.
+
+        Args:
+            traces: list of (data, label) tuples, or a single (data, label) for one trace.
+            title: figure title.
+            xlabel: x-axis label.
+            ylabel: y-axis label.
+            vlines: list of (x, color, dash, [label]) tuples for vertical reference lines.
+                color defaults to 'black', dash defaults to 'solid'.
+            height: figure height in pixels.
+        """
+        if isinstance(traces, tuple) and len(traces) == 2 and not isinstance(traces[0], tuple):
+            traces = [traces]
+        fig = go.Figure()
+        palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+        for i, (data, label) in enumerate(traces):
+            data = np.asarray(data)
+            color = palette[i % len(palette)]
+            fig.add_trace(go.Histogram(
+                x=data, histnorm='probability density', opacity=0.5,
+                name=label, marker_color=color,
+            ))
+            kde = gaussian_kde(data)
+            x_range = np.linspace(data.min(), data.max(), 200)
+            fig.add_trace(go.Scatter(
+                x=x_range, y=kde(x_range), mode='lines',
+                name=f'{label} KDE', line=dict(color=color, width=2),
+                showlegend=False,
+            ))
+        if vlines:
+            for vline in vlines:
+                x = vline[0]
+                color = vline[1] if len(vline) > 1 else 'black'
+                dash = vline[2] if len(vline) > 2 else 'solid'
+                label = vline[3] if len(vline) > 3 else None
+                fig.add_vline(
+                    x=x, line=dict(color=color, dash=dash, width=2),
+                    annotation_text=label, annotation_position='top',
+                )
+        fig.update_layout(
+            title=title, xaxis_title=xlabel, yaxis_title=ylabel,
+            barmode='overlay', height=height, hovermode='x unified',
+            margin=dict(l=60, r=20, t=50 if title else 20, b=50),
+        )
+        return fig
+
+
     _mean = 50
     _std = 10
     population_n = 10000
     population = _mean + np.random.randn(population_n) * _std
-    sns.distplot(population, kde=True, label='Population')
-    plt.title('Population Distribution', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
     print(f'Population Mean: {np.mean(population):.3}')
     print(f'Population Std: {np.std(population):.3}')
-    return np, pd, plt, population, sns
+    plot_distribution((population, 'Population'), title='Population Distribution')
+    return np, pd, plot_distribution, population
 
 
 @app.cell(hide_code=True)
@@ -78,17 +129,16 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, population, sns):
+def _(np, plot_distribution, population):
     sample_n = 20
     sample = np.random.choice(population, size=sample_n, replace=False)
-
-    sns.distplot(sample, kde=True, label='Single Sample')
-    plt.axvline(x=np.mean(sample), ymin=0, ymax=1, linestyle='-')
-    plt.title(f'Sample Distribution: n={sample_n}', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
-
     print(f'Sample Mean: {np.mean(sample):.3}')
     print(f'Sample Std: {np.std(sample):.3}')
+    plot_distribution(
+        (sample, 'Single Sample'),
+        title=f'Sample Distribution: n={sample_n}',
+        vlines=[(np.mean(sample), 'blue', 'solid', 'mean')],
+    )
     return sample, sample_n
 
 
@@ -101,18 +151,19 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, sample, sample_n, sns):
+def _(np, plot_distribution, sample, sample_n):
     _n_bootstrap = 5000
     bootstrap_means = []
     for _b in range(_n_bootstrap):
         bootstrap_means.append(np.mean(np.random.choice(sample, size=sample_n, replace=True)))
     bootstrap_means = np.array(bootstrap_means)
-    sns.distplot(bootstrap_means, kde=True, label='Bootstrap')
-    plt.axvline(x=np.mean(bootstrap_means), ymin=0, ymax=1, linestyle='-')
-    plt.title('Distribution of Bootstrapped Means', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
     print(f'Bootstrapped Mean: {np.mean(bootstrap_means):.3}')
     print(f'Bootstrapped Std: {np.std(bootstrap_means):.3}')
+    plot_distribution(
+        (bootstrap_means, 'Bootstrap'),
+        title='Distribution of Bootstrapped Means',
+        vlines=[(np.mean(bootstrap_means), 'blue', 'solid', 'mean')],
+    )
     return
 
 
@@ -127,22 +178,25 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, sample, sample_n, sns):
+def _(np, plot_distribution, sample, sample_n):
     _n_bootstrap = 5000
     bootstrap_means_1 = []
     for _b in range(_n_bootstrap):
         bootstrap_means_1.append(np.mean(np.random.choice(sample, size=sample_n, replace=True)))
     bootstrap_means_1 = np.array(bootstrap_means_1)
-    sns.distplot(bootstrap_means_1, kde=True, label='Bootstrap')
-    plt.axvline(x=np.mean(bootstrap_means_1), ymin=0, ymax=1, linestyle='-')
-    plt.title('Distribution of Bootstrapped Means', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
     _lower_bound = np.percentile(bootstrap_means_1, 2.5)
     _upper_bound = np.percentile(bootstrap_means_1, 97.5)
-    plt.axvline(x=_lower_bound, ymin=0, ymax=1, color='red', linestyle='--')
-    plt.axvline(x=_upper_bound, ymin=0, ymax=1, color='red', linestyle='--')
     print(f'Bootstrapped Mean: {np.mean(bootstrap_means_1):.3}')
     print(f'95% Confidence Intervals: [{_lower_bound:.3}, {_upper_bound:.3}]')
+    plot_distribution(
+        (bootstrap_means_1, 'Bootstrap'),
+        title='Distribution of Bootstrapped Means',
+        vlines=[
+            (np.mean(bootstrap_means_1), 'blue', 'solid', 'mean'),
+            (_lower_bound, 'red', 'dash', '2.5%'),
+            (_upper_bound, 'red', 'dash', '97.5%'),
+        ],
+    )
     return (bootstrap_means_1,)
 
 
@@ -157,22 +211,25 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, population, sample_n, sns):
+def _(np, plot_distribution, population, sample_n):
     n_samples = 1000
     sample_means = []
     for _b in range(n_samples):
         sample_means.append(np.mean(np.random.choice(population, size=sample_n, replace=False)))
     sample_means = np.array(sample_means)
-    sns.distplot(sample_means, kde=True, label='Random Samples')
-    plt.axvline(x=np.mean(sample_means), ymin=0, ymax=1, linestyle='-')
-    plt.title('Distribution of Random Sample Means', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
     _lower_bound = np.percentile(sample_means, 2.5)
     _upper_bound = np.percentile(sample_means, 97.5)
-    plt.axvline(x=_lower_bound, ymin=0, ymax=1, color='red', linestyle='--')
-    plt.axvline(x=_upper_bound, ymin=0, ymax=1, color='red', linestyle='--')
-    print(f'Bootstrapped Mean: {np.mean(sample_means):.3}')
+    print(f'Random Sample Mean: {np.mean(sample_means):.3}')
     print(f'95% Confidence Intervals: [{_lower_bound:.3}, {_upper_bound:.3}]')
+    plot_distribution(
+        (sample_means, 'Random Samples'),
+        title='Distribution of Random Sample Means',
+        vlines=[
+            (np.mean(sample_means), 'blue', 'solid', 'mean'),
+            (_lower_bound, 'red', 'dash', '2.5%'),
+            (_upper_bound, 'red', 'dash', '97.5%'),
+        ],
+    )
     return (sample_means,)
 
 
@@ -187,12 +244,11 @@ def _(mo):
 
 
 @app.cell
-def _(bootstrap_means_1, plt, sample_means, sns):
-    sns.distplot(bootstrap_means_1, kde=True, label='Bootstrap')
-    sns.distplot(sample_means, kde=True, label='Random Samples')
-    plt.title('Bootstrapped vs Randomly Sampled Precision Estimates', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
-    plt.legend(['Bootstrap', 'Random Samples'])
+def _(bootstrap_means_1, plot_distribution, sample_means):
+    plot_distribution(
+        [(bootstrap_means_1, 'Bootstrap'), (sample_means, 'Random Samples')],
+        title='Bootstrapped vs Randomly Sampled Precision Estimates',
+    )
     return
 
 
@@ -226,16 +282,17 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, sns):
+def _(np, plot_distribution):
     _mean = 1
     _std = 1
     sample_n_1 = 20
     sample_3 = _mean + np.random.randn(sample_n_1) * _std
-    sns.distplot(sample_3, kde=True, label='Population')
-    plt.title('Sample Distribution', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
     print(f'Sample Mean: {np.mean(sample_3):.3}')
     print(f'Sample Std: {np.std(sample_3):.3}')
+    plot_distribution(
+        (sample_3, 'Sample'),
+        title='Sample Distribution',
+    )
     return sample_3, sample_n_1
 
 
@@ -248,22 +305,23 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, sample_3, sample_n_1, sns):
+def _(np, plot_distribution, sample_3, sample_n_1):
     n_permutations = 5000
     permute_means = []
     for _p in range(n_permutations):
         permute_means.append(np.mean(sample_3 * np.random.choice(np.array([1, -1]), sample_n_1)))
     permute_means = np.array(permute_means)
     _p_value = 1 - np.sum(permute_means < np.mean(sample_3)) / len(permute_means)
-    sns.distplot(permute_means, kde=True, label='Population')
-    plt.title('Sample Distribution', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
-    plt.axvline(x=np.mean(sample_3), ymin=0, ymax=1, color='red', linestyle='--')
     print(f'Sample Mean: {np.mean(sample_3):.3}')
     print(f'Null Distribution Mean: {np.mean(permute_means):.3}')
     print(f'n permutations < Sample Mean = {np.sum(permute_means < np.mean(sample_3))}')
     print(f'p-value = {_p_value:.3}')
-    return n_permutations, permute_means
+    plot_distribution(
+        (permute_means, 'Null Distribution'),
+        title='Permutation Null Distribution',
+        vlines=[(np.mean(sample_3), 'red', 'dash', 'observed mean')],
+    )
+    return (n_permutations,)
 
 
 @app.cell(hide_code=True)
@@ -286,7 +344,7 @@ def _(mo):
 
 
 @app.cell
-def _(np, plt, sns):
+def _(np, plot_distribution):
     sample_n_2 = 50
     mean_1 = 10
     std_1 = 5
@@ -294,15 +352,14 @@ def _(np, plt, sns):
     std_2 = 5
     sample_1 = mean_1 + np.random.randn(sample_n_2) * std_1
     sample_2 = mean_2 + np.random.randn(sample_n_2) * std_2
-    sns.distplot(sample_1, kde=True, label='Sample 1')
-    sns.distplot(sample_2, kde=True, label='Sample 2')
-    plt.title('Sample Distribution', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
-    plt.legend(['Sample 1', 'Sample 2'])
     print(f'Sample1 Mean: {np.mean(sample_1):.3}')
     print(f'Sample1 Std: {np.std(sample_1):.3}')
     print(f'Sample2 Mean: {np.mean(sample_2):.3}')
     print(f'Sample2 Std: {np.std(sample_2):.3}')
+    plot_distribution(
+        [(sample_1, 'Sample 1'), (sample_2, 'Sample 2')],
+        title='Sample Distributions',
+    )
     return sample_1, sample_2
 
 
@@ -315,23 +372,29 @@ def _(mo):
 
 
 @app.cell
-def _(n_permutations, np, pd, permute_means, plt, sample_1, sample_2, sns):
-    data = pd.DataFrame({'Group': np.ones(len(sample_1)), 'Values': sample_1})
-    data = data.append(pd.DataFrame({'Group': np.ones(len(sample_2)) * 2, 'Values': sample_2}))
+def _(n_permutations, np, pd, plot_distribution, sample_1, sample_2):
+    data = pd.concat([
+        pd.DataFrame({'Group': np.ones(len(sample_1)), 'Values': sample_1}),
+        pd.DataFrame({'Group': np.ones(len(sample_2)) * 2, 'Values': sample_2}),
+    ], ignore_index=True)
+    _values = data['Values'].values
+    _groups = data['Group'].values
     permute_diffs = []
     for _p in range(n_permutations):
-        permutation_label = np.random.permutation(data['Group'])
-        diff = np.mean(data.loc[permutation_label == 1, 'Values']) - np.mean(data.loc[permutation_label == 2, 'Values'])
-        permute_diffs.append(diff)
+        _shuffled = np.random.permutation(_groups)
+        permute_diffs.append(_values[_shuffled == 1].mean() - _values[_shuffled == 2].mean())
+    permute_diffs = np.array(permute_diffs)
     difference = np.mean(sample_1) - np.mean(sample_2)
-    _p_value = 1 - np.sum(permute_diffs < difference) / len(permute_means)
-    sns.distplot(permute_diffs, kde=True, label='Population')
-    plt.title('Sample Distribution', fontsize=18)
-    plt.ylabel('Frequency', fontsize=16)
-    plt.axvline(x=difference, ymin=0, ymax=1, color='red', linestyle='--')
+    _p_value = 1 - np.sum(permute_diffs < difference) / len(permute_diffs)
     print(f'Difference between Sample1 & Sample2 Means: {difference:.3}')
     print(f'n permutations < Sample Mean Difference = {np.sum(permute_diffs < difference)}')
     print(f'p-value = {_p_value:.3}')
+    plot_distribution(
+        (permute_diffs, 'Null Distribution'),
+        title='Permutation Null Distribution',
+        xlabel='Difference in Means',
+        vlines=[(difference, 'red', 'dash', 'observed diff')],
+    )
     return
 
 
