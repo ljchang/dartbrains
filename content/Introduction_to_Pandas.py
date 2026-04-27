@@ -202,7 +202,7 @@ def _(mo):
 
 @app.cell
 def _(pd):
-    df = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/main/data/salary/salary.csv', sep = ',')
+    df = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv', sep = ',')
     return (df,)
 
 
@@ -979,7 +979,7 @@ def _(mo):
 
 @app.cell
 def _():
-    salary_file_url = 'https://raw.githubusercontent.com/ljchang/dartbrains/main/data/salary/salary_exercise.csv'
+    salary_file_url = 'https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary_exercise.csv'
     return
 
 
