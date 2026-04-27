@@ -1,16 +1,20 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
-def _():
+@app.cell(hide_code=True)
+def _(sys):
     import marimo as mo
     from pathlib import Path
     _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     IMG_DIR = _ROOT / "images" / "group_analysis"
-    return IMG_DIR, mo
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
+    from Code.notebook_utils import youtube
+
+    return IMG_DIR, mo, youtube
 
 
 @app.cell(hide_code=True)
@@ -32,24 +36,10 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    """)
-    return
-
-
 @app.cell
-def _():
-    import sys
-    from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
-    if str(_ROOT) not in sys.path:
-        sys.path.insert(0, str(_ROOT))
-    from Code.notebook_utils import youtube
-
+def _(youtube):
     youtube('__cOYPifDWk')
-    return (youtube,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -144,6 +134,7 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import plotly.graph_objects as go
     from nltools.stats import zscore
     from nltools.data import Brain_Data, Design_Matrix
     from nltools.stats import regress
@@ -152,17 +143,40 @@ def _():
     sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
-    def plot_timeseries(data, linewidth=3, labels=None, axes=True):
-        _f, _a = plt.subplots(figsize=(20, 5))
-        _a.plot(data, linewidth=linewidth)
-        _a.set_ylabel('Intensity', fontsize=18)
-        _a.set_xlabel('Time', fontsize=18)
-        plt.tight_layout()
-        if labels is not None:
-            plt.legend(labels, fontsize=18)
-        if not axes:
-            _a.axes.get_xaxis().set_visible(False)
-            _a.axes.get_yaxis().set_visible(False)
+    def plot_timeseries(data, labels=None, title=None, linewidth=2):
+        """Plot a timeseries as an interactive plotly figure.
+
+        Args:
+            data: 1D or 2D array; for 2D each column is a separate signal.
+            labels: trace labels; must match the number of columns when 2D.
+            title: optional figure title.
+            linewidth: trace width in pixels.
+        """
+        arr = np.asarray(data)
+        if arr.ndim == 1:
+            arr = arr[:, None]
+        n_series = arr.shape[1]
+        if labels is not None and len(labels) != n_series:
+            raise ValueError("Need to have the same number of labels as columns in data.")
+        x = np.arange(arr.shape[0])
+        fig = go.Figure()
+        for i in range(n_series):
+            fig.add_trace(go.Scatter(
+                x=x, y=arr[:, i], mode="lines",
+                name=labels[i] if labels is not None else f"Signal {i + 1}",
+                line=dict(width=linewidth),
+                hovertemplate="t=%{x}<br>y=%{y:.3f}<extra></extra>",
+            ))
+        fig.update_layout(
+            title=title,
+            xaxis_title="Time (TR)",
+            yaxis_title="Intensity",
+            hovermode="x unified",
+            height=350,
+            margin=dict(l=60, r=20, t=40 if title else 20, b=50),
+            showlegend=labels is not None or n_series > 1,
+        )
+        return fig
 
     def simulate_timeseries(n_tr=200, n_trial=5, amplitude=1, tr=1, sigma=0.05):
         _y = np.zeros(n_tr)
@@ -186,6 +200,7 @@ def _():
         regress,
         simulate_timeseries,
         sns,
+        sys,
         ttest_1samp,
     )
 
@@ -311,7 +326,7 @@ def _(np, plt, regress, simulate_timeseries):
     plt.ylabel('Frequency', fontsize=18)
     plt.xlabel('Estimated Beta', fontsize=18)
     plt.axvline(x=0, color='r', linestyle='dashed', linewidth=2)
-    return X_1, betas_1
+    return (betas_1,)
 
 
 @app.cell(hide_code=True)
@@ -424,8 +439,8 @@ def _(mo):
 @app.cell
 def _(Brain_Data, get_file, get_subjects):
     con1_name = 'horizontal_checkerboard'
-    con1_file_list = [get_file(sub, 'betas', con1_name) for sub in get_subjects()]
-    con1_dat = Brain_Data(con1_file_list)
+    con1_dat = Brain_Data([Brain_Data(get_file(sub, 'betas', con1_name)) for sub in get_subjects()])
+
     return (con1_dat,)
 
 
@@ -436,12 +451,6 @@ def _(mo):
 
     Notice how we can chain different commands like `.mean()` and `.plot()`.  This makes it easy to quickly manipulate the data similar to how we use tools like pandas.
     """)
-    return
-
-
-@app.cell
-def _(con1_dat):
-    con1_dat.mean().plot()
     return
 
 
@@ -494,8 +503,7 @@ def _(mo):
 @app.cell
 def _(Brain_Data, con1_dat, get_file, get_subjects):
     con2_name = 'vertical_checkerboard'
-    con2_file_list = [get_file(sub, 'betas', con2_name) for sub in get_subjects()]
-    con2_dat = Brain_Data(con2_file_list)
+    con2_dat = Brain_Data([Brain_Data(get_file(sub, 'betas', con2_name)) for sub in get_subjects()])
 
     con1_v_con2 = con1_dat-con2_dat
     return (con1_v_con2,)
@@ -580,42 +588,52 @@ def _(mo):
 
 
 @app.cell
-def _(X_1, group1, group2, np, pd, plt, regress, sns):
-    def run_regression_simulation(x, y, paired=False):
-        """This Function runs a regression and outputs results"""
+def _(np, pd, plt, regress, sns):
+    def run_regression_simulation(x, y, paired=False, group1=None, group2=None):
+        """Run a regression and print summary statistics, then plot the design.
+
+        Args:
+            x: design matrix (pandas DataFrame)
+            y: response vector
+            paired: if True, use paired-subject mode (first column of x is the contrast,
+                remaining columns are subject indicator variables)
+            group1, group2: optional arrays used only for printing group means in
+                two-sample (unpaired) mode
+        """
         if not paired:
-            b, t, p, df, res = regress(_x, _y)
+            b, stderr, t, p, df, res = regress(x, y)
             print(f'betas: {b}')
-            if _x.shape[1] > 1:
+            if x.shape[1] > 1:
                 print(f'beta1 + beta2: {b[0] + b[1]}')
                 print(f'beta1 - beta2: {b[0] - b[1]}')
-                print(f'mean(group1): {np.mean(group1)}')
-                print(f'mean(group2): {np.mean(group2)}')
-                print(f'mean(group1) - mean(group2): {np.mean(group1) - np.mean(group2)}')
-            print(f'mean(y): {np.mean(_y)}')
+                if group1 is not None and group2 is not None:
+                    print(f'mean(group1): {np.mean(group1)}')
+                    print(f'mean(group2): {np.mean(group2)}')
+                    print(f'mean(group1) - mean(group2): {np.mean(group1) - np.mean(group2)}')
+            print(f'mean(y): {np.mean(y)}')
         else:
-            _beta, t, p, df, res = regress(_x, _y)
-            _a = _y[_x.iloc[:, 0] == 1]
-            b = _y[_x.iloc[:, 0] == -1]
+            beta, stderr, t, p, df, res = regress(x, y)
+            a = y[x.iloc[:, 0] == 1]
+            b = y[x.iloc[:, 0] == -1]
             out = []
-            for _sub in range(1, X_1.shape[1]):
-                sub_dat = _y[X_1.iloc[:, _sub] == 1]
+            for sub in range(1, x.shape[1]):
+                sub_dat = y[x.iloc[:, sub] == 1]
                 out.append(sub_dat - np.mean(sub_dat))
-            avg_sub_mean_diff = np.mean([_x[0] for _x in out])
-            print(f'betas: {b}')
-            print(f'contrast beta: {_beta[0]}')
-            print(f'mean(subject betas): {np.mean(_beta[1:])}')
-            print(f'mean(y): {np.mean(_y)}')
-            print(f'mean(a): {_a.mean()}')
+            avg_sub_mean_diff = np.mean([row[0] for row in out])
+            print(f'betas: {beta}')
+            print(f'contrast beta: {beta[0]}')
+            print(f'mean(subject betas): {np.mean(beta[1:])}')
+            print(f'mean(y): {np.mean(y)}')
+            print(f'mean(a): {a.mean()}')
             print(f'mean(b): {b.mean()}')
-            print(f'mean(a-b): {np.mean(_a - b)}')
+            print(f'mean(a-b): {np.mean(a - b)}')
             print(f'sum(a_i-mean(y_i))/n: {avg_sub_mean_diff}')
-        _f, _a = plt.subplots(ncols=2, sharey=True)
-        sns.heatmap(pd.DataFrame(_y), ax=_a[0], cbar=False, yticklabels=False, xticklabels=False)
-        sns.heatmap(_x, ax=_a[1], cbar=False, yticklabels=False)
-        _a[0].set_ylabel('Subject Values', fontsize=18)
-        _a[0].set_title('Y')
-        _a[1].set_title('X')
+        _f, _ax = plt.subplots(ncols=2, sharey=True)
+        sns.heatmap(pd.DataFrame(y), ax=_ax[0], cbar=False, yticklabels=False, xticklabels=False)
+        sns.heatmap(x, ax=_ax[1], cbar=False, yticklabels=False)
+        _ax[0].set_ylabel('Subject Values', fontsize=18)
+        _ax[0].set_title('Y')
+        _ax[1].set_title('X')
         plt.tight_layout()
 
     return (run_regression_simulation,)
@@ -633,12 +651,12 @@ def _(mo):
 def _(np, pd, run_regression_simulation):
     _group1_params = {'n': 20, 'mean': 10, 'sd': 2}
     _group2_params = {'n': 20, 'mean': 5, 'sd': 2}
-    group1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
-    group2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
-    _y = np.hstack([group1, group2])
+    _group1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
+    _group2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
+    _y = np.hstack([_group1, _group2])
     _x = pd.DataFrame({'Intercept': np.ones(len(_y))})
-    run_regression_simulation(_x, _y)
-    return group1, group2
+    run_regression_simulation(_x, _y, group1=_group1, group2=_group2)
+    return
 
 
 @app.cell(hide_code=True)
@@ -693,11 +711,11 @@ def _(mo):
 def _(np, pd, run_regression_simulation):
     _group1_params = {'n': 20, 'mean': 10, 'sd': 2}
     _group2_params = {'n': 20, 'mean': 5, 'sd': 2}
-    group1_1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
-    group2_1 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
-    _y = np.hstack([group1_1, group2_1])
+    _group1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
+    _group2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
+    _y = np.hstack([_group1, _group2])
     _x = pd.DataFrame({'Intercept': np.ones(len(_y)), 'Contrast': np.hstack([np.ones(_group1_params['n']), np.zeros(_group2_params['n'])])})
-    run_regression_simulation(_x, _y)
+    run_regression_simulation(_x, _y, group1=_group1, group2=_group2)
     return
 
 
@@ -755,11 +773,11 @@ def _(mo):
 def _(np, pd, run_regression_simulation):
     _group1_params = {'n': 20, 'mean': 10, 'sd': 2}
     _group2_params = {'n': 20, 'mean': 5, 'sd': 2}
-    group1_2 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
-    group2_2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
-    _y = np.hstack([group1_2, group2_2])
+    _group1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
+    _group2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
+    _y = np.hstack([_group1, _group2])
     _x = pd.DataFrame({'Intercept': np.ones(len(_y)), 'Contrast': np.hstack([np.ones(_group1_params['n']), -1 * np.ones(_group2_params['n'])])})
-    run_regression_simulation(_x, _y)
+    run_regression_simulation(_x, _y, group1=_group1, group2=_group2)
     return
 
 
@@ -781,11 +799,11 @@ def _(mo):
 def _(np, pd, run_regression_simulation):
     _group1_params = {'n': 40, 'mean': 10, 'sd': 2}
     _group2_params = {'n': 20, 'mean': 5, 'sd': 2}
-    group1_3 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
-    group2_3 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
-    _y = np.hstack([group1_3, group2_3])
+    _group1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
+    _group2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
+    _y = np.hstack([_group1, _group2])
     _x = pd.DataFrame({'Intercept': np.ones(len(_y)), 'Contrast': np.hstack([np.ones(_group1_params['n']), -1 * np.ones(_group2_params['n'])])})
-    run_regression_simulation(_x, _y)
+    run_regression_simulation(_x, _y, group1=_group1, group2=_group2)
     return
 
 
@@ -837,11 +855,11 @@ def _(mo):
 def _(np, pd, run_regression_simulation):
     _group1_params = {'n': 20, 'mean': 10, 'sd': 2}
     _group2_params = {'n': 20, 'mean': 5, 'sd': 2}
-    group1_4 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
-    group2_4 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
-    _y = np.hstack([group1_4, group2_4])
-    _x = pd.DataFrame({'Group1': np.hstack([np.ones(len(group1_4)), np.zeros(len(group2_4))]), 'Group2': np.hstack([np.zeros(len(group1_4)), np.ones(len(group2_4))])})
-    run_regression_simulation(_x, _y)
+    _group1 = _group1_params['mean'] + np.random.randn(_group1_params['n']) * _group1_params['sd']
+    _group2 = _group2_params['mean'] + np.random.randn(_group2_params['n']) * _group2_params['sd']
+    _y = np.hstack([_group1, _group2])
+    _x = pd.DataFrame({'Group1': np.hstack([np.ones(len(_group1)), np.zeros(len(_group2))]), 'Group2': np.hstack([np.zeros(len(_group1)), np.ones(len(_group2))])})
+    run_regression_simulation(_x, _y, group1=_group1, group2=_group2)
     return
 
 
@@ -903,19 +921,19 @@ def _(np, pd, run_regression_simulation):
     b_params = {'mean': 5, 'sd': 2}
     sample_params = {'n': 20, 'mean': 30, 'sd': 10}
     _y = []
-    _x = []
-    sub_id = []
+    _contrast = []
+    _sub_id = []
     for s in range(sample_params['n']):
-        sub_mean = sample_params['mean'] + np.random.randn() * sample_params['sd']
-        _a = sub_mean + a_params['mean'] + np.random.randn() * a_params['sd']
-        b = sub_mean + b_params['mean'] + np.random.randn() * b_params['sd']
-        _y.extend([_a, b])
-        _x.extend([1, -1])
-        sub_id.extend([s] * 2)
+        _sub_mean = sample_params['mean'] + np.random.randn() * sample_params['sd']
+        _a = _sub_mean + a_params['mean'] + np.random.randn() * a_params['sd']
+        _b = _sub_mean + b_params['mean'] + np.random.randn() * b_params['sd']
+        _y.extend([_a, _b])
+        _contrast.extend([1, -1])
+        _sub_id.extend([s] * 2)
     _y = np.array(_y)
-    sub_means = pd.DataFrame([sub_id == _x for _x in np.unique(sub_id)]).T
-    sub_means = sub_means.replace({True: 1, False: 0})
-    X_2 = pd.concat([pd.Series(_x), sub_means], axis=1)
+    _sub_id = np.array(_sub_id)
+    _sub_dummies = pd.DataFrame({f'sub_{s}': (_sub_id == s).astype(int) for s in np.unique(_sub_id)})
+    X_2 = pd.concat([pd.Series(_contrast, name='Contrast'), _sub_dummies], axis=1)
     run_regression_simulation(X_2, _y, paired=True)
     return
 
