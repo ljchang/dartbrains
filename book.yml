@@ -15,6 +15,7 @@ branch: v2-marimo-migration
 
 logo: images/logo/dartbrains_logo_square_transparent.png
 favicon: images/logo/favicon.ico
+logo_placement: sidebar
 
 theme:
   palette:
@@ -28,6 +29,13 @@ launch_buttons:
   molab: true
   github: true
   download: true
+
+# Static reactivity for discrete mo.ui widgets (slider/dropdown/etc).
+# Each widget's downstream cells are re-rendered per value at build time
+# and cached as a JSON lookup table; a tiny JS shim swaps the visible
+# output as the reader moves the slider. No browser kernel needed.
+precompute:
+  enabled: true
 
 # Per-widget-class default state. Mirrors WIDGET_DEFAULTS in the retired
 # scripts/export_notebooks.py so each anywidget's JS sees a sensible value
@@ -82,46 +90,53 @@ toc:
       - file: content/Syllabus.md
       - file: content/Schedule.md
 
-  - section: Getting Started
+  - section: Computing Resources
     children:
+      - file: content/Download_Data.py
       - file: content/Introduction_to_Programming.py
       - file: content/Introduction_to_Pandas.py
       - file: content/Introduction_to_Polars.py
       - file: content/Introduction_to_Plotting.py
-      - file: content/Download_Data.py
+      - file: content/fmriprep_on_discovery.md
+        title: Running fMRIPrep on HPC
       - file: content/Glossary.md
 
-  - section: MR Physics & Imaging
+  - section: Course Topics
     children:
-      - file: content/MR_Physics.py
-        mode: wasm   # 33 widgets, joint-heavy → WASM gives full reactivity
-
+ 
   - section: Neuroimaging Analysis
     children:
       - file: content/Intro_to_Neuroimaging.md
+      - file: content/MR_Physics.py
+        title: Signal Generation
+        mode: wasm   # 33 widgets, joint-heavy → WASM gives full reactivity
+      - file: content/ICA.py
+        title: Separating Signal from Noise with ICA
+        # static + precompute: 10 components, threshold fixed at 2.0 → 10 combos
       - file: content/Introduction_to_Neuroimaging_Data.py
       - file: content/Signal_Processing.py
+        title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
       - file: content/Preprocessing.py
         mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
       - file: content/GLM.py
+        title: Introduction to the General Linear Model
       - file: content/GLM_Single_Subject_Model.py
+        title: Modeling Single Subject Data
       - file: content/Group_Analysis.py
       - file: content/Thresholding_Group_Analyses.py
-
-  - section: Advanced Methods
-    children:
       - file: content/Connectivity.py
-      - file: content/ICA.py
+        title: Introduction to Independent Components Analysis
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
       - file: content/RSA.py
+        title: Representational Similarity Analysis
       - file: content/Parcellations.py
+        title: Introduction to Parcellations
       - file: content/Resampling_Statistics.py
 
-  - section: Additional Resources
+  - section: Additional Courses
     children:
-      - file: content/fmriprep_on_discovery.md
       - url: http://naturalistic-data.org/
         title: Naturalistic Data Analysis
 
