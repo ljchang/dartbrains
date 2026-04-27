@@ -549,7 +549,7 @@ requires-dist = [
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["cli", "hf-xet"], specifier = ">=1.8.0" },
     { name = "ipyniivue", specifier = ">=2.4.4" },
-    { name = "marimo", specifier = ">=0.21.1" },
+    { name = "marimo", specifier = ">=0.23.3" },
     { name = "marimo-book", marker = "extra == 'build'" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "nbformat" },
@@ -568,7 +568,7 @@ requires-dist = [
 provides-extras = ["build"]
 
 [package.metadata.requires-dev]
-build = [{ name = "marimo-book", specifier = ">=0.1.3" }]
+build = [{ name = "marimo-book", specifier = ">=0.1.5" }]
 
 [[package]]
 name = "dartbrains-tools"
@@ -1467,7 +1467,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.3"
+version = "0.1.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1475,6 +1475,7 @@ dependencies = [
     { name = "lxml" },
     { name = "marimo" },
     { name = "mkdocs" },
+    { name = "mkdocs-autorefs" },
     { name = "mkdocs-material" },
     { name = "nbformat" },
     { name = "pybtex" },
@@ -1484,9 +1485,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8b/ba/17d07538e3bb83850ce3a84a4c54317bc5f4cb727aaf42cd764b57e20a60/marimo_book-0.1.3.tar.gz", hash = "sha256:662fb4fb342b1e736d2ac34a1049c4460ff9281f6a907efdac2f4027eb59614d", size = 151345, upload-time = "2026-04-27T12:19:04.767Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fb/71/2eaad7b110bb6d2f8a058a94665a29641f2b31aa613dea61d8bc8734b757/marimo_book-0.1.5.tar.gz", hash = "sha256:074de9978e9d7d5d819c3e12b29a2b0bdf260c9be666e1d6d6b19c0e686dfab1", size = 159884, upload-time = "2026-04-27T23:36:11.025Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/90/c5f237ad70526d3ea3982f80ef39bf21cdcb749e721f059c0ec8de82605f/marimo_book-0.1.3-py3-none-any.whl", hash = "sha256:7c11bd51eea8c339e53348f83b68a91f646a9caa4e392ba28d2a4eacdf823834", size = 77336, upload-time = "2026-04-27T12:19:03.011Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/f9/aa013b2488176a2662b07e540b90471dcabd2f22ce8188d8b3b5910b56a7/marimo_book-0.1.5-py3-none-any.whl", hash = "sha256:858cf692651a2ef446310d23bc1bcdea50e539fcdfcd0a25375032217a83f552", size = 80164, upload-time = "2026-04-27T23:36:09.324Z" },
 ]
 
 [[package]]
@@ -1661,6 +1662,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/bc/c6/bbd4f061bd16b378247f12953ffcb04786a618ce5e904b8c5a01a0309061/mkdocs-1.6.1.tar.gz", hash = "sha256:7b432f01d928c084353ab39c57282f29f92136665bdd6abf7c1ec8d822ef86f2", size = 3889159, upload-time = "2024-08-30T12:24:06.899Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/22/5b/dbc6a8cddc9cfa9c4971d59fb12bb8d42e161b7e7f8cc89e49137c5b279c/mkdocs-1.6.1-py3-none-any.whl", hash = "sha256:db91759624d1647f3f34aa0c3f327dd2601beae39a366d6e064c03468d35c20e", size = 3864451, upload-time = "2024-08-30T12:24:05.054Z" },
+]
+
+[[package]]
+name = "mkdocs-autorefs"
+version = "1.4.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markdown" },
+    { name = "markupsafe" },
+    { name = "mkdocs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/52/c0/f641843de3f612a6b48253f39244165acff36657a91cc903633d456ae1ac/mkdocs_autorefs-1.4.4.tar.gz", hash = "sha256:d54a284f27a7346b9c38f1f852177940c222da508e66edc816a0fa55fc6da197", size = 56588, upload-time = "2026-02-10T15:23:55.105Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/de/a3e710469772c6a89595fc52816da05c1e164b4c866a89e3cb82fb1b67c5/mkdocs_autorefs-1.4.4-py3-none-any.whl", hash = "sha256:834ef5408d827071ad1bc69e0f39704fa34c7fc05bc8e1c72b227dfdc5c76089", size = 25530, upload-time = "2026-02-10T15:23:53.817Z" },
 ]
 
 [[package]]
