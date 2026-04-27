@@ -39,7 +39,7 @@ def _(IMG_DIR, mo):
     return
 ```
 
-`mo.image()` works for PNG, JPG, GIF, and static SVGs. The JB2 export pipeline (`scripts/export_notebooks.py` with `--include-outputs`) bakes `mo.image()` outputs into the `.ipynb` as rendered cell outputs, so the static site continues to render correctly.
+`mo.image()` works for PNG, JPG, GIF, and static SVGs. The marimo-book build pipeline runs `marimo export ipynb --include-outputs` per notebook before rendering to Markdown, so `mo.image()` outputs are baked into the static site.
 
 ### Animated SVGs (fmriprep QC reports, etc.)
 

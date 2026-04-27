@@ -1,7 +1,4 @@
 # Full dartbrains TOC for marimo-book.
-# Mirrors the structure of myst.yml but references .py marimo sources
-# directly (the generated .ipynb files are deleted once marimo-book produces
-# a stable build on this branch).
 
 title: DartBrains
 description: An open-access introduction to functional neuroimaging analysis in Python
@@ -37,9 +34,9 @@ launch_buttons:
 precompute:
   enabled: true
 
-# Per-widget-class default state. Mirrors WIDGET_DEFAULTS in the retired
-# scripts/export_notebooks.py so each anywidget's JS sees a sensible value
-# when it calls model.get("key") on initial render.
+# Per-widget-class default state — each anywidget's JS sees a sensible
+# value when it calls model.get("key") on initial render in the static
+# build (no kernel running to update state from cell-level kwargs).
 widget_defaults:
   CompassWidget:
     b0: 3.0

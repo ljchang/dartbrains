@@ -28,11 +28,16 @@ cd dartbrains
 uv sync
 
 # Edit a notebook
-uv run marimo edit content/MR_Physics_1_Magnetism_and_Resonance.py
+uv run marimo edit content/MR_Physics.py
 
-# Build the static site
-uv run python scripts/export_notebooks.py
-uv run jupyter book build --site
+# Validate book.yml
+uv run marimo-book check
+
+# Live-reload dev server
+uv run marimo-book serve
+
+# One-shot static build (output: ./_site/)
+uv run marimo-book build
 ```
 
 ## License

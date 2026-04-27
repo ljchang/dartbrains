@@ -32,13 +32,11 @@ dependencies = [
 
 [project.optional-dependencies]
 build = [
-    "jupyter-book",
     "marimo-book",
 ]
 
 [dependency-groups]
 build = [
-    "jupyter-book>=2.1.2",
     "marimo-book>=0.1.0a1",
 ]
 
