@@ -265,7 +265,7 @@ def _(get_file):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    This dataset contains a single task called *localizer*. Look at the [Download Data](Download_Data.ipynb) page for more information about this task.
+    This dataset contains a single task called *localizer*. Look at the [Download Data](Download_Data.md) page for more information about this task.
 
     We can also retrieve event files that describe the experimental conditions and their timing. Let's load the events for the first subject.
     """)
