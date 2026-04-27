@@ -1,16 +1,21 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
+    import sys
     from pathlib import Path
     _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
     IMG_DIR = _ROOT / "images" / "thresholding"
-    return IMG_DIR, mo
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
+    from Code.notebook_utils import youtube
+
+    return IMG_DIR, mo, youtube
 
 
 @app.cell(hide_code=True)
@@ -34,24 +39,10 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    """)
-    return
-
-
 @app.cell
-def _():
-    import sys
-    from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
-    if str(_ROOT) not in sys.path:
-        sys.path.insert(0, str(_ROOT))
-    from Code.notebook_utils import youtube
-
+def _(youtube):
     youtube('AalIM9-5-Pk')
-    return (youtube,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -104,10 +95,13 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import plotly.graph_objects as go
     from nltools.data import Brain_Data
     from nltools.simulator import SimulateGrid
+    __import__("sys").path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
+    from Code.data import get_file, get_subjects
 
-    return Brain_Data, SimulateGrid, glob, np, os, plt, sns
+    return Brain_Data, SimulateGrid, get_file, get_subjects, go, np, plt, sns
 
 
 @app.cell(hide_code=True)
@@ -168,10 +162,11 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
     _threshold = 0.05
-    simulation_1 = SimulateGrid(grid_width=100, n_subjects=20)
-    simulation_1.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    with mo.persistent_cache("threshold_sim_1"):
+        simulation_1 = SimulateGrid(grid_width=100, n_subjects=20)
+        simulation_1.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     return
 
 
@@ -188,10 +183,11 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
     _threshold = 0.05
-    simulation_2 = SimulateGrid(grid_width=5, n_subjects=20)
-    simulation_2.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    with mo.persistent_cache("threshold_sim_2"):
+        simulation_2 = SimulateGrid(grid_width=5, n_subjects=20)
+        simulation_2.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     return
 
 
@@ -206,10 +202,11 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
     _threshold = 0.0001
-    simulation_3 = SimulateGrid(grid_width=100, n_subjects=20)
-    simulation_3.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    with mo.persistent_cache("threshold_sim_3"):
+        simulation_3 = SimulateGrid(grid_width=100, n_subjects=20)
+        simulation_3.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     return
 
 
@@ -228,21 +225,41 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, np, plt):
+def _(SimulateGrid, go, mo, np):
+    # 20 thresholds × 100 simulations × a 100×100 voxel grid is ~20 M
+    # t-tests via joblib — many minutes cold. mo.persistent_cache writes
+    # the FPR result to __marimo__/cache/ so the first build pays the
+    # cost once and every subsequent (re)build is instant. The cache
+    # invalidates automatically if any input variable in this cell
+    # changes.
     alpha = 0.05
     n_simulations = 100
     x = np.arange(3, 7, 0.2)
-    sim_all = []
-    for p in x:
-        sim = SimulateGrid(grid_width=100, n_subjects=20)
-        sim.run_multiple_simulations(threshold=p, threshold_type='t', n_simulations=n_simulations)
-        sim_all.append(sim.fpr)
-    _f, _a = plt.subplots(ncols=1, figsize=(10, 5))
-    _a.plot(x, np.array(sim_all))
-    _a.set_ylabel('False Positive Rate', fontsize=18)
-    _a.set_xlabel('Threshold (t)', fontsize=18)
-    _a.set_title(f'Simulations = {n_simulations}', fontsize=18)
-    _a.axhline(y=alpha, color='r', linestyle='dashed', linewidth=2)
+    with mo.persistent_cache("threshold_fpr_sweep"):
+        sim_all = []
+        for p in x:
+            sim = SimulateGrid(grid_width=100, n_subjects=20)
+            sim.run_multiple_simulations(threshold=p, threshold_type='t', n_simulations=n_simulations)
+            sim_all.append(sim.fpr)
+    _fig = go.Figure()
+    _fig.add_trace(go.Scatter(
+        x=x, y=sim_all, mode='lines+markers',
+        name='False Positive Rate', line=dict(width=2),
+        hovertemplate='t=%{x:.2f}<br>FPR=%{y:.3f}<extra></extra>',
+    ))
+    _fig.add_hline(
+        y=alpha, line=dict(color='red', dash='dash', width=2),
+        annotation_text=f'α = {alpha}', annotation_position='top right',
+    )
+    _fig.update_layout(
+        xaxis_title='Threshold (t)',
+        yaxis_title='False Positive Rate',
+        title=f'Simulations = {n_simulations}',
+        height=400,
+        hovermode='x unified',
+        margin=dict(l=60, r=20, t=50, b=50),
+    )
+    _fig
     return
 
 
@@ -257,9 +274,10 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid):
-    simulation_4 = SimulateGrid(grid_width=100, n_subjects=20)
-    simulation_4.plot_grid_simulation(threshold=6.2, threshold_type='t', n_simulations=100)
+def _(SimulateGrid, mo):
+    with mo.persistent_cache("threshold_sim_4"):
+        simulation_4 = SimulateGrid(grid_width=100, n_subjects=20)
+        simulation_4.plot_grid_simulation(threshold=6.2, threshold_type='t', n_simulations=100)
     return
 
 
@@ -276,11 +294,12 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
     _grid_width = 100
     _threshold = 0.05 / _grid_width ** 2
-    simulation_5 = SimulateGrid(grid_width=_grid_width, n_subjects=20)
-    simulation_5.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    with mo.persistent_cache("threshold_sim_5"):
+        simulation_5 = SimulateGrid(grid_width=_grid_width, n_subjects=20)
+        simulation_5.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     return
 
 
@@ -299,13 +318,14 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
     _grid_width = 100
     _threshold = 0.05 / _grid_width ** 2
     signal_width = 10
     _signal_amplitude = 1
-    simulation_6 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
-    simulation_6.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    with mo.persistent_cache("threshold_sim_6"):
+        simulation_6 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
+        simulation_6.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     return
 
 
@@ -379,15 +399,20 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
+    # ~450,000 permutation iterations (10 sims × 5000 perms × 9 voxels) —
+    # 30+ minutes cold. mo.persistent_cache writes the simulation result
+    # to __marimo__/cache/ so the first build pays the cost once and
+    # every subsequent (re)build is instant.
     _grid_width = 3
     _threshold = 0.05
     _signal_amplitude = 1
-    simulation_7 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=2, grid_width=_grid_width, n_subjects=20)
-    simulation_7.t_values, simulation_7.p_values = simulation_7._run_permutation(simulation_7.data)
-    simulation_7.isfit = True
-    simulation_7.threshold_simulation(_threshold, 'p')
-    simulation_7.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=10)
+    with mo.persistent_cache("threshold_sim_7_permutation"):
+        simulation_7 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=2, grid_width=_grid_width, n_subjects=20)
+        simulation_7.t_values, simulation_7.p_values = simulation_7._run_permutation(simulation_7.data)
+        simulation_7.isfit = True
+        simulation_7.threshold_simulation(_threshold, 'p')
+        simulation_7.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=10)
     return
 
 
@@ -437,12 +462,13 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(SimulateGrid):
+def _(SimulateGrid, mo):
     _grid_width = 100
     _threshold = 0.05
     _signal_amplitude = 1
-    simulation_8 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
-    simulation_8.plot_grid_simulation(threshold=_threshold, threshold_type='q', n_simulations=100, correction='fdr')
+    with mo.persistent_cache("threshold_sim_8_fdr"):
+        simulation_8 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
+        simulation_8.plot_grid_simulation(threshold=_threshold, threshold_type='q', n_simulations=100, correction='fdr')
     print(f'FDR q < 0.05 corresponds to p-value of {simulation_8.corrected_threshold}')
     return (simulation_8,)
 
@@ -458,11 +484,20 @@ def _(mo):
 
 
 @app.cell
-def _(plt, simulation_8):
-    plt.hist(simulation_8.multiple_fdr)
-    plt.ylabel('Frequency', fontsize=18)
-    plt.xlabel('False Discovery Rate', fontsize=18)
-    plt.xlabel('False Discovery Rate of Simulations', fontsize=18)
+def _(go, simulation_8):
+    _fig = go.Figure()
+    _fig.add_trace(go.Histogram(
+        x=simulation_8.multiple_fdr, name='FDR',
+        hovertemplate='FDR=%{x:.3f}<br>count=%{y}<extra></extra>',
+    ))
+    _fig.update_layout(
+        xaxis_title='False Discovery Rate',
+        yaxis_title='Frequency',
+        title='False Discovery Rate of Simulations',
+        height=400,
+        margin=dict(l=60, r=20, t=50, b=50),
+    )
+    _fig
     return
 
 
@@ -503,15 +538,13 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, glob, os):
+def _(Brain_Data, get_file, get_subjects):
     con1_name = 'horizontal_checkerboard'
-    data_dir = '../data/localizer'
-    con1_file_list = glob.glob(os.path.join(data_dir, 'derivatives', 'fmriprep', '*', 'func', f'sub*_{con1_name}*nii.gz'))
-    con1_file_list.sort()
-    con1_dat = Brain_Data(con1_file_list)
+    con1_file_list = [get_file(sub, 'betas', con1_name) for sub in get_subjects()]
+    con1_dat = Brain_Data([Brain_Data(f) for f in con1_file_list])
     _con1_stats = con1_dat.ttest(threshold_dict={'unc': 0.001})
-    _con1_stats['thr_t'].plot()
-    return con1_dat, data_dir
+    _con1_stats['thr_t'].iplot()
+    return (con1_dat,)
 
 
 @app.cell(hide_code=True)
@@ -535,7 +568,7 @@ def _(mo):
 @app.cell
 def _(con1_dat):
     _con1_stats = con1_dat.ttest(threshold_dict={'fdr': 0.05})
-    _con1_stats['thr_t'].plot()
+    _con1_stats['thr_t'].iplot()
     return
 
 
@@ -550,21 +583,20 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, con1_dat, data_dir, glob, os):
+def _(Brain_Data, con1_dat, get_file, get_subjects):
     con2_name = 'vertical_checkerboard'
-    con2_file_list = glob.glob(os.path.join(data_dir, 'derivatives', 'fmriprep', '*', 'func', f'sub*_{con2_name}*nii.gz'))
-    con2_file_list.sort()
-    con2_dat = Brain_Data(con2_file_list)
+    con2_file_list = [get_file(sub, 'betas', con2_name) for sub in get_subjects()]
+    con2_dat = Brain_Data([Brain_Data(f) for f in con2_file_list])
     con1_v_con2 = con1_dat - con2_dat
     _con1_v_con2_stats = con1_v_con2.ttest(threshold_dict={'unc': 0.001})
-    _con1_v_con2_stats['thr_t'].plot()
+    _con1_v_con2_stats['thr_t'].iplot()
     return (con1_v_con2,)
 
 
 @app.cell
 def _(con1_v_con2):
     _con1_v_con2_stats = con1_v_con2.ttest(threshold_dict={'fdr': 0.05})
-    _con1_v_con2_stats['thr_t'].plot()
+    _con1_v_con2_stats['thr_t'].iplot()
     return
 
 
