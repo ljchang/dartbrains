@@ -158,7 +158,7 @@ def _(mo):
     ### Single Subject Pattern Similarity
     Recall that in the Single Subject Model Lab that we ran single subject models for 10 different regressors for the Pinel Localizer task.  In this tutorial, we will use our results to learn how to conduct RSA style analyses.
 
-    First, let's get a list of all of the subject IDs and load the beta values from each condition for a single subject into a `Brain_Data` object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this [code](Group_Analysis.ipynb) for reference from the group analysis tutorial.
+    First, let's get a list of all of the subject IDs and load the beta values from each condition for a single subject into a `Brain_Data` object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this [code](Group_Analysis.md) for reference from the group analysis tutorial.
     """)
     return
 
