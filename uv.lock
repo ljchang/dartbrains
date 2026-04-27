@@ -549,7 +549,7 @@ requires-dist = [
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["cli", "hf-xet"], specifier = ">=1.8.0" },
     { name = "ipyniivue", specifier = ">=2.4.4" },
-    { name = "marimo", specifier = ">=0.21.1" },
+    { name = "marimo", specifier = ">=0.23.3" },
     { name = "marimo-book", marker = "extra == 'build'" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "nbformat" },
@@ -568,7 +568,7 @@ requires-dist = [
 provides-extras = ["build"]
 
 [package.metadata.requires-dev]
-build = [{ name = "marimo-book", specifier = ">=0.1.3" }]
+build = [{ name = "marimo-book", specifier = ">=0.1.4" }]
 
 [[package]]
 name = "dartbrains-tools"
@@ -1467,7 +1467,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.3"
+version = "0.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1484,9 +1484,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8b/ba/17d07538e3bb83850ce3a84a4c54317bc5f4cb727aaf42cd764b57e20a60/marimo_book-0.1.3.tar.gz", hash = "sha256:662fb4fb342b1e736d2ac34a1049c4460ff9281f6a907efdac2f4027eb59614d", size = 151345, upload-time = "2026-04-27T12:19:04.767Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/f5/80f3d66acb17919887cbae8311071b558adc3eab15b5648f1b72d8f54370/marimo_book-0.1.4.tar.gz", hash = "sha256:03082d8e4282fecb91883be11fd81559ed46320edaecfb30bcc4ec29815331f3", size = 153605, upload-time = "2026-04-27T18:22:32.313Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/90/c5f237ad70526d3ea3982f80ef39bf21cdcb749e721f059c0ec8de82605f/marimo_book-0.1.3-py3-none-any.whl", hash = "sha256:7c11bd51eea8c339e53348f83b68a91f646a9caa4e392ba28d2a4eacdf823834", size = 77336, upload-time = "2026-04-27T12:19:03.011Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/c4/c6cf383f3d0f927f1c17f14083d0764cb1bf24bdad2db27036230d5e62a0/marimo_book-0.1.4-py3-none-any.whl", hash = "sha256:732146bc9cfcf75b6f050e8891428c98e6cf8d6453579fd7fd2cf6b8c76915c2", size = 78092, upload-time = "2026-04-27T18:22:30.519Z" },
 ]
 
 [[package]]
