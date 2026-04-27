@@ -183,6 +183,7 @@ def _():
         epsilon = sigma * np.random.randn(n_tr)
         _y = _y + epsilon
         return _y
+
     return (
         Brain_Data,
         get_file,
@@ -194,7 +195,6 @@ def _():
         regress,
         simulate_timeseries,
         sns,
-        sys,
         ttest_1samp,
     )
 
@@ -358,7 +358,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    (content:group_analysis:labels)=
     ## Running a Group Analysis
 
     Okay, now let's try and run our own group level analysis with real imaging data using the Pinel Localizer data. I have run a first level model for the first 10 participants using the procedure we used in the single-subject analysis notebook.
@@ -440,7 +439,6 @@ def _(mo):
 def _(Brain_Data, get_file, get_subjects):
     con1_name = 'horizontal_checkerboard'
     con1_dat = Brain_Data([Brain_Data(get_file(sub, 'betas', con1_name)) for sub in get_subjects()])
-
     return (con1_dat,)
 
 
