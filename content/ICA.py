@@ -123,7 +123,11 @@ def _(mo):
 @app.cell
 def _(data_1, mo):
     with mo.persistent_cache("ica_decompose"):
-        output = data_1.decompose(algorithm='ica', n_components=30, axis='images', whiten='unit-variance')
+        # 10 components keeps the WASM-mode page snappy: the slider
+        # range stays small and ICA convergence in Pyodide is faster.
+        # Cranking back to 20-30 is one number-edit away if the reader
+        # wants more granularity.
+        output = data_1.decompose(algorithm='ica', n_components=10, axis='images', whiten='unit-variance')
     return (output,)
 
 
@@ -132,9 +136,9 @@ def _(mo):
     mo.md(r"""
     ## Viewing Components
 
-    We will use an interactive component viewer to explore the results of the analysis. Use the **Component** slider to select which component to view and the **Threshold** slider to control the display threshold. The plot updates automatically when you change either slider.
+    We will use an interactive component viewer to explore the results of the analysis. Use the **Component** slider to select which component to view; the plot updates automatically as you move it.
 
-    Components have been standardized, this allows us to threshold the brain in terms of standard deviations. For example, the default threshold of 2.0, means that any voxel that loads on the component greater or less than 2 standard deviations will be overlaid on the standard brain. You can play with different thresholds to be more or less inclusive - a threshold of 0 will overlay all of the voxels.
+    Components have been standardized so we can threshold the brain in terms of standard deviations. We display voxels that load greater or less than 2 standard deviations on the component (a tighter or looser cutoff than 2.0 σ requires running this notebook in `marimo edit`).
 
     The second plot is the time course of the voxels that load on the component. The x-axis is in TRs, which for this dataset is 2.4 sec.
 
@@ -147,16 +151,17 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo, output):
+    # Single slider over component index. `stop=9` is hardcoded (must
+    # match n_components-1 in the decompose() call above) — marimo-book's
+    # precompute scanner only detects literal slider bounds, so a dynamic
+    # `stop=len(output['components'])-1` would silently render frozen.
+    # Threshold is fixed at 2.0 σ to keep the lookup table small.
     component_slider = mo.ui.slider(
-        start=0, stop=len(output['components']) - 1, step=1,
+        start=0, stop=9, step=1,
         value=0, label="Component", show_value=True,
     )
-    threshold_slider = mo.ui.slider(
-        start=0.0, stop=4.0, step=0.1,
-        value=2.0, label="Threshold", show_value=True,
-    )
-    mo.hstack([component_slider, threshold_slider], justify="start", gap=2)
-    return component_slider, threshold_slider
+    component_slider
+    return (component_slider,)
 
 
 @app.cell(hide_code=True)
@@ -169,12 +174,11 @@ def _(
     mo,
     np,
     output,
-    threshold_slider,
     tr,
     view_img,
 ):
     _component = component_slider.value
-    _threshold = threshold_slider.value
+    _threshold = 2.0  # standard-deviation threshold for the brain plot
 
     # Brain viewer: z-score the component, let view_img handle threshold display
     _comp = output['components'][_component]
@@ -231,12 +235,6 @@ def _(
     )
 
     mo.vstack([mo.Html(_brain_html._repr_html_()), _fig], gap=0.5)
-    return
-
-
-@app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.image(str(IMG_DIR / "ica_viewer_demo.gif"))
     return
 
 
