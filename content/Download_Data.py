@@ -21,7 +21,7 @@ def _():
     return (mo,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import subprocess
 
@@ -82,7 +82,7 @@ def _():
     # Download a preprocessed BOLD file (cached after first download)
     bold_path = get_file('S01', 'derivatives', 'bold')
     print(f"\nBOLD file path: {bold_path}")
-    return Path, REPO_ID, load_events
+    return REPO_ID, load_events
 
 
 @app.cell(hide_code=True)
