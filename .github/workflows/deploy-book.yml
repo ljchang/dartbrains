@@ -1,9 +1,13 @@
 name: deploy-book
 
+# Legacy JB2 + peaceiris -> gh-pages branch deploy. Kept as a rewind
+# safety net during the marimo-book cutover. Push triggers removed so it
+# only runs on manual workflow_dispatch. Restore the legacy site by:
+#   1. workflow_dispatch this workflow on master
+#   2. Settings -> Pages -> Source: change to "Deploy from a branch"
+#      (gh-pages, /)
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   deploy-book:

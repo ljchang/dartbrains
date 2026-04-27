@@ -3,6 +3,7 @@ name: deploy-marimo-book
 on:
   push:
     branches:
+      - master
       - v2-marimo-migration
   workflow_dispatch:
 
