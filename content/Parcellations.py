@@ -124,11 +124,12 @@ def _(mo):
 
 @app.cell
 def _(datasets):
+    import matplotlib.pyplot as plt
     from nilearn import plotting
     aal = datasets.fetch_atlas_aal(version='SPM12')
-    aal.maps
     plotting.plot_roi(aal.maps, title='AAL')
-    return (plotting,)
+    plt.gcf()
+    return plotting, plt
 
 
 @app.cell(hide_code=True)
@@ -145,11 +146,14 @@ def _(mo):
 
 
 @app.cell
-def _(datasets, plotting):
+def _(datasets, mo, plotting, plt):
+    _figs = []
     for level in ['hemisphere', 'lobe', 'gyrus', 'tissue', 'ba']:
-      talairach = datasets.fetch_atlas_talairach(level_name=level)
-
-      plotting.plot_roi(talairach.maps, title=f'Talairach - {level}')
+        talairach = datasets.fetch_atlas_talairach(level_name=level)
+        plotting.plot_roi(talairach.maps, title=f'Talairach - {level}')
+        _figs.append(plt.gcf())
+        plt.close('all')
+    mo.vstack(_figs)
     return
 
 
@@ -175,12 +179,16 @@ def _(mo):
 
 
 @app.cell
-def _(datasets, plotting):
+def _(datasets, mo, plotting, plt):
+    _figs = []
     for atlas_name in ['cort-maxprob-thr0-2mm', 'sub-maxprob-thr0-1mm']:
-
-      harvard_oxford = datasets.fetch_atlas_harvard_oxford(atlas_name )
-
-      plotting.plot_roi(harvard_oxford.maps, title=f'Harvard-Oxford-{atlas_name}')
+        harvard_oxford = datasets.fetch_atlas_harvard_oxford(atlas_name)
+        plotting.plot_roi(
+            harvard_oxford.maps, title=f'Harvard-Oxford-{atlas_name}'
+        )
+        _figs.append(plt.gcf())
+        plt.close('all')
+    mo.vstack(_figs)
     return
 
 
