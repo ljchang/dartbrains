@@ -29,27 +29,27 @@ launch_buttons:
   github: true
   download: true
 
-# Google Analytics. Replace `G-XXXXXXXXXX` with the GA4 Measurement ID
-# from analytics.google.com (the legacy `UA-138270939-1` Universal
-# Analytics property was retired by Google on 2023-07-01 — provision a
-# new GA4 property or use the auto-migrated one if Google created it).
+# Google Analytics — GA4 Measurement ID for dartbrains.org.
+# (The legacy UA-138270939-1 Universal Analytics property was retired
+# by Google on 2023-07-01; this is its GA4 successor.)
 analytics:
   provider: google
-  property: G-XXXXXXXXXX
+  property: G-MQK18K92KD
 
 # Static reactivity for discrete mo.ui widgets (slider/dropdown/etc).
 # Each widget's downstream cells are re-rendered per value at build time
 # and cached as a JSON lookup table; a tiny JS shim swaps the visible
 # output as the reader moves the slider. No browser kernel needed.
 #
-# ICA chapter does whole-brain decomposition + per-component nilearn
-# rendering — base export takes ~10–20 s, so the default
-# max_seconds_per_page=60 trips with 10 components × ~15 s = 150 s
-# projected and the page silently renders static (no slider). Bump
-# both wall-clock and bytes caps to give heavy chapters room.
+# Heavy chapters (whole-brain decomposition + per-component nilearn
+# rendering) trip the default caps and silently render static (no
+# slider). Empirically:
+#   - ICA: ~10 renders × ~15 s = ~150 s
+#   - Connectivity: ~41 renders × ~16 s = ~677 s
+# Bump both wall-clock and bytes caps so these chapters can precompute.
 precompute:
   enabled: true
-  max_seconds_per_page: 600         # 10 minutes
+  max_seconds_per_page: 1200        # 20 minutes
   max_bytes_per_page: 50000000      # 50 MB
 
 # Per-widget-class default state — each anywidget's JS sees a sensible
