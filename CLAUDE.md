@@ -53,3 +53,37 @@ def _(IMG_DIR, mo):
 ```
 
 **Important:** large inlined SVGs (>5 MB — fmriprep QC SVGs contain base64-embedded brain slices) will bust marimo's default 10 MB per-cell output limit when combined with other content in a vstack. Put each large animated SVG in its own cell to stay under the limit.
+
+## Marimo notebooks — matplotlib/seaborn figures
+
+Marimo's matplotlib integration monkey-patches `matplotlib.artist.Artist._mime_` so a cell renders a figure **only if its last expression returns an `Artist`** (Figure, Axes, Text, Line2D, Legend, BarContainer, AxesImage, …). It is *not* an "auto-capture pyplot at end of cell" mechanism — pyplot side effects alone don't produce output. This rule is enforced by `marimo export ipynb --include-outputs`, which the marimo-book pipeline runs per notebook, so a notebook that looks fine in `marimo edit` (live kernel re-runs reactively) can still produce empty figure cells in the static build.
+
+**Renders (last expr returns an Artist):** `plt.gcf()`, `plt.title("…")`, `ax.set_title("…")`, `ax.set_xlabel("…")`, `ax.legend([…])`, `ax.axvline(...)`, `sns.heatmap(...)`, `plt.imshow(...)`, `plt.bar(...)`, `plt.scatter(...)`.
+
+**Silently empty (last expr returns `None`):** `plt.tight_layout()`, `plt.show()`, `plt.savefig(...)`, `plt.subplots_adjust(...)`, `plt.close(...)`, and any `with` block (the block itself returns `None`, regardless of what's inside — this includes `with sns.plotting_context(...)` and `with mo.persistent_cache(...)`).
+
+**Idiom:** end the cell with `plt.gcf()` to return the current Figure. This is the safest fix when the natural last line is a None-returning op:
+
+```python
+@app.cell
+def _(plt):
+    _f, _a = plt.subplots(...)
+    # … plotting …
+    plt.tight_layout()
+    plt.gcf()                  # ← required for the figure to render
+    return
+```
+
+For cells whose plotting happens inside a styling context manager:
+
+```python
+@app.cell
+def _(plt, sns):
+    with sns.plotting_context(context='paper', font_scale=1.5):
+        _f, _a = plt.subplots(...)
+        # … plotting …
+    plt.gcf()                  # ← outside the `with`; renders the figure created inside
+    return
+```
+
+**`mo.persistent_cache` is incompatible with figure rendering.** It memoizes Python variables but not matplotlib side effects, so on a cache hit the plotting code does not re-run and `plt.gcf()` returns an empty figure. Either drop the cache and accept the cold-build cost (the marimo-book BuildCache will skip the notebook on subsequent builds anyway as long as the source is unchanged), or split the cell so the cache wraps only the data computation and plotting happens in a downstream cell from cached arrays.

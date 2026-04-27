@@ -257,6 +257,7 @@ def _(np, plt):
     _ax[1, 1].set_title(f'r={_r}', fontsize=16)
     _ax[1, 1].set_xlabel('X', fontsize=16)
     plt.tight_layout()
+    plt.gcf()
     return
 
 
@@ -272,8 +273,6 @@ def _(mo):
 @app.cell
 def _(plt):
     plt.savefig('MyFirstPlot.png')
-
-    plt.savefig('/Users/lukechang/Downloads/MyFirstPlot.pdf')
     return
 
 
@@ -629,6 +628,7 @@ def _(pd, plt, sns):
         sns.heatmap(data_7.query('Sex=="male"').corr(), linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=_a[0])
         sns.heatmap(data_7.query('Sex=="male"').corr(), linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=_a[1])
         plt.tight_layout()
+    plt.gcf()
     return
 
 
@@ -663,6 +663,7 @@ def _(pd, plt, sns):
     _a[1].set_xlabel('Years Since Highest Degree', fontsize=18)
     plt.suptitle('Years Since Highest Degree', fontsize=18)
     plt.tight_layout()
+    plt.gcf()
     return
 
 

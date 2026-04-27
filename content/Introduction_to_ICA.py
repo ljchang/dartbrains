@@ -136,6 +136,7 @@ def _(Design_Matrix, n_tr, n_trial, np, plt, signal_intensity, sns, tr):
         _a.legend(['FFA', 'PPA'])
         _a.set_xlabel('TR')
         _a.set_ylabel('Signal Intensity')
+    plt.gcf()
     return ffa_signal, ppa_signal
 
 
@@ -264,6 +265,7 @@ def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
         _a.legend(['FFA', 'PPA'])
         _a.set_xlabel('TR')
         _a.set_ylabel('Signal Intensity')
+    plt.gcf()
     return ffa_signal_1, ppa_signal_1, simulated_data_1
 
 
@@ -355,6 +357,7 @@ def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
         _a.legend(['FFA', 'PPA', 'FFA_Mixed'])
         _a.set_xlabel('TR')
         _a.set_ylabel('Signal Intensity')
+    plt.gcf()
     return (simulated_data_2,)
 
 

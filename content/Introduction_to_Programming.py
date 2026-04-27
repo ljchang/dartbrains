@@ -1,5 +1,9 @@
 # /// script
-# dependencies = ["setuptools"]
+# requires-python = ">=3.13"
+# dependencies = [
+#     "marimo>=0.23.3",
+#     "setuptools",
+# ]
 # ///
 
 import marimo
@@ -8,7 +12,7 @@ __generated_with = "0.23.3"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
     from pathlib import Path
@@ -17,18 +21,11 @@ def _():
     return IMG_DIR, mo
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import subprocess
 
     return (subprocess,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -38,7 +35,7 @@ def _(IMG_DIR, mo):
         # Introduction to programming
         _Written by Luke Chang_
 
-        In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing [Python 3.7](https://www.anaconda.com/distribution/).  For those who prefer a more configurable IDE, [Pycharm](https://www.jetbrains.com/pycharm/) is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for [conducting research](http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/).  You can use python for [stimulus presentation](http://www.psychopy.org/), [data analysis](http://statsmodels.sourceforge.net/), [machine-learning](http://scikit-learn.org/stable/), [scraping data](https://www.crummy.com/software/BeautifulSoup/), creating websites with [flask](http://flask.pocoo.org/) or [django](https://www.djangoproject.com/), or [neuroimaging data analysis](http://nipy.org/).
+    In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing [Python 3.7](https://www.anaconda.com/distribution/).  For those who prefer a more configurable IDE, [Pycharm](https://www.jetbrains.com/pycharm/) is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for [conducting research](http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/).  You can use python for [stimulus presentation](http://www.psychopy.org/), [data analysis](http://statsmodels.sourceforge.net/), [machine-learning](http://scikit-learn.org/stable/), [scraping data](https://www.crummy.com/software/BeautifulSoup/), creating websites with [flask](http://flask.pocoo.org/) or [django](https://www.djangoproject.com/), or [neuroimaging data analysis](http://nipy.org/).
 
         There are lots of free useful resources to learn how to use python and various modules.  See [Jeremy Manning's](https://github.com/ContextLab/cs-for-psych) or [Yaroslav Halchenko's](https://github.com/dartmouth-pbs/psyc161) excellent Dartmouth courses.  [Codeacademy](https://www.codecademy.com/) is a great interactive tutorial.  [Stack Overflow](http://stackoverflow.com/) is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.
         """),
@@ -50,15 +47,27 @@ def _(IMG_DIR, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Jupyter Notebooks
-    We will primarily be using [Jupyter Notebooks](http://jupyter.org/) to interface with Python.  A Jupyter notebook consists of **cells**. The two main types of cells you will use are code cells and markdown cells.
+    ## Marimo Notebooks
+    We will primarily be using [marimo](https://marimo.io/) notebooks to interface with Python. A marimo notebook is a *reactive* Python notebook stored as a plain `.py` file — no JSON, no out-of-order-execution traps, and clean diffs in git.
 
-    A **_code cell_** contains actual code that you want to run. You can specify a cell as a code cell using the pulldown menu in the toolbar in your Jupyter notebook. Otherwise, you can can hit esc and then y (denoted "esc, y") while a cell is selected to specify that it is a code cell. Note that you will have to hit enter after doing this to start editing it.
-    If you want to execute the code in a code cell, hit "shift + enter." Note that code cells are executed in the order you execute them. That is to say, the ordering of the cells for which you hit "shift + enter" is the order in which the code is executed. If you did not explicitly execute a cell early in the document, its results are now known to the Python interpreter.
+    A marimo notebook consists of **cells**. Unlike Jupyter, there is only one cell type — every cell is Python. Prose is written by calling `mo.md(r"...")` (using a triple-quoted raw string for multi-line markdown) and letting the cell evaluate to that markdown object, like this very cell.
 
-    **_Markdown cells_** contain text. The text is written in markdown, a lightweight markup language. You can read about its syntax [here](http://daringfireball.net/projects/markdown/syntax). Note that you can also insert HTML into markdown cells, and this will be rendered properly. As you are typing the contents of these cells, the results appear as text. Hitting "shift + enter" renders the text in the formatting you specify.  You can specify a cell as being a markdown cell in the Jupyter toolbar, or by hitting "esc, m" in the cell. Again, you have to hit enter after using the quick keys to bring the cell into edit mode.
+    ### Reactive execution
+    The biggest conceptual difference from Jupyter is *reactivity*. marimo statically analyzes which variables each cell defines and reads, and builds a dataflow graph from that. When you change a cell, every cell that depends on it re-runs automatically — there is no "I forgot to re-run cell 4" problem, and the notebook's state always matches the code on screen.
 
-    In general, when you want to add a new cell, you can use the "Insert" pulldown menu from the Jupyter toolbar. The shortcut to insert a cell below is "esc, b" and to insert a cell above is "esc, a." Alternatively, you can execute a cell and automatically add a new one below it by hitting "alt + enter."
+    A consequence of this design: every variable name must be defined in **at most one cell**. If you want to reuse a name (e.g., `x`) for a quick experiment, prefix it with an underscore (`_x`) to make it cell-local.
+
+    ### Running and editing cells
+    - **Run a cell:** `Ctrl/⌘ + Enter` (or click the run button in the cell's gutter).
+    - **Add a cell:** click the `+` button that appears between cells, or use `Ctrl/⌘ + Shift + Enter` to run the current cell and add a new one below.
+    - **Render markdown, plots, or UI:** whatever the cell's last expression evaluates to is what gets displayed — `mo.md(...)` for prose, `plt.gcf()` for a matplotlib figure, a DataFrame for a table, `mo.ui.slider(...)` for an interactive control.
+    - **Hide cell code:** click the eye icon in the gutter. Code stays in the file; only the output is shown. The prose cells in this notebook all have their code hidden.
+
+    ### Launching marimo
+    From the project root:
+    ```bash
+    uv run marimo edit content/Introduction_to_Programming.py
+    ```
     """)
     return
 
@@ -132,21 +141,34 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     ## Package Management
-    Package managment in Python has been dramatically improving.  Anaconda has it's own package manager called 'conda'.  Use this if you would like to install a new module as it is optimized to work with anaconda.
+    marimo has a built-in package manager that works seamlessly with `uv`. When you `import` a module that isn't installed, marimo detects it, prompts you to install it, and pins the dependency in the project's `pyproject.toml` — so the environment stays reproducible across machines and the next person who clones the repo just runs `uv sync`.
 
+    You'll see comments like this near package-using cells:
+
+    ```python
+    # packages added via marimo's package management: pandas, numpy
+    import pandas as pd
+    import numpy as np
     ```
-    !conda install *package*
+
+    That comment is auto-managed by marimo — you don't need to write it yourself.
+
+    ### Installing additional packages
+    The cleanest way is to just `import` what you want and let marimo prompt you. If you'd rather pre-install from a terminal, use `uv` directly:
+
+    ```bash
+    uv add scikit-learn      # add a runtime dependency
+    uv add --dev pytest      # add a dev-only dependency
+    uv sync                  # sync the environment to pyproject.toml
     ```
 
-    However, sometimes conda doesn't have a particular package.  In this case use the default python package manager called 'pip'.
-
-    These commands can be run in your unix terminal or you can send them to the shell from a Jupyter notebook by starting the line with ```!```
-
-    It is easy to get help on how to use the package managers
-
+    ### Getting help on a package manager
+    ```bash
+    uv help
+    uv add --help
     ```
-    !pip help install
-    ```
+
+    For one-off ad-hoc installs into the current environment (without modifying `pyproject.toml`), `pip` still works — but for project work, prefer `uv add` so the dependency is tracked.
     """)
     return
 

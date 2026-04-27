@@ -10,7 +10,7 @@ def _():
     from pathlib import Path
     _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "ica"
-    return IMG_DIR, mo
+    return (mo,)
 
 
 @app.cell(hide_code=True)
@@ -148,7 +148,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo, output):
+def _(mo):
     # Single slider over component index. `stop=9` is hardcoded (must
     # match n_components-1 in the decompose() call above) — marimo-book's
     # precompute scanner only detects literal slider bounds, so a dynamic
