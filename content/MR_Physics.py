@@ -47,6 +47,7 @@ def _():
     import marimo as mo
     import numpy as np
     import plotly.graph_objects as go
+    from pathlib import Path
     from plotly.subplots import make_subplots
     from dartbrains_tools.mr_simulations import (
         GAMMA_H, GAMMA, TISSUE_PROPERTIES,
@@ -65,12 +66,22 @@ def _():
         SpinEnsembleWidget, EncodingWidget, KSpaceWidget, ConvolutionWidget,
     )
 
+    # Resolve IMG_DIR relative to book.yml so image paths work on every
+    # build host (locally + GitHub Actions runners). Hardcoded absolute
+    # paths get baked into the rendered HTML and 404 on the deployed site.
+    _ROOT = next(
+        p for p in (Path.cwd(), *Path.cwd().resolve().parents)
+        if (p / "book.yml").exists()
+    )
+    IMG_DIR = _ROOT / "images" / "signal_generation"
+
     return (
         CompassWidget,
         ConvolutionWidget,
         EncodingWidget,
         GAMMA,
         GAMMA_H,
+        IMG_DIR,
         KSpaceWidget,
         NetMagnetizationWidget,
         PrecessionWidget,
@@ -336,8 +347,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.image("/Users/lukechang/Github/dartbrains/images/signal_generation/b0.png")
+def _(IMG_DIR, mo):
+    mo.image(str(IMG_DIR / "b0.png"))
     return
 
 
@@ -1102,8 +1113,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.image("/Users/lukechang/Github/dartbrains/images/signal_generation/spin_echo_pulse_sequence.svg")
+def _(IMG_DIR, mo):
+    mo.image(str(IMG_DIR / "spin_echo_pulse_sequence.svg"))
     return
 
 
@@ -1142,8 +1153,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.image("/Users/lukechang/Github/dartbrains/images/signal_generation/gradient_echo_pulse_sequence.svg")
+def _(IMG_DIR, mo):
+    mo.image(str(IMG_DIR / "gradient_echo_pulse_sequence.svg"))
     return
 
 
