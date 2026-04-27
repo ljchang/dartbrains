@@ -5,7 +5,9 @@ description: An open-access introduction to functional neuroimaging analysis in 
 authors:
   - name: Luke Chang
     affiliation: Dartmouth College
-copyright: "2024"
+copyright: >-
+  &copy; Created by <a href="http://lukejchang.com">Luke J. Chang</a>.
+  Supported in part by NSF CAREER #1848370 and NIMH R01MH116026.
 license: CC-BY-SA-4.0
 repo: https://github.com/ljchang/dartbrains
 branch: v2-marimo-migration
@@ -27,12 +29,28 @@ launch_buttons:
   github: true
   download: true
 
+# Google Analytics. Replace `G-XXXXXXXXXX` with the GA4 Measurement ID
+# from analytics.google.com (the legacy `UA-138270939-1` Universal
+# Analytics property was retired by Google on 2023-07-01 — provision a
+# new GA4 property or use the auto-migrated one if Google created it).
+analytics:
+  provider: google
+  property: G-XXXXXXXXXX
+
 # Static reactivity for discrete mo.ui widgets (slider/dropdown/etc).
 # Each widget's downstream cells are re-rendered per value at build time
 # and cached as a JSON lookup table; a tiny JS shim swaps the visible
 # output as the reader moves the slider. No browser kernel needed.
+#
+# ICA chapter does whole-brain decomposition + per-component nilearn
+# rendering — base export takes ~10–20 s, so the default
+# max_seconds_per_page=60 trips with 10 components × ~15 s = 150 s
+# projected and the page silently renders static (no slider). Bump
+# both wall-clock and bytes caps to give heavy chapters room.
 precompute:
   enabled: true
+  max_seconds_per_page: 600         # 10 minutes
+  max_bytes_per_page: 50000000      # 50 MB
 
 # Per-widget-class default state — each anywidget's JS sees a sensible
 # value when it calls model.get("key") on initial render in the static
@@ -120,7 +138,6 @@ toc:
       - file: content/Group_Analysis.py
       - file: content/Thresholding_Group_Analyses.py
       - file: content/Connectivity.py
-        title: Introduction to Independent Components Analysis
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
       - file: content/RSA.py

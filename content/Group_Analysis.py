@@ -124,7 +124,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import os
     import glob
@@ -183,9 +183,6 @@ def _():
         epsilon = sigma * np.random.randn(n_tr)
         _y = _y + epsilon
         return _y
-    sim1 = simulate_timeseries(sigma=0)
-    sim2 = simulate_timeseries(sigma=0.05)
-    plot_timeseries(np.vstack([sim1, sim2]).T, labels=['Signal', 'Noisy Signal'])
     return (
         Brain_Data,
         get_file,
@@ -200,6 +197,14 @@ def _():
         sys,
         ttest_1samp,
     )
+
+
+@app.cell
+def _(np, plot_timeseries, simulate_timeseries):
+    sim1 = simulate_timeseries(sigma=0)
+    sim2 = simulate_timeseries(sigma=0.05)
+    plot_timeseries(np.vstack([sim1, sim2]).T, labels=['Signal', 'Noisy Signal'])
+    return
 
 
 @app.cell(hide_code=True)
