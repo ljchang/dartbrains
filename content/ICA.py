@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "ica"
     return IMG_DIR, mo
 
@@ -57,15 +57,13 @@ def _(mo):
 
 @app.cell
 def _():
-    import sys
     import numpy as np
     from numpy.fft import fft, fftfreq
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
     from nltools.data import Brain_Data
     from nilearn.plotting import view_img
-    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_tr
+    from dartbrains_tools.data import get_file, get_tr
 
     return (
         Brain_Data,

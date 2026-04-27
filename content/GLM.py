@@ -6,17 +6,13 @@ app = marimo.App()
 
 @app.cell(hide_code=True)
 def _():
-    import sys
     from pathlib import Path
 
     import marimo as mo
 
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
-    if str(_ROOT) not in sys.path:
-        sys.path.insert(0, str(_ROOT))
+    from dartbrains_tools.notebook_utils import youtube
 
-    from Code.notebook_utils import youtube
-
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "glm"
     return IMG_DIR, mo, youtube
 

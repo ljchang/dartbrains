@@ -10,6 +10,7 @@ authors = [
 ]
 dependencies = [
     "anywidget>=0.9.21",
+    "dartbrains-tools",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
     "huggingface-hub[cli,hf-xet]>=1.8.0",
@@ -42,3 +43,4 @@ build = [
 
 [tool.uv.sources]
 nltools = { git = "https://github.com/cosanlab/nltools", rev = "uv-refactor" }
+dartbrains-tools = { git = "https://github.com/ljchang/dartbrains-tools", rev = "main" }

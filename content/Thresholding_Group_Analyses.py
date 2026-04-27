@@ -7,13 +7,11 @@ app = marimo.App()
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
-    import sys
     from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
+    from dartbrains_tools.notebook_utils import youtube
+
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "thresholding"
-    if str(_ROOT) not in sys.path:
-        sys.path.insert(0, str(_ROOT))
-    from Code.notebook_utils import youtube
 
     return IMG_DIR, mo, youtube
 
@@ -98,8 +96,7 @@ def _():
     import plotly.graph_objects as go
     from nltools.data import Brain_Data
     from nltools.simulator import SimulateGrid
-    __import__("sys").path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_subjects
+    from dartbrains_tools.data import get_file, get_subjects
 
     return Brain_Data, SimulateGrid, get_file, get_subjects, go, np, plt, sns
 

@@ -9,9 +9,7 @@ def _():
     import marimo as mo
     from pathlib import Path
     import os
-    import sys
-    sys.path.insert(0, str(next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
+    from dartbrains_tools.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
     from huggingface_hub import hf_hub_download
     import nibabel as nib
     import matplotlib.pyplot as plt
@@ -19,7 +17,7 @@ def _():
     from nltools.data import Brain_Data
     from nltools.utils import get_anatomical
 
-    IMG_DIR = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir()) / "images" / "brain_data"
+    IMG_DIR = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists()) / "images" / "brain_data"
     return (
         Brain_Data,
         get_anatomical,
@@ -121,7 +119,7 @@ def _(mo):
     3. **Filenames carry metadata** as `key-value` *entities* separated by underscores: `sub-S01_task-localizer_events.tsv` tells you the subject, task, and content type at a glance.
     4. **Sidecar JSON files** describe acquisition parameters in a machine-readable format (echo time, slice timing, phase encoding direction, …), either alongside each scan or "inherited" from a top-level file like `task-localizer_bold.json`.
 
-    Not only does this specification standardize within labs, it also makes collaboration, software development, and data publishing dramatically easier. Because the format is consistent, tools like [pybids](https://github.com/bids-standard/pybids) can programmatically index and query an entire BIDS directory. In this course, we use lightweight helper functions in `Code.data` that download individual files on demand from HuggingFace Hub.
+    Not only does this specification standardize within labs, it also makes collaboration, software development, and data publishing dramatically easier. Because the format is consistent, tools like [pybids](https://github.com/bids-standard/pybids) can programmatically index and query an entire BIDS directory. In this course, we use lightweight helper functions in `dartbrains_tools.data` that download individual files on demand from HuggingFace Hub.
     """)
     return
 
@@ -186,10 +184,10 @@ def _(mo):
     mo.md(r"""
     ### Accessing the Dataset
 
-    The Localizer dataset is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer) in BIDS format. We provide helper functions in `Code.data` that download files on demand and cache them locally:
+    The Localizer dataset is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer) in BIDS format. We provide helper functions in `dartbrains_tools.data` that download files on demand and cache them locally:
 
     ```python
-    from Code.data import get_file, get_subjects, load_events
+    from dartbrains_tools.data import get_file, get_subjects, load_events
 
     # Get the preprocessed BOLD file for subject S01
     bold_path = get_file('S01', 'derivatives', 'bold')

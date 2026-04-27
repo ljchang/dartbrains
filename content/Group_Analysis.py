@@ -5,15 +5,14 @@ app = marimo.App()
 
 
 @app.cell(hide_code=True)
-def _(sys):
+def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
-    IMG_DIR = _ROOT / "images" / "group_analysis"
-    if str(_ROOT) not in sys.path:
-        sys.path.insert(0, str(_ROOT))
-    from Code.notebook_utils import youtube
 
+    from dartbrains_tools.notebook_utils import youtube
+
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
+    IMG_DIR = _ROOT / "images" / "group_analysis"
     return IMG_DIR, mo, youtube
 
 
@@ -129,7 +128,6 @@ def _(mo):
 def _():
     import os
     import glob
-    import sys
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -140,8 +138,7 @@ def _():
     from nltools.stats import regress
     from nltools.external import glover_hrf
     from scipy.stats import ttest_1samp
-    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
+    from dartbrains_tools.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
     def plot_timeseries(data, labels=None, title=None, linewidth=2):
         """Plot a timeseries as an interactive plotly figure.
@@ -365,7 +362,6 @@ def _(mo):
 
     ```
     import os
-    import sys
     from tqdm import tqdm
     import pandas as pd
     import numpy as np
@@ -374,8 +370,7 @@ def _(mo):
     from nltools.data import Brain_Data, Design_Matrix
     from nltools.file_reader import onsets_to_dm
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
-    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
+    from dartbrains_tools.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
 
     tr = get_tr()
     fwhm = 6

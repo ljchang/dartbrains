@@ -4,7 +4,6 @@ __generated_with = "0.23.2"
 app = marimo.App(width="medium")
 
 with app.setup(hide_code=True):
-    import sys
     import marimo as mo
     import numpy as np
     import matplotlib.pyplot as plt
@@ -14,12 +13,10 @@ with app.setup(hide_code=True):
     from scipy.special import gamma as gamma_func
     from scipy.signal import butter, filtfilt, freqz, sosfreqz
 
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
-    if str(_ROOT) not in sys.path:
-        sys.path.insert(0, str(_ROOT))
-    IMG_DIR = _ROOT / "images" / "signal_processing"
+    from dartbrains_tools.notebook_utils import youtube
 
-    from Code.notebook_utils import youtube
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
+    IMG_DIR = _ROOT / "images" / "signal_processing"
 
     def glover_hrf(tr_val, oversampling=1):
         _dt = tr_val / oversampling
