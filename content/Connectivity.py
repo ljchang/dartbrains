@@ -1,10 +1,10 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.1"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
     from pathlib import Path
@@ -45,16 +45,15 @@ def _(IMG_DIR, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+ 
     """)
     return
 
 
 @app.cell
-def _():
-    from IPython.display import YouTubeVideo
-
-    YouTubeVideo('J0KX_rW0hmc')
-    return (YouTubeVideo,)
+def _(youtube):
+    youtube('J0KX_rW0hmc')
+    return
 
 
 @app.cell(hide_code=True)
@@ -66,8 +65,8 @@ def _(mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('OVAQujut_1o')
+def _(youtube):
+    youtube('OVAQujut_1o')
     return
 
 
@@ -93,41 +92,54 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+    from scipy.fft import fft, fftfreq
     from nltools.data import Brain_Data, Design_Matrix, Adjacency
     from nltools.mask import expand_mask, roi_to_brain
     from nltools.stats import zscore, fdr, one_sample_permutation
     from nltools.file_reader import onsets_to_dm
-    from nltools.plotting import component_viewer
     from scipy.stats import binom, ttest_1samp
     from sklearn.metrics import pairwise_distances
     from copy import deepcopy
     import networkx as nx
     from nilearn.plotting import plot_stat_map, view_img_on_surf
     import nibabel as nib
-    import sys
-    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
+    __import__("sys").path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
     from Code.data import get_file, get_tr, load_events, load_confounds, get_subjects
+    from Code.notebook_utils import youtube
+
+
+    def get_csf_mask_path(subject):
+        """Per-subject CSF probability mask from fmriprep outputs."""
+        from pathlib import Path as _Path
+        bold_path = _Path(get_file(subject, 'derivatives', 'bold'))
+        return str(bold_path.parent.parent / 'anat' /
+                   f'sub-{subject}_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz')
 
     return (
         Adjacency,
         Brain_Data,
         Design_Matrix,
-        component_viewer,
         expand_mask,
+        fft,
+        fftfreq,
+        get_csf_mask_path,
         get_file,
         get_tr,
+        go,
         load_confounds,
         load_events,
+        make_subplots,
         nib,
         np,
         nx,
-        onsets_to_dm,
         pairwise_distances,
         pd,
         plt,
         roi_to_brain,
-        sns,
         view_img_on_surf,
+        youtube,
         zscore,
     )
 
@@ -141,11 +153,13 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file):
+def _(Brain_Data, get_file, mo):
     sub = 'S01'
     _fwhm = 6
     data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
-    smoothed = data.smooth(fwhm=_fwhm)
+
+    with mo.persistent_cache(name="connectivity_smoothed"):
+        smoothed = data.smooth(fwhm=_fwhm)
     return data, smoothed, sub
 
 
@@ -160,15 +174,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data):
-    mask = Brain_Data('../masks/k50_2mm.nii.gz')
-    return
-
-
-@app.cell
-def _(Brain_Data):
-    mask_1 = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
-    mask_1.plot()
+def _(Brain_Data, mo):
+    with mo.persistent_cache(name="connectivity_k50_mask"):
+        mask_1 = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+    mask_1.iplot()
     return (mask_1,)
 
 
@@ -185,7 +194,7 @@ def _(mo):
 @app.cell
 def _(expand_mask, mask_1):
     mask_x = expand_mask(mask_1)
-    _f = mask_x[0:5].plot()
+    mask_x[0:5].iplot()
     return (mask_x,)
 
 
@@ -200,13 +209,21 @@ def _(mo):
 
 
 @app.cell
-def _(mask_x, plt, smoothed):
+def _(go, mask_x, smoothed):
     vmpfc = smoothed.extract_roi(mask=mask_x[32])
 
-    plt.figure(figsize=(15,5))
-    plt.plot(vmpfc, linewidth=3)
-    plt.ylabel('Mean Intensitiy', fontsize=18)
-    plt.xlabel('Time (TRs)', fontsize=18)
+    _fig = go.Figure()
+    _fig.add_trace(go.Scatter(
+        y=vmpfc, mode='lines', name='vmPFC',
+        line=dict(width=2),
+        hovertemplate='TR=%{x}<br>intensity=%{y:.2f}<extra></extra>',
+    ))
+    _fig.update_layout(
+        xaxis_title='Time (TRs)', yaxis_title='Mean Intensity',
+        height=350, hovermode='x unified',
+        margin=dict(l=60, r=20, t=20, b=50),
+    )
+    _fig
     return (vmpfc,)
 
 
@@ -233,6 +250,7 @@ def _(
     Brain_Data,
     Design_Matrix,
     data,
+    get_csf_mask_path,
     get_tr,
     load_confounds,
     pd,
@@ -245,14 +263,25 @@ def _(
     _fwhm = 6
     n_tr = len(data)
 
+
     def make_motion_covariates(mc, tr):
-        z_mc = zscore(_mc)
-        all_mc = pd.concat([z_mc, z_mc ** 2, z_mc.diff(), z_mc.diff() ** 2], axis=1)
+        z_mc = zscore(mc)
+        parts = {
+            '': z_mc,
+            '_sq': z_mc ** 2,
+            '_diff': z_mc.diff(),
+            '_diff_sq': z_mc.diff() ** 2,
+        }
+        all_mc = pd.concat(
+            [df.rename(columns=lambda c: f'{c}{suffix}') for suffix, df in parts.items()],
+            axis=1,
+        )
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1 / tr)
+
+
     vmpfc_1 = zscore(pd.DataFrame(vmpfc, columns=['vmpfc']))
-    _csf_mask = Brain_Data('../masks/csf.nii.gz')
-    _csf_mask = _csf_mask.threshold(upper=0.7, binarize=True)
+    _csf_mask = Brain_Data(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
     csf = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
     _covariates = load_confounds(sub)
@@ -260,15 +289,17 @@ def _(
     mc_cov = make_motion_covariates(_mc, tr)
     dm = Design_Matrix(pd.concat([vmpfc_1, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
     dm = dm.add_poly(order=2, include_lower=True)
+    dm.convolved = ['vmpfc']
+
     smoothed.X = dm
-    _stats = smoothed.regress()
-    vmpfc_conn = _stats['beta'][0]
+    _stats_vmpfc = smoothed.regress()
+    vmpfc_conn = _stats_vmpfc['beta']
     return csf, make_motion_covariates, mc_cov, spikes, tr, vmpfc_1, vmpfc_conn
 
 
 @app.cell
 def _(vmpfc_conn):
-    vmpfc_conn.threshold(upper=25, lower=-25).plot()
+    vmpfc_conn.threshold(upper=25, lower=-25).iplot()
     return
 
 
@@ -296,7 +327,11 @@ def _(mo):
 
 @app.cell
 def _(get_file, nib):
-    nib.load(get_file('S01', 'derivatives', 'bold'))
+    _img = nib.load(get_file('S01', 'derivatives', 'bold'))
+    print(f'shape: {_img.shape}')
+    print(f'voxel size: {_img.header.get_zooms()}')
+    print(f'TR: {_img.header.get_zooms()[3]} s')
+    _img
     return
 
 
@@ -309,29 +344,44 @@ def _(
     load_events,
     mc_cov,
     nib,
-    onsets_to_dm,
+    np,
     pd,
+    plt,
     spikes,
     tr,
     vmpfc_1,
 ):
     def load_bids_events(subject):
-        """Create a design_matrix instance from BIDS event file"""
+        """Create a Design_Matrix from BIDS event file.
+
+        Bypasses nltools.onsets_to_dm because that wrapper has a column-name
+        mangling bug when TR is supplied. Calls nilearn directly with
+        hrf_model='glover', then resets the index so the result can be
+        horizontally concatenated with other 0..n_tr-indexed DataFrames.
+        """
+        from nilearn.glm.first_level import make_first_level_design_matrix as _make_dm
         tr = get_tr()
         n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
         onsets = load_events(subject)
-        onsets.columns = ['Onset', 'Duration', 'Stim']
-        return onsets_to_dm(onsets, sampling_freq=1 / tr, run_length=n_tr)
+        frame_times = np.arange(n_tr) * tr
+        dm_raw = _make_dm(frame_times, events=onsets, hrf_model='glover', drift_model=None)
+        convolved = [c for c in dm_raw.columns if c != 'constant']
+        return Design_Matrix(dm_raw, convolved=convolved, sampling_freq=1 / tr,
+                             polys=['constant']).reset_index(drop=True)
+
+
     dm_1 = load_bids_events('S01')
     motor_variables = ['video_left_hand', 'audio_left_hand', 'video_right_hand', 'audio_right_hand']
     ppi_dm = dm_1.drop(motor_variables, axis=1)
     ppi_dm['motor'] = pd.Series(dm_1.loc[:, motor_variables].sum(axis=1))
     ppi_dm_conv = ppi_dm.convolve()
-    ppi_dm_conv['vmpfc'] = vmpfc_1
+    ppi_dm_conv['vmpfc'] = vmpfc_1.values
     ppi_dm_conv['vmpfc_motor'] = ppi_dm_conv['vmpfc'] * ppi_dm_conv['motor_c0']
     dm_1 = Design_Matrix(pd.concat([ppi_dm_conv, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
     dm_1 = dm_1.add_poly(order=2, include_lower=True)
+    dm_1.convolved = list(ppi_dm_conv.columns)
     dm_1.heatmap()
+    plt.clf()
     return (dm_1,)
 
 
@@ -350,7 +400,7 @@ def _(dm_1, np, smoothed):
     smoothed.X = dm_1
     ppi_stats = smoothed.regress()
     vmpfc_motor_ppi = ppi_stats['beta'][int(np.where(smoothed.X.columns == 'vmpfc_motor')[0][0])]
-    vmpfc_motor_ppi.plot()
+    vmpfc_motor_ppi.iplot()
     return (vmpfc_motor_ppi,)
 
 
@@ -396,8 +446,8 @@ def _(mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('gv5ENgW0bbs')
+def _(youtube):
+    youtube('gv5ENgW0bbs')
     return
 
 
@@ -463,8 +513,8 @@ def _(mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('Klp-8t5GLEg')
+def _(youtube):
+    youtube('Klp-8t5GLEg')
     return
 
 
@@ -499,6 +549,7 @@ def _(IMG_DIR, mo):
 def _(
     Brain_Data,
     Design_Matrix,
+    get_csf_mask_path,
     load_confounds,
     make_motion_covariates,
     pd,
@@ -508,7 +559,7 @@ def _(
     vmpfc_1,
     zscore,
 ):
-    _csf_mask = Brain_Data('../masks/csf.nii.gz')
+    _csf_mask = Brain_Data(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
     csf_1 = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes_1 = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
     _covariates = load_confounds(sub)
@@ -516,9 +567,11 @@ def _(
     mc_cov_1 = make_motion_covariates(_mc, tr)
     dm_2 = Design_Matrix(pd.concat([vmpfc_1, csf_1, mc_cov_1, spikes_1.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
     dm_2 = dm_2.add_poly(order=2, include_lower=True)
+    dm_2.convolved = ['vmpfc']
+
     smoothed.X = dm_2
-    _stats = smoothed.regress()
-    smoothed_denoised = _stats['residual']
+    _stats_denoise = smoothed.regress()
+    smoothed_denoised = _stats_denoise['residual']
     return (smoothed_denoised,)
 
 
@@ -547,8 +600,80 @@ def _(mo):
 
 
 @app.cell
-def _(component_viewer, get_tr, pca_stats_output):
-    component_viewer(pca_stats_output, tr=get_tr())
+def _(mo, pca_stats_output):
+    component_slider = mo.ui.slider(
+        start=0, stop=len(pca_stats_output['components']) - 1, value=0, step=1,
+        label='Component', show_value=True, full_width=True,
+    )
+    threshold_slider = mo.ui.slider(
+        start=0.0, stop=4.0, value=2.0, step=0.1,
+        label='Threshold (z)', show_value=True, full_width=True,
+    )
+    mo.hstack([component_slider, threshold_slider], justify='start')
+    return component_slider, threshold_slider
+
+
+@app.cell
+def _(
+    component_slider,
+    fft,
+    fftfreq,
+    get_tr,
+    go,
+    make_subplots,
+    mo,
+    np,
+    pca_stats_output,
+    threshold_slider,
+):
+    _comp = component_slider.value
+    _thresh = threshold_slider.value
+
+    # z-score and threshold the selected component map
+    _component = pca_stats_output['components'][_comp]
+    _zscored = (_component - _component.mean()) * (1 / _component.std())
+    _zscored.data = np.where(np.abs(_zscored.data) <= _thresh, 0, _zscored.data)
+
+    # Title with variance explained (if PCA)
+    import sklearn.decomposition as _skd
+    _decomp = pca_stats_output['decomposition_object']
+    if isinstance(_decomp, _skd.PCA):
+        _var = _decomp.explained_variance_ratio_[_comp]
+        _title = f'Component {_comp}/{len(pca_stats_output["components"])} — Variance Explained: {_var:.2%}'
+    else:
+        _title = f'Component {_comp}/{len(pca_stats_output["components"])}'
+
+    # Timecourse + power spectrum (plotly subplots)
+    _weights = pca_stats_output['weights'][:, _comp]
+    _y = fft(_weights)
+    _freqs = fftfreq(len(_y), d=get_tr())
+    _pos_mask = _freqs > 0
+
+    _fig = make_subplots(
+        rows=2, cols=1, vertical_spacing=0.18,
+        subplot_titles=(f'Timecourse (TR={get_tr()}s)', 'Power Spectrum'),
+    )
+    _fig.add_trace(go.Scatter(
+        y=_weights, mode='lines', line=dict(color='red', width=2),
+        hovertemplate='TR=%{x}<br>intensity=%{y:.3f}<extra></extra>',
+        name='timecourse',
+    ), row=1, col=1)
+    _fig.add_trace(go.Scatter(
+        x=_freqs[_pos_mask], y=np.abs(_y)[_pos_mask] ** 2,
+        mode='lines', line=dict(width=2),
+        hovertemplate='f=%{x:.3f} Hz<br>power=%{y:.2f}<extra></extra>',
+        name='power',
+    ), row=2, col=1)
+    _fig.update_xaxes(title_text='Time (TRs)', row=1, col=1)
+    _fig.update_yaxes(title_text='Intensity (AU)', row=1, col=1)
+    _fig.update_xaxes(title_text='Frequency (Hz)', row=2, col=1)
+    _fig.update_yaxes(title_text='Power', row=2, col=1)
+    _fig.update_layout(
+        title=_title, height=600, showlegend=False,
+        margin=dict(l=60, r=20, t=80, b=50),
+    )
+
+    mo.vstack([_zscored.iplot(), _fig])
     return
 
 
@@ -563,10 +688,19 @@ def _(mo):
 
 
 @app.cell
-def _(pca_stats_output, plt):
-    plt.plot(pca_stats_output['decomposition_object'].singular_values_)
-    plt.xlabel('Component', fontsize=18)
-    plt.ylabel('Singular Values', fontsize=18)
+def _(go, np, pca_stats_output):
+    _sv = pca_stats_output['decomposition_object'].singular_values_
+    _fig = go.Figure()
+    _fig.add_trace(go.Scatter(
+        x=np.arange(len(_sv)), y=_sv, mode='lines+markers',
+        line=dict(width=2),
+        hovertemplate='component %{x}<br>singular value=%{y:.3f}<extra></extra>',
+    ))
+    _fig.update_layout(
+        xaxis_title='Component', yaxis_title='Singular Value',
+        height=350, margin=dict(l=60, r=20, t=20, b=50),
+    )
+    _fig
     return
 
 
@@ -581,16 +715,24 @@ def _(mo):
 
 
 @app.cell
-def _(np, pca_stats_output, plt):
-    _f, _a = plt.subplots(ncols=2, figsize=(12, 5))
-    _a[0].plot(pca_stats_output['decomposition_object'].explained_variance_ratio_)
-    _a[0].set_ylabel('Percent Variance Explained', fontsize=18)
-    _a[0].set_xlabel('Component', fontsize=18)
-    _a[0].set_title('Variance Explained', fontsize=18)
-    _a[1].plot(np.cumsum(pca_stats_output['decomposition_object'].explained_variance_ratio_))
-    _a[1].set_ylabel('Percent Variance Explained', fontsize=18)
-    _a[1].set_xlabel('Component', fontsize=18)
-    _a[1].set_title('Cumulative Variance Explained', fontsize=18)
+def _(go, make_subplots, np, pca_stats_output):
+    _var = pca_stats_output['decomposition_object'].explained_variance_ratio_
+    _cum = np.cumsum(_var)
+    _fig = make_subplots(rows=1, cols=2, subplot_titles=('Variance Explained', 'Cumulative Variance Explained'))
+    _fig.add_trace(go.Scatter(x=np.arange(len(_var)), y=_var, mode='lines+markers',
+                              name='per-component', line=dict(width=2),
+                              hovertemplate='component %{x}<br>variance=%{y:.3%}<extra></extra>'),
+                   row=1, col=1)
+    _fig.add_trace(go.Scatter(x=np.arange(len(_cum)), y=_cum, mode='lines+markers',
+                              name='cumulative', line=dict(width=2),
+                              hovertemplate='component %{x}<br>cumulative=%{y:.3%}<extra></extra>'),
+                   row=1, col=2)
+    _fig.update_xaxes(title_text='Component', row=1, col=1)
+    _fig.update_xaxes(title_text='Component', row=1, col=2)
+    _fig.update_yaxes(title_text='Percent Variance Explained', row=1, col=1, tickformat='.0%')
+    _fig.update_yaxes(title_text='Percent Variance Explained', row=1, col=2, tickformat='.0%')
+    _fig.update_layout(height=400, showlegend=False, margin=dict(l=60, r=20, t=50, b=50))
+    _fig
     return
 
 
@@ -633,8 +775,8 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(YouTubeVideo):
-    YouTubeVideo('v8ls5VED1ng')
+def _(youtube):
+    youtube('v8ls5VED1ng')
     return
 
 
@@ -651,12 +793,20 @@ def _(mo):
 
 
 @app.cell
-def _(mask_1, plt, smoothed_denoised):
+def _(go, mask_1, smoothed_denoised):
     rois = smoothed_denoised.extract_roi(mask=mask_1)
-    plt.figure(figsize=(15, 5))
-    plt.plot(rois.T)
-    plt.ylabel('Mean Intensitiy', fontsize=18)
-    plt.xlabel('Time (TRs)', fontsize=18)
+    _fig = go.Figure()
+    for i in range(rois.shape[0]):
+        _fig.add_trace(go.Scatter(
+            y=rois[i], mode='lines', name=f'ROI {i}', line=dict(width=1),
+            hovertemplate=f'ROI {i}<br>TR=%{{x}}<br>intensity=%{{y:.2f}}<extra></extra>',
+        ))
+    _fig.update_layout(
+        xaxis_title='Time (TRs)', yaxis_title='Mean Intensity',
+        height=400, showlegend=False, hovermode='closest',
+        margin=dict(l=60, r=20, t=20, b=50),
+    )
+    _fig
     return (rois,)
 
 
@@ -671,10 +821,19 @@ def _(mo):
 
 
 @app.cell
-def _(pairwise_distances, rois, sns):
+def _(go, pairwise_distances, rois):
     roi_corr = 1 - pairwise_distances(rois, metric='correlation')
 
-    sns.heatmap(roi_corr, square=True, vmin=-1, vmax=1, cmap='RdBu_r')
+    _fig = go.Figure(go.Heatmap(
+        z=roi_corr, zmin=-1, zmax=1, colorscale='RdBu_r', reversescale=True,
+        hovertemplate='ROI %{x} → %{y}<br>r=%{z:.3f}<extra></extra>',
+    ))
+    _fig.update_layout(
+        title='ROI-to-ROI correlation', height=600, width=600,
+        yaxis=dict(autorange='reversed', scaleanchor='x'),
+        margin=dict(l=60, r=20, t=50, b=50),
+    )
+    _fig
     return (roi_corr,)
 
 
@@ -707,18 +866,53 @@ def _(mo):
 
 
 @app.cell
-def _(a_thresholded, nx, plt):
-    plt.figure(figsize=(20,15))
+def _(a_thresholded, go, nx):
     G = a_thresholded.to_graph()
-    pos = nx.kamada_kawai_layout(G)
-    node_and_degree = G.degree()
-    nx.draw_networkx_edges(G, pos, width=3, alpha=.2)
-    nx.draw_networkx_labels(G, pos, font_size=14, font_color='darkslategray')
+    _pos = nx.kamada_kawai_layout(G)
+    _node_degree = dict(G.degree())
 
-    nx.draw_networkx_nodes(G, pos, nodelist=list(dict(node_and_degree).keys()),
-                           node_size=[x[1]*100 for x in node_and_degree],
-                           node_color=list(dict(node_and_degree).values()),
-                           cmap=plt.cm.Reds_r, linewidths=2, edgecolors='darkslategray', alpha=1)
+    # Edges: flatten to (x0, x1, None, x0, x1, None, ...) for a single Scatter trace
+    _edge_x = []
+    _edge_y = []
+    for u, v in G.edges():
+        x0, y0 = _pos[u]
+        x1, y1 = _pos[v]
+        _edge_x.extend([x0, x1, None])
+        _edge_y.extend([y0, y1, None])
+
+    # Nodes
+    _node_x = [_pos[n][0] for n in G.nodes()]
+    _node_y = [_pos[n][1] for n in G.nodes()]
+    _node_text = [f'ROI {n}<br>degree={_node_degree[n]}' for n in G.nodes()]
+    _node_labels = [str(n) for n in G.nodes()]
+    _node_sizes = [max(_node_degree[n] * 4, 8) for n in G.nodes()]
+    _node_colors = [_node_degree[n] for n in G.nodes()]
+
+    _fig = go.Figure()
+    _fig.add_trace(go.Scatter(
+        x=_edge_x, y=_edge_y, mode='lines',
+        line=dict(width=1.5, color='rgba(80,80,100,0.25)'),
+        hoverinfo='skip', showlegend=False,
+    ))
+    _fig.add_trace(go.Scatter(
+        x=_node_x, y=_node_y, mode='markers+text',
+        marker=dict(
+            size=_node_sizes, color=_node_colors, colorscale='Reds',
+            reversescale=True, line=dict(color='darkslategray', width=2),
+            colorbar=dict(title='Degree', thickness=15),
+        ),
+        text=_node_labels, textposition='middle center',
+        textfont=dict(color='darkslategray', size=10),
+        hovertext=_node_text, hoverinfo='text', showlegend=False,
+    ))
+    _fig.update_layout(
+        height=700, width=900,
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, scaleanchor='x'),
+        margin=dict(l=20, r=20, t=20, b=20),
+        plot_bgcolor='white',
+    )
+    _fig
     return (G,)
 
 
@@ -731,10 +925,17 @@ def _(mo):
 
 
 @app.cell
-def _(G, plt):
-    plt.hist(dict(G.degree).values())
-    plt.ylabel('Frequency', fontsize=18)
-    plt.xlabel('Degree', fontsize=18)
+def _(G, go):
+    _degrees = list(dict(G.degree).values())
+    _fig = go.Figure(go.Histogram(
+        x=_degrees, name='degree',
+        hovertemplate='degree=%{x}<br>count=%{y}<extra></extra>',
+    ))
+    _fig.update_layout(
+        xaxis_title='Degree', yaxis_title='Frequency',
+        height=350, margin=dict(l=60, r=20, t=20, b=50),
+    )
+    _fig
     return
 
 
@@ -754,7 +955,7 @@ def _(mo):
 def _(G, mask_x, pd, roi_to_brain):
     degree = pd.Series(dict(G.degree()))
     brain_degree = roi_to_brain(degree, mask_x)
-    brain_degree.plot()
+    brain_degree.iplot()
     return (brain_degree,)
 
 
