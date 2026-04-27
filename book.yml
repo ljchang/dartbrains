@@ -84,8 +84,6 @@ toc:
   - section: Course Overview
     children:
       - file: content/Instructors.md
-      - file: content/Syllabus.md
-      - file: content/Schedule.md
 
   - section: Computing Resources
     children:
@@ -103,9 +101,8 @@ toc:
  
   - section: Neuroimaging Analysis
     children:
-      - file: content/Intro_to_Neuroimaging.md
       - file: content/MR_Physics.py
-        title: Signal Generation
+        title: Introduction to Magnetic Resonance Imaging
         mode: wasm   # 33 widgets, joint-heavy → WASM gives full reactivity
       - file: content/ICA.py
         title: Separating Signal from Noise with ICA
