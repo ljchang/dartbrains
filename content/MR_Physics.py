@@ -48,10 +48,7 @@ def _():
     import numpy as np
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
-    import sys
-    from pathlib import Path
-    sys.path.insert(0, str(next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.mr_simulations import (
+    from dartbrains_tools.mr_simulations import (
         GAMMA_H, GAMMA, TISSUE_PROPERTIES,
         rotation_x, rotation_y, rotation_z,
         apply_rf_pulse, apply_relaxation, simulate_bloch,
@@ -63,7 +60,7 @@ def _():
         plot_contrast_bars, plot_pulse_sequence,
         plot_kspace_and_image,
     )
-    from Code.mr_widgets import (
+    from dartbrains_tools.mr_widgets import (
         CompassWidget, NetMagnetizationWidget, PrecessionWidget,
         SpinEnsembleWidget, EncodingWidget, KSpaceWidget, ConvolutionWidget,
     )

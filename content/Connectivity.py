@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "connectivity"
     return IMG_DIR, mo
 
@@ -105,9 +105,8 @@ def _():
     import networkx as nx
     from nilearn.plotting import plot_stat_map, view_img_on_surf
     import nibabel as nib
-    __import__("sys").path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_tr, load_events, load_confounds, get_subjects
-    from Code.notebook_utils import youtube
+    from dartbrains_tools.data import get_file, get_tr, load_events, load_confounds, get_subjects
+    from dartbrains_tools.notebook_utils import youtube
 
 
     def get_csf_mask_path(subject):

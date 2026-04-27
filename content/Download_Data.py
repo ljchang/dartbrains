@@ -66,17 +66,14 @@ def _(mo):
 
     ### Using the Course Helper Module
 
-    The `Code.data` module provides convenient functions to download and access any file in the dataset:
+    The `dartbrains_tools.data` module provides convenient functions to download and access any file in the dataset:
     """)
     return
 
 
 @app.cell
 def _():
-    import sys
-    from pathlib import Path
-    sys.path.insert(0, str(next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_file, get_subjects, load_events, get_tr, REPO_ID
+    from dartbrains_tools.data import get_file, get_subjects, load_events, get_tr, REPO_ID
 
     # List all subjects
     print(f"Subjects: {get_subjects()}")

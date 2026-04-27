@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "plotting"
     return IMG_DIR, mo
 

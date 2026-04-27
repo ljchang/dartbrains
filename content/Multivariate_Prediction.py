@@ -8,7 +8,7 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())
+    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "multivariate"
     return IMG_DIR, mo
 
@@ -122,7 +122,6 @@ def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
-    import sys
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -130,8 +129,7 @@ def _():
     from nltools.data import Brain_Data
     from nltools.mask import expand_mask
     from nilearn.plotting import view_img_on_surf
-    sys.path.insert(0, str(next(p for p in (__import__("pathlib").Path.cwd(), *__import__("pathlib").Path.cwd().resolve().parents) if (p / "book.yml").exists() or (p / "Code").is_dir())))
-    from Code.data import get_subjects, get_file
+    from dartbrains_tools.data import get_subjects, get_file
 
     return (
         Brain_Data,
