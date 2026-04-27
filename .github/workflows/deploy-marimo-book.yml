@@ -33,6 +33,25 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-groups
 
+      # Restore the marimo-book build cache so unchanged chapters skip
+      # re-rendering. The cache is keyed on content/, book.yml, and
+      # uv.lock — any of those changing cuts a fresh cache. restore-keys
+      # falls back to the most recent partial-match cache so even fresh
+      # keys start warm; BuildCache then validates each entry against
+      # current source hashes and re-renders only what's drifted.
+      #
+      # First build after this step lands pays full cold-build cost;
+      # subsequent unmodified-content builds drop to ~1-2 min.
+      # Heaviest chapters (ICA, Connectivity) are the big wins — their
+      # cold renders are 2-12 minutes each.
+      - name: Restore marimo-book build cache
+        uses: actions/cache@v4
+        with:
+          path: .marimo_book_cache
+          key: mb-${{ runner.os }}-${{ hashFiles('content/**', 'book.yml', 'uv.lock') }}
+          restore-keys: |
+            mb-${{ runner.os }}-
+
       - name: Validate book.yml
         run: uv run marimo-book check
 
