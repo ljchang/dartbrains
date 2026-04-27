@@ -14,7 +14,7 @@ At the Dartmouth Brain Imaging Center (DBIC), all data collected on the scanner 
 
 ### Download Data with DataLad
 
-For this tutorial, we can use download sample data using [datalad](http://handbook.datalad.org/en/latest/) with the [Download Data](Download_Data.ipynb) tutorial. 
+For this tutorial, we can use download sample data using [datalad](http://handbook.datalad.org/en/latest/) with the [Download Data](Download_Data.md) tutorial. 
 
 ### Using Discovery
 
@@ -37,7 +37,7 @@ The discovery system can be accessed via `ssh` using a terminal. There are a num
 
 ### Preprocessing with fmriprep
 
-fmriprep is an fMRI data preprocessing pipeline that is discussed throughout the course in the [fmriprep](fmriprep) subsection of the [preprocessing](Preprocessing.ipynb) and also the [download data](Download_Data.ipynb) tutorial.
+fmriprep is an fMRI data preprocessing pipeline that is discussed throughout the course in the [preprocessing](Preprocessing.md) and [download data](Download_Data.md) tutorials.
 
 ## Set-up before running fMRIPrep
 

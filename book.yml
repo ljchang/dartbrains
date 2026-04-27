@@ -1,0 +1,166 @@
+# Full dartbrains TOC for marimo-book.
+
+title: DartBrains
+description: An open-access introduction to functional neuroimaging analysis in Python
+authors:
+  - name: Luke Chang
+    affiliation: Dartmouth College
+copyright: >-
+  &copy; Created by <a href="http://lukejchang.com">Luke J. Chang</a>.
+  Supported in part by NSF CAREER #1848370 and NIMH R01MH116026.
+license: CC-BY-SA-4.0
+repo: https://github.com/ljchang/dartbrains
+branch: v2-marimo-migration
+
+logo: images/logo/dartbrains_logo_square_transparent.png
+favicon: images/logo/favicon.ico
+logo_placement: sidebar
+
+theme:
+  palette:
+    primary: "#00693E"   # Dartmouth green
+    accent:  "#A5D75F"
+  font:
+    text: Source Sans Pro
+    code: JetBrains Mono
+
+launch_buttons:
+  molab: true
+  github: true
+  download: true
+
+# Google Analytics — GA4 Measurement ID for dartbrains.org.
+# (The legacy UA-138270939-1 Universal Analytics property was retired
+# by Google on 2023-07-01; this is its GA4 successor.)
+analytics:
+  provider: google
+  property: G-MQK18K92KD
+
+# Static reactivity for discrete mo.ui widgets (slider/dropdown/etc).
+# Each widget's downstream cells are re-rendered per value at build time
+# and cached as a JSON lookup table; a tiny JS shim swaps the visible
+# output as the reader moves the slider. No browser kernel needed.
+#
+# Heavy chapters (whole-brain decomposition + per-component nilearn
+# rendering) trip the default caps and silently render static (no
+# slider). Empirically:
+#   - ICA: ~10 renders × ~15 s = ~150 s
+#   - Connectivity: ~41 renders × ~16 s = ~677 s
+# Bump both wall-clock and bytes caps so these chapters can precompute.
+precompute:
+  enabled: true
+  max_seconds_per_page: 1200        # 20 minutes
+  max_bytes_per_page: 50000000      # 50 MB
+
+# Per-widget-class default state — each anywidget's JS sees a sensible
+# value when it calls model.get("key") on initial render in the static
+# build (no kernel running to update state from cell-level kwargs).
+widget_defaults:
+  CompassWidget:
+    b0: 3.0
+  NetMagnetizationWidget:
+    n_protons: 100
+    b0_on: false
+  PrecessionWidget:
+    b0: 3.0
+    flip_angle: 90.0
+    t1: 0.0
+    t2: 0.0
+    show_relaxation: false
+    paused: false
+  SpinEnsembleWidget:
+    sequence_type: spin_echo
+    speed: 1.0
+  KSpaceWidget:
+    mask_type: full
+    radius_fraction: 1.0
+    speed: 1.0
+  EncodingWidget:
+    speed: 1.0
+  ConvolutionWidget:
+    pattern: block
+    speed: 1.0
+  TransformCubeWidget:
+    tx: 0
+    ty: 0
+    tz: 0
+    rot_x: 0
+    rot_y: 0
+    rot_z: 0
+    scale_x: 1.0
+    scale_y: 1.0
+    scale_z: 1.0
+  CostFunctionWidget:
+    trans_x: 0
+    trans_y: 0
+  SmoothingWidget:
+    fwhm: 0
+
+toc:
+  - file: content/intro.md
+
+  - section: Course Overview
+    children:
+      - file: content/Instructors.md
+
+  - section: Computing Resources
+    children:
+      - file: content/Download_Data.py
+      - file: content/Introduction_to_Programming.py
+      - file: content/Introduction_to_Pandas.py
+      - file: content/Introduction_to_Polars.py
+      - file: content/Introduction_to_Plotting.py
+      - file: content/fmriprep_on_discovery.md
+        title: Running fMRIPrep on HPC
+      - file: content/Glossary.md
+
+  - section: Course Topics
+    children:
+ 
+  - section: Neuroimaging Analysis
+    children:
+      - file: content/MR_Physics.py
+        title: Introduction to Magnetic Resonance Imaging
+        mode: wasm   # 33 widgets, joint-heavy → WASM gives full reactivity
+      - file: content/ICA.py
+        title: Separating Signal from Noise with ICA
+        # static + precompute: 10 components, threshold fixed at 2.0 → 10 combos
+      - file: content/Introduction_to_Neuroimaging_Data.py
+      - file: content/Signal_Processing.py
+        title: Signal Processing Basics
+        mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
+      - file: content/Preprocessing.py
+        mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
+      - file: content/GLM.py
+        title: Introduction to the General Linear Model
+      - file: content/GLM_Single_Subject_Model.py
+        title: Modeling Single Subject Data
+      - file: content/Group_Analysis.py
+      - file: content/Thresholding_Group_Analyses.py
+      - file: content/Connectivity.py
+      - file: content/Introduction_to_ICA.py
+      - file: content/Multivariate_Prediction.py
+      - file: content/RSA.py
+        title: Representational Similarity Analysis
+      - file: content/Parcellations.py
+        title: Introduction to Parcellations
+      - file: content/Resampling_Statistics.py
+
+  - section: Additional Courses
+    children:
+      - url: http://naturalistic-data.org/
+        title: Naturalistic Data Analysis
+
+  - section: Project Gallery
+    children:
+      - file: content/2019_Spring.md
+      - file: content/2020_Spring.md
+      - file: content/2020_Fall.md
+      - file: content/2021_Fall.md
+      - file: content/2022_Fall.md
+
+  - section: Contributing
+    children:
+      - file: content/Contributing.md
+      - url: https://github.com/ljchang/dartbrains
+        title: GitHub Repository

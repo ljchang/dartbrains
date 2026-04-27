@@ -1,0 +1,45 @@
+[project]
+name = "dartbrains"
+version = "2.0.0"
+description = "An open-access introduction to functional neuroimaging analysis in Python"
+readme = "README.md"
+requires-python = ">=3.13"
+license = "CC-BY-SA-4.0"
+authors = [
+    { name = "Luke Chang", email = "luke.j.chang@dartmouth.edu" },
+]
+dependencies = [
+    "anywidget>=0.9.21",
+    "dartbrains-tools>=0.1",
+    "datalad>=1.3.4",
+    "datasets>=4.8.4",
+    "huggingface-hub[cli,hf-xet]>=1.8.0",
+    "marimo>=0.23.3",
+    "matplotlib>=3.10.8",
+    "nbformat",
+    "nibabel>=5.4.2",
+    "nilearn",
+    "nltools",
+    "numpy>=2.4.3",
+    "pandas",
+    "plotly>=6.6.0",
+    "scikit-learn",
+    "scipy>=1.17.1",
+    "seaborn",
+    "networkx",
+    "polars>=1.39.3",
+    "ipyniivue>=2.4.4",
+]
+
+[project.optional-dependencies]
+build = [
+    "marimo-book",
+]
+
+[dependency-groups]
+build = [
+    "marimo-book>=0.1.3",
+]
+
+[tool.uv.sources]
+nltools = { git = "https://github.com/cosanlab/nltools", rev = "uv-refactor" }
