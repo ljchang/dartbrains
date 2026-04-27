@@ -143,7 +143,7 @@ def _(mo):
 
 @app.cell
 def _(pl):
-    url = "https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv"
+    url = "https://raw.githubusercontent.com/ljchang/dartbrains/main/data/salary/salary.csv"
     df = pl.read_csv(url)
     df
     return df, url

@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.1"
+__generated_with = "0.23.3"
 app = marimo.App()
 
 
@@ -12,7 +12,6 @@ def _():
 
     _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "thresholding"
-
     return IMG_DIR, mo, youtube
 
 
@@ -120,6 +119,7 @@ def _(SimulateGrid, plt, sns):
             _a[row, col].set_title(f'Subject {counter + 1}', fontsize=16)
             counter = counter + 1
     plt.tight_layout()
+    plt.gcf()
     return (simulation,)
 
 
@@ -159,11 +159,11 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     _threshold = 0.05
-    with mo.persistent_cache("threshold_sim_1"):
-        simulation_1 = SimulateGrid(grid_width=100, n_subjects=20)
-        simulation_1.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    simulation_1 = SimulateGrid(grid_width=100, n_subjects=20)
+    simulation_1.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    plt.gcf()
     return
 
 
@@ -180,11 +180,11 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     _threshold = 0.05
-    with mo.persistent_cache("threshold_sim_2"):
-        simulation_2 = SimulateGrid(grid_width=5, n_subjects=20)
-        simulation_2.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    simulation_2 = SimulateGrid(grid_width=5, n_subjects=20)
+    simulation_2.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    plt.gcf()
     return
 
 
@@ -199,11 +199,11 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     _threshold = 0.0001
-    with mo.persistent_cache("threshold_sim_3"):
-        simulation_3 = SimulateGrid(grid_width=100, n_subjects=20)
-        simulation_3.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    simulation_3 = SimulateGrid(grid_width=100, n_subjects=20)
+    simulation_3.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    plt.gcf()
     return
 
 
@@ -271,10 +271,10 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
-    with mo.persistent_cache("threshold_sim_4"):
-        simulation_4 = SimulateGrid(grid_width=100, n_subjects=20)
-        simulation_4.plot_grid_simulation(threshold=6.2, threshold_type='t', n_simulations=100)
+def _(SimulateGrid, plt):
+    simulation_4 = SimulateGrid(grid_width=100, n_subjects=20)
+    simulation_4.plot_grid_simulation(threshold=6.2, threshold_type='t', n_simulations=100)
+    plt.gcf()
     return
 
 
@@ -291,12 +291,12 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     _grid_width = 100
     _threshold = 0.05 / _grid_width ** 2
-    with mo.persistent_cache("threshold_sim_5"):
-        simulation_5 = SimulateGrid(grid_width=_grid_width, n_subjects=20)
-        simulation_5.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    simulation_5 = SimulateGrid(grid_width=_grid_width, n_subjects=20)
+    simulation_5.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    plt.gcf()
     return
 
 
@@ -315,14 +315,14 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     _grid_width = 100
     _threshold = 0.05 / _grid_width ** 2
     signal_width = 10
     _signal_amplitude = 1
-    with mo.persistent_cache("threshold_sim_6"):
-        simulation_6 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
-        simulation_6.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    simulation_6 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
+    simulation_6.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
+    plt.gcf()
     return
 
 
@@ -396,20 +396,18 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     # ~450,000 permutation iterations (10 sims × 5000 perms × 9 voxels) —
-    # 30+ minutes cold. mo.persistent_cache writes the simulation result
-    # to __marimo__/cache/ so the first build pays the cost once and
-    # every subsequent (re)build is instant.
+    # this cell is slow (~30 min) on every cold rebuild.
     _grid_width = 3
     _threshold = 0.05
     _signal_amplitude = 1
-    with mo.persistent_cache("threshold_sim_7_permutation"):
-        simulation_7 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=2, grid_width=_grid_width, n_subjects=20)
-        simulation_7.t_values, simulation_7.p_values = simulation_7._run_permutation(simulation_7.data)
-        simulation_7.isfit = True
-        simulation_7.threshold_simulation(_threshold, 'p')
-        simulation_7.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=10)
+    simulation_7 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=2, grid_width=_grid_width, n_subjects=20)
+    simulation_7.t_values, simulation_7.p_values = simulation_7._run_permutation(simulation_7.data)
+    simulation_7.isfit = True
+    simulation_7.threshold_simulation(_threshold, 'p')
+    simulation_7.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=10)
+    plt.gcf()
     return
 
 
@@ -459,14 +457,14 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(SimulateGrid, mo):
+def _(SimulateGrid, plt):
     _grid_width = 100
     _threshold = 0.05
     _signal_amplitude = 1
-    with mo.persistent_cache("threshold_sim_8_fdr"):
-        simulation_8 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
-        simulation_8.plot_grid_simulation(threshold=_threshold, threshold_type='q', n_simulations=100, correction='fdr')
+    simulation_8 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
+    simulation_8.plot_grid_simulation(threshold=_threshold, threshold_type='q', n_simulations=100, correction='fdr')
     print(f'FDR q < 0.05 corresponds to p-value of {simulation_8.corrected_threshold}')
+    plt.gcf()
     return (simulation_8,)
 
 
