@@ -22,6 +22,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # GitHub-hosted ubuntu-latest runners ship with ~14 GB free, which
+      # the heavy chapters (ICA: ~150s × big lookup table, MR_Physics: 30+
+      # WASM widgets, Preprocessing: 12 widgets + brain SVG QC reports)
+      # eat into via uv's sync cache + matplotlib intermediates. The
+      # `Build the book` step has been crashing with `No space left on
+      # device`. This step removes ~30 GB of preinstalled tooling we
+      # don't use (Android SDK, .NET, GHC, browsers, large hostedtoolcache
+      # entries) before any of our work runs. AWS-cli stays — we don't
+      # use it but stripping it costs <100 MB and saves the maintenance
+      # burden of inspecting every removed package.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /opt/ghc || true
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /opt/hostedtoolcache/CodeQL || true
+          sudo rm -rf /opt/hostedtoolcache/PyPy || true
+          sudo rm -rf /usr/local/share/boost || true
+          sudo rm -rf /usr/local/share/powershell || true
+          sudo rm -rf /usr/local/share/chromium || true
+          sudo rm -rf /opt/microsoft || true
+          df -h /
+
       - uses: actions/checkout@v4
 
       - name: Install uv
