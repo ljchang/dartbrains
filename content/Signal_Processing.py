@@ -13,8 +13,6 @@ with app.setup(hide_code=True):
     from scipy.special import gamma as gamma_func
     from scipy.signal import butter, filtfilt, freqz, sosfreqz
 
-    from dartbrains_tools.notebook_utils import youtube
-
     _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
     IMG_DIR = _ROOT / "images" / "signal_processing"
 
@@ -30,6 +28,21 @@ with app.setup(hide_code=True):
 
     def rad_to_hz(w, fs):
         return (w * fs) / (2 * np.pi)
+
+
+# `from dartbrains_tools.notebook_utils import youtube` lives in this
+# regular cell (not in the `with app.setup:` block above) so that when
+# this notebook runs in WASM mode, marimo-book's micropip bootstrap
+# cell can install `dartbrains-tools` from PyPI before this import
+# tries to resolve. The setup block runs at module import time and
+# can't be made to wait on async work; a regular `@app.cell` waits on
+# the bootstrap via marimo's dataflow scheduler. Cells that use
+# `youtube` take it as a parameter (see `sine_vid`, `tf_video`,
+# `dft_vid`, `fft_details`).
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import youtube
+    return (youtube,)
 
 
 @app.cell(hide_code=True)
@@ -332,7 +345,7 @@ def osc_intro():
 
 
 @app.cell(hide_code=True)
-def sine_vid():
+def sine_vid(youtube):
     youtube("9RvZXZ46FRQ")
     return
 
@@ -508,7 +521,7 @@ def tf_intro():
 
 
 @app.cell(hide_code=True)
-def tf_video():
+def tf_video(youtube):
     youtube("fYtVHhk3xJ0")
     return
 
@@ -533,7 +546,7 @@ def freq_intro():
 
 
 @app.cell(hide_code=True)
-def dft_vid():
+def dft_vid(youtube):
     youtube("_htCsieA0_U")
     return
 
@@ -725,7 +738,7 @@ def dft_compute(
 
 
 @app.cell(hide_code=True)
-def fft_details():
+def fft_details(youtube):
     mo.vstack([mo.md("Let's learn a few more important details about the DFT:"), youtube("RHjqvcKVopg")])
     return
 
