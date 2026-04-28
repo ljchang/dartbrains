@@ -13,9 +13,6 @@ with app.setup(hide_code=True):
     from scipy.special import gamma as gamma_func
     from scipy.signal import butter, filtfilt, freqz, sosfreqz
 
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
-    IMG_DIR = _ROOT / "images" / "signal_processing"
-
     def glover_hrf(tr_val, oversampling=1):
         _dt = tr_val / oversampling
         _ts = np.arange(0, 32, _dt)
@@ -43,6 +40,39 @@ with app.setup(hide_code=True):
 def _():
     from dartbrains_tools.notebook_utils import youtube
     return (youtube,)
+
+
+# IMG_DIR resolution lives in a regular `@app.cell`, not the
+# `with app.setup:` block: setup runs at module-import time in the
+# browser's Pyodide kernel for WASM-mode pages, where `Path.cwd()` is
+# a Pyodide-internal path with no `book.yml` ancestor. An unguarded
+# `next(...)` over that walk raises StopIteration and crashes the
+# page before any cell can render. The `_find_root()` fallback to
+# `Path.cwd()` makes the lookup non-throwing; the resolved path is
+# meaningless in the browser but the consumer cell's image bytes are
+# baked into the static export at build time, so the browser never
+# re-reads from disk.
+@app.cell(hide_code=True)
+def _():
+    def _find_root() -> Path:
+        for candidate in (Path.cwd(), *Path.cwd().resolve().parents):
+            if (candidate / "book.yml").exists():
+                return candidate
+        return Path.cwd()
+
+    IMG_DIR = _find_root() / "images" / "signal_processing"
+
+    def img_src(filename: str):
+        # In marimo edit + at build time the file exists at IMG_DIR/filename
+        # and `mo.image(Path)` embeds the bytes inline. In WASM browser the
+        # file isn't reachable; fall back to a page-relative URL that
+        # resolves to the deployed /images/signal_processing/<filename>.
+        # Without the fallback, browser-side cell re-execution would emit
+        # a Pyodide-internal absolute path that 404s.
+        p = IMG_DIR / filename
+        return p if p.is_file() else f"../images/signal_processing/{filename}"
+
+    return (IMG_DIR, img_src)
 
 
 @app.cell(hide_code=True)
@@ -865,14 +895,14 @@ def fft_section(combined_signal, dft_freq_axis):
 
 
 @app.cell(hide_code=True)
-def ct_md():
+def ct_md(img_src):
     mo.vstack([
         mo.md(r"""
         ### Convolution Theorem
 
         Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [Video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
         """),
-        mo.image(str(IMG_DIR / "ConvolutionTheorem.png")),
+        mo.image(img_src("ConvolutionTheorem.png")),
         mo.md(r"""
         Let's prove it:
         """),

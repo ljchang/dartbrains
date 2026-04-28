@@ -69,11 +69,27 @@ def _():
     # Resolve IMG_DIR relative to book.yml so image paths work on every
     # build host (locally + GitHub Actions runners). Hardcoded absolute
     # paths get baked into the rendered HTML and 404 on the deployed site.
-    _ROOT = next(
-        p for p in (Path.cwd(), *Path.cwd().resolve().parents)
-        if (p / "book.yml").exists()
-    )
+    # The fallback to `Path.cwd()` keeps lookup non-throwing in WASM
+    # mode (Pyodide's CWD has no `book.yml` ancestor).
+    def _find_root() -> Path:
+        for candidate in (Path.cwd(), *Path.cwd().resolve().parents):
+            if (candidate / "book.yml").exists():
+                return candidate
+        return Path.cwd()
+
+    _ROOT = _find_root()
     IMG_DIR = _ROOT / "images" / "signal_generation"
+
+    def img_src(filename: str):
+        # In marimo edit + at build time on dev, the file exists at
+        # IMG_DIR/filename and `mo.image(Path)` embeds the bytes inline.
+        # In WASM browser, the file isn't reachable so fall back to a
+        # page-relative URL that resolves to the deployed
+        # /images/signal_generation/<filename>. Without the fallback,
+        # browser-side cell re-execution emits a Pyodide-internal absolute
+        # path (e.g. /marimo/images/...) that 404s.
+        p = IMG_DIR / filename
+        return p if p.is_file() else f"../images/signal_generation/{filename}"
 
     return (
         CompassWidget,
@@ -86,6 +102,7 @@ def _():
         NetMagnetizationWidget,
         PrecessionWidget,
         SpinEnsembleWidget,
+        img_src,
         TISSUE_PROPERTIES,
         compute_spectrum,
         fid_signal,
@@ -347,8 +364,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.image(str(IMG_DIR / "b0.png"))
+def _(img_src, mo):
+    mo.image(img_src("b0.png"))
     return
 
 
@@ -1113,8 +1130,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.image(str(IMG_DIR / "spin_echo_pulse_sequence.svg"))
+def _(img_src, mo):
+    mo.image(img_src("spin_echo_pulse_sequence.svg"))
     return
 
 
@@ -1153,8 +1170,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.image(str(IMG_DIR / "gradient_echo_pulse_sequence.svg"))
+def _(img_src, mo):
+    mo.image(img_src("gradient_echo_pulse_sequence.svg"))
     return
 
 
