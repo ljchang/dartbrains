@@ -29,18 +29,6 @@ launch_buttons:
   github: true
   download: true
 
-# Run `marimo export` with PYTHONWARNINGS=ignore so library warnings
-# (numpy / nltools / pandas deprecation notices, etc.) don't surface
-# as visible stderr blocks in cell output. Also keeps the precompute
-# slider's inline mount stable: when warning text differs across the
-# per-value re-exports, the diff detector flags upstream cells (data
-# load, filter+smooth) as "reactive" and the slider mounts inline
-# with the wrong cell — the brain viewer ends up far below the
-# slider. Suppressing warnings makes those cell outputs deterministic
-# so only the actual viewer cell is flagged.
-defaults:
-  suppress_warnings: true
-
 # Google Analytics — GA4 Measurement ID for dartbrains.org.
 # (The legacy UA-138270939-1 Universal Analytics property was retired
 # by Google on 2023-07-01; this is its GA4 successor.)
