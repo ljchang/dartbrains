@@ -299,29 +299,43 @@ def _(mo):
 
 
 @app.cell
-def _(mo, plt, simulated_data_1, sns):
-    # Render BOTH spatial (axis='voxels') and temporal (axis='images')
-    # ICA decompositions stacked vertically. Collect via plt.gcf() (not
-    # the local _f reference) and plt.close('all') between iterations
-    # to match the known-working Parcellations.py pattern — plt.gcf()
-    # returns the figure marimo's patched Artist._mime_ knows how to
-    # serialise; without plt.close, matplotlib's internal state can
-    # interleave the two figures' axes/legends.
-    _figs = []
-    for _ica_mode in ['voxels', 'images']:
-        _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis=_ica_mode, n_components=2)
-        with sns.plotting_context(context='paper', font_scale=1.5):
-            _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
-            _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
-            _decomposed_voxels['components'][1].plot(colorbar=True, title='Component 2', axes=_a[1])
-            _a[2].plot(_decomposed_voxels['weights'])
-            _a[2].set_ylabel('Intensity')
-            _a[2].set_xlabel('Time')
-            _a[2].legend(['Component 1', 'Component 2'])
-            _a[0].set_title(f'ICA Mode = {_ica_mode}')
-        _figs.append(plt.gcf())
-        plt.close('all')
-    mo.vstack(_figs)
+def _(plt, simulated_data_1, sns):
+    # Spatial ICA on the second simulation. Single-figure cell (ends in
+    # plt.gcf()) — splitting from the previous mo.vstack(_figs) pattern
+    # because marimo-book's static export inconsistently unwraps the
+    # marimo-mime-renderer elements emitted for matplotlib Figures
+    # inside an mo.vstack, leaving them as raw mime blobs instead of
+    # rendered images. Single-figure cells with plt.gcf() as the last
+    # expression render reliably.
+    _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis='voxels', n_components=2)
+    with sns.plotting_context(context='paper', font_scale=1.5):
+        _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
+        _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
+        _decomposed_voxels['components'][1].plot(colorbar=True, title='Component 2', axes=_a[1])
+        _a[2].plot(_decomposed_voxels['weights'])
+        _a[2].set_ylabel('Intensity')
+        _a[2].set_xlabel('Time')
+        _a[2].legend(['Component 1', 'Component 2'])
+        _a[0].set_title('ICA Mode = voxels')
+    plt.gcf()
+    return
+
+
+@app.cell
+def _(plt, simulated_data_1, sns):
+    # Temporal ICA on the second simulation — paired with the spatial
+    # cell above (see note there).
+    _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis='images', n_components=2)
+    with sns.plotting_context(context='paper', font_scale=1.5):
+        _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
+        _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
+        _decomposed_voxels['components'][1].plot(colorbar=True, title='Component 2', axes=_a[1])
+        _a[2].plot(_decomposed_voxels['weights'])
+        _a[2].set_ylabel('Intensity')
+        _a[2].set_xlabel('Time')
+        _a[2].legend(['Component 1', 'Component 2'])
+        _a[0].set_title('ICA Mode = images')
+    plt.gcf()
     return
 
 
@@ -375,23 +389,38 @@ def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
 
 
 @app.cell
-def _(mo, plt, simulated_data_2, sns):
-    # See note on the previous ICA-loop cell.
-    _figs = []
-    for _ica_mode in ['voxels', 'images']:
-        _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis=_ica_mode, n_components=2)
-        with sns.plotting_context(context='paper', font_scale=1.5):
-            _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
-            _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
-            _decomposed_voxels['components'][1].plot(colorbar=True, title='Component 2', axes=_a[1])
-            _a[2].plot(_decomposed_voxels['weights'])
-            _a[2].set_ylabel('Intensity')
-            _a[2].set_xlabel('Time')
-            _a[2].legend(['Component 1', 'Component 2'])
-            _a[0].set_title(f'ICA Mode = {_ica_mode}')
-        _figs.append(plt.gcf())
-        plt.close('all')
-    mo.vstack(_figs)
+def _(plt, simulated_data_2, sns):
+    # Spatial ICA on the third simulation. Same single-figure-per-cell
+    # pattern as the sim-2 cells above.
+    _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis='voxels', n_components=2)
+    with sns.plotting_context(context='paper', font_scale=1.5):
+        _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
+        _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
+        _decomposed_voxels['components'][1].plot(colorbar=True, title='Component 2', axes=_a[1])
+        _a[2].plot(_decomposed_voxels['weights'])
+        _a[2].set_ylabel('Intensity')
+        _a[2].set_xlabel('Time')
+        _a[2].legend(['Component 1', 'Component 2'])
+        _a[0].set_title('ICA Mode = voxels')
+    plt.gcf()
+    return
+
+
+@app.cell
+def _(plt, simulated_data_2, sns):
+    # Temporal ICA on the third simulation — paired with the spatial
+    # cell above.
+    _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis='images', n_components=2)
+    with sns.plotting_context(context='paper', font_scale=1.5):
+        _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
+        _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
+        _decomposed_voxels['components'][1].plot(colorbar=True, title='Component 2', axes=_a[1])
+        _a[2].plot(_decomposed_voxels['weights'])
+        _a[2].set_ylabel('Intensity')
+        _a[2].set_xlabel('Time')
+        _a[2].legend(['Component 1', 'Component 2'])
+        _a[0].set_title('ICA Mode = images')
+    plt.gcf()
     return
 
 
