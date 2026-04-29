@@ -18,7 +18,10 @@ dependencies = [
     "matplotlib>=3.10.8",
     "nbformat",
     "nibabel>=5.4.2",
-    "nilearn",
+    "nilearn<0.13",  # 0.13 tightened ZSlicer._sanitize_cut_coords to reject `range`,
+                     # which breaks every nltools.Brain_Data.plot() call (it passes
+                     # cut_coords=range(...) by default). Re-evaluate when nltools
+                     # upstream coerces to list() before forwarding.
     "nltools",
     "numpy>=2.4.3",
     "pandas",

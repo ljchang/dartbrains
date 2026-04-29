@@ -555,7 +555,7 @@ requires-dist = [
     { name = "nbformat" },
     { name = "networkx" },
     { name = "nibabel", specifier = ">=5.4.2" },
-    { name = "nilearn" },
+    { name = "nilearn", specifier = "<0.13" },
     { name = "nltools", git = "https://github.com/cosanlab/nltools?rev=uv-refactor" },
     { name = "numpy", specifier = ">=2.4.3" },
     { name = "pandas" },
@@ -568,7 +568,7 @@ requires-dist = [
 provides-extras = ["build"]
 
 [package.metadata.requires-dev]
-build = [{ name = "marimo-book", specifier = ">=0.1.12" }]
+build = [{ name = "marimo-book", specifier = ">=0.1.17" }]
 
 [[package]]
 name = "dartbrains-tools"
@@ -1467,7 +1467,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.12"
+version = "0.1.17"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1485,9 +1485,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1b/4c/cad54a66b85bd4bf27eecfe9b28c6dea116de3fff3d293706585e5ea4f30/marimo_book-0.1.12.tar.gz", hash = "sha256:e12562170abd59cc65b1300ce4f29395412c54e0287c515fc3b9a141d4b5c48d", size = 188660, upload-time = "2026-04-29T00:20:46.162Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/eb/781f1267386b8981d13d5d3102cbf73adfae69285daae9904b7cfd7bd2ed/marimo_book-0.1.17.tar.gz", hash = "sha256:5649be187d53004b90342cc518f748aeef7c79991fc47a82e3057011194312ce", size = 200412, upload-time = "2026-04-29T18:23:46.266Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/3f/3e1d67324eef4bd761aacb7869486783cc2f7159a440e4a6070dbd336cee/marimo_book-0.1.12-py3-none-any.whl", hash = "sha256:4a3dc193145cc5b6fd58720f40a4959d02f28965174978371af6935b9090d894", size = 97145, upload-time = "2026-04-29T00:20:44.586Z" },
+    { url = "https://files.pythonhosted.org/packages/d0/fc/061dd96539c97391192c48461e0df0768334938dd0818ae971cb1803c55c/marimo_book-0.1.17-py3-none-any.whl", hash = "sha256:4f86af64bf666523da60bbbfad09745c821204fcc00998d092227125db105f16", size = 103562, upload-time = "2026-04-29T18:23:44.921Z" },
 ]
 
 [[package]]
@@ -1945,11 +1945,11 @@ wheels = [
 
 [[package]]
 name = "nilearn"
-version = "0.13.1"
+version = "0.12.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "jinja2" },
     { name = "joblib" },
+    { name = "lxml" },
     { name = "nibabel" },
     { name = "numpy" },
     { name = "packaging" },
@@ -1958,9 +1958,9 @@ dependencies = [
     { name = "scikit-learn" },
     { name = "scipy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/c0/b06fa98658b9f43d7cd89c4b2527a637a2962d05838658f767d8dda8e790/nilearn-0.13.1.tar.gz", hash = "sha256:66d4a4f3f1dea9b8683806849ea8e91abfeac11e14f7e972a726f644e515bc2b", size = 46371538, upload-time = "2026-02-10T17:08:17.287Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4f/1c/5d6ef3f80145889bee1c7abbf107c88e7adea7d5b498633f8644910c673c/nilearn-0.12.1.tar.gz", hash = "sha256:a08bbfae94d0fac5ba0aebbbcd864b7f91d1ef5725d1c309ce643dd64b2391b9", size = 25134624, upload-time = "2025-09-03T06:00:40.631Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/3d/91ff1823b291de709e92b01373ab9c1d582658ce4b795e443b76761cd2c8/nilearn-0.13.1-py3-none-any.whl", hash = "sha256:2543cea9e2b001c079b7f81d1bff3050576125eb906cf318a9992add9a63c19e", size = 10638666, upload-time = "2026-02-10T17:04:47.21Z" },
+    { url = "https://files.pythonhosted.org/packages/6b/90/f17ebc6914b9ed0b577475a17a0b8d31e929897f7002bae1b03438852dad/nilearn-0.12.1-py3-none-any.whl", hash = "sha256:2112e1cdf9f7b96e0af87d679997e834ee36534fc0a970811a703700820edc4c", size = 12743284, upload-time = "2025-09-03T06:00:18.625Z" },
 ]
 
 [[package]]
