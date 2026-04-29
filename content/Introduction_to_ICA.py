@@ -301,9 +301,12 @@ def _(mo):
 @app.cell
 def _(mo, plt, simulated_data_1, sns):
     # Render BOTH spatial (axis='voxels') and temporal (axis='images')
-    # ICA decompositions stacked vertically. Collecting into _figs keeps
-    # both visible in marimo's static export — `plt.gcf()` after a
-    # multi-figure loop only captures the last figure.
+    # ICA decompositions stacked vertically. Collect via plt.gcf() (not
+    # the local _f reference) and plt.close('all') between iterations
+    # to match the known-working Parcellations.py pattern — plt.gcf()
+    # returns the figure marimo's patched Artist._mime_ knows how to
+    # serialise; without plt.close, matplotlib's internal state can
+    # interleave the two figures' axes/legends.
     _figs = []
     for _ica_mode in ['voxels', 'images']:
         _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis=_ica_mode, n_components=2)
@@ -316,7 +319,8 @@ def _(mo, plt, simulated_data_1, sns):
             _a[2].set_xlabel('Time')
             _a[2].legend(['Component 1', 'Component 2'])
             _a[0].set_title(f'ICA Mode = {_ica_mode}')
-        _figs.append(_f)
+        _figs.append(plt.gcf())
+        plt.close('all')
     mo.vstack(_figs)
     return
 
@@ -372,8 +376,7 @@ def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
 
 @app.cell
 def _(mo, plt, simulated_data_2, sns):
-    # See note on the previous ICA-loop cell — collect both modes' figures
-    # so both render in static export.
+    # See note on the previous ICA-loop cell.
     _figs = []
     for _ica_mode in ['voxels', 'images']:
         _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis=_ica_mode, n_components=2)
@@ -386,7 +389,8 @@ def _(mo, plt, simulated_data_2, sns):
             _a[2].set_xlabel('Time')
             _a[2].legend(['Component 1', 'Component 2'])
             _a[0].set_title(f'ICA Mode = {_ica_mode}')
-        _figs.append(_f)
+        _figs.append(plt.gcf())
+        plt.close('all')
     mo.vstack(_figs)
     return
 
