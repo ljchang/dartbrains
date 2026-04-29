@@ -168,7 +168,13 @@ def _(Brain_Data, CONDITIONS, get_file):
     _sub = 'S01'
     _file_list = [get_file(_sub, 'betas', cond) for cond in CONDITIONS]
     conditions = CONDITIONS
-    beta = Brain_Data(_file_list)
+    # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens into 1D
+    # (e.g. (10*238955,) instead of (10, 238955)), which breaks every
+    # downstream apply_mask / distance call. Wrap each path in
+    # Brain_Data() first so the outer constructor sees a list of
+    # Brain_Data objects and stacks them properly. Same pattern used
+    # in Group_Analysis.py and Thresholding_Group_Analyses.py.
+    beta = Brain_Data([Brain_Data(f) for f in _file_list])
     return beta, conditions
 
 
@@ -388,7 +394,9 @@ def _(Brain_Data, CONDITIONS, get_file, get_subjects, mask_x, motor, pd):
     for _sub in sub_list:
         _file_list = [get_file(_sub, 'betas', cond) for cond in CONDITIONS]
         conditions_1 = CONDITIONS
-        beta_1 = Brain_Data(_file_list)
+        # See note on the single-subject cell above — wrap each path in
+        # Brain_Data() so the outer constructor stacks instead of flattening.
+        beta_1 = Brain_Data([Brain_Data(f) for f in _file_list])
         sub_pattern = []
         motor_sim_r_1 = []
         for _m in mask_x:

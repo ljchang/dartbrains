@@ -4,7 +4,7 @@ __generated_with = "0.23.3"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
     from pathlib import Path
@@ -55,7 +55,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import numpy as np
     from numpy.fft import fft, fftfreq

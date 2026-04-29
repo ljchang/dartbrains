@@ -157,10 +157,16 @@ def _(mo):
 def _(Brain_Data, get_file, get_subjects):
     _sub_list = get_subjects()
     left_file_list = [get_file(sub, 'betas', 'video_left_hand') for sub in _sub_list]
-    left = Brain_Data(left_file_list)
-
     right_file_list = [get_file(sub, 'betas', 'video_right_hand') for sub in _sub_list]
-    right = Brain_Data(right_file_list)
+
+    # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens to 1D
+    # ((20*238955,) instead of (20, 238955)), which then makes
+    # left.append(right) produce shape (2, 20*238955) — sklearn rejects
+    # the X/y mismatch as 2 samples vs 40 labels. Wrap each path in
+    # Brain_Data() first so the outer constructor stacks per-image, then
+    # append produces the expected (40, 238955).
+    left = Brain_Data([Brain_Data(f) for f in left_file_list])
+    right = Brain_Data([Brain_Data(f) for f in right_file_list])
 
     data = left.append(right)
     return data, left_file_list, right_file_list
