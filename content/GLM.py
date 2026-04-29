@@ -127,40 +127,7 @@ def _(go, np):
     face = np.zeros(n_tr)
     face[np.arange(10, n_tr, int(n_tr / _n_trial))] = 1
 
-    def plot_timeseries(data, labels=None, title=None, linewidth=2):
-        """Plot a timeseries as an interactive plotly figure.
-
-        Args:
-            data: 1D or 2D array; for 2D each column is a separate signal.
-            labels: trace labels; must match the number of columns when 2D.
-            title: optional figure title.
-            linewidth: trace width in pixels.
-        """
-        arr = np.asarray(data)
-        if arr.ndim == 1:
-            arr = arr[:, None]
-        n_series = arr.shape[1]
-        if labels is not None and len(labels) != n_series:
-            raise ValueError("Need to have the same number of labels as columns in data.")
-        x = np.arange(arr.shape[0])
-        fig = go.Figure()
-        for i in range(n_series):
-            fig.add_trace(go.Scatter(
-                x=x, y=arr[:, i], mode="lines",
-                name=labels[i] if labels is not None else f"Signal {i + 1}",
-                line=dict(width=linewidth),
-                hovertemplate="t=%{x}<br>y=%{y:.3f}<extra></extra>",
-            ))
-        fig.update_layout(
-            title=title,
-            xaxis_title="Time (TR)",
-            yaxis_title="Intensity",
-            hovermode="x unified",
-            height=350,
-            margin=dict(l=60, r=20, t=40 if title else 20, b=50),
-            showlegend=labels is not None or n_series > 1,
-        )
-        return fig
+    from dartbrains_tools.notebook_utils import plot_timeseries
 
     plot_timeseries(face)
     return (plot_timeseries,)

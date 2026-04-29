@@ -10,7 +10,7 @@ authors = [
 ]
 dependencies = [
     "anywidget>=0.9.21",
-    "dartbrains-tools>=0.1.1",
+    "dartbrains-tools>=0.1.2",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
     "huggingface-hub[cli,hf-xet]>=1.8.0",
