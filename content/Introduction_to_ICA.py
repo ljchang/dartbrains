@@ -4,7 +4,7 @@ __generated_with = "0.23.3"
 app = marimo.App()
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import marimo as mo
 
@@ -61,7 +61,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import numpy as np
     import pandas as pd
@@ -238,7 +238,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
     n_tr_1 = 200
     n_trial_1 = 5
@@ -326,7 +326,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
     n_tr_2 = 200
     n_trial_2 = 5
