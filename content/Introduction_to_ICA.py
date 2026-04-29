@@ -197,6 +197,7 @@ def _(plt, simulated_data, sns):
         _a[2].set_ylabel('Intensity')
         _a[2].set_xlabel('Time')
         _a[2].legend(['Component 1', 'Component 2'])
+    plt.gcf()
     return
 
 
@@ -221,6 +222,7 @@ def _(plt, simulated_data, sns):
         _a[2].set_ylabel('Intensity')
         _a[2].set_xlabel('Time')
         _a[2].legend(['Component 1', 'Component 2'])
+    plt.gcf()
     return
 
 
@@ -297,7 +299,12 @@ def _(mo):
 
 
 @app.cell
-def _(plt, simulated_data_1, sns):
+def _(mo, plt, simulated_data_1, sns):
+    # Render BOTH spatial (axis='voxels') and temporal (axis='images')
+    # ICA decompositions stacked vertically. Collecting into _figs keeps
+    # both visible in marimo's static export — `plt.gcf()` after a
+    # multi-figure loop only captures the last figure.
+    _figs = []
     for _ica_mode in ['voxels', 'images']:
         _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis=_ica_mode, n_components=2)
         with sns.plotting_context(context='paper', font_scale=1.5):
@@ -309,6 +316,8 @@ def _(plt, simulated_data_1, sns):
             _a[2].set_xlabel('Time')
             _a[2].legend(['Component 1', 'Component 2'])
             _a[0].set_title(f'ICA Mode = {_ica_mode}')
+        _figs.append(_f)
+    mo.vstack(_figs)
     return
 
 
@@ -362,7 +371,10 @@ def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
 
 
 @app.cell
-def _(plt, simulated_data_2, sns):
+def _(mo, plt, simulated_data_2, sns):
+    # See note on the previous ICA-loop cell — collect both modes' figures
+    # so both render in static export.
+    _figs = []
     for _ica_mode in ['voxels', 'images']:
         _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis=_ica_mode, n_components=2)
         with sns.plotting_context(context='paper', font_scale=1.5):
@@ -374,6 +386,8 @@ def _(plt, simulated_data_2, sns):
             _a[2].set_xlabel('Time')
             _a[2].legend(['Component 1', 'Component 2'])
             _a[0].set_title(f'ICA Mode = {_ica_mode}')
+        _figs.append(_f)
+    mo.vstack(_figs)
     return
 
 
