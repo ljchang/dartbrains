@@ -70,6 +70,21 @@ def _():
         p = IMG_DIR / filename
         return p if p.is_file() else f"../images/preprocessing/{filename}"
 
+    def read_svg(filename: str) -> str:
+        # Same disk-vs-WASM split as img_src, but for inline-SVG cells that
+        # need to embed raw SVG markup into the DOM (mo.image() loads via an
+        # <img> tag, which sandboxes embedded @keyframes / animation CSS).
+        # In marimo edit + at build the file is on disk; in WASM browser
+        # we fetch from the deployed /images/preprocessing/<filename> URL.
+        p = IMG_DIR / filename
+        if p.is_file():
+            return p.read_text()
+        import urllib.request
+        with urllib.request.urlopen(
+            f"https://dartbrains.org/images/preprocessing/{filename}"
+        ) as resp:
+            return resp.read().decode("utf-8")
+
     return (
         CostFunctionWidget,
         IMG_DIR,
@@ -77,6 +92,7 @@ def _():
         TransformCubeWidget,
         img_src,
         mo,
+        read_svg,
     )
 
 
@@ -385,8 +401,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.Html(f'<div style="max-width:100%">{(IMG_DIR / "sub-S01_space-MNI152NLin2009cAsym_T1w.svg").read_text()}</div>')
+def _(mo, read_svg):
+    mo.Html(f'<div style="max-width:100%">{read_svg("sub-S01_space-MNI152NLin2009cAsym_T1w.svg")}</div>')
     return
 
 
@@ -401,8 +417,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.Html(f'<div style="max-width:100%">{(IMG_DIR / "sub-S01_task-localizer_desc-flirtbbr_bold.svg").read_text()}</div>')
+def _(mo, read_svg):
+    mo.Html(f'<div style="max-width:100%">{read_svg("sub-S01_task-localizer_desc-flirtbbr_bold.svg")}</div>')
     return
 
 

@@ -38,7 +38,7 @@ build = [
 
 [dependency-groups]
 build = [
-    "marimo-book>=0.1.12",
+    "marimo-book>=0.1.13",
 ]
 
 [tool.uv.sources]
