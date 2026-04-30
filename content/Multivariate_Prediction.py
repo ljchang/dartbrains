@@ -264,8 +264,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, expand_mask, os):
-    mask = Brain_Data(os.path.join('..', 'masks', 'k50_2mm.nii.gz'))
+def _(Brain_Data, expand_mask):
+    mask = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
     mask_x = expand_mask(mask)
 
     mask.plot()
@@ -331,7 +331,7 @@ def _(IMG_DIR, mo):
 @app.cell
 def _(data, os, pd, right_file_list):
     sub_list = [os.path.basename(x).split('_')[0] for x in right_file_list]
-    subject_id = pd.DataFrame(sub_list + sub_list)
+    subject_id = pd.Series(sub_list + sub_list)
     svm_stats_1 = data.predict(algorithm='svm', cv_dict={'type': 'kfolds', 'n_folds': 5, 'subject_id': subject_id}, **{'kernel': 'linear'})
     return (subject_id,)
 
