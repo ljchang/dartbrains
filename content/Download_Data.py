@@ -722,6 +722,75 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## Sherlock Dataset
+
+    The [Sherlock dataset](https://huggingface.co/datasets/dartbrains/sherlock)
+    (Chen et al., 2017) contains 16 subjects who watched ~50 minutes of
+    *Sherlock* across two scanning runs and then verbally recalled the
+    narrative in the scanner. TR = 1.5 s. We use this dataset in the
+    naturalistic-data tutorials (intersubject correlation, event
+    segmentation, functional alignment).
+
+    Access via `dartbrains_tools.data.sherlock`:
+    """)
+    return
+
+
+@app.cell
+def _():
+    from dartbrains_tools.data import sherlock
+
+    print(f"Subjects: {sherlock.get_subjects()[:3]} ... ({len(sherlock.get_subjects())} total)")
+    print(f"Tasks: {sherlock.get_tasks()}")
+    print(f"TR: {sherlock.get_tr()} s")
+
+    # Per-subject preprocessed bold (lazy download, ~800 MB each)
+    bold_path = sherlock.get_file("sub-01", task="sherlockPart1", suffix="bold")
+    print(f"\nBOLD path: {bold_path}")
+
+    # Confounds + scene onsets are small
+    confounds = sherlock.load_confounds("sub-01", task="sherlockPart1")
+    watch_onsets = sherlock.load_onsets("watch")
+    print(f"\nConfounds: {confounds.shape}; Watch onsets: {watch_onsets.shape}")
+    return (sherlock,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Paranoia Dataset
+
+    The [Paranoia dataset](https://huggingface.co/datasets/dartbrains/paranoia)
+    (Finn et al., 2018) contains 22 subjects who listened to a three-part
+    ambiguous social narrative (~22 minutes total). TR = 1.0 s. Each subject
+    completed 3 story runs.
+
+    Access via `dartbrains_tools.data.paranoia`:
+    """)
+    return
+
+
+@app.cell
+def _():
+    from dartbrains_tools.data import paranoia
+
+    print(f"Subjects: {paranoia.get_subjects()[:3]} ... ({len(paranoia.get_subjects())} total)")
+    print(f"Runs: {paranoia.get_runs()}")
+    print(f"TR: {paranoia.get_tr()} s")
+
+    # Demographics + trait paranoia score
+    participants = paranoia.load_participants()
+    print(f"\nParticipants:\n{participants.head()}")
+
+    # Story 1 transcript (small)
+    transcript = paranoia.load_transcript(1)
+    print(f"\nStory 1 transcript (first 200 chars):\n{transcript[:200]}")
+    return (paranoia,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     (run-preprocessing)=
     ## Preprocessing
     The data has already been preprocessed using [fmriprep](https://fmriprep.readthedocs.io/en/stable/), which is a robust, but opinionated automated preprocessing pipeline developed by [Russ Poldrack's group at Stanford University](https://poldracklab.stanford.edu/). The developer's have made a number of choices about how to preprocess your fMRI data using best practices and have created an automated pipeline using multiple software packages that are all distributed via a [docker container](https://fmriprep.org/en/1.5.9/docker.html).
