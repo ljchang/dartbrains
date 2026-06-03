@@ -66,18 +66,14 @@ def _():
         SpinEnsembleWidget, EncodingWidget, KSpaceWidget, ConvolutionWidget,
     )
 
-    # Resolve IMG_DIR relative to book.yml so image paths work on every
-    # build host (locally + GitHub Actions runners). Hardcoded absolute
-    # paths get baked into the rendered HTML and 404 on the deployed site.
-    # The fallback to `Path.cwd()` keeps lookup non-throwing in WASM
-    # mode (Pyodide's CWD has no `book.yml` ancestor).
-    def _find_root() -> Path:
-        for candidate in (Path.cwd(), *Path.cwd().resolve().parents):
-            if (candidate / "book.yml").exists():
-                return candidate
-        return Path.cwd()
-
-    _ROOT = _find_root()
+    # Repo root = two levels up from this notebook (content/<nb>.py → repo
+    # root), so the sibling images/ dir resolves on every build host.
+    # marimo >=0.23.6 + marimo-book >=0.1.18 make __file__ resolve to the
+    # notebook's real location at build time (including the WASM islands
+    # build). In the browser __file__ is a Pyodide path and _ROOT is
+    # meaningless, but img_src() falls back to a page-relative URL there,
+    # and .parent.parent never raises, so that's harmless.
+    _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "signal_generation"
 
     def img_src(filename: str):

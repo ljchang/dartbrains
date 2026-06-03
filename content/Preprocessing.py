@@ -46,18 +46,14 @@ def _():
     from pathlib import Path
     from dartbrains_tools.mr_widgets import TransformCubeWidget, CostFunctionWidget, SmoothingWidget
 
-    # Locate the repo root so we can find the sibling images/ directory.
-    # Under MarimoIslandGenerator (WASM build), both __file__ and
-    # mo.notebook_dir() resolve to marimo-internal paths (.venv/bin/),
-    # so we walk up from cwd looking for book.yml. Falls back to cwd
-    # in marimo-edit (where cwd is already the project root).
-    def _find_root() -> Path:
-        for candidate in (Path.cwd(), *Path.cwd().resolve().parents):
-            if (candidate / "book.yml").exists():
-                return candidate
-        return Path.cwd()
-
-    _ROOT = _find_root()
+    # Repo root = two levels up from this notebook (content/<nb>.py → repo
+    # root), so the sibling images/ dir resolves on every build host.
+    # marimo >=0.23.6 + marimo-book >=0.1.18 make __file__ resolve to the
+    # notebook's real location at build time (including the WASM islands
+    # build). In the browser __file__ is a Pyodide path and _ROOT is
+    # meaningless, but img_src() falls back to a page-relative URL there,
+    # and .parent.parent never raises, so that's harmless.
+    _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "preprocessing"
 
     def img_src(filename: str):

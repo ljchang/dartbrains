@@ -17,7 +17,7 @@ def _():
     from nltools.data import Brain_Data
     from nltools.utils import get_anatomical
 
-    IMG_DIR = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists()) / "images" / "brain_data"
+    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "brain_data"
     return (
         Brain_Data,
         get_anatomical,
