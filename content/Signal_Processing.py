@@ -42,25 +42,17 @@ def _():
     return (youtube,)
 
 
-# IMG_DIR resolution lives in a regular `@app.cell`, not the
-# `with app.setup:` block: setup runs at module-import time in the
-# browser's Pyodide kernel for WASM-mode pages, where `Path.cwd()` is
-# a Pyodide-internal path with no `book.yml` ancestor. An unguarded
-# `next(...)` over that walk raises StopIteration and crashes the
-# page before any cell can render. The `_find_root()` fallback to
-# `Path.cwd()` makes the lookup non-throwing; the resolved path is
-# meaningless in the browser but the consumer cell's image bytes are
-# baked into the static export at build time, so the browser never
-# re-reads from disk.
+# IMG_DIR is consumed by other cells, so it lives in a regular `@app.cell`.
+# Repo root = two levels up from this notebook (content/<nb>.py → repo root).
+# marimo >=0.23.6 + marimo-book >=0.1.18 make __file__ resolve to the
+# notebook's real location at build time (including the WASM islands build),
+# so the image bytes get inlined into the static export. In the browser
+# __file__ is a Pyodide path and the resolved root is meaningless, but
+# img_src() falls back to a page-relative URL there, and .parent.parent
+# never raises (unlike the old unguarded book.yml walk).
 @app.cell(hide_code=True)
 def _():
-    def _find_root() -> Path:
-        for candidate in (Path.cwd(), *Path.cwd().resolve().parents):
-            if (candidate / "book.yml").exists():
-                return candidate
-        return Path.cwd()
-
-    IMG_DIR = _find_root() / "images" / "signal_processing"
+    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "signal_processing"
 
     def img_src(filename: str):
         # In marimo edit + at build time the file exists at IMG_DIR/filename

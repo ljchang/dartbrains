@@ -10,7 +10,7 @@ def _():
     from pathlib import Path
     from dartbrains_tools.notebook_utils import youtube
 
-    _ROOT = next(p for p in (Path.cwd(), *Path.cwd().resolve().parents) if (p / "book.yml").exists())
+    _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "thresholding"
     return IMG_DIR, mo, youtube
 
