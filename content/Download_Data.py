@@ -745,13 +745,13 @@ def _():
     print(f"TR: {sherlock.get_tr()} s")
 
     # Per-subject preprocessed bold (lazy download, ~800 MB each)
-    bold_path = sherlock.get_file("sub-01", task="sherlockPart1", suffix="bold")
-    print(f"\nBOLD path: {bold_path}")
+    _bold_path = sherlock.get_file("sub-01", task="sherlockPart1", suffix="bold")
+    print(f"\nBOLD path: {_bold_path}")
 
     # Confounds + scene onsets are small
-    confounds = sherlock.load_confounds("sub-01", task="sherlockPart1")
-    watch_onsets = sherlock.load_onsets("watch")
-    print(f"\nConfounds: {confounds.shape}; Watch onsets: {watch_onsets.shape}")
+    _confounds = sherlock.load_confounds("sub-01", task="sherlockPart1")
+    _watch_onsets = sherlock.load_onsets("watch")
+    print(f"\nConfounds: {_confounds.shape}; Watch onsets: {_watch_onsets.shape}")
     return
 
 
@@ -779,12 +779,12 @@ def _():
     print(f"TR: {paranoia.get_tr()} s")
 
     # Demographics + trait paranoia score
-    participants = paranoia.load_participants()
-    print(f"\nParticipants:\n{participants.head()}")
+    _participants = paranoia.load_participants()
+    print(f"\nParticipants:\n{_participants.head()}")
 
     # Story 1 transcript (small)
-    transcript = paranoia.load_transcript(1)
-    print(f"\nStory 1 transcript (first 200 chars):\n{transcript[:200]}")
+    _transcript = paranoia.load_transcript(1)
+    print(f"\nStory 1 transcript (first 200 chars):\n{_transcript[:200]}")
     return
 
 
