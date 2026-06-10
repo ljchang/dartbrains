@@ -138,7 +138,7 @@ def _():
     from nltools.stats import regress
     from nltools.external import glover_hrf
     from scipy.stats import ttest_1samp
-    from dartbrains_tools.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
+    from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import plot_timeseries
 
     def simulate_timeseries(n_tr=200, n_trial=5, amplitude=1, tr=1, sigma=0.05):
@@ -152,8 +152,7 @@ def _():
 
     return (
         Brain_Data,
-        get_file,
-        get_subjects,
+        localizer,
         np,
         pd,
         plot_timeseries,
@@ -340,19 +339,19 @@ def _(mo):
     from nltools.data import Brain_Data, Design_Matrix
     from nltools.file_reader import onsets_to_dm
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
-    from dartbrains_tools.data import get_file, get_subjects, get_tr, load_events, load_confounds, CONDITIONS
+    from dartbrains_tools.data import localizer
 
-    tr = get_tr()
+    tr = localizer.get_tr()
     fwhm = 6
     spike_cutoff = 3
 
     def load_bids_events(subject):
         '''Create a design_matrix instance from BIDS event file'''
 
-        tr = get_tr()
-        n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
+        tr = localizer.get_tr()
+        n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
 
-        onsets = load_events(subject)
+        onsets = localizer.load_events(subject)
         onsets.columns = ['Onset', 'Duration', 'Stim']
         return onsets_to_dm(onsets, sampling_freq=1/tr, run_length=n_tr)
 
@@ -362,11 +361,11 @@ def _(mo):
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1/tr)
 
-    for sub in tqdm(get_subjects()):
-        data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
+    for sub in tqdm(localizer.get_subjects()):
+        data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
         data = data.smooth(fwhm=fwhm)
         dm = load_bids_events(sub)
-        covariates = load_confounds(sub)
+        covariates = localizer.load_confounds(sub)
         mc_cov = make_motion_covariates(covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']])
         spikes = data.find_spikes(global_spike_cutoff=spike_cutoff, diff_spike_cutoff=spike_cutoff)
         dm_cov = dm.convolve().add_dct_basis(duration=128).add_poly(order=1, include_lower=True)
@@ -402,9 +401,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file, get_subjects):
+def _(Brain_Data, localizer):
     con1_name = 'horizontal_checkerboard'
-    con1_dat = Brain_Data([Brain_Data(get_file(sub, 'betas', con1_name)) for sub in get_subjects()])
+    con1_dat = Brain_Data([Brain_Data(localizer.get_file(sub, 'betas', con1_name)) for sub in localizer.get_subjects()])
     return (con1_dat,)
 
 
@@ -465,9 +464,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, con1_dat, get_file, get_subjects):
+def _(Brain_Data, con1_dat, localizer):
     con2_name = 'vertical_checkerboard'
-    con2_dat = Brain_Data([Brain_Data(get_file(sub, 'betas', con2_name)) for sub in get_subjects()])
+    con2_dat = Brain_Data([Brain_Data(localizer.get_file(sub, 'betas', con2_name)) for sub in localizer.get_subjects()])
 
     con1_v_con2 = con1_dat-con2_dat
     return (con1_v_con2,)

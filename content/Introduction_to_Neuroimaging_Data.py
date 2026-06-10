@@ -9,7 +9,7 @@ def _():
     import marimo as mo
     from pathlib import Path
     import os
-    from dartbrains_tools.data import get_file, get_subjects, get_tr, load_events, load_confounds, REPO_ID, CONDITIONS
+    from dartbrains_tools.data import localizer
     from huggingface_hub import hf_hub_download
     import nibabel as nib
     import matplotlib.pyplot as plt
@@ -21,9 +21,7 @@ def _():
     return (
         Brain_Data,
         get_anatomical,
-        get_file,
-        get_subjects,
-        load_events,
+        localizer,
         mo,
         nib,
         plot_anat,
@@ -187,16 +185,16 @@ def _(mo):
     The Localizer dataset is hosted on [HuggingFace](https://huggingface.co/datasets/dartbrains/localizer) in BIDS format. We provide helper functions in `dartbrains_tools.data` that download files on demand and cache them locally:
 
     ```python
-    from dartbrains_tools.data import get_file, get_subjects, load_events
+    from dartbrains_tools.data import localizer
 
     # Get the preprocessed BOLD file for subject S01
-    bold_path = get_file('S01', 'derivatives', 'bold')
+    bold_path = localizer.get_file('S01', 'derivatives', 'bold')
 
     # Get a list of all subjects
-    subjects = get_subjects()  # ['S01', 'S02', ..., 'S20']
+    subjects = localizer.get_subjects()  # ['S01', 'S02', ..., 'S20']
 
     # Load event timing for a subject
-    events = load_events('S01')
+    events = localizer.load_events('S01')
     ```
 
     Files are downloaded from HuggingFace Hub the first time you request them and cached locally for subsequent use.
@@ -213,8 +211,8 @@ def _(mo):
 
 
 @app.cell
-def _(get_subjects):
-    subjects = get_subjects()
+def _(localizer):
+    subjects = localizer.get_subjects()
     subjects[:10]
     return
 
@@ -222,14 +220,14 @@ def _(get_subjects):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We can also retrieve the path to a specific file. For example, let's get the preprocessed BOLD file for the first 10 subjects. The `get_file` function downloads the file from HuggingFace Hub on first access and returns the local cached path.
+    We can also retrieve the path to a specific file. For example, let's get the preprocessed BOLD file for the first 10 subjects. The `localizer.get_file` function downloads the file from HuggingFace Hub on first access and returns the local cached path.
     """)
     return
 
 
 @app.cell
-def _(get_file, get_subjects):
-    bold_files = [get_file(sub, 'derivatives', 'bold') for sub in get_subjects()[:10]]
+def _(localizer):
+    bold_files = [localizer.get_file(sub, 'derivatives', 'bold') for sub in localizer.get_subjects()[:10]]
     bold_files
     return
 
@@ -256,8 +254,8 @@ def _(mo):
 
 
 @app.cell
-def _(get_file):
-    f = get_file('S01', 'derivatives', 'bold')
+def _(localizer):
+    f = localizer.get_file('S01', 'derivatives', 'bold')
     f
     return
 
@@ -273,8 +271,8 @@ def _(mo):
 
 
 @app.cell
-def _(load_events):
-    events_df = load_events('S01')
+def _(localizer):
+    events_df = localizer.load_events('S01')
     events_df.head(10)
     return
 
@@ -291,14 +289,14 @@ def _(mo):
 
     We will be loading an anatomical image from subject S01 from the localizer [dataset](Download_Data.md).  See this [paper](https://bmcneurosci.biomedcentral.com/articles/10.1186/1471-2202-8-91) for more information about this dataset.
 
-    We will use our `get_file` helper to grab subject S01's T1 image.
+    We will use our `localizer.get_file` helper to grab subject S01's T1 image.
     """)
     return
 
 
 @app.cell
-def _(get_file, nib):
-    data = nib.load(get_file('S01', 'derivatives', 'T1w'))
+def _(localizer, nib):
+    data = nib.load(localizer.get_file('S01', 'derivatives', 'T1w'))
     return (data,)
 
 
@@ -590,8 +588,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file):
-    data_1 = Brain_Data(get_file('S01', 'derivatives', 'bold'))
+def _(Brain_Data, localizer):
+    data_1 = Brain_Data(localizer.get_file('S01', 'derivatives', 'bold'))
     return (data_1,)
 
 
@@ -921,7 +919,7 @@ def _(mo):
     ### Exercise 1
     A few subjects have already been preprocessed with fMRI prep.
 
-    Use `get_subjects()` to figure out which subjects are available in the dataset.
+    Use `localizer.get_subjects()` to figure out which subjects are available in the dataset.
     """)
     return
 

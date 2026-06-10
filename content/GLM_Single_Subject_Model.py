@@ -74,16 +74,14 @@ def _():
     from nltools.data import Brain_Data, Design_Matrix
     from nltools.stats import find_spikes
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
-    from dartbrains_tools.data import get_file, get_tr, load_events, get_subjects
+    from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
 
     return (
         Brain_Data,
         Design_Matrix,
-        get_file,
-        get_tr,
-        load_events,
+        localizer,
         nib,
         np,
         onsets_to_dm,
@@ -104,14 +102,14 @@ def _(mo):
 
 
 @app.cell
-def _(get_file, get_tr, load_events, nib, onsets_to_dm):
+def _(localizer, nib, onsets_to_dm):
     def load_bids_events(subject):
         '''Create a design_matrix instance from BIDS event file'''
 
-        tr = get_tr()
-        n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
+        tr = localizer.get_tr()
+        n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
 
-        onsets = load_events(subject)
+        onsets = localizer.load_events(subject)
         dm = onsets_to_dm(onsets, run_length=n_tr, TR=tr, hrf_model=None)
         # nilearn auto-adds a 'constant' intercept; drop it so .add_poly() later
         # is the single source of the intercept (avoids a rank-deficient design).
@@ -395,9 +393,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file):
+def _(Brain_Data, localizer):
     sub = 'S01'
-    data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
+    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
     return data, sub
 
 
@@ -410,8 +408,8 @@ def _(mo):
 
 
 @app.cell
-def _(get_file, pd, plt, zscore):
-    covariates = pd.read_csv(get_file('S01', 'derivatives', 'confounds'), sep='\t')
+def _(localizer, pd, plt, zscore):
+    covariates = pd.read_csv(localizer.get_file('S01', 'derivatives', 'confounds'), sep='\t')
 
     mc = covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']]
 
@@ -431,7 +429,7 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, get_tr, mc, pd, sns, zscore):
+def _(Design_Matrix, localizer, mc, pd, sns, zscore):
     def make_motion_covariates(mc, tr):
         z_mc = zscore(mc)
         z_mc_sq = z_mc ** 2
@@ -444,7 +442,7 @@ def _(Design_Matrix, get_tr, mc, pd, sns, zscore):
         all_mc.fillna(value=0, inplace=True)
         return Design_Matrix(all_mc, sampling_freq=1/tr)
 
-    tr = get_tr()
+    tr = localizer.get_tr()
     mc_cov = make_motion_covariates(mc, tr)
 
     sns.heatmap(mc_cov)

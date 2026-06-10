@@ -129,17 +129,15 @@ def _():
     from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map, view_img_on_surf, view_img
-    from dartbrains_tools.data import get_subjects, get_file, CONDITIONS
+    from dartbrains_tools.data import localizer
 
     return (
         Adjacency,
         Brain_Data,
-        CONDITIONS,
         expand_mask,
         fdr,
         fisher_r_to_z,
-        get_file,
-        get_subjects,
+        localizer,
         np,
         one_sample_permutation,
         pd,
@@ -164,10 +162,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, CONDITIONS, get_file):
+def _(Brain_Data, localizer):
     _sub = 'S01'
-    _file_list = [get_file(_sub, 'betas', cond) for cond in CONDITIONS]
-    conditions = CONDITIONS
+    _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
+    conditions = localizer.CONDITIONS
     # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens into 1D
     # (e.g. (10*238955,) instead of (10, 238955)), which breaks every
     # downstream apply_mask / distance call. Wrap each path in
@@ -387,13 +385,13 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, CONDITIONS, get_file, get_subjects, mask_x, motor, pd):
-    sub_list = get_subjects()
+def _(Brain_Data, localizer, mask_x, motor, pd):
+    sub_list = localizer.get_subjects()
     all_sub_similarity = {}
     all_sub_motor_rsa = {}
     for _sub in sub_list:
-        _file_list = [get_file(_sub, 'betas', cond) for cond in CONDITIONS]
-        conditions_1 = CONDITIONS
+        _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
+        conditions_1 = localizer.CONDITIONS
         # See note on the single-subject cell above — wrap each path in
         # Brain_Data() so the outer constructor stacks instead of flattening.
         beta_1 = Brain_Data([Brain_Data(f) for f in _file_list])

@@ -129,18 +129,9 @@ def _():
     from nltools.data import Brain_Data
     from nltools.mask import expand_mask
     from nilearn.plotting import view_img_on_surf
-    from dartbrains_tools.data import get_subjects, get_file
+    from dartbrains_tools.data import localizer
 
-    return (
-        Brain_Data,
-        expand_mask,
-        get_file,
-        get_subjects,
-        np,
-        os,
-        pd,
-        view_img_on_surf,
-    )
+    return Brain_Data, expand_mask, localizer, np, os, pd, view_img_on_surf
 
 
 @app.cell(hide_code=True)
@@ -154,10 +145,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file, get_subjects):
-    _sub_list = get_subjects()
-    left_file_list = [get_file(sub, 'betas', 'video_left_hand') for sub in _sub_list]
-    right_file_list = [get_file(sub, 'betas', 'video_right_hand') for sub in _sub_list]
+def _(Brain_Data, localizer):
+    _sub_list = localizer.get_subjects()
+    left_file_list = [localizer.get_file(sub, 'betas', 'video_left_hand') for sub in _sub_list]
+    right_file_list = [localizer.get_file(sub, 'betas', 'video_right_hand') for sub in _sub_list]
 
     # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens to 1D
     # ((20*238955,) instead of (20, 238955)), which then makes
