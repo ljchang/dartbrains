@@ -105,14 +105,14 @@ def _():
     import networkx as nx
     from nilearn.plotting import plot_stat_map, view_img_on_surf
     import nibabel as nib
-    from dartbrains_tools.data import get_file, get_tr, load_events, load_confounds, get_subjects
+    from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
 
     def get_csf_mask_path(subject):
         """Per-subject CSF probability mask from fmriprep outputs."""
         from pathlib import Path as _Path
-        bold_path = _Path(get_file(subject, 'derivatives', 'bold'))
+        bold_path = _Path(localizer.get_file(subject, 'derivatives', 'bold'))
         return str(bold_path.parent.parent / 'anat' /
                    f'sub-{subject}_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz')
 
@@ -124,11 +124,8 @@ def _():
         fft,
         fftfreq,
         get_csf_mask_path,
-        get_file,
-        get_tr,
         go,
-        load_confounds,
-        load_events,
+        localizer,
         make_subplots,
         nib,
         np,
@@ -152,10 +149,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file, mo):
+def _(Brain_Data, localizer, mo):
     sub = 'S01'
     _fwhm = 6
-    data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
+    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
 
     with mo.persistent_cache(name="connectivity_smoothed"):
         smoothed = data.smooth(fwhm=_fwhm)
@@ -250,15 +247,14 @@ def _(
     Design_Matrix,
     data,
     get_csf_mask_path,
-    get_tr,
-    load_confounds,
+    localizer,
     pd,
     smoothed,
     sub,
     vmpfc,
     zscore,
 ):
-    tr = get_tr()
+    tr = localizer.get_tr()
     _fwhm = 6
     n_tr = len(data)
 
@@ -283,7 +279,7 @@ def _(
     _csf_mask = Brain_Data(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
     csf = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
-    _covariates = load_confounds(sub)
+    _covariates = localizer.load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov = make_motion_covariates(_mc, tr)
     dm = Design_Matrix(pd.concat([vmpfc_1, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
@@ -325,8 +321,8 @@ def _(mo):
 
 
 @app.cell
-def _(get_file, nib):
-    _img = nib.load(get_file('S01', 'derivatives', 'bold'))
+def _(localizer, nib):
+    _img = nib.load(localizer.get_file('S01', 'derivatives', 'bold'))
     print(f'shape: {_img.shape}')
     print(f'voxel size: {_img.header.get_zooms()}')
     print(f'TR: {_img.header.get_zooms()[3]} s')
@@ -338,9 +334,7 @@ def _(get_file, nib):
 def _(
     Design_Matrix,
     csf,
-    get_file,
-    get_tr,
-    load_events,
+    localizer,
     mc_cov,
     nib,
     np,
@@ -359,9 +353,9 @@ def _(
         horizontally concatenated with other 0..n_tr-indexed DataFrames.
         """
         from nilearn.glm.first_level import make_first_level_design_matrix as _make_dm
-        tr = get_tr()
-        n_tr = nib.load(get_file(subject, 'derivatives', 'bold')).shape[-1]
-        onsets = load_events(subject)
+        tr = localizer.get_tr()
+        n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
+        onsets = localizer.load_events(subject)
         frame_times = np.arange(n_tr) * tr
         dm_raw = _make_dm(frame_times, events=onsets, hrf_model='glover', drift_model=None)
         convolved = [c for c in dm_raw.columns if c != 'constant']
@@ -549,7 +543,7 @@ def _(
     Brain_Data,
     Design_Matrix,
     get_csf_mask_path,
-    load_confounds,
+    localizer,
     make_motion_covariates,
     pd,
     smoothed,
@@ -561,7 +555,7 @@ def _(
     _csf_mask = Brain_Data(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
     csf_1 = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes_1 = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
-    _covariates = load_confounds(sub)
+    _covariates = localizer.load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov_1 = make_motion_covariates(_mc, tr)
     dm_2 = Design_Matrix(pd.concat([vmpfc_1, csf_1, mc_cov_1, spikes_1.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
@@ -617,8 +611,8 @@ def _(
     component_slider,
     fft,
     fftfreq,
-    get_tr,
     go,
+    localizer,
     make_subplots,
     mo,
     np,
@@ -645,12 +639,12 @@ def _(
     # Timecourse + power spectrum (plotly subplots)
     _weights = pca_stats_output['weights'][:, _comp]
     _y = fft(_weights)
-    _freqs = fftfreq(len(_y), d=get_tr())
+    _freqs = fftfreq(len(_y), d=localizer.get_tr())
     _pos_mask = _freqs > 0
 
     _fig = make_subplots(
         rows=2, cols=1, vertical_spacing=0.18,
-        subplot_titles=(f'Timecourse (TR={get_tr()}s)', 'Power Spectrum'),
+        subplot_titles=(f'Timecourse (TR={localizer.get_tr()}s)', 'Power Spectrum'),
     )
     _fig.add_trace(go.Scatter(
         y=_weights, mode='lines', line=dict(color='red', width=2),

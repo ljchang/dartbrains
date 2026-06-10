@@ -63,25 +63,15 @@ def _():
     from plotly.subplots import make_subplots
     from nltools.data import Brain_Data
     from nilearn.plotting import view_img
-    from dartbrains_tools.data import get_file, get_tr
+    from dartbrains_tools.data import localizer
 
-    return (
-        Brain_Data,
-        fft,
-        fftfreq,
-        get_file,
-        get_tr,
-        go,
-        make_subplots,
-        np,
-        view_img,
-    )
+    return Brain_Data, fft, fftfreq, go, localizer, make_subplots, np, view_img
 
 
 @app.cell
-def _(Brain_Data, get_file):
+def _(Brain_Data, localizer):
     sub = 'S01'
-    data = Brain_Data(get_file(sub, 'derivatives', 'bold'))
+    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
     return (data,)
 
 
@@ -97,8 +87,8 @@ def _(mo):
 
 
 @app.cell
-def _(data, get_tr, mo):
-    tr = get_tr()
+def _(data, localizer, mo):
+    tr = localizer.get_tr()
     with mo.persistent_cache("ica_preprocess"):
         data_1 = data.filter(sampling_freq=1 / tr, high_pass=1 / 128)
         data_1 = data_1.smooth(6)

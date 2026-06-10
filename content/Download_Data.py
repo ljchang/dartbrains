@@ -73,16 +73,16 @@ def _(mo):
 
 @app.cell
 def _():
-    from dartbrains_tools.data import get_file, get_subjects, load_events, get_tr, REPO_ID
+    from dartbrains_tools.data import localizer
 
     # List all subjects
-    print(f"Subjects: {get_subjects()}")
-    print(f"TR: {get_tr()} seconds")
+    print(f"Subjects: {localizer.get_subjects()}")
+    print(f"TR: {localizer.get_tr()} seconds")
 
     # Download a preprocessed BOLD file (cached after first download)
-    bold_path = get_file('S01', 'derivatives', 'bold')
+    bold_path = localizer.get_file('S01', 'derivatives', 'bold')
     print(f"\nBOLD file path: {bold_path}")
-    return REPO_ID, load_events
+    return (localizer,)
 
 
 @app.cell(hide_code=True)
@@ -96,8 +96,8 @@ def _(mo):
 
 
 @app.cell
-def _(load_events):
-    events = load_events('S01')
+def _(localizer):
+    events = localizer.load_events('S01')
     events.head(10)
     return
 
@@ -113,12 +113,12 @@ def _(mo):
 
 
 @app.cell
-def _(REPO_ID):
+def _(localizer):
     from huggingface_hub import hf_hub_download
 
     # Download a specific beta map
     path = hf_hub_download(
-        repo_id=REPO_ID,
+        repo_id=localizer.REPO_ID,
         filename="derivatives/betas/S01_betas.nii.gz",
         repo_type="dataset",
     )
@@ -132,11 +132,11 @@ def _(mo):
         mo.md(r"""
         ### Browsing the Dataset as a BIDS Tree
 
-        `hf_hub_download` and `get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to access.
+        `hf_hub_download` and `localizer.get_file()` cache files in `~/.cache/huggingface/hub/datasets--dartbrains--localizer/`, but the cache uses a content-addressed layout (`blobs/` for raw bytes, `snapshots/<commit>/` for symlinks back to those blobs with their original filenames). The `snapshots/` folder *does* preserve the original BIDS tree exactly, but the path is awkward to access.
 
         If you'd rather browse the dataset like a normal BIDS directory — `cd` into it, `ls` subjects, drag it into a file explorer, point external tools at it — the cleanest pattern is to download a full snapshot and symlink it to a friendly location of your choice.
 
-         First, pull the snapshot. Files you've already cached with `get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
+         First, pull the snapshot. Files you've already cached with `localizer.get_file()` or `hf_hub_download` are reused, so this is fast on a second call:
         """),
         mo.callout(
             mo.md(
@@ -158,11 +158,11 @@ def _(mo):
 
 
 @app.cell
-def _(REPO_ID):
+def _(localizer):
     from huggingface_hub import snapshot_download
 
     snapshot_path = snapshot_download(
-        repo_id=REPO_ID,
+        repo_id=localizer.REPO_ID,
         repo_type="dataset",
     )
     print(f"Snapshot lives at:\n  {snapshot_path}")
@@ -752,7 +752,7 @@ def _():
     confounds = sherlock.load_confounds("sub-01", task="sherlockPart1")
     watch_onsets = sherlock.load_onsets("watch")
     print(f"\nConfounds: {confounds.shape}; Watch onsets: {watch_onsets.shape}")
-    return (sherlock,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -785,7 +785,7 @@ def _():
     # Story 1 transcript (small)
     transcript = paranoia.load_transcript(1)
     print(f"\nStory 1 transcript (first 200 chars):\n{transcript[:200]}")
-    return (paranoia,)
+    return
 
 
 @app.cell(hide_code=True)

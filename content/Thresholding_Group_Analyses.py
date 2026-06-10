@@ -95,9 +95,9 @@ def _():
     import plotly.graph_objects as go
     from nltools.data import Brain_Data
     from nltools.simulator import SimulateGrid
-    from dartbrains_tools.data import get_file, get_subjects
+    from dartbrains_tools.data import localizer
 
-    return Brain_Data, SimulateGrid, get_file, get_subjects, go, np, plt, sns
+    return Brain_Data, SimulateGrid, go, localizer, np, plt, sns
 
 
 @app.cell(hide_code=True)
@@ -533,9 +533,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, get_file, get_subjects):
+def _(Brain_Data, localizer):
     con1_name = 'horizontal_checkerboard'
-    con1_file_list = [get_file(sub, 'betas', con1_name) for sub in get_subjects()]
+    con1_file_list = [localizer.get_file(sub, 'betas', con1_name) for sub in localizer.get_subjects()]
     con1_dat = Brain_Data([Brain_Data(f) for f in con1_file_list])
     _con1_stats = con1_dat.ttest(threshold_dict={'unc': 0.001})
     _con1_stats['thr_t'].iplot()
@@ -578,9 +578,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, con1_dat, get_file, get_subjects):
+def _(Brain_Data, con1_dat, localizer):
     con2_name = 'vertical_checkerboard'
-    con2_file_list = [get_file(sub, 'betas', con2_name) for sub in get_subjects()]
+    con2_file_list = [localizer.get_file(sub, 'betas', con2_name) for sub in localizer.get_subjects()]
     con2_dat = Brain_Data([Brain_Data(f) for f in con2_file_list])
     con1_v_con2 = con1_dat - con2_dat
     _con1_v_con2_stats = con1_v_con2.ttest(threshold_dict={'unc': 0.001})
