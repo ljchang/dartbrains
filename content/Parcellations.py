@@ -1,11 +1,14 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.8"
 app = marimo.App()
 
 
 @app.cell
 def _():
+    import warnings
+    warnings.filterwarnings("ignore")  # hide library resampling warnings from the atlas plots
+
     import marimo as mo
     from pathlib import Path
     _ROOT = Path(__file__).resolve().parent.parent
@@ -126,7 +129,7 @@ def _(mo):
 def _(datasets):
     import matplotlib.pyplot as plt
     from nilearn import plotting
-    aal = datasets.fetch_atlas_aal(version='SPM12')
+    aal = datasets.fetch_atlas_aal(version='SPM12', verbose=0)
     plotting.plot_roi(aal.maps, title='AAL')
     plt.gcf()
     return plotting, plt
@@ -149,7 +152,7 @@ def _(mo):
 def _(datasets, mo, plotting, plt):
     _figs = []
     for level in ['hemisphere', 'lobe', 'gyrus', 'tissue', 'ba']:
-        talairach = datasets.fetch_atlas_talairach(level_name=level)
+        talairach = datasets.fetch_atlas_talairach(level_name=level, verbose=0)
         plotting.plot_roi(talairach.maps, title=f'Talairach - {level}')
         _figs.append(plt.gcf())
         plt.close('all')
@@ -182,7 +185,7 @@ def _(mo):
 def _(datasets, mo, plotting, plt):
     _figs = []
     for atlas_name in ['cort-maxprob-thr0-2mm', 'sub-maxprob-thr0-1mm']:
-        harvard_oxford = datasets.fetch_atlas_harvard_oxford(atlas_name)
+        harvard_oxford = datasets.fetch_atlas_harvard_oxford(atlas_name, verbose=0)
         plotting.plot_roi(
             harvard_oxford.maps, title=f'Harvard-Oxford-{atlas_name}'
         )
@@ -241,21 +244,21 @@ def _(IMG_DIR, mo):
 
 @app.cell
 def _(datasets, plotting):
-    destrieux = datasets.fetch_atlas_surf_destrieux()
+    destrieux = datasets.fetch_atlas_surf_destrieux(verbose=0)
 
     # See outputs of the dataset
     print(destrieux.keys())
 
-    atlas = destrieux['map_left']
+    destrieux_atlas = destrieux['map_left']
     fsaverage = datasets.fetch_surf_fsaverage()
-    plot = plotting.plot_surf_roi(fsaverage['infl_left'], roi_map=atlas,
+    plot = plotting.plot_surf_roi(fsaverage['infl_left'], roi_map=destrieux_atlas,
                            hemi='left', view='lateral',
                            bg_map=fsaverage['sulc_left'], bg_on_data=True,
                            darkness=.2)
     # Note: we chose 'infl_left' here to match the image above, but the same
     # image could be plotted on pial surface or at different angles using
     # this plot_surf_roi function
-    return (atlas,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -298,18 +301,18 @@ def _(mo):
 
 @app.cell
 def _(datasets, plotting):
-    yeo = datasets.fetch_atlas_yeo_2011()
+    yeo = datasets.fetch_atlas_yeo_2011(verbose=0)
 
     ''' See outputs of the dataset '''
     print(yeo.keys())
 
     for label in ['thick_7','thick_17']:
       n = label.replace("thick_","")
-      atlas = yeo[label] #this loads in a .nii file
-      plotting.plot_roi(atlas, title=f'Yeo - {n} Network',cmap='Paired')
+      yeo_atlas = yeo[label] #this loads in a .nii file
+      plotting.plot_roi(yeo_atlas, title=f'Yeo - {n} Network',cmap='Paired')
 
     '''Note: if you want to keep the canonical Yeo colors for your plotting, there is a 'colors_7' txt file available in the nilearn function'''
-    return (atlas,)
+    return (yeo_atlas,)
 
 
 @app.cell(hide_code=True)
@@ -321,10 +324,10 @@ def _(mo):
 
 
 @app.cell
-def _(atlas, plotting):
+def _(plotting, yeo_atlas):
     from nilearn.regions import connected_label_regions
 
-    region_labels = connected_label_regions(atlas)
+    region_labels = connected_label_regions(yeo_atlas)
 
     plotting.plot_roi(region_labels, title='Yeo',
                       colorbar=True, cmap='Paired')
@@ -348,14 +351,14 @@ def _(mo):
 
 @app.cell
 def _(datasets, plotting):
-    schaefer = datasets.fetch_atlas_schaefer_2018()
+    schaefer = datasets.fetch_atlas_schaefer_2018(verbose=0)
     ' See outputs of the dataset '
     print(schaefer.keys())
     ' Change here if you want a different number of rois, networks, or resolution'
     n_rois = 200
     yeo_networks = 7
     resolution_mm = 1
-    dataset_s = datasets.fetch_atlas_schaefer_2018(n_rois, yeo_networks, resolution_mm)
+    dataset_s = datasets.fetch_atlas_schaefer_2018(n_rois, yeo_networks, resolution_mm, verbose=0)
     atlas_1 = schaefer['maps']
     plotting.plot_roi(atlas_1, title=f'Schaefer - {n_rois}', colorbar=True, cmap='Paired')
     return

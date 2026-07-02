@@ -1,0 +1,13 @@
+{
+  "entries": {
+    "content/Parcellations.py": {
+      "body_path": "content/Parcellations.md",
+      "body_sig": "sha256:88addbce2747f85254dc0b53add28c23890eea9eb55c2a9f0e1da6edfabc7ae8",
+      "cell_errors": [],
+      "marimo_book_version": "0.1.27",
+      "rendered_at": "2026-07-02T13:27:54+00:00",
+      "src_hash": "c1be08ff24802324fc200b4b86d3982c0d0d550d55ea9b9960bf7a5b2d491fcf"
+    }
+  },
+  "schema_version": 2
+}

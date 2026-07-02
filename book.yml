@@ -152,6 +152,10 @@ toc:
         title: Representational Similarity Analysis
       - file: content/Parcellations.py
         title: Introduction to Parcellations
+        # Fetches many atlases over the network (AAL/Talairach from hosts whose
+        # TLS chains certifi rejects, plus Harvard-Oxford/Destrieux/Yeo). Render
+        # once locally (committed to _rendered/) so CI never hits the network.
+        mode: cached
       - file: content/Resampling_Statistics.py
 
   - section: Additional Courses
