@@ -36,6 +36,17 @@ analytics:
   provider: google
   property: G-MQK18K92KD
 
+# marimo-book 0.1.27 added a 600s per-notebook execution cap
+# (defaults.execution_timeout). Several chapters legitimately run longer at
+# build time — Download_Data, Multivariate_Prediction, and RSA download
+# datasets / do heavy compute (the full build has always taken ~75 min with
+# no cap). `null` disables the cap, restoring the pre-0.1.27 behaviour.
+# Downloads are network-bound with unpredictable timing, so a fixed cap risks
+# spurious build failures; re-introduce a finite value here only if a genuinely
+# hung notebook ever needs guarding.
+defaults:
+  execution_timeout: null
+
 # Static reactivity for discrete mo.ui widgets (slider/dropdown/etc).
 # Each widget's downstream cells are re-rendered per value at build time
 # and cached as a JSON lookup table; a tiny JS shim swaps the visible
