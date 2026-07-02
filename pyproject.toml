@@ -16,7 +16,7 @@ dependencies = [
     "dartbrains-tools>=0.1.5",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
-    "huggingface-hub[cli,hf-xet]>=1.8.0",
+    "huggingface-hub[hf-xet]>=1.8.0",
     # 0.23.6 ships marimo-team/marimo#9409 so MarimoIslandGenerator.from_file
     # propagates the notebook filename — lets notebooks resolve the repo root
     # via Path(__file__).resolve().parent.parent instead of a cwd/book.yml walk.

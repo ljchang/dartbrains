@@ -547,7 +547,7 @@ requires-dist = [
     { name = "dartbrains-tools", specifier = ">=0.1.5" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
-    { name = "huggingface-hub", extras = ["cli", "hf-xet"], specifier = ">=1.8.0" },
+    { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
     { name = "ipyniivue", specifier = ">=2.4.4" },
     { name = "marimo", specifier = ">=0.23.6" },
     { name = "marimo-book", marker = "extra == 'build'" },

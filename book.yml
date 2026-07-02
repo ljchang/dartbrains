@@ -114,9 +114,6 @@ toc:
         title: Running fMRIPrep on HPC
       - file: content/Glossary.md
 
-  - section: Course Topics
-    children:
- 
   - section: Neuroimaging Analysis
     children:
       - file: content/MR_Physics.py
