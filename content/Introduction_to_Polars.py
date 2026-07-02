@@ -310,8 +310,9 @@ def _(df, pl):
 
 @app.cell
 def _(df, pl):
-    # Use pl.all() to compute the sum of every numeric column
-    df.select(pl.all().sum())
+    # Use a numeric selector to sum every numeric column (pl.all() would also
+    # try to sum string columns, which raises in modern polars).
+    df.select(pl.selectors.numeric().sum())
     return
 
 

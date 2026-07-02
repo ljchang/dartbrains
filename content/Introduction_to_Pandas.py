@@ -181,14 +181,15 @@ def _(mo):
     mo.md(r"""
     To load a csv file we will need to specify either the relative or absolute path to the file.
 
-    The command `pwd` will print the path of the current working directory.
+    In Python, `os.getcwd()` returns the path of the current working directory.
     """)
     return
 
 
 @app.cell
-def _(pwd):
-    pwd
+def _():
+    import os
+    os.getcwd()
     return
 
 

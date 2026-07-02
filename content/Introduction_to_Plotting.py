@@ -233,7 +233,7 @@ def _(IMG_DIR, mo):
 def _(np, plt):
     def simulate_xy(n=500, r=0.9):
         _mu = np.array([0, 0])
-        _cov = np.array([[1, _r], [_r, 1]])
+        _cov = np.array([[1, r], [r, 1]])
         return np.random.multivariate_normal(_mu, _cov, size=n)
     _f, _ax = plt.subplots(nrows=2, ncols=2, figsize=(8, 8), sharex=True, sharey=True)
     _r = 0.1
@@ -303,7 +303,7 @@ def _(mo):
 def _(np, pd, plt, sns):
     def simulate_xy_1(n=500, r=0.9):
         _mu = np.array([0, 0])
-        _cov = np.array([[1, _r], [_r, 1]])
+        _cov = np.array([[1, r], [r, 1]])
         return pd.DataFrame(np.random.multivariate_normal(_mu, _cov, size=n), columns=['Variable1', 'Variable2'])
     sns.scatterplot(data=simulate_xy_1(), x='Variable1', y='Variable2')
     plt.title('Scatterplot', fontsize=18)
@@ -468,7 +468,7 @@ def _(mo):
 
 @app.cell
 def _(pd):
-    df = pd.read_csv('../../data/salary.csv', sep = ',', header='infer')
+    df = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv', sep = ',', header='infer')
     df = df.dropna()
     df = df[df['gender']!=2]
     return (df,)
@@ -530,7 +530,7 @@ def _(df, plt):
     _f, axs = plt.subplots(1, 4, sharey=True)
     _f.suptitle('Salary in relation to other variables')
     df.plot(kind='scatter', x='gender', y='salary', ax=axs[0], figsize=(15, 4))
-    df.plot(kind='scatter', x='dept_num', y='salary', ax=axs[1])
+    df.plot(kind='scatter', x='departm', y='salary', ax=axs[1])
     df.plot(kind='scatter', x='years', y='salary', ax=axs[2])
     df.plot(kind='scatter', x='age', y='salary', ax=axs[3])
     return
@@ -554,8 +554,8 @@ def _(mo):
 
 @app.cell
 def _(df, np):
-    means = df.groupby('gender').mean()['salary']
-    errors = df.groupby('gender').std()['salary'] / np.sqrt(df.groupby('gender').count()['salary'])
+    means = df.groupby('gender')['salary'].mean()
+    errors = df.groupby('gender')['salary'].std() / np.sqrt(df.groupby('gender')['salary'].count())
     _ax = means.plot.bar(yerr=errors, figsize=(5, 3))
     return
 
@@ -621,12 +621,12 @@ def _(IMG_DIR, mo):
 
 @app.cell
 def _(pd, plt, sns):
-    data_7 = pd.read_csv('../data/salary/salary_exercise.csv')
+    data_7 = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary_exercise.csv')
     data_7.columns = ['Sex', 'Rank', 'Year', 'Degree', 'YearsSinceHighestDegree', 'Salary']
     with sns.plotting_context(context='paper', font_scale=2.5):
         _f, _a = plt.subplots(ncols=2, nrows=1, figsize=(25, 10))
-        sns.heatmap(data_7.query('Sex=="male"').corr(), linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=_a[0])
-        sns.heatmap(data_7.query('Sex=="male"').corr(), linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=_a[1])
+        sns.heatmap(data_7.query('Sex=="male"').corr(numeric_only=True), linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=_a[0])
+        sns.heatmap(data_7.query('Sex=="female"').corr(numeric_only=True), linewidths=2, cmap='RdBu_r', vmin=-1, vmax=1, ax=_a[1])
         plt.tight_layout()
     plt.gcf()
     return
@@ -653,7 +653,7 @@ def _(IMG_DIR, mo):
 
 @app.cell
 def _(pd, plt, sns):
-    data_8 = pd.read_csv('../data/salary/salary_exercise.csv')
+    data_8 = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary_exercise.csv')
     data_8.columns = ['Sex', 'Rank', 'Year', 'Degree', 'YearsSinceHighestDegree', 'Salary']
     _f, _a = plt.subplots(ncols=2, nrows=1, figsize=(12, 5))
     sns.barplot(data=data_8, x='Sex', y='Salary', ax=_a[0])
