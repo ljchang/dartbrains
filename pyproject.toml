@@ -10,7 +10,10 @@ authors = [
 ]
 dependencies = [
     "anywidget>=0.9.21",
-    "dartbrains-tools>=0.1.4",
+    # 0.1.5 lazy-imports the data subpackage so `import dartbrains_tools.*`
+    # no longer drags in huggingface_hub (which imports termios, absent in
+    # WASM) — required for the mode: wasm notebooks to boot in Pyodide.
+    "dartbrains-tools>=0.1.5",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
     "huggingface-hub[cli,hf-xet]>=1.8.0",
@@ -45,8 +48,12 @@ build = [
 [dependency-groups]
 build = [
     # 0.1.18 stages PEP 723 copies as sibling files so __file__-relative
-    # root detection works on WASM pages (marimo-book #46).
-    "marimo-book>=0.1.18",
+    # root detection works on WASM pages (marimo-book #46). 0.1.27 adds a
+    # body-level build cache (TOC/launch-button edits no longer re-execute
+    # notebooks), a build-free `marimo-book check` doctor, native [@key]
+    # citations, and a strict cell-error gate that fails the build when a
+    # cell raises instead of publishing the traceback.
+    "marimo-book>=0.1.27",
 ]
 
 [tool.uv.sources]
