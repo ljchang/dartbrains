@@ -89,7 +89,7 @@ snapshot_path = snapshot_download(
 print(f"Snapshot lives at:\n  {snapshot_path}")
 ```
 
-<pre class="marimo-book-output-text marimo-stream-stderr">Fetching ... files: 0it [00:00, ?it/s]Fetching ... files: 3642it [00:00, 121335.51it/s]
+<pre class="marimo-book-output-text marimo-stream-stderr">Fetching ... files: 0it [00:00, ?it/s]Fetching ... files: 3642it [00:00, 136932.62it/s]
 </pre>
 
 <pre class="marimo-book-output-text marimo-stream-stdout">Snapshot lives at:
