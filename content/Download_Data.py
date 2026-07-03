@@ -225,7 +225,7 @@ def _(mo):
     mo.md(r"""
     ### Bulk Loading with the `datasets` Library
 
-    For loading all beta maps or events at once, use the `datasets` library:
+    Each config is an index of file paths plus BIDS labels. Load the table, then fetch and open the files you need:
     """)
     return
 
@@ -233,11 +233,14 @@ def _(mo):
 @app.cell
 def _():
     from datasets import load_dataset
+    from huggingface_hub import hf_hub_download
+    import nibabel as nib
 
     ds = load_dataset("dartbrains/localizer", "betas")
-    print(f"Loaded {len(ds['train'])} beta maps")
-    _first = ds['train'][0]
-    print(f"First entry: subject={_first['subject']}, condition={_first['condition']}")
+    print(f"Loaded {len(ds['train'])} beta maps (index of paths + labels)")
+    _first = ds['train'][0]  # {'path', 'subject', 'condition', 'type'}
+    _img = nib.load(hf_hub_download("dartbrains/localizer", _first['path'], repo_type="dataset"))
+    print(f"{_first['subject']} {_first['condition']} ({_first['type']}) -> {_img.shape}")
     return
 
 
