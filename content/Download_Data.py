@@ -10,7 +10,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.8"
 app = marimo.App()
 
 
@@ -18,7 +18,12 @@ app = marimo.App()
 def _():
     import marimo as mo
 
-    return (mo,)
+    def short_path(p):
+        """Collapse the home dir to ~ so printed paths don't leak a username."""
+        from pathlib import Path
+        return str(p).replace(str(Path.home()), "~")
+
+    return mo, short_path
 
 
 @app.cell(hide_code=True)
@@ -65,7 +70,7 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(short_path):
     from dartbrains_tools.data import localizer
 
     # List all subjects
@@ -74,7 +79,7 @@ def _():
 
     # Download a preprocessed BOLD file (cached after first download)
     bold_path = localizer.get_file('S01', 'derivatives', 'bold')
-    print(f"\nBOLD file path: {bold_path}")
+    print(f"\nBOLD file path: {short_path(bold_path)}")
     return (localizer,)
 
 
@@ -106,7 +111,7 @@ def _(mo):
 
 
 @app.cell
-def _(localizer):
+def _(localizer, short_path):
     from huggingface_hub import hf_hub_download
 
     # Download a specific beta map
@@ -115,7 +120,7 @@ def _(localizer):
         filename="derivatives/betas/S01_betas.nii.gz",
         repo_type="dataset",
     )
-    print(f"Downloaded to: {path}")
+    print(f"Downloaded to: {short_path(path)}")
     return
 
 
@@ -151,7 +156,7 @@ def _(mo):
 
 
 @app.cell
-def _(localizer):
+def _(localizer, short_path):
     from huggingface_hub import snapshot_download
     from huggingface_hub.utils import disable_progress_bars
 
@@ -160,7 +165,7 @@ def _(localizer):
         repo_id=localizer.REPO_ID,
         repo_type="dataset",
     )
-    print(f"Snapshot lives at:\n  {snapshot_path}")
+    print(f"Snapshot lives at:\n  {short_path(snapshot_path)}")
     return (snapshot_path,)
 
 
@@ -173,7 +178,7 @@ def _(mo):
 
 
 @app.cell
-def _(snapshot_path):
+def _(short_path, snapshot_path):
     from pathlib import Path
 
     bids_root = Path.home() / "data" / "localizer"
@@ -183,7 +188,7 @@ def _(snapshot_path):
         bids_root.unlink()  # replace any stale symlink
     bids_root.symlink_to(snapshot_path)
 
-    print(f"Browse the BIDS tree at: {bids_root}")
+    print(f"Browse the BIDS tree at: {short_path(bids_root)}")
     return (bids_root,)
 
 
@@ -225,17 +230,14 @@ def _(mo):
     return
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ```python
+@app.cell
+def _():
     from datasets import load_dataset
 
     ds = load_dataset("dartbrains/localizer", "betas")
     print(f"Loaded {len(ds['train'])} beta maps")
-    print(f"First entry: subject={ds['train'][0]['subject']}, condition={ds['train'][0]['condition']}")
-    ```
-    """)
+    _first = ds['train'][0]
+    print(f"First entry: subject={_first['subject']}, condition={_first['condition']}")
     return
 
 
@@ -791,7 +793,7 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(short_path):
     from dartbrains_tools.data import sherlock
 
     print(f"Subjects: {sherlock.get_subjects()[:3]} ... ({len(sherlock.get_subjects())} total)")
@@ -800,7 +802,7 @@ def _():
 
     # Per-subject preprocessed bold (lazy download, ~800 MB each)
     _bold_path = sherlock.get_file("sub-01", task="sherlockPart1", suffix="bold")
-    print(f"\nBOLD path: {_bold_path}")
+    print(f"\nBOLD path: {short_path(_bold_path)}")
 
     # Confounds + scene onsets are small
     _confounds = sherlock.load_confounds("sub-01", task="sherlockPart1")

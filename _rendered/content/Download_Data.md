@@ -31,13 +31,13 @@ print(f"TR: {localizer.get_tr()} seconds")
 
 # Download a preprocessed BOLD file (cached after first download)
 bold_path = localizer.get_file('S01', 'derivatives', 'bold')
-print(f"\nBOLD file path: {bold_path}")
+print(f"\nBOLD file path: {short_path(bold_path)}")
 ```
 
 <pre class="marimo-book-output-text marimo-stream-stdout">Subjects: [&#x27;S01&#x27;, &#x27;S02&#x27;, &#x27;S03&#x27;, &#x27;S04&#x27;, &#x27;S05&#x27;, &#x27;S06&#x27;, &#x27;S07&#x27;, &#x27;S08&#x27;, &#x27;S09&#x27;, &#x27;S10&#x27;, &#x27;S11&#x27;, &#x27;S12&#x27;, &#x27;S13&#x27;, &#x27;S14&#x27;, &#x27;S15&#x27;, &#x27;S16&#x27;, &#x27;S17&#x27;, &#x27;S18&#x27;, &#x27;S19&#x27;, &#x27;S20&#x27;]
 TR: 2.4 seconds
 
-BOLD file path: /Users/lukechang/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/493f7614c8b7cdc0593a89eb0635f10669b30a10/derivatives/fmriprep/sub-S01/func/sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+BOLD file path: ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/b5bbae243ae673133b93deb2ba308ff2541624f6/derivatives/fmriprep/sub-S01/func/sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 </pre>
 
 ### Loading Event Timing Data
@@ -66,10 +66,10 @@ path = hf_hub_download(
     filename="derivatives/betas/S01_betas.nii.gz",
     repo_type="dataset",
 )
-print(f"Downloaded to: {path}")
+print(f"Downloaded to: {short_path(path)}")
 ```
 
-<pre class="marimo-book-output-text marimo-stream-stdout">Downloaded to: /Users/lukechang/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/493f7614c8b7cdc0593a89eb0635f10669b30a10/derivatives/betas/S01_betas.nii.gz
+<pre class="marimo-book-output-text marimo-stream-stdout">Downloaded to: ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/b5bbae243ae673133b93deb2ba308ff2541624f6/derivatives/betas/S01_betas.nii.gz
 </pre>
 
 <div class="marimo-book-output">
@@ -88,11 +88,11 @@ snapshot_path = snapshot_download(
     repo_id=localizer.REPO_ID,
     repo_type="dataset",
 )
-print(f"Snapshot lives at:\n  {snapshot_path}")
+print(f"Snapshot lives at:\n  {short_path(snapshot_path)}")
 ```
 
 <pre class="marimo-book-output-text marimo-stream-stdout">Snapshot lives at:
-  /Users/lukechang/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/493f7614c8b7cdc0593a89eb0635f10669b30a10
+  ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/b5bbae243ae673133b93deb2ba308ff2541624f6
 </pre>
 
 Now create a symlink from somewhere convenient (e.g. `~/data/localizer`) pointing at the snapshot. The symlink takes ~no disk space and lets you treat the cached data as if it lived in `~/data/localizer`:
@@ -107,10 +107,10 @@ if bids_root.exists() or bids_root.is_symlink():
     bids_root.unlink()  # replace any stale symlink
 bids_root.symlink_to(snapshot_path)
 
-print(f"Browse the BIDS tree at: {bids_root}")
+print(f"Browse the BIDS tree at: {short_path(bids_root)}")
 ```
 
-<pre class="marimo-book-output-text marimo-stream-stdout">Browse the BIDS tree at: /Users/lukechang/data/localizer
+<pre class="marimo-book-output-text marimo-stream-stdout">Browse the BIDS tree at: ~/data/localizer
 </pre>
 
 ```python
@@ -154,8 +154,13 @@ from datasets import load_dataset
 
 ds = load_dataset("dartbrains/localizer", "betas")
 print(f"Loaded {len(ds['train'])} beta maps")
-print(f"First entry: subject={ds['train'][0]['subject']}, condition={ds['train'][0]['condition']}")
+_first = ds['train'][0]
+print(f"First entry: subject={_first['subject']}, condition={_first['condition']}")
 ```
+
+<pre class="marimo-book-output-text marimo-stream-stdout">Loaded 220 beta maps
+First entry: subject=S01, condition=audio_computation
+</pre>
 
 ---
 
@@ -483,7 +488,7 @@ print(f"TR: {sherlock.get_tr()} s")
 
 # Per-subject preprocessed bold (lazy download, ~800 MB each)
 _bold_path = sherlock.get_file("sub-01", task="sherlockPart1", suffix="bold")
-print(f"\nBOLD path: {_bold_path}")
+print(f"\nBOLD path: {short_path(_bold_path)}")
 
 # Confounds + scene onsets are small
 _confounds = sherlock.load_confounds("sub-01", task="sherlockPart1")
@@ -495,7 +500,7 @@ print(f"\nConfounds: {_confounds.shape}; Watch onsets: {_watch_onsets.shape}")
 Tasks: [&#x27;sherlockPart1&#x27;, &#x27;sherlockPart2&#x27;, &#x27;freerecall&#x27;]
 TR: 1.5 s
 
-BOLD path: /Users/lukechang/.cache/huggingface/hub/datasets--dartbrains--sherlock/snapshots/f824692b47bb34a45e90c68e92b796114db2910c/fmriprep/sub-01/func/sub-01_task-sherlockPart1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+BOLD path: ~/.cache/huggingface/hub/datasets--dartbrains--sherlock/snapshots/f824692b47bb34a45e90c68e92b796114db2910c/fmriprep/sub-01/func/sub-01_task-sherlockPart1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 
 Confounds: (973, 502); Watch onsets: (50, 4)
 </pre>
