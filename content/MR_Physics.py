@@ -135,7 +135,7 @@ def _(mo):
     Let's first start with a short video on the basics of MR physics by Martin Lindquist.
 
     ---
-    # Part 1: Magnetism & Resonance
+    ## Part 1: Magnetism & Resonance
 
     ---
     """)
@@ -568,7 +568,7 @@ def _(
 def _(mo):
     mo.md(r"""
     ---
-    # Part 2: Signal & Contrast
+    ## Part 2: Signal & Contrast
 
     We've learned how an RF pulse tips the net magnetization into the
     transverse plane, producing a Free Induction Decay signal. But
@@ -1258,7 +1258,7 @@ def _(SpinEnsembleWidget, echo_speed, echo_type, mo):
 def _(mo):
     mo.md(r"""
     ---
-    # Part 3: Imaging & fMRI
+    ## Part 3: Imaging & fMRI
 
     We now know how to generate a signal and how different tissues produce
     different signals. But there's a critical problem: **where did the

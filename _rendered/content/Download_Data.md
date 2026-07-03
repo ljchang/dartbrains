@@ -81,16 +81,15 @@ print(f"Downloaded to: {path}")
 
 ```python
 from huggingface_hub import snapshot_download
+from huggingface_hub.utils import disable_progress_bars
 
+disable_progress_bars()  # keep the rendered page clean (no fetch progress bars)
 snapshot_path = snapshot_download(
     repo_id=localizer.REPO_ID,
     repo_type="dataset",
 )
 print(f"Snapshot lives at:\n  {snapshot_path}")
 ```
-
-<pre class="marimo-book-output-text marimo-stream-stderr">Fetching ... files: 0it [00:00, ?it/s]Fetching ... files: 3642it [00:00, 136932.62it/s]
-</pre>
 
 <pre class="marimo-book-output-text marimo-stream-stdout">Snapshot lives at:
   /Users/lukechang/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/493f7614c8b7cdc0593a89eb0635f10669b30a10
@@ -312,7 +311,7 @@ The Pinel localizer dataset can be accessed at the following location https://gi
 You can run this from the notebook using the `!` cell magic.
 
 ```bash
-cd ~/Dropbox/Dartbrains/data
+cd ~/data
 datalad install https://gin.g-node.org/ljchang/Localizer
 ```
 
@@ -323,7 +322,7 @@ You might be surprised to find that after cloning the dataset that it barely tak
 You can check to see how big the entire dataset would be if you downloaded everything using `datalad status`.
 
 ```bash
-cd ~/Dropbox/Dartbrains/data/Localizer
+cd ~/data/Localizer
 datalad status --annex
 ```
 
@@ -366,7 +365,7 @@ import glob
 import datalad.api as dl
 import pandas as pd
 
-localizer_path = '/Users/lukechang/Dropbox/Dartbrains/data/Localizer'
+localizer_path = '~/data/Localizer'
 
 dl.clone(source='https://gin.g-node.org/ljchang/Localizer', path=localizer_path)
 ```
@@ -562,6 +561,6 @@ Though, you are welcome to just start working right away with the preprocessed d
 
  - 2. Run a single command in the terminal specifying the location of the data, the location of the output, the participant id, and a few specific flags depending on specific details of how you want to run the preprocessing.
 
-    `fmriprep-docker /Users/lukechang/Dropbox/Dartbrains/Data/localizer /Users/lukechang/Dropbox/Dartbrains/Data/preproc participant --participant_label sub-S01 --write-graph --fs-no-reconall --notrack --fs-license-file ~/Dropbox/Dartbrains/License/license.txt --work-dir /Users/lukechang/Dropbox/Dartbrains/Data/work`
+    `fmriprep-docker ~/data/localizer ~/data/preproc participant --participant_label sub-S01 --write-graph --fs-no-reconall --notrack --fs-license-file ~/data/license.txt --work-dir ~/data/work`
 
 In practice, it's alway a little bit finicky to get everything set up on a particular system. Sometimes you might run into issues with a specific missing file like the [freesurfer license](https://fmriprep.readthedocs.io/en/stable/usage.html#the-freesurfer-license) even if you're not using it. You might also run into issues with the format of the data that might have some conflicts with the [bids-validator](https://github.com/bids-standard/bids-validator). In our experience, there is always some frustrations getting this to work, but it's very nice once it's done.
