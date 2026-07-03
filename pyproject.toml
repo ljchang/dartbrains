@@ -56,7 +56,7 @@ build = [
     # citations, and a strict cell-error gate that fails the build when a
     # cell raises instead of publishing the traceback. 0.1.28 hoists the
     # notebook title on WASM pages so MkDocs doesn't render it twice.
-    "marimo-book>=0.1.28",
+    "marimo-book>=0.1.29",
 ]
 
 [tool.uv.sources]
