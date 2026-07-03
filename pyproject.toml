@@ -15,7 +15,9 @@ dependencies = [
     # WASM) — required for the mode: wasm notebooks to boot in Pyodide.
     # 0.1.6 fixes anywidget layout/sizing (Convolution, NetMagnetization,
     # Precession) and makes the canvases responsive.
-    "dartbrains-tools>=0.1.6",
+    # 0.1.7 points the sherlock/paranoia loaders at derivatives/fmriprep/
+    # (the datasets were reorganized) — required or those loaders 404.
+    "dartbrains-tools>=0.1.7",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
     "huggingface-hub[hf-xet]>=1.8.0",
