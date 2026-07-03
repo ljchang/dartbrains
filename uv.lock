@@ -544,7 +544,7 @@ build = [
 [package.metadata]
 requires-dist = [
     { name = "anywidget", specifier = ">=0.9.21" },
-    { name = "dartbrains-tools", specifier = ">=0.1.5" },
+    { name = "dartbrains-tools", specifier = ">=0.1.6" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
@@ -572,7 +572,7 @@ build = [{ name = "marimo-book", specifier = ">=0.1.27" }]
 
 [[package]]
 name = "dartbrains-tools"
-version = "0.1.5"
+version = "0.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
@@ -583,9 +583,9 @@ dependencies = [
     { name = "scipy" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1d/c4/d0aefa3e34cd8860f1eceff3bce6d396a9f0e0a9005b73e3c669005829cd/dartbrains_tools-0.1.5.tar.gz", hash = "sha256:d6609178394307d51bab46baf8056d6b7b47d4b2f86fb6da2710247cc814dcfd", size = 47971, upload-time = "2026-07-02T11:25:22.82Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/55/11/94d4126678b0b836c13d5d29ac7915d601a77f821bcef4ca4c3fc71ccf8d/dartbrains_tools-0.1.6.tar.gz", hash = "sha256:47a280067205a7cf69daf5e51230a88c0ee6b1695713775d5b9067cfad76e37e", size = 48614, upload-time = "2026-07-03T02:45:32.707Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b4/06/91fc79179c9e46ac3c32f3f37ab416ac8d2b09b25187cc972abb20d78cf1/dartbrains_tools-0.1.5-py3-none-any.whl", hash = "sha256:8f36dbc36bda42e19bd33b9d5ea19ffb0f998757e005537984b8190b2a47005b", size = 54683, upload-time = "2026-07-02T11:25:21.457Z" },
+    { url = "https://files.pythonhosted.org/packages/56/c4/c38baf0e4843ead3f0e6ca69a13f1527586440394b65fd2f7659b033e004/dartbrains_tools-0.1.6-py3-none-any.whl", hash = "sha256:b60a64762e10f73b379c7379d387eb2ead14eee76166c53bfc02229bb4ed7b88", size = 55445, upload-time = "2026-07-03T02:45:31.393Z" },
 ]
 
 [[package]]

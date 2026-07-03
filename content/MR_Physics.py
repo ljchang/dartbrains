@@ -47,8 +47,16 @@ def _():
     import marimo as mo
     import numpy as np
     import plotly.graph_objects as go
+    import plotly.io as pio
     from pathlib import Path
     from plotly.subplots import make_subplots
+
+    # Render plotly's modebar vertically (top-right, down the side) so its
+    # toolbar buttons don't overlap the compact subplot titles.
+    pio.templates["dartbrains"] = go.layout.Template(
+        layout=dict(modebar=dict(orientation="v"))
+    )
+    pio.templates.default = "plotly+dartbrains"
     from dartbrains_tools.mr_simulations import (
         GAMMA_H, GAMMA, TISSUE_PROPERTIES,
         rotation_x, rotation_y, rotation_z,
