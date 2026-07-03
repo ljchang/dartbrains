@@ -54,8 +54,9 @@ build = [
     # body-level build cache (TOC/launch-button edits no longer re-execute
     # notebooks), a build-free `marimo-book check` doctor, native [@key]
     # citations, and a strict cell-error gate that fails the build when a
-    # cell raises instead of publishing the traceback.
-    "marimo-book>=0.1.27",
+    # cell raises instead of publishing the traceback. 0.1.28 hoists the
+    # notebook title on WASM pages so MkDocs doesn't render it twice.
+    "marimo-book>=0.1.28",
 ]
 
 [tool.uv.sources]
