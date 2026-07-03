@@ -117,6 +117,9 @@ toc:
   - section: Computing Resources
     children:
       - file: content/Download_Data.py
+        # Downloads the full ~46 GB HuggingFace snapshot at execution time.
+        # Render once locally (committed to _rendered/) so CI never downloads.
+        mode: cached
       - file: content/Introduction_to_Programming.py
       - file: content/Introduction_to_Pandas.py
       - file: content/Introduction_to_Polars.py

@@ -22,13 +22,6 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _():
-    import subprocess
-
-    return (subprocess,)
-
-
-@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     """)
@@ -178,7 +171,9 @@ def _(mo):
 
 
 @app.cell
-def _(Path, snapshot_path):
+def _(snapshot_path):
+    from pathlib import Path
+
     bids_root = Path.home() / "data" / "localizer"
     bids_root.parent.mkdir(parents=True, exist_ok=True)
 
@@ -228,14 +223,18 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     from datasets import load_dataset
 
     ds = load_dataset("dartbrains/localizer", "betas")
     print(f"Loaded {len(ds['train'])} beta maps")
     print(f"First entry: subject={ds['train'][0]['subject']}, condition={ds['train'][0]['condition']}")
-    return (ds,)
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -285,12 +284,6 @@ def _(mo):
 
     For more installation options, we recommend reading the DataLad [installation instructions](https://git-annex.branchable.com/).
     """)
-    return
-
-
-@app.cell
-def _():
-    # packages added via marimo's package management: datalad !pip install datalad
     return
 
 
@@ -421,14 +414,15 @@ def _(mo):
     return
 
 
-@app.cell
-def _(subprocess):
-    import os
-    os.chdir('~/Dropbox/Dartbrains/data')
-
-    #! datalad install https://gin.g-node.org/ljchang/Localizer
-    subprocess.call(['datalad', 'install', 'https://gin.g-node.org/ljchang/Localizer'])
-    return (os,)
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```bash
+    cd ~/Dropbox/Dartbrains/data
+    datalad install https://gin.g-node.org/ljchang/Localizer
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -443,14 +437,15 @@ def _(mo):
     return
 
 
-@app.cell
-def _(subprocess):
-    import os
-    os.chdir('~/Dropbox/Dartbrains/data/Localizer')
-
-    #! datalad status --annex
-    subprocess.call(['datalad', 'status', '--annex'])
-    return (os,)
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```bash
+    cd ~/Dropbox/Dartbrains/data/Localizer
+    datalad status --annex
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -464,10 +459,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(subprocess):
-    #! datalad get participants.tsv
-    subprocess.call(['datalad', 'get', 'participants.tsv'])
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```bash
+    datalad get participants.tsv
+    ```
+    """)
     return
 
 
@@ -479,10 +477,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(subprocess):
-    #! datalad status --annex all
-    subprocess.call(['datalad', 'status', '--annex', 'all'])
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```bash
+    datalad status --annex all
+    ```
+    """)
     return
 
 
@@ -507,10 +508,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(subprocess):
-    #! datalad drop participants.tsv
-    subprocess.call(['datalad', 'drop', 'participants.tsv'])
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```bash
+    datalad drop participants.tsv
+    ```
+    """)
     return
 
 
@@ -525,8 +529,10 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     import os
     import glob
     import datalad.api as dl
@@ -535,7 +541,9 @@ def _():
     localizer_path = '/Users/lukechang/Dropbox/Dartbrains/data/Localizer'
 
     dl.clone(source='https://gin.g-node.org/ljchang/Localizer', path=localizer_path)
-    return dl, glob, localizer_path, os, pd
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -546,10 +554,14 @@ def _(mo):
     return
 
 
-@app.cell
-def _(dl, localizer_path):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     ds = dl.Dataset(localizer_path)
-    return (ds,)
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -560,9 +572,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(ds):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     results = ds.status(annex='all')
+    ```
+    """)
     return
 
 
@@ -578,12 +594,16 @@ def _(mo):
     return
 
 
-@app.cell
-def _(glob, localizer_path, os):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     file_list = glob.glob(os.path.join(localizer_path, '*', 'fmriprep', '*', 'func', '*tsv'))
     file_list.sort()
     file_list[:10]
-    return (file_list,)
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -596,12 +616,16 @@ def _(mo):
     return
 
 
-@app.cell
-def _(ds, file_list, pd):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     result = ds.get(file_list[0])
 
     confounds = pd.read_csv(file_list[0], sep='\t')
     confounds.head()
+    ```
+    """)
     return
 
 
@@ -613,9 +637,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(ds, file_list):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     result_1 = ds.drop(file_list[0])
+    ```
+    """)
     return
 
 
@@ -627,9 +655,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(file_list, pd):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     confounds_1 = pd.read_csv(file_list[0], sep='\t')
+    ```
+    """)
     return
 
 
@@ -645,12 +677,16 @@ def _(mo):
     return
 
 
-@app.cell
-def _(glob, localizer_path, os):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     file_list_1 = glob.glob(os.path.join(localizer_path, 'derivatives', 'fmriprep', '*', 'func', '*task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'))
     file_list_1.sort()
     file_list_1
-    return (file_list_1,)
+    ```
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -661,9 +697,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(ds, file_list_1):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     result_2 = ds.get(file_list_1[0])
+    ```
+    """)
     return
 
 
@@ -675,9 +715,13 @@ def _(mo):
     return
 
 
-@app.cell
-def _(ds):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     result_3 = ds.status(annex='all')
+    ```
+    """)
     return
 
 
@@ -693,21 +737,29 @@ def _(mo):
     return
 
 
-@app.cell
-def _(ds, glob, localizer_path, os):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     result_4 = ds.get(os.path.join(localizer_path, 'sub-S01'))
     result_4 = ds.get(glob.glob(os.path.join(localizer_path, '*.json')))
     result_4 = ds.get(glob.glob(os.path.join(localizer_path, '*.tsv')))
     result_4 = ds.get(glob.glob(os.path.join(localizer_path, 'phenotype')))
+    ```
+    """)
     return
 
 
-@app.cell
-def _(ds, glob, localizer_path, os):
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ```python
     file_list_2 = glob.glob(os.path.join(localizer_path, '*', 'fmriprep', 'sub*'))
     file_list_2.sort()
     for f in file_list_2[:20]:
         result_5 = ds.get(f)
+    ```
+    """)
     return
 
 
