@@ -110,11 +110,19 @@ def _():
 
 
     def get_csf_mask_path(subject):
-        """Per-subject CSF probability mask from fmriprep outputs."""
-        from pathlib import Path as _Path
-        bold_path = _Path(localizer.get_file(subject, 'derivatives', 'bold'))
-        return str(bold_path.parent.parent / 'anat' /
-                   f'sub-{subject}_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz')
+        """Per-subject CSF probability mask from fmriprep outputs.
+
+        Downloads the probseg file directly -- ``localizer.get_file`` only
+        materializes the requested file into the HF snapshot, so the sibling
+        anat/ file is not present until fetched explicitly.
+        """
+        from huggingface_hub import hf_hub_download
+        return hf_hub_download(
+            'dartbrains/localizer',
+            f'derivatives/fmriprep/sub-{subject}/anat/'
+            f'sub-{subject}_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz',
+            repo_type='dataset',
+        )
 
     return (
         Adjacency,

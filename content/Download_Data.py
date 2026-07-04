@@ -121,7 +121,7 @@ def _(localizer, short_path):
         repo_type="dataset",
     )
     print(f"Downloaded to: {short_path(path)}")
-    return
+    return (hf_hub_download,)
 
 
 @app.cell(hide_code=True)
@@ -231,9 +231,8 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(hf_hub_download):
     from datasets import load_dataset
-    from huggingface_hub import hf_hub_download
     import nibabel as nib
 
     ds = load_dataset("dartbrains/localizer", "betas")
