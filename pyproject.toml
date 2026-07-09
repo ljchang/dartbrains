@@ -24,7 +24,7 @@ dependencies = [
     # 0.23.6 ships marimo-team/marimo#9409 so MarimoIslandGenerator.from_file
     # propagates the notebook filename — lets notebooks resolve the repo root
     # via Path(__file__).resolve().parent.parent instead of a cwd/book.yml walk.
-    "marimo>=0.23.6",
+    "marimo>=0.23.9",
     "matplotlib>=3.10.8",
     "nbformat",
     "nibabel>=5.4.2",
