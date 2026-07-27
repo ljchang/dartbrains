@@ -28,10 +28,14 @@ dependencies = [
     "matplotlib>=3.10.8",
     "nbformat",
     "nibabel>=5.4.2",
-    "nilearn<0.13",  # 0.13 tightened ZSlicer._sanitize_cut_coords to reject `range`,
-                     # which breaks every nltools.Brain_Data.plot() call (it passes
-                     # cut_coords=range(...) by default). Re-evaluate when nltools
-                     # upstream coerces to list() before forwarding.
+    # nilearn 0.13 tightened ZSlicer._sanitize_cut_coords to reject `range`, which
+    # used to break every nltools plot() call. nltools 0.6 coerces range → list
+    # before forwarding (nltools/data/braindata/plotting.py), so the <0.13 cap is
+    # lifted. nltools 0.6 itself requires nilearn >= 0.12.
+    "nilearn>=0.12",
+    # Version stays unconstrained: master still self-reports 0.5.1 (the bump
+    # happens at release time), so the [tool.uv.sources] git pin below is what
+    # actually selects the 0.6 API. Switch to "nltools>=0.6.0" once it's on PyPI.
     "nltools",
     "numpy>=2.4.3",
     "pandas",
@@ -62,4 +66,7 @@ build = [
 ]
 
 [tool.uv.sources]
-nltools = { git = "https://github.com/cosanlab/nltools", rev = "uv-refactor" }
+# The old `uv-refactor` branch was merged and deleted; 0.6.0 (the breaking
+# rewrite: BrainData/DesignMatrix, .fit()/.predict(), spatial_scale=) lives on
+# master and is not on PyPI yet. Repoint to PyPI once 0.6.0 is released.
+nltools = { git = "https://github.com/cosanlab/nltools", rev = "master" }
