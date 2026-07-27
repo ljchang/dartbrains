@@ -329,57 +329,95 @@ def _(mo):
 
     Here is the code I used to complete this for all participants. I wrote all of the betas and also a separate file for each individual regressor of interest.
 
-    ```
-    import os
+    ```python
+    import polars as pl
     from tqdm import tqdm
-    import pandas as pd
-    import numpy as np
     import nibabel as nib
-    from nltools.stats import zscore, regress, find_spikes
+    from nltools.stats import zscore
     from nltools.data import BrainData, DesignMatrix
-    from nltools.file_reader import onsets_to_dm
-    from nilearn.plotting import view_img, glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
 
     tr = localizer.get_tr()
     fwhm = 6
     spike_cutoff = 3
 
-    def load_bids_events(subject):
-        '''Create a design_matrix instance from BIDS event file'''
+    def build_design(subject, data):
+        '''Build the full first-level design matrix for one subject.'''
+        n_tr = len(data)
+        events_file = localizer.get_file(subject, 'raw', 'events', '.tsv')
+        dm = DesignMatrix(events_file, run_length=n_tr, TR=tr)   # HRF-convolved
 
-        tr = localizer.get_tr()
-        n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
-
-        onsets = localizer.load_events(subject)
-        onsets.columns = ['Onset', 'Duration', 'Stim']
-        return onsets_to_dm(onsets, sampling_freq=1/tr, run_length=n_tr)
-
-    def make_motion_covariates(mc):
-        z_mc = zscore(mc)
-        all_mc = pd.concat([z_mc, z_mc**2, z_mc.diff(), z_mc.diff()**2], axis=1)
-        all_mc.fillna(value=0, inplace=True)
-        return DesignMatrix(all_mc, sampling_freq=1/tr)
+        mc = localizer.load_confounds(subject)[
+            ['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']
+        ]
+        z = zscore(mc)
+        mc_cov = DesignMatrix(
+            z.with_columns(
+                [pl.col(c).pow(2).alias(f'{c}_sq') for c in z.columns]
+                + [pl.col(c).diff().alias(f'{c}_diff') for c in z.columns]
+                + [pl.col(c).diff().pow(2).alias(f'{c}_diff_sq') for c in z.columns]
+            ).fill_null(0),
+            sampling_freq=1 / tr,
+        )
+        spikes = data.find_spikes(
+            global_spike_cutoff=spike_cutoff, diff_spike_cutoff=spike_cutoff, TR=tr
+        )
+        return (
+            dm.add_dct_basis(duration=128, include_constant=False)
+              .add_poly(order=1, include_lower=True)
+              .append([mc_cov, spikes], axis=1)
+        )
 
     for sub in tqdm(localizer.get_subjects()):
-        data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
-        data = data.smooth(fwhm=fwhm)
-        dm = load_bids_events(sub)
-        covariates = localizer.load_confounds(sub)
-        mc_cov = make_motion_covariates(covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']])
-        spikes = data.find_spikes(global_spike_cutoff=spike_cutoff, diff_spike_cutoff=spike_cutoff)
-        dm_cov = dm.convolve().add_dct_basis(duration=128).add_poly(order=1, include_lower=True)
-        dm_cov = dm_cov.append(mc_cov, axis=1).append(DesignMatrix(spikes.iloc[:, 1:], sampling_freq=1/tr), axis=1)
-        data.X = dm_cov
-        stats = data.regress()
+        data = BrainData(localizer.get_file(sub, 'derivatives', 'bold')).smooth(fwhm=fwhm)
+        data.fit(model='glm', X=build_design(sub, data))
 
         # Write out all betas
-        stats['beta'].write(f'{sub}_betas.nii.gz')
+        data.glm_betas.write(f'{sub}_betas.nii.gz')
 
-        # Write out separate beta for each condition
-        for i, name in enumerate([x[:-3] for x in dm_cov.columns[:10]]):
-            stats['beta'][i].write(f'{sub}_beta_{name}.nii.gz')
+        # Write out a separate beta image for each condition
+        for name in data.X.columns[:10]:
+            data.compute_contrasts(name, statistic='beta').write(
+                f'{sub}_beta_{name.removesuffix("_c0")}.nii.gz'
+            )
     ```
+
+    ### The same thing with `BrainCollection`
+
+    That loop is worth writing out once, because it makes every step explicit. But
+    running the identical model on every subject is such a common pattern that
+    nltools has a class for it. `BrainCollection` holds a list of subjects, pairs
+    each one with its design, and runs operations across all of them in parallel,
+    caching results to disk so you don't recompute on a re-run:
+
+    ```python
+    from nltools.data import BrainCollection
+
+    subjects = localizer.get_subjects()
+    bc = BrainCollection.from_paths(
+        [localizer.get_file(s, 'derivatives', 'bold') for s in subjects],
+        design_paths=[localizer.get_file(s, 'raw', 'events', '.tsv') for s in subjects],
+        mask=localizer.get_file(subjects[0], 'derivatives', 'mask'),
+        metadata={'subject_id': subjects},
+    )
+
+    fitted = bc.smooth(fwhm).fit(
+        model='glm',
+        X=lambda ctx: DesignMatrix(ctx.dm, run_length=len(ctx.bd), TR=tr)
+                      .add_poly(order=1, include_lower=True),
+    )
+    betas = fitted.compute_contrasts('horizontal_checkerboard_c0', statistic='beta')
+    ```
+
+    The `X=` argument takes a function that builds the design for a single subject.
+    It receives a context object exposing everything about that subject — `ctx.bd`
+    (the loaded `BrainData`), `ctx.dm` (its design/events file), `ctx.TR`,
+    `ctx.subject`, `ctx.confounds` — so the same builder works for every subject
+    without you managing the bookkeeping. One thing to watch: `from_paths` hands
+    the design *path* through unparsed, so the builder is responsible for turning it
+    into a `DesignMatrix` (`from_bids` does that step for you).
+
+    We will use `BrainCollection` for the group statistics below.
 
     Now, we are ready to run our first group analyses!
 
@@ -403,7 +441,7 @@ def _(mo):
 @app.cell
 def _(BrainData, localizer):
     con1_name = 'horizontal_checkerboard'
-    con1_dat = BrainData([BrainData(localizer.get_file(sub, 'betas', con1_name)) for sub in localizer.get_subjects()])
+    con1_dat = BrainData([localizer.get_file(sub, 'betas', con1_name) for sub in localizer.get_subjects()])
     return (con1_dat,)
 
 
@@ -466,7 +504,7 @@ def _(mo):
 @app.cell
 def _(BrainData, con1_dat, localizer):
     con2_name = 'vertical_checkerboard'
-    con2_dat = BrainData([BrainData(localizer.get_file(sub, 'betas', con2_name)) for sub in localizer.get_subjects()])
+    con2_dat = BrainData([localizer.get_file(sub, 'betas', con2_name) for sub in localizer.get_subjects()])
 
     con1_v_con2 = con1_dat-con2_dat
     return (con1_v_con2,)
