@@ -71,7 +71,7 @@ def _():
     import nibabel as nib
     from nltools.file_reader import onsets_to_dm
     from nltools.stats import regress, zscore
-    from nltools.data import Brain_Data, Design_Matrix
+    from nltools.data import BrainData, DesignMatrix
     from nltools.stats import find_spikes
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
@@ -79,8 +79,8 @@ def _():
 
 
     return (
-        Brain_Data,
-        Design_Matrix,
+        BrainData,
+        DesignMatrix,
         localizer,
         nib,
         np,
@@ -96,7 +96,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To build the design matrix, we will be using the `Design_Matrix` class from the `nltools` toolbox. We load the BIDS events file (onsets, durations, and condition labels) and then call `onsets_to_dm` to turn it into a `Design_Matrix` with one row per TR and one column per condition. We pass `TR=tr` so the function knows how to align event timing (in seconds) to the scan's sampling grid, and `hrf_model=None` because we want to see the raw onset regressors first — we will convolve them with the HRF ourselves in a later step.
+    To build the design matrix, we will be using the `DesignMatrix` class from the `nltools` toolbox. We load the BIDS events file (onsets, durations, and condition labels) and then call `onsets_to_dm` to turn it into a `DesignMatrix` with one row per TR and one column per condition. We pass `TR=tr` so the function knows how to align event timing (in seconds) to the scan's sampling grid, and `hrf_model=None` because we want to see the raw onset regressors first — we will convolve them with the HRF ourselves in a later step.
     """)
     return
 
@@ -122,7 +122,7 @@ def _(localizer, nib, onsets_to_dm):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    The Design_Matrix class is built on top of Pandas DataFrames and retains most of that functionality. There are additional methods to help with building design matrices. Be sure to check out this [tutorial](https://nltools.org/auto_examples/01_DataOperations/plot_design_matrix.html#sphx-glr-auto-examples-01-dataoperations-plot-design-matrix-py) for more information about how to use this tool.
+    The DesignMatrix class is built on top of Pandas DataFrames and retains most of that functionality. There are additional methods to help with building design matrices. Be sure to check out this [tutorial](https://nltools.org/) for more information about how to use this tool.
 
     We can check out details about the data using the `.info()` method.
     """)
@@ -393,9 +393,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     sub = 'S01'
-    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
+    data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
     return data, sub
 
 
@@ -429,7 +429,7 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, localizer, mc, pd, sns, zscore):
+def _(DesignMatrix, localizer, mc, pd, sns, zscore):
     def make_motion_covariates(mc, tr):
         z_mc = zscore(mc)
         z_mc_sq = z_mc ** 2
@@ -440,7 +440,7 @@ def _(Design_Matrix, localizer, mc, pd, sns, zscore):
         z_mc_diff_sq.columns = [f"{c}_diff_sq" for c in z_mc.columns]
         all_mc = pd.concat([z_mc, z_mc_sq, z_mc_diff, z_mc_diff_sq], axis=1)
         all_mc.fillna(value=0, inplace=True)
-        return Design_Matrix(all_mc, sampling_freq=1/tr)
+        return DesignMatrix(all_mc, sampling_freq=1/tr)
 
     tr = localizer.get_tr()
     mc_cov = make_motion_covariates(mc, tr)
@@ -479,10 +479,10 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, data, plt, tr):
+def _(DesignMatrix, data, plt, tr):
     spikes = data.find_spikes(global_spike_cutoff=2, diff_spike_cutoff=2.5)
     _f, _a = plt.subplots(figsize=(15, 3))
-    spikes = Design_Matrix(spikes.iloc[:, 1:], sampling_freq=1 / tr)
+    spikes = DesignMatrix(spikes.iloc[:, 1:], sampling_freq=1 / tr)
     spikes.plot(ax=_a, linewidth=2)
     return (spikes,)
 
@@ -568,7 +568,7 @@ def _(mo):
     ## Estimate GLM for all voxels
     Now we are ready to estimate the regression model for all voxels.
 
-    We will assign the design_matrix object to the `.X` attribute of our `Brain_Data` instance.
+    We will assign the design_matrix object to the `.X` attribute of our `BrainData` instance.
 
     Then we simply need to run the `.regress()` method.
     """)
@@ -607,7 +607,7 @@ def _(smoothed):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances have their own plotting methods. We will be using `.iplot()` here, which can allow us to interactively look at all of the values.
+    BrainData instances have their own plotting methods. We will be using `.iplot()` here, which can allow us to interactively look at all of the values.
 
     If you would like to see the top values, we can quickly apply a threshold. Try using `95`% threshold, and be sure to click the `percentile_threshold` option.
     """)

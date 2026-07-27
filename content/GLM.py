@@ -98,7 +98,7 @@ def _():
     import plotly.graph_objects as go
     import seaborn as sns
     from nltools.stats import regress
-    from nltools.external import glover_hrf
+    from nltools.algorithms.hrf import glover_hrf
 
 
     return glover_hrf, go, np, plt, sns

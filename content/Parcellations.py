@@ -211,12 +211,12 @@ def _(mo):
 
 @app.cell
 def _(plotting):
-    from nltools import Brain_Data
+    from nltools import BrainData
 
-    desikan_killiany = Brain_Data('https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Desikan_space-MNI152NLin6_res-1x1x1.nii.gz').to_nifti()
+    desikan_killiany = BrainData('https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Desikan_space-MNI152NLin6_res-1x1x1.nii.gz').to_nifti()
 
     plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colorbar=True)
-    return (Brain_Data,)
+    return (BrainData,)
 
 
 @app.cell(hide_code=True)
@@ -377,8 +377,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, plotting):
-    shen = Brain_Data('https://neurovault.org/media/images/8423/shen_2mm_268_parcellation.nii.gz').to_nifti()
+def _(BrainData, plotting):
+    shen = BrainData('https://neurovault.org/media/images/8423/shen_2mm_268_parcellation.nii.gz').to_nifti()
 
     plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
     return
@@ -417,8 +417,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, plotting):
-    atlas_glasser = Brain_Data('https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Glasser_space-MNI152NLin6_res-4x4x4.nii.gz').to_nifti()
+def _(BrainData, plotting):
+    atlas_glasser = BrainData('https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Glasser_space-MNI152NLin6_res-4x4x4.nii.gz').to_nifti()
 
     plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)
     return

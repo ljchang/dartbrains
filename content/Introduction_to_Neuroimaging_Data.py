@@ -14,13 +14,15 @@ def _():
     import nibabel as nib
     import matplotlib.pyplot as plt
     from nilearn.plotting import view_img, plot_glass_brain, plot_anat, plot_epi, plot_stat_map
-    from nltools.data import Brain_Data
-    from nltools.utils import get_anatomical
+    from nltools.data import BrainData
+    from nltools.templates import fetch_resource
+    from nilearn.datasets import load_mni152_template
 
     IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "brain_data"
     return (
-        Brain_Data,
-        get_anatomical,
+        BrainData,
+        fetch_resource,
+        load_mni152_template,
         localizer,
         mo,
         nib,
@@ -494,14 +496,21 @@ def _(mo):
     mo.md(r"""
     The `view_img` function is particularly useful for overlaying statistical maps over an anatomical image so that we can interactively examine where the results are located.
 
-    As an example, let's load a mask of the amygdala and try to find where it is located. We will download it from [Neurovault](https://neurovault.org/images/18632/) using a function from `nltools`.
+    As an example, let's load a mask of the amygdala and try to find where it is located.
+
+    We will grab it with `nltools.templates.fetch_resource`, which pulls files from
+    nltools' curated collection of masks, atlases, and templates and caches them
+    locally on first use. It returns a *path*, which means the result drops straight
+    into anything that reads a NIfTI file — nilearn's plotting functions,
+    `nibabel.load`, or `BrainData`. Use this in preference to hard-coding a download
+    URL: links rot, and servers go down at inconvenient moments.
     """)
     return
 
 
 @app.cell
-def _(Brain_Data, data, view_img):
-    amygdala_mask = Brain_Data('https://neurovault.org/media/images/1290/FSL_BAmyg_thr0.nii.gz').to_nifti()
+def _(data, fetch_resource, view_img):
+    amygdala_mask = fetch_resource('masks/fsl_bilateral_amygdala_thr0.nii.gz')
 
     view_img(amygdala_mask, data)
     return (amygdala_mask,)
@@ -528,21 +537,23 @@ def _(mo):
     ## Manipulating Data with Nltools
     Ok, we've now learned how to use nibabel to load imaging data and nilearn to plot it.
 
-    Next we are going to learn how to use the `nltools` package that tries to make loading, plotting, and manipulating data easier. It uses many functions from nibabel, nilearn, and other python libraries. The bulk of the nltools toolbox is built around the `Brain_Data()` class. The concept behind the class is to have a similar feel to a pandas dataframe, which means that it should feel intuitive to manipulate the data.
+    Next we are going to learn how to use the `nltools` package that tries to make loading, plotting, and manipulating data easier. It uses many functions from nibabel, nilearn, and other python libraries. The bulk of the nltools toolbox is built around the `BrainData()` class. The concept behind the class is to have a similar feel to a pandas dataframe, which means that it should feel intuitive to manipulate the data.
 
-    The `Brain_Data()` class has several attributes that may be helpful to know about. First, it stores imaging data in `.data` as a vectorized features by observations matrix. Each image is an observation and each voxel is a feature. Space is flattened using `nifti_masker` from nilearn. This object is also stored as an attribute in `.nifti_masker` to allow transformations from 2D to 3D/4D matrices. In addition, a brain_mask is stored in `.mask`. Finally, there are attributes to store either class labels for prediction/classification analyses in `.Y` and design matrices in `.X`. These are both expected to be pandas `DataFrames`.
+    The `BrainData()` class has several attributes that may be helpful to know about. First, it stores imaging data in `.data` as a vectorized observations by features matrix. Each image is an observation and each voxel is a feature. Space is flattened using the brain mask stored in `.mask`, which is a nibabel image. To go back and forth between this flat 2D representation and a 3D/4D image, use `.to_nifti()`, or nilearn's `apply_mask(img, bd.mask)` / `unmask(vec, bd.mask)` directly. Finally, there are attributes to store either class labels for prediction/classification analyses in `.Y` and design matrices in `.X`.
 
-    We will give a quick overview of basic Brain_Data operations, but we encourage you to see our [documentation](https://nltools.org/) for more details.
+    If you don't pass a `mask=`, `BrainData` picks a built-in MNI template matching your data's voxel resolution and resamples if needed — so most of the time you never have to think about masks at all.
 
-    ### Brain_Data basics
-    To get a feel for `Brain_Data`, let's load an example anatomical overlay image that comes packaged with the toolbox.
+    We will give a quick overview of basic BrainData operations, but we encourage you to see our [documentation](https://nltools.org/) for more details.
+
+    ### BrainData basics
+    To get a feel for `BrainData`, let's load an example anatomical image. We'll use the standard MNI152 template that ships with nilearn.
     """)
     return
 
 
 @app.cell
-def _(Brain_Data, get_anatomical):
-    anat = Brain_Data(get_anatomical())
+def _(BrainData, load_mni152_template):
+    anat = BrainData(load_mni152_template(resolution=2))
     anat
     return (anat,)
 
@@ -550,7 +561,7 @@ def _(Brain_Data, get_anatomical):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To view the attributes of `Brain_Data` use the `vars()` function.
+    To view the attributes of `BrainData` use the `vars()` function.
     """)
     return
 
@@ -564,9 +575,9 @@ def _(anat):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    `Brain_Data` has many methods to help manipulate, plot, and analyze imaging data. We can use the `dir()` function to get a quick list of all of the available methods that can be used on this class.
+    `BrainData` has many methods to help manipulate, plot, and analyze imaging data. We can use the `dir()` function to get a quick list of all of the available methods that can be used on this class.
 
-    To learn more about how to use these tools either use the `?` function, or look up the function in the [api documentation](https://nltools.org/api.html).
+    To learn more about how to use these tools either use the `?` function, or look up the function in the [api documentation](https://nltools.org/api/).
     """)
     return
 
@@ -588,8 +599,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer):
-    data_1 = Brain_Data(localizer.get_file('S01', 'derivatives', 'bold'))
+def _(BrainData, localizer):
+    data_1 = BrainData(localizer.get_file('S01', 'derivatives', 'bold'))
     return (data_1,)
 
 
@@ -598,7 +609,7 @@ def _(mo):
     mo.md(r"""
     Here are a few quick basic data operations.
 
-    Find number of images in Brain_Data() instance
+    Find number of images in BrainData() instance
     """)
     return
 
@@ -619,7 +630,7 @@ def _(mo):
 
 @app.cell
 def _(data_1):
-    print(data_1.shape())
+    print(data_1.shape)
     return
 
 
@@ -634,12 +645,12 @@ def _(mo):
 @app.cell
 def _(data_1):
     import numpy as np
-    print(data_1[5].shape())
-    print(data_1[[1, 6, 2]].shape())
-    print(data_1[0:10].shape())
+    print(data_1[5].shape)
+    print(data_1[[1, 6, 2]].shape)
+    print(data_1[0:10].shape)
     index = np.zeros(len(data_1), dtype=bool)
     index[[1, 5, 9, 16, 20, 22]] = True
-    print(data_1[index].shape())
+    print(data_1[index].shape)
     return
 
 
@@ -689,14 +700,14 @@ def _(mo):
 
 @app.cell
 def _(data_1):
-    print(data_1.mean().shape())
+    print(data_1.mean().shape)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances can be added and subtracted
+    BrainData instances can be added and subtracted
     """)
     return
 
@@ -710,7 +721,7 @@ def _(data_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances can be manipulated with basic arithmetic operations.
+    BrainData instances can be manipulated with basic arithmetic operations.
 
     Here we add 10 to every voxel and scale by 2
     """)
@@ -726,7 +737,7 @@ def _(data_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances can be copied
+    BrainData instances can be copied
     """)
     return
 
@@ -740,7 +751,7 @@ def _(data_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances can be easily converted to nibabel instances, which store the data in a 3D/4D matrix.  This is useful for interfacing with other python toolboxes such as [nilearn](http://nilearn.github.io)
+    BrainData instances can be easily converted to nibabel instances, which store the data in a 3D/4D matrix.  This is useful for interfacing with other python toolboxes such as [nilearn](http://nilearn.github.io)
     """)
     return
 
@@ -754,7 +765,7 @@ def _(data_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances can be concatenated using the append method
+    BrainData instances can be concatenated using the append method
     """)
     return
 
@@ -768,22 +779,22 @@ def _(data_1, new_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Lists of `Brain_Data` instances can also be concatenated by recasting as a `Brain_Data` object.
+    Lists of `BrainData` instances can also be concatenated by recasting as a `BrainData` object.
     """)
     return
 
 
 @app.cell
-def _(Brain_Data, data_1):
+def _(BrainData, data_1):
     print(type([x for x in data_1[:4]]))
-    type(Brain_Data([x for x in data_1[:4]]))
+    type(BrainData([x for x in data_1[:4]]))
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Any Brain_Data object can be written out to a nifti file.
+    Any BrainData object can be written out to a nifti file.
     """)
     return
 
@@ -797,7 +808,7 @@ def _(data_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Images within a Brain_Data() instance are iterable.  Here we use a list comprehension to calculate the overall mean across all voxels within an image.
+    Images within a BrainData() instance are iterable.  Here we use a list comprehension to calculate the overall mean across all voxels within an image.
     """)
     return
 
@@ -879,7 +890,7 @@ def _(data_1):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data() instances can be converted to a nibabel instance and plotted using any nilearn plot method such as glass brain.
+    BrainData() instances can be converted to a nibabel instance and plotted using any nilearn plot method such as glass brain.
     """)
     return
 
@@ -894,9 +905,9 @@ def _(data_1, plot_glass_brain, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Ok, that's the basics. `Brain_Data` can do much more!
+    Ok, that's the basics. `BrainData` can do much more!
 
-    Check out some of our [tutorials](https://nltools.org/auto_examples/index.html) for more detailed examples.
+    Check out some of our [tutorials](https://nltools.org/) for more detailed examples.
 
     We'll be using this tool throughout the course.
     """)

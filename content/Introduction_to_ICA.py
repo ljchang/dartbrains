@@ -41,7 +41,7 @@ def _(mo):
     mo.md(r"""
     ## Using ICA in Python
 
-    There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x,y,z spatial dimensions and then using any of the ICA algorithms distributed by [Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html). Alternatively, ICA can be directly applied to neuroimaging data using [nilearn](https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA) or [nltools](https://https://nltools.org/index.html). ICA can also be applied to EEG data in python using the [MNE toolbox](https://mne.tools/stable/index.html).
+    There are several ways to run ICA in Python. First, imaging data can be represented as a space by time matrix by vectorizing the x,y,z spatial dimensions and then using any of the ICA algorithms distributed by [Scikit-Learn](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html). Alternatively, ICA can be directly applied to neuroimaging data using [nilearn](https://nilearn.github.io/stable/modules/generated/nilearn.decomposition.CanICA.html#nilearn.decomposition.CanICA) or [nltools](https://nltools.org/). ICA can also be applied to EEG data in python using the [MNE toolbox](https://mne.tools/stable/index.html).
     """)
     return
 
@@ -67,7 +67,7 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
-    from nltools import Brain_Data, Design_Matrix
+    from nltools import BrainData, DesignMatrix
     from nltools.mask import create_sphere
     from nltools.utils import get_anatomical
     from scipy.stats import pearsonr
@@ -78,8 +78,8 @@ def _():
     sigma = 0.75
     signal_intensity = 5
     return (
-        Brain_Data,
-        Design_Matrix,
+        BrainData,
+        DesignMatrix,
         create_sphere,
         get_anatomical,
         n_tr,
@@ -104,11 +104,11 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, create_sphere):
-    ffa = Brain_Data(create_sphere([44, -55, -22])) + Brain_Data(create_sphere([-44, -55, -22]))
+def _(BrainData, create_sphere):
+    ffa = BrainData(create_sphere([44, -55, -22])) + BrainData(create_sphere([-44, -55, -22]))
     ffa.plot(title='FFA')
 
-    ppa = Brain_Data(create_sphere([-20, -40, -6])) + Brain_Data(create_sphere([20, -40, -6]))
+    ppa = BrainData(create_sphere([-20, -40, -6])) + BrainData(create_sphere([20, -40, -6]))
     ppa.plot(title='PPA')
     return ffa, ppa
 
@@ -122,11 +122,11 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, n_tr, n_trial, np, plt, signal_intensity, sns, tr):
-    ffa_signal = Design_Matrix(np.zeros(n_tr), sampling_freq=1 / tr)
+def _(DesignMatrix, n_tr, n_trial, np, plt, signal_intensity, sns, tr):
+    ffa_signal = DesignMatrix(np.zeros(n_tr), sampling_freq=1 / tr)
     ffa_signal.iloc[np.arange(10, n_tr, int(n_tr / n_trial))] = signal_intensity
     ffa_signal = ffa_signal.convolve()
-    ppa_signal = Design_Matrix(np.zeros(n_tr), sampling_freq=1 / tr)
+    ppa_signal = DesignMatrix(np.zeros(n_tr), sampling_freq=1 / tr)
     ppa_signal.iloc[np.arange(20, n_tr, int(n_tr / n_trial))] = signal_intensity
     ppa_signal = ppa_signal.convolve()
     with sns.plotting_context(context='paper', font_scale=1.5):
@@ -152,7 +152,7 @@ def _(mo):
 
 @app.cell
 def _(
-    Brain_Data,
+    BrainData,
     ffa,
     ffa_signal,
     get_anatomical,
@@ -164,8 +164,8 @@ def _(
     sigma,
 ):
     # Initialize an empty brain for 200 TRs
-    simulated_data = Brain_Data(get_anatomical())
-    simulated_data.data = np.zeros([n_tr, simulated_data.shape()[0]])
+    simulated_data = BrainData(get_anatomical())
+    simulated_data.data = np.zeros([n_tr, simulated_data.shape[0]])
     simulated_data.data[:, ffa.data == 1] = pd.concat([ffa_signal.T] * ffa.data.sum().astype(int)).T
     # Add brain signal to each ROI
     simulated_data.data[:, ppa.data == 1] = pd.concat([ppa_signal.T] * ppa.data.sum().astype(int)).T
@@ -188,7 +188,7 @@ def _(mo):
 
 @app.cell
 def _(plt, simulated_data, sns):
-    _decomposed_voxels = simulated_data.decompose(algorithm='ica', axis='voxels', n_components=2)
+    _decomposed_voxels = simulated_data.decompose(method='ica', axis='voxels', n_components=2)
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
         _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
@@ -213,7 +213,7 @@ def _(mo):
 
 @app.cell
 def _(plt, simulated_data, sns):
-    _decomposed_voxels = simulated_data.decompose(algorithm='ica', axis='images', n_components=2)
+    _decomposed_voxels = simulated_data.decompose(method='ica', axis='images', n_components=2)
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
         _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
@@ -241,19 +241,19 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
+def _(BrainData, DesignMatrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
     n_tr_1 = 200
     n_trial_1 = 5
     tr_1 = 2
     sigma_1 = 0.75
     _signal_intensity_1 = 10
     _signal_intensity_2 = 5
-    simulated_data_1 = Brain_Data(get_anatomical())
-    simulated_data_1.data = np.zeros([n_tr_1, simulated_data_1.shape()[0]])
-    ffa_signal_1 = Design_Matrix(np.zeros(n_tr_1), sampling_freq=1 / tr_1)
+    simulated_data_1 = BrainData(get_anatomical())
+    simulated_data_1.data = np.zeros([n_tr_1, simulated_data_1.shape[0]])
+    ffa_signal_1 = DesignMatrix(np.zeros(n_tr_1), sampling_freq=1 / tr_1)
     ffa_signal_1.iloc[np.arange(10, n_tr_1, int(n_tr_1 / n_trial_1))] = _signal_intensity_1
     ffa_signal_1 = ffa_signal_1.convolve()
-    ppa_signal_1 = Design_Matrix(np.zeros(n_tr_1), sampling_freq=1 / tr_1)
+    ppa_signal_1 = DesignMatrix(np.zeros(n_tr_1), sampling_freq=1 / tr_1)
     ppa_signal_1.iloc[np.arange(11, n_tr_1, int(n_tr_1 / n_trial_1))] = _signal_intensity_2
     ppa_signal_1.iloc[np.arange(20, n_tr_1, int(n_tr_1 / n_trial_1))] = _signal_intensity_2
     ppa_signal_1 = ppa_signal_1.convolve()
@@ -307,7 +307,7 @@ def _(plt, simulated_data_1, sns):
     # inside an mo.vstack, leaving them as raw mime blobs instead of
     # rendered images. Single-figure cells with plt.gcf() as the last
     # expression render reliably.
-    _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis='voxels', n_components=2)
+    _decomposed_voxels = simulated_data_1.decompose(method='ica', axis='voxels', n_components=2)
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
         _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
@@ -325,7 +325,7 @@ def _(plt, simulated_data_1, sns):
 def _(plt, simulated_data_1, sns):
     # Temporal ICA on the second simulation — paired with the spatial
     # cell above (see note there).
-    _decomposed_voxels = simulated_data_1.decompose(algorithm='ica', axis='images', n_components=2)
+    _decomposed_voxels = simulated_data_1.decompose(method='ica', axis='images', n_components=2)
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
         _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
@@ -354,22 +354,22 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
+def _(BrainData, DesignMatrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
     n_tr_2 = 200
     n_trial_2 = 5
     tr_2 = 2
     sigma_2 = 0.75
     _signal_intensity_1 = 10
     _signal_intensity_2 = 5
-    simulated_data_2 = Brain_Data(get_anatomical())
-    simulated_data_2.data = np.zeros([n_tr_2, simulated_data_2.shape()[0]])
-    ffa_signal_2 = Design_Matrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
+    simulated_data_2 = BrainData(get_anatomical())
+    simulated_data_2.data = np.zeros([n_tr_2, simulated_data_2.shape[0]])
+    ffa_signal_2 = DesignMatrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
     ffa_signal_2.iloc[np.arange(10, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_1
     ffa_signal_2 = ffa_signal_2.convolve()
-    ppa_signal_3 = Design_Matrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
+    ppa_signal_3 = DesignMatrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
     ppa_signal_3.iloc[np.arange(20, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_1
     ppa_signal_3 = ppa_signal_3.convolve()
-    ppa_signal_2 = Design_Matrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
+    ppa_signal_2 = DesignMatrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
     ppa_signal_2.iloc[np.arange(10, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_2
     ppa_signal_2.iloc[np.arange(20, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_2
     ppa_signal_2 = ppa_signal_2.convolve()
@@ -392,7 +392,7 @@ def _(Brain_Data, Design_Matrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
 def _(plt, simulated_data_2, sns):
     # Spatial ICA on the third simulation. Same single-figure-per-cell
     # pattern as the sim-2 cells above.
-    _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis='voxels', n_components=2)
+    _decomposed_voxels = simulated_data_2.decompose(method='ica', axis='voxels', n_components=2)
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
         _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])
@@ -410,7 +410,7 @@ def _(plt, simulated_data_2, sns):
 def _(plt, simulated_data_2, sns):
     # Temporal ICA on the third simulation — paired with the spatial
     # cell above.
-    _decomposed_voxels = simulated_data_2.decompose(algorithm='ica', axis='images', n_components=2)
+    _decomposed_voxels = simulated_data_2.decompose(method='ica', axis='images', n_components=2)
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(nrows=3, figsize=(10, 5))
         _decomposed_voxels['components'][0].plot(colorbar=True, title='Component 1', axes=_a[0])

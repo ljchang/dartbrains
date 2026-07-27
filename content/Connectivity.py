@@ -95,9 +95,9 @@ def _():
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
     from scipy.fft import fft, fftfreq
-    from nltools.data import Brain_Data, Design_Matrix, Adjacency
+    from nltools.data import BrainData, DesignMatrix, Adjacency
     from nltools.mask import expand_mask, roi_to_brain
-    from nltools.stats import zscore, fdr, one_sample_permutation
+    from nltools.stats import zscore, fdr, one_sample_permutation_test
     from nltools.file_reader import onsets_to_dm
     from scipy.stats import binom, ttest_1samp
     from sklearn.metrics import pairwise_distances
@@ -126,8 +126,8 @@ def _():
 
     return (
         Adjacency,
-        Brain_Data,
-        Design_Matrix,
+        BrainData,
+        DesignMatrix,
         expand_mask,
         fft,
         fftfreq,
@@ -157,10 +157,10 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer, mo):
+def _(BrainData, localizer, mo):
     sub = 'S01'
     _fwhm = 6
-    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
+    data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
 
     with mo.persistent_cache(name="connectivity_smoothed"):
         smoothed = data.smooth(fwhm=_fwhm)
@@ -178,9 +178,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, mo):
+def _(BrainData, mo):
     with mo.persistent_cache(name="connectivity_k50_mask"):
-        mask_1 = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+        mask_1 = BrainData('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
     mask_1.iplot()
     return (mask_1,)
 
@@ -251,8 +251,8 @@ def _(mo):
 
 @app.cell
 def _(
-    Brain_Data,
-    Design_Matrix,
+    BrainData,
+    DesignMatrix,
     data,
     get_csf_mask_path,
     localizer,
@@ -280,17 +280,17 @@ def _(
             axis=1,
         )
         all_mc.fillna(value=0, inplace=True)
-        return Design_Matrix(all_mc, sampling_freq=1 / tr)
+        return DesignMatrix(all_mc, sampling_freq=1 / tr)
 
 
     vmpfc_1 = zscore(pd.DataFrame(vmpfc, columns=['vmpfc']))
-    _csf_mask = Brain_Data(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
+    _csf_mask = BrainData(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
     csf = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
     _covariates = localizer.load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov = make_motion_covariates(_mc, tr)
-    dm = Design_Matrix(pd.concat([vmpfc_1, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
+    dm = DesignMatrix(pd.concat([vmpfc_1, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
     dm = dm.add_poly(order=2, include_lower=True)
     dm.convolved = ['vmpfc']
 
@@ -340,7 +340,7 @@ def _(localizer, nib):
 
 @app.cell
 def _(
-    Design_Matrix,
+    DesignMatrix,
     csf,
     localizer,
     mc_cov,
@@ -353,7 +353,7 @@ def _(
     vmpfc_1,
 ):
     def load_bids_events(subject):
-        """Create a Design_Matrix from BIDS event file.
+        """Create a DesignMatrix from BIDS event file.
 
         Bypasses nltools.onsets_to_dm because that wrapper has a column-name
         mangling bug when TR is supplied. Calls nilearn directly with
@@ -367,7 +367,7 @@ def _(
         frame_times = np.arange(n_tr) * tr
         dm_raw = _make_dm(frame_times, events=onsets, hrf_model='glover', drift_model=None)
         convolved = [c for c in dm_raw.columns if c != 'constant']
-        return Design_Matrix(dm_raw, convolved=convolved, sampling_freq=1 / tr,
+        return DesignMatrix(dm_raw, convolved=convolved, sampling_freq=1 / tr,
                              polys=['constant']).reset_index(drop=True)
 
 
@@ -378,7 +378,7 @@ def _(
     ppi_dm_conv = ppi_dm.convolve()
     ppi_dm_conv['vmpfc'] = vmpfc_1.values
     ppi_dm_conv['vmpfc_motor'] = ppi_dm_conv['vmpfc'] * ppi_dm_conv['motor_c0']
-    dm_1 = Design_Matrix(pd.concat([ppi_dm_conv, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
+    dm_1 = DesignMatrix(pd.concat([ppi_dm_conv, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
     dm_1 = dm_1.add_poly(order=2, include_lower=True)
     dm_1.convolved = list(ppi_dm_conv.columns)
     dm_1.heatmap()
@@ -548,8 +548,8 @@ def _(IMG_DIR, mo):
 
 @app.cell
 def _(
-    Brain_Data,
-    Design_Matrix,
+    BrainData,
+    DesignMatrix,
     get_csf_mask_path,
     localizer,
     make_motion_covariates,
@@ -560,13 +560,13 @@ def _(
     vmpfc_1,
     zscore,
 ):
-    _csf_mask = Brain_Data(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
+    _csf_mask = BrainData(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
     csf_1 = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
     spikes_1 = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
     _covariates = localizer.load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov_1 = make_motion_covariates(_mc, tr)
-    dm_2 = Design_Matrix(pd.concat([vmpfc_1, csf_1, mc_cov_1, spikes_1.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
+    dm_2 = DesignMatrix(pd.concat([vmpfc_1, csf_1, mc_cov_1, spikes_1.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
     dm_2 = dm_2.add_poly(order=2, include_lower=True)
     dm_2.convolved = ['vmpfc']
 
@@ -588,7 +588,7 @@ def _(mo):
 def _(smoothed_denoised):
     n_components = 10
 
-    pca_stats_output = smoothed_denoised.decompose(algorithm='pca', axis='images', n_components=n_components)
+    pca_stats_output = smoothed_denoised.decompose(method='pca', axis='images', n_components=n_components)
     return (pca_stats_output,)
 
 

@@ -126,12 +126,12 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
-    from nltools.data import Brain_Data
+    from nltools.data import BrainData
     from nltools.mask import expand_mask
     from nilearn.plotting import view_img_on_surf
     from dartbrains_tools.data import localizer
 
-    return Brain_Data, expand_mask, localizer, np, os, pd, view_img_on_surf
+    return BrainData, expand_mask, localizer, np, os, pd, view_img_on_surf
 
 
 @app.cell(hide_code=True)
@@ -145,19 +145,19 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     _sub_list = localizer.get_subjects()
     left_file_list = [localizer.get_file(sub, 'betas', 'video_left_hand') for sub in _sub_list]
     right_file_list = [localizer.get_file(sub, 'betas', 'video_right_hand') for sub in _sub_list]
 
-    # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens to 1D
+    # nltools 0.5.1 quirk: BrainData(list-of-paths) flattens to 1D
     # ((20*238955,) instead of (20, 238955)), which then makes
     # left.append(right) produce shape (2, 20*238955) — sklearn rejects
     # the X/y mismatch as 2 samples vs 40 labels. Wrap each path in
-    # Brain_Data() first so the outer constructor stacks per-image, then
+    # BrainData() first so the outer constructor stacks per-image, then
     # append produces the expected (40, 238955).
-    left = Brain_Data([Brain_Data(f) for f in left_file_list])
-    right = Brain_Data([Brain_Data(f) for f in right_file_list])
+    left = BrainData([BrainData(f) for f in left_file_list])
+    right = BrainData([BrainData(f) for f in right_file_list])
 
     data = left.append(right)
     return data, left_file_list, right_file_list
@@ -168,7 +168,7 @@ def _(mo):
     mo.md(r"""
     Next, we need to create the labels or outcome variable to train the model. We will make a vector of ones and zeros to indicate left images and right images, respectively.
 
-    We assign this vector to the `data.Y` attribute of the Brain_Data instance.
+    We assign this vector to the `data.Y` attribute of the BrainData instance.
     """)
     return
 
@@ -255,8 +255,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, expand_mask):
-    mask = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+def _(BrainData, expand_mask):
+    mask = BrainData('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
     mask_x = expand_mask(mask)
 
     mask.plot()

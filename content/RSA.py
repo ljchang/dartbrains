@@ -124,22 +124,22 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
-    from nltools.data import Brain_Data, Adjacency
+    from nltools.data import BrainData, Adjacency
     from nltools.mask import expand_mask, roi_to_brain
-    from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation
+    from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation_test
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map, view_img_on_surf, view_img
     from dartbrains_tools.data import localizer
 
     return (
         Adjacency,
-        Brain_Data,
+        BrainData,
         expand_mask,
         fdr,
         fisher_r_to_z,
         localizer,
         np,
-        one_sample_permutation,
+        one_sample_permutation_test,
         pd,
         plot_glass_brain,
         plot_stat_map,
@@ -156,23 +156,23 @@ def _(mo):
     ### Single Subject Pattern Similarity
     Recall that in the Single Subject Model Lab that we ran single subject models for 10 different regressors for the Pinel Localizer task.  In this tutorial, we will use our results to learn how to conduct RSA style analyses.
 
-    First, let's get a list of all of the subject IDs and load the beta values from each condition for a single subject into a `Brain_Data` object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this [code](Group_Analysis.md) for reference from the group analysis tutorial.
+    First, let's get a list of all of the subject IDs and load the beta values from each condition for a single subject into a `BrainData` object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this [code](Group_Analysis.md) for reference from the group analysis tutorial.
     """)
     return
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     _sub = 'S01'
     _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
     conditions = localizer.CONDITIONS
-    # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens into 1D
+    # nltools 0.5.1 quirk: BrainData(list-of-paths) flattens into 1D
     # (e.g. (10*238955,) instead of (10, 238955)), which breaks every
     # downstream apply_mask / distance call. Wrap each path in
-    # Brain_Data() first so the outer constructor sees a list of
-    # Brain_Data objects and stacks them properly. Same pattern used
+    # BrainData() first so the outer constructor sees a list of
+    # BrainData objects and stacks them properly. Same pattern used
     # in Group_Analysis.py and Thresholding_Group_Analyses.py.
-    beta = Brain_Data([Brain_Data(f) for f in _file_list])
+    beta = BrainData([BrainData(f) for f in _file_list])
     return beta, conditions
 
 
@@ -187,8 +187,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, expand_mask):
-    mask = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+def _(BrainData, expand_mask):
+    mask = BrainData('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
     mask_x = expand_mask(mask)
 
     mask.plot()
@@ -385,7 +385,7 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer, mask_x, motor, pd):
+def _(BrainData, localizer, mask_x, motor, pd):
     sub_list = localizer.get_subjects()
     all_sub_similarity = {}
     all_sub_motor_rsa = {}
@@ -393,8 +393,8 @@ def _(Brain_Data, localizer, mask_x, motor, pd):
         _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
         conditions_1 = localizer.CONDITIONS
         # See note on the single-subject cell above — wrap each path in
-        # Brain_Data() so the outer constructor stacks instead of flattening.
-        beta_1 = Brain_Data([Brain_Data(f) for f in _file_list])
+        # BrainData() so the outer constructor stacks instead of flattening.
+        beta_1 = BrainData([BrainData(f) for f in _file_list])
         sub_pattern = []
         motor_sim_r_1 = []
         for _m in mask_x:
@@ -418,10 +418,10 @@ def _(mo):
 
 
 @app.cell
-def _(all_sub_motor_rsa, fisher_r_to_z, one_sample_permutation):
+def _(all_sub_motor_rsa, fisher_r_to_z, one_sample_permutation_test):
     rsa_stats = []
     for i in all_sub_motor_rsa:
-        rsa_stats.append(one_sample_permutation(fisher_r_to_z(all_sub_motor_rsa[i])))
+        rsa_stats.append(one_sample_permutation_test(fisher_r_to_z(all_sub_motor_rsa[i])))
     return (rsa_stats,)
 
 
@@ -434,12 +434,12 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, fdr, mask_x, np, plot_glass_brain, rsa_stats, threshold):
+def _(BrainData, fdr, mask_x, np, plot_glass_brain, rsa_stats, threshold):
     fdr_p = fdr(np.array([x['p'] for x in rsa_stats]), q=0.05)
     print(fdr_p)
 
-    rsa_motor_r = Brain_Data([x*y['mean'] for x,y in zip(mask_x, rsa_stats)]).sum()
-    rsa_motor_p = Brain_Data([x*y['p'] for x,y in zip(mask_x, rsa_stats)]).sum()
+    rsa_motor_r = BrainData([x*y['mean'] for x,y in zip(mask_x, rsa_stats)]).sum()
+    rsa_motor_p = BrainData([x*y['p'] for x,y in zip(mask_x, rsa_stats)]).sum()
 
     thresholded = threshold(rsa_motor_r, rsa_motor_p, thr=fdr_p)
 

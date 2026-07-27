@@ -134,9 +134,9 @@ def _():
     import seaborn as sns
     import plotly.graph_objects as go
     from nltools.stats import zscore
-    from nltools.data import Brain_Data, Design_Matrix
+    from nltools.data import BrainData, DesignMatrix
     from nltools.stats import regress
-    from nltools.external import glover_hrf
+    from nltools.algorithms.hrf import glover_hrf
     from scipy.stats import ttest_1samp
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import plot_timeseries
@@ -151,7 +151,7 @@ def _():
         return _y
 
     return (
-        Brain_Data,
+        BrainData,
         localizer,
         np,
         pd,
@@ -336,7 +336,7 @@ def _(mo):
     import numpy as np
     import nibabel as nib
     from nltools.stats import zscore, regress, find_spikes
-    from nltools.data import Brain_Data, Design_Matrix
+    from nltools.data import BrainData, DesignMatrix
     from nltools.file_reader import onsets_to_dm
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
@@ -359,17 +359,17 @@ def _(mo):
         z_mc = zscore(mc)
         all_mc = pd.concat([z_mc, z_mc**2, z_mc.diff(), z_mc.diff()**2], axis=1)
         all_mc.fillna(value=0, inplace=True)
-        return Design_Matrix(all_mc, sampling_freq=1/tr)
+        return DesignMatrix(all_mc, sampling_freq=1/tr)
 
     for sub in tqdm(localizer.get_subjects()):
-        data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
+        data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
         data = data.smooth(fwhm=fwhm)
         dm = load_bids_events(sub)
         covariates = localizer.load_confounds(sub)
         mc_cov = make_motion_covariates(covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']])
         spikes = data.find_spikes(global_spike_cutoff=spike_cutoff, diff_spike_cutoff=spike_cutoff)
         dm_cov = dm.convolve().add_dct_basis(duration=128).add_poly(order=1, include_lower=True)
-        dm_cov = dm_cov.append(mc_cov, axis=1).append(Design_Matrix(spikes.iloc[:, 1:], sampling_freq=1/tr), axis=1)
+        dm_cov = dm_cov.append(mc_cov, axis=1).append(DesignMatrix(spikes.iloc[:, 1:], sampling_freq=1/tr), axis=1)
         data.X = dm_cov
         stats = data.regress()
 
@@ -395,15 +395,15 @@ def _(mo):
 
     For our first group analysis, let's try to examine which regions of the brain are consistently activated across participants. We will just load the first regressor in the design matrix - *horizontal_checkerboard*.
 
-    We will use the `glob` function to search for all files that contain the name *horizontal_checkerboard* in each subject's folder. We will then sort the list and load all of the files using the `Brain_Data` class.  This will take a little bit to load all of the data into ram.
+    We will use the `glob` function to search for all files that contain the name *horizontal_checkerboard* in each subject's folder. We will then sort the list and load all of the files using the `BrainData` class.  This will take a little bit to load all of the data into ram.
     """)
     return
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     con1_name = 'horizontal_checkerboard'
-    con1_dat = Brain_Data([Brain_Data(localizer.get_file(sub, 'betas', con1_name)) for sub in localizer.get_subjects()])
+    con1_dat = BrainData([BrainData(localizer.get_file(sub, 'betas', con1_name)) for sub in localizer.get_subjects()])
     return (con1_dat,)
 
 
@@ -464,9 +464,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, con1_dat, localizer):
+def _(BrainData, con1_dat, localizer):
     con2_name = 'vertical_checkerboard'
-    con2_dat = Brain_Data([Brain_Data(localizer.get_file(sub, 'betas', con2_name)) for sub in localizer.get_subjects()])
+    con2_dat = BrainData([BrainData(localizer.get_file(sub, 'betas', con2_name)) for sub in localizer.get_subjects()])
 
     con1_v_con2 = con1_dat-con2_dat
     return (con1_v_con2,)
