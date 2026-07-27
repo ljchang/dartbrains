@@ -36,7 +36,15 @@ dependencies = [
     # Version stays unconstrained: master still self-reports 0.5.1 (the bump
     # happens at release time), so the [tool.uv.sources] git pin below is what
     # actually selects the 0.6 API. Switch to "nltools>=0.6.0" once it's on PyPI.
-    "nltools",
+    #
+    # The extras are NOT optional for this course:
+    #   h5                — BrainCollection's cached per-subject fit path writes
+    #                       HDF5 bundles; without h5py every .fit() raises
+    #                       ModuleNotFoundError inside a joblib worker.
+    #   graph             — Adjacency.to_graph() in the Connectivity chapter.
+    #   interactive_plots — BrainData.iplot() ships an ipywidgets threshold
+    #                       slider by default (controls=True).
+    "nltools[h5,graph,interactive_plots]",
     "numpy>=2.4.3",
     "pandas",
     "plotly>=6.6.0",
