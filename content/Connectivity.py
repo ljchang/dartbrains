@@ -84,7 +84,7 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(fetch_resource):
     # '%matplotlib inline' command supported automatically in marimo
 
     import glob
@@ -96,6 +96,7 @@ def _():
     from plotly.subplots import make_subplots
     from scipy.fft import fft, fftfreq
     from nltools.data import BrainData, DesignMatrix, Adjacency
+    from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
     from nltools.stats import zscore, fdr, one_sample_permutation_test
     from nltools.file_reader import onsets_to_dm
@@ -129,6 +130,7 @@ def _():
         BrainData,
         DesignMatrix,
         expand_mask,
+        fetch_resource,
         fft,
         fftfreq,
         get_csf_mask_path,
@@ -178,9 +180,9 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, mo):
+def _(BrainData, fetch_resource, mo):
     with mo.persistent_cache(name="connectivity_k50_mask"):
-        mask_1 = BrainData('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+        mask_1 = BrainData(fetch_resource('masks/k50_2mm.nii.gz'))
     mask_1.iplot()
     return (mask_1,)
 

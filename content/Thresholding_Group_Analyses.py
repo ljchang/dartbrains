@@ -536,7 +536,7 @@ def _(mo):
 def _(BrainData, localizer):
     con1_name = 'horizontal_checkerboard'
     con1_file_list = [localizer.get_file(sub, 'betas', con1_name) for sub in localizer.get_subjects()]
-    con1_dat = BrainData([BrainData(f) for f in con1_file_list])
+    con1_dat = BrainData([f for f in con1_file_list])
     _con1_stats = con1_dat.ttest(threshold_dict={'unc': 0.001})
     _con1_stats['thr_t'].iplot()
     return (con1_dat,)
@@ -581,7 +581,7 @@ def _(mo):
 def _(BrainData, con1_dat, localizer):
     con2_name = 'vertical_checkerboard'
     con2_file_list = [localizer.get_file(sub, 'betas', con2_name) for sub in localizer.get_subjects()]
-    con2_dat = BrainData([BrainData(f) for f in con2_file_list])
+    con2_dat = BrainData([f for f in con2_file_list])
     con1_v_con2 = con1_dat - con2_dat
     _con1_v_con2_stats = con1_v_con2.ttest(threshold_dict={'unc': 0.001})
     _con1_v_con2_stats['thr_t'].iplot()

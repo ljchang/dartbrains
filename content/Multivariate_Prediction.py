@@ -86,7 +86,7 @@ def _(mo):
     ## Important MVPA Concepts
     Now, we are ready to dive into the details. In this tutorial, we will be using the nltools toolsbox to run these models, but also see ([nilearn](https://nilearn.github.io/), [brainiak](https://brainiak.org/tutorials/), and [pyMPVA](http://www.pymvpa.org/)) for excellent alternatives.
 
-    Running MVPA style analyses using multivariate regression is surprisingly easier and faster than univariate methods. All you need to do is specify the algorithm and cross-validation parameters. Currently, we have several different linear algorithms implemented from [scikit-learn](http://scikit-learn.org/stable/) in the nltools package.
+    Running MVPA style analyses using multivariate regression is surprisingly easier and faster than univariate methods. All you need to do is specify the model and the cross-validation scheme. nltools hands the actual estimation off to [scikit-learn](http://scikit-learn.org/stable/), so anything scikit-learn provides — any classifier, any regressor, or a whole `Pipeline` — can be passed straight to `model=`.
 
     To make sure you understand all of the key concepts involved in the practical aspects of conducting MVPA, let's watch two short videos by Martin Lindquist before we dive into the code.
     """)
@@ -118,7 +118,7 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(fetch_resource):
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
@@ -127,11 +127,16 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
     from nltools.data import BrainData
+    from nltools.templates import fetch_resource
     from nltools.mask import expand_mask
     from nilearn.plotting import view_img_on_surf
+    from sklearn.svm import SVC
+    from sklearn.linear_model import RidgeClassifier, RidgeCV, LassoCV
+    from sklearn.model_selection import GroupKFold
     from dartbrains_tools.data import localizer
 
-    return BrainData, expand_mask, localizer, np, os, pd, view_img_on_surf
+    return (BrainData, GroupKFold, LassoCV, RidgeCV, RidgeClassifier, SVC,
+            expand_mask, fetch_resource, localizer, np, os, pd, view_img_on_surf)
 
 
 @app.cell(hide_code=True)
@@ -150,14 +155,8 @@ def _(BrainData, localizer):
     left_file_list = [localizer.get_file(sub, 'betas', 'video_left_hand') for sub in _sub_list]
     right_file_list = [localizer.get_file(sub, 'betas', 'video_right_hand') for sub in _sub_list]
 
-    # nltools 0.5.1 quirk: BrainData(list-of-paths) flattens to 1D
-    # ((20*238955,) instead of (20, 238955)), which then makes
-    # left.append(right) produce shape (2, 20*238955) — sklearn rejects
-    # the X/y mismatch as 2 samples vs 40 labels. Wrap each path in
-    # BrainData() first so the outer constructor stacks per-image, then
-    # append produces the expected (40, 238955).
-    left = BrainData([BrainData(f) for f in left_file_list])
-    right = BrainData([BrainData(f) for f in right_file_list])
+    left = BrainData(left_file_list)
+    right = BrainData(right_file_list)
 
     data = left.append(right)
     return data, left_file_list, right_file_list
@@ -166,19 +165,21 @@ def _(BrainData, localizer):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Next, we need to create the labels or outcome variable to train the model. We will make a vector of ones and zeros to indicate left images and right images, respectively.
+    Next, we need to create the labels or outcome variable to train the model. We will make a vector of ones and zeros to indicate left images and right images, respectively. We pass this directly to `.predict()` as the `y=` argument.
 
-    We assign this vector to the `data.Y` attribute of the BrainData instance.
+    We also build a vector recording which subject each image came from. We will need it shortly to cross-validate *by subject*.
     """)
     return
 
 
 @app.cell
-def _(data, left_file_list, np, pd):
-    Y = pd.DataFrame(np.hstack([np.ones(len(left_file_list)), np.zeros(len(left_file_list))]))
+def _(left_file_list, localizer, np):
+    Y = np.hstack([np.ones(len(left_file_list)), np.zeros(len(left_file_list))])
 
-    data.Y = Y
-    return
+    # Each subject contributes one left and one right image, so the subject
+    # labels repeat across the two halves of the stack.
+    subject_id = np.hstack([localizer.get_subjects(), localizer.get_subjects()])
+    return Y, subject_id
 
 
 @app.cell(hide_code=True)
@@ -190,36 +191,53 @@ def _(mo):
 
 
 @app.cell
-def _(data):
-    svm_stats = data.predict(algorithm='svm', **{'kernel':"linear"})
+def _(SVC, Y, data):
+    svm_stats = data.predict(y=Y, model=SVC(kernel='linear'), cv=5)
     return (svm_stats,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    the results of this analysis are stored in a dictionary.
+    The results come back as a `Predict` object. Its fields are:
 
-    - **Y**: training labels
-    - **yfit_all**: predicted labels
-    - **dist_from_hyperplane_all**: how far the prediction is from the classifier hyperplane through feature space, > 0 indicates left, while < 0 indicates right.
-    - **intercept**: scalar value which indicates how much to add to the prediction to get the correct class label.
-    - **weight_map**: multivariate brain model
-    - **mcr_all**: overall model accuracy in classifying training data
+    - **weight_map**: the multivariate brain model — coefficients from refitting on all the data
+    - **estimator**: the fitted scikit-learn pipeline itself
+    - **predictions**: out-of-fold predicted labels, in the original sample order
+    - **scores** / **mean_score** / **std_score**: accuracy in each cross-validation fold, and its summary
+    - **fold_weight_maps**: the coefficients from each individual fold
+    - **cv_folds**: the train/test split used
+
+    `.available()` lists whichever fields are populated for a given call.
     """)
     return
 
 
 @app.cell
 def _(svm_stats):
-    print(svm_stats.keys())
+    print(svm_stats.available())
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    You can see that that the model can perfectly discriminate between left and right using the training data. This is great, but we definitely shouldn't get our hopes up as this model is completely being overfit to the training data. To get an unbiased estimate of the accuracy we will need to test the model on independent data.
+    Let's compare two numbers. `.estimator` is the model refit on *all* of the data, so scoring it against that same data tells us how well it does on examples it has already seen. `.mean_score` is the average accuracy across held-out folds — data the model did not see while training.
+    """)
+    return
+
+
+@app.cell
+def _(Y, data, svm_stats):
+    print(f"accuracy on training data: {svm_stats.estimator.score(data.data, Y):.2f}")
+    print(f"cross-validated accuracy:  {svm_stats.mean_score:.2f}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    You can see that the model perfectly discriminates left from right *on the training data*. That is not as impressive as it looks — the model has memorized these specific images. The cross-validated number is the honest estimate of how it will do on somebody new, and it is much lower. This gap is overfitting, and it is why we never report training accuracy.
 
     We can also examine the model weights more thoroughly by plotting it.  This shows that we see a very nice expected motor cortex representation, but notice that there are many other regions also contributing to the prediction.
     """)
@@ -228,7 +246,7 @@ def _(mo):
 
 @app.cell
 def _(svm_stats, view_img_on_surf):
-    view_img_on_surf(svm_stats['weight_map'].to_nifti())
+    view_img_on_surf(svm_stats.weight_map.to_nifti())
     return
 
 
@@ -255,8 +273,8 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, expand_mask):
-    mask = BrainData('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+def _(BrainData, expand_mask, fetch_resource):
+    mask = BrainData(fetch_resource('masks/k50_2mm.nii.gz'))
     mask_x = expand_mask(mask)
 
     mask.plot()
@@ -274,16 +292,16 @@ def _(mo):
 
 
 @app.cell
-def _(data, mask_x):
+def _(SVC, Y, data, mask_x):
     _motor = mask_x[[26, 47]].sum()
     _data_masked = data.apply_mask(_motor)
-    svm_stats_masked = _data_masked.predict(algorithm='svm', **{'kernel': 'linear'})
+    svm_stats_masked = _data_masked.predict(y=Y, model=SVC(kernel='linear'), cv=5)
     return (svm_stats_masked,)
 
 
 @app.cell
 def _(svm_stats_masked):
-    svm_stats_masked['weight_map'].iplot()
+    svm_stats_masked.weight_map.iplot()
     return
 
 
@@ -320,17 +338,22 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(data, os, pd, right_file_list):
-    sub_list = [os.path.basename(x).split('_')[0] for x in right_file_list]
-    subject_id = pd.Series(sub_list + sub_list)
-    svm_stats_1 = data.predict(algorithm='svm', cv_dict={'type': 'kfolds', 'n_folds': 5, 'subject_id': subject_id}, **{'kernel': 'linear'})
-    return (subject_id,)
+def _(GroupKFold, SVC, Y, data, subject_id):
+    # GroupKFold keeps both images from a subject in the same fold. Passing a
+    # plain integer (cv=5) would use StratifiedKFold and silently ignore
+    # `groups`, splitting a subject across train and test and inflating accuracy.
+    svm_stats_1 = data.predict(
+        y=Y, model=SVC(kernel='linear'),
+        cv=GroupKFold(n_splits=5), groups=subject_id,
+    )
+    print(f"subject-wise cross-validated accuracy: {svm_stats_1.mean_score:.2f}")
+    return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now we see that our whole-brain model is still performing very well ~78% accuracy.
+    Now we see that our whole-brain model is still performing very well — about 80% accuracy, even with every subject's data held out together.
 
     What about our masked version?
     """)
@@ -338,17 +361,21 @@ def _(mo):
 
 
 @app.cell
-def _(data, mask_x, subject_id):
+def _(GroupKFold, SVC, Y, data, mask_x, subject_id):
     _motor = mask_x[[26, 47]].sum()
     _data_masked = data.apply_mask(_motor)
-    svm_stats_masked_1 = _data_masked.predict(algorithm='svm', cv_dict={'type': 'kfolds', 'n_folds': 5, 'subject_id': subject_id}, **{'kernel': 'linear'})
+    svm_stats_masked_1 = _data_masked.predict(
+        y=Y, model=SVC(kernel='linear'),
+        cv=GroupKFold(n_splits=5), groups=subject_id,
+    )
+    print(f"motor-cortex-only accuracy: {svm_stats_masked_1.mean_score:.2f}")
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Wow, it looks like the model with feature selection actually outperforms the whole-brain model in cross-validation! 83% > 78% accuracy.
+    Wow, it looks like the model with feature selection actually outperforms the whole-brain model in cross-validation! About 82% against 80%.
 
     Why do you think this is the case?
     """)
@@ -382,21 +409,32 @@ def _(mo):
 
 
 @app.cell
-def _(data, subject_id):
-    _ridge_stats = data.predict(algorithm='ridgeClassifier', cv_dict={'type': 'kfolds', 'n_folds': 5, 'subject_id': subject_id}, **{'alpha': 0.01})
+def _(GroupKFold, RidgeClassifier, Y, data, subject_id):
+    _ridge_stats = data.predict(
+        y=Y, model=RidgeClassifier(alpha=0.01),
+        cv=GroupKFold(n_splits=5), groups=subject_id,
+    )
+    print(f"ridge (alpha=0.01) accuracy: {_ridge_stats.mean_score:.2f}")
     return
 
 
 @app.cell
-def _(data, subject_id):
-    _ridge_stats = data.predict(algorithm='ridgeCV', cv_dict={'type': 'kfolds', 'n_folds': 5, 'subject_id': subject_id})
+def _(GroupKFold, RidgeCV, Y, data, subject_id):
+    _ridge_stats = data.predict(
+        y=Y, model=RidgeCV(), scoring='r2',
+        cv=GroupKFold(n_splits=5), groups=subject_id,
+    )
+    print(f"ridgeCV (alpha chosen by nested CV) r2: {_ridge_stats.mean_score:.2f}")
     return
 
 
 @app.cell
-def _(data, subject_id):
-    lasso_cv_stats = data.predict(algorithm='lassoCV',
-        cv_dict={'type': 'kfolds','n_folds': 5, 'subject_id':subject_id})
+def _(GroupKFold, LassoCV, Y, data, subject_id):
+    lasso_cv_stats = data.predict(
+        y=Y, model=LassoCV(), scoring='r2',
+        cv=GroupKFold(n_splits=5), groups=subject_id,
+    )
+    print(f"lassoCV r2: {lasso_cv_stats.mean_score:.2f}")
     return
 
 
@@ -423,8 +461,13 @@ def _(mo):
 
 
 @app.cell
-def _(data, subject_id):
-    svm_stats_2 = data.predict(algorithm='svm', cv_dict={'type': 'kfolds', 'n_folds': 5, 'subject_id': subject_id}, **{'class_weight': 'balanced', 'kernel': 'linear'})
+def _(GroupKFold, SVC, Y, data, subject_id):
+    svm_stats_2 = data.predict(
+        y=Y, model=SVC(kernel='linear', class_weight='balanced'),
+        scoring='balanced_accuracy',
+        cv=GroupKFold(n_splits=5), groups=subject_id,
+    )
+    print(f"balanced accuracy: {svm_stats_2.mean_score:.2f}")
     return
 
 

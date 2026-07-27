@@ -116,7 +116,7 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _():
+def _(fetch_resource):
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
@@ -125,6 +125,7 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
     from nltools.data import BrainData, Adjacency
+    from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
     from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation_test
     from sklearn.metrics import pairwise_distances
@@ -136,6 +137,7 @@ def _():
         BrainData,
         expand_mask,
         fdr,
+        fetch_resource,
         fisher_r_to_z,
         localizer,
         np,
@@ -172,7 +174,7 @@ def _(BrainData, localizer):
     # BrainData() first so the outer constructor sees a list of
     # BrainData objects and stacks them properly. Same pattern used
     # in Group_Analysis.py and Thresholding_Group_Analyses.py.
-    beta = BrainData([BrainData(f) for f in _file_list])
+    beta = BrainData([f for f in _file_list])
     return beta, conditions
 
 
@@ -187,8 +189,8 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, expand_mask):
-    mask = BrainData('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+def _(BrainData, expand_mask, fetch_resource):
+    mask = BrainData(fetch_resource('masks/k50_2mm.nii.gz'))
     mask_x = expand_mask(mask)
 
     mask.plot()
@@ -394,7 +396,7 @@ def _(BrainData, localizer, mask_x, motor, pd):
         conditions_1 = localizer.CONDITIONS
         # See note on the single-subject cell above — wrap each path in
         # BrainData() so the outer constructor stacks instead of flattening.
-        beta_1 = BrainData([BrainData(f) for f in _file_list])
+        beta_1 = BrainData([f for f in _file_list])
         sub_pattern = []
         motor_sim_r_1 = []
         for _m in mask_x:
