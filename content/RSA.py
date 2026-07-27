@@ -194,7 +194,7 @@ def _(BrainData, expand_mask, fetch_resource):
     mask_x = expand_mask(mask)
 
     mask.plot()
-    return (mask_x,)
+    return mask, mask_x
 
 
 @app.cell(hide_code=True)
@@ -362,6 +362,50 @@ def _(mask_x, motor_sim_r, np, plot_stat_map, roi_to_brain):
     rsa_motor = roi_to_brain(motor_sim_r, mask_x)
 
     plot_stat_map(rsa_motor.to_nifti(), draw_cross=False, display_mode='z', black_bg=True, cut_coords=np.arange(-30,70, 15))
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### The same analysis in two lines
+
+    It is worth having written that out step by step, because every stage is a real
+    conceptual step: mask each ROI, compute a distance matrix, convert to
+    similarity, correlate against the model, paint the result back onto the brain.
+
+    But it is also a lot of bookkeeping for what is conceptually one analysis, and
+    nltools can do the whole thing directly. `distance()` takes a `spatial_scale`
+    argument: `'whole_brain'` (the default) gives you one matrix for the entire
+    brain, while `'roi'` gives you one matrix *per parcel* of the atlas you pass as
+    `roi_mask`. The result is a stack of RDMs that remembers which parcel each one
+    came from — so `similarity(..., project=True)` can paint the per-parcel scores
+    straight back into a voxel-space `BrainData`.
+    """)
+    return
+
+
+@app.cell
+def _(beta, mask, motor, np, plot_stat_map):
+    _rdms = beta.distance(metric='correlation', spatial_scale='roi', roi_mask=mask)
+    rsa_motor_oneliner = (1 - _rdms).similarity(
+        motor, metric='spearman', method=None, project=True
+    )
+
+    plot_stat_map(rsa_motor_oneliner.to_nifti(), draw_cross=False, display_mode='z',
+                  black_bg=True, cut_coords=np.arange(-30, 70, 15))
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Same map, two lines. `spatial_scale` is worth remembering because it shows up
+    across nltools: `.distance()`, `.predict()`, `.align()`, and `.mean()` all take
+    it, and it always means the same thing — at what spatial scale should this
+    analysis be run? We will come back to that idea in more depth when we look at
+    spatial feature selection.
+    """)
     return
 
 
