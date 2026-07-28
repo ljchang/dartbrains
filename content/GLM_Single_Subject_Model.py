@@ -678,7 +678,11 @@ def _(mo):
 
     A contrast is a set of weights over the regressors. We express it by *name* using `compute_contrasts`, which accepts a string of regressor names combined with `+`, `-`, and scalar multipliers. Naming the regressors is much safer than indexing them by position: the column order depends on how the events file was read, so positional indices are a classic source of silent errors.
 
-    Note also that `.fit()` cleaned the design before estimating — it drops regressors that are near-perfectly collinear with others (controlled by `design_clean_thresh`), because those make the model rank deficient. That means the fitted model can have fewer regressors than the design matrix you handed it, which is another reason to refer to regressors by name rather than by index. You can see what was actually fit in `smoothed.model_.design_matrices_[0].columns`.
+    One thing to be aware of: by default `.fit()` runs `.clean()` on the design before estimating, dropping any column that correlates above `design_clean_thresh` (0.95) with an earlier one. Here that removes `poly_1` and `poly_2`, because our linear and quadratic drift terms are nearly identical to the first two cosine regressors — the DCT basis and the polynomial trends are modeling the same slow drift, so including both is redundant.
+
+    Two caveats worth internalizing. First, this is a *correlation* heuristic, not a rank test: this particular design matrix is full rank (48 of 48 columns), so it was perfectly estimable as specified. Second, `clean()` keeps the first column of a correlated pair and drops the second, so **which** regressor survives depends on the order you built the design in — had we called `.add_poly()` before `.add_dct_basis()`, the cosines would have been dropped instead. If you want full control, pass `design_clean=False` and handle redundancy yourself.
+
+    So the fitted model can have fewer regressors than the design matrix you handed it. You can see what was actually estimated in `smoothed.model_.design_matrices_[0].columns` — another reason to refer to regressors by name rather than by index.
     """)
     return
 
