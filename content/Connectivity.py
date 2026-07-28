@@ -99,7 +99,7 @@ def _(fetch_resource):
     from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
     from nltools.stats import zscore, fdr, one_sample_permutation_test
-    from nltools.file_reader import onsets_to_dm
+    import polars as pl
     from scipy.stats import binom, ttest_1samp
     from sklearn.metrics import pairwise_distances
     from copy import deepcopy
@@ -142,6 +142,7 @@ def _(fetch_resource):
         nx,
         pairwise_distances,
         pd,
+        pl,
         plt,
         roi_to_brain,
         view_img_on_surf,
@@ -255,50 +256,67 @@ def _(mo):
 def _(
     BrainData,
     DesignMatrix,
-    data,
     get_csf_mask_path,
     localizer,
     pd,
+    pl,
     smoothed,
     sub,
     vmpfc,
     zscore,
 ):
     tr = localizer.get_tr()
-    _fwhm = 6
-    n_tr = len(data)
 
 
     def make_motion_covariates(mc, tr):
-        z_mc = zscore(mc)
-        parts = {
-            '': z_mc,
-            '_sq': z_mc ** 2,
-            '_diff': z_mc.diff(),
-            '_diff_sq': z_mc.diff() ** 2,
-        }
-        all_mc = pd.concat(
-            [df.rename(columns=lambda c: f'{c}{suffix}') for suffix, df in parts.items()],
-            axis=1,
-        )
-        all_mc.fillna(value=0, inplace=True)
+        # zscore returns a Polars frame, so the quadratic/derivative expansion
+        # is built with Polars expressions. Each expression is evaluated against
+        # the original z-scored columns, so `.diff()` refers to the realignment
+        # parameters rather than to the squared versions.
+        z = zscore(mc)
+        cols = z.columns
+        all_mc = z.with_columns(
+            [pl.col(c).pow(2).alias(f'{c}_sq') for c in cols]
+            + [pl.col(c).diff().alias(f'{c}_diff') for c in cols]
+            + [pl.col(c).diff().pow(2).alias(f'{c}_diff_sq') for c in cols]
+        ).fill_null(0)
         return DesignMatrix(all_mc, sampling_freq=1 / tr)
 
 
-    vmpfc_1 = zscore(pd.DataFrame(vmpfc, columns=['vmpfc']))
-    _csf_mask = BrainData(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
+    # The seed timeseries is our regressor of interest. It is a measured BOLD
+    # signal, so it is NOT convolved with an HRF -- it already has the
+    # hemodynamic response baked in.
+    vmpfc_1 = DesignMatrix(
+        zscore(pd.DataFrame(vmpfc, columns=['vmpfc'])), sampling_freq=1 / tr
+    )
+
+    # The CSF probability map is a 1mm anatomical image. BrainData picks a
+    # template matching the voxel resolution of whatever you give it, so
+    # loading it bare would put it in 1mm space (~1.9M voxels) and it would not
+    # align with our 2mm functional data. Passing mask=smoothed.mask resamples
+    # it into the same space as the data.
+    _csf_mask = BrainData(
+        get_csf_mask_path(sub), mask=smoothed.mask
+    ).threshold(upper=0.7, binarize=True)
     csf = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
-    spikes = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
+    spikes = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3, TR=tr)
     _covariates = localizer.load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov = make_motion_covariates(_mc, tr)
-    dm = DesignMatrix(pd.concat([vmpfc_1, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
-    dm = dm.add_poly(order=2, include_lower=True)
-    dm.convolved = ['vmpfc']
 
-    smoothed.X = dm
-    _stats_vmpfc = smoothed.regress()
-    vmpfc_conn = _stats_vmpfc['beta']
+    # .append(..., as_confounds=True) marks everything we are regressing out as
+    # a confound, leaving `vmpfc` as the only regressor of interest. The
+    # design matrix tracks that split for us in .confounds.
+    # Drift terms are added before the nuisance regressors are appended.
+    # (add_poly() refuses to run on a design that already carries confound
+    # columns whose names contain two underscores -- e.g. trans_x_sq -- which
+    # it mistakes for run-separated polynomials.)
+    dm = vmpfc_1.add_poly(order=2, include_lower=True).append(
+        [csf, mc_cov, spikes], axis=1, as_confounds=True
+    )
+
+    smoothed.fit(model='glm', X=dm)
+    vmpfc_conn = smoothed.compute_contrasts('vmpfc', statistic='beta')
     return csf, make_motion_covariates, mc_cov, spikes, tr, vmpfc_1, vmpfc_conn
 
 
@@ -346,45 +364,53 @@ def _(
     csf,
     localizer,
     mc_cov,
-    nib,
-    np,
-    pd,
+    pl,
     plt,
+    smoothed,
     spikes,
     tr,
     vmpfc_1,
 ):
-    def load_bids_events(subject):
-        """Create a DesignMatrix from BIDS event file.
+    # 1. Load the events as raw boxcars. PPI needs the four motor conditions
+    #    combined into a single regressor BEFORE convolution, so we opt out of
+    #    the constructor's default HRF convolution with hrf_model=None.
+    _events_file = localizer.get_file('S01', 'raw', 'events', '.tsv')
+    _events = DesignMatrix(
+        _events_file, run_length=len(smoothed), TR=tr, hrf_model=None
+    )
 
-        Bypasses nltools.onsets_to_dm because that wrapper has a column-name
-        mangling bug when TR is supplied. Calls nilearn directly with
-        hrf_model='glover', then resets the index so the result can be
-        horizontally concatenated with other 0..n_tr-indexed DataFrames.
-        """
-        from nilearn.glm.first_level import make_first_level_design_matrix as _make_dm
-        tr = localizer.get_tr()
-        n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
-        onsets = localizer.load_events(subject)
-        frame_times = np.arange(n_tr) * tr
-        dm_raw = _make_dm(frame_times, events=onsets, hrf_model='glover', drift_model=None)
-        convolved = [c for c in dm_raw.columns if c != 'constant']
-        return DesignMatrix(dm_raw, convolved=convolved, sampling_freq=1 / tr,
-                             polys=['constant']).reset_index(drop=True)
+    motor_variables = [
+        'video_left_hand', 'audio_left_hand', 'video_right_hand', 'audio_right_hand'
+    ]
 
+    # 2. Collapse the four motor variants into one regressor, then convolve
+    #    everything in a single pass.
+    task = (
+        _events
+        .with_columns(motor=pl.sum_horizontal(motor_variables))
+        .drop(motor_variables)
+        .convolve()
+    )
 
-    dm_1 = load_bids_events('S01')
-    motor_variables = ['video_left_hand', 'audio_left_hand', 'video_right_hand', 'audio_right_hand']
-    ppi_dm = dm_1.drop(motor_variables, axis=1)
-    ppi_dm['motor'] = pd.Series(dm_1.loc[:, motor_variables].sum(axis=1))
-    ppi_dm_conv = ppi_dm.convolve()
-    ppi_dm_conv['vmpfc'] = vmpfc_1.values
-    ppi_dm_conv['vmpfc_motor'] = ppi_dm_conv['vmpfc'] * ppi_dm_conv['motor_c0']
-    dm_1 = DesignMatrix(pd.concat([ppi_dm_conv, csf, mc_cov, spikes.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
-    dm_1 = dm_1.add_poly(order=2, include_lower=True)
-    dm_1.convolved = list(ppi_dm_conv.columns)
-    dm_1.heatmap()
-    plt.clf()
+    # 3. Add the seed timeseries (raw -- it is already a BOLD signal) and the
+    #    PPI interaction term. Written as Polars expressions, the interaction
+    #    reads like the equation: vmpfc x motor.
+    task = task.with_columns(
+        vmpfc=vmpfc_1['vmpfc'],
+    ).with_columns(
+        vmpfc_motor=pl.col('vmpfc') * pl.col('motor_c0'),
+    )
+
+    # 4. Stack the nuisance regressors and drift terms. .append() takes a mixed
+    #    list of pandas frames (csf) and DesignMatrix instances (mc_cov, spikes)
+    #    and marks them all as confounds, so .convolved and .confounds stay
+    #    correct without us re-asserting them by hand.
+    dm_1 = task.add_poly(order=2, include_lower=True).append(
+        [csf, mc_cov, spikes], axis=1, as_confounds=True
+    )
+
+    dm_1.plot()
+    plt.gcf()
     return (dm_1,)
 
 
@@ -400,9 +426,10 @@ def _(mo):
 
 @app.cell
 def _(dm_1, np, smoothed):
-    smoothed.X = dm_1
-    ppi_stats = smoothed.regress()
-    vmpfc_motor_ppi = ppi_stats['beta'][int(np.where(smoothed.X.columns == 'vmpfc_motor')[0][0])]
+    smoothed.fit(model='glm', X=dm_1)
+    # Ask for the interaction term by name rather than hunting for its column
+    # index -- this is the regressor the whole PPI analysis is about.
+    vmpfc_motor_ppi = smoothed.compute_contrasts('vmpfc_motor', statistic='beta')
     vmpfc_motor_ppi.iplot()
     return (vmpfc_motor_ppi,)
 
@@ -562,19 +589,27 @@ def _(
     vmpfc_1,
     zscore,
 ):
-    _csf_mask = BrainData(get_csf_mask_path(sub)).threshold(upper=0.7, binarize=True)
+    # The CSF probability map is a 1mm anatomical image. BrainData picks a
+    # template matching the voxel resolution of whatever you give it, so
+    # loading it bare would put it in 1mm space (~1.9M voxels) and it would not
+    # align with our 2mm functional data. Passing mask=smoothed.mask resamples
+    # it into the same space as the data.
+    _csf_mask = BrainData(
+        get_csf_mask_path(sub), mask=smoothed.mask
+    ).threshold(upper=0.7, binarize=True)
     csf_1 = zscore(pd.DataFrame(smoothed.extract_roi(mask=_csf_mask).T, columns=['csf']))
-    spikes_1 = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3)
+    spikes_1 = smoothed.find_spikes(global_spike_cutoff=3, diff_spike_cutoff=3, TR=tr)
     _covariates = localizer.load_confounds(sub)
     _mc = _covariates[['trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z']]
     mc_cov_1 = make_motion_covariates(_mc, tr)
-    dm_2 = DesignMatrix(pd.concat([vmpfc_1, csf_1, mc_cov_1, spikes_1.drop(labels='TR', axis=1)], axis=1), sampling_freq=1 / tr)
-    dm_2 = dm_2.add_poly(order=2, include_lower=True)
-    dm_2.convolved = ['vmpfc']
+    dm_2 = vmpfc_1.add_poly(order=2, include_lower=True).append(
+        [csf_1, mc_cov_1, spikes_1], axis=1, as_confounds=True
+    )
 
-    smoothed.X = dm_2
-    _stats_denoise = smoothed.regress()
-    smoothed_denoised = _stats_denoise['residual']
+    # The residuals are the data with every nuisance regressor projected out --
+    # this is what we want to decompose in the next section.
+    smoothed.fit(model='glm', X=dm_2)
+    smoothed_denoised = smoothed.glm_residual
     return (smoothed_denoised,)
 
 
