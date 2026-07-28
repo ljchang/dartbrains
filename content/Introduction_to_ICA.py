@@ -69,7 +69,7 @@ def _():
     import seaborn as sns
     from nltools import BrainData, DesignMatrix
     from nltools.mask import create_sphere
-    from nltools.utils import get_anatomical
+    from nilearn.datasets import load_mni152_template
     from scipy.stats import pearsonr
 
     n_tr = 200
@@ -81,7 +81,7 @@ def _():
         BrainData,
         DesignMatrix,
         create_sphere,
-        get_anatomical,
+        load_mni152_template,
         n_tr,
         n_trial,
         np,
@@ -123,21 +123,31 @@ def _(mo):
 
 @app.cell
 def _(DesignMatrix, n_tr, n_trial, np, plt, signal_intensity, sns, tr):
-    ffa_signal = DesignMatrix(np.zeros(n_tr), sampling_freq=1 / tr)
-    ffa_signal.iloc[np.arange(10, n_tr, int(n_tr / n_trial))] = signal_intensity
-    ffa_signal = ffa_signal.convolve()
-    ppa_signal = DesignMatrix(np.zeros(n_tr), sampling_freq=1 / tr)
-    ppa_signal.iloc[np.arange(20, n_tr, int(n_tr / n_trial))] = signal_intensity
-    ppa_signal = ppa_signal.convolve()
+    def make_signal(first_onset, intensity, n_tr, n_trial, tr, extra_onsets=()):
+        """Impulse at each trial onset, convolved with an HRF.
+
+        The impulse train is built in numpy, where positional indexing is
+        natural, and handed to DesignMatrix purely for the HRF convolution.
+        Returns a plain 1-D array so the rest of the simulation stays numpy.
+        """
+        x = np.zeros(n_tr)
+        for start in (first_onset, *extra_onsets):
+            x[np.arange(start, n_tr, int(n_tr / n_trial))] = intensity
+        dm = DesignMatrix({'signal': x}, sampling_freq=1 / tr).convolve()
+        return dm['signal_c0'].to_numpy()
+
+    ffa_signal = make_signal(10, signal_intensity, n_tr, n_trial, tr)
+    ppa_signal = make_signal(20, signal_intensity, n_tr, n_trial, tr)
+
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(figsize=(10, 3))
-        ffa_signal.plot(ax=_a)
-        ppa_signal.plot(ax=_a)
+        _a.plot(ffa_signal)
+        _a.plot(ppa_signal)
         _a.legend(['FFA', 'PPA'])
         _a.set_xlabel('TR')
         _a.set_ylabel('Signal Intensity')
     plt.gcf()
-    return ffa_signal, ppa_signal
+    return ffa_signal, make_signal, ppa_signal
 
 
 @app.cell(hide_code=True)
@@ -155,7 +165,7 @@ def _(
     BrainData,
     ffa,
     ffa_signal,
-    get_anatomical,
+    load_mni152_template,
     n_tr,
     np,
     pd,
@@ -164,11 +174,12 @@ def _(
     sigma,
 ):
     # Initialize an empty brain for 200 TRs
-    simulated_data = BrainData(get_anatomical())
+    simulated_data = BrainData(load_mni152_template(resolution=2))
     simulated_data.data = np.zeros([n_tr, simulated_data.shape[0]])
-    simulated_data.data[:, ffa.data == 1] = pd.concat([ffa_signal.T] * ffa.data.sum().astype(int)).T
-    # Add brain signal to each ROI
-    simulated_data.data[:, ppa.data == 1] = pd.concat([ppa_signal.T] * ppa.data.sum().astype(int)).T
+    # Add brain signal to each ROI. ffa_signal is (n_tr,), so the [:, None]
+    # broadcasts the same timecourse into every voxel of the ROI.
+    simulated_data.data[:, ffa.data == 1] = ffa_signal[:, None]
+    simulated_data.data[:, ppa.data == 1] = ppa_signal[:, None]
     simulated_data.data = simulated_data.data + np.random.randn(simulated_data.data.shape[0], simulated_data.data.shape[1]) * sigma
     # Add Noise to each voxel and TR
     # Plot average voxel activity over time
@@ -241,29 +252,28 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(BrainData, DesignMatrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
+def _(BrainData, ffa, load_mni152_template, make_signal, np, plt, ppa, sns):
     n_tr_1 = 200
     n_trial_1 = 5
     tr_1 = 2
     sigma_1 = 0.75
     _signal_intensity_1 = 10
     _signal_intensity_2 = 5
-    simulated_data_1 = BrainData(get_anatomical())
+    simulated_data_1 = BrainData(load_mni152_template(resolution=2))
     simulated_data_1.data = np.zeros([n_tr_1, simulated_data_1.shape[0]])
-    ffa_signal_1 = DesignMatrix(np.zeros(n_tr_1), sampling_freq=1 / tr_1)
-    ffa_signal_1.iloc[np.arange(10, n_tr_1, int(n_tr_1 / n_trial_1))] = _signal_intensity_1
-    ffa_signal_1 = ffa_signal_1.convolve()
-    ppa_signal_1 = DesignMatrix(np.zeros(n_tr_1), sampling_freq=1 / tr_1)
-    ppa_signal_1.iloc[np.arange(11, n_tr_1, int(n_tr_1 / n_trial_1))] = _signal_intensity_2
-    ppa_signal_1.iloc[np.arange(20, n_tr_1, int(n_tr_1 / n_trial_1))] = _signal_intensity_2
-    ppa_signal_1 = ppa_signal_1.convolve()
-    simulated_data_1.data[:, ffa.data == 1] = pd.concat([ffa_signal_1.T] * ffa.data.sum().astype(int)).T
-    simulated_data_1.data[:, ppa.data == 1] = pd.concat([ppa_signal_1.T] * ppa.data.sum().astype(int)).T
+    ffa_signal_1 = make_signal(10, _signal_intensity_1, n_tr_1, n_trial_1, tr_1)
+    # The PPA now also responds on the FFA trials, so the two timecourses
+    # become correlated -- that is the point of this second simulation.
+    ppa_signal_1 = make_signal(
+        11, _signal_intensity_2, n_tr_1, n_trial_1, tr_1, extra_onsets=(20,)
+    )
+    simulated_data_1.data[:, ffa.data == 1] = ffa_signal_1[:, None]
+    simulated_data_1.data[:, ppa.data == 1] = ppa_signal_1[:, None]
     simulated_data_1.data = simulated_data_1.data + np.random.randn(simulated_data_1.data.shape[0], simulated_data_1.data.shape[1]) * sigma_1
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(figsize=(10, 3))
-        ffa_signal_1.plot(ax=_a)
-        ppa_signal_1.plot(ax=_a)
+        _a.plot(ffa_signal_1)
+        _a.plot(ppa_signal_1)
         _a.legend(['FFA', 'PPA'])
         _a.set_xlabel('TR')
         _a.set_ylabel('Signal Intensity')
@@ -283,10 +293,9 @@ def _(mo):
 
 @app.cell
 def _(ffa_signal_1, pd, pearsonr, plt, ppa_signal_1, sns):
-    combined = pd.concat([ffa_signal_1, ppa_signal_1], axis=1)
-    combined.columns = ['Faces', 'Houses']
+    combined = pd.DataFrame({'Faces': ffa_signal_1, 'Houses': ppa_signal_1})
     sns.lmplot(data=combined, x='Faces', y='Houses')
-    plt.text(2, 0, f'r = {pearsonr(ffa_signal_1.iloc[:, 0], ppa_signal_1.iloc[:, 0])[0]:.02}', {'fontsize': 15, 'color': 'red'})
+    plt.text(2, 0, f'r = {pearsonr(ffa_signal_1, ppa_signal_1)[0]:.02}', {'fontsize': 15, 'color': 'red'})
     return
 
 
@@ -354,33 +363,39 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(BrainData, DesignMatrix, ffa, get_anatomical, np, pd, plt, ppa, sns):
+def _(BrainData, ffa, load_mni152_template, make_signal, np, plt, ppa, sns):
     n_tr_2 = 200
     n_trial_2 = 5
     tr_2 = 2
     sigma_2 = 0.75
     _signal_intensity_1 = 10
     _signal_intensity_2 = 5
-    simulated_data_2 = BrainData(get_anatomical())
+    simulated_data_2 = BrainData(load_mni152_template(resolution=2))
     simulated_data_2.data = np.zeros([n_tr_2, simulated_data_2.shape[0]])
-    ffa_signal_2 = DesignMatrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
-    ffa_signal_2.iloc[np.arange(10, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_1
-    ffa_signal_2 = ffa_signal_2.convolve()
-    ppa_signal_3 = DesignMatrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
-    ppa_signal_3.iloc[np.arange(20, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_1
-    ppa_signal_3 = ppa_signal_3.convolve()
-    ppa_signal_2 = DesignMatrix(np.zeros(n_tr_2), sampling_freq=1 / tr_2)
-    ppa_signal_2.iloc[np.arange(10, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_2
-    ppa_signal_2.iloc[np.arange(20, n_tr_2, int(n_tr_2 / n_trial_2))] = _signal_intensity_2
-    ppa_signal_2 = ppa_signal_2.convolve()
-    simulated_data_2.data[:, ffa.data == 1] = pd.concat([pd.concat([ffa_signal_2.T] * int(ffa.data.sum() / 4)).T, pd.concat([ppa_signal_2.T] * int(ffa.data.sum() / 4)).T, pd.concat([ffa_signal_2.T] * int(ffa.data.sum() / 4)).T, pd.concat([ppa_signal_2.T] * int(ffa.data.sum() / 4)).T], axis=1)
-    simulated_data_2.data[:, ppa.data == 1] = pd.concat([ppa_signal_3.T] * ppa.data.sum().astype(int)).T
+    ffa_signal_2 = make_signal(10, _signal_intensity_1, n_tr_2, n_trial_2, tr_2)
+    ppa_signal_3 = make_signal(20, _signal_intensity_1, n_tr_2, n_trial_2, tr_2)
+    ppa_signal_2 = make_signal(
+        10, _signal_intensity_2, n_tr_2, n_trial_2, tr_2, extra_onsets=(20,)
+    )
+
+    # This time the FFA is not homogeneous: its voxels are split into four
+    # blocks that alternate between the two timecourses, so the region carries
+    # a mixture of signals rather than one.
+    _n_ffa = int(ffa.data.sum())
+    _pattern = np.zeros((n_tr_2, _n_ffa))
+    for _sig, _cols in zip(
+        [ffa_signal_2, ppa_signal_2, ffa_signal_2, ppa_signal_2],
+        np.array_split(np.arange(_n_ffa), 4),
+    ):
+        _pattern[:, _cols] = _sig[:, None]
+    simulated_data_2.data[:, ffa.data == 1] = _pattern
+    simulated_data_2.data[:, ppa.data == 1] = ppa_signal_3[:, None]
     simulated_data_2.data = simulated_data_2.data + np.random.randn(simulated_data_2.data.shape[0], simulated_data_2.data.shape[1]) * sigma_2
     with sns.plotting_context(context='paper', font_scale=1.5):
         _f, _a = plt.subplots(figsize=(10, 3))
-        ffa_signal_2.plot(ax=_a)
-        ppa_signal_3.plot(ax=_a)
-        ppa_signal_2.plot(ax=_a)
+        _a.plot(ffa_signal_2)
+        _a.plot(ppa_signal_3)
+        _a.plot(ppa_signal_2)
         _a.legend(['FFA', 'PPA', 'FFA_Mixed'])
         _a.set_xlabel('TR')
         _a.set_ylabel('Signal Intensity')
