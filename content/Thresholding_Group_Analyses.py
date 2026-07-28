@@ -95,9 +95,13 @@ def _():
     import plotly.graph_objects as go
     from nltools.data import BrainData
     from nltools import SimulateGrid
+    from nltools.stats import fdr, threshold
+    from nltools.algorithms.inference import one_sample_permutation_test
+    from scipy.stats import ttest_1samp
     from dartbrains_tools.data import localizer
 
-    return BrainData, SimulateGrid, go, localizer, np, plt, sns
+    return (BrainData, SimulateGrid, fdr, go, localizer, np,
+            one_sample_permutation_test, plt, sns, threshold, ttest_1samp)
 
 
 @app.cell(hide_code=True)
@@ -396,14 +400,24 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(SimulateGrid, plt):
-    # ~450,000 permutation iterations (10 sims × 5000 perms × 9 voxels) —
-    # this cell is slow (~30 min) on every cold rebuild.
+def _(SimulateGrid, one_sample_permutation_test, plt, ttest_1samp):
     _grid_width = 3
     _threshold = 0.05
     _signal_amplitude = 1
-    simulation_7 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=2, grid_width=_grid_width, n_subjects=20)
-    simulation_7.t_values, simulation_7.p_values = simulation_7._run_permutation(simulation_7.data)
+    _n_subjects = 20
+    simulation_7 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=2, grid_width=_grid_width, n_subjects=_n_subjects)
+
+    # Rather than assuming the null distribution of the t-statistic, build it
+    # empirically by randomly flipping the sign of each subject's data. Under
+    # the null of no effect, a positive and a negative value are equally
+    # likely, so sign-flipping generates data the null could have produced.
+    _flat = simulation_7.data.reshape(-1, _n_subjects).T
+    _perm = one_sample_permutation_test(_flat, n_permute=5000, random_state=0)
+    simulation_7.p_values = _perm['p'].reshape(_grid_width, _grid_width)
+    # Keep t-values for display; only the p-values come from the permutation.
+    simulation_7.t_values = ttest_1samp(_flat, 0, axis=0).statistic.reshape(
+        _grid_width, _grid_width
+    )
     simulation_7.isfit = True
     simulation_7.threshold_simulation(_threshold, 'p')
     simulation_7.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=10)
@@ -533,13 +547,16 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, localizer):
+def _(BrainData, localizer, threshold):
     con1_name = 'horizontal_checkerboard'
     con1_file_list = [localizer.get_file(sub, 'betas', con1_name) for sub in localizer.get_subjects()]
-    con1_dat = BrainData([f for f in con1_file_list])
-    _con1_stats = con1_dat.ttest(threshold_dict={'unc': 0.001})
-    _con1_stats['thr_t'].iplot()
-    return (con1_dat,)
+    con1_dat = BrainData(con1_file_list)
+
+    # Estimating and thresholding are now two separate steps: .ttest() returns
+    # the unthresholded maps, and `threshold` masks the t-map by the p-map.
+    con1_stats = con1_dat.ttest()
+    threshold(con1_stats['t'], con1_stats['p'], thr=0.001).iplot()
+    return con1_dat, con1_stats
 
 
 @app.cell(hide_code=True)
@@ -555,15 +572,18 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We can also easily run FDR correction by changing the inputs of the `threshold_dict`. We will be using a q value of 0.05 to control our false discovery rate.
+    Because thresholding is now its own step, swapping in FDR correction just means computing a different cutoff. `fdr()` returns the p-value threshold that controls the false discovery rate at q, and we feed that to the same `threshold` call.
+
+    One thing to watch: if nothing survives, `fdr()` returns `-1`. Always check for that rather than passing it straight through, or you will threshold at a negative p-value and keep every voxel.
     """)
     return
 
 
 @app.cell
-def _(con1_dat):
-    _con1_stats = con1_dat.ttest(threshold_dict={'fdr': 0.05})
-    _con1_stats['thr_t'].iplot()
+def _(con1_stats, fdr, threshold):
+    _fdr_thr = fdr(con1_stats['p'].data, q=0.05)
+    print(f"FDR threshold: p < {_fdr_thr:.5f}" if _fdr_thr > 0 else "Nothing survives FDR correction")
+    threshold(con1_stats['t'], con1_stats['p'], thr=_fdr_thr).iplot()
     return
 
 
@@ -578,20 +598,24 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, con1_dat, localizer):
+def _(BrainData, con1_dat, localizer, threshold):
     con2_name = 'vertical_checkerboard'
     con2_file_list = [localizer.get_file(sub, 'betas', con2_name) for sub in localizer.get_subjects()]
-    con2_dat = BrainData([f for f in con2_file_list])
+    con2_dat = BrainData(con2_file_list)
     con1_v_con2 = con1_dat - con2_dat
-    _con1_v_con2_stats = con1_v_con2.ttest(threshold_dict={'unc': 0.001})
-    _con1_v_con2_stats['thr_t'].iplot()
-    return (con1_v_con2,)
+
+    con1_v_con2_stats = con1_v_con2.ttest()
+    threshold(con1_v_con2_stats['t'], con1_v_con2_stats['p'], thr=0.001).iplot()
+    return con1_v_con2, con1_v_con2_stats
 
 
 @app.cell
-def _(con1_v_con2):
-    _con1_v_con2_stats = con1_v_con2.ttest(threshold_dict={'fdr': 0.05})
-    _con1_v_con2_stats['thr_t'].iplot()
+def _(con1_v_con2_stats, fdr, threshold):
+    _fdr_thr = fdr(con1_v_con2_stats['p'].data, q=0.05)
+    if _fdr_thr > 0:
+        threshold(con1_v_con2_stats['t'], con1_v_con2_stats['p'], thr=_fdr_thr).iplot()
+    else:
+        print('Nothing survives FDR correction for this contrast.')
     return
 
 
