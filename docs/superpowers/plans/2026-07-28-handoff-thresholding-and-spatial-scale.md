@@ -12,15 +12,12 @@ operational handoff: what's done, what's next, and what will bite you.
 
 ## 0. Start here — environment and verification
 
-**The HF token on this machine is stale** and 401s against the *public*
-`nltools/niftis` dataset. Every command below needs:
-
-```bash
-HF_HUB_DISABLE_IMPLICIT_TOKEN=1 uv run ...
-```
-
-Permanent fix: `huggingface-cli logout` and re-login, or clear
-`~/.cache/huggingface/token`. Worth checking CI doesn't carry a stale one too.
+~~**The HF token on this machine is stale** and 401s against the *public*
+`nltools/niftis` dataset.~~ **RESOLVED 2026-07-28.** `~/.cache/huggingface/token`
+was deleted (anonymous access to the public dataset now works; `list_repo_files`
+returns all 918 files). The `HF_HUB_DISABLE_IMPLICIT_TOKEN=1` prefix is **no
+longer needed** anywhere. Note `huggingface-cli` is retired — the CLI is now
+`hf auth login` / `hf auth logout`. Worth checking CI doesn't carry a stale token.
 
 **Verification harness.** Use this, not `marimo export script`:
 
@@ -92,6 +89,11 @@ installed version yet**. Anything written now runs against pre-#470 behavior.
 ---
 
 ## 3. Task A — thresholding chapter: permutation + cluster inference
+
+> **STATUS 2026-07-28: DONE.** `content/Thresholding_Group_Analyses.py` rewritten
+> to the structure below — **83 cells, 0 errors, 12 non-blank figures**, verified
+> with `marimo export ipynb --include-outputs`. Read §3.1 below before touching
+> it: four claims in the original version of this handoff turned out to be wrong.
 
 Target: `content/Thresholding_Group_Analyses.py` (already migrated; 50 cells green).
 
@@ -183,20 +185,85 @@ stay on the simulated grid; real data goes through nilearn.
 2. Classical corrections — Bonferroni and FDR on parametric p-values
 3. Permutation — sign-flipping; **teach the `1/n_permute` floor here**
 4. Max-statistic FWE — three lines from `return_null=True`; verify calibration live
-5. Cluster inference — smooth the grid first; show the 0% → 6% contrast; connect to Eklund 2016
-6. Real data — `nilearn.non_parametric_inference(threshold=, tfce=True)` on localizer contrasts
+5. Cluster inference — smooth the grid first; show the median-cluster-size
+   contrast (1 vox → 5 vox; **not** the 0% → 6% rates — see §3.1c); Eklund 2016
+6. Real data — `nilearn.non_parametric_inference(threshold=0.001, ...)` on
+   localizer contrasts (**`threshold` is a p-value** — see §3.1a; TFCE needs a
+   restricted mask — see §3.1b)
 7. Reporting — `cluster_report(atlas=...)`; be explicit this step is *descriptive*, not corrective
 
 ### Also fix while in there
 
-- `fdr()` returns `-1` when nothing survives. The migrated notebook now branches
-  on it, but re-check any new call sites — thresholding at a negative p keeps
-  every voxel, a bad failure mode in this chapter specifically.
+- ✅ `fdr()` returns `-1` when nothing survives. **There was a live instance of
+  this bug**: the `con1_stats` FDR cell *printed* "Nothing survives" but then
+  called `threshold(..., thr=_fdr_thr)` anyway, thresholding at −1 and keeping
+  every voxel. Now branches properly. The `con1_v_con2` cell was already correct
+  (and in fact prints "Nothing survives" on the real data — so this path is live,
+  not hypothetical).
 - `SimulateGrid.threshold_simulation(correction=)` only recognizes `'fdr'`. There
   is no permutation or cluster path in that class; don't assume one.
-- `plot_grid_simulation()` internally re-runs with `_run_ttest`, i.e. parametric,
-  regardless of what you did to `t_values`/`p_values`. Pre-existing
-  inconsistency — decide whether to work around or avoid.
+- ✅ `plot_grid_simulation()` internally re-runs with `_run_ttest`, i.e.
+  parametric, regardless of what you did to `t_values`/`p_values`. Resolved by
+  *avoiding*: the old `simulation_7` cell (which hand-patched `t_values`,
+  `p_values`, `isfit` onto a `SimulateGrid` and then had its permutation results
+  silently discarded by `plot_grid_simulation`) is deleted. The permutation
+  sections now use plain numpy loops.
+
+---
+
+## 3.1 Corrections to this document — found while implementing Task A
+
+Four things above are wrong or misleading. Verified by execution, not reading.
+
+**(a) `non_parametric_inference(threshold=)` is a P-VALUE, not a t-value.**
+§3's `threshold=2.5` and the older plan's `threshold=2.5` are both wrong, and
+they fail **silently**. nilearn converts the argument to a t-statistic
+internally (`_compute_t_stat_threshold`); `threshold=2.5` two-sided computes
+`t.isf(1.25, 19)` = **NaN**, every `arr > NaN` is `False`, so `size` and `mass`
+come back **identically zero** and `logp_max_size` is a uniform 0.004 — while
+`logp_max_t` still looks perfectly reasonable, which is what makes it
+convincing. Use `threshold=0.001`. (The private `permuted_ols` helper documents
+the same-named arg as "t-scale" at line 67 of `permuted_least_squares.py` while
+the public one says "p-scale" at line 389 — same file, opposite units.)
+Corrected upstream in the vendored nltools nilearn skill
+(`.claude/skills/nilearn/references/glm.md`), which carried the same error.
+
+**(b) Whole-brain TFCE is not affordable at build time.** Measured on the
+localizer betas (20 subjects, 238,955 voxels): **~15 s per permutation**
+one-sided, doubled by `two_sided_test=True`. n_perm=50 one-sided = 735 s;
+n_perm=500 would be ~2 h. The cost scales with voxel count and is *superlinear*
+whole-brain. Restricting to a probabilistic Harvard–Oxford occipital mask
+(31,647 voxels) brings n_perm=500 down to **71 s**, and scaling becomes linear.
+The chapter now does whole-brain for max-t/cluster-extent/cluster-mass
+(`n_perm=500`, 35 s) and occipital-only for TFCE — framed as the same small
+volume correction idea the chapter already teaches.
+
+**(c) The "0% → 6%" smoothing contrast does not replicate as stated.** Measured
+1.0% (σ=0) vs 3.0% (σ=2.0). Both are within Monte Carlo error (±4% at 100 sims)
+of each other and of the original numbers — the FWE-rate contrast is simply too
+noisy at this sample size to headline. **The stable contrast is median largest
+cluster size: 1 voxel vs 5 voxels**, which reproduces exactly. The chapter leads
+with cluster size and explicitly cautions against over-reading the rates.
+
+**(d) `n_jobs=-1` is a pessimization for these small permutation tests.** At
+900 voxels × 500 permutations, joblib pool startup dominates: `n_jobs=1` runs a
+100-simulation calibration loop in ~6 s vs ~14 s for `n_jobs=-1`. Worse, running
+two such loops concurrently drove load average to 147 and inflated timings by
+~100×, which is how the first (discarded) round of measurements got 1225 s for a
+loop that actually takes 6 s. **Measure on an idle machine, one job at a time.**
+
+### Measured, in the shipped chapter
+
+```
+uncorrected p<.001, any FP    56%      (theory 59.4%)          ✓
+permutation p floor           0.0010   (= 1/(1+1000); Bonferroni needs 5.56e-05)
+max-stat FWE calibration      4.0% ±3.8%                       ✓
+cluster FWE  σ=0              1.0%     median cluster 1 vox
+cluster FWE  σ=2.0            3.0%     median cluster 5 vox
+real data, voxel FWE (max-t)     169 voxels
+real data, cluster-extent FWE   3269 voxels
+real data, cluster-mass FWE     3269 voxels
+```
 
 ---
 
@@ -310,3 +377,15 @@ Things that cost time this round and aren't obvious from signatures:
 - **`fetch_resource` returns a path**, so it feeds nilearn directly — no
   `BrainData(url).to_nifti()` round-trip. All five previously hard-coded
   Neurovault/GitHub atlas URLs are in the `nltools/niftis` HF dataset.
+- **`atlases/atlas_harvard_oxford.nii.gz` is a 4D *probabilistic* atlas**
+  (151×194×159×113), not a label volume — one volume per region holding
+  probabilities 0–100, in row order matching `atlases/labels_harvard_oxford.csv`.
+  So there is no label-value/row offset to worry about: build a mask with
+  `BrainData(path, mask=data.mask)[rows].data.max(axis=0) > 25`.
+- **`BrainData.shape` is a property, not a method** — `dat.shape()` raises
+  `TypeError: 'tuple' object is not callable`.
+- **`one_sample_permutation_test` has no `progress_bar` kwarg** and prints a tqdm
+  bar unconditionally, so a 100-iteration calibration loop emits 100 progress
+  bars. Worked around with `contextlib.redirect_stderr`. This violates nltools'
+  own canonical-kwarg table (`progress_bar: bool = False`) — **candidate for a
+  small upstream PR** (see §5).
