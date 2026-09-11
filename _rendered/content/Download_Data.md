@@ -37,7 +37,7 @@ print(f"\nBOLD file path: {short_path(bold_path)}")
 <pre class="marimo-book-output-text marimo-stream-stdout">Subjects: [&#x27;S01&#x27;, &#x27;S02&#x27;, &#x27;S03&#x27;, &#x27;S04&#x27;, &#x27;S05&#x27;, &#x27;S06&#x27;, &#x27;S07&#x27;, &#x27;S08&#x27;, &#x27;S09&#x27;, &#x27;S10&#x27;, &#x27;S11&#x27;, &#x27;S12&#x27;, &#x27;S13&#x27;, &#x27;S14&#x27;, &#x27;S15&#x27;, &#x27;S16&#x27;, &#x27;S17&#x27;, &#x27;S18&#x27;, &#x27;S19&#x27;, &#x27;S20&#x27;]
 TR: 2.4 seconds
 
-BOLD file path: ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/b5bbae243ae673133b93deb2ba308ff2541624f6/derivatives/fmriprep/sub-S01/func/sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+BOLD file path: ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/62e63ab08667183d98abcbcd6d221a6071018ff6/derivatives/fmriprep/sub-S01/func/sub-S01_task-localizer_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 </pre>
 
 ### Loading Event Timing Data
@@ -69,7 +69,7 @@ path = hf_hub_download(
 print(f"Downloaded to: {short_path(path)}")
 ```
 
-<pre class="marimo-book-output-text marimo-stream-stdout">Downloaded to: ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/b5bbae243ae673133b93deb2ba308ff2541624f6/derivatives/betas/S01_betas.nii.gz
+<pre class="marimo-book-output-text marimo-stream-stdout">Downloaded to: ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/62e63ab08667183d98abcbcd6d221a6071018ff6/derivatives/betas/S01_betas.nii.gz
 </pre>
 
 <div class="marimo-book-output">
@@ -92,7 +92,7 @@ print(f"Snapshot lives at:\n  {short_path(snapshot_path)}")
 ```
 
 <pre class="marimo-book-output-text marimo-stream-stdout">Snapshot lives at:
-  ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/b5bbae243ae673133b93deb2ba308ff2541624f6
+  ~/.cache/huggingface/hub/datasets--dartbrains--localizer/snapshots/62e63ab08667183d98abcbcd6d221a6071018ff6
 </pre>
 
 Now create a symlink from somewhere convenient (e.g. `~/data/localizer`) pointing at the snapshot. The symlink takes ~no disk space and lets you treat the cached data as if it lived in `~/data/localizer`:
@@ -122,13 +122,13 @@ for _entry in sorted(bids_root.iterdir())[:10]:
 <pre class="marimo-book-output-text marimo-stream-stdout">.gitattributes
 README
 README.md
+betas.csv
+bold.csv
+confounds.csv
 dataset_description.json
 derivatives
-participants.json
-participants.tsv
-phenotype
-sub-S01
-sub-S02
+events.csv
+mask.csv
 </pre>
 
 A few practical notes:
@@ -147,19 +147,21 @@ A few practical notes:
 
 ### Bulk Loading with the `datasets` Library
 
-For loading all beta maps or events at once, use the `datasets` library:
+Each config is an index of file paths plus BIDS labels. Load the table, then fetch and open the files you need:
 
 ```python
 from datasets import load_dataset
+import nibabel as nib
 
 ds = load_dataset("dartbrains/localizer", "betas")
-print(f"Loaded {len(ds['train'])} beta maps")
-_first = ds['train'][0]
-print(f"First entry: subject={_first['subject']}, condition={_first['condition']}")
+print(f"Loaded {len(ds['train'])} beta maps (index of paths + labels)")
+_first = ds['train'][0]  # {'path', 'subject', 'condition', 'type'}
+_img = nib.load(hf_hub_download("dartbrains/localizer", _first['path'], repo_type="dataset"))
+print(f"{_first['subject']} {_first['condition']} ({_first['type']}) -> {_img.shape}")
 ```
 
-<pre class="marimo-book-output-text marimo-stream-stdout">Loaded 220 beta maps
-First entry: subject=S01, condition=audio_computation
+<pre class="marimo-book-output-text marimo-stream-stdout">Loaded 220 beta maps (index of paths + labels)
+S01 audio_computation (individual) -&gt; (91, 109, 91)
 </pre>
 
 ---
@@ -500,7 +502,7 @@ print(f"\nConfounds: {_confounds.shape}; Watch onsets: {_watch_onsets.shape}")
 Tasks: [&#x27;sherlockPart1&#x27;, &#x27;sherlockPart2&#x27;, &#x27;freerecall&#x27;]
 TR: 1.5 s
 
-BOLD path: ~/.cache/huggingface/hub/datasets--dartbrains--sherlock/snapshots/f824692b47bb34a45e90c68e92b796114db2910c/fmriprep/sub-01/func/sub-01_task-sherlockPart1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
+BOLD path: ~/.cache/huggingface/hub/datasets--dartbrains--sherlock/snapshots/c85b49f6b30adf40581ed971812624f6d354524a/derivatives/fmriprep/sub-01/func/sub-01_task-sherlockPart1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 
 Confounds: (973, 502); Watch onsets: (50, 4)
 </pre>
