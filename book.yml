@@ -151,6 +151,7 @@ toc:
       - file: content/Connectivity.py
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
+      - file: content/Spatial_Feature_Selection.py
       - file: content/RSA.py
         title: Representational Similarity Analysis
       - file: content/Parcellations.py
