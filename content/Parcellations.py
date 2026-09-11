@@ -255,8 +255,7 @@ def _(datasets, plotting):
     fsaverage = datasets.fetch_surf_fsaverage()
     plot = plotting.plot_surf_roi(fsaverage['infl_left'], roi_map=destrieux_atlas,
                            hemi='left', view='lateral',
-                           bg_map=fsaverage['sulc_left'], bg_on_data=True,
-                           darkness=.2)
+                           bg_map=fsaverage['sulc_left'], bg_on_data=True)
     # Note: we chose 'infl_left' here to match the image above, but the same
     # image could be plotted on pial surface or at different angles using
     # this plot_surf_roi function
@@ -303,14 +302,12 @@ def _(mo):
 
 @app.cell
 def _(datasets, plotting):
-    yeo = datasets.fetch_atlas_yeo_2011(verbose=0)
-
-    ''' See outputs of the dataset '''
-    print(yeo.keys())
-
-    for label in ['thick_7','thick_17']:
-      n = label.replace("thick_","")
-      yeo_atlas = yeo[label] #this loads in a .nii file
+    # nilearn >= 0.12 selects the parcellation up front (n_networks=7|17,
+    # thickness='thick'|'thin') and returns a single `maps` image; the old
+    # one-fetch-many-keys form (`yeo['thick_7']`) was removed in 0.14.
+    for n in [7, 17]:
+      yeo = datasets.fetch_atlas_yeo_2011(n_networks=n, thickness='thick', verbose=0)
+      yeo_atlas = yeo['maps']  # this loads in a .nii file
       plotting.plot_roi(yeo_atlas, title=f'Yeo - {n} Network',cmap='Paired')
 
     '''Note: if you want to keep the canonical Yeo colors for your plotting, there is a 'colors_7' txt file available in the nilearn function'''

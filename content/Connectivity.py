@@ -785,7 +785,7 @@ def _(mo):
 
     In ICA we find an un-mixing matrix $W$, such that $Y = WX$ provides an approximation to $S$. To estimate the mixing matrix, ICA assumes that the sources are (1) linearly mixed, (2) the components are statistically independent, and (3) the components are non-Gaussian.
 
-    It is trivial to run ICA on our data as it only requires switching `algorithm='pca'` to `algorithm='ica'` when using the `decompose()` method.
+    It is trivial to run ICA on our data as it only requires switching `method='pca'` to `method='ica'` when using the `decompose()` method.
 
     We will experiment with this in our exercises.
 

@@ -876,7 +876,7 @@ def _(data_1, plot_stat_map, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    There is an interactive `.iplot()` method based on nilearn `view_img`.
+    There is also an interactive `.iplot()` method. It opens the image in a WebGL viewer (built on [niivue](https://niivue.com)): scroll through slices, right-drag to change the window, and drag the sliders to threshold.
     """)
     return
 
