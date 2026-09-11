@@ -24,7 +24,9 @@ dependencies = [
     # 0.23.6 ships marimo-team/marimo#9409 so MarimoIslandGenerator.from_file
     # propagates the notebook filename — lets notebooks resolve the repo root
     # via Path(__file__).resolve().parent.parent instead of a cwd/book.yml walk.
-    "marimo>=0.23.6",
+    # 0.24 moved the exporter to marimo._export and ships the islands micropip
+    # payload marimo-book >= 0.1.31 relies on. Tracks the newest release.
+    "marimo>=0.24.2",
     "matplotlib>=3.10.8",
     "nbformat",
     "nibabel>=5.4.2",
@@ -38,13 +40,13 @@ dependencies = [
     # actually selects the 0.6 API. Switch to "nltools>=0.6.0" once it's on PyPI.
     #
     # The extras are NOT optional for this course:
-    #   h5                — BrainCollection's cached per-subject fit path writes
-    #                       HDF5 bundles; without h5py every .fit() raises
-    #                       ModuleNotFoundError inside a joblib worker.
-    #   graph             — Adjacency.to_graph() in the Connectivity chapter.
-    #   interactive_plots — BrainData.iplot() ships an ipywidgets threshold
-    #                       slider by default (controls=True).
-    "nltools[h5,graph,interactive_plots]",
+    #   h5    — hdf5plugin for reading compressed HDF5 fit bundles. h5py itself
+    #           became a core nltools dependency (cosanlab/nltools#469) because
+    #           BrainCollection.fit() always writes HDF5.
+    #   graph — Adjacency.to_graph() in the Connectivity chapter.
+    # (interactive_plots / ipywidgets is no longer needed: since nltools
+    # b3603484 iplot() is a self-contained anywidget with its own slider.)
+    "nltools[h5,graph]",
     "numpy>=2.4.3",
     "pandas",
     "plotly>=6.6.0",
@@ -53,7 +55,6 @@ dependencies = [
     "seaborn",
     "networkx",
     "polars>=1.39.3",
-    "ipyniivue>=2.4.4",
 ]
 
 [project.optional-dependencies]
@@ -70,6 +71,11 @@ build = [
     # citations, and a strict cell-error gate that fails the build when a
     # cell raises instead of publishing the traceback. 0.1.28 hoists the
     # notebook title on WASM pages so MkDocs doesn't render it twice.
+    # PyPI 0.1.30 caps marimo <0.24; the git source below (ljchang/marimo-book
+    # #88, on top of main) widens it to <0.25 and bakes anywidget model state
+    # into static pages so BrainData.iplot() and every other anywidget render
+    # interactively without a kernel. Repoint to "marimo-book>=0.1.31" once
+    # that release is on PyPI.
     "marimo-book>=0.1.30",
 ]
 
@@ -78,3 +84,6 @@ build = [
 # rewrite: BrainData/DesignMatrix, .fit()/.predict(), spatial_scale=) lives on
 # master and is not on PyPI yet. Repoint to PyPI once 0.6.0 is released.
 nltools = { git = "https://github.com/cosanlab/nltools", rev = "master" }
+# See the build group comment: anywidget state baking + marimo 0.24 support
+# are not on PyPI yet. Drop this once marimo-book 0.1.31 is released.
+marimo-book = { git = "https://github.com/ljchang/marimo-book", rev = "feat/anywidget-state-baking" }

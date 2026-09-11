@@ -248,7 +248,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
+    { name = "pycparser", marker = "implementation_name != 'PyPy' and sys_platform != 'emscripten'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -514,14 +514,13 @@ dependencies = [
     { name = "datalad" },
     { name = "datasets" },
     { name = "huggingface-hub", extra = ["hf-xet"] },
-    { name = "ipyniivue" },
     { name = "marimo" },
     { name = "matplotlib" },
     { name = "nbformat" },
     { name = "networkx" },
     { name = "nibabel" },
     { name = "nilearn" },
-    { name = "nltools", extra = ["graph", "h5", "interactive-plots"] },
+    { name = "nltools", extra = ["graph", "h5"] },
     { name = "numpy" },
     { name = "pandas" },
     { name = "plotly" },
@@ -548,15 +547,14 @@ requires-dist = [
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
-    { name = "ipyniivue", specifier = ">=2.4.4" },
-    { name = "marimo", specifier = ">=0.23.6" },
-    { name = "marimo-book", marker = "extra == 'build'" },
+    { name = "marimo", specifier = ">=0.24.2" },
+    { name = "marimo-book", marker = "extra == 'build'", git = "https://github.com/ljchang/marimo-book?rev=feat%2Fanywidget-state-baking" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "nbformat" },
     { name = "networkx" },
     { name = "nibabel", specifier = ">=5.4.2" },
     { name = "nilearn", specifier = ">=0.12" },
-    { name = "nltools", extras = ["h5", "graph", "interactive-plots"], git = "https://github.com/cosanlab/nltools?rev=master" },
+    { name = "nltools", extras = ["h5", "graph"], git = "https://github.com/cosanlab/nltools?rev=master" },
     { name = "numpy", specifier = ">=2.4.3" },
     { name = "pandas" },
     { name = "plotly", specifier = ">=6.6.0" },
@@ -568,7 +566,7 @@ requires-dist = [
 provides-extras = ["build"]
 
 [package.metadata.requires-dev]
-build = [{ name = "marimo-book", specifier = ">=0.1.30" }]
+build = [{ name = "marimo-book", git = "https://github.com/ljchang/marimo-book?rev=feat%2Fanywidget-state-baking" }]
 
 [[package]]
 name = "dartbrains-tools"
@@ -1011,20 +1009,6 @@ wheels = [
 ]
 
 [[package]]
-name = "ipyniivue"
-version = "2.4.4"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anywidget" },
-    { name = "numpy" },
-    { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/74/72/0fb5dc15a871c5706741fd2e68b6204c52321cca7148629b8be0753137a3/ipyniivue-2.4.4.tar.gz", hash = "sha256:34ce751a9aa342081fe1ab9e1aadcf2d5594729b45b1670bfc225eeb3888c1d9", size = 1648849, upload-time = "2025-12-08T03:42:59.09Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/30/09/1acb57d0225c93c9dadad025245c206bec17238eddac0bd9c49bc2240999/ipyniivue-2.4.4-py3-none-any.whl", hash = "sha256:5e42b192a607b398c900a1e66d18aab1b41da4653a7e1641c18959bf1873cadc", size = 1672906, upload-time = "2025-12-08T03:42:57.302Z" },
-]
-
-[[package]]
 name = "ipython"
 version = "9.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1455,38 +1439,38 @@ wheels = [
 
 [[package]]
 name = "marimo"
-version = "0.23.8"
+version = "0.24.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click" },
+    { name = "click", marker = "sys_platform != 'emscripten'" },
     { name = "docutils" },
     { name = "itsdangerous" },
     { name = "jedi" },
-    { name = "loro" },
+    { name = "loro", marker = "sys_platform != 'android' and sys_platform != 'emscripten'" },
     { name = "markdown" },
     { name = "msgspec" },
     { name = "narwhals" },
     { name = "packaging" },
-    { name = "psutil" },
+    { name = "psutil", marker = "sys_platform != 'android' and sys_platform != 'emscripten'" },
     { name = "pygments" },
     { name = "pymdown-extensions" },
     { name = "python-multipart" },
     { name = "pyyaml" },
-    { name = "pyzmq", marker = "python_full_version < '3.15'" },
-    { name = "starlette" },
+    { name = "pyzmq", marker = "python_full_version < '3.15' and sys_platform != 'emscripten'" },
+    { name = "starlette", marker = "sys_platform != 'emscripten'" },
     { name = "tomlkit" },
-    { name = "uvicorn" },
-    { name = "websockets" },
+    { name = "uvicorn", marker = "sys_platform != 'emscripten'" },
+    { name = "websockets", marker = "sys_platform != 'emscripten'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f2/fe/a1dec6111a660ee3bd26521c24788e7aef519a31c60cf37f767f29313454/marimo-0.23.8.tar.gz", hash = "sha256:8049df4ad263e7126e959d7d910b014e6181dffe49f540a89c3174e61a446a99", size = 38505767, upload-time = "2026-05-22T16:24:19.881Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/90/a7/321efa5a41218b1d1efab5110484d264377428ee858969d3678e573e3379/marimo-0.24.2.tar.gz", hash = "sha256:b0e1bf55f605f1a522cc3428a38d44242469fd24aa24199a86715aefbf746812", size = 38784284, upload-time = "2026-09-11T16:58:30.789Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2d/76/51b57a2e521b9110f25ec935f2774412e2f3d678b3fdea7841987244fb2c/marimo-0.23.8-py3-none-any.whl", hash = "sha256:99a4035d035fb320c8f2dcefc2213e0d64e9de13e989bc3f2a973b19dc40542a", size = 38938839, upload-time = "2026-05-22T16:24:16.102Z" },
+    { url = "https://files.pythonhosted.org/packages/49/c9/48e338c36e7153da76fd6cc87afb86d0c8b4aedd5a8f969c106e05b9b61d/marimo-0.24.2-py3-none-any.whl", hash = "sha256:a6c46e8f49e3b30a5d59ae3af06f6ecd0b0a3b69434be8a022692229dd538ad4", size = 39251372, upload-time = "2026-09-11T16:58:27.615Z" },
 ]
 
 [[package]]
 name = "marimo-book"
-version = "0.1.30"
-source = { registry = "https://pypi.org/simple" }
+version = "0.1.31.post1.dev1+g2e5d2a235"
+source = { git = "https://github.com/ljchang/marimo-book?rev=feat%2Fanywidget-state-baking#2e5d2a235ca63655edcbbe66a3870376953a777b" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "lxml" },
@@ -1503,10 +1487,6 @@ dependencies = [
     { name = "tomlkit" },
     { name = "typer" },
     { name = "watchdog" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/36/34/2e5dac67250cead19b442a048357ed3d58463a2c9e0f33851e5a68a9ff51/marimo_book-0.1.30.tar.gz", hash = "sha256:2409810d20e6047abbae24247c490f68b0f21dcfb9f4cb4d4361fc209d4b4a7e", size = 316084, upload-time = "2026-07-03T06:41:11.334Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/60/2fedb22660f8a731e4e29b4720dea69c88ee843fc45876c0064e8b268e0c/marimo_book-0.1.30-py3-none-any.whl", hash = "sha256:12595e51dd7892ec5f3bcc37211f572659473a5bc2954cb6b3ee1a8f00702fc6", size = 147014, upload-time = "2026-07-03T06:41:09.988Z" },
 ]
 
 [[package]]
@@ -1985,11 +1965,11 @@ wheels = [
 [[package]]
 name = "nltools"
 version = "0.5.1"
-source = { git = "https://github.com/cosanlab/nltools?rev=master#0fe8333f34b132185ec7820d8b6bcfa231ede467" }
+source = { git = "https://github.com/cosanlab/nltools?rev=master#a17ec8d8c61d2bffae6834f9a2b2f49e00b78c11" }
 dependencies = [
     { name = "anywidget" },
+    { name = "h5py" },
     { name = "huggingface-hub" },
-    { name = "ipyniivue" },
     { name = "joblib" },
     { name = "nilearn" },
     { name = "numpy" },
@@ -2005,9 +1985,6 @@ graph = [
 h5 = [
     { name = "h5py" },
     { name = "hdf5plugin" },
-]
-interactive-plots = [
-    { name = "ipywidgets" },
 ]
 
 [[package]]
@@ -2683,7 +2660,7 @@ name = "pyzmq"
 version = "27.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "implementation_name == 'pypy'" },
+    { name = "cffi", marker = "implementation_name == 'pypy' and sys_platform != 'emscripten'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/0b/3c9baedbdf613ecaa7aa07027780b8867f57b6293b6ee50de316c9f3222b/pyzmq-27.1.0.tar.gz", hash = "sha256:ac0765e3d44455adb6ddbf4417dcce460fc40a05978c08efdf2948072f6db540", size = 281750, upload-time = "2025-09-08T23:10:18.157Z" }
 wheels = [
@@ -3014,7 +2991,7 @@ name = "starlette"
 version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio" },
+    { name = "anyio", marker = "sys_platform != 'emscripten'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/81/69/17425771797c36cded50b7fe44e850315d039f28b15901ab44839e70b593/starlette-1.0.0.tar.gz", hash = "sha256:6a4beaf1f81bb472fd19ea9b918b50dc3a77a6f2e190a12954b25e6ed5eea149", size = 2655289, upload-time = "2026-03-22T18:29:46.779Z" }
 wheels = [
@@ -3119,8 +3096,8 @@ name = "uvicorn"
 version = "0.44.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click" },
-    { name = "h11" },
+    { name = "click", marker = "sys_platform != 'emscripten'" },
+    { name = "h11", marker = "sys_platform != 'emscripten'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5e/da/6eee1ff8b6cbeed47eeb5229749168e81eb4b7b999a1a15a7176e51410c9/uvicorn-0.44.0.tar.gz", hash = "sha256:6c942071b68f07e178264b9152f1f16dfac5da85880c4ce06366a96d70d4f31e", size = 86947, upload-time = "2026-04-06T09:23:22.826Z" }
 wheels = [
