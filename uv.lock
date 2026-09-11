@@ -555,7 +555,7 @@ requires-dist = [
     { name = "ipyniivue", specifier = ">=2.4.4" },
     { name = "marimo", specifier = ">=0.23.6" },
     { name = "marimo-book", marker = "extra == 'build'" },
-    { name = "marimo-grader-client", marker = "extra == 'build'", git = "https://github.com/ljchang/marimo-grader?subdirectory=client&rev=2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7" },
+    { name = "marimo-grader-client", marker = "extra == 'build'", specifier = ">=0.1.0" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "mograder", marker = "extra == 'build'", specifier = ">=0.3" },
     { name = "nbformat" },
@@ -576,7 +576,7 @@ provides-extras = ["build"]
 [package.metadata.requires-dev]
 build = [
     { name = "marimo-book", specifier = ">=0.1.30" },
-    { name = "marimo-grader-client", git = "https://github.com/ljchang/marimo-grader?subdirectory=client&rev=2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7" },
+    { name = "marimo-grader-client", specifier = ">=0.1.0" },
     { name = "mograder", specifier = ">=0.3" },
 ]
 
@@ -1505,10 +1505,14 @@ wheels = [
 [[package]]
 name = "marimo-grader-client"
 version = "0.1.0"
-source = { git = "https://github.com/ljchang/marimo-grader?subdirectory=client&rev=2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7#2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "traitlets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e5/42/4046d4fab5f4ec396b864a2f301fd7ce9e5b044ff60e61b1f4edc14cab0f/marimo_grader_client-0.1.0.tar.gz", hash = "sha256:6536a53a6be6862951050f76f1c47acae5d9cb92554d8368015cccac8a09e50e", size = 97011, upload-time = "2026-09-11T16:12:18.223Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/9b/8d1113d8b2e7c0171e90f8803e962edfbb86ccb79113931782496fec02f7/marimo_grader_client-0.1.0-py3-none-any.whl", hash = "sha256:209103104395142a4c4c117894319473d47bc14d4ebc43c3761cb3d841b3cff8", size = 17504, upload-time = "2026-09-11T16:12:16.84Z" },
 ]
 
 [[package]]
