@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["marimo", "numpy", "matplotlib", "nilearn", "marimo-grader-client", "mograder"]
-# mograder-cell-hashes = "d9bbf386,0def6f6b,8af6cf8a,02394504,2b636745,9dfa4cd8,65ae7bd0,d1247f35,1376da2e,de24ba33,a00823c9,1726656f,e3adbd64,5edeb41c,d5867732,7215d5d9,d031d589,3a60ffb9,d6900c33,543f6f7e,bd3d1a89,a0226b3b"
+# mograder-cell-hashes = "d9bbf386,0def6f6b,8af6cf8a,02394504,2b636745,9dfa4cd8,65ae7bd0,d1247f35,704f1508,de24ba33,a00823c9,64765855,e3adbd64,5edeb41c,ee748a1e,7215d5d9,d031d589,60edda69,d6900c33,543f6f7e,bd3d1a89,a0226b3b"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "glm"
 # grader-assignment-id = "f9acfc9e-3068-4237-90cc-8427d166abab"
-# grader-assignment-version = "5f7e3129-2548-4f60-8dac-ac21aade25f0"
-# grader-version = "2"
+# grader-assignment-version = "53adee1e-6d09-4a3b-80bc-5da39adc1e6c"
+# grader-version = "3"
 # ///
 """DartBrains assignment: the General Linear Model (instructor notebook).
 
@@ -206,7 +206,12 @@ def _(np, ols_estimator, plt, r_square, simulate_voxel):
 
 
 @app.cell
-def _(g, np, r2_by_amplitude, signal_amplitudes):
+def _(g, mo, np, r2_by_amplitude, signal_amplitudes):
+    mo.stop(
+        any(v is ... for v in (r2_by_amplitude, signal_amplitudes)),
+        mo.md("**Complete the code cell above first.** This check runs once `r2_by_amplitude` and `signal_amplitudes` are defined."),
+    )
+
     g.check(
         "glm-q01: r-squared vs signal amplitude",
         [
@@ -263,7 +268,12 @@ def _(np, ols_estimator, plt, r_square, simulate_voxel):
 
 
 @app.cell
-def _(g, noise_levels, np, r2_by_noise):
+def _(g, mo, noise_levels, np, r2_by_noise):
+    mo.stop(
+        any(v is ... for v in (noise_levels, r2_by_noise)),
+        mo.md("**Complete the code cell above first.** This check runs once `noise_levels` and `r2_by_noise` are defined."),
+    )
+
     g.check(
         "glm-q02: r-squared vs noise",
         [
@@ -321,7 +331,12 @@ def _(contrast_efficiency, np, plt, simulate_voxel):
 
 
 @app.cell
-def _(efficiency_by_trials, g, np, trial_counts):
+def _(efficiency_by_trials, g, mo, np, trial_counts):
+    mo.stop(
+        any(v is ... for v in (efficiency_by_trials, trial_counts)),
+        mo.md("**Complete the code cell above first.** This check runs once `efficiency_by_trials` and `trial_counts` are defined."),
+    )
+
     g.check(
         "glm-q03: contrast efficiency vs number of trials",
         [
@@ -384,7 +399,12 @@ def _(np, ols_estimator, plt, simulate_voxel):
 
 
 @app.cell
-def _(betas_equal, betas_longer, g, np):
+def _(betas_equal, betas_longer, g, mo, np):
+    mo.stop(
+        any(v is ... for v in (betas_equal, betas_longer)),
+        mo.md("**Complete the code cell above first.** This check runs once `betas_equal` and `betas_longer` are defined."),
+    )
+
     g.check(
         "glm-q04: beta estimates vs stimulus duration",
         [
