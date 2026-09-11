@@ -46,16 +46,16 @@ dependencies = [
 
 [project.optional-dependencies]
 build = [
-    # Assignment pages import grader_client (student widget); from git until it is on PyPI.
-    "grader-client @ git+https://github.com/ljchang/marimo-grader#subdirectory=client",
+    # Assignment pages import marimo_grader_client (student widget); from git until it is on PyPI.
+    "marimo-grader-client @ git+https://github.com/ljchang/marimo-grader@2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7#subdirectory=client",
     "mograder>=0.3",
     "marimo-book",
 ]
 
 [dependency-groups]
 build = [
-    # Assignment pages import grader_client (student widget); from git until it is on PyPI.
-    "grader-client @ git+https://github.com/ljchang/marimo-grader#subdirectory=client",
+    # Assignment pages import marimo_grader_client (student widget); from git until it is on PyPI.
+    "marimo-grader-client @ git+https://github.com/ljchang/marimo-grader@2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7#subdirectory=client",
     "mograder>=0.3",
     # 0.1.18 stages PEP 723 copies as sibling files so __file__-relative
     # root detection works on WASM pages (marimo-book #46). 0.1.27 adds a

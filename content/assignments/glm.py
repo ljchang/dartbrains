@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["marimo", "numpy", "matplotlib", "nilearn", "grader-client", "mograder"]
-# mograder-cell-hashes = "cff29c05,0def6f6b,8af6cf8a,02394504,2b636745,9dfa4cd8,65ae7bd0,d1247f35,1376da2e,de24ba33,a00823c9,1726656f,e3adbd64,5edeb41c,d5867732,7215d5d9,d031d589,3a60ffb9,d6900c33,543f6f7e,bd3d1a89,a0226b3b"
+# dependencies = ["marimo", "numpy", "matplotlib", "nilearn", "marimo-grader-client", "mograder"]
+# mograder-cell-hashes = "d9bbf386,0def6f6b,8af6cf8a,02394504,2b636745,9dfa4cd8,65ae7bd0,d1247f35,1376da2e,de24ba33,a00823c9,1726656f,e3adbd64,5edeb41c,d5867732,7215d5d9,d031d589,3a60ffb9,d6900c33,543f6f7e,bd3d1a89,a0226b3b"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "glm"
 # grader-assignment-id = "f9acfc9e-3068-4237-90cc-8427d166abab"
-# grader-assignment-version = "e2a56b54-6a5b-4217-bd6d-2559228587ed"
-# grader-version = "1"
+# grader-assignment-version = "5f7e3129-2548-4f60-8dac-ac21aade25f0"
+# grader-version = "2"
 # ///
 """DartBrains assignment: the General Linear Model (instructor notebook).
 
@@ -34,7 +34,7 @@ def _():
     import matplotlib.pyplot as plt
     from nilearn.glm.first_level import glover_hrf
 
-    from grader_client import Grader
+    from marimo_grader_client import Grader
 
     g = Grader()  # reads server / offering / assignment / version from this file's PEP 723 block
     return g, glover_hrf, mo, np, plt

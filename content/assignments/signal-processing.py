@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["marimo", "numpy", "scipy", "matplotlib", "grader-client", "mograder"]
-# mograder-cell-hashes = "f8bae4a9,fe9f4ef6,8af6cf8a,625df5dc,67a54988,ca2329d2,e348968a,e3aac99f,406a3c2b,c9ec193b,d42c98e9,a8fb810c,f95a95b8,44ecf4fe,d16afb54,5314c3dc,c626d2d6,286fc629,294a7272,bd3d1a89,3023e359"
+# dependencies = ["marimo", "numpy", "scipy", "matplotlib", "marimo-grader-client", "mograder"]
+# mograder-cell-hashes = "75142515,fe9f4ef6,8af6cf8a,625df5dc,67a54988,ca2329d2,e348968a,e3aac99f,406a3c2b,c9ec193b,d42c98e9,a8fb810c,f95a95b8,44ecf4fe,d16afb54,5314c3dc,c626d2d6,286fc629,294a7272,bd3d1a89,3023e359"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "signal-processing"
 # grader-assignment-id = "51e589a9-69f3-4ae5-911d-5cdb60354f96"
-# grader-assignment-version = "5a2e3f6f-4ff2-47cb-b9ac-1ade5ceec87f"
-# grader-version = "1"
+# grader-assignment-version = "22bccfd9-c5ce-45d9-b614-4849f4df0ef8"
+# grader-version = "2"
 # ///
 """DartBrains assignment: Signal Processing (instructor notebook).
 
@@ -36,7 +36,7 @@ def _():
     from numpy.fft import fft, ifft, fftfreq
     from scipy.signal import butter, filtfilt, freqz
 
-    from grader_client import Grader
+    from marimo_grader_client import Grader
 
     g = Grader()  # reads server / offering / assignment / version from this file's PEP 723 block
     return butter, fft, fftfreq, filtfilt, freqz, g, ifft, mo, np, plt

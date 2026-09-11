@@ -533,15 +533,15 @@ dependencies = [
 
 [package.optional-dependencies]
 build = [
-    { name = "grader-client" },
     { name = "marimo-book" },
+    { name = "marimo-grader-client" },
     { name = "mograder" },
 ]
 
 [package.dev-dependencies]
 build = [
-    { name = "grader-client" },
     { name = "marimo-book" },
+    { name = "marimo-grader-client" },
     { name = "mograder" },
 ]
 
@@ -551,11 +551,11 @@ requires-dist = [
     { name = "dartbrains-tools", specifier = ">=0.1.7" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
-    { name = "grader-client", marker = "extra == 'build'", git = "https://github.com/ljchang/marimo-grader?subdirectory=client" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
     { name = "ipyniivue", specifier = ">=2.4.4" },
     { name = "marimo", specifier = ">=0.23.6" },
     { name = "marimo-book", marker = "extra == 'build'" },
+    { name = "marimo-grader-client", marker = "extra == 'build'", git = "https://github.com/ljchang/marimo-grader?subdirectory=client&rev=2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "mograder", marker = "extra == 'build'", specifier = ">=0.3" },
     { name = "nbformat" },
@@ -575,8 +575,8 @@ provides-extras = ["build"]
 
 [package.metadata.requires-dev]
 build = [
-    { name = "grader-client", git = "https://github.com/ljchang/marimo-grader?subdirectory=client" },
     { name = "marimo-book", specifier = ">=0.1.30" },
+    { name = "marimo-grader-client", git = "https://github.com/ljchang/marimo-grader?subdirectory=client&rev=2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7" },
     { name = "mograder", specifier = ">=0.3" },
 ]
 
@@ -854,15 +854,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d9/29/d40217cbe2f6b1359e00c6c307bb3fc876ba74068cbab3dde77f03ca0dc4/ghp-import-2.1.0.tar.gz", hash = "sha256:9c535c4c61193c2df8871222567d7fd7e5014d835f97dc7b7439069e2413d343", size = 10943, upload-time = "2022-05-02T15:47:16.11Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f7/ec/67fbef5d497f86283db54c22eec6f6140243aae73265799baaaa19cd17fb/ghp_import-2.1.0-py3-none-any.whl", hash = "sha256:8337dd7b50877f163d4c0289bc1f1c7f127550241988d568c1db512c4324a619", size = 11034, upload-time = "2022-05-02T15:47:14.552Z" },
-]
-
-[[package]]
-name = "grader-client"
-version = "0.1.0"
-source = { git = "https://github.com/ljchang/marimo-grader?subdirectory=client#04b489b530ae64c4d45a88ce45a77497a4beffbe" }
-dependencies = [
-    { name = "anywidget" },
-    { name = "traitlets" },
 ]
 
 [[package]]
@@ -1509,6 +1500,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/36/34/2e5dac67250cead19b442a048357ed3d58463a2c9e0f33851e5a68a9ff51/marimo_book-0.1.30.tar.gz", hash = "sha256:2409810d20e6047abbae24247c490f68b0f21dcfb9f4cb4d4361fc209d4b4a7e", size = 316084, upload-time = "2026-07-03T06:41:11.334Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/85/60/2fedb22660f8a731e4e29b4720dea69c88ee843fc45876c0064e8b268e0c/marimo_book-0.1.30-py3-none-any.whl", hash = "sha256:12595e51dd7892ec5f3bcc37211f572659473a5bc2954cb6b3ee1a8f00702fc6", size = 147014, upload-time = "2026-07-03T06:41:09.988Z" },
+]
+
+[[package]]
+name = "marimo-grader-client"
+version = "0.1.0"
+source = { git = "https://github.com/ljchang/marimo-grader?subdirectory=client&rev=2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7#2ca0b49e6a1bb8a217ad625a8f2adaeb864338b7" }
+dependencies = [
+    { name = "anywidget" },
+    { name = "traitlets" },
 ]
 
 [[package]]
