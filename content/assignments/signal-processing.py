@@ -8,8 +8,8 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "signal-processing"
 # grader-assignment-id = "51e589a9-69f3-4ae5-911d-5cdb60354f96"
-# grader-assignment-version = "af86871e-9fbc-47f1-a1f9-faaa7018568a"
-# grader-version = "3"
+# grader-assignment-version = "ad34eb4e-274e-406b-b08a-02a15482973a"
+# grader-version = "4"
 # ///
 """DartBrains assignment: Signal Processing (instructor notebook).
 
