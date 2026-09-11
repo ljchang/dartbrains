@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["marimo", "numpy", "scipy", "matplotlib", "marimo-grader-client", "mograder"]
-# mograder-cell-hashes = "75142515,fe9f4ef6,8af6cf8a,625df5dc,67a54988,ca2329d2,e348968a,e3aac99f,406a3c2b,c9ec193b,d42c98e9,a8fb810c,f95a95b8,44ecf4fe,d16afb54,5314c3dc,c626d2d6,286fc629,294a7272,bd3d1a89,3023e359"
+# mograder-cell-hashes = "75142515,fe9f4ef6,8af6cf8a,625df5dc,67a54988,ca2329d2,e348968a,9f2cc442,406a3c2b,c9ec193b,3aa0c3f6,a8fb810c,f95a95b8,52b7212a,d16afb54,5314c3dc,d283430f,286fc629,294a7272,bd3d1a89,3023e359"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "signal-processing"
 # grader-assignment-id = "51e589a9-69f3-4ae5-911d-5cdb60354f96"
-# grader-assignment-version = "22bccfd9-c5ce-45d9-b614-4849f4df0ef8"
-# grader-version = "2"
+# grader-assignment-version = "af86871e-9fbc-47f1-a1f9-faaa7018568a"
+# grader-version = "3"
 # ///
 """DartBrains assignment: Signal Processing (instructor notebook).
 
@@ -130,7 +130,12 @@ def _(n_samples, np, plt, time):
 
 
 @app.cell
-def _(amps, clean_signal, fft, fftfreq, freqs, g, n_samples, np, nyquist, sf, signal, time):
+def _(amps, clean_signal, fft, fftfreq, freqs, g, mo, n_samples, np, nyquist, sf, signal, time):
+    mo.stop(
+        any(v is ... for v in (freqs, amps, clean_signal, signal)),
+        mo.md("**Complete the code cell above first.** This check runs once `freqs`, `amps`, `clean_signal` and `signal` are defined."),
+    )
+
     # HIDDEN TESTS
     g.check(
         "sp-q01: simulated multi-frequency signal",
@@ -199,7 +204,15 @@ def _(fft, fftfreq, freqs, n_samples, np, plt, sf, signal):
 
 
 @app.cell
-def _(amplitude, amps, detected_freqs, freq_axis, freqs, g, np, signal):
+def _(amplitude, amps, detected_freqs, freq_axis, freqs, g, mo, np, signal):
+    mo.stop(
+        any(v is ... for v in (freq_axis, amplitude, detected_freqs, freqs, amps, signal)),
+        mo.md(
+            "**Complete the code cell above first.** This check runs once `freq_axis`, `amplitude` and `detected_freqs` "
+            "are defined (it also needs `freqs`, `amps` and `signal` from the earlier questions)."
+        ),
+    )
+
     g.check(
         "sp-q02: recover frequencies with the FFT",
         [
@@ -257,7 +270,15 @@ def _(butter, filtfilt, freqs, freqz, plt, sf, signal, time):
 
 
 @app.cell
-def _(fft, fftfreq, filtered, freqs, g, n_samples, np, sf, signal, target_freq):
+def _(fft, fftfreq, filtered, freqs, g, mo, n_samples, np, sf, signal, target_freq):
+    mo.stop(
+        any(v is ... for v in (filtered, target_freq, freqs, signal)),
+        mo.md(
+            "**Complete the code cell above first.** This check runs once `filtered` and `target_freq` "
+            "are defined (it also needs `freqs` and `signal` from the earlier questions)."
+        ),
+    )
+
     _freq_axis = fftfreq(n_samples, 1 / sf)
     _amp_orig = 2 * np.abs(fft(signal)) / n_samples
     _amp_filt = 2 * np.abs(fft(filtered)) / n_samples
@@ -323,7 +344,15 @@ def _(fft, filtered, freq_axis, ifft, np, plt, signal, target_freq, time):
 
 
 @app.cell
-def _(fft, fftfreq, freqs, g, ifft, n_samples, np, reconstructed, sf, signal, spectrum_masked, target_freq):
+def _(fft, fftfreq, freqs, g, ifft, mo, n_samples, np, reconstructed, sf, signal, spectrum_masked, target_freq):
+    mo.stop(
+        any(v is ... for v in (reconstructed, spectrum_masked, freqs, signal, target_freq)),
+        mo.md(
+            "**Complete the code cell above first.** This check runs once `reconstructed` and `spectrum_masked` "
+            "are defined (it also needs `freqs`, `signal` and `target_freq` from the earlier questions)."
+        ),
+    )
+
     _freq_axis = fftfreq(n_samples, 1 / sf)
     _amp_orig = 2 * np.abs(fft(signal)) / n_samples
     _amp_recon = 2 * np.abs(fft(reconstructed)) / n_samples
