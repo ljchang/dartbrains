@@ -8,8 +8,8 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "glm"
 # grader-assignment-id = "f9acfc9e-3068-4237-90cc-8427d166abab"
-# grader-assignment-version = "53adee1e-6d09-4a3b-80bc-5da39adc1e6c"
-# grader-version = "3"
+# grader-assignment-version = "e5e84d49-f586-45f7-8b71-602cd1ffb2c0"
+# grader-version = "4"
 # ///
 """DartBrains assignment: the General Linear Model (instructor notebook).
 
