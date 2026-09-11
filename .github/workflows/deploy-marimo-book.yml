@@ -80,6 +80,10 @@ jobs:
 
       - name: Build the book
         run: uv run marimo-book build
+        env:
+          # Assignment pages: render the grader widgets as static placeholders (no live sign-in
+          # button on a page without a kernel). See marimo-grader client/README.md.
+          GRADER_RENDER: "1"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
