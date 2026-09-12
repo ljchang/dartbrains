@@ -210,13 +210,15 @@ def _(mo):
 
 
 @app.cell
-def _(plotting):
-    from nltools import Brain_Data
+def _(fetch_resource, plotting):
+    from nltools import BrainData
+    from nltools.templates import fetch_resource
 
-    desikan_killiany = Brain_Data('https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Desikan_space-MNI152NLin6_res-1x1x1.nii.gz').to_nifti()
+    desikan_killiany = fetch_resource('masks/desikan_killiany_mni152nlin6_1mm.nii.gz')
 
     plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colorbar=True)
-    return (Brain_Data,)
+    return (BrainData, fetch_resource)
+
 
 
 @app.cell(hide_code=True)
@@ -253,8 +255,7 @@ def _(datasets, plotting):
     fsaverage = datasets.fetch_surf_fsaverage()
     plot = plotting.plot_surf_roi(fsaverage['infl_left'], roi_map=destrieux_atlas,
                            hemi='left', view='lateral',
-                           bg_map=fsaverage['sulc_left'], bg_on_data=True,
-                           darkness=.2)
+                           bg_map=fsaverage['sulc_left'], bg_on_data=True)
     # Note: we chose 'infl_left' here to match the image above, but the same
     # image could be plotted on pial surface or at different angles using
     # this plot_surf_roi function
@@ -301,14 +302,12 @@ def _(mo):
 
 @app.cell
 def _(datasets, plotting):
-    yeo = datasets.fetch_atlas_yeo_2011(verbose=0)
-
-    ''' See outputs of the dataset '''
-    print(yeo.keys())
-
-    for label in ['thick_7','thick_17']:
-      n = label.replace("thick_","")
-      yeo_atlas = yeo[label] #this loads in a .nii file
+    # nilearn >= 0.12 selects the parcellation up front (n_networks=7|17,
+    # thickness='thick'|'thin') and returns a single `maps` image; the old
+    # one-fetch-many-keys form (`yeo['thick_7']`) was removed in 0.14.
+    for n in [7, 17]:
+      yeo = datasets.fetch_atlas_yeo_2011(n_networks=n, thickness='thick', verbose=0)
+      yeo_atlas = yeo['maps']  # this loads in a .nii file
       plotting.plot_roi(yeo_atlas, title=f'Yeo - {n} Network',cmap='Paired')
 
     '''Note: if you want to keep the canonical Yeo colors for your plotting, there is a 'colors_7' txt file available in the nilearn function'''
@@ -377,8 +376,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, plotting):
-    shen = Brain_Data('https://neurovault.org/media/images/8423/shen_2mm_268_parcellation.nii.gz').to_nifti()
+def _(BrainData, fetch_resource, plotting):
+    shen = fetch_resource('masks/shen_268_2mm.nii.gz')
 
     plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
     return
@@ -417,8 +416,8 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, plotting):
-    atlas_glasser = Brain_Data('https://github.com/neurodata/neuroparc/raw/master/atlases/label/Human/Glasser_space-MNI152NLin6_res-4x4x4.nii.gz').to_nifti()
+def _(BrainData, fetch_resource, plotting):
+    atlas_glasser = fetch_resource('masks/glasser_360_mni152nlin6_4mm.nii.gz')
 
     plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)
     return

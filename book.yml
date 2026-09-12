@@ -56,7 +56,8 @@ defaults:
 # rendering) trip the default caps and silently render static (no
 # slider). Empirically:
 #   - ICA: ~10 renders × ~15 s = ~150 s
-#   - Connectivity: ~41 renders × ~16 s = ~677 s
+#   - Connectivity: 9 threshold values × ~16 s ≈ 150 s (step 0.5; the PCA is
+#     seeded so the per-value viewer volumes de-duplicate to one per component)
 # Bump both wall-clock and bytes caps so these chapters can precompute.
 precompute:
   enabled: true
@@ -151,6 +152,7 @@ toc:
       - file: content/Connectivity.py
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
+      - file: content/Spatial_Feature_Selection.py
       - file: content/RSA.py
         title: Representational Similarity Analysis
       - file: content/Parcellations.py

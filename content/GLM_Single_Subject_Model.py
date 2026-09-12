@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.16"
 app = marimo.App()
 
 
@@ -42,13 +42,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
     ## Building a Design Matrix
 
     First, we will learn the basics of how to build a design matrix for our GLM.
@@ -60,34 +53,29 @@ def _(mo):
 
 @app.cell
 def _():
-    # '%matplotlib inline' command supported automatically in marimo
-
     import os
     import glob
     import numpy as np
     import pandas as pd
+    import polars as pl
     import matplotlib.pyplot as plt
     import seaborn as sns
     import nibabel as nib
-    from nltools.file_reader import onsets_to_dm
-    from nltools.stats import regress, zscore
-    from nltools.data import Brain_Data, Design_Matrix
-    from nltools.stats import find_spikes
+    from nltools.stats import zscore
+    from nltools.data import BrainData, DesignMatrix
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
-
     return (
-        Brain_Data,
-        Design_Matrix,
+        BrainData,
+        DesignMatrix,
         localizer,
         nib,
         np,
-        onsets_to_dm,
         pd,
+        pl,
         plt,
-        sns,
         youtube,
         zscore,
     )
@@ -96,24 +84,23 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To build the design matrix, we will be using the `Design_Matrix` class from the `nltools` toolbox. We load the BIDS events file (onsets, durations, and condition labels) and then call `onsets_to_dm` to turn it into a `Design_Matrix` with one row per TR and one column per condition. We pass `TR=tr` so the function knows how to align event timing (in seconds) to the scan's sampling grid, and `hrf_model=None` because we want to see the raw onset regressors first — we will convolve them with the HRF ourselves in a later step.
+    To build the design matrix, we will be using the `DesignMatrix` class from the `nltools` toolbox. It reads a BIDS events file (onsets, durations, and condition labels) directly and turns it into a design matrix with one row per TR and one column per condition.
+
+    Two arguments do the work here. `run_length=n_tr` tells it how many TRs the scan has, and `TR=tr` tells it how long each one is — together those define the sampling grid that event times (in seconds) get mapped onto. We also pass `hrf_model=None`, because we want to look at the raw onset regressors first; we will convolve them with the HRF ourselves in a later step. (Leave `hrf_model` out and it convolves for you with a Glover HRF, which is what you would usually want in real analysis.)
     """)
     return
 
 
 @app.cell
-def _(localizer, nib, onsets_to_dm):
+def _(DesignMatrix, localizer, nib):
     def load_bids_events(subject):
-        '''Create a design_matrix instance from BIDS event file'''
+        '''Create a DesignMatrix instance from a BIDS events file'''
 
         tr = localizer.get_tr()
         n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
+        events_file = localizer.get_file(subject, 'raw', 'events', '.tsv')
 
-        onsets = localizer.load_events(subject)
-        dm = onsets_to_dm(onsets, run_length=n_tr, TR=tr, hrf_model=None)
-        # nilearn auto-adds a 'constant' intercept; drop it so .add_poly() later
-        # is the single source of the intercept (avoids a rank-deficient design).
-        return dm.drop(columns='constant')
+        return DesignMatrix(events_file, run_length=n_tr, TR=tr, hrf_model=None)
 
     dm = load_bids_events('S01')
     return (dm,)
@@ -122,45 +109,38 @@ def _(localizer, nib, onsets_to_dm):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    The Design_Matrix class is built on top of Pandas DataFrames and retains most of that functionality. There are additional methods to help with building design matrices. Be sure to check out this [tutorial](https://nltools.org/auto_examples/01_DataOperations/plot_design_matrix.html#sphx-glr-auto-examples-01-dataoperations-plot-design-matrix-py) for more information about how to use this tool.
+    The `DesignMatrix` class is built on top of [Polars](Introduction_to_Polars.md) DataFrames — the same library we covered earlier — and adds methods specific to building design matrices. If you are used to pandas, the main differences are that there is no row index (so no `.loc` / `.iloc`) and that a column comes back as a Polars Series, so you use `.to_numpy()` rather than `.values`. Be sure to check out the [nltools documentation](https://nltools.org/) for more on this class.
 
-    We can check out details about the data using the `.info()` method.
+    Printing the object shows its shape along with which columns are HRF-convolved regressors and which are nuisance confounds — metadata the class tracks for you as you build the model up.
     """)
-    return
-
-
-@app.cell
-def _(dm):
-    dm.info()
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We can also view the raw design matrix as a dataframe just like pd.Dataframe.  We use the `.head()` method to just post the first few rows.
+    The underlying Polars dataframe is always available as `.data` if you want to work with the numbers directly.
     """)
     return
 
 
 @app.cell
 def _(dm):
-    dm
+    dm.data.head()
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We can plot each regressor's time course using the `.plot()` method.
+    We can plot each regressor's time course with `.plot(method='timeseries')`.
     """)
     return
 
 
 @app.cell
-def _(dm, plt):
-    _f, _a = plt.subplots(figsize=(20, 3))
-    dm.plot(ax=_a)
+def _(dm):
+    dm.plot(method='timeseries')
     return
 
 
@@ -169,15 +149,14 @@ def _(mo):
     mo.md(r"""
     This plot can be useful sometimes, but here there are too many regressors, which makes it difficult to see what is going on.
 
-    Often,  `.heatmap()` method provides a more useful visual representation of the design matrix.
+    The default `.plot()` draws an SPM-style heatmap instead, which is usually a more useful view of the whole design — time runs down the rows, regressors across the columns.
     """)
     return
 
 
 @app.cell
-def _(dm, plt):
-    dm.heatmap()
-    plt.gcf()
+def _(dm):
+    dm.plot()
     return
 
 
@@ -191,28 +170,25 @@ def _(mo):
 
 
 @app.cell
-def _(dm, plt):
+def _(dm):
     dm_conv = dm.convolve()
-    # nltools .convolve() appends '_c0' to column names but leaves .convolved with the
-    # pre-suffix names, which breaks .regress() later. Keep .convolved in sync with columns.
-    dm_conv.convolved = [f"{c}_c0" for c in dm_conv.convolved]
-    dm_conv.heatmap()
-    plt.gcf()
+    dm_conv.plot()
     return (dm_conv,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    You can see that each of the regressors is now a bit blurrier and now has the shape of an HRF function. We can plot a single regressor to see this more clearly using the `.plot()` method.
+    Notice that convolving renamed every column: `horizontal_checkerboard` became `horizontal_checkerboard_c0`. The `_c0` suffix identifies which convolution kernel produced the column — useful when you convolve with a basis set of several kernels and get `_c0`, `_c1`, `_c2`. The design matrix keeps track of these names for you in `.convolved`, which matters later when we write contrasts by name.
+
+    You can see that each of the regressors is now a bit blurrier and has the shape of an HRF. We can plot a single regressor to see this more clearly by passing `columns=`.
     """)
     return
 
 
 @app.cell
-def _(dm_conv, plt):
-    _f, _a = plt.subplots(figsize=(15, 3))
-    dm_conv['horizontal_checkerboard_c0'].plot(ax=_a)
+def _(dm_conv):
+    dm_conv.plot(method='timeseries', columns=['horizontal_checkerboard_c0'])
     return
 
 
@@ -225,9 +201,11 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv, plt):
-    _f, _a = plt.subplots(figsize=(15, 3))
-    dm_conv[['horizontal_checkerboard_c0', 'vertical_checkerboard_c0']].plot(ax=_a)
+def _(dm_conv):
+    dm_conv.plot(
+        method='timeseries',
+        columns=['horizontal_checkerboard_c0', 'vertical_checkerboard_c0']
+    )
     return
 
 
@@ -240,15 +218,15 @@ def _(IMG_DIR, mo):
         """),
         mo.image(str(IMG_DIR / "MultipleRegression.png")),
         mo.md(r"""
-        One way to evaluate multicollinearity is to examine the pairwise correlations between each regressor. We plot the correlation matrix as a heatmap.
+        One way to evaluate multicollinearity is to examine the pairwise correlations between each regressor. `.plot(method='corr')` draws that correlation matrix for us.
         """),
     ])
     return
 
 
 @app.cell
-def _(dm_conv, sns):
-    sns.heatmap(dm_conv.corr(), vmin=-1, vmax=1, cmap='RdBu_r')
+def _(dm_conv):
+    dm_conv.plot(method='corr')
     return
 
 
@@ -323,21 +301,31 @@ def _(mo):
 
 @app.cell
 def _(dm_conv):
-    dm_conv_filt = dm_conv.add_dct_basis(duration=128)
+    # include_constant=False so that .add_poly() below stays the single source
+    # of the intercept — otherwise the two would collide and produce a
+    # rank-deficient design.
+    dm_conv_filt = dm_conv.add_dct_basis(duration=128, include_constant=False)
     return (dm_conv_filt,)
 
 
-@app.cell
-def _(dm_conv_filt):
-    dm_conv_filt.iloc[:,10:].plot()
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    The cosine regressors that `.add_dct_basis()` just added are automatically registered as *confounds* — nuisance regressors we want to model but don't care about interpreting. We can pull that list off the design matrix with `.confounds` and plot just those columns.
+    """)
     return
 
 
 @app.cell
-def _(dm_conv, plt):
-    dm_conv_filt_1 = dm_conv.add_dct_basis(duration=128)
-    dm_conv_filt_1.heatmap()
-    plt.gcf()
+def _(dm_conv_filt):
+    dm_conv_filt.plot(method='timeseries', columns=dm_conv_filt.confounds)
+    return
+
+
+@app.cell
+def _(dm_conv):
+    dm_conv_filt_1 = dm_conv.add_dct_basis(duration=128, include_constant=False)
+    dm_conv_filt_1.plot()
     return (dm_conv_filt_1,)
 
 
@@ -353,10 +341,10 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1, plt):
+def _(dm_conv_filt_1):
     dm_conv_filt_poly = dm_conv_filt_1.add_poly()
-    dm_conv_filt_poly.heatmap()
-    plt.gcf()
+    dm_conv_filt_poly.plot()
+
     return
 
 
@@ -372,10 +360,9 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1, plt):
+def _(dm_conv_filt_1):
     dm_conv_filt_poly_1 = dm_conv_filt_1.add_poly(order=2, include_lower=True)
-    dm_conv_filt_poly_1.heatmap()
-    plt.gcf()
+    dm_conv_filt_poly_1.plot()
     return (dm_conv_filt_poly_1,)
 
 
@@ -393,9 +380,9 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     sub = 'S01'
-    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
+    data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
     return data, sub
 
 
@@ -414,7 +401,7 @@ def _(localizer, pd, plt, zscore):
     mc = covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']]
 
     plt.figure(figsize=(15,5))
-    plt.plot(zscore(mc))
+    plt.plot(zscore(mc).to_numpy())
     return (mc,)
 
 
@@ -429,23 +416,25 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, localizer, mc, pd, sns, zscore):
+def _(DesignMatrix, localizer, mc, pl, zscore):
     def make_motion_covariates(mc, tr):
-        z_mc = zscore(mc)
-        z_mc_sq = z_mc ** 2
-        z_mc_sq.columns = [f"{c}_sq" for c in z_mc.columns]
-        z_mc_diff = z_mc.diff()
-        z_mc_diff.columns = [f"{c}_diff" for c in z_mc.columns]
-        z_mc_diff_sq = z_mc.diff() ** 2
-        z_mc_diff_sq.columns = [f"{c}_diff_sq" for c in z_mc.columns]
-        all_mc = pd.concat([z_mc, z_mc_sq, z_mc_diff, z_mc_diff_sq], axis=1)
-        all_mc.fillna(value=0, inplace=True)
-        return Design_Matrix(all_mc, sampling_freq=1/tr)
+        # nltools' zscore accepts pandas but always returns Polars, so we build
+        # the expansion with Polars expressions. Each expression is evaluated
+        # against the original z-scored columns, so `.diff()` below refers to
+        # the realignment parameters and not to the squared versions.
+        z = zscore(mc)
+        cols = z.columns
+        all_mc = z.with_columns(
+            [pl.col(c).pow(2).alias(f"{c}_sq") for c in cols]
+            + [pl.col(c).diff().alias(f"{c}_diff") for c in cols]
+            + [pl.col(c).diff().pow(2).alias(f"{c}_diff_sq") for c in cols]
+        ).fill_null(0)
+        return DesignMatrix(all_mc, sampling_freq=1/tr)
 
     tr = localizer.get_tr()
     mc_cov = make_motion_covariates(mc, tr)
 
-    sns.heatmap(mc_cov)
+    mc_cov.plot()
     return mc_cov, tr
 
 
@@ -479,11 +468,12 @@ def _(mo):
 
 
 @app.cell
-def _(Design_Matrix, data, plt, tr):
-    spikes = data.find_spikes(global_spike_cutoff=2, diff_spike_cutoff=2.5)
-    _f, _a = plt.subplots(figsize=(15, 3))
-    spikes = Design_Matrix(spikes.iloc[:, 1:], sampling_freq=1 / tr)
-    spikes.plot(ax=_a, linewidth=2)
+def _(data, tr):
+    # find_spikes returns a DesignMatrix with one indicator column per spike,
+    # already marked as confounds. Passing TR sets its sampling frequency so it
+    # can be appended to the main design matrix below.
+    spikes = data.find_spikes(global_spike_cutoff=2, diff_spike_cutoff=2.5, TR=tr)
+    spikes.plot(method='timeseries')
     return (spikes,)
 
 
@@ -500,10 +490,9 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_poly_1, mc_cov, plt, spikes):
+def _(dm_conv_filt_poly_1, mc_cov, spikes):
     dm_conv_filt_poly_cov = dm_conv_filt_poly_1.append([mc_cov, spikes], axis=1)
-    dm_conv_filt_poly_cov.heatmap(cmap='RdBu_r', vmin=-1, vmax=1)
-    plt.gcf()
+    dm_conv_filt_poly_cov.plot()
     return (dm_conv_filt_poly_cov,)
 
 
@@ -568,20 +557,15 @@ def _(mo):
     ## Estimate GLM for all voxels
     Now we are ready to estimate the regression model for all voxels.
 
-    We will assign the design_matrix object to the `.X` attribute of our `Brain_Data` instance.
-
-    Then we simply need to run the `.regress()` method.
+    We pass our design matrix to the `.fit()` method with `model='glm'`. This runs the same regression separately on every voxel in the brain and stores the results back on the `BrainData` object as attributes, in the style of a scikit-learn estimator.
     """)
     return
 
 
 @app.cell
 def _(dm_conv_filt_poly_cov, smoothed):
-    smoothed.X = dm_conv_filt_poly_cov
-    stats = smoothed.regress()
-
-    print(stats.keys())
-    return (stats,)
+    smoothed.fit(model='glm', X=dm_conv_filt_poly_cov)
+    return
 
 
 @app.cell(hide_code=True)
@@ -589,25 +573,25 @@ def _(mo):
     mo.md(r"""
     Ok, it's done! Let's take a look at the results.
 
-    The stats variable is a dictionary with the main results from the regression: a brain image with all of the betas for each voxel, a corresponding image of t-values, p-values, standard error of the estimate, and residuals.
+    `.fit()` attached the main results to the object as `BrainData` instances, one image per quantity: `.glm_betas` (a beta image per regressor), plus `.glm_t`, `.glm_p`, `.glm_se`, `.glm_residual`, `.glm_r2`, and the fitted model itself in `.model_`.
 
     Remember we have run the same regression model separately on each voxel of the brain.
 
-    Let's take a look at one of the regressors. The names of each of them are in the column names of the design matrix, which is in the `data.X` field.  We can print them to see the names. Let's plot the first one, which corresponds to `video_computation_c0` or an arithmetic problem presented in the visual domain.
+    Let's take a look at one of the regressors. Each row of `.glm_betas` corresponds to a column of the design matrix, so we can print the design matrix column names to see what we have. Let's plot the first one, which corresponds to `audio_computation_c0`, an arithmetic problem presented in the auditory domain.
     """)
     return
 
 
 @app.cell
-def _(smoothed):
-    print(smoothed.X.columns)
+def _(dm_conv_filt_poly_cov):
+    print(dm_conv_filt_poly_cov.columns)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Brain_Data instances have their own plotting methods. We will be using `.iplot()` here, which can allow us to interactively look at all of the values.
+    BrainData instances have their own plotting methods. We will be using `.iplot()` here, which can allow us to interactively look at all of the values.
 
     If you would like to see the top values, we can quickly apply a threshold. Try using `95`% threshold, and be sure to click the `percentile_threshold` option.
     """)
@@ -615,8 +599,8 @@ def _(mo):
 
 
 @app.cell
-def _(stats):
-    stats['beta'][0].iplot()
+def _(smoothed):
+    smoothed.glm_betas[0].iplot()
     return
 
 
@@ -660,20 +644,28 @@ def _(youtube):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now, let's try making a simple contrast where we average only the regressors pertaining to motor. This is essentially summing all of the motor regressors. To take the mean we need to divide by the number of regressors.
+    Now, let's try making a simple contrast where we average only the regressors pertaining to motor. This is essentially summing all of the motor regressors and dividing by the number of regressors.
+
+    A contrast is a set of weights over the regressors. We express it by *name* using `compute_contrasts`, which accepts a string of regressor names combined with `+`, `-`, and scalar multipliers. Naming the regressors is much safer than indexing them by position: the column order depends on how the events file was read, so positional indices are a classic source of silent errors.
+
+    One thing to be aware of: by default `.fit()` runs `.clean()` on the design before estimating, dropping any column that correlates above `design_clean_thresh` (0.95) with an earlier one. Here that removes `poly_1` and `poly_2`, because our linear and quadratic drift terms are nearly identical to the first two cosine regressors — the DCT basis and the polynomial trends are modeling the same slow drift, so including both is redundant.
+
+    Two caveats worth internalizing. First, this is a *correlation* heuristic, not a rank test: this particular design matrix is full rank (48 of 48 columns), so it was perfectly estimable as specified. Second, `clean()` keeps the first column of a correlated pair and drops the second, so **which** regressor survives depends on the order you built the design in — had we called `.add_poly()` before `.add_dct_basis()`, the cosines would have been dropped instead. If you want full control, pass `design_clean=False` and handle redundancy yourself.
+
+    So the fitted model can have fewer regressors than the design matrix you handed it. You can see what was actually estimated in `smoothed.model_.design_matrices_[0].columns` — another reason to refer to regressors by name rather than by index.
     """)
     return
 
 
 @app.cell
-def _(np, smoothed, stats):
-    print(smoothed.X.columns)
+def _(smoothed):
+    print(f"design matrix regressors: {len(smoothed.model_.design_matrices_[0].columns)}")
 
-    c1 = np.zeros(len(stats['beta']))
-    c1[[2,4,5,6]] = 1/4
-    print(c1)
-
-    motor = stats['beta'] * c1
+    motor = smoothed.compute_contrasts(
+        '0.25*audio_left_hand_c0 + 0.25*audio_right_hand_c0 '
+        '+ 0.25*video_left_hand_c0 + 0.25*video_right_hand_c0',
+        statistic='beta',
+    )
 
     motor.iplot()
     return
@@ -685,16 +677,19 @@ def _(mo):
     Ok, now we can clearly see regions specifically involved in motor processing.
 
     Now let's see which regions are more active when making motor movements with our right hand compared to our left hand.
+
+    The contrast reads directly as the hypothesis: right-hand regressors minus left-hand regressors.
     """)
     return
 
 
 @app.cell
-def _(np, stats):
-    c_rvl = np.zeros(len(stats['beta']))
-    c_rvl[[2,4,5,6]] = [.5, .5, -.5, -.5]
-
-    motor_rvl = stats['beta'] * c_rvl
+def _(smoothed):
+    motor_rvl = smoothed.compute_contrasts(
+        'audio_right_hand_c0 + video_right_hand_c0 '
+        '- audio_left_hand_c0 - video_left_hand_c0',
+        statistic='beta',
+    )
 
     motor_rvl.iplot()
     return

@@ -61,17 +61,17 @@ def _():
     from numpy.fft import fft, fftfreq
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
-    from nltools.data import Brain_Data
+    from nltools.data import BrainData
     from nilearn.plotting import view_img
     from dartbrains_tools.data import localizer
 
-    return Brain_Data, fft, fftfreq, go, localizer, make_subplots, np, view_img
+    return BrainData, fft, fftfreq, go, localizer, make_subplots, np, view_img
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     sub = 'S01'
-    data = Brain_Data(localizer.get_file(sub, 'derivatives', 'bold'))
+    data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
     return (data,)
 
 
@@ -103,7 +103,7 @@ def _(mo):
 
     ICA attempts to perform blind source separation by decomposing a multivariate signal into additive subcomponents that are maximally independent.
 
-    We will be using the `decompose()` method on our `Brain_Data` instance. This runs the [FastICA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html) algorithm implemented by scikit-learn. You can choose whether you want to run spatial ICA by setting `axis='voxels` or temporal ICA by setting `axis='images'`. We also recommend running the whitening flat `whiten=True`. By default `decompose` will estimate the maximum components that are possible given the data. We recommend using a completely arbitrary heuristic of 20-30 components.
+    We will be using the `decompose()` method on our `BrainData` instance. This runs the [FastICA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.FastICA.html) algorithm implemented by scikit-learn. You can choose whether you want to run spatial ICA by setting `axis='voxels` or temporal ICA by setting `axis='images'`. We also recommend running the whitening flat `whiten=True`. By default `decompose` will estimate the maximum components that are possible given the data. We recommend using a completely arbitrary heuristic of 20-30 components.
     """)
     return
 
@@ -115,7 +115,7 @@ def _(data_1, mo):
         # range stays small and ICA convergence in Pyodide is faster.
         # Cranking back to 20-30 is one number-edit away if the reader
         # wants more granularity.
-        output = data_1.decompose(algorithm='ica', n_components=10, axis='images', whiten='unit-variance')
+        output = data_1.decompose(method='ica', n_components=10, axis='images', whiten='unit-variance')
     return (output,)
 
 

@@ -24,15 +24,29 @@ dependencies = [
     # 0.23.6 ships marimo-team/marimo#9409 so MarimoIslandGenerator.from_file
     # propagates the notebook filename — lets notebooks resolve the repo root
     # via Path(__file__).resolve().parent.parent instead of a cwd/book.yml walk.
-    "marimo>=0.23.6",
+    # 0.24 moved the exporter to marimo._export and ships the islands micropip
+    # payload marimo-book >= 0.1.31 relies on. Tracks the newest release.
+    "marimo>=0.24.2",
     "matplotlib>=3.10.8",
     "nbformat",
     "nibabel>=5.4.2",
-    "nilearn<0.13",  # 0.13 tightened ZSlicer._sanitize_cut_coords to reject `range`,
-                     # which breaks every nltools.Brain_Data.plot() call (it passes
-                     # cut_coords=range(...) by default). Re-evaluate when nltools
-                     # upstream coerces to list() before forwarding.
-    "nltools",
+    # nilearn 0.13 tightened ZSlicer._sanitize_cut_coords to reject `range`, which
+    # used to break every nltools plot() call. nltools 0.6 coerces range → list
+    # before forwarding (nltools/data/braindata/plotting.py), so the <0.13 cap is
+    # lifted. nltools 0.6 itself requires nilearn >= 0.12.
+    "nilearn>=0.12",
+    # Version stays unconstrained: master still self-reports 0.5.1 (the bump
+    # happens at release time), so the [tool.uv.sources] git pin below is what
+    # actually selects the 0.6 API. Switch to "nltools>=0.6.0" once it's on PyPI.
+    #
+    # The extras are NOT optional for this course:
+    #   h5    — hdf5plugin for reading compressed HDF5 fit bundles. h5py itself
+    #           became a core nltools dependency (cosanlab/nltools#469) because
+    #           BrainCollection.fit() always writes HDF5.
+    #   graph — Adjacency.to_graph() in the Connectivity chapter.
+    # (interactive_plots / ipywidgets is no longer needed: since nltools
+    # b3603484 iplot() is a self-contained anywidget with its own slider.)
+    "nltools[h5,graph]",
     "numpy>=2.4.3",
     "pandas",
     "plotly>=6.6.0",
@@ -41,7 +55,6 @@ dependencies = [
     "seaborn",
     "networkx",
     "polars>=1.39.3",
-    "ipyniivue>=2.4.4",
 ]
 
 [project.optional-dependencies]
@@ -64,8 +77,19 @@ build = [
     # citations, and a strict cell-error gate that fails the build when a
     # cell raises instead of publishing the traceback. 0.1.28 hoists the
     # notebook title on WASM pages so MkDocs doesn't render it twice.
-    "marimo-book>=0.1.30",
+    # 0.1.31 supports marimo 0.24 (PyPI 0.1.30 capped it <0.24). 0.1.32 bakes
+    # every anywidget's recorded model state — traits, binary buffers, CSS —
+    # into static pages, so BrainData.iplot() (and any other anywidget)
+    # renders interactively without a kernel instead of an empty mount.
+    # 0.1.33 stops precompute from treating every anywidget cell as reactive
+    # and de-duplicates gzip buffers by payload, which is what keeps the
+    # Connectivity slider grid's viewer volumes down to one per component;
+    # 0.1.34 finishes that by masking ipywidgets' IPY_MODEL_ references.
+    "marimo-book>=0.1.34",
 ]
 
 [tool.uv.sources]
-nltools = { git = "https://github.com/cosanlab/nltools", rev = "uv-refactor" }
+# The old `uv-refactor` branch was merged and deleted; 0.6.0 (the breaking
+# rewrite: BrainData/DesignMatrix, .fit()/.predict(), spatial_scale=) lives on
+# master and is not on PyPI yet. Repoint to PyPI once 0.6.0 is released.
+nltools = { git = "https://github.com/cosanlab/nltools", rev = "master" }

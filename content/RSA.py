@@ -116,7 +116,7 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _():
+def _(fetch_resource):
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
@@ -124,22 +124,24 @@ def _():
     import pandas as pd
     import matplotlib.pyplot as plt
     import seaborn as sns
-    from nltools.data import Brain_Data, Adjacency
+    from nltools.data import BrainData, Adjacency
+    from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
-    from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation
+    from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation_test
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map, view_img_on_surf, view_img
     from dartbrains_tools.data import localizer
 
     return (
         Adjacency,
-        Brain_Data,
+        BrainData,
         expand_mask,
         fdr,
+        fetch_resource,
         fisher_r_to_z,
         localizer,
         np,
-        one_sample_permutation,
+        one_sample_permutation_test,
         pd,
         plot_glass_brain,
         plot_stat_map,
@@ -156,23 +158,23 @@ def _(mo):
     ### Single Subject Pattern Similarity
     Recall that in the Single Subject Model Lab that we ran single subject models for 10 different regressors for the Pinel Localizer task.  In this tutorial, we will use our results to learn how to conduct RSA style analyses.
 
-    First, let's get a list of all of the subject IDs and load the beta values from each condition for a single subject into a `Brain_Data` object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this [code](Group_Analysis.md) for reference from the group analysis tutorial.
+    First, let's get a list of all of the subject IDs and load the beta values from each condition for a single subject into a `BrainData` object. We will be using the output of running a 1st-level model for each participant where we saved a separate file for each task condition. See this [code](Group_Analysis.md) for reference from the group analysis tutorial.
     """)
     return
 
 
 @app.cell
-def _(Brain_Data, localizer):
+def _(BrainData, localizer):
     _sub = 'S01'
     _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
     conditions = localizer.CONDITIONS
-    # nltools 0.5.1 quirk: Brain_Data(list-of-paths) flattens into 1D
+    # nltools 0.5.1 quirk: BrainData(list-of-paths) flattens into 1D
     # (e.g. (10*238955,) instead of (10, 238955)), which breaks every
     # downstream apply_mask / distance call. Wrap each path in
-    # Brain_Data() first so the outer constructor sees a list of
-    # Brain_Data objects and stacks them properly. Same pattern used
+    # BrainData() first so the outer constructor sees a list of
+    # BrainData objects and stacks them properly. Same pattern used
     # in Group_Analysis.py and Thresholding_Group_Analyses.py.
-    beta = Brain_Data([Brain_Data(f) for f in _file_list])
+    beta = BrainData([f for f in _file_list])
     return beta, conditions
 
 
@@ -187,12 +189,12 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, expand_mask):
-    mask = Brain_Data('https://neurovault.org/media/images/8423/k50_2mm.nii.gz')
+def _(BrainData, expand_mask, fetch_resource):
+    mask = BrainData(fetch_resource('masks/k50_2mm.nii.gz'))
     mask_x = expand_mask(mask)
 
     mask.plot()
-    return (mask_x,)
+    return mask, mask_x
 
 
 @app.cell(hide_code=True)
@@ -366,6 +368,51 @@ def _(mask_x, motor_sim_r, np, plot_stat_map, roi_to_brain):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ### The same analysis in two lines
+
+    It is worth having written that out step by step, because every stage is a real
+    conceptual step: mask each ROI, compute a distance matrix, convert to
+    similarity, correlate against the model, paint the result back onto the brain.
+
+    But it is also a lot of bookkeeping for what is conceptually one analysis, and
+    nltools can do the whole thing directly. `distance()` takes a `spatial_scale`
+    argument: `'whole_brain'` (the default) gives you one matrix for the entire
+    brain, while `'roi'` gives you one matrix *per parcel* of the atlas you pass as
+    `roi_mask`. The result is a stack of RDMs that remembers which parcel each one
+    came from — so `similarity(..., project=True)` can paint the per-parcel scores
+    straight back into a voxel-space `BrainData`.
+    """)
+    return
+
+
+@app.cell
+def _(beta, mask, motor, np, plot_stat_map):
+    _rdms = beta.distance(metric='correlation', spatial_scale='roi', roi_mask=mask)
+    rsa_motor_oneliner = (1 - _rdms).similarity(
+        motor, metric='spearman', method=None, project=True
+    )
+
+    plot_stat_map(rsa_motor_oneliner.to_nifti(), draw_cross=False, display_mode='z',
+                  black_bg=True, cut_coords=np.arange(-30, 70, 15))
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Same map, two lines. `spatial_scale` is worth remembering because it shows up
+    across nltools: `.distance()`, `.predict()`, `.align()`, and `.mean()` all take
+    it, and it always means the same thing — at what spatial scale should this
+    analysis be run? The Spatial Feature Selection tutorial worked through that
+    question for decoding accuracy; here we are asking it of representational
+    geometry instead.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     Notice how left motor cortex is among the ROIs with the highest similarity value?  Unfortunately, we can only plot the similarity values and can't threshold them yet because we didn't calculate any p-values.
 
     We could calculate p-values using a permutation test, but this would require us to repeatedly recalculate the similarity between the two matrices and would take a long time (i.e., 5,000 correlations X 50 ROIS). Plus, the inference we want to make isn't really at the single-subject level, but across participants.
@@ -385,7 +432,7 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, localizer, mask_x, motor, pd):
+def _(BrainData, localizer, mask_x, motor, pd):
     sub_list = localizer.get_subjects()
     all_sub_similarity = {}
     all_sub_motor_rsa = {}
@@ -393,8 +440,8 @@ def _(Brain_Data, localizer, mask_x, motor, pd):
         _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
         conditions_1 = localizer.CONDITIONS
         # See note on the single-subject cell above — wrap each path in
-        # Brain_Data() so the outer constructor stacks instead of flattening.
-        beta_1 = Brain_Data([Brain_Data(f) for f in _file_list])
+        # BrainData() so the outer constructor stacks instead of flattening.
+        beta_1 = BrainData([f for f in _file_list])
         sub_pattern = []
         motor_sim_r_1 = []
         for _m in mask_x:
@@ -418,10 +465,10 @@ def _(mo):
 
 
 @app.cell
-def _(all_sub_motor_rsa, fisher_r_to_z, one_sample_permutation):
+def _(all_sub_motor_rsa, fisher_r_to_z, one_sample_permutation_test):
     rsa_stats = []
     for i in all_sub_motor_rsa:
-        rsa_stats.append(one_sample_permutation(fisher_r_to_z(all_sub_motor_rsa[i])))
+        rsa_stats.append(one_sample_permutation_test(fisher_r_to_z(all_sub_motor_rsa[i])))
     return (rsa_stats,)
 
 
@@ -434,12 +481,12 @@ def _(mo):
 
 
 @app.cell
-def _(Brain_Data, fdr, mask_x, np, plot_glass_brain, rsa_stats, threshold):
+def _(BrainData, fdr, mask_x, np, plot_glass_brain, rsa_stats, threshold):
     fdr_p = fdr(np.array([x['p'] for x in rsa_stats]), q=0.05)
     print(fdr_p)
 
-    rsa_motor_r = Brain_Data([x*y['mean'] for x,y in zip(mask_x, rsa_stats)]).sum()
-    rsa_motor_p = Brain_Data([x*y['p'] for x,y in zip(mask_x, rsa_stats)]).sum()
+    rsa_motor_r = BrainData([x*y['mean'] for x,y in zip(mask_x, rsa_stats)]).sum()
+    rsa_motor_p = BrainData([x*y['p'] for x,y in zip(mask_x, rsa_stats)]).sum()
 
     thresholded = threshold(rsa_motor_r, rsa_motor_p, thr=fdr_p)
 
