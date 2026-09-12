@@ -88,7 +88,9 @@ build = [
     # 0.1.35 compresses every inline figure to WebP, downscales oversized
     # renders, de-duplicates and serves them as lazy-loaded files — the
     # heaviest chapters shrink from tens of MB of inline PNG to a few hundred KB.
-    "marimo-book>=0.1.35",
+    # 0.1.36 keeps images inside nilearn view_img iframes at full resolution
+    # (brainsprite slices its sprite by pixel geometry; 0.1.35 garbled them).
+    "marimo-book>=0.1.36",
 ]
 
 [tool.uv.sources]

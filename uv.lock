@@ -573,7 +573,7 @@ provides-extras = ["build"]
 
 [package.metadata.requires-dev]
 build = [
-    { name = "marimo-book", specifier = ">=0.1.35" },
+    { name = "marimo-book", specifier = ">=0.1.36" },
     { name = "marimo-grader-client", specifier = ">=0.1.0" },
     { name = "mograder", specifier = ">=0.3" },
 ]
@@ -1479,7 +1479,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.35"
+version = "0.1.36"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1499,9 +1499,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c5/d5/c78d6512e0dbd0ff413b2092647bbfcd7ca90011c09daa8b506f52700afe/marimo_book-0.1.35.tar.gz", hash = "sha256:4523c71f1d4f3b26c1e83752cfd5ab9c5594068c2630225366dda79011a01b2a", size = 366604, upload-time = "2026-09-12T16:12:17.938Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e4/82/f3831145487873b921f55d04771675d7ee9090c29027dc18f9d855ec9bb4/marimo_book-0.1.36.tar.gz", hash = "sha256:a53b313cb875649b2f9c3f9abe692235e9ff4b9d14b2eea2f8ba3a23d2efc988", size = 367434, upload-time = "2026-09-12T20:58:07.511Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7b/cd/a394433861d6cf2d64f47f0cd22b36bc73ba707f0a4ffcbe092027a08adc/marimo_book-0.1.35-py3-none-any.whl", hash = "sha256:942df6781ee66b850902eb2af2bacb215b7ca05b1310abfa6efd945f87781ef4", size = 174425, upload-time = "2026-09-12T16:12:16.508Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/b6/eeaa7c71dea70ec36074e5dbf15c49fa75a74ce503432bb30e9cc9a11acf/marimo_book-0.1.36-py3-none-any.whl", hash = "sha256:e2d3da174d6c1c581ba6fe9fc74ca856a628c40107510bbc240eb9bca45816c4", size = 174708, upload-time = "2026-09-12T20:58:06.044Z" },
 ]
 
 [[package]]
