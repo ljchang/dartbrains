@@ -75,7 +75,10 @@ build = [
     # every anywidget's recorded model state — traits, binary buffers, CSS —
     # into static pages, so BrainData.iplot() (and any other anywidget)
     # renders interactively without a kernel instead of an empty mount.
-    "marimo-book>=0.1.32",
+    # 0.1.33 stops precompute from treating every anywidget cell as reactive
+    # and de-duplicates gzip buffers by payload, which is what keeps the
+    # Connectivity slider grid's viewer volumes down to one per component.
+    "marimo-book>=0.1.33",
 ]
 
 [tool.uv.sources]
