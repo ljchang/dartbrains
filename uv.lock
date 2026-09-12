@@ -573,7 +573,7 @@ provides-extras = ["build"]
 
 [package.metadata.requires-dev]
 build = [
-    { name = "marimo-book", specifier = ">=0.1.34" },
+    { name = "marimo-book", specifier = ">=0.1.35" },
     { name = "marimo-grader-client", specifier = ">=0.1.0" },
     { name = "mograder", specifier = ">=0.3" },
 ]
@@ -1479,7 +1479,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.34"
+version = "0.1.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1490,6 +1490,7 @@ dependencies = [
     { name = "mkdocs-autorefs" },
     { name = "mkdocs-material" },
     { name = "nbformat" },
+    { name = "pillow" },
     { name = "pybtex" },
     { name = "pydantic" },
     { name = "pymdown-extensions" },
@@ -1498,9 +1499,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/23/90/24ed7c7dec2d7630c6675b193902d0de719730c5b96cd6b104d06c7e8c82/marimo_book-0.1.34.tar.gz", hash = "sha256:04872e1960f285d37f4e5433f5568f2a11238df1e39f833c344d48f4d170649e", size = 355480, upload-time = "2026-09-12T03:46:34.193Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c5/d5/c78d6512e0dbd0ff413b2092647bbfcd7ca90011c09daa8b506f52700afe/marimo_book-0.1.35.tar.gz", hash = "sha256:4523c71f1d4f3b26c1e83752cfd5ab9c5594068c2630225366dda79011a01b2a", size = 366604, upload-time = "2026-09-12T16:12:17.938Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/4c/ed67cc084768cd8197ab4acae0ef66f6faa26effaa811ad4427f3ccee550/marimo_book-0.1.34-py3-none-any.whl", hash = "sha256:b6b725f4791c666883eca738770fdb0a65f91413f8903e46999c4e0cc4ba04f2", size = 167652, upload-time = "2026-09-12T03:46:32.695Z" },
+    { url = "https://files.pythonhosted.org/packages/7b/cd/a394433861d6cf2d64f47f0cd22b36bc73ba707f0a4ffcbe092027a08adc/marimo_book-0.1.35-py3-none-any.whl", hash = "sha256:942df6781ee66b850902eb2af2bacb215b7ca05b1310abfa6efd945f87781ef4", size = 174425, upload-time = "2026-09-12T16:12:16.508Z" },
 ]
 
 [[package]]
