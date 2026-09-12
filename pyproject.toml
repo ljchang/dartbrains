@@ -85,7 +85,10 @@ build = [
     # and de-duplicates gzip buffers by payload, which is what keeps the
     # Connectivity slider grid's viewer volumes down to one per component;
     # 0.1.34 finishes that by masking ipywidgets' IPY_MODEL_ references.
-    "marimo-book>=0.1.34",
+    # 0.1.35 compresses every inline figure to WebP, downscales oversized
+    # renders, de-duplicates and serves them as lazy-loaded files — the
+    # heaviest chapters shrink from tens of MB of inline PNG to a few hundred KB.
+    "marimo-book>=0.1.35",
 ]
 
 [tool.uv.sources]
