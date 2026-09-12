@@ -71,12 +71,11 @@ build = [
     # citations, and a strict cell-error gate that fails the build when a
     # cell raises instead of publishing the traceback. 0.1.28 hoists the
     # notebook title on WASM pages so MkDocs doesn't render it twice.
-    # PyPI 0.1.30 caps marimo <0.24; the git source below (ljchang/marimo-book
-    # #88, on top of main) widens it to <0.25 and bakes anywidget model state
-    # into static pages so BrainData.iplot() and every other anywidget render
-    # interactively without a kernel. Repoint to "marimo-book>=0.1.31" once
-    # that release is on PyPI.
-    "marimo-book>=0.1.30",
+    # 0.1.31 supports marimo 0.24 (PyPI 0.1.30 capped it <0.24). 0.1.32 bakes
+    # every anywidget's recorded model state — traits, binary buffers, CSS —
+    # into static pages, so BrainData.iplot() (and any other anywidget)
+    # renders interactively without a kernel instead of an empty mount.
+    "marimo-book>=0.1.32",
 ]
 
 [tool.uv.sources]
@@ -84,6 +83,3 @@ build = [
 # rewrite: BrainData/DesignMatrix, .fit()/.predict(), spatial_scale=) lives on
 # master and is not on PyPI yet. Repoint to PyPI once 0.6.0 is released.
 nltools = { git = "https://github.com/cosanlab/nltools", rev = "master" }
-# See the build group comment: anywidget state baking + marimo 0.24 support
-# are not on PyPI yet. Drop this once marimo-book 0.1.31 is released.
-marimo-book = { git = "https://github.com/ljchang/marimo-book", rev = "feat/anywidget-state-baking" }

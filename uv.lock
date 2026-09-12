@@ -548,7 +548,7 @@ requires-dist = [
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
     { name = "marimo", specifier = ">=0.24.2" },
-    { name = "marimo-book", marker = "extra == 'build'", git = "https://github.com/ljchang/marimo-book?rev=feat%2Fanywidget-state-baking" },
+    { name = "marimo-book", marker = "extra == 'build'" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "nbformat" },
     { name = "networkx" },
@@ -566,7 +566,7 @@ requires-dist = [
 provides-extras = ["build"]
 
 [package.metadata.requires-dev]
-build = [{ name = "marimo-book", git = "https://github.com/ljchang/marimo-book?rev=feat%2Fanywidget-state-baking" }]
+build = [{ name = "marimo-book", specifier = ">=0.1.32" }]
 
 [[package]]
 name = "dartbrains-tools"
@@ -1469,8 +1469,8 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.31.post1.dev1+g2e5d2a235"
-source = { git = "https://github.com/ljchang/marimo-book?rev=feat%2Fanywidget-state-baking#2e5d2a235ca63655edcbbe66a3870376953a777b" }
+version = "0.1.32"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "lxml" },
@@ -1487,6 +1487,10 @@ dependencies = [
     { name = "tomlkit" },
     { name = "typer" },
     { name = "watchdog" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/45/83/9b2e60a4204b3a1a909f701e47e9e3eca6aa49f596d412a6895f979b8fdf/marimo_book-0.1.32.tar.gz", hash = "sha256:6a7a28277ba07ecc9d1bdfd5cfb0952aea44334f757e1fb69f2a636f0aaf6dce", size = 353490, upload-time = "2026-09-12T01:12:45.08Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7d/37/ff5352a4acc61533bf8652ed386d7d39d3ae8679f087d056c56c8cc199c9/marimo_book-0.1.32-py3-none-any.whl", hash = "sha256:5f0df05e11a530add04fa9a4aaf7127dd1a693efc6b1a0b2ff8f6a95e5d484ef", size = 166883, upload-time = "2026-09-12T01:12:43.592Z" },
 ]
 
 [[package]]
