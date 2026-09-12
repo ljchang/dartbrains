@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.23.16"
 app = marimo.App()
 
 
@@ -42,13 +42,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
     ## Building a Design Matrix
 
     First, we will learn the basics of how to build a design matrix for our GLM.
@@ -60,8 +53,6 @@ def _(mo):
 
 @app.cell
 def _():
-    # '%matplotlib inline' command supported automatically in marimo
-
     import os
     import glob
     import numpy as np
@@ -76,7 +67,6 @@ def _():
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
-
     return (
         BrainData,
         DesignMatrix,
@@ -86,7 +76,6 @@ def _():
         pd,
         pl,
         plt,
-        sns,
         youtube,
         zscore,
     )
@@ -127,12 +116,6 @@ def _(mo):
     return
 
 
-@app.cell
-def _(dm):
-    dm
-    return
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -156,9 +139,8 @@ def _(mo):
 
 
 @app.cell
-def _(dm, plt):
-    _f, _a = plt.subplots(figsize=(20, 3))
-    dm.plot(method='timeseries', ax=_a)
+def _(dm):
+    dm.plot(method='timeseries')
     return
 
 
@@ -173,9 +155,8 @@ def _(mo):
 
 
 @app.cell
-def _(dm, plt):
+def _(dm):
     dm.plot()
-    plt.gcf()
     return
 
 
@@ -189,10 +170,9 @@ def _(mo):
 
 
 @app.cell
-def _(dm, plt):
+def _(dm):
     dm_conv = dm.convolve()
     dm_conv.plot()
-    plt.gcf()
     return (dm_conv,)
 
 
@@ -207,9 +187,8 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv, plt):
-    _f, _a = plt.subplots(figsize=(15, 3))
-    dm_conv.plot(method='timeseries', columns=['horizontal_checkerboard_c0'], ax=_a)
+def _(dm_conv):
+    dm_conv.plot(method='timeseries', columns=['horizontal_checkerboard_c0'])
     return
 
 
@@ -222,12 +201,10 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv, plt):
-    _f, _a = plt.subplots(figsize=(15, 3))
+def _(dm_conv):
     dm_conv.plot(
         method='timeseries',
-        columns=['horizontal_checkerboard_c0', 'vertical_checkerboard_c0'],
-        ax=_a,
+        columns=['horizontal_checkerboard_c0', 'vertical_checkerboard_c0']
     )
     return
 
@@ -248,9 +225,8 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(dm_conv, plt):
+def _(dm_conv):
     dm_conv.plot(method='corr')
-    plt.gcf()
     return
 
 
@@ -341,17 +317,15 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt, plt):
-    _f, _a = plt.subplots(figsize=(20, 3))
-    dm_conv_filt.plot(method='timeseries', columns=dm_conv_filt.confounds, ax=_a)
+def _(dm_conv_filt):
+    dm_conv_filt.plot(method='timeseries', columns=dm_conv_filt.confounds)
     return
 
 
 @app.cell
-def _(dm_conv, plt):
+def _(dm_conv):
     dm_conv_filt_1 = dm_conv.add_dct_basis(duration=128, include_constant=False)
     dm_conv_filt_1.plot()
-    plt.gcf()
     return (dm_conv_filt_1,)
 
 
@@ -367,10 +341,10 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1, plt):
+def _(dm_conv_filt_1):
     dm_conv_filt_poly = dm_conv_filt_1.add_poly()
     dm_conv_filt_poly.plot()
-    plt.gcf()
+
     return
 
 
@@ -386,10 +360,9 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1, plt):
+def _(dm_conv_filt_1):
     dm_conv_filt_poly_1 = dm_conv_filt_1.add_poly(order=2, include_lower=True)
     dm_conv_filt_poly_1.plot()
-    plt.gcf()
     return (dm_conv_filt_poly_1,)
 
 
@@ -443,7 +416,7 @@ def _(mo):
 
 
 @app.cell
-def _(DesignMatrix, localizer, mc, pl, plt, zscore):
+def _(DesignMatrix, localizer, mc, pl, zscore):
     def make_motion_covariates(mc, tr):
         # nltools' zscore accepts pandas but always returns Polars, so we build
         # the expansion with Polars expressions. Each expression is evaluated
@@ -462,7 +435,6 @@ def _(DesignMatrix, localizer, mc, pl, plt, zscore):
     mc_cov = make_motion_covariates(mc, tr)
 
     mc_cov.plot()
-    plt.gcf()
     return mc_cov, tr
 
 
@@ -496,13 +468,12 @@ def _(mo):
 
 
 @app.cell
-def _(data, plt, tr):
+def _(data, tr):
     # find_spikes returns a DesignMatrix with one indicator column per spike,
     # already marked as confounds. Passing TR sets its sampling frequency so it
     # can be appended to the main design matrix below.
     spikes = data.find_spikes(global_spike_cutoff=2, diff_spike_cutoff=2.5, TR=tr)
-    _f, _a = plt.subplots(figsize=(15, 3))
-    spikes.plot(method='timeseries', ax=_a)
+    spikes.plot(method='timeseries')
     return (spikes,)
 
 
@@ -519,10 +490,9 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_poly_1, mc_cov, plt, spikes):
+def _(dm_conv_filt_poly_1, mc_cov, spikes):
     dm_conv_filt_poly_cov = dm_conv_filt_poly_1.append([mc_cov, spikes], axis=1)
     dm_conv_filt_poly_cov.plot()
-    plt.gcf()
     return (dm_conv_filt_poly_cov,)
 
 
@@ -698,7 +668,7 @@ def _(smoothed):
     )
 
     motor.iplot()
-    return (motor,)
+    return
 
 
 @app.cell(hide_code=True)

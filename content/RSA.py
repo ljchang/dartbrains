@@ -403,8 +403,9 @@ def _(mo):
     Same map, two lines. `spatial_scale` is worth remembering because it shows up
     across nltools: `.distance()`, `.predict()`, `.align()`, and `.mean()` all take
     it, and it always means the same thing — at what spatial scale should this
-    analysis be run? We will come back to that idea in more depth when we look at
-    spatial feature selection.
+    analysis be run? The Spatial Feature Selection tutorial worked through that
+    question for decoding accuracy; here we are asking it of representational
+    geometry instead.
     """)
     return
 
