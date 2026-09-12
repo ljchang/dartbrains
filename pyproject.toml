@@ -77,8 +77,9 @@ build = [
     # renders interactively without a kernel instead of an empty mount.
     # 0.1.33 stops precompute from treating every anywidget cell as reactive
     # and de-duplicates gzip buffers by payload, which is what keeps the
-    # Connectivity slider grid's viewer volumes down to one per component.
-    "marimo-book>=0.1.33",
+    # Connectivity slider grid's viewer volumes down to one per component;
+    # 0.1.34 finishes that by masking ipywidgets' IPY_MODEL_ references.
+    "marimo-book>=0.1.34",
 ]
 
 [tool.uv.sources]
