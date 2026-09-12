@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -84,7 +84,7 @@ def _(mo):
 
 
 @app.cell
-def _(fetch_resource):
+def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import glob
@@ -167,7 +167,7 @@ def _(BrainData, localizer, mo):
 
     with mo.persistent_cache(name="connectivity_smoothed"):
         smoothed = data.smooth(fwhm=_fwhm)
-    return data, smoothed, sub
+    return smoothed, sub
 
 
 @app.cell(hide_code=True)
@@ -425,7 +425,7 @@ def _(mo):
 
 
 @app.cell
-def _(dm_1, np, smoothed):
+def _(dm_1, smoothed):
     smoothed.fit(model='glm', X=dm_1)
     # Ask for the interaction term by name rather than hunting for its column
     # index -- this is the regressor the whole PPI analysis is about.
@@ -578,7 +578,6 @@ def _(IMG_DIR, mo):
 @app.cell
 def _(
     BrainData,
-    DesignMatrix,
     get_csf_mask_path,
     localizer,
     make_motion_covariates,
@@ -625,7 +624,12 @@ def _(mo):
 def _(smoothed_denoised):
     n_components = 10
 
-    pca_stats_output = smoothed_denoised.decompose(method='pca', axis='images', n_components=n_components)
+    # random_state pins sklearn's randomized SVD so the component maps are
+    # byte-identical across runs (the static build re-executes this notebook
+    # once per slider value and de-duplicates identical volumes by content).
+    pca_stats_output = smoothed_denoised.decompose(
+        method='pca', axis='images', n_components=n_components, random_state=0
+    )
     return (pca_stats_output,)
 
 
@@ -644,7 +648,7 @@ def _(mo, pca_stats_output):
         label='Component', show_value=True, full_width=True,
     )
     threshold_slider = mo.ui.slider(
-        start=0.0, stop=4.0, value=2.0, step=0.1,
+        start=0.0, stop=4.0, value=2.0, step=0.5,
         label='Threshold (z)', show_value=True, full_width=True,
     )
     mo.hstack([component_slider, threshold_slider], justify='start')

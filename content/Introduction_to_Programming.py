@@ -8,7 +8,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -23,9 +23,10 @@ def _():
 
 @app.cell(hide_code=True)
 def _():
+    import shutil
     import subprocess
 
-    return (subprocess,)
+    return shutil, subprocess
 
 
 @app.cell(hide_code=True)
@@ -180,9 +181,16 @@ def _():
 
 
 @app.cell
-def _(subprocess):
-    #! pip list --outdated
-    subprocess.call(['pip', 'list', '--outdated'])
+def _(shutil, subprocess):
+    # List installed packages with a newer release available. In a uv-managed
+    # environment `uv pip` is the fast path (plain `pip` may not even be
+    # installed there); fall back to pip elsewhere.
+    if shutil.which('uv'):
+        subprocess.call(['uv', 'pip', 'list', '--outdated'])
+    elif shutil.which('pip'):
+        subprocess.call(['pip', 'list', '--outdated'])
+    else:
+        print('Neither uv nor pip is on PATH in this environment.')
     return
 
 
