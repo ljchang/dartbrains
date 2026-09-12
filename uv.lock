@@ -533,11 +533,15 @@ dependencies = [
 [package.optional-dependencies]
 build = [
     { name = "marimo-book" },
+    { name = "marimo-grader-client" },
+    { name = "mograder" },
 ]
 
 [package.dev-dependencies]
 build = [
     { name = "marimo-book" },
+    { name = "marimo-grader-client" },
+    { name = "mograder" },
 ]
 
 [package.metadata]
@@ -549,7 +553,9 @@ requires-dist = [
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
     { name = "marimo", specifier = ">=0.24.2" },
     { name = "marimo-book", marker = "extra == 'build'" },
+    { name = "marimo-grader-client", marker = "extra == 'build'", specifier = ">=0.1.0" },
     { name = "matplotlib", specifier = ">=3.10.8" },
+    { name = "mograder", marker = "extra == 'build'", specifier = ">=0.3" },
     { name = "nbformat" },
     { name = "networkx" },
     { name = "nibabel", specifier = ">=5.4.2" },
@@ -566,7 +572,11 @@ requires-dist = [
 provides-extras = ["build"]
 
 [package.metadata.requires-dev]
-build = [{ name = "marimo-book", specifier = ">=0.1.34" }]
+build = [
+    { name = "marimo-book", specifier = ">=0.1.34" },
+    { name = "marimo-grader-client", specifier = ">=0.1.0" },
+    { name = "mograder", specifier = ">=0.3" },
+]
 
 [[package]]
 name = "dartbrains-tools"
@@ -1494,6 +1504,19 @@ wheels = [
 ]
 
 [[package]]
+name = "marimo-grader-client"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anywidget" },
+    { name = "traitlets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e5/42/4046d4fab5f4ec396b864a2f301fd7ce9e5b044ff60e61b1f4edc14cab0f/marimo_grader_client-0.1.0.tar.gz", hash = "sha256:6536a53a6be6862951050f76f1c47acae5d9cb92554d8368015cccac8a09e50e", size = 97011, upload-time = "2026-09-11T16:12:18.223Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/9b/8d1113d8b2e7c0171e90f8803e962edfbb86ccb79113931782496fec02f7/marimo_grader_client-0.1.0-py3-none-any.whl", hash = "sha256:209103104395142a4c4c117894319473d47bc14d4ebc43c3761cb3d841b3cff8", size = 17504, upload-time = "2026-09-11T16:12:16.84Z" },
+]
+
+[[package]]
 name = "markdown"
 version = "3.10.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1724,6 +1747,22 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/79/9b/9b4c96d6593b2a541e1cb8b34899a6d021d208bb357042823d4d2cabdbe7/mkdocs_material_extensions-1.3.1.tar.gz", hash = "sha256:10c9511cea88f568257f960358a467d12b970e1f7b2c0e5fb2bb48cab1928443", size = 11847, upload-time = "2023-11-22T19:09:45.208Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5b/54/662a4743aa81d9582ee9339d4ffa3c8fd40a4965e033d77b9da9774d3960/mkdocs_material_extensions-1.3.1-py3-none-any.whl", hash = "sha256:adff8b62700b25cb77b53358dad940f3ef973dd6db797907c49e3c2ef3ab4e31", size = 8728, upload-time = "2023-11-22T19:09:43.465Z" },
+]
+
+[[package]]
+name = "mograder"
+version = "0.3.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "httpx" },
+    { name = "marimo" },
+    { name = "requests" },
+    { name = "websockets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8e/0a/99217d57d3a43714250f036b6c9a09217115e6223907e7b9281d3de12506/mograder-0.3.3.tar.gz", hash = "sha256:ee77c9d451000800b709aed8bae7d3c3725b3e5388cc17983d653a34c3814942", size = 2271296, upload-time = "2026-08-26T17:32:43.001Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/17/86/051078a99ac0fa8ec7d2329a7b30f7651a47a815f92538d3a64f6e247085/mograder-0.3.3-py3-none-any.whl", hash = "sha256:7d6807737f0b09db93990835310144f1540c6aa0793ae17bbc025fb8031982f7", size = 194095, upload-time = "2026-08-26T17:32:41.268Z" },
 ]
 
 [[package]]

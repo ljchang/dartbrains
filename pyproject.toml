@@ -59,11 +59,17 @@ dependencies = [
 
 [project.optional-dependencies]
 build = [
+    # Assignment pages import marimo_grader_client (the student widget).
+    "marimo-grader-client>=0.1.0",
+    "mograder>=0.3",
     "marimo-book",
 ]
 
 [dependency-groups]
 build = [
+    # Assignment pages import marimo_grader_client (the student widget).
+    "marimo-grader-client>=0.1.0",
+    "mograder>=0.3",
     # 0.1.18 stages PEP 723 copies as sibling files so __file__-relative
     # root detection works on WASM pages (marimo-book #46). 0.1.27 adds a
     # body-level build cache (TOC/launch-button edits no longer re-execute

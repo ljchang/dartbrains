@@ -10,7 +10,7 @@ copyright: >-
   Supported in part by NSF CAREER #1848370 and NIMH R01MH116026.
 license: CC-BY-SA-4.0
 repo: https://github.com/ljchang/dartbrains
-branch: v2-marimo-migration
+branch: master
 
 logo: images/logo/dartbrains_logo_square_transparent.png
 favicon: images/logo/favicon.ico
@@ -162,6 +162,20 @@ toc:
         # once locally (committed to _rendered/) so CI never hits the network.
         mode: cached
       - file: content/Resampling_Statistics.py
+
+  - section: Assignments
+    # Student versions published by the grader (https://grader.dartbrains.org); the
+    # instructor notebooks with solutions live in the private dartbrains-assignments repo.
+    # Static preview + "Open in molab"; unfinished cells error by design (allow_errors).
+    children:
+      - file: content/assignments/glm.py
+        title: "Assignment: GLM"
+        mode: static
+        allow_errors: true
+      - file: content/assignments/signal-processing.py
+        title: "Assignment: Signal Processing"
+        mode: static
+        allow_errors: true
 
   - section: Additional Courses
     children:

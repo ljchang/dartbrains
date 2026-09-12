@@ -1223,5 +1223,20 @@ def exercise_4():
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+        ---
+        ### Graded assignment
+
+        The graded version of these exercises is the **[Signal Processing](https://dartbrains.org/assignments/signal-processing/)** assignment.
+        Open it from that page (in molab or by download), sign in with your Dartmouth account
+        inside the notebook, and submit each question when you are ready.
+        """
+    )
+    return
+
+
 if __name__ == "__main__":
     app.run()
