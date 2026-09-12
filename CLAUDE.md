@@ -54,6 +54,21 @@ def _(IMG_DIR, mo):
 
 **Important:** large inlined SVGs (>5 MB — fmriprep QC SVGs contain base64-embedded brain slices) will bust marimo's default 10 MB per-cell output limit when combined with other content in a vstack. Put each large animated SVG in its own cell to stay under the limit.
 
+## Marimo notebooks — YouTube embeds
+
+marimo's server responds with **`Referrer-Policy: same-origin`**, which sends *no* `Referer` header at all on cross-origin requests. YouTube's embedded player uses that header to identify the embedding site; without it, it refuses to play and shows **"Error 153 — Video player configuration error"**. This is the inverse of the `mo.image()` trap above: the *static build* renders fine (GitHub Pages does not set that policy), so a broken embed only shows up in `marimo edit`.
+
+**Rule:** every YouTube iframe needs its own `referrerpolicy`, which overrides the document policy for that one request and sends the origin (and only the origin).
+
+```python
+f'<iframe width="560" height="315" '
+f'src="https://www.youtube.com/embed/{video_id}" '
+f'frameborder="0" allowfullscreen '
+f'referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+```
+
+Use `dartbrains_tools.notebook_utils.youtube()` rather than hand-writing the iframe — it carries the attribute (>= 0.1.8). Error 153 is *not* the same as Errors 101/150, which mean the video's owner disabled embedding; check with the oEmbed endpoint (`https://www.youtube.com/oembed?url=…&format=json` returns 200 with a payload if the video is embeddable) before chasing the referrer.
+
 ## Marimo notebooks — matplotlib/seaborn figures
 
 Marimo's matplotlib integration monkey-patches `matplotlib.artist.Artist._mime_` so a cell renders a figure **only if its last expression returns an `Artist`** (Figure, Axes, Text, Line2D, Legend, BarContainer, AxesImage, …). It is *not* an "auto-capture pyplot at end of cell" mechanism — pyplot side effects alone don't produce output. This rule is enforced by `marimo export ipynb --include-outputs`, which the marimo-book pipeline runs per notebook, so a notebook that looks fine in `marimo edit` (live kernel re-runs reactively) can still produce empty figure cells in the static build.
