@@ -41,7 +41,7 @@ datasets.fetch_atlas_basc_multiscale_2015
 ```
 
 <div class="marimo-book-output">
-<div style='border-radius: 6px; overflow: hidden; background-color: var(--slate-1); display: inline-block; min-width: 0; max-width: 100%;'><div style='padding: 10px 12px 8px 12px; display: flex; align-items: center;'><span style='background-color: var(--green-3); color: var(--green-11);padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; font-weight: 600; margin-right: 8px; display: inline-block;'>function</span><span style='font-family: monospace; font-size: 0.875rem; color: var(--slate-12);'>fetch_atlas_basc_multiscale_2015</span></div><div style='height: 1px; background-color: var(--slate-3); margin: 0 12px 8px 12px;'></div><div style='color: var(--slate-11); margin: 0 12px 8px 12px; font-size: 0.75rem; font-family: monospace; padding: 0; white-space: pre-wrap;'>Download and load multiscale functional brain parcellations.</div><div style='font-family: monospace; font-size: 0.875rem; color: var(--slate-12); margin: 0 12px 8px 12px;'><span>def fetch_atlas_basc_multiscale_2015(data_dir=None, url=None, resume=True, verbose=1, resolution=None, version=&#x27;sym&#x27;):</span></div></div>
+<div style='border-radius: 6px; overflow: hidden; background-color: var(--slate-1); display: inline-block; min-width: 0; max-width: 100%;'><div style='padding: 10px 12px 8px 12px; display: flex; align-items: center;'><span style='background-color: var(--green-3); color: var(--green-11);padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; font-weight: 600; margin-right: 8px; display: inline-block;'>function</span><span style='font-family: monospace; font-size: 0.875rem; color: var(--slate-12);'>fetch_atlas_basc_multiscale_2015</span></div><div style='height: 1px; background-color: var(--slate-3); margin: 0 12px 8px 12px;'></div><div style='color: var(--slate-11); margin: 0 12px 8px 12px; font-size: 0.75rem; font-family: monospace; padding: 0; white-space: pre-wrap;'>Download and load multiscale functional brain parcellations.</div><div style='font-family: monospace; font-size: 0.875rem; color: var(--slate-12); margin: 0 12px 8px 12px;'><span>def fetch_atlas_basc_multiscale_2015(data_dir: str | pathlib._local.Path | None = None, url: str | None = None, resume: bool = True, verbose: bool | int | numpy.integer = 1, resolution: Literal[7, 12, 20, 36, 64, 122, 197, 325, 444] = 7, version: Literal[&#x27;sym&#x27;, &#x27;asym&#x27;] = &#x27;sym&#x27;) -&gt; nilearn.datasets.atlas.Atlas:</span></div></div>
 </div>
 
 <div class="marimo-book-output">
@@ -76,7 +76,7 @@ plotting.plot_roi(aal.maps, title='AAL')
 plt.gcf()
 ```
 
-<div class="marimo-book-output"><img src="assets/img/2f421500397466512c10a63211ea5d2fbfba3af3bf937cf033f8829e6ca77da7.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
+<div class="marimo-book-output"><img src="assets/img/816186ca0733cf808b33f1217405820417964b83d0ab29a516310c1f253dc6dd.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
 
 2. [Talairach Atlas](http://www.talairach.org/) (Talairach and Tournoux, 1988)
 - This **anatomical** atlas includes the Hemisphere, Lobe, Gyrus, Tissue Type, and Cell Type.
@@ -96,7 +96,7 @@ mo.vstack(_figs)
 ```
 
 <div class="marimo-book-output">
-<div style="display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem"><img src="assets/img/90e5d6c1ea5c984a663ce9364f359b0f56da6dfba06c769a669d1e694d5ad8dc.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/fc2083206dd58c02da6672d184fe66efeb4f82a9a0b01f69f346b2150d9ca94b.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/52f0b8dee54e45b6b31c5f295a620a18872e079aba9a6644b3ce192edc385102.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/40138cd0b41f392471f2672229ee1c6b8185f6c7cd5ea443c15ea43b4241f2e0.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/c38efa1a89212e1dfca09bf224234b837b276e3ee522bd0b72f7f6a166485056.webp" loading="lazy" decoding="async" width="1500" height="740"/></div>
+<div style="display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem"><img src="assets/img/95d579d503d9ce53b63414c652a57b3b6dff1b2b8dcaef5183b538f74ebaa8ed.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/1e453ff82ce39a8c603f138e6e4bbcf5a9ac01ce9c0717e0847af8b20b5e9adb.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/24b76b2e97ceac6cf070a7324f06fb22a0e2f51b0718e630dbcbd5ee4612bf16.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/38001089609dabde1f780ec9748edb080e2d5d97433129b3677bcb53f45df343.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/32b308cf4048596bcabe69cb84eda2ba253f7b6679512b6dd81c2ac6d6ce93cb.webp" loading="lazy" decoding="async" width="1500" height="740"/></div>
 </div>
 
 **Multiple-subject atlases** use the combination of multiple subjects' T1 scans as the reference image for mirroring in generating anatomical atlases. Multiple-subject parcelations are thought to be more accurate than single subject parcellations and tend to be **probabilistic** in that they describe the probability of a voxel belonging to a specific region of the brain based on multiple subjects.
@@ -127,7 +127,7 @@ mo.vstack(_figs)
 ```
 
 <div class="marimo-book-output">
-<div style="display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem"><img src="assets/img/3e06637ee1c3086c2805a6b6665651bd8dff9ce5d056b81236c9290e17e94435.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/a917557bbc191950adc67633d4621dbc7ae1f782cded0e59dcfd2b5458929a3d.webp" loading="lazy" decoding="async" width="1500" height="740"/></div>
+<div style="display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem"><img src="assets/img/02bcf89755fd5ef4762004d2037381f0e687e69f15c3bee163076558c7789668.webp" loading="lazy" decoding="async" width="1500" height="740"/><img src="assets/img/e22141d0b70c7aee40b86164aa57b83cb7893dde75edef230e18ff701fe9fe25.webp" loading="lazy" decoding="async" width="1500" height="740"/></div>
 </div>
 
 4. Desikan-Killiany (Desikan, 2006)
@@ -148,7 +148,7 @@ plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colo
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11f626c50&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11d8b1750&gt;</pre>
 </div>
 
 <div class="marimo-book-output">
@@ -243,7 +243,7 @@ plotting.plot_roi(region_labels, title='Yeo',
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11f79e7b0&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11a78e3f0&gt;</pre>
 </div>
 
 2. [Schaefer parcellation](https://pubmed.ncbi.nlm.nih.gov/28981612/)
@@ -272,7 +272,7 @@ plotting.plot_roi(atlas_1, title=f'Schaefer - {n_rois}', colorbar=True, cmap='Pa
 </pre>
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11b9f5710&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11af48f30&gt;</pre>
 </div>
 
 3. [Shen Parcellation](https://pubmed.ncbi.nlm.nih.gov/23747961/)
@@ -288,7 +288,7 @@ plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11fa84590&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x15e2084b0&gt;</pre>
 </div>
 
 Something of note is that while we usually think of voxels as belonging to one single region (**hard assignment**), but it also possible that a voxel can belong to multiple regions (**soft assignment**). Consider parcellations based on network - (association cortex) regions may be "part of" different networks depending on task. Below, we introduce the idea of multimodal parcellations.
@@ -318,7 +318,7 @@ plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11f786000&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11a787a00&gt;</pre>
 </div>
 
 - Rosen & Halgren: https://pubmed.ncbi.nlm.nih.gov/33483325/

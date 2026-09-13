@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.16"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium")
 
 
@@ -95,7 +95,6 @@ def _(BrainData, localizer, np):
     subject_id = np.hstack([_sub_list, _sub_list])
 
     f"{len(_sub_list)} subjects -> {data.shape[0]} images x {data.shape[1]} voxels"
-
     return Y, data, subject_id
 
 
@@ -153,11 +152,10 @@ def _(mo):
 @app.cell
 def _(Y, data, subject_id):
     whole_brain = data.predict(
-        y=Y, spatial_scale="whole_brain", groups=subject_id, cv=5, random_state=0
+        y=Y, spatial_scale="whole_brain", groups=subject_id, cv=5
     )
 
     f"Whole-brain accuracy: {whole_brain.mean_score:.3f}  (chance = 0.5)"
-
     return (whole_brain,)
 
 
@@ -208,24 +206,22 @@ def _(Y, data, fetch_resource, np, subject_id):
 
     roi = data.predict(
         y=Y, spatial_scale="roi", roi_mask=atlas,
-        groups=subject_id, cv=5, random_state=0, n_jobs=-1,
+        groups=subject_id, cv=5, n_jobs=-1,
     )
 
     f"{len(roi.roi_labels)} parcels | best {np.nanmax(roi.mean_score):.3f} | median {np.nanmedian(roi.mean_score):.3f}"
-
     return (roi,)
 
 
 @app.cell
 def _(roi):
-    roi_above_chance = roi.accuracy_map - 0.5
+    roi_above_chance = roi.score_map - 0.5
 
     roi_above_chance.plot(
         method="glass",
         cmap="RdBu_r",
         title="ROI decoding accuracy above chance (k=50)",
     )
-
     return
 
 
@@ -239,9 +235,9 @@ def _(mo):
     is not a paradox — most voxels carry no signal for this contrast, and feeding
     them to the model adds noise and dimensionality without adding evidence.
 
-    **Most parcels are near chance.** The median parcel sits close to 0.5. The
-    information is not distributed evenly; it is concentrated in a handful of
-    regions, and the map shows where.
+    **Most parcels are far from the best one.** The median parcel sits well below
+    the top parcel. The information is not distributed evenly; it is concentrated
+    in a handful of regions, and the map shows where.
 
     Note also that we asked for 50 parcels and got 46. Parcels that fall entirely
     outside this dataset's brain mask have no voxels to model, so they drop out.
@@ -296,33 +292,30 @@ def _(BrainData, data, fetch_resource, pd):
     data_sm = data.apply_mask(sensorimotor)
 
     f"{list(sensorimotor_rows['name'])} -> {data_sm.shape[1]:,} voxels"
-
     return (data_sm,)
 
 
 @app.cell
 def _(Y, data_sm, np, subject_id):
     searchlight = data_sm.predict(
-        y=Y, spatial_scale="searchlight", radius_mm=10,
-        groups=subject_id, cv=5, random_state=0, n_jobs=-1,
+        y=Y, spatial_scale="searchlight", radius=10,
+        groups=subject_id, cv=5, n_jobs=-1,
     )
 
-    _acc = searchlight.accuracy_map.data
+    _acc = searchlight.score_map.data
     f"peak {np.nanmax(_acc):.3f} | median {np.nanmedian(_acc):.3f} | above 0.7: {np.nanmean(_acc > 0.7):.1%} of spheres"
-
     return (searchlight,)
 
 
 @app.cell
 def _(searchlight):
-    sl_above_chance = searchlight.accuracy_map - 0.5
+    sl_above_chance = searchlight.score_map - 0.5
 
     sl_above_chance.plot(
         method="glass",
         cmap="RdBu_r",
         title="Searchlight accuracy above chance (10mm, sensorimotor cortex)",
     )
-
     return
 
 
@@ -382,7 +375,7 @@ def _(mo):
 
 @app.cell
 def _(np, pd, plt, roi, searchlight, sns, whole_brain):
-    _sl_acc = searchlight.accuracy_map.data
+    _sl_acc = searchlight.score_map.data
     _sl_acc = _sl_acc[np.isfinite(_sl_acc)]
     _roi_acc = roi.mean_score[np.isfinite(roi.mean_score)]
 
@@ -421,7 +414,6 @@ def _(np, pd, plt, roi, searchlight, sns, whole_brain):
     _ax.legend(loc="lower right", frameon=False)
     plt.tight_layout()
     plt.gcf()
-
     return
 
 
@@ -430,13 +422,13 @@ def _(mo):
     mo.md(r"""
     The figure makes the real lesson visible, and it is **not** "smaller scales win."
 
-    The whole-brain model (red line) lands at 0.75 — above the median of both local
-    analyses, but below the best of either. Meanwhile the bulk of parcels and the
-    bulk of spheres sit near chance.
+    The whole-brain model (red line) lands in the middle — above the median of both
+    local analyses, but below the best of either. Meanwhile the bulk of parcels and
+    the bulk of spheres sit well below those peaks.
 
     Read together, those facts say something the whole-brain number alone could not:
     **the information is focal, not diffuse.** A handful of sensorimotor regions
-    carry nearly all of it, and the whole-brain model reaches 0.75 by pooling that
+    carry nearly all of it, and the whole-brain model reaches its score by pooling that
     concentrated signal with thousands of uninformative voxels — doing well despite
     the noise rather than because the signal is everywhere.
 

@@ -35,9 +35,13 @@ dependencies = [
     # before forwarding (nltools/data/braindata/plotting.py), so the <0.13 cap is
     # lifted. nltools 0.6 itself requires nilearn >= 0.12.
     "nilearn>=0.12",
-    # Version stays unconstrained: master still self-reports 0.5.1 (the bump
-    # happens at release time), so the [tool.uv.sources] git pin below is what
-    # actually selects the 0.6 API. Switch to "nltools>=0.6.0" once it's on PyPI.
+    # Version stays unconstrained: master self-reports 0.6.0.dev0, so the
+    # [tool.uv.sources] git pin below is what actually selects the API (uv.lock
+    # freezes the SHA). Switch to "nltools>=0.6.0" once it's on PyPI. The
+    # 2026-09-13 master (160dc401) removed nltools.stats (→ nltools.algorithms),
+    # the HRF module (→ nilearn), predict(model=) (→ estimator=), radius_mm
+    # (→ radius), compute_contrasts(statistic=), Adjacency.similarity(project=)
+    # and requires nilearn >= 0.14; the notebooks are migrated accordingly.
     #
     # The extras are NOT optional for this course:
     #   h5    — hdf5plugin for reading compressed HDF5 fit bundles. h5py itself

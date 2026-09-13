@@ -133,10 +133,10 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
     import plotly.graph_objects as go
-    from nltools.stats import zscore
+    from nltools.algorithms import zscore
     from nltools.data import BrainData, DesignMatrix
-    from nltools.stats import regress
-    from nltools.algorithms.hrf import glover_hrf
+    from nltools.algorithms import regress
+    from nilearn.glm.first_level import glover_hrf
     from scipy.stats import ttest_1samp
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import plot_timeseries
@@ -333,7 +333,7 @@ def _(mo):
     import polars as pl
     from tqdm import tqdm
     import nibabel as nib
-    from nltools.stats import zscore
+    from nltools.algorithms import zscore
     from nltools.data import BrainData, DesignMatrix
     from dartbrains_tools.data import localizer
 
@@ -377,7 +377,7 @@ def _(mo):
 
         # Write out a separate beta image for each condition
         for name in data.X.columns[:10]:
-            data.compute_contrasts(name, statistic='beta').write(
+            data.compute_contrasts(name).write(
                 f'{sub}_beta_{name.removesuffix("_c0")}.nii.gz'
             )
     ```
@@ -406,7 +406,7 @@ def _(mo):
         X=lambda ctx: DesignMatrix(ctx.dm, run_length=len(ctx.bd), TR=tr)
                       .add_poly(order=1, include_lower=True),
     )
-    betas = fitted.compute_contrasts('horizontal_checkerboard_c0', statistic='beta')
+    betas = fitted.compute_contrasts('horizontal_checkerboard_c0')
     ```
 
     The `X=` argument takes a function that builds the design for a single subject.
