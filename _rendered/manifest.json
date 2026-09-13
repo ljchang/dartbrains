@@ -7,7 +7,7 @@
       "cell_errors": [],
       "images": [],
       "marimo_book_version": "0.1.37",
-      "rendered_at": "2026-09-12T23:56:10+00:00",
+      "rendered_at": "2026-09-13T03:17:46+00:00",
       "src_hash": "bcfcda2556cb18e803667eec1b5a710ff3ed0695dc3bda6c9f8a4855f6c7ae5d"
     },
     "content/Parcellations.py": {
@@ -16,22 +16,22 @@
       "buffers": [],
       "cell_errors": [],
       "images": [
+        "02bcf89755fd5ef4762004d2037381f0e687e69f15c3bee163076558c7789668.webp",
         "0a7f0717cac15af334b101ecb83149c6eff44b0decb22edfdf64f2a5f2d42dec.webp",
-        "2f421500397466512c10a63211ea5d2fbfba3af3bf937cf033f8829e6ca77da7.webp",
-        "3e06637ee1c3086c2805a6b6665651bd8dff9ce5d056b81236c9290e17e94435.webp",
-        "40138cd0b41f392471f2672229ee1c6b8185f6c7cd5ea443c15ea43b4241f2e0.webp",
-        "52f0b8dee54e45b6b31c5f295a620a18872e079aba9a6644b3ce192edc385102.webp",
+        "1e453ff82ce39a8c603f138e6e4bbcf5a9ac01ce9c0717e0847af8b20b5e9adb.webp",
+        "24b76b2e97ceac6cf070a7324f06fb22a0e2f51b0718e630dbcbd5ee4612bf16.webp",
+        "32b308cf4048596bcabe69cb84eda2ba253f7b6679512b6dd81c2ac6d6ce93cb.webp",
+        "38001089609dabde1f780ec9748edb080e2d5d97433129b3677bcb53f45df343.webp",
         "57017bb38bc9043ea5ba4447ebf21d4b2e3e08b40c06064a8166eddd525ed620.webp",
-        "90e5d6c1ea5c984a663ce9364f359b0f56da6dfba06c769a669d1e694d5ad8dc.webp",
-        "a917557bbc191950adc67633d4621dbc7ae1f782cded0e59dcfd2b5458929a3d.webp",
+        "816186ca0733cf808b33f1217405820417964b83d0ab29a516310c1f253dc6dd.webp",
+        "95d579d503d9ce53b63414c652a57b3b6dff1b2b8dcaef5183b538f74ebaa8ed.webp",
         "a99d37f1fc811aaa32673d3f73a41915ac468b1947a8a8b1385a102ec2bec1c2.webp",
-        "c38efa1a89212e1dfca09bf224234b837b276e3ee522bd0b72f7f6a166485056.webp",
         "dfb75f71c93669edd3f4c9d21ef7f4c6988e6885a3495ecefcaff901dfc6bfd7.webp",
-        "f2f6fba9f5a1f647246933a78c24faa8b09285b3e2c4405b213ab82448c48c81.webp",
-        "fc2083206dd58c02da6672d184fe66efeb4f82a9a0b01f69f346b2150d9ca94b.webp"
+        "e22141d0b70c7aee40b86164aa57b83cb7893dde75edef230e18ff701fe9fe25.webp",
+        "f2f6fba9f5a1f647246933a78c24faa8b09285b3e2c4405b213ab82448c48c81.webp"
       ],
       "marimo_book_version": "0.1.37",
-      "rendered_at": "2026-09-12T23:56:38+00:00",
+      "rendered_at": "2026-09-13T03:17:59+00:00",
       "src_hash": "59711f11a73c44ca3dd2a172cf4cd0c11c03a345f58e8b6dec16225e524356d5"
     }
   },

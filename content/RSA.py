@@ -127,7 +127,7 @@ def _():
     from nltools.data import BrainData, Adjacency
     from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
-    from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation_test
+    from nltools.algorithms import fdr, threshold, fisher_r_to_z, one_sample_permutation_test
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
@@ -377,19 +377,22 @@ def _(mo):
     nltools can do the whole thing directly. `distance()` takes a `spatial_scale`
     argument: `'whole_brain'` (the default) gives you one matrix for the entire
     brain, while `'roi'` gives you one matrix *per parcel* of the atlas you pass as
-    `roi_mask`. The result is a stack of RDMs that remembers which parcel each one
-    came from — so `similarity(..., project=True)` can paint the per-parcel scores
-    straight back into a voxel-space `BrainData`.
+    `roi_mask`. The result is a stack of RDMs, one per parcel in atlas order — the
+    same order `expand_mask` uses — so `similarity()` on the stack gives one score
+    per parcel and `roi_to_brain` paints them straight back into a voxel-space
+    `BrainData`.
     """)
     return
 
 
 @app.cell
-def _(beta, mask, motor, np, plot_stat_map):
+def _(beta, mask, mask_x, motor, np, pd, plot_stat_map, roi_to_brain):
     _rdms = beta.distance(metric='correlation', spatial_scale='roi', roi_mask=mask)
-    rsa_motor_oneliner = (1 - _rdms).similarity(
-        motor, metric='spearman', method=None, project=True
-    )
+    _scores = [
+        r['correlation']
+        for r in (1 - _rdms).similarity(motor, metric='spearman', method=None)
+    ]
+    rsa_motor_oneliner = roi_to_brain(pd.Series(_scores), mask_x)
 
     plot_stat_map(rsa_motor_oneliner.to_nifti(), draw_cross=False, display_mode='z',
                   black_bg=True, cut_coords=np.arange(-30, 70, 15))

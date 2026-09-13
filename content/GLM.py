@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -97,11 +97,11 @@ def _():
     import matplotlib.pyplot as plt
     import plotly.graph_objects as go
     import seaborn as sns
-    from nltools.stats import regress
-    from nltools.algorithms.hrf import glover_hrf
+    from nltools.algorithms import regress
+    from nilearn.glm.first_level import glover_hrf
 
 
-    return glover_hrf, go, np, plt, sns
+    return glover_hrf, np, plt, sns
 
 
 @app.cell(hide_code=True)
@@ -121,7 +121,7 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(go, np):
+def _(np):
     n_tr = 200
     _n_trial = 5
     face = np.zeros(n_tr)
@@ -781,16 +781,14 @@ def _():
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""
-        ---
-        ### Graded assignment
+    mo.md(r"""
+    ---
+    ### Graded assignment
 
-        The graded version of these exercises is the **[GLM](https://dartbrains.org/assignments/glm/)** assignment.
-        Open it from that page (in molab or by download), sign in with your Dartmouth account
-        inside the notebook, and submit each question when you are ready.
-        """
-    )
+    The graded version of these exercises is the **[GLM](https://dartbrains.org/assignments/glm/)** assignment.
+    Open it from that page (in molab or by download), sign in with your Dartmouth account
+    inside the notebook, and submit each question when you are ready.
+    """)
     return
 
 

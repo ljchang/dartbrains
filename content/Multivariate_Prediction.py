@@ -86,7 +86,7 @@ def _(mo):
     ## Important MVPA Concepts
     Now, we are ready to dive into the details. In this tutorial, we will be using the nltools toolsbox to run these models, but also see ([nilearn](https://nilearn.github.io/), [brainiak](https://brainiak.org/tutorials/), and [pyMPVA](http://www.pymvpa.org/)) for excellent alternatives.
 
-    Running MVPA style analyses using multivariate regression is surprisingly easier and faster than univariate methods. All you need to do is specify the model and the cross-validation scheme. nltools hands the actual estimation off to [scikit-learn](http://scikit-learn.org/stable/), so anything scikit-learn provides — any classifier, any regressor, or a whole `Pipeline` — can be passed straight to `model=`.
+    Running MVPA style analyses using multivariate regression is surprisingly easier and faster than univariate methods. All you need to do is specify the model and the cross-validation scheme. nltools hands the actual estimation off to [scikit-learn](http://scikit-learn.org/stable/), so anything scikit-learn provides — any classifier, any regressor, or a whole `Pipeline` — can be passed straight to `estimator=`.
 
     To make sure you understand all of the key concepts involved in the practical aspects of conducting MVPA, let's watch two short videos by Martin Lindquist before we dive into the code.
     """)
@@ -201,7 +201,7 @@ def _(mo):
 
 @app.cell
 def _(SVC, Y, data):
-    svm_stats = data.predict(y=Y, model=SVC(kernel='linear'), cv=5)
+    svm_stats = data.predict(y=Y, estimator=SVC(kernel='linear'), cv=5)
     return (svm_stats,)
 
 
@@ -304,7 +304,7 @@ def _(mo):
 def _(SVC, Y, data, mask_x):
     _motor = mask_x[[26, 47]].sum()
     _data_masked = data.apply_mask(_motor)
-    svm_stats_masked = _data_masked.predict(y=Y, model=SVC(kernel='linear'), cv=5)
+    svm_stats_masked = _data_masked.predict(y=Y, estimator=SVC(kernel='linear'), cv=5)
     return (svm_stats_masked,)
 
 
@@ -352,7 +352,7 @@ def _(GroupKFold, SVC, Y, data, subject_id):
     # plain integer (cv=5) would use StratifiedKFold and silently ignore
     # `groups`, splitting a subject across train and test and inflating accuracy.
     svm_stats_1 = data.predict(
-        y=Y, model=SVC(kernel='linear'),
+        y=Y, estimator=SVC(kernel='linear'),
         cv=GroupKFold(n_splits=5), groups=subject_id,
     )
     print(f"subject-wise cross-validated accuracy: {svm_stats_1.mean_score:.2f}")
@@ -374,7 +374,7 @@ def _(GroupKFold, SVC, Y, data, mask_x, subject_id):
     _motor = mask_x[[26, 47]].sum()
     _data_masked = data.apply_mask(_motor)
     svm_stats_masked_1 = _data_masked.predict(
-        y=Y, model=SVC(kernel='linear'),
+        y=Y, estimator=SVC(kernel='linear'),
         cv=GroupKFold(n_splits=5), groups=subject_id,
     )
     print(f"motor-cortex-only accuracy: {svm_stats_masked_1.mean_score:.2f}")
@@ -420,7 +420,7 @@ def _(mo):
 @app.cell
 def _(GroupKFold, RidgeClassifier, Y, data, subject_id):
     _ridge_stats = data.predict(
-        y=Y, model=RidgeClassifier(alpha=0.01),
+        y=Y, estimator=RidgeClassifier(alpha=0.01),
         cv=GroupKFold(n_splits=5), groups=subject_id,
     )
     print(f"ridge (alpha=0.01) accuracy: {_ridge_stats.mean_score:.2f}")
@@ -430,7 +430,7 @@ def _(GroupKFold, RidgeClassifier, Y, data, subject_id):
 @app.cell
 def _(GroupKFold, RidgeCV, Y, data, subject_id):
     _ridge_stats = data.predict(
-        y=Y, model=RidgeCV(), scoring='r2',
+        y=Y, estimator=RidgeCV(), scoring='r2',
         cv=GroupKFold(n_splits=5), groups=subject_id,
     )
     print(f"ridgeCV (alpha chosen by nested CV) r2: {_ridge_stats.mean_score:.2f}")
@@ -440,7 +440,7 @@ def _(GroupKFold, RidgeCV, Y, data, subject_id):
 @app.cell
 def _(GroupKFold, LassoCV, Y, data, subject_id):
     lasso_cv_stats = data.predict(
-        y=Y, model=LassoCV(), scoring='r2',
+        y=Y, estimator=LassoCV(), scoring='r2',
         cv=GroupKFold(n_splits=5), groups=subject_id,
     )
     print(f"lassoCV r2: {lasso_cv_stats.mean_score:.2f}")
@@ -472,7 +472,7 @@ def _(mo):
 @app.cell
 def _(GroupKFold, SVC, Y, data, subject_id):
     svm_stats_2 = data.predict(
-        y=Y, model=SVC(kernel='linear', class_weight='balanced'),
+        y=Y, estimator=SVC(kernel='linear', class_weight='balanced'),
         scoring='balanced_accuracy',
         cv=GroupKFold(n_splits=5), groups=subject_id,
     )

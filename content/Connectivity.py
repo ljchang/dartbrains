@@ -98,7 +98,7 @@ def _():
     from nltools.data import BrainData, DesignMatrix, Adjacency
     from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
-    from nltools.stats import zscore, fdr, one_sample_permutation_test
+    from nltools.algorithms import zscore, fdr, one_sample_permutation_test
     import polars as pl
     from scipy.stats import binom, ttest_1samp
     from sklearn.metrics import pairwise_distances
@@ -315,7 +315,7 @@ def _(
     )
 
     smoothed.fit(model='glm', X=dm)
-    vmpfc_conn = smoothed.compute_contrasts('vmpfc', statistic='beta')
+    vmpfc_conn = smoothed.compute_contrasts('vmpfc')
     return csf, make_motion_covariates, mc_cov, spikes, tr, vmpfc_1, vmpfc_conn
 
 
@@ -428,7 +428,7 @@ def _(dm_1, smoothed):
     smoothed.fit(model='glm', X=dm_1)
     # Ask for the interaction term by name rather than hunting for its column
     # index -- this is the regressor the whole PPI analysis is about.
-    vmpfc_motor_ppi = smoothed.compute_contrasts('vmpfc_motor', statistic='beta')
+    vmpfc_motor_ppi = smoothed.compute_contrasts('vmpfc_motor')
     vmpfc_motor_ppi.iplot()
     return (vmpfc_motor_ppi,)
 

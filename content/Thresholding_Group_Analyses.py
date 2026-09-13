@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -105,15 +105,32 @@ def _():
     from nilearn.plotting import plot_stat_map
     from nltools.data import BrainData
     from nltools import SimulateGrid
-    from nltools.stats import fdr, threshold
+    from nltools.algorithms import fdr, threshold
     from nltools.templates import fetch_resource
     from nltools.algorithms.inference import one_sample_permutation_test
     from dartbrains_tools.data import localizer
 
-    return (BrainData, SimulateGrid, contextlib, fdr, fetch_resource,
-            gaussian_filter, go, io, label, localizer,
-            non_parametric_inference, np, one_sample_permutation_test, pd,
-            plot_stat_map, plt, sns, threshold, ttest_1samp)
+    return (
+        BrainData,
+        SimulateGrid,
+        contextlib,
+        fdr,
+        fetch_resource,
+        gaussian_filter,
+        go,
+        io,
+        label,
+        localizer,
+        non_parametric_inference,
+        np,
+        one_sample_permutation_test,
+        pd,
+        plot_stat_map,
+        plt,
+        sns,
+        threshold,
+        ttest_1samp,
+    )
 
 
 @app.cell(hide_code=True)
@@ -541,6 +558,7 @@ def _(contextlib, io):
         100 progress bars in the output.
         """
         return contextlib.redirect_stderr(io.StringIO())
+
     return (quiet,)
 
 
@@ -563,7 +581,7 @@ def _(SimulateGrid, np, one_sample_permutation_test, quiet):
     with quiet():
         perm_result = one_sample_permutation_test(
             perm_data, n_permute=N_PERMUTE, return_null=True,
-            random_state=0, parallel='cpu', n_jobs=1,
+            random_state=0, n_jobs=1,
         )
 
     perm_null = np.asarray(perm_result['null_dist'])
@@ -573,7 +591,7 @@ def _(SimulateGrid, np, one_sample_permutation_test, quiet):
     print(f"smallest attainable p    = 1 / (1 + {N_PERMUTE}) = {1 / (N_PERMUTE + 1):.4f}")
     print(f"smallest observed p      = {np.min(perm_result['p']):.4f}")
     print(f"Bonferroni target for {n_voxels} voxels = {0.05 / n_voxels:.2e}")
-    return GRID_WIDTH, N_PERMUTE, n_voxels, perm_null, perm_result, perm_sim
+    return GRID_WIDTH, perm_null, perm_result, perm_sim
 
 
 @app.cell(hide_code=True)
@@ -644,6 +662,7 @@ def _(np):
         value anywhere in that permuted map.
         """
         return np.percentile(np.abs(null).max(axis=1), 100 * (1 - alpha))
+
     return (max_stat_threshold,)
 
 
@@ -689,7 +708,16 @@ def _(mo):
 
 
 @app.cell
-def _(GRID_WIDTH, max_stat_threshold, np, perm_null, perm_result, perm_sim, plt, sns):
+def _(
+    GRID_WIDTH,
+    max_stat_threshold,
+    np,
+    perm_null,
+    perm_result,
+    perm_sim,
+    plt,
+    sns,
+):
     _critical = max_stat_threshold(perm_null)
     _observed = np.abs(perm_result['mean']).reshape(GRID_WIDTH, GRID_WIDTH)
     _survivors = (_observed > _critical).astype(float)
@@ -727,7 +755,7 @@ def _(max_stat_threshold, np, one_sample_permutation_test, quiet):
             _noise = _rng.standard_normal((_n_subjects, _n_voxels))
             _res = one_sample_permutation_test(
                 _noise, n_permute=500, return_null=True,
-                random_state=_i, parallel='cpu', n_jobs=1,
+                random_state=_i, n_jobs=1,
             )
             _null = np.asarray(_res['null_dist'])
             _hits += (np.abs(_res['mean']) > max_stat_threshold(_null)).any()
@@ -789,7 +817,8 @@ def _(label, np):
             return 1.0, 0, null_max
         p_value = (np.sum(null_max >= observed_size) + 1) / (len(null_max) + 1)
         return p_value, observed_size, null_max
-    return cluster_fwe_p, largest_cluster
+
+    return (cluster_fwe_p,)
 
 
 @app.cell(hide_code=True)
@@ -809,7 +838,14 @@ def _(mo):
 
 
 @app.cell
-def _(cluster_fwe_p, gaussian_filter, np, one_sample_permutation_test, pd, quiet):
+def _(
+    cluster_fwe_p,
+    gaussian_filter,
+    np,
+    one_sample_permutation_test,
+    pd,
+    quiet,
+):
     def run_cluster_calibration(smoothing_sigma, n_sims=100, width=30, n_subjects=20,
                                 n_permute=500, alpha=0.05):
         """Family-wise error rate of the cluster test under the complete null."""
@@ -823,7 +859,7 @@ def _(cluster_fwe_p, gaussian_filter, np, one_sample_permutation_test, pd, quiet
                     data = data / data.std()          # renormalize after smoothing
                 res = one_sample_permutation_test(
                     data.reshape(n_subjects, -1), n_permute=n_permute,
-                    return_null=True, random_state=i, parallel='cpu', n_jobs=1,
+                    return_null=True, random_state=i, n_jobs=1,
                 )
                 null = np.asarray(res['null_dist'])
                 forming = np.percentile(np.abs(null), 99)
@@ -843,7 +879,7 @@ def _(cluster_fwe_p, gaussian_filter, np, one_sample_permutation_test, pd, quiet
         ]
     )
     cluster_calibration
-    return (run_cluster_calibration,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -960,7 +996,7 @@ def _(BrainData, con1_dat, localizer, threshold):
 
     con1_v_con2_stats = con1_v_con2.ttest()
     threshold(con1_v_con2_stats['t'], con1_v_con2_stats['p'], thr=0.001).iplot()
-    return con1_v_con2, con1_v_con2_stats
+    return (con1_v_con2_stats,)
 
 
 @app.cell
@@ -1086,7 +1122,7 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, con1_dat, fetch_resource, np, pd):
+def _(BrainData, con1_dat, fetch_resource, pd):
     ho_labels = pd.read_csv(fetch_resource('atlases/labels_harvard_oxford.csv'))
 
     # The Harvard-Oxford resource is a 4D *probabilistic* atlas: one volume per
@@ -1103,7 +1139,7 @@ def _(BrainData, con1_dat, fetch_resource, np, pd):
 
     print(f"{len(occipital_rows)} occipital regions -> "
           f"{int(occipital_mask.data.sum())} voxels of {con1_dat.shape[1]}")
-    return ho_atlas, ho_labels, occipital_mask, occipital_rows
+    return (occipital_mask,)
 
 
 @app.cell

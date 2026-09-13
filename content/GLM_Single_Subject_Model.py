@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.16"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -61,7 +61,7 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
     import nibabel as nib
-    from nltools.stats import zscore
+    from nltools.algorithms import zscore
     from nltools.data import BrainData, DesignMatrix
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
@@ -344,7 +344,6 @@ def _(mo):
 def _(dm_conv_filt_1):
     dm_conv_filt_poly = dm_conv_filt_1.add_poly()
     dm_conv_filt_poly.plot()
-
     return
 
 
@@ -648,23 +647,20 @@ def _(mo):
 
     A contrast is a set of weights over the regressors. We express it by *name* using `compute_contrasts`, which accepts a string of regressor names combined with `+`, `-`, and scalar multipliers. Naming the regressors is much safer than indexing them by position: the column order depends on how the events file was read, so positional indices are a classic source of silent errors.
 
-    One thing to be aware of: by default `.fit()` runs `.clean()` on the design before estimating, dropping any column that correlates above `design_clean_thresh` (0.95) with an earlier one. Here that removes `poly_1` and `poly_2`, because our linear and quadratic drift terms are nearly identical to the first two cosine regressors — the DCT basis and the polynomial trends are modeling the same slow drift, so including both is redundant.
+    One thing to be aware of: `.fit()` estimates exactly the design you hand it. It does not silently drop or reorder regressors, and it warns if the design is genuinely rank deficient (a column that is an exact linear combination of others). Our design is full rank (48 of 48 columns), so it is perfectly estimable as specified — even though the linear and quadratic drift terms are nearly identical to the first two cosine regressors. The DCT basis and the polynomial trends are modeling the same slow drift, so including both is redundant, and the betas for those columns will be unstable.
 
-    Two caveats worth internalizing. First, this is a *correlation* heuristic, not a rank test: this particular design matrix is full rank (48 of 48 columns), so it was perfectly estimable as specified. Second, `clean()` keeps the first column of a correlated pair and drops the second, so **which** regressor survives depends on the order you built the design in — had we called `.add_poly()` before `.add_dct_basis()`, the cosines would have been dropped instead. If you want full control, pass `design_clean=False` and handle redundancy yourself.
-
-    So the fitted model can have fewer regressors than the design matrix you handed it. You can see what was actually estimated in `smoothed.model_.design_matrices_[0].columns` — another reason to refer to regressors by name rather than by index.
+    If you want that redundancy handled for you, call `.clean()` on the design yourself before fitting: it drops any column that correlates above a threshold (0.95 by default) with an earlier one. Two caveats worth internalizing. First, this is a *correlation* heuristic, not a rank test. Second, `clean()` keeps the first column of a correlated pair and drops the second, so **which** regressor survives depends on the order you built the design in — had we called `.add_poly()` before `.add_dct_basis()`, the cosines would have been dropped instead. Either way, refer to regressors by name rather than by index, and check `dm.columns` for what was actually estimated.
     """)
     return
 
 
 @app.cell
-def _(smoothed):
-    print(f"design matrix regressors: {len(smoothed.model_.design_matrices_[0].columns)}")
+def _(dm_conv_filt_poly_cov, smoothed):
+    print(f"design matrix regressors: {len(dm_conv_filt_poly_cov.columns)}")
 
     motor = smoothed.compute_contrasts(
         '0.25*audio_left_hand_c0 + 0.25*audio_right_hand_c0 '
         '+ 0.25*video_left_hand_c0 + 0.25*video_right_hand_c0',
-        statistic='beta',
     )
 
     motor.iplot()
@@ -688,7 +684,6 @@ def _(smoothed):
     motor_rvl = smoothed.compute_contrasts(
         'audio_right_hand_c0 + video_right_hand_c0 '
         '- audio_left_hand_c0 - video_left_hand_c0',
-        statistic='beta',
     )
 
     motor_rvl.iplot()
