@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -13,7 +13,7 @@ def _():
     from huggingface_hub import hf_hub_download
     import nibabel as nib
     import matplotlib.pyplot as plt
-    from nilearn.plotting import view_img, plot_glass_brain, plot_anat, plot_epi, plot_stat_map
+    from nilearn.plotting import plot_glass_brain, plot_anat, plot_epi, plot_stat_map
     from nltools.data import BrainData
     from nltools.templates import fetch_resource
     from nilearn.datasets import load_mni152_template
@@ -30,7 +30,6 @@ def _():
         plot_glass_brain,
         plot_stat_map,
         plt,
-        view_img,
     )
 
 
@@ -480,21 +479,9 @@ def _(mo):
     mo.md(r"""
     try to get more information how to use the function with `?` and try to add different commands to change the plot.
 
-    nilearn also has a neat interactive viewer called `view_img` for examining images directly in the notebook.
-    """)
-    return
+    For examining an image interactively, nltools ships a WebGL viewer built on [niivue](https://niivue.com): wrap the image in a `BrainData` and call `.iplot()`. Scroll to move through slices, right-drag to change the window, and drag the sliders to threshold.
 
-
-@app.cell
-def _(data, view_img):
-    view_img(data)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    The `view_img` function is particularly useful for overlaying statistical maps over an anatomical image so that we can interactively examine where the results are located.
+    `.iplot()` is particularly useful for overlaying a map on an anatomical image so that we can interactively examine where the results are located. By default the background is the MNI152 template that `BrainData` resamples everything into; pass another image as `bg_img` to use, say, a participant's own anatomy.
 
     As an example, let's load a mask of the amygdala and try to find where it is located.
 
@@ -509,10 +496,10 @@ def _(mo):
 
 
 @app.cell
-def _(data, fetch_resource, view_img):
+def _(BrainData, fetch_resource):
     amygdala_mask = fetch_resource('masks/fsl_bilateral_amygdala_thr0.nii.gz')
 
-    view_img(amygdala_mask, data)
+    BrainData(amygdala_mask).iplot()
     return (amygdala_mask,)
 
 
@@ -876,7 +863,7 @@ def _(data_1, plot_stat_map, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    There is also an interactive `.iplot()` method. It opens the image in a WebGL viewer (built on [niivue](https://niivue.com)): scroll through slices, right-drag to change the window, and drag the sliders to threshold.
+    `.iplot()` works on any `BrainData`, not just the mask we viewed above. On 4D data the viewer also scrubs through volumes; here we look at the mean image.
     """)
     return
 
