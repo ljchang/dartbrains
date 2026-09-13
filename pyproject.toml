@@ -90,7 +90,9 @@ build = [
     # heaviest chapters shrink from tens of MB of inline PNG to a few hundred KB.
     # 0.1.36 keeps images inside nilearn view_img iframes at full resolution
     # (brainsprite slices its sprite by pixel geometry; 0.1.35 garbled them).
-    "marimo-book>=0.1.36",
+    # 0.1.37 rewraps anywidgets placed inside mo.vstack/hstack (they arrived as
+    # escaped text) — the Connectivity and ICA component viewers.
+    "marimo-book>=0.1.37",
 ]
 
 [tool.uv.sources]

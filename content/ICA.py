@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -62,10 +62,9 @@ def _():
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
     from nltools.data import BrainData
-    from nilearn.plotting import view_img
     from dartbrains_tools.data import localizer
 
-    return BrainData, fft, fftfreq, go, localizer, make_subplots, np, view_img
+    return BrainData, fft, fftfreq, go, localizer, make_subplots, np
 
 
 @app.cell
@@ -115,7 +114,11 @@ def _(data_1, mo):
         # range stays small and ICA convergence in Pyodide is faster.
         # Cranking back to 20-30 is one number-edit away if the reader
         # wants more granularity.
-        output = data_1.decompose(method='ica', n_components=10, axis='images', whiten='unit-variance')
+        # random_state pins FastICA so the components are identical across
+        # runs (the static build re-executes this notebook per slider value).
+        output = data_1.decompose(
+            method='ica', n_components=10, axis='images', whiten='unit-variance', random_state=0
+        )
     return (output,)
 
 
@@ -153,31 +156,15 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(
-    component_slider,
-    fft,
-    fftfreq,
-    go,
-    make_subplots,
-    mo,
-    np,
-    output,
-    tr,
-    view_img,
-):
+def _(component_slider, fft, fftfreq, go, make_subplots, mo, np, output, tr):
     _component = component_slider.value
     _threshold = 2.0  # standard-deviation threshold for the brain plot
 
-    # Brain viewer: z-score the component, let view_img handle threshold display
+    # Brain viewer: z-score the component and show it in the niivue viewer with
+    # a symmetric |z| threshold (drag the sliders to change it).
     _comp = output['components'][_component]
     _zscored = (_comp - _comp.mean()) * (1 / _comp.std())
-    _brain_html = view_img(
-        _zscored.to_nifti(),
-        threshold=_threshold,
-        black_bg=True,
-        symmetric_cmap=True,
-        title=f'Component {_component}/{len(output["components"])}',
-    )
+    _brain = _zscored.iplot(threshold=_threshold)
 
     # Plotly: timecourse + power spectrum
     _timecourse = output['weights'][:, _component]
@@ -222,7 +209,11 @@ def _(
         margin=dict(t=40, b=50, l=70, r=30),
     )
 
-    mo.vstack([mo.Html(_brain_html._repr_html_()), _fig], gap=0.5)
+    mo.vstack([
+        mo.md(f'**Component {_component + 1} of {len(output["components"])}**'),
+        _brain,
+        _fig,
+    ], gap=0.5)
     return
 
 

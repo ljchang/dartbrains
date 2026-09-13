@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -116,7 +116,7 @@ def _(IMG_DIR, mo):
 
 
 @app.cell
-def _(fetch_resource):
+def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
@@ -129,7 +129,7 @@ def _(fetch_resource):
     from nltools.mask import expand_mask, roi_to_brain
     from nltools.stats import fdr, threshold, fisher_r_to_z, one_sample_permutation_test
     from sklearn.metrics import pairwise_distances
-    from nilearn.plotting import plot_glass_brain, plot_stat_map, view_img_on_surf, view_img
+    from nilearn.plotting import plot_glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
 
     return (
@@ -148,7 +148,6 @@ def _(fetch_resource):
         plt,
         roi_to_brain,
         threshold,
-        view_img,
     )
 
 
@@ -510,8 +509,8 @@ def _(plot_glass_brain, rsa_motor_p, rsa_motor_r, threshold):
 
 
 @app.cell
-def _(thresholded_1, view_img):
-    view_img(thresholded_1.to_nifti())
+def _(thresholded_1):
+    thresholded_1.iplot()
     return
 
 
