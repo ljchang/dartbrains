@@ -382,42 +382,10 @@ def _(mo):
             )
     ```
 
-    ### The same thing with `BrainCollection`
-
-    That loop is worth writing out once, because it makes every step explicit. But
-    running the identical model on every subject is such a common pattern that
-    nltools has a class for it. `BrainCollection` holds a list of subjects, pairs
-    each one with its design, and runs operations across all of them in parallel,
-    caching results to disk so you don't recompute on a re-run:
-
-    ```python
-    from nltools.data import BrainCollection
-
-    subjects = localizer.get_subjects()
-    bc = BrainCollection.from_paths(
-        [localizer.get_file(s, 'derivatives', 'bold') for s in subjects],
-        design_paths=[localizer.get_file(s, 'raw', 'events', '.tsv') for s in subjects],
-        mask=localizer.get_file(subjects[0], 'derivatives', 'mask'),
-        metadata={'subject_id': subjects},
-    )
-
-    fitted = bc.smooth(fwhm).fit(
-        model='glm',
-        X=lambda ctx: DesignMatrix(ctx.dm, run_length=len(ctx.bd), TR=tr)
-                      .add_poly(order=1, include_lower=True),
-    )
-    betas = fitted.compute_contrasts('horizontal_checkerboard_c0')
-    ```
-
-    The `X=` argument takes a function that builds the design for a single subject.
-    It receives a context object exposing everything about that subject — `ctx.bd`
-    (the loaded `BrainData`), `ctx.dm` (its design/events file), `ctx.TR`,
-    `ctx.subject`, `ctx.confounds` — so the same builder works for every subject
-    without you managing the bookkeeping. One thing to watch: `from_paths` hands
-    the design *path* through unparsed, so the builder is responsible for turning it
-    into a `DesignMatrix` (`from_bids` does that step for you).
-
-    We will use `BrainCollection` for the group statistics below.
+    Writing the loop out like this keeps every step explicit: load, smooth, build
+    the design, fit, write. The same pattern works for any first-level model you
+    want to run across a dataset, and because each subject's betas are written to
+    disk you only pay for the fit once.
 
     Now, we are ready to run our first group analyses!
 

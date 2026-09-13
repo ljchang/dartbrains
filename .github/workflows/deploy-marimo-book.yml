@@ -71,9 +71,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .marimo_book_cache
-          key: mb-${{ runner.os }}-${{ hashFiles('content/**', 'book.yml', 'uv.lock') }}
+          key: mb-${{ runner.os }}-${{ hashFiles('uv.lock') }}-${{ hashFiles('content/**', 'book.yml') }}
+          # Fall back only to caches built from the SAME lock file: a cached
+          # body bakes in the installed packages (anywidget JS + state, plot
+          # markup), so a dependency bump must start cold even when the
+          # notebook source is unchanged. marimo-book >= 0.1.38 also hashes
+          # uv.lock into its own cache signature; this keeps CI honest on
+          # older versions and avoids restoring a cache it would discard.
           restore-keys: |
-            mb-${{ runner.os }}-
+            mb-${{ runner.os }}-${{ hashFiles('uv.lock') }}-
 
       - name: Validate book.yml
         run: uv run marimo-book check
