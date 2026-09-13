@@ -168,6 +168,7 @@ toc:
     # instructor notebooks with solutions live in the private dartbrains-assignments repo.
     # Static preview + "Open in molab"; unfinished cells error by design (allow_errors).
     children:
+      - file: content/assignments/how-to-submit.md
       - file: content/assignments/glm.py
         title: "Assignment: GLM"
         mode: static
