@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -118,7 +118,7 @@ def _(mo):
 
 
 @app.cell
-def _(fetch_resource):
+def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import os
@@ -129,14 +129,23 @@ def _(fetch_resource):
     from nltools.data import BrainData
     from nltools.templates import fetch_resource
     from nltools.mask import expand_mask
-    from nilearn.plotting import view_img_on_surf
     from sklearn.svm import SVC
     from sklearn.linear_model import RidgeClassifier, RidgeCV, LassoCV
     from sklearn.model_selection import GroupKFold
     from dartbrains_tools.data import localizer
 
-    return (BrainData, GroupKFold, LassoCV, RidgeCV, RidgeClassifier, SVC,
-            expand_mask, fetch_resource, localizer, np, os, pd, view_img_on_surf)
+    return (
+        BrainData,
+        GroupKFold,
+        LassoCV,
+        RidgeCV,
+        RidgeClassifier,
+        SVC,
+        expand_mask,
+        fetch_resource,
+        localizer,
+        np,
+    )
 
 
 @app.cell(hide_code=True)
@@ -159,7 +168,7 @@ def _(BrainData, localizer):
     right = BrainData(right_file_list)
 
     data = left.append(right)
-    return data, left_file_list, right_file_list
+    return data, left_file_list
 
 
 @app.cell(hide_code=True)
@@ -245,8 +254,8 @@ def _(mo):
 
 
 @app.cell
-def _(svm_stats, view_img_on_surf):
-    view_img_on_surf(svm_stats.weight_map.to_nifti())
+def _(svm_stats):
+    svm_stats.weight_map.iplot()
     return
 
 

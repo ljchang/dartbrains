@@ -104,7 +104,7 @@ def _():
     from sklearn.metrics import pairwise_distances
     from copy import deepcopy
     import networkx as nx
-    from nilearn.plotting import plot_stat_map, view_img_on_surf
+    from nilearn.plotting import plot_stat_map
     import nibabel as nib
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
@@ -145,7 +145,6 @@ def _():
         pl,
         plt,
         roi_to_brain,
-        view_img_on_surf,
         youtube,
         zscore,
     )
@@ -1002,8 +1001,9 @@ def _(G, mask_x, pd, roi_to_brain):
 
 
 @app.cell
-def _(brain_degree, view_img_on_surf):
-    view_img_on_surf(brain_degree.to_nifti())
+def _(brain_degree):
+    # The same map as a 3D volume render (rotate with the mouse).
+    brain_degree.iplot(view='render')
     return
 
 
