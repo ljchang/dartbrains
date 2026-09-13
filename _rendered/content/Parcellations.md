@@ -148,7 +148,7 @@ plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colo
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11d8b1750&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11b829c50&gt;</pre>
 </div>
 
 <div class="marimo-book-output">
@@ -243,7 +243,7 @@ plotting.plot_roi(region_labels, title='Yeo',
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11a78e3f0&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x118919e50&gt;</pre>
 </div>
 
 2. [Schaefer parcellation](https://pubmed.ncbi.nlm.nih.gov/28981612/)
@@ -272,7 +272,7 @@ plotting.plot_roi(atlas_1, title=f'Schaefer - {n_rois}', colorbar=True, cmap='Pa
 </pre>
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11af48f30&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x1188943d0&gt;</pre>
 </div>
 
 3. [Shen Parcellation](https://pubmed.ncbi.nlm.nih.gov/23747961/)
@@ -288,7 +288,7 @@ plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x15e2084b0&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11b8c82f0&gt;</pre>
 </div>
 
 Something of note is that while we usually think of voxels as belonging to one single region (**hard assignment**), but it also possible that a voxel can belong to multiple regions (**soft assignment**). Consider parcellations based on network - (association cortex) regions may be "part of" different networks depending on task. Below, we introduce the idea of multimodal parcellations.
@@ -318,7 +318,7 @@ plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)
 ```
 
 <div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11a787a00&gt;</pre>
+<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x118657d40&gt;</pre>
 </div>
 
 - Rosen & Halgren: https://pubmed.ncbi.nlm.nih.gov/33483325/
