@@ -96,7 +96,12 @@ build = [
     # (brainsprite slices its sprite by pixel geometry; 0.1.35 garbled them).
     # 0.1.37 rewraps anywidgets placed inside mo.vstack/hstack (they arrived as
     # escaped text) — the Connectivity and ICA component viewers.
-    "marimo-book>=0.1.37",
+    # 0.1.38 renders mo.md prose on mode: wasm pages (marimo ships it under
+    # text/markdown with the rendered HTML as payload; 0.1.31–0.1.37 wrapped
+    # it in <pre>, so MR_Physics / Signal_Processing / Preprocessing showed
+    # escaped markup), keys the build cache on uv.lock so a dependency bump
+    # re-renders unchanged notebooks, and labels precompute sliders.
+    "marimo-book>=0.1.38",
 ]
 
 [tool.uv.sources]
