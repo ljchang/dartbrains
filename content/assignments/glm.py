@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["marimo", "numpy", "matplotlib", "nilearn", "marimo-grader-client", "mograder"]
-# mograder-cell-hashes = "d9bbf386,0def6f6b,8af6cf8a,02394504,2b636745,9dfa4cd8,65ae7bd0,d1247f35,704f1508,de24ba33,a00823c9,64765855,e3adbd64,5edeb41c,ee748a1e,7215d5d9,d031d589,60edda69,d6900c33,543f6f7e,bd3d1a89,a0226b3b"
+# mograder-cell-hashes = "d9bbf386,0def6f6b,8af6cf8a,02394504,2b636745,9dfa4cd8,65ae7bd0,d1247f35,704f1508,de24ba33,15f6ee82,a00823c9,64765855,e3adbd64,b98c399a,5edeb41c,ee748a1e,7215d5d9,8e2b8b0f,d031d589,60edda69,d6900c33,c5a3908d,543f6f7e,bd3d1a89,a0226b3b,cea8aa5d"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "glm"
 # grader-assignment-id = "f9acfc9e-3068-4237-90cc-8427d166abab"
-# grader-assignment-version = "e5e84d49-f586-45f7-8b71-602cd1ffb2c0"
-# grader-version = "4"
+# grader-assignment-version = "11f738f7-22cf-406f-9673-41ea28b877e9"
+# grader-version = "5"
 # ///
 """DartBrains assignment: the General Linear Model (instructor notebook).
 
@@ -242,6 +242,12 @@ def _(g):
     return
 
 
+@app.cell
+def _(g):
+    g.feedback("glm-q01")
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -301,6 +307,12 @@ def _(g, mo, noise_levels, np, r2_by_noise):
 @app.cell
 def _(g):
     g.submit_button("glm-q02")
+    return
+
+
+@app.cell
+def _(g):
+    g.feedback("glm-q02")
     return
 
 
@@ -364,6 +376,12 @@ def _(efficiency_by_trials, g, mo, np, trial_counts):
 @app.cell
 def _(g):
     g.submit_button("glm-q03")
+    return
+
+
+@app.cell
+def _(g):
+    g.feedback("glm-q03")
     return
 
 
@@ -435,6 +453,12 @@ def _(g):
     return
 
 
+@app.cell
+def _(g):
+    g.feedback("glm-q04")
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -462,6 +486,12 @@ def _(answer, g):
     # UI element values are not part of the notebook file, so pass them as outputs;
     # they are stored with the attempt and shown to the grader next to the notebook.
     g.submit_button("glm-q05", outputs={"answer": answer.value})
+    return
+
+
+@app.cell
+def _(g):
+    g.feedback("glm-q05")
     return
 
 

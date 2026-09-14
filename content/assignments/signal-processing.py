@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["marimo", "numpy", "scipy", "matplotlib", "marimo-grader-client", "mograder"]
-# mograder-cell-hashes = "75142515,fe9f4ef6,8af6cf8a,625df5dc,67a54988,ca2329d2,e348968a,9f2cc442,406a3c2b,c9ec193b,3aa0c3f6,a8fb810c,f95a95b8,52b7212a,d16afb54,5314c3dc,d283430f,286fc629,294a7272,bd3d1a89,3023e359"
+# mograder-cell-hashes = "75142515,fe9f4ef6,8af6cf8a,625df5dc,67a54988,ca2329d2,e348968a,9f2cc442,406a3c2b,c153bf14,c9ec193b,3aa0c3f6,a8fb810c,edd5928b,f95a95b8,52b7212a,d16afb54,8feeb704,5314c3dc,d283430f,286fc629,9a2b1022,294a7272,bd3d1a89,3023e359,4838bc52"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "signal-processing"
 # grader-assignment-id = "51e589a9-69f3-4ae5-911d-5cdb60354f96"
-# grader-assignment-version = "ad34eb4e-274e-406b-b08a-02a15482973a"
-# grader-version = "4"
+# grader-assignment-version = "ff8b3107-7c4e-48cb-9ffa-cd55d58a10ee"
+# grader-version = "5"
 # ///
 """DartBrains assignment: Signal Processing (instructor notebook).
 
@@ -174,6 +174,12 @@ def _(g):
     return
 
 
+@app.cell
+def _(g):
+    g.feedback("sp-q01")
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -240,6 +246,12 @@ def _(amplitude, amps, detected_freqs, freq_axis, freqs, g, mo, np, signal):
 @app.cell
 def _(g):
     g.submit_button("sp-q02")
+    return
+
+
+@app.cell
+def _(g):
+    g.feedback("sp-q02")
     return
 
 
@@ -313,6 +325,12 @@ def _(fft, fftfreq, filtered, freqs, g, mo, n_samples, np, sf, signal, target_fr
 @app.cell
 def _(g):
     g.submit_button("sp-q03")
+    return
+
+
+@app.cell
+def _(g):
+    g.feedback("sp-q03")
     return
 
 
@@ -391,6 +409,12 @@ def _(g):
     return
 
 
+@app.cell
+def _(g):
+    g.feedback("sp-q04")
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -418,6 +442,12 @@ def _(answer, g):
     # UI element values are not part of the notebook file, so pass them as outputs;
     # they are stored with the attempt and shown to the grader next to the notebook.
     g.submit_button("sp-q05", outputs={"answer": answer.value})
+    return
+
+
+@app.cell
+def _(g):
+    g.feedback("sp-q05")
     return
 
 

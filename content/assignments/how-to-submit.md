@@ -24,11 +24,15 @@ Press **Sign in with Dartmouth** near the top of the notebook. A tab opens on Da
 
 Then press **Submit** under a question. Autograded questions come back with a score and feedback within about a minute; written questions show *waiting for grade* until an instructor reads them. You can submit again; the assignment page says which attempt counts.
 
-Until Dartmouth enables single sign-on for the grader, the button says that sign-in is not yet available. Keep working: Check runs regardless, and Submit opens as soon as sign-in is turned on. Your notebook stays in molab.
-
 ## 4. See your feedback
 
-Feedback appears in the notebook after grading and stays on the grader's website at [grader.dartbrains.org](https://grader.dartbrains.org), where you can see every assignment, every attempt, and the instructor's comments after signing in.
+Under each question there is a **Feedback** cell. It loads on its own when you open the notebook and shows your latest attempt for that question: the score, the maximum, any comments, and how many attempts you have made. **Refresh** checks again without re-running the cell.
+
+Autograded questions fill it in within about a minute of submitting. Written questions show your attempt until an instructor reads it, then the comments appear there too — so come back to this cell rather than waiting for an email.
+
+Your sign-in lasts eight hours. Coming back the next day, the Feedback cell will say *Sign in to see your feedback* with a button right there; one click and your score appears. That is normal, not an error.
+
+Everything is also on the grader's website at [grader.dartbrains.org](https://grader.dartbrains.org), where you can see every assignment and every attempt after signing in.
 
 ## If something looks wrong
 
