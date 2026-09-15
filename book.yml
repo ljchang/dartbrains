@@ -133,19 +133,22 @@ toc:
         mode: wasm
         # Edit opens the chapter in marimo's editor in the page; the work is kept
         # in the reader's browser. The assignment opens in its own drawer.
-        views: [read, run, edit]
+        # No `run` view: this page is already reactive to read (mode: wasm), so
+        # the only thing Edit adds — and the only one worth a second kernel — is
+        # editing the code.
+        views: [read, edit]
         assignment: content/assignments/programming.py
       - file: content/Introduction_to_Pandas.py
         # pandas/numpy are bundled with Pyodide and the salary CSV is 1.7 KB with
         # open CORS, so read_csv over the network works via pyodide_http's patch.
         mode: wasm
-        views: [read, run, edit]
+        views: [read, edit]
         assignment: content/assignments/pandas-intro.py
       - file: content/Introduction_to_Polars.py
       - file: content/Introduction_to_Plotting.py
         # matplotlib/seaborn are bundled with Pyodide; the CSV is 1.7 KB over open CORS.
         mode: wasm
-        views: [read, run, edit]
+        views: [read, edit]
         assignment: content/assignments/plotting.py
       - file: content/assignments/how-to-submit.md
         title: Submitting assignments
