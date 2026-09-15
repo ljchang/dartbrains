@@ -133,6 +133,8 @@ toc:
         mode: wasm
       - file: content/Introduction_to_Polars.py
       - file: content/Introduction_to_Plotting.py
+        # matplotlib/seaborn are bundled with Pyodide; the CSV is 1.7 KB over open CORS.
+        mode: wasm
       - file: content/fmriprep_on_discovery.md
         title: Running fMRIPrep on HPC
       - file: content/Glossary.md
@@ -183,6 +185,10 @@ toc:
         allow_errors: true
       - file: content/assignments/pandas-intro.py
         title: "Assignment: Pandas"
+        mode: static
+        allow_errors: true
+      - file: content/assignments/plotting.py
+        title: "Assignment: Plotting"
         mode: static
         allow_errors: true
       - file: content/assignments/glm.py

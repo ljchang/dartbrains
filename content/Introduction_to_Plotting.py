@@ -52,6 +52,11 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
 
+    # seaborn imports scipy internally for clustermap's linkage. marimo only installs
+    # what it can see in an import statement, so naming it here is what makes the
+    # clustermap cell work in the browser.
+    import scipy  # noqa: F401
+
     return np, pd, plt, sns
 
 
@@ -599,6 +604,15 @@ def _(mo):
      - sl = Academic year salary, in dollars.
 
     Reference: S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.
+    
+    ---
+
+    ### Graded version
+
+    The graded version of these exercises is the
+    **[Plotting assignment](assignments/plotting.html)**. The exercises below ask you to
+    recreate a figure exactly; the graded version checks the numbers behind the plot and the
+    structure of the figure, and leaves the styling to you.
     """)
     return
 
