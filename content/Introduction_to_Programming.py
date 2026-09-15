@@ -35,6 +35,39 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## How a cell shows its output
+
+    Before anything else, the rule that catches everyone in marimo: a cell displays
+    **whatever its last expression evaluates to**.
+
+    ```python
+    x = 2 + 2      # an assignment is a statement, not an expression -> shows nothing
+    ```
+    ```python
+    x = 2 + 2
+    x              # the last line is an expression -> shows 4
+    ```
+
+    `print()` is different: it writes text out as the cell runs, so you can show several
+    things, or show something from inside a loop. The value it *returns* is `None`, which is
+    why a cell ending in `print(...)` shows the printed text and nothing else.
+
+    Use `print()` when you want a running commentary; end on a bare expression when you want
+    marimo to render the thing itself — a table, a figure, a slider.
+    """)
+    return
+
+
+@app.cell
+def _():
+    total = 10 * 3
+    total
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Variables and types
 
     A variable is a name bound to a value. Python works out the type for you, and `type()`
@@ -591,6 +624,85 @@ def _():
     print(f"sqrt(64)      = {math.sqrt(64)}")
     print(f"pi            = {math.pi:.5f}")
     print(f"random draws  = {[round(random.random(), 3) for _ in range(5)]}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## When something breaks
+
+    You will spend more time reading errors than writing code, so it is worth learning to
+    read them properly rather than skimming for red.
+
+    A traceback is printed **oldest call first**. The last line is the one that matters: it
+    names the error and says what went wrong. Everything above it is the path the interpreter
+    took to get there, which only matters once the last line is not enough.
+
+    Pick an error and read what Python says about it:
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mistake = mo.ui.dropdown(
+        options={
+            "a name that does not exist": "subtotal + 10",
+            "adding a string to a number": "'3' + 4",
+            "an index past the end": "[10, 20, 30][5]",
+            "a key that is not there": "{'age': 24}['name']",
+            "dividing by zero": "100 / 0",
+            "a method that does not exist": "'hello'.push('!')",
+        },
+        value="a name that does not exist",
+        label="Try:",
+    )
+    mistake
+    return (mistake,)
+
+
+@app.cell(hide_code=True)
+def _(mistake, mo):
+    _advice = {
+        "NameError": "Python has never seen that name. Nearly always a typo, or a cell that "
+        "defines it has not run yet.",
+        "TypeError": "The operation does not make sense for those types. `'3'` is text and "
+        "`4` is a number; `int('3') + 4` or `'3' + str(4)` -- decide which you meant.",
+        "IndexError": "You asked for a position that does not exist. Counting starts at 0, "
+        "so the last item of a three-element list is `[2]`, not `[3]`.",
+        "KeyError": "That key is not in the dictionary. Use `.get(key, default)` when a "
+        "missing key is expected rather than exceptional.",
+        "ZeroDivisionError": "Nothing to interpret -- check where the divisor came from; it "
+        "is usually an empty list or a count that stayed at zero.",
+        "AttributeError": "That type has no such method. Lists have `.append()`; strings do "
+        "not have `.push()`. `dir(x)` lists what an object can actually do.",
+    }
+    try:
+        eval(mistake.value)
+        _out = mo.md("No error -- that one worked.")
+    except Exception as _err:
+        _name = type(_err).__name__
+        _out = mo.md(f"""
+        ```python
+        {mistake.value}
+        ```
+        ```pytb
+        {_name}: {_err}
+        ```
+        **{_name}** — {_advice.get(_name, "")}
+        """)
+    _out
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Two habits worth forming now: read the **last line first**, and paste the error message
+    into a search engine rather than describing it in your own words. Someone has hit it
+    before, and they used the same wording Python did.
+    """).callout(kind="info")
     return
 
 
