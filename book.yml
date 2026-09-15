@@ -127,6 +127,8 @@ toc:
         # Downloads the full ~46 GB HuggingFace snapshot at execution time.
         # Render once locally (committed to _rendered/) so CI never downloads.
         mode: cached
+      - file: content/assignments/how-to-submit.md
+        title: Submitting assignments
       - file: content/Introduction_to_Programming.py
         # Pure-Python tutorial with ~10 mo.ui controls and no third-party imports,
         # so Pyodide boots fast and every example is editable in the browser.
@@ -145,13 +147,14 @@ toc:
         views: [read, edit]
         assignment: content/assignments/pandas-intro.py
       - file: content/Introduction_to_Polars.py
+        # polars ships an emscripten wheel micropip can install, and the CSV is
+        # the same 1.7 KB open-CORS file the pandas chapter reads.
+        views: [read, edit]
       - file: content/Introduction_to_Plotting.py
         # matplotlib/seaborn are bundled with Pyodide; the CSV is 1.7 KB over open CORS.
         mode: wasm
         views: [read, edit]
         assignment: content/assignments/plotting.py
-      - file: content/assignments/how-to-submit.md
-        title: Submitting assignments
       - file: content/fmriprep_on_discovery.md
         title: Running fMRIPrep on HPC
       - file: content/Glossary.md
@@ -161,6 +164,7 @@ toc:
       - file: content/MR_Physics.py
         title: Introduction to Magnetic Resonance Imaging
         mode: wasm   # 33 widgets, joint-heavy → WASM gives full reactivity
+        views: [read, run, edit]
       - file: content/ICA.py
         title: Separating Signal from Noise with ICA
         # static + precompute: 10 components, threshold fixed at 2.0 → 10 combos
@@ -168,6 +172,7 @@ toc:
       - file: content/Signal_Processing.py
         title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
+        views: [read, edit]
         assignment: content/assignments/signal-processing.py
       - file: content/Preprocessing.py
         mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
@@ -194,6 +199,10 @@ toc:
         # once locally (committed to _rendered/) so CI never hits the network.
         mode: cached
       - file: content/Resampling_Statistics.py
+        # Simulation only — no data to fetch, and numpy/scipy/pandas/matplotlib/
+        # seaborn/plotly all run in Pyodide, so the whole chapter is live.
+        mode: wasm
+        views: [read, edit]
 
   - section: Additional Courses
     children:
