@@ -1049,10 +1049,10 @@ def _(mo):
 
     ### Graded version
 
-    The graded version of these questions is the
-    **[Pandas assignment](assignments/pandas-intro.html)**. Open it from that page, sign in
-    with your Dartmouth account inside the notebook, and submit each question when you are
-    ready.
+    The graded version of these questions is the **Pandas assignment** at the end of this
+    page. Open it with the **Assignment** button in the header — it runs in a drawer at the
+    bottom of the page, so you can keep this chapter open while you work. Sign in with your
+    Dartmouth account inside it and submit each question when you are ready.
     """)
     return
 

@@ -64,7 +64,9 @@ dependencies = [
 [project.optional-dependencies]
 build = [
     # Assignment pages import marimo_grader_client (the student widget).
-    "marimo-grader-client>=0.1.0",
+    # 0.1.1 announces a successful submission to the host page, which is what
+    # records "Submitted" in the assignment drawer's version history.
+    "marimo-grader-client>=0.1.1",
     "mograder>=0.3",
     "marimo-book",
 ]
@@ -72,7 +74,9 @@ build = [
 [dependency-groups]
 build = [
     # Assignment pages import marimo_grader_client (the student widget).
-    "marimo-grader-client>=0.1.0",
+    # 0.1.1 announces a successful submission to the host page, which is what
+    # records "Submitted" in the assignment drawer's version history.
+    "marimo-grader-client>=0.1.1",
     "mograder>=0.3",
     # 0.1.18 stages PEP 723 copies as sibling files so __file__-relative
     # root detection works on WASM pages (marimo-book #46). 0.1.27 adds a
@@ -101,7 +105,14 @@ build = [
     # it in <pre>, so MR_Physics / Signal_Processing / Preprocessing showed
     # escaped markup), keys the build cache on uv.lock so a dependency bump
     # re-renders unchanged notebooks, and labels precompute sliders.
-    "marimo-book>=0.1.38",
+    # 0.1.40 ships the in-browser workbench this book turns on with
+    # `views: [read, run, edit]` (marimo's editor in the page, the reader's
+    # copy kept in their browser) and the `assignment:` drawer that carries
+    # the grader-published student notebooks; it also blocks the paragraphs of
+    # a composite `mo.vstack` cell on static pages (the byline used to run into
+    # the first paragraph) and honours `hide_author_line`, which this book
+    # sets to false to keep each chapter's byline.
+    "marimo-book>=0.1.40",
 ]
 
 [tool.uv.sources]

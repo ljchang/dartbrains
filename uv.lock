@@ -566,7 +566,7 @@ requires-dist = [
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
     { name = "marimo", specifier = ">=0.24.2" },
     { name = "marimo-book", marker = "extra == 'build'" },
-    { name = "marimo-grader-client", marker = "extra == 'build'", specifier = ">=0.1.0" },
+    { name = "marimo-grader-client", marker = "extra == 'build'", specifier = ">=0.1.1" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "mograder", marker = "extra == 'build'", specifier = ">=0.3" },
     { name = "nbformat" },
@@ -586,8 +586,8 @@ provides-extras = ["build"]
 
 [package.metadata.requires-dev]
 build = [
-    { name = "marimo-book", specifier = ">=0.1.38" },
-    { name = "marimo-grader-client", specifier = ">=0.1.0" },
+    { name = "marimo-book", specifier = ">=0.1.40" },
+    { name = "marimo-grader-client", specifier = ">=0.1.1" },
     { name = "mograder", specifier = ">=0.3" },
 ]
 
@@ -1488,7 +1488,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.38"
+version = "0.1.40"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1499,6 +1499,7 @@ dependencies = [
     { name = "mkdocs-autorefs" },
     { name = "mkdocs-material" },
     { name = "nbformat" },
+    { name = "packaging" },
     { name = "pillow" },
     { name = "pybtex" },
     { name = "pydantic" },
@@ -1508,22 +1509,22 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/20/57/d90bcd85005439fa6ab84028ddb073c5dad47f46e7303232d4d5401592d3/marimo_book-0.1.38.tar.gz", hash = "sha256:13a5aeff41ea38912639d6e279318c18f4c3894abfd6f6e08e75f958bf24c4e9", size = 371008, upload-time = "2026-09-13T18:34:38.22Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/eb/4d/c30adfd55864f365fc125510a5cee0f3e3ba8a79d36ab138e83cd70a3d1e/marimo_book-0.1.40.tar.gz", hash = "sha256:16435e76b1a7616de5605db359331f1ed78d7b7b82314c138825752da8ac22ac", size = 420040, upload-time = "2026-09-15T18:53:17.006Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/ec/75b4ea837e4fe5009be8879d77e80bd920e9f6ccf3d43d084ecce96c5310/marimo_book-0.1.38-py3-none-any.whl", hash = "sha256:66e344908759c5580a55e26cd18b2d9eac85a91aaa67baa24cf0ff0f83d93c10", size = 176243, upload-time = "2026-09-13T18:34:36.784Z" },
+    { url = "https://files.pythonhosted.org/packages/29/ed/3e6fc3320ab62c5d71d6088743e5342081b0445e5247b8bcc39426fe604f/marimo_book-0.1.40-py3-none-any.whl", hash = "sha256:29de9a39910bd800ce85f53516a37f8d7c9d94fe6367194a53d1b85b679c89da", size = 209105, upload-time = "2026-09-15T18:53:15.449Z" },
 ]
 
 [[package]]
 name = "marimo-grader-client"
-version = "0.1.0"
+version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e5/42/4046d4fab5f4ec396b864a2f301fd7ce9e5b044ff60e61b1f4edc14cab0f/marimo_grader_client-0.1.0.tar.gz", hash = "sha256:6536a53a6be6862951050f76f1c47acae5d9cb92554d8368015cccac8a09e50e", size = 97011, upload-time = "2026-09-11T16:12:18.223Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/58/71ea04ea5777774453c5058b2dcbbfb833bff718a7de57ab664c459e2313/marimo_grader_client-0.1.1.tar.gz", hash = "sha256:91e59d9c81dea2edefb512d6592a6a4c782e8b0aa383cf8d70b72b0867e43a35", size = 97157, upload-time = "2026-09-15T18:01:28.089Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/82/9b/8d1113d8b2e7c0171e90f8803e962edfbb86ccb79113931782496fec02f7/marimo_grader_client-0.1.0-py3-none-any.whl", hash = "sha256:209103104395142a4c4c117894319473d47bc14d4ebc43c3761cb3d841b3cff8", size = 17504, upload-time = "2026-09-11T16:12:16.84Z" },
+    { url = "https://files.pythonhosted.org/packages/8d/e1/7df2704787831761d3284c0350de43f1de9bdbb6eaae6618894f3ba6866b/marimo_grader_client-0.1.1-py3-none-any.whl", hash = "sha256:2ab7916e44c56bd4b78c62191a6181390307b8cf6fc0584d8935bdb42804bd01", size = 17685, upload-time = "2026-09-15T18:01:26.633Z" },
 ]
 
 [[package]]

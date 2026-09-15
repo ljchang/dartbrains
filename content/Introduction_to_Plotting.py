@@ -609,10 +609,10 @@ def _(mo):
 
     ### Graded version
 
-    The graded version of these exercises is the
-    **[Plotting assignment](assignments/plotting.html)**. The exercises below ask you to
-    recreate a figure exactly; the graded version checks the numbers behind the plot and the
-    structure of the figure, and leaves the styling to you.
+    The graded version of these exercises is the **Plotting assignment** at the end of this
+    page, which opens in a drawer from the **Assignment** button in the header. The exercises
+    below ask you to recreate a figure exactly; the graded version checks the numbers behind
+    the plot and the structure of the figure, and leaves the styling to you.
     """)
     return
 

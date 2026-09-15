@@ -1230,7 +1230,8 @@ def _(mo):
         ---
         ### Graded assignment
 
-        The graded version of these exercises is the **[Signal Processing](https://dartbrains.org/assignments/signal-processing/)** assignment.
+        The graded version of these exercises is the **Signal Processing assignment** at the
+        end of this page, which opens in a drawer from the **Assignment** button in the header.
         Open it from that page (in molab or by download), sign in with your Dartmouth account
         inside the notebook, and submit each question when you are ready.
         """

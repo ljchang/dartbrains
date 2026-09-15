@@ -785,7 +785,8 @@ def _(mo):
     ---
     ### Graded assignment
 
-    The graded version of these exercises is the **[GLM](https://dartbrains.org/assignments/glm/)** assignment.
+    The graded version of these exercises is the **GLM assignment** at the end of this page,
+    which opens in a drawer from the **Assignment** button in the header.
     Open it from that page (in molab or by download), sign in with your Dartmouth account
     inside the notebook, and submit each question when you are ready.
     """)

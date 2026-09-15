@@ -46,6 +46,10 @@ analytics:
 # hung notebook ever needs guarding.
 defaults:
   execution_timeout: null
+  # Keep the "*Written by ...*" byline each chapter carries under its title:
+  # these chapters have distinct authors, and book.yml's `authors:` only names
+  # the course's editors. (marimo-book hides the byline by default.)
+  hide_author_line: false
 
 # Static reactivity for discrete mo.ui widgets (slider/dropdown/etc).
 # Each widget's downstream cells are re-rendered per value at build time
@@ -117,24 +121,34 @@ toc:
 
   - section: Computing Resources
     children:
+      - file: content/Setting_Up_Python.py
+        title: Setting up Python
       - file: content/Download_Data.py
         # Downloads the full ~46 GB HuggingFace snapshot at execution time.
         # Render once locally (committed to _rendered/) so CI never downloads.
         mode: cached
-      - file: content/Setting_Up_Python.py
-        title: Setting up Python
       - file: content/Introduction_to_Programming.py
         # Pure-Python tutorial with ~10 mo.ui controls and no third-party imports,
         # so Pyodide boots fast and every example is editable in the browser.
         mode: wasm
+        # Edit opens the chapter in marimo's editor in the page; the work is kept
+        # in the reader's browser. The assignment opens in its own drawer.
+        views: [read, run, edit]
+        assignment: content/assignments/programming.py
       - file: content/Introduction_to_Pandas.py
         # pandas/numpy are bundled with Pyodide and the salary CSV is 1.7 KB with
         # open CORS, so read_csv over the network works via pyodide_http's patch.
         mode: wasm
+        views: [read, run, edit]
+        assignment: content/assignments/pandas-intro.py
       - file: content/Introduction_to_Polars.py
       - file: content/Introduction_to_Plotting.py
         # matplotlib/seaborn are bundled with Pyodide; the CSV is 1.7 KB over open CORS.
         mode: wasm
+        views: [read, run, edit]
+        assignment: content/assignments/plotting.py
+      - file: content/assignments/how-to-submit.md
+        title: Submitting assignments
       - file: content/fmriprep_on_discovery.md
         title: Running fMRIPrep on HPC
       - file: content/Glossary.md
@@ -151,10 +165,15 @@ toc:
       - file: content/Signal_Processing.py
         title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
+        assignment: content/assignments/signal-processing.py
       - file: content/Preprocessing.py
         mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
       - file: content/GLM.py
         title: Introduction to the General Linear Model
+        # The chapter itself needs nltools (no Pyodide wheel), so no run/edit
+        # views; the assignment only needs numpy/matplotlib/nilearn and opens
+        # in the drawer.
+        assignment: content/assignments/glm.py
       - file: content/GLM_Single_Subject_Model.py
         title: Modeling Single Subject Data
       - file: content/Group_Analysis.py
@@ -172,33 +191,6 @@ toc:
         # once locally (committed to _rendered/) so CI never hits the network.
         mode: cached
       - file: content/Resampling_Statistics.py
-
-  - section: Assignments
-    # Student versions published by the grader (https://grader.dartbrains.org); the
-    # instructor notebooks with solutions live in the private dartbrains-assignments repo.
-    # Static preview + "Open in molab"; unfinished cells error by design (allow_errors).
-    children:
-      - file: content/assignments/how-to-submit.md
-      - file: content/assignments/programming.py
-        title: "Assignment: Programming"
-        mode: static
-        allow_errors: true
-      - file: content/assignments/pandas-intro.py
-        title: "Assignment: Pandas"
-        mode: static
-        allow_errors: true
-      - file: content/assignments/plotting.py
-        title: "Assignment: Plotting"
-        mode: static
-        allow_errors: true
-      - file: content/assignments/glm.py
-        title: "Assignment: GLM"
-        mode: static
-        allow_errors: true
-      - file: content/assignments/signal-processing.py
-        title: "Assignment: Signal Processing"
-        mode: static
-        allow_errors: true
 
   - section: Additional Courses
     children:
