@@ -752,6 +752,15 @@ def _(mo):
     from 61 to 80 inclusive, `$500` at 81 or above.
 
     *You have seen this one already — write it yourself without scrolling up, then compare.*
+
+    ---
+
+    ### Graded version
+
+    The graded version of these four questions, plus one on reading an error message, is the
+    **[Programming assignment](assignments/programming.html)**. Open it from that page, sign
+    in with your Dartmouth account inside the notebook, and submit each question when you are
+    ready. The cells below are for practice and are not collected.
     """)
     return
 
