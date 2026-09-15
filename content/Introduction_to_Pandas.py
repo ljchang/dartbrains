@@ -179,24 +179,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To load a csv file we will need to specify either the relative or absolute path to the file.
-
-    In Python, `os.getcwd()` returns the path of the current working directory.
-    """)
-    return
-
-
-@app.cell
-def _():
-    import os
-    os.getcwd()
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    We will now load the Pandas has many ways to read data different data formats into a dataframe.  Here we will use the `pd.read_csv` function.
+    Pandas can read many different data formats into a dataframe. Here we use `pd.read_csv`, pointing it straight at a URL — it reads from the web as happily as from a local file.
     """)
     return
 
@@ -561,6 +544,56 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(df, mo):
+    filter_col = mo.ui.dropdown(
+        options=[c for c in df.columns if df[c].dtype.kind in "if"],
+        value="salary",
+        label="where",
+    )
+    filter_op = mo.ui.dropdown(options=[">", ">=", "<", "<=", "=="], value=">", label="")
+    return filter_col, filter_op
+
+
+@app.cell(hide_code=True)
+def _(df, filter_col, filter_op, mo):
+    _series = df[filter_col.value]
+    filter_val = mo.ui.slider(
+        start=float(_series.min()),
+        stop=float(_series.max()),
+        value=float(_series.median()),
+        step=(float(_series.max()) - float(_series.min())) / 50 or 1.0,
+        label="",
+        show_value=True,
+    )
+    mo.hstack([filter_col, filter_op, filter_val], justify="start", gap=1)
+    return (filter_val,)
+
+
+@app.cell(hide_code=True)
+def _(df, filter_col, filter_op, filter_val, mo):
+    _mask = {
+        ">": df[filter_col.value] > filter_val.value,
+        ">=": df[filter_col.value] >= filter_val.value,
+        "<": df[filter_col.value] < filter_val.value,
+        "<=": df[filter_col.value] <= filter_val.value,
+        "==": df[filter_col.value] == filter_val.value,
+    }[filter_op.value]
+    _kept = df[_mask]
+    mo.vstack([
+        mo.md(f"""
+        ```python
+        mask = df["{filter_col.value}"] {filter_op.value} {filter_val.value:g}
+        df[mask]
+        ```
+        The mask is a Series of `True`/`False`, one per row — **{int(_mask.sum())} of
+        {len(df)}** rows are `True`. Passing it to `df[...]` keeps exactly those rows.
+        """),
+        _kept.head(8),
+    ])
+    return
+
+
 @app.cell
 def _(df_1):
     df_1[(df_1.salary > 90000) & (df_1.salary < 100000)]
@@ -815,6 +848,43 @@ def _(mo):
     In this example, we will use the `groupby` operator to split the data based on gender labels and separately calculate the mean for each group. Note that newer versions of pandas might throw an error if you try to perform a numeric computation such as `.mean()` on a dataframe containing columns of string data. Use the flag `numeric_only=True` to avoid this issue.
     """)
     return
+
+
+@app.cell(hide_code=True)
+def _(df, mo):
+    by_col = mo.ui.dropdown(
+        options=[c for c in df.columns if df[c].dtype.kind in "biOU"],
+        value="departm",
+        label="group by",
+    )
+    agg_col = mo.ui.dropdown(
+        options=[c for c in df.columns if df[c].dtype.kind in "if"],
+        value="salary",
+        label="then take the",
+    )
+    agg_fn = mo.ui.dropdown(
+        options=["mean", "median", "count", "min", "max", "std"], value="mean", label="of"
+    )
+    mo.hstack([by_col, agg_col, agg_fn], justify="start", gap=1)
+    return agg_col, agg_fn, by_col
+
+
+@app.cell(hide_code=True)
+def _(agg_col, agg_fn, by_col, df, mo):
+    _grouped = getattr(df.groupby(by_col.value)[agg_col.value], agg_fn.value)()
+    mo.vstack([
+        mo.md(f"""
+        ```python
+        df.groupby("{by_col.value}")["{agg_col.value}"].{agg_fn.value}()
+        ```
+        **Split** the {len(df)} rows into {_grouped.shape[0]} groups by
+        `{by_col.value}`, **apply** `{agg_fn.value}` to each group's `{agg_col.value}`,
+        and **combine** the answers into one Series:
+        """),
+        _grouped.round(2).to_frame(agg_fn.value),
+    ])
+    return
+
 
 
 @app.cell

@@ -128,6 +128,9 @@ toc:
         # so Pyodide boots fast and every example is editable in the browser.
         mode: wasm
       - file: content/Introduction_to_Pandas.py
+        # pandas/numpy are bundled with Pyodide and the salary CSV is 1.7 KB with
+        # open CORS, so read_csv over the network works via pyodide_http's patch.
+        mode: wasm
       - file: content/Introduction_to_Polars.py
       - file: content/Introduction_to_Plotting.py
       - file: content/fmriprep_on_discovery.md
