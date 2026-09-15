@@ -1,127 +1,33 @@
-# /// script
-# requires-python = ">=3.13"
-# dependencies = [
-#     "marimo>=0.23.3",
-#     "setuptools",
-# ]
-# ///
-
 import marimo
 
 __generated_with = "0.24.2"
-app = marimo.App()
+app = marimo.App(width="medium")
 
 
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
-    from pathlib import Path
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "programming"
-    return IMG_DIR, mo
 
-
-@app.cell(hide_code=True)
-def _():
-    import shutil
-    import subprocess
-
-    return shutil, subprocess
-
-
-@app.cell(hide_code=True)
-def _(IMG_DIR, mo):
-    mo.vstack([
-        mo.md(r"""
-        # Introduction to programming
-        _Written by Luke Chang_
-
-    In this notebook we will begin to learn how to use Python.  There are many different ways to install Python, but we recommend starting using Anaconda which is preconfigured for scientific computing.  Start with installing [Python 3.7](https://www.anaconda.com/distribution/).  For those who prefer a more configurable IDE, [Pycharm](https://www.jetbrains.com/pycharm/) is a nice option.  Python is a modular interpreted language with an intuitive minimal syntax that is quickly becoming one of the most popular languages for [conducting research](http://www.talyarkoni.org/blog/2013/11/18/the-homogenization-of-scientific-computing-or-why-python-is-steadily-eating-other-languages-lunch/).  You can use python for [stimulus presentation](http://www.psychopy.org/), [data analysis](http://statsmodels.sourceforge.net/), [machine-learning](http://scikit-learn.org/stable/), [scraping data](https://www.crummy.com/software/BeautifulSoup/), creating websites with [flask](http://flask.pocoo.org/) or [django](https://www.djangoproject.com/), or [neuroimaging data analysis](http://nipy.org/).
-
-        There are lots of free useful resources to learn how to use python and various modules.  See [Jeremy Manning's](https://github.com/ContextLab/cs-for-psych) or [Yaroslav Halchenko's](https://github.com/dartmouth-pbs/psyc161) excellent Dartmouth courses.  [Codeacademy](https://www.codecademy.com/) is a great interactive tutorial.  [Stack Overflow](http://stackoverflow.com/) is an incredibly useful resource for asking specific questions and seeing responses to others that have been rated by the development community.
-        """),
-        mo.image(str(IMG_DIR / "programming_growth.png")),
-    ])
-    return
+    return (mo,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Marimo Notebooks
-    We will primarily be using [marimo](https://marimo.io/) notebooks to interface with Python. A marimo notebook is a *reactive* Python notebook stored as a plain `.py` file — no JSON, no out-of-order-execution traps, and clean diffs in git.
+    # Introduction to Programming
+    _Written by Luke Chang_
 
-    A marimo notebook consists of **cells**. Unlike Jupyter, there is only one cell type — every cell is Python. Prose is written by calling `mo.md(r"...")` (using a triple-quoted raw string for multi-line markdown) and letting the cell evaluate to that markdown object, like this very cell.
+    This notebook runs **in your browser**. There is nothing to install: every cell below is
+    live Python, and you are encouraged to change the code and see what happens. Breaking a
+    cell costs nothing — reload the page and it comes back.
 
-    ### Reactive execution
-    The biggest conceptual difference from Jupyter is *reactivity*. marimo statically analyzes which variables each cell defines and reads, and builds a dataflow graph from that. When you change a cell, every cell that depends on it re-runs automatically — there is no "I forgot to re-run cell 4" problem, and the notebook's state always matches the code on screen.
+    If you want to run Python on your own machine, see
+    **[Setting up Python](Setting_Up_Python.html)** first.
 
-    A consequence of this design: every variable name must be defined in **at most one cell**. If you want to reuse a name (e.g., `x`) for a quick experiment, prefix it with an underscore (`_x`) to make it cell-local.
-
-    ### Running and editing cells
-    - **Run a cell:** `Ctrl/⌘ + Enter` (or click the run button in the cell's gutter).
-    - **Add a cell:** click the `+` button that appears between cells, or use `Ctrl/⌘ + Shift + Enter` to run the current cell and add a new one below.
-    - **Render markdown, plots, or UI:** whatever the cell's last expression evaluates to is what gets displayed — `mo.md(...)` for prose, `plt.gcf()` for a matplotlib figure, a DataFrame for a table, `mo.ui.slider(...)` for an interactive control.
-    - **Hide cell code:** click the eye icon in the gutter. Code stays in the file; only the output is shown. The prose cells in this notebook all have their code hidden.
-
-    ### Launching marimo
-    From the project root:
-    ```bash
-    uv run marimo edit content/Introduction_to_Programming.py
-    ```
-    """)
-    return
-
-
-@app.cell
-def _():
-    print("Hello World")
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Installing Python with uv (Recommended)
-
-    [uv](https://docs.astral.sh/uv/) is a fast, modern Python package manager that handles both installing Python itself and managing project dependencies.
-
-    ### Install uv
-
-    **macOS / Linux:**
-    ```bash
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    ```
-
-    **Windows:**
-    ```powershell
-    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-    ```
-
-    ### Set up the DartBrains project
-
-    ```bash
-    # Clone the repository
-    git clone https://github.com/ljchang/dartbrains.git
-    cd dartbrains
-
-    # Install Python and all dependencies (this one command does everything)
-    uv sync
-
-    # Open a notebook
-    uv run marimo edit content/Introduction_to_Programming.py
-    ```
-
-    `uv sync` reads the `pyproject.toml` file and automatically installs the correct Python version (3.13) and all required packages. No need to manually install Python or create virtual environments — uv handles it all.
-
-    ### Running Python with uv
-
-    To run any Python script or command with the project's dependencies available:
-
-    ```bash
-    uv run python my_script.py
-    uv run marimo edit content/any_notebook.py
-    ```
+    A note on how to read this page. Many cells have a slider or a box above them. Those are
+    not decoration — move one and every cell that depends on it re-runs immediately. That is
+    what a *reactive* notebook means, and it is the fastest way to build intuition about what
+    a piece of code actually does.
     """)
     return
 
@@ -129,266 +35,256 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ---
+    ## Variables and types
 
-    ## Installing Python with Conda (Legacy)
+    A variable is a name bound to a value. Python works out the type for you, and `type()`
+    tells you what it decided.
 
-    If you prefer using Conda for package management, the following instructions still work.
+    Type a Python value into the box — try `42`, `3.14`, `'hello'`, `True`, `None`,
+    `[1, 2, 3]`, `{'a': 1}` — and watch what Python makes of it.
     """)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(r"""
-    ## Package Management
-    marimo has a built-in package manager that works seamlessly with `uv`. When you `import` a module that isn't installed, marimo detects it, prompts you to install it, and pins the dependency in the project's `pyproject.toml` — so the environment stays reproducible across machines and the next person who clones the repo just runs `uv sync`.
-
-    You'll see comments like this near package-using cells:
-
-    ```python
-    # packages added via marimo's package management: pandas, numpy
-    import pandas as pd
-    import numpy as np
-    ```
-
-    That comment is auto-managed by marimo — you don't need to write it yourself.
-
-    ### Installing additional packages
-    The cleanest way is to just `import` what you want and let marimo prompt you. If you'd rather pre-install from a terminal, use `uv` directly:
-
-    ```bash
-    uv add scikit-learn      # add a runtime dependency
-    uv add --dev pytest      # add a dev-only dependency
-    uv sync                  # sync the environment to pyproject.toml
-    ```
-
-    ### Getting help on a package manager
-    ```bash
-    uv help
-    uv add --help
-    ```
-
-    For one-off ad-hoc installs into the current environment (without modifying `pyproject.toml`), `pip` still works — but for project work, prefer `uv add` so the dependency is tracked.
-    """)
-    return
+    literal = mo.ui.text(value="42", label="A Python value:", full_width=False)
+    literal
+    return (literal,)
 
 
-@app.cell
-def _():
-    # packages added via marimo's package management:  !pip help install
-    return
-
-
-@app.cell
-def _(shutil, subprocess):
-    # List installed packages with a newer release available. In a uv-managed
-    # environment `uv pip` is the fast path (plain `pip` may not even be
-    # installed there); fall back to pip elsewhere.
-    if shutil.which('uv'):
-        subprocess.call(['uv', 'pip', 'list', '--outdated'])
-    elif shutil.which('pip'):
-        subprocess.call(['pip', 'list', '--outdated'])
-    else:
-        print('Neither uv nor pip is on PATH in this environment.')
-    return
-
-
-@app.cell
-def _():
-    # packages added via marimo's package management: setuptools !pip install setuptools --upgrade
+@app.cell(hide_code=True)
+def _(literal, mo):
+    try:
+        _value = eval(literal.value, {"__builtins__": {}}, {})
+        _t = type(_value).__name__
+        _out = mo.md(f"""
+        ```python
+        x = {literal.value}
+        type(x)   # -> {_t}
+        ```
+        Python read that as a **`{_t}`**, with the value `{_value!r}`.
+        """)
+    except Exception as _e:
+        _out = mo.md(f"""
+        ```python
+        x = {literal.value}
+        ```
+        That is not valid Python: **{type(_e).__name__}** — {_e}
+        """)
+    _out
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Variables
+    The types you will meet constantly:
 
-    Python is a dynamically typed language, which means that you can easily change the datatype associated with a variable. There are several built-in datatypes that are good to be aware of.
+    | Type | Example | What it is |
+    |---|---|---|
+    | `int` | `42` | a whole number |
+    | `float` | `3.14` | a number with a decimal point |
+    | `str` | `'hello'` | text |
+    | `bool` | `True` | true or false |
+    | `NoneType` | `None` | "no value" — not zero, not empty |
 
-    * Built-in
-      * Numeric types:
-        * **int**, **float**, **long**, complex
-      * String: **str**
-      * Boolean: **bool**
-        * True / False
-      * **NoneType**
-    * User defined
-
-    * Use the type() function to find the type for a value or variable
-
-    * Data can be converted using cast commands
+    You can convert between them when the conversion makes sense. `str(1)` gives `'1'`, and
+    `int('1')` gives `1` — but `int('hello')` raises a `ValueError`, because there is no
+    sensible answer.
     """)
     return
 
 
 @app.cell
 def _():
-    # Integer
     a = 1
-    print(type(a))
-
-    # Float
     b = 1.0
-    print(type(b))
-
-    # String
-    c = 'hello'
-    print(type(c))
-
-    # Boolean
+    c = "hello"
     d = True
-    print(type(d))
-
-    # None
     e = None
-    print(type(e))
 
-    # Cast integer to string
-    print(type(str(a)))
+    print(f"{a!r:>8}  is {type(a).__name__}")
+    print(f"{b!r:>8}  is {type(b).__name__}")
+    print(f"{c!r:>8}  is {type(c).__name__}")
+    print(f"{d!r:>8}  is {type(d).__name__}")
+    print(f"{e!r:>8}  is {type(e).__name__}")
+    print()
+    print(f"str(1) -> {str(1)!r}      int('1') -> {int('1')!r}")
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Math Operators
-    * +, -, *, and /
-    * Exponentiation **
-    * Modulo %
+    ## Arithmetic
 
-    * Note that division with integers in Python 2.7 automatically rounds, which may not be intended.  It is recommended to import the division module from python3 `from __future__ import division`
+    The usual operators, plus two that surprise people. Change the numbers and the operator:
     """)
     return
 
 
-@app.cell
-def _():
-    # Addition
-    a_1 = 2 + 7
-    print(a_1)
-    b_1 = a_1 - 5
-    # Subtraction
-    print(b_1)
-    print(b_1 * 2)
-    print(b_1 ** 2)
-    # Multiplication
-    print(4 % 9)
-    # Exponentiation
-    # Modulo
-    # Division
-    print(4 / 9)
+@app.cell(hide_code=True)
+def _(mo):
+    lhs = mo.ui.number(value=7, start=-100, stop=100, label="")
+    op = mo.ui.dropdown(
+        options=["+", "-", "*", "/", "//", "%", "**"], value="/", label=""
+    )
+    rhs = mo.ui.number(value=2, start=-100, stop=100, label="")
+    mo.hstack([lhs, op, rhs], justify="start", gap=1)
+    return lhs, op, rhs
+
+
+@app.cell(hide_code=True)
+def _(lhs, mo, op, rhs):
+    _expr = f"{lhs.value} {op.value} {rhs.value}"
+    _notes = {
+        "/": "`/` is **true division** and always gives a `float`, even when it divides evenly.",
+        "//": "`//` is **floor division** — it divides and rounds *down* to a whole number.",
+        "%": "`%` is the **modulo**: the remainder. `n % 2 == 0` is the usual test for even.",
+        "**": "`**` is exponentiation, not `^`. In Python `^` means something else entirely.",
+    }
+    try:
+        _result = eval(_expr, {"__builtins__": {}}, {})
+        _body = f"""
+        ```python
+        {_expr}
+        ```
+        → `{_result!r}`  (a `{type(_result).__name__}`)
+        """
+    except Exception as _err:
+        _body = f"""
+        ```python
+        {_expr}
+        ```
+        raises **{type(_err).__name__}**: {_err}
+        """
+    mo.md(_body + ("\n" + _notes[op.value] if op.value in _notes else ""))
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## String Operators
-    * Some of the arithmetic operators also have meaning for strings. E.g. for string concatenation use `+` sign
-    * String repetition: Use `*` sign with a number of repetitions
+    ## Strings
+
+    `+` joins strings and `*` repeats them. The same symbols do different things depending on
+    the type — adding numbers and adding strings are not the same operation.
     """)
     return
 
 
-@app.cell
-def _():
-    # Combine string
-    a_2 = 'Hello'
-    b_2 = 'World'
-    print(a_2 + b_2)
-    # Repeat String
-    print(a_2 * 5)
-    return
+@app.cell(hide_code=True)
+def _(mo):
+    word = mo.ui.text(value="ha", label="text:")
+    times = mo.ui.slider(1, 12, value=3, label="repeat:", show_value=True)
+    mo.hstack([word, times], justify="start", gap=2)
+    return times, word
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Logical Operators
-    Perform logical comparison and return Boolean value
-
+def _(mo, times, word):
+    mo.md(f"""
     ```python
-    x == y # x is equal to y
-    x != y # x is not equal to y
-    x > y # x is greater than y
-    x < y # x is less than y
-    x >= y # x is greater than or equal to y
-    x <= y # x is less than or equal to y
+    word = {word.value!r}
+    word * {times.value}        # -> {word.value * times.value!r}
+    word + "!"       # -> {word.value + "!"!r}
+    len(word)        # -> {len(word.value)}
+    word.upper()     # -> {word.value.upper()!r}
     ```
-
-    |  X    | not X  |
-    |-------|--------|
-    | True  | False  |
-    | False | True   |
-
-    |  X   | Y    | X AND Y | X OR Y |
-    |------|------|---------|--------|
-    |True  | True | True  | True   |
-    |True  | False| False | True   |
-    |False | True | False | True   |
-    |False | False| False | False  |
     """)
-    return
-
-
-@app.cell
-def _():
-    # Works for string
-    a_3 = 'hello'
-    b_3 = 'world'
-    c_1 = 'Hello'
-    print(a_3 == b_3)
-    print(a_3 == c_1)
-    print(a_3 != b_3)
-    d_1 = 5
-    # Works for numeric
-    e_1 = 8
-    print(d_1 < e_1)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Conditional Logic (if...)
-    Unlike most other languages, Python uses tab formatting rather than closing conditional statements (e.g., end).
+    ## Comparisons and logic
 
-    * Syntax:
+    Comparisons produce a `bool`. `and`, `or` and `not` combine them.
 
+    One trap worth burning in now: `=` **assigns**, `==` **compares**. `x = 5` sets x to 5;
+    `x == 5` asks whether it already is.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    left = mo.ui.number(value=5, start=-20, stop=20, label="")
+    comp = mo.ui.dropdown(options=["==", "!=", "<", "<=", ">", ">="], value="<", label="")
+    right = mo.ui.number(value=10, start=-20, stop=20, label="")
+    mo.hstack([left, comp, right], justify="start", gap=1)
+    return comp, left, right
+
+
+@app.cell(hide_code=True)
+def _(comp, left, mo, right):
+    _expr = f"{left.value} {comp.value} {right.value}"
+    _val = eval(_expr, {"__builtins__": {}}, {})
+    mo.md(f"""
     ```python
-    if condition:
-        do something
+    {_expr}
     ```
+    → **`{_val}`**
 
-    * Implicit conversion of the value to bool() happens if `condition` is of a different type than **bool**, thus all of the following should work:
+    Combining them: `({_expr}) and ({left.value} != 0)` → `{_val and left.value != 0}`
+    """)
+    return
 
-    ```python
-    if condition:
-        do_something
-    elif condition:
-        do_alternative1
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Conditional logic
+
+    `if` runs a block when a condition is true, `elif` offers another condition, and `else`
+    catches everything remaining. Python decides where a block begins and ends by
+    **indentation** — there are no braces, and the indentation is not cosmetic.
+
+    Drag the speed and watch which branch runs. This is the same logic as the speeding-ticket
+    exercise at the end of the notebook.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    speed = mo.ui.slider(40, 110, value=75, label="speed (mph):", show_value=True)
+    speed
+    return (speed,)
+
+
+@app.cell(hide_code=True)
+def _(mo, speed):
+    _s = speed.value
+    if _s <= 60:
+        _fine, _branch = 0, "if speed <= 60"
+    elif _s <= 80:
+        _fine, _branch = 100, "elif speed <= 80"
     else:
-        do_otherwise # often reserved to report an error
-                     # after a long list of options
+        _fine, _branch = 500, "else"
+
+    _code = "\n".join(
+        ("──▶ " if line.startswith(_branch) else "    ") + line
+        for line in [
+            "if speed <= 60:",
+            "    fine = 0",
+            "elif speed <= 80:",
+            "    fine = 100",
+            "else:",
+            "    fine = 500",
+        ]
+    )
+    mo.md(f"""
+    ```python
+    speed = {_s}
     ```
+    ```text
+    {_code}
+    ```
+    The branch that ran was **`{_branch}`**, so `fine` is **${_fine}**.
     """)
-    return
-
-
-@app.cell
-def _():
-    n = 1
-
-    if n:
-        print("n is non-0")
-
-    if n is None:
-        print("n is None")
-
-    if n is not None:
-        print("n is not None")
     return
 
 
@@ -396,41 +292,41 @@ def _():
 def _(mo):
     mo.md(r"""
     ## Loops
-    * **for** loop is probably the most popular loop construct in Python:
 
-    ```python
-    for target in sequence:
-        do_statements
-    ```
+    A `for` loop walks over the items of something. A `while` loop keeps going until its
+    condition stops being true.
 
-    * However, it's also possible to use a **while** loop to repeat statements while `condition` remains True:
-
-    ```python
-    while condition do:
-        do_statements
-    ```
+    `range(n)` produces the numbers `0` to `n-1` — note it stops *before* `n`, which is the
+    same convention as slicing below.
     """)
     return
 
 
-@app.cell
-def _():
-    string = 'Python is going to make conducting research easier'
-    for c_2 in string:
-        print(c_2)
-    return
+@app.cell(hide_code=True)
+def _(mo):
+    n = mo.ui.slider(1, 12, value=5, label="n:", show_value=True)
+    n
+    return (n,)
 
 
-@app.cell
-def _():
-    x = 0
-    end = 10
-    csum = 0
-    while x < end:
-        csum = csum + x
-        print(x, csum)
-        x = x + 1
-    print(f'Exited with x=={x}')
+@app.cell(hide_code=True)
+def _(mo, n):
+    _squares = [i**2 for i in range(n.value)]
+    _lines = "\n".join(f"  i = {i:<3} i**2 = {i**2}" for i in range(n.value))
+    mo.md(f"""
+    ```python
+    for i in range({n.value}):
+        print(i, i ** 2)
+    ```
+    ```text
+    {_lines}
+    ```
+    The same thing as a **list comprehension**, which is the idiomatic way to build a list
+    from a loop:
+    ```python
+    [i ** 2 for i in range({n.value})]   # -> {_squares}
+    ```
+    """)
     return
 
 
@@ -438,43 +334,40 @@ def _():
 def _(mo):
     mo.md(r"""
     ## Functions
-    A **function** is a named sequence of statements that performs a computation.  You define the function by giving it a name, specify a sequence of statements, and optionally values to return.  Later, you can “call” the function by name.
-    ```python
-    def make_upper_case(text):
-        return (text.upper())
-    ```
-    * The expression in the parenthesis is the **argument**.
-    * It is common to say that a function **“takes” an argument** and **“returns” a result**.
-    * The result is called the **return value**.
 
-    The first line of the function definition is called the **header**; the rest is called the **body**.
+    A function packages a piece of work under a name so you can use it more than once.
+    `def` names it, the parameters are its inputs, and `return` hands a value back.
 
-    The header has to end with a colon and the body has to be indented.
-    It is a common practice to use 4 spaces for indentation, and to avoid mixing with tabs.
-
-    Function body in Python ends whenever statement begins at the original level of indentation.  There is no **end** or **fed** or any other identify to signal the end of function.  Indentation is part of the the language syntax in Python, making it more readable and less cluttered.
+    Edit this one — change the rates, add a branch — and the cells below re-run.
     """)
     return
 
 
 @app.cell
 def _():
-    def make_upper_case(text):
-        return text.upper()
-    string_1 = 'Python is going to make conducting research easier'
-    print(make_upper_case(string_1))
-    return
+    def speeding_fine(speed):
+        """Return the fine in dollars for a given speed in mph."""
+        if speed <= 60:
+            return 0
+        elif speed <= 80:
+            return 100
+        return 500
+
+    return (speeding_fine,)
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Python Containers
-    There are 4 main types of builtin containers for storing data in Python:
-    * list
-    * tuple
-    * dict
-    * set
+def _(mo, speeding_fine):
+    _rows = "\n".join(
+        f"| {s} | ${speeding_fine(s)} |" for s in (55, 60, 61, 80, 81, 100)
+    )
+    mo.md(f"""
+    | speed | fine |
+    |---|---|
+    {_rows}
+
+    Because the notebook is reactive, editing `speeding_fine` above rewrites this table
+    immediately — you never re-run anything by hand.
     """)
     return
 
@@ -482,46 +375,134 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Lists
-    In Python, a list is a mutable sequence of values.  Mutable means that we can change separate entries within a list. For a more in depth tutorial on lists look [here](http://nbviewer.jupyter.org/github/dartmouth-pbs/psyc161/blob/master/classes/02d-Python-Fundamentals-Containers-Lists.ipynb)
+    ## Lists
 
-    * Each value in the list is an element or item
-    * Elements can be any Python data type
-    * Lists can mix data types
+    A list is an ordered, changeable sequence. Python counts from **0**, so the first item is
+    `a[0]`.
 
-    * Lists are initialized with ```[]``` or ```list()```
+    Slicing is `a[start:stop:step]`, and it includes `start` but **excludes** `stop`. That
+    off-by-one is the single most common source of confusion for beginners, so rather than
+    explain it again, move the sliders and watch which items survive.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    start = mo.ui.slider(-10, 10, value=0, label="start:", show_value=True)
+    stop = mo.ui.slider(-10, 10, value=10, label="stop:", show_value=True)
+    step = mo.ui.slider(-3, 3, value=1, label="step:", show_value=True)
+    mo.hstack([start, stop, step], justify="start", gap=2)
+    return start, step, stop
+
+
+@app.cell(hide_code=True)
+def _(mo, start, step, stop):
+    _a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+    _step = step.value or 1  # a step of 0 is an error in Python
+    _sliced = _a[start.value : stop.value : _step]
+    _kept = set(id(x) for x in _sliced)
+    _shown = "  ".join(
+        f"**{v}**" if v in _sliced else f"<span style='opacity:.3'>{v}</span>"
+        for v in _a
+    )
+    mo.md(f"""
     ```python
-    l = [1,2,3]
+    a = {_a}
+    a[{start.value}:{stop.value}:{_step}]
     ```
-    *
-    Elements within a list are indexed (**starting with 0**)
-    ```python
-    l[0]
-    ```
+    {_shown}
 
-    *
-    Elements can be nested lists
-    ```python
-    nested = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    ```
+    → `{_sliced}`
 
-    *
-    Lists can be *sliced*.
-    ```python
-    l[start:stop:stride]
-    ```
+    {"A negative step walks backwards." if _step < 0 else ""}
+    {"An empty result: with this step, start never reaches stop." if not _sliced else ""}
+    """)
+    return
 
-    * Like all python containers, lists have many useful methods that can be applied
-    ```python
-    a.insert(index,new element)
-    a.append(element to add at end)
-    len(a)
-    ```
 
-    *
-    List comprehension is a *Very* powerful technique allowing for efficient construction of new lists.
+@app.cell
+def _():
+    squares = [1, 4, 9, 16, 25]
+
+    squares.append(36)  # add to the end
+    squares[0] = 100  # lists are mutable: you can change an item in place
+
+    print(squares)
+    print(f"length {len(squares)}, last {squares[-1]}, first three {squares[:3]}")
+    print(f"evens only: {[v for v in squares if v % 2 == 0]}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Dictionaries
+
+    A dictionary maps **keys** to **values**. Where a list answers "what is at position 3?",
+    a dictionary answers "what is stored under `'age'`?" — which is usually the question you
+    actually have.
+    """)
+    return
+
+
+@app.cell
+def _():
+    subject = {"id": "sub-01", "age": 24, "handedness": "right"}
+
+    print(subject["age"])
+    print(subject.get("session", "not recorded"))  # a default instead of an error
+
+    subject["session"] = 1  # add a new key
+    for _key, _value in subject.items():
+        print(f"  {_key:12} {_value}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Tuples and sets
+
+    A **tuple** is an ordered sequence like a list, but it cannot be changed after it is
+    made. Use one when the fixedness is the point — coordinates, or a function returning
+    several values at once.
+
+    A **set** is an unordered collection with no duplicates, and it does the
+    membership-and-overlap questions quickly.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    left_set = mo.ui.multiselect(
+        options=[str(i) for i in range(1, 11)],
+        value=["1", "2", "3", "4", "5", "6"],
+        label="set A:",
+    )
+    right_set = mo.ui.multiselect(
+        options=[str(i) for i in range(1, 11)],
+        value=["4", "5", "6", "7", "8"],
+        label="set B:",
+    )
+    mo.hstack([left_set, right_set], justify="start", gap=2)
+    return left_set, right_set
+
+
+@app.cell(hide_code=True)
+def _(left_set, mo, right_set):
+    _A = {int(x) for x in left_set.value}
+    _B = {int(x) for x in right_set.value}
+    mo.md(f"""
     ```python
-    [a for a in l]
+    A = {_A or set()}
+    B = {_B or set()}
+
+    A | B    # union         -> {_A | _B or set()}
+    A & B    # intersection  -> {_A & _B or set()}
+    A - B    # difference    -> {_A - _B or set()}
+    A ^ B    # in one, not both -> {_A ^ _B or set()}
     ```
     """)
     return
@@ -529,110 +510,14 @@ def _(mo):
 
 @app.cell
 def _():
-    # Indexing and Slicing
-    a_4 = ['lists', 'are', 'arrays']
-    print(a_4[0])
-    print(a_4[1:3])
-    a_4.insert(2, 'python')
-    # List methods
-    a_4.append('.')
-    print(a_4)
-    print(len(a_4))
-    # List Comprehension
-    print([x.upper() for x in a_4])
-    return
+    point = (3, 7)  # a tuple
+    x, y = point  # unpacking: two names from one tuple
+    print(f"x={x}, y={y}")
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Dictionaries
-
-    * In Python, a dictionary (or `dict`) is mapping between a set of
-    indices (**keys**) and a set of **values**
-
-    * The items in a dictionary are key-value pairs
-
-    * Keys can be any Python data type
-
-    * Dictionaries are unordered
-
-    * Here is a more indepth tutorial on [dictionaries](http://nbviewer.jupyter.org/github/dartmouth-pbs/psyc161/blob/master/classes/03c-Python-Fundamentals-Containers-Dicts.ipynb)
-    """)
-    return
-
-
-@app.cell
-def _():
-    # Dictionaries
-    eng2sp = {}
-    eng2sp['one'] = 'uno'
-    print(eng2sp)
-
-    eng2sp = {'one': 'uno', 'two': 'dos', 'three': 'tres'}
-    print(eng2sp)
-
-    print(eng2sp.keys())
-    print(eng2sp.values())
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Tuples
-    In Python, a **tuple** is an immutable sequence of values, meaning they can't be changed
-
-    * Each value in the tuple is an element or item
-
-    * Elements can be any Python data type
-
-    * Tuples can mix data types
-
-    * Elements can be nested tuples
-
-    * **Essentially tuples are immutable lists**
-
-    Here is a nice tutorial on [tuples](http://nbviewer.jupyter.org/github/dartmouth-pbs/psyc161/blob/master/classes/03b-Python-Fundamentals-Containers-Tuples.ipynb)
-    """)
-    return
-
-
-@app.cell
-def _():
-    numbers = (1, 2, 3, 4)
-    print(numbers)
-
-    t2 = 1, 2
-    print(t2)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## sets
-    In Python, a `set` is an efficient storage for "membership" checking
-
-    * `set` is like a `dict` but only with keys and without values
-
-    * a `set` can also perform set operations (e.g., union intersection)
-
-    * Here is more info on [sets](http://nbviewer.jupyter.org/github/dartmouth-pbs/psyc161/blob/master/classes/03d-Python-Fundamentals-Containers-Sets.ipynb)
-    """)
-    return
-
-
-@app.cell
-def _():
-    # Union
-    print({1, 2, 3, 'mom', 'dad'} | {2, 3, 10})
-
-    # Intersection
-    print({1, 2, 3, 'mom', 'dad'} & {2, 3, 10})
-
-    # Difference
-    print({1, 2, 3, 'mom', 'dad'} - {2, 3, 10})
+    try:
+        point[0] = 99
+    except TypeError as err:
+        print(f"TypeError: {err}")
     return
 
 
@@ -640,113 +525,32 @@ def _():
 def _(mo):
     mo.md(r"""
     ## Modules
-    A *Module* is a python file that contains a collection of related definitions. Python has *hundreds* of standard modules.  These are organized into what is known as the [Python Standard Library](http://docs.python.org/library/).  You can also create and use your own modules.  To use functionality from a module, you first have to import the entire module or parts of it into your namespace
 
-    * To import the entire module, use
-
-    ```python
-    import module_name
-    ```
-
-    * You can also import a module using a specific name
+    Most of Python's usefulness lives in modules you import rather than in the language
+    itself. The standard library ships with the interpreter; everything else you install.
 
     ```python
-    import module_name as new_module_name
+    import math                     # the whole module
+    import numpy as np              # under a shorter name
+    from math import sqrt, pi       # just the names you want
     ```
 
-    * To import specific definitions (e.g. functions, variables, etc) from the module into your local namespace, use
-
-    ```python
-    from module_name import name1, name2
-    ```
-       which will make those available directly in your `namespace`
+    Prefer `import numpy as np` to `from numpy import *`. With the second form you cannot
+    tell where a name came from, and two modules can silently overwrite each other's.
     """)
     return
 
 
 @app.cell
 def _():
-    import os
-    from glob import glob
+    import math
+    import random
 
-    return glob, os
+    random.seed(0)  # makes the "random" numbers reproducible
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    Here let's try and get the path of the current working directory using functions from the `os` module
-    """)
-    return
-
-
-@app.cell
-def _(os):
-    os.path.abspath(os.path.curdir)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    It looks like we are currently in the notebooks folder of the github repository.  Let's use glob, a pattern matching function, to list all of the csv files in the Data folder.
-    """)
-    return
-
-
-@app.cell
-def _(glob, os):
-    data_file_list = glob(os.path.join('../..','Data','*csv'))
-    print(data_file_list)
-    return (data_file_list,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    This gives us a list of the files including the relative path from the current directory.  What if we wanted just the filenames?  There are several different ways to do this.  First, we can use the the `os.path.basename` function.  We loop over every file, grab the base file name and then append it to a new list.
-    """)
-    return
-
-
-@app.cell
-def _(data_file_list, os):
-    file_list = []
-    for f in data_file_list:
-        file_list.append(os.path.basename(f))
-
-    print(file_list)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    Alternatively, we could loop over all files and split on the `/` character.  This will create a new list where each element is whatever characters are separated by the splitting character.  We can then take the last element of each list.
-    """)
-    return
-
-
-@app.cell
-def _(data_file_list):
-    file_list_1 = []
-    for f_1 in data_file_list:
-        file_list_1.append(f_1.split('/')[-1])
-    print(file_list_1)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    It is also sometimes even cleaner to do this as a list comprehension
-    """)
-    return
-
-
-@app.cell
-def _(data_file_list, os):
-    [os.path.basename(x) for x in data_file_list]
+    print(f"sqrt(64)      = {math.sqrt(64)}")
+    print(f"pi            = {math.pi:.5f}")
+    print(f"random draws  = {[round(random.random(), 3) for _ in range(5)]}")
     return
 
 
@@ -754,6 +558,9 @@ def _(data_file_list, os):
 def _(mo):
     mo.md(r"""
     ## Exercises
+
+    Add a cell under each one and write your answer. Everything you need is above, and there
+    is more than one right way to do each.
     """)
     return
 
@@ -761,41 +568,38 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Find Even Numbers
-    Let’s say I give you a list saved in a variable: a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]. Make a new list that has only the even elements of this list in it.
-    """)
-    return
+    ### 1. Find the even numbers
 
+    Given `a = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]`, make a new list containing only the
+    even elements.
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Find Maximal Range
-    Given an array length 1 or more of ints, return the difference between the largest and smallest values in the array.
-    """)
-    return
+    *Hint: `%` from the arithmetic section.*
 
+    ### 2. Find the range
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Duplicated Numbers
-    Find the numbers in list a that are also in list b
+    Given a list of integers with at least one element, return the difference between the
+    largest and smallest values.
 
+    *Hint: `max()` and `min()` are built in.*
+
+    ### 3. Numbers in both lists
+
+    Find the numbers that appear in **both** lists:
+
+    ```python
     a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361]
-
     b = [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
-    """)
-    return
+    ```
 
+    *Hint: a list comprehension with `in` works. So does one line using sets — try both and
+    compare.*
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Speeding Ticket Fine
-    You are driving a little too fast on the highway, and a police officer stops you. Write a function that takes the speed as an input and returns the fine.
+    ### 4. Speeding ticket
 
-    If speed is 60 or less, the result is `$0`. If speed is between 61 and 80 inclusive, the result is `$100`. If speed is 81 or more, the result is `$500`.
+    Write a function that takes a speed and returns the fine: `$0` at 60 or below, `$100`
+    from 61 to 80 inclusive, `$500` at 81 or above.
+
+    *You have seen this one already — write it yourself without scrolling up, then compare.*
     """)
     return
 

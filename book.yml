@@ -121,7 +121,12 @@ toc:
         # Downloads the full ~46 GB HuggingFace snapshot at execution time.
         # Render once locally (committed to _rendered/) so CI never downloads.
         mode: cached
+      - file: content/Setting_Up_Python.py
+        title: Setting up Python
       - file: content/Introduction_to_Programming.py
+        # Pure-Python tutorial with ~10 mo.ui controls and no third-party imports,
+        # so Pyodide boots fast and every example is editable in the browser.
+        mode: wasm
       - file: content/Introduction_to_Pandas.py
       - file: content/Introduction_to_Polars.py
       - file: content/Introduction_to_Plotting.py
