@@ -8,25 +8,10 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "plotting"
 # grader-assignment-id = "3c36bb36-7272-4a3f-8bd2-74cfe4c69bcb"
-# grader-assignment-version = "e8459aa3-6b3f-4b6b-952b-b57be49bc108"
-# grader-version = "1"
+# grader-assignment-version = "b573be65-04c8-4fe3-884e-9c944e781a59"
+# grader-version = "2"
 # ///
-"""DartBrains assignment: Introduction to Plotting (instructor notebook).
-
-Adapted from the Exercises at the end of the plotting chapter:
-https://dartbrains.org/Introduction_to_Plotting/
-
-Grading a figure is not the same as grading a number. The checks here look at
-two things that are actually well defined: the data behind the plot, and the
-structure of the figure object -- how many axes, what the labels say, whether an
-artist of the right kind was drawn. Aesthetic faithfulness to the reference
-image stays ungraded practice, because "looks the same" has no threshold.
-
-Publish with (from dartbrains-grader/backend):
-    uv run grader publish ../../dartbrains-assignments/assignments/plotting.py \
-        --server <server> --offering neuroimaging/2026-fall \
-        --slug plotting --title "Introduction to Plotting"
-"""
+"""DartBrains assignment: Introduction to Plotting."""
 
 import marimo
 

@@ -8,24 +8,10 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "pandas"
 # grader-assignment-id = "b6b9c33d-5d09-4280-b937-4ec9d65b67d7"
-# grader-assignment-version = "98713443-5c16-46c0-9e18-8a12581da0f3"
-# grader-version = "1"
+# grader-assignment-version = "a1ae7ce0-5a1a-429c-bae9-3472874b6696"
+# grader-version = "2"
 # ///
-"""DartBrains assignment: Introduction to Pandas (instructor notebook).
-
-Adapted from the Exercises at the end of the pandas chapter:
-https://dartbrains.org/Introduction_to_Pandas/
-
-Uses salary_exercise.csv (Weisberg 1985): 52 tenure-track professors, three rows
-with a missing value. Note the column *values* are strings ("male", "doctorate"),
-not the 0/1 codes the old exercise text described -- the prose had drifted from
-the data.
-
-Publish with (from dartbrains-grader/backend):
-    uv run grader publish ../../dartbrains-assignments/assignments/pandas-intro.py \
-        --server <server> --offering neuroimaging/2026-fall \
-        --slug pandas --title "Introduction to Pandas"
-"""
+"""DartBrains assignment: Introduction to Pandas."""
 
 import marimo
 

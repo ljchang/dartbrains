@@ -8,23 +8,10 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "programming"
 # grader-assignment-id = "33d31bd1-9b3d-44b0-9198-a74c1236dfbd"
-# grader-assignment-version = "112a5f3c-8340-4323-a765-e9704ab30397"
-# grader-version = "1"
+# grader-assignment-version = "a6e93784-eb14-4153-a2e3-11db40bdc032"
+# grader-version = "2"
 # ///
-"""DartBrains assignment: Introduction to Programming (instructor notebook).
-
-Adapted from the Exercises at the end of the programming chapter:
-https://dartbrains.org/Introduction_to_Programming/
-
-Deliberately depends on nothing but marimo and the grader client -- the chapter
-teaches plain Python, so the assignment should not require a scientific stack to
-run. It starts fast in MoLab for the same reason.
-
-Publish with (from dartbrains-grader/backend):
-    uv run grader publish ../../dartbrains-assignments/assignments/programming.py \
-        --server <server> --offering neuroimaging/2026-fall \
-        --slug programming --title "Introduction to Programming"
-"""
+"""DartBrains assignment: Introduction to Programming."""
 
 import marimo
 

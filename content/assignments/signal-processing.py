@@ -8,19 +8,10 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "signal-processing"
 # grader-assignment-id = "51e589a9-69f3-4ae5-911d-5cdb60354f96"
-# grader-assignment-version = "ff8b3107-7c4e-48cb-9ffa-cd55d58a10ee"
-# grader-version = "5"
+# grader-assignment-version = "8143aecf-1f9b-4a52-878a-628318add7ef"
+# grader-version = "6"
 # ///
-"""DartBrains assignment: Signal Processing (instructor notebook).
-
-Adapted from the Exercises at the end of the Signal Processing chapter:
-https://dartbrains.org/content/Signal_Processing.html
-
-Publish with (from dartbrains-grader/backend):
-    uv run grader publish ../../dartbrains-assignments/assignments/signal-processing.py \
-        --server <server> --offering neuroimaging/2026-fall --slug signal-processing \
-        --title "Signal Processing"
-"""
+"""DartBrains assignment: Signal Processing."""
 
 import marimo
 

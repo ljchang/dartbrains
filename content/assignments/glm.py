@@ -8,18 +8,10 @@
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "glm"
 # grader-assignment-id = "f9acfc9e-3068-4237-90cc-8427d166abab"
-# grader-assignment-version = "11f738f7-22cf-406f-9673-41ea28b877e9"
-# grader-version = "5"
+# grader-assignment-version = "a4a25569-10c1-4768-b530-f2a866539f29"
+# grader-version = "6"
 # ///
-"""DartBrains assignment: the General Linear Model (instructor notebook).
-
-Adapted from the Exercises at the end of the GLM chapter:
-https://dartbrains.org/content/GLM.html
-
-Publish with (from dartbrains-grader/backend):
-    uv run grader publish ../../dartbrains-assignments/assignments/glm.py \
-        --server <server> --offering neuroimaging/2026-fall --slug glm --title "GLM"
-"""
+"""DartBrains assignment: the General Linear Model."""
 
 import marimo
 
