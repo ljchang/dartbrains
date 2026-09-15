@@ -199,13 +199,46 @@ def _(mo, times, word):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ### Putting values into text
+
+    Nearly every `print` on this page uses an **f-string**: a string prefixed with `f`, in
+    which anything inside `{braces}` is evaluated and dropped into the text.
+
+    ```python
+    name, n = "Luke", 3
+    f"{name} ran {n} subjects"    # -> 'Luke ran 3 subjects'
+    f"{n} squared is {n ** 2}"    # -> '3 squared is 9'
+    ```
+
+    A colon introduces formatting, which is how you stop a float printing to seventeen
+    decimal places:
+
+    ```python
+    f"{3.14159:.2f}"   # -> '3.14'     two decimal places
+    f"{42:>6}"         # -> '    42'   right-aligned in six columns
+    f"{0.87:.1%}"      # -> '87.0%'    as a percentage
+    ```
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Comparisons and logic
 
     Comparisons produce a `bool`. `and`, `or` and `not` combine them.
 
-    One trap worth burning in now: `=` **assigns**, `==` **compares**. `x = 5` sets x to 5;
-    `x == 5` asks whether it already is.
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    `=` **assigns**, `==` **compares**. `x = 5` sets `x` to five; `x == 5` asks whether it
+    already is. Python will not stop you writing one where you meant the other.
+    """).callout(kind="warn")
     return
 
 
@@ -257,34 +290,41 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(mo, speed):
+    # Rendered as HTML, not a fenced code block: a fence cannot carry a highlight,
+    # and the whole point of this cell is showing *which line runs*.
     _s = speed.value
-    if _s <= 60:
-        _fine, _branch = 0, "if speed <= 60"
-    elif _s <= 80:
-        _fine, _branch = 100, "elif speed <= 80"
-    else:
-        _fine, _branch = 500, "else"
+    _active = 0 if _s <= 60 else 1 if _s <= 80 else 2
+    _fine = (0, 100, 500)[_active]
 
-    _code = "\n".join(
-        ("──▶ " if line.startswith(_branch) else "    ") + line
-        for line in [
-            "if speed <= 60:",
-            "    fine = 0",
-            "elif speed <= 80:",
-            "    fine = 100",
-            "else:",
-            "    fine = 500",
+    _rows = "".join(
+        "<div style='padding:1px 10px;border-left:3px solid "
+        + (
+            "#00693e;background:#00693e14'>"
+            if _group == _active
+            else "transparent;opacity:.38'>"
+        )
+        + _line
+        + "</div>"
+        for _line, _group in [
+            ("if speed &lt;= 60:", 0),
+            ("    fine = 0", 0),
+            ("elif speed &lt;= 80:", 1),
+            ("    fine = 100", 1),
+            ("else:", 2),
+            ("    fine = 500", 2),
         ]
     )
-    mo.md(f"""
-    ```python
-    speed = {_s}
-    ```
-    ```text
-    {_code}
-    ```
-    The branch that ran was **`{_branch}`**, so `fine` is **${_fine}**.
-    """)
+    mo.Html(
+        f"""
+        <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
+                    line-height:1.6;white-space:pre;margin:.4rem 0">
+          <div style="opacity:.5;padding:1px 10px">speed = {_s}</div>
+          {_rows}
+        </div>
+        <p style="margin:.4rem 0 0">The highlighted branch is the one that runs, so
+        <code>fine</code> is <b>${_fine}</b>.</p>
+        """
+    )
     return
 
 
@@ -601,6 +641,44 @@ def _(mo):
 
     *You have seen this one already — write it yourself without scrolling up, then compare.*
     """)
+    return
+
+
+@app.cell
+def _():
+    # Exercise 1 -- the even numbers. Your answer below.
+    ex1 = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+    ex1
+    return
+
+
+@app.cell
+def _():
+    # Exercise 2 -- largest minus smallest. Your answer below.
+    ex2 = [17, 4, 9, 42, 25, 3]
+
+    ex2
+    return
+
+
+@app.cell
+def _():
+    # Exercise 3 -- the numbers in both lists. Your answer below.
+    ex3_a = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361]
+    ex3_b = [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
+
+    len(ex3_a), len(ex3_b)
+    return
+
+
+@app.cell
+def _():
+    # Exercise 4 -- write the function, then try it on a few speeds.
+    def my_fine(speed):
+        return None
+
+    [(s, my_fine(s)) for s in (55, 70, 95)]
     return
 
 
