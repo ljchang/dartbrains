@@ -1044,6 +1044,15 @@ def _(mo):
     Clean the data by excluding rows with any missing value.
 
     What are the overall mean, standard deviation, min, and maximum of professors' salary?
+
+    ---
+
+    ### Graded version
+
+    The graded version of these questions is the
+    **[Pandas assignment](assignments/pandas-intro.html)**. Open it from that page, sign in
+    with your Dartmouth account inside the notebook, and submit each question when you are
+    ready.
     """)
     return
 

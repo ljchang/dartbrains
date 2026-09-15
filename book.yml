@@ -181,6 +181,10 @@ toc:
         title: "Assignment: Programming"
         mode: static
         allow_errors: true
+      - file: content/assignments/pandas-intro.py
+        title: "Assignment: Pandas"
+        mode: static
+        allow_errors: true
       - file: content/assignments/glm.py
         title: "Assignment: GLM"
         mode: static
