@@ -97,7 +97,6 @@ def _():
     import matplotlib.pyplot as plt
     import plotly.graph_objects as go
     import seaborn as sns
-    from nltools.algorithms import regress
     from nilearn.glm.first_level import glover_hrf
 
 

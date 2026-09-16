@@ -35,13 +35,17 @@ dependencies = [
     # before forwarding (nltools/data/braindata/plotting.py), so the <0.13 cap is
     # lifted. nltools 0.6 itself requires nilearn >= 0.12.
     "nilearn>=0.12",
-    # Version stays unconstrained: master self-reports 0.6.0.dev0, so the
-    # [tool.uv.sources] git pin below is what actually selects the API (uv.lock
-    # freezes the SHA). Switch to "nltools>=0.6.0" once it's on PyPI. The
-    # 2026-09-13 master (160dc401) removed nltools.stats (→ nltools.algorithms),
-    # the HRF module (→ nilearn), predict(model=) (→ estimator=), radius_mm
-    # (→ radius), compute_contrasts(statistic=), Adjacency.similarity(project=)
-    # and requires nilearn >= 0.14; the notebooks are migrated accordingly.
+    # Pinned to the exact pre-release the browser installs. book.yml's
+    # dependencies.overrides sends WASM and workbench pages to
+    # nltools==0.6.0.dev2, because git master needs h5py>=3.15 while Pyodide
+    # ships 3.13. Building against a *different* 0.6 snapshot than readers run
+    # would let an API change break an Edit session while the rendered page
+    # still looks correct, with nothing in CI able to see it — so both sides
+    # name the same version. Move both to "nltools>=0.6.0" once 0.6 is stable.
+    # The 0.6 line removed nltools.stats (→ nltools.algorithms), the HRF module
+    # (→ nilearn), predict(model=) (→ estimator=), radius_mm (→ radius),
+    # compute_contrasts(statistic=) and Adjacency.similarity(project=); the
+    # notebooks are migrated accordingly.
     #
     # The extras are NOT optional for this course:
     #   h5    — hdf5plugin for reading compressed HDF5 fit bundles. h5py itself
@@ -50,7 +54,7 @@ dependencies = [
     #   graph — Adjacency.to_graph() in the Connectivity chapter.
     # (interactive_plots / ipywidgets is no longer needed: since nltools
     # b3603484 iplot() is a self-contained anywidget with its own slider.)
-    "nltools[h5,graph]",
+    "nltools[h5,graph]==0.6.0.dev2",
     "numpy>=2.4.3",
     "pandas",
     "plotly>=6.6.0",
@@ -116,7 +120,7 @@ build = [
 ]
 
 [tool.uv.sources]
-# The old `uv-refactor` branch was merged and deleted; 0.6.0 (the breaking
-# rewrite: BrainData/DesignMatrix, .fit()/.predict(), spatial_scale=) lives on
-# master and is not on PyPI yet. Repoint to PyPI once 0.6.0 is released.
-nltools = { git = "https://github.com/cosanlab/nltools", rev = "master" }
+# nltools was pinned to git master while 0.6 was unreleased. The 0.6
+# pre-releases are on PyPI now, and the browser can only install from there, so
+# the constraint above names the version directly and this source is gone —
+# build and browser resolve the same wheel.

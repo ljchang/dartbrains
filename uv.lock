@@ -573,7 +573,7 @@ requires-dist = [
     { name = "networkx" },
     { name = "nibabel", specifier = ">=5.4.2" },
     { name = "nilearn", specifier = ">=0.12" },
-    { name = "nltools", extras = ["h5", "graph"], git = "https://github.com/cosanlab/nltools?rev=master" },
+    { name = "nltools", extras = ["h5", "graph"], specifier = "==0.6.0.dev2" },
     { name = "numpy", specifier = ">=2.4.3" },
     { name = "pandas" },
     { name = "plotly", specifier = ">=6.6.0" },
@@ -2046,8 +2046,8 @@ wheels = [
 
 [[package]]
 name = "nltools"
-version = "0.6.0.dev0"
-source = { git = "https://github.com/cosanlab/nltools?rev=master#ef95a97079784d422cbed8ddc392905ffb6c3602" }
+version = "0.6.0.dev2"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "h5py" },
@@ -2065,6 +2065,10 @@ dependencies = [
     { name = "scipy" },
     { name = "seaborn" },
     { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fe/ca/8971098d470d0e973a0519ea005646c066ee63067249bb57a1d575212afb/nltools-0.6.0.dev2.tar.gz", hash = "sha256:9f19b53ccb68ab1e03ea32979f6cadf71e387e56f59f8ef5bfc76f7aa809bfb1", size = 486797, upload-time = "2026-09-14T06:31:23.265Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2f/c3/400a70bc9aa76cbfde5df90d1862426e316bb21ccedc2ae0204a467088b2/nltools-0.6.0.dev2-py3-none-any.whl", hash = "sha256:14e7de1fdd4d54dcedd2f79a9c35c172c83e78422e4071e1ee73e655fe36ffcf", size = 447710, upload-time = "2026-09-14T06:31:22.053Z" },
 ]
 
 [package.optional-dependencies]
