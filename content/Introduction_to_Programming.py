@@ -308,26 +308,27 @@ def _(mo):
     catches everything remaining. Python decides where a block begins and ends by
     **indentation** — there are no braces, and the indentation is not cosmetic.
 
-    Drag the speed and watch which branch runs. This is the same logic as the speeding-ticket
-    exercise at the end of the notebook.
+    Drag the reaction time and watch which branch runs. A trial answered in under 150 ms was
+    almost certainly anticipated rather than decided, and one past 2000 ms suggests attention
+    lapsed — so a study usually labels the trial before analysing it.
     """)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    speed = mo.ui.slider(40, 110, value=75, label="speed (mph):", show_value=True)
-    speed
-    return (speed,)
+    rt = mo.ui.slider(0, 3000, step=50, value=450, label="reaction time (ms):", show_value=True)
+    rt
+    return (rt,)
 
 
 @app.cell(hide_code=True)
-def _(mo, speed):
+def _(mo, rt):
     # Rendered as HTML, not a fenced code block: a fence cannot carry a highlight,
     # and the whole point of this cell is showing *which line runs*.
-    _s = speed.value
-    _active = 0 if _s <= 60 else 1 if _s <= 80 else 2
-    _fine = (0, 100, 500)[_active]
+    _r = rt.value
+    _active = 0 if _r < 150 else 1 if _r <= 2000 else 2
+    _label = ("anticipation", "valid", "lapse")[_active]
 
     _rows = "".join(
         "<div style='padding:1px 10px;border-left:3px solid "
@@ -339,23 +340,23 @@ def _(mo, speed):
         + _line
         + "</div>"
         for _line, _group in [
-            ("if speed &lt;= 60:", 0),
-            ("    fine = 0", 0),
-            ("elif speed &lt;= 80:", 1),
-            ("    fine = 100", 1),
+            ("if rt &lt; 150:", 0),
+            ('    label = "anticipation"', 0),
+            ("elif rt &lt;= 2000:", 1),
+            ('    label = "valid"', 1),
             ("else:", 2),
-            ("    fine = 500", 2),
+            ('    label = "lapse"', 2),
         ]
     )
     mo.Html(
         f"""
         <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
                     line-height:1.6;white-space:pre;margin:.4rem 0">
-          <div style="opacity:.5;padding:1px 10px">speed = {_s}</div>
+          <div style="opacity:.5;padding:1px 10px">rt = {_r}</div>
           {_rows}
         </div>
         <p style="margin:.4rem 0 0">The highlighted branch is the one that runs, so
-        <code>fine</code> is <b>${_fine}</b>.</p>
+        <code>label</code> is <b>"{_label}"</b>.</p>
         """
     )
     return
@@ -411,35 +412,35 @@ def _(mo):
     A function packages a piece of work under a name so you can use it more than once.
     `def` names it, the parameters are its inputs, and `return` hands a value back.
 
-    Edit this one — change the rates, add a branch — and the cells below re-run.
+    Edit this one — move the cutoffs, add a branch — and the cells below re-run.
     """)
     return
 
 
 @app.cell
 def _():
-    def speeding_fine(speed):
-        """Return the fine in dollars for a given speed in mph."""
-        if speed <= 60:
-            return 0
-        elif speed <= 80:
-            return 100
-        return 500
+    def trial_label(rt):
+        """Classify a trial by its reaction time in milliseconds."""
+        if rt < 150:
+            return "anticipation"
+        elif rt <= 2000:
+            return "valid"
+        return "lapse"
 
-    return (speeding_fine,)
+    return (trial_label,)
 
 
 @app.cell(hide_code=True)
-def _(mo, speeding_fine):
+def _(mo, trial_label):
     _rows = "\n".join(
-        f"| {s} | ${speeding_fine(s)} |" for s in (55, 60, 61, 80, 81, 100)
+        f"| {t} | {trial_label(t)} |" for t in (120, 150, 450, 2000, 2400)
     )
     mo.md(f"""
-    | speed | fine |
+    | rt (ms) | label |
     |---|---|
     {_rows}
 
-    Because the notebook is reactive, editing `speeding_fine` above rewrites this table
+    Because the notebook is reactive, editing `trial_label` above rewrites this table
     immediately — you never re-run anything by hand.
     """)
     return
@@ -503,7 +504,7 @@ def _():
 
     print(squares)
     print(f"length {len(squares)}, last {squares[-1]}, first three {squares[:3]}")
-    print(f"evens only: {[v for v in squares if v % 2 == 0]}")
+    print(f"over twenty: {[v for v in squares if v > 20]}")
     return
 
 
@@ -671,8 +672,8 @@ def _(mistake, mo):
         "`4` is a number; `int('3') + 4` or `'3' + str(4)` -- decide which you meant.",
         "IndexError": "You asked for a position that does not exist. Counting starts at 0, "
         "so the last item of a three-element list is `[2]`, not `[3]`.",
-        "KeyError": "That key is not in the dictionary. Use `.get(key, default)` when a "
-        "missing key is expected rather than exceptional.",
+        "KeyError": "That key is not in the dictionary, and Python will not invent a value "
+        "for it. Check the spelling, then check what `.keys()` actually holds.",
         "ZeroDivisionError": "Nothing to interpret -- check where the divisor came from; it "
         "is usually an empty list or a count that stayed at zero.",
         "AttributeError": "That type has no such method. Lists have `.append()`; strings do "
@@ -751,7 +752,9 @@ def _(mo):
     Write a function that takes a speed and returns the fine: `$0` at 60 or below, `$100`
     from 61 to 80 inclusive, `$500` at 81 or above.
 
-    *You have seen this one already — write it yourself without scrolling up, then compare.*
+    *Hint: `if` / `elif` / `else`. The thresholds are inclusive at both ends, so decide
+    carefully whether each comparison is `<` or `<=` — 60, 61, 80 and 81 are where a wrong
+    choice shows up.*
 
     ---
 
