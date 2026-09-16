@@ -161,6 +161,7 @@ toc:
         # polars ships an emscripten wheel micropip can install, and the CSV is
         # the same 1.7 KB open-CORS file the pandas chapter reads.
         views: [read, edit]
+        assignment: content/assignments/polars-intro.py
       - file: content/Introduction_to_Plotting.py
         # matplotlib/seaborn are bundled with Pyodide; the CSV is 1.7 KB over open CORS.
         mode: wasm
@@ -188,6 +189,9 @@ toc:
         # dependency list; the block itself is already correct.
       - file: content/Introduction_to_Neuroimaging_Data.py
         # No edit view — same nltools/PEP 723 reason as ICA above.
+        # The assignment is unaffected: it opens in its own drawer and downloads
+        # one subject's preprocessed run (57 MB), so it wants molab either way.
+        assignment: content/assignments/neuroimaging-data.py
       - file: content/Signal_Processing.py
         title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
@@ -201,11 +205,15 @@ toc:
         assignment: content/assignments/glm.py
       - file: content/GLM_Single_Subject_Model.py
         title: Modeling Single Subject Data
+        assignment: content/assignments/glm-single-subject.py
       - file: content/Group_Analysis.py
+        assignment: content/assignments/group-analysis.py
       - file: content/Thresholding_Group_Analyses.py
+        assignment: content/assignments/thresholding.py
       - file: content/Connectivity.py
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
+        assignment: content/assignments/multivariate-prediction.py
       - file: content/Spatial_Feature_Selection.py
       - file: content/RSA.py
         title: Representational Similarity Analysis
