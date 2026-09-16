@@ -36,6 +36,17 @@ analytics:
   provider: google
   property: G-MQK18K92KD
 
+# nltools has no stable release that installs under Pyodide: PyPI's latest
+# stable (0.5.1) pulls dependencies with no browser wheels, and current master
+# needs h5py>=3.15 while Pyodide ships 3.13. The 0.6 pre-release is the one
+# that works -- it resolves against the scikit-learn 1.8 / h5py 3.13 that
+# marimo's Pyodide (v314) bundles, installs in ~6 s and imports cleanly. This
+# is what nltools.org's own browser docs pin, and it is what lets the chapters
+# below offer an `edit` view. Drop this override once 0.6 ships as stable.
+dependencies:
+  overrides:
+    nltools: nltools==0.6.0.dev2
+
 # marimo-book 0.1.27 added a 600s per-notebook execution cap
 # (defaults.execution_timeout). Several chapters legitimately run longer at
 # build time — Download_Data, Multivariate_Prediction, and RSA download
@@ -167,8 +178,12 @@ toc:
         views: [read, run, edit]
       - file: content/ICA.py
         title: Separating Signal from Noise with ICA
-        # static + precompute: 10 components, threshold fixed at 2.0 → 10 combos
+        # static + precompute: 10 components, threshold fixed at 2.0 → 10 combos.
+        # `views` is independent of `mode`: the page stays a fast precomputed
+        # static render, and Edit opens the notebook in the browser workbench.
+        views: [read, edit]
       - file: content/Introduction_to_Neuroimaging_Data.py
+        views: [read, edit]
       - file: content/Signal_Processing.py
         title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
@@ -178,9 +193,7 @@ toc:
         mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
       - file: content/GLM.py
         title: Introduction to the General Linear Model
-        # The chapter itself needs nltools (no Pyodide wheel), so no run/edit
-        # views; the assignment only needs numpy/matplotlib/nilearn and opens
-        # in the drawer.
+        views: [read, edit]
         assignment: content/assignments/glm.py
       - file: content/GLM_Single_Subject_Model.py
         title: Modeling Single Subject Data

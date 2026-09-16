@@ -560,7 +560,7 @@ build = [
 [package.metadata]
 requires-dist = [
     { name = "anywidget", specifier = ">=0.9.21" },
-    { name = "dartbrains-tools", specifier = ">=0.1.7" },
+    { name = "dartbrains-tools", specifier = ">=0.1.8" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
@@ -593,7 +593,7 @@ build = [
 
 [[package]]
 name = "dartbrains-tools"
-version = "0.1.7"
+version = "0.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
@@ -604,9 +604,9 @@ dependencies = [
     { name = "scipy" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/85/22/d938534620e0e529001d685c5b7da5e4674ad7648223417d1438d412e246/dartbrains_tools-0.1.7.tar.gz", hash = "sha256:730aa2a39a9c0af1ebc06a5b8385d5b10db7c0cf893687d2a34662967aadec75", size = 50721, upload-time = "2026-07-03T16:23:09.558Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a2/24/8a62d9d0008e49cd598872bb723738bf2f07fec3474830520d974c05c6b0/dartbrains_tools-0.1.8.tar.gz", hash = "sha256:bd857aed4acfb24aca281848a2e74c7f000e8f023284d73acf7e7bf2b6062418", size = 56249, upload-time = "2026-09-16T01:38:13.751Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c1/0a/b2df37f9e9b21a133b2a007617b812a40eecba69b02a809b8a821b8d0a0b/dartbrains_tools-0.1.7-py3-none-any.whl", hash = "sha256:e4845db09099ade9e0c3bb5b2a83985e03ce6352df327c1de978c94a8ac13844", size = 55468, upload-time = "2026-07-03T16:23:08.347Z" },
+    { url = "https://files.pythonhosted.org/packages/57/c3/f0ca025e40c80895ccaa737fcb20f984391929103a31ebc56ee93fdc8dab/dartbrains_tools-0.1.8-py3-none-any.whl", hash = "sha256:a1486e87ff738d76ce821656348ae6f5a37ef693b7ee4c7c3c8d59f467020ad1", size = 59712, upload-time = "2026-09-16T01:38:12.383Z" },
 ]
 
 [[package]]
