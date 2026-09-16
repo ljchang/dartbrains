@@ -7,17 +7,14 @@ app = marimo.App()
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
-    from pathlib import Path
-    import os
     from dartbrains_tools.data import localizer
     import nibabel as nib
     import matplotlib.pyplot as plt
-    from nilearn.plotting import plot_glass_brain, plot_anat, plot_epi, plot_stat_map
+    from nilearn.plotting import plot_glass_brain, plot_anat, plot_stat_map
     from nltools.data import BrainData
     from nltools.templates import fetch_resource
     from nilearn.datasets import load_mni152_template
 
-    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "brain_data"
     return (
         BrainData,
         fetch_resource,
