@@ -1,15 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["marimo", "marimo-grader-client", "mograder"]
-# mograder-cell-hashes = "f95b7d3b,a6050e8d,8af6cf8a,3c898569,0c2a9525,5b0811c2,4057a21d,8e573c96,bb431c42,f91c9868,47ea8b1a,3938720a,9a885e11,9ed8c312,623d28f9,88171b67,88d4f0d6,071c7218,2e048490,1abb7cde,66ff5488,bd3d1a89,6a6bcd39,80bcc5af"
+# mograder-cell-hashes = "f95b7d3b,a6050e8d,8af6cf8a,3c898569,4a2dd458,fa17e306,4057a21d,8e573c96,bb431c42,f91c9868,47ea8b1a,3938720a,9a885e11,9ed8c312,623d28f9,88171b67,88d4f0d6,071c7218,2e048490,1abb7cde,66ff5488,bd3d1a89,6a6bcd39,80bcc5af"
 # grader-server = "https://grader.dartbrains.org"
 # grader-course = "neuroimaging"
 # grader-term = "2026-fall"
 # grader-offering-id = "a8e72d80-495a-4f26-a006-b9798bf9b306"
 # grader-assignment = "programming"
 # grader-assignment-id = "33d31bd1-9b3d-44b0-9198-a74c1236dfbd"
-# grader-assignment-version = "a6e93784-eb14-4153-a2e3-11db40bdc032"
-# grader-version = "2"
+# grader-assignment-version = "6888baf9-0e21-4f63-a6ea-f53b825b9ec5"
+# grader-version = "3"
 # ///
 """DartBrains assignment: Introduction to Programming."""
 
@@ -69,14 +69,15 @@ def _(mo):
         r"""
         ## Q1. The even numbers
 
-        Given the list below, build a new list called `evens` containing only its **even**
-        elements, in the same order.
+        Write a function `only_evens(values)` that returns a new list holding just the
+        **even** elements of `values`, in the order they appeared.
 
         ```python
-        numbers = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+        only_evens([1, 4, 9, 16, 25, 36, 49, 64, 81, 100])   # -> [4, 16, 36, 64, 100]
         ```
 
-        *A number is even when the remainder of dividing it by two is zero.*
+        *A number is even when the remainder of dividing it by two is zero. Return a new list
+        rather than changing the one you were given.*
         """
     )
     return
@@ -84,31 +85,35 @@ def _(mo):
 
 @app.cell
 def _():
-    numbers = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+    def only_evens(values):
+        # YOUR CODE HERE
+        pass
 
-    evens = ...
-    # YOUR CODE HERE
-    pass
-    return evens, numbers
+    return (only_evens,)
 
 
 @app.cell
-def _(evens, g, mo, numbers):
+def _(g, mo, only_evens):
+    _probe = only_evens([2])
     mo.stop(
-        evens is ...,
-        mo.md("**Complete the code cell above first.** This check runs once `evens` is defined."),
+        _probe is None,
+        mo.md("**Complete the function above first.** It should `return` a list."),
     )
+
+    # Mixed odd/even on purpose: an all-even probe would survive an in-place filter
+    # unchanged, so it could not detect one.
+    _untouched = [4, 7, 6]
+    only_evens(_untouched)
 
     g.check(
         "prog-q01: The even numbers",
         [
-            (isinstance(evens, list), "evens should be a list", 1),
             (
-                all(n % 2 == 0 for n in evens) if isinstance(evens, list) else False,
-                "every element of evens should be even",
-                1,
+                only_evens([1, 4, 9, 16, 25, 36, 49, 64, 81, 100]) == [4, 16, 36, 64, 100],
+                "only_evens([1, 4, 9, 16, 25, 36, 49, 64, 81, 100]) should be [4, 16, 36, 64, 100]",
+                2,
             ),
-            (evens == [4, 16, 36, 64, 100], "evens should be [4, 16, 36, 64, 100]", 2),
+            (only_evens([7, 5, 3]) == [], "a list with no even numbers gives an empty list", 1),
             # HIDDEN TESTS
         ],
     )
