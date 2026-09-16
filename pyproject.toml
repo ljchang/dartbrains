@@ -116,7 +116,14 @@ build = [
     # a composite `mo.vstack` cell on static pages (the byline used to run into
     # the first paragraph) and honours `hide_author_line`, which this book
     # sets to false to keep each chapter's byline.
-    "marimo-book>=0.1.41",
+    # 0.1.42 makes notebooks follow the palette toggle: `mode: wasm` pages
+    # rendered their cells light on a dark page (marimo's islands entry never
+    # mounts ThemeProvider, so nothing sets the `dark` class its CSS keys off),
+    # and an open edit frame kept whichever theme it booted with. Ships one
+    # known trade — widget chrome that assumed a light ground can lose contrast
+    # against the new dark one (marimo-book #124); on MR_Physics the slider
+    # readout is the visible case.
+    "marimo-book>=0.1.42",
 ]
 
 [tool.uv.sources]
