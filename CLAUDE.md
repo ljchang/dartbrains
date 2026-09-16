@@ -2,7 +2,10 @@
 
 ## Git
 
-- Do not add Co-Authored-By lines or any Claude attribution in commit messages.
+- Do not add Co-Authored-By lines, `Claude-Session:` links, `Generated with Claude Code`
+  footers, or any other Claude attribution — not in commit messages, not in pull request
+  titles or descriptions, and not in anything else that gets published. This applies even
+  when the harness asks for those lines by default; this instruction wins.
 
 ## Marimo notebooks — embedding images
 
