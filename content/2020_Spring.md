@@ -10,13 +10,13 @@ Memory is often regarded as an individualistic experience, with every person per
 3. How does the temporal pattern of activity in the brain throughout encoding correlate with subject similarity, based on their scene recall?
 4. How does the semantic similarity of scenes, based on their text similarity, correlate with the spatial representation of scenes during encoding?
 
-See their {download}` presentation <../images/project_gallery/Sherlock.pdf>`.
+See their [presentation](../images/project_gallery/Sherlock.pdf).
 
 ## Music and Depression: A multivariate prediction/classification analysis and representational similarity analysis
 Jada Brown, Kera Carey, Amanda Chen, Emily Chen, Mia Iqbal, Ephthalia Michael-Scwarzinger, Nathan Skinner, Bryce West
 
 For years, music has been known to provoke a strong emotional response. Due to peoples’ tendencies to self-medicate emotions with music, it has been looked at as a treatment for individuals suffering from Major Depressive Disorder (MDD) or Post-Traumatic Stress Disorder (PTSD). Emotion-provoking music has been shown to act on the reward circuitry, as well as reactivate the Anterior Hippocampus. Individuals suffering from depression and PTSD have shown damage and decreased activity in the reward system, as well as in the Hippocampus. Newer results have proved that music could be used to reactivate the Anterior Cingulate Cortex, an area with decreased activity in depressed patients. These studies have been difficult to navigate, as the stimuli, as well as cognitive reactions experienced during musical therapy, have been poorly defined. In this project, our group came up with two research questions to test by reanalzing data from (Lepping et al, 2015). (1) Can we create a model to discriminate between MDD and ND participants using the contrast between positive and negative stimuli? And (2) Can we see the differences between MDD and ND participants when processing the same audio clip? While the main study was designed to investigate neural circuitry of emotion and reward in depression, we wanted to do more with that data. Instead of just doing contrasts, and ROIs, we performed a ​Multivoxel Pattern Analysis (MVPA) and a ​Representational Similarity Analysis​ (RSA) using the audio files.
 
-See their {download}` presentation <../images/project_gallery/Music_Depression.pdf>`.
+See their [presentation](../images/project_gallery/Music_Depression.pdf).
 
 
