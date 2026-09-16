@@ -560,7 +560,7 @@ build = [
 [package.metadata]
 requires-dist = [
     { name = "anywidget", specifier = ">=0.9.21" },
-    { name = "dartbrains-tools", specifier = ">=0.1.8" },
+    { name = "dartbrains-tools", specifier = ">=0.1.9" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
@@ -586,14 +586,14 @@ provides-extras = ["build"]
 
 [package.metadata.requires-dev]
 build = [
-    { name = "marimo-book", specifier = ">=0.1.40" },
+    { name = "marimo-book", specifier = ">=0.1.41" },
     { name = "marimo-grader-client", specifier = ">=0.1.1" },
     { name = "mograder", specifier = ">=0.3" },
 ]
 
 [[package]]
 name = "dartbrains-tools"
-version = "0.1.8"
+version = "0.1.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
@@ -604,9 +604,9 @@ dependencies = [
     { name = "scipy" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a2/24/8a62d9d0008e49cd598872bb723738bf2f07fec3474830520d974c05c6b0/dartbrains_tools-0.1.8.tar.gz", hash = "sha256:bd857aed4acfb24aca281848a2e74c7f000e8f023284d73acf7e7bf2b6062418", size = 56249, upload-time = "2026-09-16T01:38:13.751Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b8/af/7f22668bfcccc125ab63a5034aed95a15fa460081283d5756566fc998c25/dartbrains_tools-0.1.9.tar.gz", hash = "sha256:6c701aa6135ef24c7cc43282ef946064a4ba2f7443f44631ba77fcfe7f6744de", size = 64712, upload-time = "2026-09-16T10:41:39.022Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/57/c3/f0ca025e40c80895ccaa737fcb20f984391929103a31ebc56ee93fdc8dab/dartbrains_tools-0.1.8-py3-none-any.whl", hash = "sha256:a1486e87ff738d76ce821656348ae6f5a37ef693b7ee4c7c3c8d59f467020ad1", size = 59712, upload-time = "2026-09-16T01:38:12.383Z" },
+    { url = "https://files.pythonhosted.org/packages/b3/62/b043fe4f9e2621523e89603d5fe0ab541ca33882354ed4e8c6e71f5301a8/dartbrains_tools-0.1.9-py3-none-any.whl", hash = "sha256:5c307f2dc011c1d278d5a595159602800c0854d14562769cff106c19b1f7404e", size = 64457, upload-time = "2026-09-16T10:41:37.616Z" },
 ]
 
 [[package]]
@@ -1488,7 +1488,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.40"
+version = "0.1.41"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1509,9 +1509,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/eb/4d/c30adfd55864f365fc125510a5cee0f3e3ba8a79d36ab138e83cd70a3d1e/marimo_book-0.1.40.tar.gz", hash = "sha256:16435e76b1a7616de5605db359331f1ed78d7b7b82314c138825752da8ac22ac", size = 420040, upload-time = "2026-09-15T18:53:17.006Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e1/60/fe7fdc96d522e2fa1841c0c3eb33fb767f354efacf64808549ac9d638ca6/marimo_book-0.1.41.tar.gz", hash = "sha256:763a27d63d69a2618fdfd4a1a331fed99f5feb8abdc6433a0030e2cf3b0d6b4a", size = 426948, upload-time = "2026-09-16T10:41:58.831Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/29/ed/3e6fc3320ab62c5d71d6088743e5342081b0445e5247b8bcc39426fe604f/marimo_book-0.1.40-py3-none-any.whl", hash = "sha256:29de9a39910bd800ce85f53516a37f8d7c9d94fe6367194a53d1b85b679c89da", size = 209105, upload-time = "2026-09-15T18:53:15.449Z" },
+    { url = "https://files.pythonhosted.org/packages/15/19/a8fc3a305a2c5b636664af633ffe19c82e085613451d27cee4ba508982f7/marimo_book-0.1.41-py3-none-any.whl", hash = "sha256:eb80b295de3e3deb0ae737c45e45c56d6f8e2d73bf0b800d5fd7eb58ee0516ad", size = 211698, upload-time = "2026-09-16T10:41:57.105Z" },
 ]
 
 [[package]]
