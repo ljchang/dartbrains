@@ -2,9 +2,11 @@
 
 Assignments are marimo notebooks that check your work as you go and let you submit each question from inside the notebook. This page walks through the whole loop once; after that it is the same for every assignment.
 
+**There is a practice assignment on this page.** Press **Assignment** in the header, or **Open assignment** on the card at the end of the page, and work it as you read. It does not count for anything and every answer is written out in the question — it runs the same sign-in, checking and submission machinery as a real assignment, so you can watch each step described below actually happen. Do it once now: if your Dartmouth sign-in is going to give you trouble, this is a far better place to find that out than an hour before something is due.
+
 ## 1. Open the assignment
 
-Each assignment belongs to a chapter and opens inside it. Go to the chapter — the [Programming](../Introduction_to_Programming/) chapter, say — and press **Assignment** in the header, or **Open assignment** on the card at the end of the page. The assignment opens in a drawer along the bottom of the window and starts running in your browser; the first time, it spends a few seconds installing its packages. The chapter stays where it is above the drawer, so you can read it while you work, and **Minimize** tucks the drawer down to its bar without stopping the notebook.
+Each assignment belongs to a page and opens inside it — the graded ones to their chapter, the practice one to this page. Go to the page — the [Programming](../Introduction_to_Programming/) chapter, say — and press **Assignment** in the header, or **Open assignment** on the card at the end of the page. The assignment opens in a drawer along the bottom of the window and starts running in your browser; the first time, it spends a few seconds installing its packages. The page stays where it is above the drawer, so you can read it while you work — try it here and these instructions stay in view. **Minimize** tucks the drawer down to its bar without stopping the notebook.
 
 **Your work is saved in this browser as you type.** The drawer is your own copy of the assignment: close the tab, come back tomorrow, and your answers are where you left them. **History** in the drawer's bar shows every version of that copy — checkpoints as you work, a version each time you submit, and any you name yourself — and lets you look at one, compare it with your current copy, and restore it. Because the copy lives in this browser, work on one machine, in one browser, and press **Download .py** if you want a backup of your own.
 
@@ -20,7 +22,7 @@ Everything below works the same way there.
 
 Each question has a place for your code or your written answer, followed by a **Check** cell. Check runs instantly, as often as you like, and tells you whether your answer passes the visible tests. A cell that says *Complete the code cell above first* is simply waiting for your answer.
 
-Checks are for learning. They are not your grade, and some questions run extra hidden tests when you submit.
+Checks are for learning. They are not your grade, and some questions run extra hidden tests when you submit. The practice assignment's second question is built to show this: its check runs one test, and submitting runs two more that are not in your notebook.
 
 ## 3. Sign in and submit
 

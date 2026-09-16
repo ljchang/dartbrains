@@ -140,6 +140,10 @@ toc:
         mode: cached
       - file: content/assignments/how-to-submit.md
         title: Submitting assignments
+        # The guide demonstrates itself: a zero-stakes practice assignment opens
+        # in the drawer right where the page describes it, so a student can walk
+        # sign-in / Check / Submit / Feedback before a real deadline rides on it.
+        assignment: content/assignments/practice.py
       - file: content/Introduction_to_Programming.py
         # Pure-Python tutorial with ~10 mo.ui controls and no third-party imports,
         # so Pyodide boots fast and every example is editable in the browser.
