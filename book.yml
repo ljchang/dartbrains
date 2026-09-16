@@ -179,11 +179,15 @@ toc:
       - file: content/ICA.py
         title: Separating Signal from Noise with ICA
         # static + precompute: 10 components, threshold fixed at 2.0 → 10 combos.
-        # `views` is independent of `mode`: the page stays a fast precomputed
-        # static render, and Edit opens the notebook in the browser workbench.
-        views: [read, edit]
+        # No edit view: marimo's WASM *editor* does not install from the
+        # notebook's PEP 723 block. It prompts with "Missing packages" and
+        # installs the bare name, which for nltools resolves to the latest
+        # stable (0.5.1) — it needs numpy<1.24, has no Pyodide wheel, and the
+        # install fails. Verified on the live site 2026-09-16. Restore
+        # `views: [read, edit]` once the workbench can hand marimo the pinned
+        # dependency list; the block itself is already correct.
       - file: content/Introduction_to_Neuroimaging_Data.py
-        views: [read, edit]
+        # No edit view — same nltools/PEP 723 reason as ICA above.
       - file: content/Signal_Processing.py
         title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
