@@ -10,7 +10,6 @@ def _():
     from pathlib import Path
     import os
     from dartbrains_tools.data import localizer
-    from huggingface_hub import hf_hub_download
     import nibabel as nib
     import matplotlib.pyplot as plt
     from nilearn.plotting import plot_glass_brain, plot_anat, plot_epi, plot_stat_map
