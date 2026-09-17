@@ -261,7 +261,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "implementation_name != 'PyPy' and sys_platform != 'emscripten'" },
+    { name = "pycparser", marker = "implementation_name != 'PyPy' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -469,7 +469,7 @@ name = "cryptography"
 version = "50.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bb/ad/5d6702db60b1e40b41ef513b6967ff5848f307d50f8449baf1634f5908f1/cryptography-50.0.1.tar.gz", hash = "sha256:5dd9bda1c12b4162f6ff568eeb5e0ff956c28d14406e875cfe8a63a2d414ff20", size = 880381, upload-time = "2026-08-25T19:45:45.499Z" }
 wheels = [
@@ -560,7 +560,7 @@ build = [
 [package.metadata]
 requires-dist = [
     { name = "anywidget", specifier = ">=0.9.21" },
-    { name = "dartbrains-tools", specifier = ">=0.1.9" },
+    { name = "dartbrains-tools", specifier = ">=0.1.10" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
@@ -586,14 +586,14 @@ provides-extras = ["build"]
 
 [package.metadata.requires-dev]
 build = [
-    { name = "marimo-book", specifier = ">=0.1.42" },
+    { name = "marimo-book", specifier = ">=0.1.44" },
     { name = "marimo-grader-client", specifier = ">=0.1.1" },
     { name = "mograder", specifier = ">=0.3" },
 ]
 
 [[package]]
 name = "dartbrains-tools"
-version = "0.1.9"
+version = "0.1.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
@@ -604,9 +604,9 @@ dependencies = [
     { name = "scipy" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b8/af/7f22668bfcccc125ab63a5034aed95a15fa460081283d5756566fc998c25/dartbrains_tools-0.1.9.tar.gz", hash = "sha256:6c701aa6135ef24c7cc43282ef946064a4ba2f7443f44631ba77fcfe7f6744de", size = 64712, upload-time = "2026-09-16T10:41:39.022Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/39/f4/abfaa20698fd22a1c1c602fb741401647933f40a332deff47505b5ec7289/dartbrains_tools-0.1.10.tar.gz", hash = "sha256:ac6bd9f069db8b8aa3409ad328d8279e629871a665741318f94b271b50c3581e", size = 64991, upload-time = "2026-09-17T15:04:34.523Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b3/62/b043fe4f9e2621523e89603d5fe0ab541ca33882354ed4e8c6e71f5301a8/dartbrains_tools-0.1.9-py3-none-any.whl", hash = "sha256:5c307f2dc011c1d278d5a595159602800c0854d14562769cff106c19b1f7404e", size = 64457, upload-time = "2026-09-16T10:41:37.616Z" },
+    { url = "https://files.pythonhosted.org/packages/7d/11/2d5e0e18ac732c17ddcc60d9a14c25e188d3d5f0a5428b9adc2171f96777/dartbrains_tools-0.1.10-py3-none-any.whl", hash = "sha256:041d090226b597834ab3f1fe34f1512064d708eede8beb2f4b0613ae3533dcc4", size = 64790, upload-time = "2026-09-17T15:04:33.172Z" },
 ]
 
 [[package]]
@@ -1488,7 +1488,7 @@ wheels = [
 
 [[package]]
 name = "marimo-book"
-version = "0.1.42"
+version = "0.1.44"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1509,9 +1509,9 @@ dependencies = [
     { name = "typer" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8a/b1/6ca74ac3de48fd41806827a0386c724f468eb422a99b63109fdc7613629b/marimo_book-0.1.42.tar.gz", hash = "sha256:3cf73bb5c21317d52538d50c2e16a854772500f2763e4fc3202ae93cad729e76", size = 437893, upload-time = "2026-09-16T23:50:38.336Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/bf/e0ae05c9ea77db4d66c847cad7b64d071e72edbdeb501c363923be1f5720/marimo_book-0.1.44.tar.gz", hash = "sha256:7a89286fe31dd34fba5481b792b23298b4bce5c9ee6e6f8fb6c848d7a41edd99", size = 441746, upload-time = "2026-09-17T14:57:45.828Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/34/f9/a3eeedbb1fc15d8132579d685717278c04e071ba12592c46cc1d0ed29380/marimo_book-0.1.42-py3-none-any.whl", hash = "sha256:7d69fd99e8a750ab1fd15eaa259a823008dff32926ffc56d83d384dfb3b1adb4", size = 216346, upload-time = "2026-09-16T23:50:36.935Z" },
+    { url = "https://files.pythonhosted.org/packages/1c/eb/4d4f2660ef085d4d5449e5840f5fdb43545a78058a858807cd8f013c25bf/marimo_book-0.1.44-py3-none-any.whl", hash = "sha256:1457bc157675ac24fb049a60aa7f4a74c8bc7bd56d95890e212ab83b12e3c447", size = 217975, upload-time = "2026-09-17T14:57:44.111Z" },
 ]
 
 [[package]]
@@ -2223,7 +2223,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "ptyprocess" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [
@@ -2756,7 +2756,7 @@ name = "pyzmq"
 version = "27.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "implementation_name == 'pypy' and sys_platform != 'emscripten'" },
+    { name = "cffi", marker = "implementation_name == 'pypy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/0b/3c9baedbdf613ecaa7aa07027780b8867f57b6293b6ee50de316c9f3222b/pyzmq-27.1.0.tar.gz", hash = "sha256:ac0765e3d44455adb6ddbf4417dcce460fc40a05978c08efdf2948072f6db540", size = 281750, upload-time = "2025-09-08T23:10:18.157Z" }
 wheels = [
@@ -3033,8 +3033,8 @@ name = "secretstorage"
 version = "3.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "jeepney", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "cryptography" },
+    { name = "jeepney" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1c/03/e834bcd866f2f8a49a85eaff47340affa3bfa391ee9912a952a1faa68c7b/secretstorage-3.5.0.tar.gz", hash = "sha256:f04b8e4689cbce351744d5537bf6b1329c6fc68f91fa666f60a380edddcd11be", size = 19884, upload-time = "2025-11-23T19:02:53.191Z" }
 wheels = [
@@ -3087,7 +3087,7 @@ name = "starlette"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform != 'emscripten'" },
+    { name = "anyio" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b5/b4/205b0d5241d934e8add0c38aa924c4f9fb7330834ff11e5444db964ec3f9/starlette-1.6.0.tar.gz", hash = "sha256:d4e3ac5e546444960c710297a3c9fc3f7ebae1b7e963f3d36173b49da535be9b", size = 2716969, upload-time = "2026-08-08T18:27:57.512Z" }
 wheels = [
@@ -3192,8 +3192,8 @@ name = "uvicorn"
 version = "0.44.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "sys_platform != 'emscripten'" },
-    { name = "h11", marker = "sys_platform != 'emscripten'" },
+    { name = "click" },
+    { name = "h11" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5e/da/6eee1ff8b6cbeed47eeb5229749168e81eb4b7b999a1a15a7176e51410c9/uvicorn-0.44.0.tar.gz", hash = "sha256:6c942071b68f07e178264b9152f1f16dfac5da85880c4ce06366a96d70d4f31e", size = 86947, upload-time = "2026-04-06T09:23:22.826Z" }
 wheels = [

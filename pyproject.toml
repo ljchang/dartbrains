@@ -17,7 +17,13 @@ dependencies = [
     # Precession) and makes the canvases responsive.
     # 0.1.7 points the sherlock/paranoia loaders at derivatives/fmriprep/
     # (the datasets were reorganized) — required or those loaders 404.
-    "dartbrains-tools>=0.1.9",
+    # 0.1.10 fixes widget layout: the precession and transform_cube widgets
+    # asked for more width than a medium cell has, so their flex row wrapped
+    # into a tall vertical stack; spin_ensemble/cost_function/smoothing were
+    # declared wider than the cell and got scaled down, shrinking their
+    # in-canvas text. Also unclips the compass button and reframes
+    # net_magnetization, whose camera showed mostly empty space.
+    "dartbrains-tools>=0.1.10",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
     "huggingface-hub[hf-xet]>=1.8.0",
@@ -123,7 +129,12 @@ build = [
     # known trade — widget chrome that assumed a light ground can lose contrast
     # against the new dark one (marimo-book #124); on MR_Physics the slider
     # readout is the visible case.
-    "marimo-book>=0.1.42",
+    # 0.1.42 makes `check` warn when a workbench page pins a dependency
+    # version: marimo installs script-metadata deps by name in the browser, so
+    # a specifier is silently dropped and the reader gets the newest stable.
+    # 0.1.43/0.1.44 add a header link to the book's repository and settle which
+    # side of the search box it sits on.
+    "marimo-book>=0.1.44",
 ]
 
 [tool.uv.sources]
