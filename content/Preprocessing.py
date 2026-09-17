@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium", app_title="Preprocessing")
 
 
@@ -83,12 +83,41 @@ def _():
 
     return (
         CostFunctionWidget,
-        IMG_DIR,
         SmoothingWidget,
         TransformCubeWidget,
         img_src,
         mo,
         read_svg,
+    )
+
+
+@app.cell(hide_code=True)
+def _(CostFunctionWidget, SmoothingWidget, TransformCubeWidget, mo):
+    # Widgets are built ONCE, here -- never inside a slider-driven cell.
+    # Rebuilding a widget hands marimo a new anywidget model_id, so the browser
+    # unmounts the old widget and mounts a new one. That teardown is what makes
+    # a plot vanish mid-drag and lets neighbouring text reflow into the gap.
+    # Sliders instead mutate traits via on_change; each widget's JS re-reads its
+    # traits every animation frame and redraws in place, so the mount is stable.
+    transform_w = TransformCubeWidget(
+        trans_x=0.0, trans_y=0.0, trans_z=0.0,
+        rot_x=0.0, rot_y=0.0, rot_z=0.0,
+        scale_x=1.0, scale_y=1.0, scale_z=1.0,
+    )
+    transform_view = mo.ui.anywidget(transform_w)
+
+    cost_w = CostFunctionWidget(trans_x=0.0, trans_y=0.0)
+    cost_view = mo.ui.anywidget(cost_w)
+
+    smooth_w = SmoothingWidget(fwhm=0.0)
+    smooth_view = mo.ui.anywidget(smooth_w)
+    return (
+        cost_view,
+        cost_w,
+        smooth_view,
+        smooth_w,
+        transform_view,
+        transform_w,
     )
 
 
@@ -148,16 +177,16 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    tx_slider = mo.ui.slider(start=-15, stop=15, step=0.5, value=0, label="Translate X")
-    ty_slider = mo.ui.slider(start=-15, stop=15, step=0.5, value=0, label="Translate Y")
-    tz_slider = mo.ui.slider(start=-15, stop=15, step=0.5, value=0, label="Translate Z")
-    rx_slider = mo.ui.slider(start=-180, stop=180, step=5, value=0, label="Rotate X (\u00b0)")
-    ry_slider = mo.ui.slider(start=-180, stop=180, step=5, value=0, label="Rotate Y (\u00b0)")
-    rz_slider = mo.ui.slider(start=-180, stop=180, step=5, value=0, label="Rotate Z (\u00b0)")
-    sx_slider = mo.ui.slider(start=0.5, stop=2.0, step=0.1, value=1.0, label="Scale X")
-    sy_slider = mo.ui.slider(start=0.5, stop=2.0, step=0.1, value=1.0, label="Scale Y")
-    sz_slider = mo.ui.slider(start=0.5, stop=2.0, step=0.1, value=1.0, label="Scale Z")
+def _(mo, transform_w):
+    tx_slider = mo.ui.slider(start=-15, stop=15, step=0.5, value=0, label="Translate X", on_change=lambda v, _w=transform_w: setattr(_w, "trans_x", float(v)))
+    ty_slider = mo.ui.slider(start=-15, stop=15, step=0.5, value=0, label="Translate Y", on_change=lambda v, _w=transform_w: setattr(_w, "trans_y", float(v)))
+    tz_slider = mo.ui.slider(start=-15, stop=15, step=0.5, value=0, label="Translate Z", on_change=lambda v, _w=transform_w: setattr(_w, "trans_z", float(v)))
+    rx_slider = mo.ui.slider(start=-180, stop=180, step=5, value=0, label="Rotate X (\u00b0)", on_change=lambda v, _w=transform_w: setattr(_w, "rot_x", float(v)))
+    ry_slider = mo.ui.slider(start=-180, stop=180, step=5, value=0, label="Rotate Y (\u00b0)", on_change=lambda v, _w=transform_w: setattr(_w, "rot_y", float(v)))
+    rz_slider = mo.ui.slider(start=-180, stop=180, step=5, value=0, label="Rotate Z (\u00b0)", on_change=lambda v, _w=transform_w: setattr(_w, "rot_z", float(v)))
+    sx_slider = mo.ui.slider(start=0.5, stop=2.0, step=0.1, value=1.0, label="Scale X", on_change=lambda v, _w=transform_w: setattr(_w, "scale_x", float(v)))
+    sy_slider = mo.ui.slider(start=0.5, stop=2.0, step=0.1, value=1.0, label="Scale Y", on_change=lambda v, _w=transform_w: setattr(_w, "scale_y", float(v)))
+    sz_slider = mo.ui.slider(start=0.5, stop=2.0, step=0.1, value=1.0, label="Scale Z", on_change=lambda v, _w=transform_w: setattr(_w, "scale_z", float(v)))
     return (
         rx_slider,
         ry_slider,
@@ -173,7 +202,6 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(
-    TransformCubeWidget,
     mo,
     rx_slider,
     ry_slider,
@@ -181,17 +209,11 @@ def _(
     sx_slider,
     sy_slider,
     sz_slider,
+    transform_view,
     tx_slider,
     ty_slider,
     tz_slider,
 ):
-    _widget = TransformCubeWidget(
-        trans_x=float(tx_slider.value), trans_y=float(ty_slider.value), trans_z=float(tz_slider.value),
-        rot_x=float(rx_slider.value), rot_y=float(ry_slider.value), rot_z=float(rz_slider.value),
-        scale_x=float(sx_slider.value), scale_y=float(sy_slider.value), scale_z=float(sz_slider.value),
-    )
-    _wrapped = mo.ui.anywidget(_widget)
-
     mo.vstack([
         mo.md("**Translation:**"),
         mo.hstack([tx_slider, ty_slider, tz_slider], justify="start", gap=1),
@@ -199,7 +221,7 @@ def _(
         mo.hstack([rx_slider, ry_slider, rz_slider], justify="start", gap=1),
         mo.md("**Scale:**"),
         mo.hstack([sx_slider, sy_slider, sz_slider], justify="start", gap=1),
-        _wrapped,
+        transform_view,
     ])
     return
 
@@ -272,23 +294,17 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    cost_tx = mo.ui.slider(start=0, stop=20, step=1, value=0, label="Translate X")
-    cost_ty = mo.ui.slider(start=0, stop=20, step=1, value=0, label="Translate Y")
+def _(cost_w, mo):
+    cost_tx = mo.ui.slider(start=0, stop=20, step=1, value=0, label="Translate X", on_change=lambda v, _w=cost_w: setattr(_w, "trans_x", float(v)))
+    cost_ty = mo.ui.slider(start=0, stop=20, step=1, value=0, label="Translate Y", on_change=lambda v, _w=cost_w: setattr(_w, "trans_y", float(v)))
     return cost_tx, cost_ty
 
 
 @app.cell(hide_code=True)
-def _(CostFunctionWidget, cost_tx, cost_ty, mo):
-    _widget = CostFunctionWidget(
-        trans_x=float(cost_tx.value),
-        trans_y=float(cost_ty.value),
-    )
-    _wrapped = mo.ui.anywidget(_widget)
-
+def _(cost_tx, cost_ty, cost_view, mo):
     mo.vstack([
         mo.hstack([cost_tx, cost_ty], justify="start", gap=2),
-        _wrapped,
+        cost_view,
         mo.callout(
             mo.md(
                 "**Goal:** Find the translation that makes SSE = 0 (perfect overlap, shown in green). "
@@ -445,19 +461,16 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    fwhm_slider = mo.ui.slider(start=0, stop=20, step=0.5, value=0, label="FWHM (mm)", full_width=True)
+def _(mo, smooth_w):
+    fwhm_slider = mo.ui.slider(start=0, stop=20, step=0.5, value=0, label="FWHM (mm)", full_width=True, on_change=lambda v, _w=smooth_w: setattr(_w, "fwhm", float(v)))
     return (fwhm_slider,)
 
 
 @app.cell(hide_code=True)
-def _(SmoothingWidget, fwhm_slider, mo):
-    _widget = SmoothingWidget(fwhm=float(fwhm_slider.value))
-    _wrapped = mo.ui.anywidget(_widget)
-
+def _(fwhm_slider, mo, smooth_view):
     mo.vstack([
         fwhm_slider,
-        _wrapped,
+        smooth_view,
         mo.callout(
             mo.md(
                 "**Try this:** Start at FWHM=0 (no smoothing) and slowly increase. "

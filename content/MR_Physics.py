@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.24.2"
 app = marimo.App(
     width="medium",
     app_title="MR Physics: From Protons to Brain Images",
@@ -101,17 +101,16 @@ def _():
         EncodingWidget,
         GAMMA,
         GAMMA_H,
-        IMG_DIR,
         KSpaceWidget,
         NetMagnetizationWidget,
         PrecessionWidget,
         SpinEnsembleWidget,
-        img_src,
         TISSUE_PROPERTIES,
         compute_spectrum,
         fid_signal,
         go,
         hrf,
+        img_src,
         make_subplots,
         mo,
         np,
@@ -123,8 +122,64 @@ def _():
 
 
 @app.cell(hide_code=True)
+def _(
+    CompassWidget,
+    ConvolutionWidget,
+    KSpaceWidget,
+    PrecessionWidget,
+    SpinEnsembleWidget,
+    mo,
+):
+    # Widgets are built ONCE, here -- never inside a slider-driven cell.
+    # Rebuilding a widget hands marimo a new anywidget model_id, so the browser
+    # unmounts the old widget and mounts a new one. That teardown is what makes
+    # a plot vanish mid-drag and lets neighbouring text reflow into the gap
+    # (the canvases are height:auto, so an empty container has no height).
+    # Sliders instead mutate traits via on_change; each widget's JS re-reads its
+    # traits every animation frame and redraws in place, so the mount is stable.
+    compass_w = CompassWidget(b0=3.0)
+    compass_view = mo.ui.anywidget(compass_w)
+
+    larmor_w = PrecessionWidget(b0=3.0, flip_angle=30.0, show_relaxation=False)
+    larmor_view = mo.ui.anywidget(larmor_w)
+
+    flip_w = PrecessionWidget(b0=3.0, flip_angle=90.0, show_relaxation=False)
+    flip_view = mo.ui.anywidget(flip_w)
+
+    bloch_w = PrecessionWidget(
+        b0=3.0, flip_angle=90.0, t1=1300.0, t2=80.0, show_relaxation=True
+    )
+    bloch_view = mo.ui.anywidget(bloch_w)
+
+    echo_w = SpinEnsembleWidget(sequence_type="spin_echo", speed=1.0)
+    echo_view = mo.ui.anywidget(echo_w)
+
+    kspace_w = KSpaceWidget(mask_type="progressive", radius_fraction=0.2, speed=2.0)
+    kspace_view = mo.ui.anywidget(kspace_w)
+
+    conv_w = ConvolutionWidget(pattern="single", speed=1.5)
+    conv_view = mo.ui.anywidget(conv_w)
+    return (
+        bloch_view,
+        bloch_w,
+        compass_view,
+        conv_view,
+        conv_w,
+        echo_view,
+        echo_w,
+        flip_view,
+        flip_w,
+        kspace_view,
+        kspace_w,
+        larmor_view,
+        larmor_w,
+    )
+
+
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+
     """)
     return
 
@@ -184,16 +239,13 @@ def _(mo):
         label="B\u2080 field strength (mT)",
         full_width=True,
     )
-    return (b0_compass_slider,)
+    return
 
 
 @app.cell(hide_code=True)
-def _(CompassWidget, b0_compass_slider, mo):
-    _widget = CompassWidget(b0=float(b0_compass_slider.value))
-    _wrapped = mo.ui.anywidget(_widget)
-
+def _(compass_view, mo):
     mo.vstack([
-        _wrapped,
+        compass_view,
     ])
     return
 
@@ -242,6 +294,7 @@ def _(mo):
     n_protons_slider = mo.ui.slider(
         start=10, stop=500, step=10, value=100,
         label="Number of protons",
+        debounce=True,  # read once at widget setup, so this one must rebuild
     )
     b0_on_toggle = mo.ui.switch(label="B\u2080 field ON", value=False)
     return b0_on_toggle, n_protons_slider
@@ -301,26 +354,24 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _(larmor_w, mo):
     b0_larmor_slider = mo.ui.slider(
         start=0.5, stop=7.0, step=0.1, value=3.0,
         label="B\u2080 (Tesla)",
         full_width=True,
+        on_change=lambda v, _w=larmor_w: setattr(_w, "b0", float(v)),
     )
     return (b0_larmor_slider,)
 
 
 @app.cell(hide_code=True)
-def _(GAMMA_H, PrecessionWidget, b0_larmor_slider, mo):
+def _(GAMMA_H, b0_larmor_slider, larmor_view, mo):
     _b0 = b0_larmor_slider.value
     _larmor_freq = GAMMA_H * _b0
 
-    _widget = PrecessionWidget(b0=_b0, flip_angle=30.0, show_relaxation=False)
-    _wrapped = mo.ui.anywidget(_widget)
-
     mo.vstack([
       b0_larmor_slider,
-      _wrapped,
+      larmor_view,
     ])
     return
 
@@ -400,28 +451,26 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _(flip_w, mo):
     flip_angle_slider = mo.ui.slider(
         start=0, stop=180, step=5, value=90,
         label="Flip angle (degrees)",
         full_width=True,
+        on_change=lambda v, _w=flip_w: setattr(_w, "flip_angle", float(v)),
     )
     return (flip_angle_slider,)
 
 
 @app.cell(hide_code=True)
-def _(PrecessionWidget, flip_angle_slider, mo):
+def _(flip_angle_slider, flip_view, mo):
     _flip = flip_angle_slider.value
-
-    _widget = PrecessionWidget(b0=3.0, flip_angle=float(_flip), show_relaxation=False)
-    _wrapped = mo.ui.anywidget(_widget)
 
     _mxy = abs(round(float(__import__('math').sin(__import__('math').radians(_flip))), 2))
     _mz = round(float(__import__('math').cos(__import__('math').radians(_flip))), 2)
 
     mo.vstack([
         flip_angle_slider,
-        _wrapped,
+        flip_view,
         mo.md(
             f"Transverse magnetization |Mxy| = **{_mxy:.2f}** "
             f"(this is our detectable signal strength)\n\n"
@@ -875,39 +924,35 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _(bloch_w, mo):
     bloch_t1_slider = mo.ui.slider(
 
         start=200, stop=4000, step=100, value=1300,
         label="T\u2081 (ms)",
+        on_change=lambda v, _w=bloch_w: setattr(_w, "t1", float(v)),
     )
     bloch_t2_slider = mo.ui.slider(
         start=10, stop=300, step=10, value=80,
         label="T\u2082 (ms)",
+        on_change=lambda v, _w=bloch_w: setattr(_w, "t2", float(v)),
     )
     bloch_b0_slider = mo.ui.slider(
         start=0.5, stop=7.0, step=0.5, value=3.0,
         label="B\u2080 (T)",
+        on_change=lambda v, _w=bloch_w: setattr(_w, "b0", float(v)),
     )
     return bloch_b0_slider, bloch_t1_slider, bloch_t2_slider
 
 
 @app.cell(hide_code=True)
-def _(PrecessionWidget, bloch_b0_slider, bloch_t1_slider, bloch_t2_slider, mo):
+def _(bloch_b0_slider, bloch_t1_slider, bloch_t2_slider, bloch_view, mo):
     _t1 = bloch_t1_slider.value
     _t2 = bloch_t2_slider.value
     _b0 = bloch_b0_slider.value
 
-    _widget = PrecessionWidget(
-        b0=float(_b0), flip_angle=90.0,
-        t1=float(_t1), t2=float(_t2),
-        show_relaxation=True,
-    )
-    _wrapped = mo.ui.anywidget(_widget)
-
     mo.vstack([
         mo.hstack([bloch_t1_slider, bloch_t2_slider, bloch_b0_slider], justify="start", gap=2),
-        _wrapped,
+        bloch_view,
         mo.callout(
             mo.md(
                 "**The spiral tells the whole story:** The magnetization simultaneously "
@@ -1200,26 +1245,25 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _(echo_w, mo):
     echo_type = mo.ui.radio(
         options={"Spin Echo (90\u00b0-180\u00b0)": "spin_echo", "Gradient Echo": "gradient_echo"},
         value="Spin Echo (90\u00b0-180\u00b0)",
         label="Sequence type",
+        on_change=lambda v, _w=echo_w: setattr(_w, "sequence_type", str(v)),
     )
     echo_speed = mo.ui.slider(
         start=0.3, stop=3.0, step=0.1, value=1.0,
         label="Animation speed",
+        on_change=lambda v, _w=echo_w: setattr(_w, "speed", float(v)),
     )
     return echo_speed, echo_type
 
 
 @app.cell(hide_code=True)
-def _(SpinEnsembleWidget, echo_speed, echo_type, mo):
+def _(echo_speed, echo_type, echo_view, mo):
     _seq_type = echo_type.value
     _speed = echo_speed.value
-
-    _widget = SpinEnsembleWidget(sequence_type=_seq_type, speed=_speed)
-    _wrapped = mo.ui.anywidget(_widget)
 
     if _seq_type == "spin_echo":
         _seq_desc = (
@@ -1237,7 +1281,7 @@ def _(SpinEnsembleWidget, echo_speed, echo_type, mo):
 
     mo.vstack([
         mo.hstack([echo_type, echo_speed], justify="start", gap=2),
-        _wrapped,
+        echo_view,
         mo.md(_seq_desc),
         mo.callout(
             mo.md(
@@ -1612,7 +1656,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _(kspace_w, mo):
     kspace_mask_type = mo.ui.dropdown(
         options={
             "Progressive fill (animated)": "progressive",
@@ -1622,30 +1666,26 @@ def _(mo):
         },
         value="Progressive fill (animated)",
         label="K-space mode",
+        on_change=lambda v, _w=kspace_w: setattr(_w, "mask_type", str(v)),
     )
     kspace_radius = mo.ui.slider(
         start=0.05, stop=0.5, step=0.05, value=0.2,
         label="Mask radius",
+        on_change=lambda v, _w=kspace_w: setattr(_w, "radius_fraction", float(v)),
     )
     kspace_speed = mo.ui.slider(
         start=0.5, stop=5.0, step=0.5, value=2.0,
         label="Fill speed",
+        on_change=lambda v, _w=kspace_w: setattr(_w, "speed", float(v)),
     )
     return kspace_mask_type, kspace_radius, kspace_speed
 
 
 @app.cell(hide_code=True)
-def _(KSpaceWidget, kspace_mask_type, kspace_radius, kspace_speed, mo):
-    _widget = KSpaceWidget(
-        mask_type=kspace_mask_type.value,
-        radius_fraction=float(kspace_radius.value),
-        speed=float(kspace_speed.value),
-    )
-    _wrapped = mo.ui.anywidget(_widget)
-
+def _(kspace_mask_type, kspace_radius, kspace_speed, kspace_view, mo):
     mo.vstack([
         mo.hstack([kspace_mask_type, kspace_radius, kspace_speed], justify="start", gap=2),
-        _wrapped,
+        kspace_view,
         mo.md(
             "**Progressive fill** shows how an MRI scanner acquires k-space line by line, "
             "with the image emerging gradually. Try other modes:\n"
@@ -1807,7 +1847,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
+def _(conv_w, mo):
     stim_pattern = mo.ui.dropdown(
         options={
             "Single event": "single",
@@ -1817,25 +1857,21 @@ def _(mo):
         },
         value="Single event",
         label="Stimulus pattern",
+        on_change=lambda v, _w=conv_w: setattr(_w, "pattern", str(v)),
     )
     conv_speed = mo.ui.slider(
         start=0.5, stop=4.0, step=0.5, value=1.5,
         label="Animation speed",
+        on_change=lambda v, _w=conv_w: setattr(_w, "speed", float(v)),
     )
     return conv_speed, stim_pattern
 
 
 @app.cell(hide_code=True)
-def _(ConvolutionWidget, conv_speed, mo, stim_pattern):
-    _widget = ConvolutionWidget(
-        pattern=stim_pattern.value,
-        speed=float(conv_speed.value),
-    )
-    _wrapped = mo.ui.anywidget(_widget)
-
+def _(conv_speed, conv_view, mo, stim_pattern):
     mo.vstack([
         mo.hstack([stim_pattern, conv_speed], justify="start", gap=2),
-        _wrapped,
+        conv_view,
         mo.callout(
             mo.md(
                 "Watch how each stimulus event spawns its own HRF response (purple ghost curves), "
