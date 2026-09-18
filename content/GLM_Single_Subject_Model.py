@@ -64,6 +64,7 @@ def _():
     from nltools.algorithms import zscore
     from nltools.data import BrainData, DesignMatrix
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
+    from dartbrains_tools import storage
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
@@ -76,9 +77,42 @@ def _():
         pd,
         pl,
         plt,
+        storage,
         youtube,
         zscore,
     )
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Where the data lives
+
+    This chapter works through one participant from the Localizer dataset. The dataset is public on [Hugging Face](https://huggingface.co/datasets/dartbrains/localizer), and that is where the files come from if you simply run the notebook.
+
+    If you are taking the course, sign in with your Dartmouth account below. The same files then come from the class's own storage, and anything you save with `storage.private()` later in the course is yours to find again next time, from any notebook. If you are not at Dartmouth, skip the button; everything below works the same way.
+    """)
+    return
+
+
+@app.cell
+def _(storage):
+    signin = storage.signin_button()
+    signin
+    return (signin,)
+
+
+@app.cell
+def _(localizer, signin, storage):
+    course = storage.course() if storage.connect(signin) else None
+
+    def localizer_path(subject, scope, suffix, extension='.nii.gz'):
+        '''A Localizer file: the class copy when signed in, otherwise the public one.'''
+        if course is None:
+            return localizer_path(subject, scope, suffix, extension)
+        return course.local_path('localizer/' + localizer.filename(subject, scope, suffix, extension))
+
+    return (localizer_path,)
 
 
 @app.cell(hide_code=True)
@@ -92,13 +126,13 @@ def _(mo):
 
 
 @app.cell
-def _(DesignMatrix, localizer, nib):
+def _(DesignMatrix, localizer, localizer_path, nib):
     def load_bids_events(subject):
         '''Create a DesignMatrix instance from a BIDS events file'''
 
         tr = localizer.get_tr()
-        n_tr = nib.load(localizer.get_file(subject, 'derivatives', 'bold')).shape[-1]
-        events_file = localizer.get_file(subject, 'raw', 'events', '.tsv')
+        n_tr = nib.load(localizer_path(subject, 'derivatives', 'bold')).shape[-1]
+        events_file = localizer_path(subject, 'raw', 'events', '.tsv')
 
         return DesignMatrix(events_file, run_length=n_tr, TR=tr, hrf_model=None)
 
@@ -379,9 +413,9 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, localizer):
+def _(BrainData, localizer_path):
     sub = 'S01'
-    data = BrainData(localizer.get_file(sub, 'derivatives', 'bold'))
+    data = BrainData(localizer_path(sub, 'derivatives', 'bold'))
     return data, sub
 
 
@@ -394,8 +428,8 @@ def _(mo):
 
 
 @app.cell
-def _(localizer, pd, plt, zscore):
-    covariates = pd.read_csv(localizer.get_file('S01', 'derivatives', 'confounds'), sep='\t')
+def _(localizer_path, pd, plt, zscore):
+    covariates = pd.read_csv(localizer_path('S01', 'derivatives', 'confounds'), sep='\t')
 
     mc = covariates[['trans_x','trans_y','trans_z','rot_x', 'rot_y', 'rot_z']]
 

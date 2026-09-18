@@ -23,7 +23,10 @@ dependencies = [
     # declared wider than the cell and got scaled down, shrinking their
     # in-canvas text. Also unclips the compass button and reframes
     # net_magnetization, whose camera showed mostly empty space.
-    "dartbrains-tools>=0.1.10",
+    # 0.2.3 adds dartbrains_tools.storage (the class copy of the data on R2,
+    # private student storage) with a sign-in button that falls back to the
+    # public Hugging Face copy for readers who are not at Dartmouth.
+    "dartbrains-tools>=0.2.3",
     "datalad>=1.3.4",
     "datasets>=4.8.4",
     "huggingface-hub[hf-xet]>=1.8.0",

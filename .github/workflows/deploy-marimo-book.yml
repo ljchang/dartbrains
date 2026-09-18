@@ -84,9 +84,18 @@ jobs:
       - name: Validate book.yml
         run: uv run marimo-book check
 
+      - name: Stage the class copy of the data
+        # Chapters that offer the class copy on R2 render against a directory
+        # shaped like the bucket (DARTBRAINS_STORAGE_ROOT). The files are the
+        # same public ones, fetched from Hugging Face.
+        run: uv run python scripts/stage_storage_root.py
+        env:
+          DARTBRAINS_STORAGE_ROOT: ${{ runner.temp }}/storage
+
       - name: Build the book
         run: uv run marimo-book build
         env:
+          DARTBRAINS_STORAGE_ROOT: ${{ runner.temp }}/storage
           # Assignment pages: render the grader widgets as static placeholders (no live sign-in
           # button on a page without a kernel). See marimo-grader client/README.md.
           GRADER_RENDER: "1"
