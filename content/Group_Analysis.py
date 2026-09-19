@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 #     "matplotlib",
 #     "nilearn",
 #     "nltools==0.6.0.dev2",
@@ -11,6 +11,11 @@
 #     "scipy",
 #     "seaborn",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo
@@ -1061,6 +1066,14 @@ def _(mo):
      - plot the results
      - write the file to your output folder.
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
+
+    assignment_card("group-analysis")
     return
 
 

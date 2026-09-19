@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 #     "matplotlib",
 #     "mpl-toolkits",
 #     "numpy",
@@ -9,6 +9,11 @@
 #     "scipy",
 #     "seaborn",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo
@@ -691,6 +696,14 @@ def _(pd, plt, sns):
     plt.suptitle('Years Since Highest Degree', fontsize=18)
     plt.tight_layout()
     plt.gcf()
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
+
+    assignment_card("plotting")
     return
 
 

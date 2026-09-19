@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 #     "datalad",
 #     "datasets",
 #     "huggingface-hub==1.10.2",
@@ -9,6 +9,11 @@
 #     "nibabel",
 #     "pandas==3.0.2",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo

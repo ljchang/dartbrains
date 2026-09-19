@@ -1,10 +1,15 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 #     "numpy",
 #     "polars",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo
@@ -874,6 +879,14 @@ def _(mo):
 
     Polars' combination of speed, expressiveness, and lazy evaluation makes it an excellent tool for data analysis in Python. As your datasets grow larger and your queries more complex, these features will become increasingly valuable.
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
+
+    assignment_card("polars")
     return
 
 
