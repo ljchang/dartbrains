@@ -84,6 +84,15 @@ jobs:
       - name: Validate book.yml
         run: uv run marimo-book check
 
+      - name: Chapters carry current PEP 723 blocks
+        # molab installs a chapter's dependencies from the block committed in
+        # its source (the launch button links to the GitHub file, not to build
+        # output), so a block CI generated here would never reach a student.
+        # This only catches drift: an import added without re-running
+        # `uv run --group build marimo-book sync-deps` fails the build instead
+        # of surfacing as a "Missing packages" prompt in molab.
+        run: uv run marimo-book sync-deps --check
+
       - name: Stage the class copy of the data
         # Chapters that offer the class copy on R2 render against a directory
         # shaped like the bucket (DARTBRAINS_STORAGE_ROOT). The files are the
