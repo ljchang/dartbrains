@@ -44,6 +44,17 @@ analytics:
 # is what nltools.org's own browser docs pin, and it is what lets the chapters
 # below offer an `edit` view. Drop this override once 0.6 ships as stable.
 dependencies:
+  # molab installs a notebook's dependencies from its own PEP 723 block, and
+  # `marimo-book sync-deps` writes those blocks into the chapters from these
+  # settings. Re-run it after adding an import to a chapter.
+  #
+  # Assignments are published with requires-python >= 3.11; the chapters say
+  # the same so the block never asks molab for a newer interpreter than it
+  # has. dartbrains-tools gets a floor: 0.2.3 is the first release with the
+  # storage layer the chapters use.
+  requires_python: ">=3.11"
+  extras:
+    - dartbrains-tools>=0.2.3
   overrides:
     nltools: nltools==0.6.0.dev2
 

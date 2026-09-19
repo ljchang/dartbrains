@@ -1,3 +1,12 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "dartbrains-tools>=0.2.3",
+#     "numpy",
+#     "pandas",
+# ]
+# ///
+
 import marimo
 
 __generated_with = "0.23.3"

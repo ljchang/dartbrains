@@ -1,9 +1,12 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
+#     "dartbrains-tools>=0.2.3",
 #     "datalad",
+#     "datasets",
 #     "huggingface-hub==1.10.2",
 #     "marimo>=0.23.1",
+#     "nibabel",
 #     "pandas==3.0.2",
 # ]
 # ///

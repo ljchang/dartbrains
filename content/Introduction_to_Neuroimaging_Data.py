@@ -1,3 +1,15 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "dartbrains-tools>=0.2.3",
+#     "matplotlib",
+#     "nibabel",
+#     "nilearn",
+#     "nltools==0.6.0.dev2",
+#     "numpy",
+# ]
+# ///
+
 import marimo
 
 __generated_with = "0.24.2"
