@@ -43,6 +43,18 @@ analytics:
 # marimo's Pyodide (v314) bundles, installs in ~6 s and imports cleanly. This
 # is what nltools.org's own browser docs pin, and it is what lets the chapters
 # below offer an `edit` view. Drop this override once 0.6 ships as stable.
+# The grader assignments are published on. TOC entries name their assignment
+# by slug and the build fetches the notebook the grader currently publishes
+# ({server}/a/{course}/{term}/{slug}/student.py) -- a republish in the grader
+# reaches the site on the next build with nothing to commit here. sync-deps
+# writes these three values into every chapter's PEP 723 block as
+# [tool.grader], which is how a chapter opened in molab or on a laptop finds
+# its assignments and its course storage. A new term is a one-line change.
+grader:
+  server: https://grader.dartbrains.org
+  course: neuroimaging
+  term: 2026-fall
+
 dependencies:
   # molab installs a notebook's dependencies from its own PEP 723 block, and
   # `marimo-book sync-deps` writes those blocks into the chapters from these
@@ -54,7 +66,7 @@ dependencies:
   # storage layer the chapters use.
   requires_python: ">=3.11"
   extras:
-    - dartbrains-tools>=0.2.3
+    - dartbrains-tools>=0.2.5
   overrides:
     nltools: nltools==0.6.0.dev2
 
@@ -154,7 +166,7 @@ toc:
         # The guide demonstrates itself: a zero-stakes practice assignment opens
         # in the drawer right where the page describes it, so a student can walk
         # sign-in / Check / Submit / Feedback before a real deadline rides on it.
-        assignment: content/assignments/practice.py
+        assignment: practice
       - file: content/Introduction_to_Programming.py
         # Pure-Python tutorial with ~10 mo.ui controls and no third-party imports,
         # so Pyodide boots fast and every example is editable in the browser.
@@ -165,23 +177,23 @@ toc:
         # the only thing Edit adds — and the only one worth a second kernel — is
         # editing the code.
         views: [read, edit]
-        assignment: content/assignments/programming.py
+        assignment: programming
       - file: content/Introduction_to_Pandas.py
         # pandas/numpy are bundled with Pyodide and the salary CSV is 1.7 KB with
         # open CORS, so read_csv over the network works via pyodide_http's patch.
         mode: wasm
         views: [read, edit]
-        assignment: content/assignments/pandas-intro.py
+        assignment: pandas
       - file: content/Introduction_to_Polars.py
         # polars ships an emscripten wheel micropip can install, and the CSV is
         # the same 1.7 KB open-CORS file the pandas chapter reads.
         views: [read, edit]
-        assignment: content/assignments/polars-intro.py
+        assignment: polars
       - file: content/Introduction_to_Plotting.py
         # matplotlib/seaborn are bundled with Pyodide; the CSV is 1.7 KB over open CORS.
         mode: wasm
         views: [read, edit]
-        assignment: content/assignments/plotting.py
+        assignment: plotting
       - file: content/fmriprep_on_discovery.md
         title: Running fMRIPrep on HPC
       - file: content/Glossary.md
@@ -206,29 +218,29 @@ toc:
         # No edit view — same nltools/PEP 723 reason as ICA above.
         # The assignment is unaffected: it opens in its own drawer and downloads
         # one subject's preprocessed run (57 MB), so it wants molab either way.
-        assignment: content/assignments/neuroimaging-data.py
+        assignment: neuroimaging-data
       - file: content/Signal_Processing.py
         title: Signal Processing Basics
         mode: wasm   # 14 sliders, mostly continuous → WASM gives full reactivity
         views: [read, edit]
-        assignment: content/assignments/signal-processing.py
+        assignment: signal-processing
       - file: content/Preprocessing.py
         mode: wasm   # 12 widgets in joint group → WASM gives full reactivity
       - file: content/GLM.py
         title: Introduction to the General Linear Model
         views: [read, edit]
-        assignment: content/assignments/glm.py
+        assignment: glm
       - file: content/GLM_Single_Subject_Model.py
         title: Modeling Single Subject Data
-        assignment: content/assignments/glm-single-subject.py
+        assignment: glm-single-subject
       - file: content/Group_Analysis.py
-        assignment: content/assignments/group-analysis.py
+        assignment: group-analysis
       - file: content/Thresholding_Group_Analyses.py
-        assignment: content/assignments/thresholding.py
+        assignment: thresholding
       - file: content/Connectivity.py
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
-        assignment: content/assignments/multivariate-prediction.py
+        assignment: multivariate-prediction
       - file: content/Spatial_Feature_Selection.py
       - file: content/RSA.py
         title: Representational Similarity Analysis

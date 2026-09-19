@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 #     "ipython",
 #     "matplotlib",
 #     "nltools==0.6.0.dev2",
@@ -10,6 +10,11 @@
 #     "scikit-learn",
 #     "seaborn",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo
@@ -546,6 +551,14 @@ def _(mo):
     ### Exercise 2. Generalizing Patterns.
     Now, let's see how well this pattern generalizes to other conditions. See which other conditions this pattern appears to generalize too by applying the pattern to all of the participants. Does it only get *confused* for conditions involving visual information?
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
+
+    assignment_card("multivariate-prediction")
     return
 
 

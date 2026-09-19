@@ -1,8 +1,13 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo
@@ -811,6 +816,14 @@ def _():
         return None
 
     [(s, my_fine(s)) for s in (55, 70, 95)]
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
+
+    assignment_card("programming")
     return
 
 

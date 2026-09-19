@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.3",
+#     "dartbrains-tools>=0.2.5",
 #     "matplotlib",
 #     "nilearn",
 #     "numpy",
@@ -10,6 +10,11 @@
 #     "scipy",
 #     "seaborn",
 # ]
+# 
+# [tool.grader]
+# server = "https://grader.dartbrains.org"
+# course = "neuroimaging"
+# term = "2026-fall"
 # ///
 
 import marimo
@@ -803,6 +808,14 @@ def _(mo):
     Open it from that page (in molab or by download), sign in with your Dartmouth account
     inside the notebook, and submit each question when you are ready.
     """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
+
+    assignment_card("glm")
     return
 
 
