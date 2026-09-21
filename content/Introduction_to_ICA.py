@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "nilearn",
 #     "nltools==0.6.0.dev2",
@@ -19,7 +19,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -187,7 +187,6 @@ def _(
     load_mni152_template,
     n_tr,
     np,
-    pd,
     ppa,
     ppa_signal,
     sigma,

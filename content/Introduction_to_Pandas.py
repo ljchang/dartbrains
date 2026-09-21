@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "numpy",
 #     "pandas",
 # ]
@@ -14,7 +14,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -22,9 +22,11 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "pandas"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
@@ -837,7 +839,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ## Grouping
@@ -847,7 +849,7 @@ def _(IMG_DIR, mo):
 
         One useful way to conceptualize this is using the **Split, Apply, Combine** operation (similar to map-reduce).
         """),
-        mo.image(str(IMG_DIR / "split-apply-combine.png")),
+        image("pandas/split-apply-combine.png"),
         mo.md(r"""
         This figure is taken from Jake Vanderplas's tutorial and highlights how input data can be *split* on some key and then an operation such as sum can be *applied* separately to each split. Finally, the results of the applied function for each key can be *combined* into a new data frame.
         """),
@@ -898,7 +900,6 @@ def _(agg_col, agg_fn, by_col, df, mo):
         _grouped.round(2).to_frame(agg_fn.value),
     ])
     return
-
 
 
 @app.cell

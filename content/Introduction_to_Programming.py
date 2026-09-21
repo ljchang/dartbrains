@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 # ]
 # 
 # [tool.grader]
@@ -273,7 +273,6 @@ def _(mo):
     ## Comparisons and logic
 
     Comparisons produce a `bool`. `and`, `or` and `not` combine them.
-
     """)
     return
 
@@ -429,21 +428,18 @@ def _(mo):
     return
 
 
-@app.cell
-def _():
-    def trial_label(rt):
-        """Classify a trial by its reaction time in milliseconds."""
-        if rt < 150:
-            return "anticipation"
-        elif rt <= 2000:
-            return "valid"
-        return "lapse"
-
-    return (trial_label,)
+@app.function
+def trial_label(rt):
+    """Classify a trial by its reaction time in milliseconds."""
+    if rt < 150:
+        return "anticipation"
+    elif rt <= 2000:
+        return "valid"
+    return "lapse"
 
 
 @app.cell(hide_code=True)
-def _(mo, trial_label):
+def _(mo):
     _rows = "\n".join(
         f"| {t} | {trial_label(t)} |" for t in (120, 150, 450, 2000, 2400)
     )

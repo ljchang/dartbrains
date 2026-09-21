@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "nibabel",
 #     "nilearn",
@@ -28,9 +28,11 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "single_subject"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
@@ -264,13 +266,13 @@ def _(dm_conv):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Multicollinearity
         In statistics, collinearity or multicollinearity is when one regressor can be strongly linearly predicted from the others. While this does not actually impact the model's ability to predict data as a whole, it will impact our ability to accurately attribute variance to a single regressor. Recall that in multiple regression, we are estimating the independent variance from each regressor from `X` on `Y`. If there is substantial overlap between the regressors, then the estimator can not attribute the correct amount of variance each regressor accounts for `Y` and the coefficients can become unstable. A more intuitive depiction of this problem can be seen in the venn diagram. The dark orange area in the center at the confluence of all 3 circles reflects the shared variance between `X1` and `X2` on `Y`. If this area becomes bigger, the unique variances become smaller and individually reflect less of the total variance on `Y`.
         """),
-        mo.image(str(IMG_DIR / "MultipleRegression.png")),
+        image("single_subject/MultipleRegression.png"),
         mo.md(r"""
         One way to evaluate multicollinearity is to examine the pairwise correlations between each regressor. `.plot(method='corr')` draws that correlation matrix for us.
         """),
@@ -314,7 +316,7 @@ def _(dm_conv, plt):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         #### Orthogonalization
@@ -322,7 +324,7 @@ def _(IMG_DIR, mo):
 
         It is commonly thought that using a procedure called orthogonalization should be used to address issues of multicollinearity. In linear algebra, orthogonalization is the process of prioritizing shared variance between regressors to a single regressor. Recall that the standard GLM already accounts for shared variance by removing it from individual regressors. Orthogonalization allows a user to assign that variance to a specific regressor. However, the process of performing this procedure can introduce artifact into the model and often changes the interpretation of the beta weights in unanticipated ways.
         """),
-        mo.image(str(IMG_DIR / "Orthogonalization.png")),
+        image("single_subject/Orthogonalization.png"),
         mo.md(r"""
         In general, we do not recommend using orthogonalization in most use cases, with the exception of centering regressor variables. We encourage the interested reader to review this very useful [overview](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0126255) of collinearity and orthogonalization by Jeanette Mumford and colleagues.
         """),

@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 # ]
 # 
 # [tool.grader]
@@ -21,13 +21,15 @@ def _():
     import marimo as mo
     from pathlib import Path
 
+    from dartbrains_tools.notebook_utils import image
+
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "programming"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         # Setting up Python
@@ -52,7 +54,7 @@ def _(IMG_DIR, mo):
         [neuroimaging analysis](https://nipy.org/) — which is why it is worth learning once,
         properly.
         """),
-        mo.image(str(IMG_DIR / "programming_growth.png")),
+        image("programming/programming_growth.png"),
     ])
     return
 

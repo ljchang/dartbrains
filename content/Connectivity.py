@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "huggingface-hub",
 #     "matplotlib",
 #     "networkx",
@@ -33,13 +33,15 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "connectivity"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     # Connectivity
@@ -51,7 +53,7 @@ def _(IMG_DIR, mo):
 
     An alternative approach to studying connectivity is to examine how brain regions covary with each other in time. This is referred to as *functional connectivity*, but it is better to think about it as temporal covariation between regions as this does not necessarily imply that two regions are directly communication with each other.
     """),
-        mo.image(str(IMG_DIR / "mediation.png")),
+        image("connectivity/mediation.png"),
         mo.md(r"""
     For example, regions can *directly* influence each other, or they can *indirectly* influence each other via a mediating region, or they can be affected similarly by a *shared influence*. These types of figures are often called *graphs*. These types of *graphical* models can be *directed* or *undirected*. Directed graphs imply a causal relationship, where one region A directly influence another region B. Directed graphs or *causal models* are typically described as *effective connectivity*, while undirected graphs in which the relationship is presumed to be bidirectional are what we typically describe as *functional connectivity*.
 
@@ -506,14 +508,14 @@ def _(youtube):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     ### Structural Equation Modeling
 
     Structural equation modeling (SEM) is one early technique that was used to model the causal relationship between multiple nodes. SEM requires specifying a causal relationship between nodes in terms of a set of linear equations. The parameters of this system of equations reflects the connectivity matrix. Users are expected to formulate their own hypothesized relationship between variables with a value of one when there is an expected relationship, and zero when there is no relationship. Then we estimate the parameters of the model and evaluate how well the model describes the observed data.
     """),
-        mo.image(str(IMG_DIR / "sem.png")),
+        image("connectivity/sem.png"),
         mo.md(r"""
     We will not be discussing this method in much detail. In practice, this method is more routinely used to examine how brain activations mediate relationships between other regions, or between different psychological constructs (e.g., X -> Z -> Y).
 
@@ -573,7 +575,7 @@ def _(youtube):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     ### Principal Components Analysis
@@ -585,7 +587,7 @@ def _(IMG_DIR, mo):
 
     In practice, $V$ corresponds to the eigenimages or spatial components and $U$ corresponds to the transformation matrix to convert the eigenimages into a timecourse. $S$ reflects the amount of scaling for each component.
     """),
-        mo.image(str(IMG_DIR / "svd.png")),
+        image("connectivity/svd.png"),
         mo.md(r"""
     SVD is conceptually very similar to regression. We are trying to explain a matrix $X$ as a linear combination of components. Each term in the equation reflects a unique (i.e., orthogonal) multivariate signal present in $X$. For example, the $nth$ signal in X can be described by the dot product of a time course $u_n$ and the spatial map $Vn^T$  scaled by $s_n$.
 
@@ -823,7 +825,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     ## Graph Theory
@@ -832,7 +834,7 @@ def _(IMG_DIR, mo):
 
     There are many different metrics of graphs that can be used to describe the overall efficiency of a network (e.g., small worldness), or how connected a region is to other regions (e.g., degree, centrality), or how long it would take to send information from one node to another node (e.g., path length, connectivity).
     """),
-        mo.image(str(IMG_DIR / "graph.png")),
+        image("connectivity/graph.png"),
         mo.md(r"""
     Let's watch a short video by Martin Lindquist providing a more in depth introduction to graph theory.
     """),

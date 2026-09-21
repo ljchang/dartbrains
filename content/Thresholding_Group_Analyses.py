@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "nilearn",
 #     "nltools==0.6.0.dev2",
@@ -28,11 +28,13 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     from dartbrains_tools.notebook_utils import youtube
 
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "thresholding"
-    return IMG_DIR, mo, youtube
+    return image, mo, youtube
 
 
 @app.cell(hide_code=True)
@@ -67,7 +69,7 @@ def _(youtube):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     The primary goal in fMRI data analysis is to make inferences about how the brain processes information. These inferences can be in the form of predictions, but most often we are testing hypotheses about whether a particular region of the brain is involved in a specific type of process. This requires rejecting a $H_0$ hypothesis (i.e., that there is no effect). Null hypothesis testing is traditionally performed by specifying contrasts between different conditions of an experimental design and assessing if these differences between conditions are reliably present across many participants. There are two main types of errors in null-hypothesis testing.
@@ -89,7 +91,7 @@ def _(IMG_DIR, mo):
 
     This should probably be no surprise to anyone, but fMRI studies are expensive and inherently underpowered. Here is a simulation by Jeannette Mumford to show approximately how many participants you would need to achieve 80% power assuming a specific effect size in your contrast.
     """),
-        mo.image(str(IMG_DIR / "fmri_power.png")),
+        image("thresholding/fmri_power.png"),
     ])
     return
 
@@ -453,7 +455,7 @@ def _(youtube):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     The *false discovery rate* (FDR) is a more recent development in multiple testing correction originally described by [Benjamini & Hochberg, 1995](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1995.tb02031.x). While FWER is the probability of any false positives occurring in a family of tests, the FDR is the expected proportion of false positives among significant tests.
@@ -464,13 +466,13 @@ def _(IMG_DIR, mo):
      3. We find the threshold $r$ such that $p \leq i/m * q$
      4. We reject any $H_0$ that is lower than $r$.
     """),
-        mo.image(str(IMG_DIR / "fdr_calc.png")),
+        image("thresholding/fdr_calc.png"),
         mo.md(r"""
     In a brain map, this means that we expect approximately 95% of the voxels reported at q < .05 FDR-corrected to be true activations (note we use q instead of p). The FDR procedure adaptively identifies a threshold based on the overall signal across all voxels. Larger signals results in lower thresholds. Importantly, if all of the null hypotheses are true, then the FDR will be equivalent to the FWER. This means that any FWER procedure will *also* control the FDR. For these reasons, any procedure which controls the FDR is necessarily less stringent than a FWER controlling procedure, which leads to an overall increased power. Another nice feature of FDR, is that it operates on p-values instead of test statistics, which means it can be applied to most statistical tests.
 
     This figure is taken from Poldrack, Mumford, & Nichols (2011) and compares different procedures to control for multiple tests.
     """),
-        mo.image(str(IMG_DIR / "fdr.png")),
+        image("thresholding/fdr.png"),
         mo.md(r"""
     For a more indepth overview of FDR, see this [tutorial](https://matthew-brett.github.io/teaching/fdr.html) by Matthew Brett.
 
@@ -789,7 +791,7 @@ def _(max_stat_threshold, np, one_sample_permutation_test, quiet):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     Calibrated. The measured rate sits on top of the nominal 5%, within Monte Carlo error.
@@ -800,11 +802,11 @@ def _(IMG_DIR, mo):
 
     The classic implementation approximates the distribution of the maximum cluster size using Gaussian Random Field Theory (RFT), which attempts to account for the spatial dependence of the data.
     """),
-        mo.image(str(IMG_DIR / "fwer.png")),
+        image("thresholding/fwer.png"),
         mo.md(r"""
     This requires specifying an initial threshold to determine the *Euler Characteristic* or the number of blobs minus the number of holes in the thresholded image. The number of voxels in the blob and the overall smoothness can be used to calculate something called *resels* or resolution elements and can be effectively thought of as the spatial units that need to be controlled for using FWER. We won't be going into too much detail with this approach as the mathematical details are somewhat complicated. In practice, if the image is smooth and the number of subjects is high enough (around 20), cluster correction seems to provide control closer to the true false positive rate than Bonferroni correction. Though we won't be spending time simulating this today, I encourage you to check out this Python [simulation](https://matthew-brett.github.io/teaching/random_fields.html) by Matthew Brett and this [chapter](https://www.fil.ion.ucl.ac.uk/spm/doc/books/hbf2/pdfs/Ch14.pdf) for an introduction to random field theory.
     """),
-        mo.image(str(IMG_DIR / "grf.png")),
+        image("thresholding/grf.png"),
         mo.md(r"""
     We can build the permutation version of this ourselves, and it is conceptually identical to the max-statistic procedure. Pick a **cluster-forming threshold**, apply it to each permuted map, find the largest surviving blob, and record its size. Do that for every permutation and you have a null distribution of the largest cluster size. Then ask where the observed cluster falls in that distribution.
 
