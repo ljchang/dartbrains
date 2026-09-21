@@ -11,7 +11,31 @@
 
 Marimo's `mo.md()` does **not** resolve relative filesystem paths in markdown image syntax (`![alt](../images/foo/bar.png)`). The browser tries to fetch the path as a URL relative to the page origin, producing broken-image icons in the live editor. The same syntax works in the Jupyter Book 2 static build (MyST resolves relative to the source file), so code that looks fine in the rendered site can still be broken in `marimo edit`.
 
-**Rule:** use `mo.image()` for local files, not markdown image syntax.
+**Rule:** use `dartbrains_tools.notebook_utils.image("<section>/<file>")` for the book's figures — not markdown image syntax, and not `mo.image(str(IMG_DIR / ...))`.
+
+`image()` embeds the file from `<repo>/images/` when the book is checked out (`marimo edit`, the site build — the static image pipeline is unchanged) and otherwise points at `https://dartbrains.org/images/<section>/<file>`. That second case is molab: the sandbox holds only the notebook file, so any path built from `__file__` is a broken image there (every figure in the book was, until dartbrains #118). The three `mode: wasm` chapters (`MR_Physics`, `Preprocessing`, `Signal_Processing`) keep their own equivalent `img_src()` helper.
+
+```python
+@app.cell(hide_code=True)
+def _():
+    import marimo as mo
+
+    from dartbrains_tools.notebook_utils import image
+    return image, mo
+
+
+@app.cell(hide_code=True)
+def _(image, mo):
+    mo.vstack([
+        mo.md(r"""Prose before the figure..."""),
+        image("single_subject/MultipleRegression.png"),
+        mo.md(r"""Prose after the figure."""),
+    ])
+    return
+```
+
+The older pattern below still describes how paths resolve at build time; prefer `image()` for anything new.
+
 
 **Pattern** — add an `IMG_DIR` constant to the notebook's imports cell so paths are portable (independent of CWD when marimo launches):
 
