@@ -134,6 +134,10 @@ def _(localizer, signin, storage):
             return localizer_path(subject, scope, suffix, extension)
         return course.local_path('localizer/' + localizer.filename(subject, scope, suffix, extension))
 
+    # marimo's Files panel lists any obstore store defined in the notebook, so
+    # once signed in you can browse the class copy and your own storage there.
+    class_files = course.store if course is not None else None
+    my_files = storage.private().store if course is not None else None
     return (localizer_path,)
 
 
