@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "dartbrains-tools>=0.2.6",
+#     "dartbrains-tools>=0.2.7",
 #     "datalad",
 #     "datasets",
 #     "huggingface-hub==1.10.2",
