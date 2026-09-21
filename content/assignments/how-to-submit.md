@@ -40,6 +40,34 @@ Your sign-in lasts eight hours. Coming back the next day, the Feedback cell will
 
 Everything is also on the grader's website at [grader.dartbrains.org](https://grader.dartbrains.org), where you can see every assignment and every attempt after signing in.
 
+## 5. Your data
+
+Some chapters — the [single-subject GLM](../GLM_Single_Subject_Model/) is the first — start with a short section called *Where the data lives* and a **Sign in with Dartmouth** button. Everything in the chapter works without it: the datasets are public on [Hugging Face](https://huggingface.co/dartbrains), and that is where the files come from if you just run the notebook. Signing in switches the chapter to the course's own storage, which gives you two things the public copy cannot:
+
+- **The class copy of the data**, including files that are only for this course.
+- **Storage that is yours.** Anything you save is there the next time you open *any* notebook — a different chapter, a new molab session, your laptop — and nobody but you, the instructor and the TAs can see it.
+
+Sign in once per notebook; after that it remembers you. In your code it looks like this:
+
+```python
+from dartbrains_tools import storage
+
+course = storage.course()                   # the class copy, read-only
+private = storage.private()                 # yours, read-write
+
+path = course.local_path("localizer/sub-S01/func/sub-S01_task-localizer_events.tsv")
+private.put("week3/betas.pkl", betas)       # pickle, .npy, .csv, .json, .nii.gz by extension
+betas = private.get("week3/betas.pkl")
+private.ls("week3")
+```
+
+`local_path()` gives you an ordinary file path, so `nibabel`, `nilearn` and `nltools` load it like any other file. Once you are signed in, molab's **Files** panel (the folder icon on the left) also lists the class copy and your own storage under *Remote storage*, where you can browse and download files.
+
+Two things to know:
+
+- **Where you run matters.** Storage works in molab and on your own machine. In the edit view on this site — the notebook running inside the page — it is not available yet; the chapter falls back to the public data and says so.
+- **Not at Dartmouth?** Skip the button. Every chapter works the same way from the public data.
+
 ## If the assignment is updated
 
 When we publish a new version of an assignment, the drawer's bar says *update available* and offers **Update…**. Updating replaces your copy with the new version and keeps the old one in **History**, so nothing is lost either way — and you can undo it right after. Your submitted attempts are on the grader and are not affected.
