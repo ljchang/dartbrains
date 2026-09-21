@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "nilearn",
 #     "nltools==0.6.0.dev2",
@@ -15,7 +15,7 @@
 
 import marimo
 
-__generated_with = "0.23.8"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -26,13 +26,15 @@ def _():
 
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "parcellations"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         # Introduction to Parcellations
@@ -48,7 +50,7 @@ def _(IMG_DIR, mo):
 
         The table below is a useful discussion comparing ROI (parcellation) approaches to searchlights and whole brain approaches. (From: [Jolly & Chang, 2021](https://academic.oup.com/scan/article/16/8/795/6121195?login=true)). The goal of this notebook is to provide extensive detail on how the publicly available parcellations have been generated to give you more insight as to which ones would be better suited for your own research questions.
         """),
-        mo.image(str(IMG_DIR / "spatial_feature_selection_table.png")),
+        image("parcellations/spatial_feature_selection_table.png"),
     ])
     return
 
@@ -101,7 +103,7 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Neuroparc
@@ -110,8 +112,8 @@ def _(IMG_DIR, mo):
 
         The table below [(Lawrence *et al.*, 2021)](https://www.nature.com/articles/s41597-021-00849-3) includes a list of the parcellations available, the number of ROIs in each depending on the resolution, and whether a anatomical labels are available. Again, if you want further information on these parcellations, we recommend checking out the aforementioned [README file](https://github.com/neurodata/neuroparc/blob/master/README.md#atlas-info-summary).
         """),
-        mo.image(str(IMG_DIR / "neuroparc_atlas_table.png")),
-        mo.image(str(IMG_DIR / "brainAtlases_color_wRegions.png")),
+        image("parcellations/neuroparc_atlas_table.png"),
+        image("parcellations/brainAtlases_color_wRegions.png"),
     ])
     return
 
@@ -225,19 +227,18 @@ def _(mo):
 
 
 @app.cell
-def _(fetch_resource, plotting):
+def _(plotting):
     from nltools import BrainData
     from nltools.templates import fetch_resource
 
     desikan_killiany = fetch_resource('masks/desikan_killiany_mni152nlin6_1mm.nii.gz')
 
     plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colorbar=True)
-    return (BrainData, fetch_resource)
-
+    return (fetch_resource,)
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         5. Destrieux Atlas [(Destrieux *et al.* 2010)](https://www.sciencedirect.com/science/article/pii/S1053811910008542)
@@ -253,8 +254,8 @@ def _(IMG_DIR, mo):
 
         Atlas image from Freesurfer. You can note the differences from the DK atlas above visually:
         """),
-        mo.image(str(IMG_DIR / "freesurfer_atlas.png")),
-        mo.image(str(IMG_DIR / "destrieux.png")),
+        image("parcellations/freesurfer_atlas.png"),
+        image("parcellations/destrieux.png"),
     ])
     return
 
@@ -391,7 +392,7 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, fetch_resource, plotting):
+def _(fetch_resource, plotting):
     shen = fetch_resource('masks/shen_268_2mm.nii.gz')
 
     plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
@@ -431,7 +432,7 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, fetch_resource, plotting):
+def _(fetch_resource, plotting):
     atlas_glasser = fetch_resource('masks/glasser_360_mni152nlin6_4mm.nii.gz')
 
     plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)

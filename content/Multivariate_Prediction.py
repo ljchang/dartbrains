@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "ipython",
 #     "matplotlib",
 #     "nltools==0.6.0.dev2",
@@ -27,9 +27,11 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "multivariate"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
@@ -342,7 +344,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
     ### Cross-Validation
@@ -353,7 +355,7 @@ def _(IMG_DIR, mo):
 
     The best way to do this, is to use **cross-validation**. The idea behind this is to subdivide the data into training and testing partitions - k-folds cross-validation is a common method - divide the data into $k$ separate folds and use all of the data except for one fold to train the model and then test the model using the left out fold. We iterate over this process for each fold. For example, consider k=2 or split-half cross-validation.
     """),
-        mo.image(str(IMG_DIR / "cv.png")),
+        image("multivariate/cv.png"),
         mo.md(r"""
     We divide the data into two partitions. We estimate the model using half of the data and test it on the other half and then evaluate how well the model performed. As you can see from this simulation, the model will almost always fit the training data better than the test data, because it is overfitting to the noise inherent to the training data, which is presumably independent across folds. More training data will lead to better estimation. This means that a k > 2 will usually result in better model estimates. When k=number of subjects, we call this *leave-one-subject-out* cross-validation.
 

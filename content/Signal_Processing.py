@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "numpy",
 #     "scipy",
@@ -15,7 +15,7 @@
 
 import marimo
 
-__generated_with = "0.23.2"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium")
 
 with app.setup(hide_code=True):
@@ -42,29 +42,13 @@ with app.setup(hide_code=True):
         return (w * fs) / (2 * np.pi)
 
 
-# `from dartbrains_tools.notebook_utils import youtube` lives in this
-# regular cell (not in the `with app.setup:` block above) so that when
-# this notebook runs in WASM mode, marimo-book's micropip bootstrap
-# cell can install `dartbrains-tools` from PyPI before this import
-# tries to resolve. The setup block runs at module import time and
-# can't be made to wait on async work; a regular `@app.cell` waits on
-# the bootstrap via marimo's dataflow scheduler. Cells that use
-# `youtube` take it as a parameter (see `sine_vid`, `tf_video`,
-# `dft_vid`, `fft_details`).
 @app.cell(hide_code=True)
 def _():
     from dartbrains_tools.notebook_utils import youtube
+
     return (youtube,)
 
 
-# IMG_DIR is consumed by other cells, so it lives in a regular `@app.cell`.
-# Repo root = two levels up from this notebook (content/<nb>.py → repo root).
-# marimo >=0.23.6 + marimo-book >=0.1.18 make __file__ resolve to the
-# notebook's real location at build time (including the WASM islands build),
-# so the image bytes get inlined into the static export. In the browser
-# __file__ is a Pyodide path and the resolved root is meaningless, but
-# img_src() falls back to a page-relative URL there, and .parent.parent
-# never raises (unlike the old unguarded book.yml walk).
 @app.cell(hide_code=True)
 def _():
     IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "signal_processing"
@@ -79,7 +63,7 @@ def _():
         p = IMG_DIR / filename
         return p if p.is_file() else f"../images/signal_processing/{filename}"
 
-    return (IMG_DIR, img_src)
+    return (img_src,)
 
 
 @app.cell(hide_code=True)
@@ -1239,18 +1223,16 @@ def exercise_4():
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(
-        r"""
-        ---
-        ### Graded assignment
+def _():
+    mo.md(r"""
+    ---
+    ### Graded assignment
 
-        The graded version of these exercises is the **Signal Processing assignment** at the
-        end of this page, which opens in a drawer from the **Assignment** button in the header.
-        Open it from that page (in molab or by download), sign in with your Dartmouth account
-        inside the notebook, and submit each question when you are ready.
-        """
-    )
+    The graded version of these exercises is the **Signal Processing assignment** at the
+    end of this page, which opens in a drawer from the **Assignment** button in the header.
+    Open it from that page (in molab or by download), sign in with your Dartmouth account
+    inside the notebook, and submit each question when you are ready.
+    """)
     return
 
 

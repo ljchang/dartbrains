@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "nilearn",
 #     "nltools==0.6.0.dev2",
@@ -20,7 +20,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -29,11 +29,13 @@ def _():
     import marimo as mo
     from pathlib import Path
 
+    from dartbrains_tools.notebook_utils import image
+
     from dartbrains_tools.notebook_utils import youtube
 
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "group_analysis"
-    return IMG_DIR, mo, youtube
+    return image, mo, youtube
 
 
 @app.cell(hide_code=True)
@@ -62,13 +64,13 @@ def _(youtube):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ## Hierarchical Data Structure
         We can think of the data as being organized into a hierarchical structure. For each brain, we are measuring BOLD activity in hundreds of thousands of cubic voxels sampled at about 0.5Hz (i.e., TR=2s). Our experimental task will have many different trials for each condition (seconds), and these trials may be spread across multiple scanning runs (minutes), or entire scanning sessions (hours). We are ultimately interested in modeling all of these different scales of data to make an inference about the function of a particular region of the brain across the group of participants we sampled, which we would hope will generalize to the broader population.
         """),
-        mo.image(str(IMG_DIR / "HierarchicalStructure.png")),
+        image("group_analysis/HierarchicalStructure.png"),
         mo.md(r"""
         In the past few notebooks, we have explored how to preprocess the data to reduce noise and enhance our signal and also how we can estimate responses in each voxel to specific conditions within a single participant based on convolving our experimental design with a canonical hemodynamic response function (HRF). Here we will discuss how we combine these brain responses estimated at the first-level in a second-level model to make inferences about the group.
         """),
@@ -92,7 +94,7 @@ def _(youtube):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         Most of the statistics we have discussed to this point have assumed that the data we are trying to model are drawn from an identical distribution and that they are independent of each other. For example, each group of participants that complete each version of our experiment are assumed to be random sample of the larger population. However, if there was some type of systematic bias in our sampling strategy, our group level statistics would not necessarily reflect a random draw from the population-level Gaussian distribution. However, as should already be clear from the graphical depiction of the hierarchical structure of our data above, our data are not always independent. For example, we briefly discussed this in the GLM notebook, but voxel responses within the same participant are not necessarily independent as there appears to be a small amount of autocorrelation in the BOLD response. This requires whitening the data to meet the independence assumption. What is clear from the hierarchy is that all of the data measured from one participant are likely to be more similar to each other than another participant. In fact, it is almost always the case that the variance *within* a subject $\sigma_{within}^2$ is almost always smaller than the variance *across* participants $\sigma_{between}^2$. If we combined all of the data from all participants and treated them as if they were independent, we would likely have an inflated view of the group effect (this was historically referred to as a "fixed effects group analysis").
@@ -108,7 +110,7 @@ def _(IMG_DIR, mo):
 
         As an example, imagine if we were interested if there were any gender differences between the length of how males and females cut their hair. We might sample a given individual several times over the course of a couple of years to get an accurate measurement of how long they keep their hair. These samples are akin to trials and will give us a way to represent the overall tendency of the length an individual keeps their hair in the form of a distribution. Narrow distributions mean that there is little variability in the length of the hair at each measurement, while wider distributions indicate more variation in the hair length across time. Of course, we are most interested not in the length of how an individual cuts their hair, but rather how many individuals from the same group cut their hair. This requires measuring multiple participants, who will all vary randomly around some population level hair length parameter. We are interested in modeling the true *fixed effect* of what the population parameter is for hair length, and specifically, whether this differs across gender. The variation in measurements within an individual and across individuals will reflect some degree of randomness that we need to account for in order to estimate a parameter that will generalize beyond the participants we measured their hair, but to new participants.
         """),
-        mo.image(str(IMG_DIR / "MixedEffects.png")),
+        image("group_analysis/MixedEffects.png"),
         mo.md(r"""
         from Poldrack, Mumford, & Nichols (2011)
 
@@ -254,7 +256,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Mixed Effects Model
@@ -269,7 +271,7 @@ def _(IMG_DIR, mo):
 
         $$Y \sim \mathcal(XX_g\beta_g, X\sigma_g^2X^T + \sigma^2)$$
         """),
-        mo.image(str(IMG_DIR / "TwoLevelModel.png")),
+        image("group_analysis/TwoLevelModel.png"),
         mo.md(r"""
         from Poldrack, Mumford, & Nichols (2011)
 
@@ -514,7 +516,7 @@ def _(con1_v_con2):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ## Group statistics using design matrices
@@ -525,7 +527,7 @@ def _(IMG_DIR, mo):
 
         It turns out that most parametric statistical tests are just special cases of the general linear model.  Here are what the design matrices would look like for various types of statistical tests.
         """),
-        mo.image(str(IMG_DIR / "DesignMatrices.png")),
+        image("group_analysis/DesignMatrices.png"),
         mo.md(r"""
         from Poldrack, Mumford, & Nichols 2011
 

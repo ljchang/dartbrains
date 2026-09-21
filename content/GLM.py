@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "nilearn",
 #     "numpy",
@@ -29,11 +29,11 @@ def _():
 
     import marimo as mo
 
-    from dartbrains_tools.notebook_utils import youtube
+    from dartbrains_tools.notebook_utils import image, youtube
 
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "glm"
-    return IMG_DIR, mo, youtube
+    return image, mo, youtube
 
 
 @app.cell(hide_code=True)
@@ -123,7 +123,7 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ## Simulate a voxel time course
@@ -133,7 +133,7 @@ def _(IMG_DIR, mo):
 
         First, we will need to specify the number of volumes in the time series. Then we need to specify the timepoint, in which a face is presented.
         """),
-        mo.image(str(IMG_DIR / "faces.png")),
+        image("glm/faces.png"),
     ])
     return
 
@@ -152,7 +152,7 @@ def _(np):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         We now have 5 events where a face is shown for 2 seconds (i.e., one TR). If we scanned someone with this design, we might expect to see any region involved in processing faces increase in activation around the time of the face presentation. How would we know which of these regions, if any, *selectively* process faces? Many of the regions we would observe are likely involved in processing *any* visual stimulus, and not specifically faces.
@@ -161,11 +161,11 @@ def _(IMG_DIR, mo):
 
         One possibility is to create a visual stimulus that has all of the same visual properties in terms of luminance and color, but no longer resembles a face. Here is an example of the same faces that have been Fourier transformed, phase-scrambled, and inverse Fourier transformed. These pictures have essentially identical low level visual properties, but are clearly not faces.
         """),
-        mo.image(str(IMG_DIR / "phase_scrambled.png")),
+        image("glm/phase_scrambled.png"),
         mo.md(r"""
         However, one might argue that faces are a type of object, and regions that are involved in higher visual processing such as object recognition might not be selective to processing faces. To rule out this possibility, we would need to add an additional visual control such as objects.
         """),
-        mo.image(str(IMG_DIR / "objects.png")),
+        image("glm/objects.png"),
         mo.md(r"""
         Both of these conditions could serve as a different type of visual control. To keep things simple, let's start with pictures of objects as it controls for low level visual features, but also more complex object processing.
 

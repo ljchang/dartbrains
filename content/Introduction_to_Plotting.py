@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.5",
+#     "dartbrains-tools>=0.2.6",
 #     "matplotlib",
 #     "mpl-toolkits",
 #     "numpy",
@@ -18,7 +18,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App()
 
 
@@ -26,9 +26,11 @@ app = marimo.App()
 def _():
     import marimo as mo
     from pathlib import Path
+
+    from dartbrains_tools.notebook_utils import image
     _ROOT = Path(__file__).resolve().parent.parent
     IMG_DIR = _ROOT / "images" / "plotting"
-    return IMG_DIR, mo
+    return image, mo
 
 
 @app.cell(hide_code=True)
@@ -227,14 +229,14 @@ def _(np, plt):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Layouts
 
         The easiest way to make customized layouts that can include multiple panels of a plot are with `subplot`.
         """),
-        mo.image(str(IMG_DIR / "subplot.png")),
+        image("plotting/subplot.png"),
         mo.md(r"""
         There are two different ways to index. One is by adding a subplot. The first number is the number of rows, the second is the number of columns, and the third is the index number.
 
@@ -622,7 +624,7 @@ def _(mo):
      - sl = Academic year salary, in dollars.
 
     Reference: S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.
-    
+
     ---
 
     ### Graded version
@@ -636,7 +638,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Exercise 1
@@ -646,7 +648,7 @@ def _(IMG_DIR, mo):
         The colormap code used is `RdBu_r`. Read the Docstrings on sns.heatmap or search the internet to figure out how to change the colormap, scale the colorbar, and create square line boundaries.
         Place titles for each plot as shown, and your name as the main title.
         """),
-        mo.image(str(IMG_DIR / "hw2-3.png")),
+        image("plotting/hw2-3.png"),
     ])
     return
 
@@ -665,7 +667,7 @@ def _(pd, plt, sns):
 
 
 @app.cell(hide_code=True)
-def _(IMG_DIR, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Exercise 2
@@ -678,7 +680,7 @@ def _(IMG_DIR, mo):
         Add a legend for the scatterplot and place it at a bottom-right location.
         Add your name as the main title of the plot.
         """),
-        mo.image(str(IMG_DIR / "hw2-4.png")),
+        image("plotting/hw2-4.png"),
     ])
     return
 
