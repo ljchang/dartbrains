@@ -560,7 +560,7 @@ build = [
 [package.metadata]
 requires-dist = [
     { name = "anywidget", specifier = ">=0.9.21" },
-    { name = "dartbrains-tools", specifier = ">=0.2.7" },
+    { name = "dartbrains-tools", specifier = ">=0.3.0" },
     { name = "datalad", specifier = ">=1.3.4" },
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
@@ -593,22 +593,21 @@ build = [
 
 [[package]]
 name = "dartbrains-tools"
-version = "0.2.7"
+version = "0.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "huggingface-hub" },
     { name = "marimo-grader-client" },
     { name = "numpy" },
-    { name = "obstore", marker = "sys_platform != 'emscripten'" },
     { name = "pandas" },
     { name = "plotly" },
     { name = "scipy" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/30/6d/b6a1b27c0d039209d4fc3203059adc0130360bacbb667c26483ab9d68166/dartbrains_tools-0.2.7.tar.gz", hash = "sha256:d832cf9a797ceea41c29aff0d4abb623473aa79d06e6a03ab37eb203c66e845f", size = 86924, upload-time = "2026-09-21T11:28:49.952Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e9/72/817e12e20459ea151be71fb52da1779c1c84c62a236327bb2333bb69f24f/dartbrains_tools-0.3.0.tar.gz", hash = "sha256:13745ef76b9408d0355a11173cc8677737037567e846632597a0c4b23a29dc90", size = 69443, upload-time = "2026-09-21T14:04:23.192Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/23/a5/73750f5fee28bdcef1d40560af02475ba4cdc0cc6346e108c3274d45394a/dartbrains_tools-0.2.7-py3-none-any.whl", hash = "sha256:2c43f7d698ef1357821d566f8adbe1dc4aed8b2856a4344cd0900bc2ee573f27", size = 86778, upload-time = "2026-09-21T11:28:48.439Z" },
+    { url = "https://files.pythonhosted.org/packages/67/f3/79deb3d242274f036ffe126f347801a1c824c4672498300cdeaf44c705e0/dartbrains_tools-0.3.0-py3-none-any.whl", hash = "sha256:473ec50862c381a23b9b180329334d2922f3c64eb84d3737dcc06ce499cde2d5", size = 68076, upload-time = "2026-09-21T14:04:21.172Z" },
 ]
 
 [[package]]
@@ -1518,15 +1517,16 @@ wheels = [
 
 [[package]]
 name = "marimo-grader-client"
-version = "0.1.1"
+version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
+    { name = "obstore", marker = "sys_platform != 'emscripten'" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6d/58/71ea04ea5777774453c5058b2dcbbfb833bff718a7de57ab664c459e2313/marimo_grader_client-0.1.1.tar.gz", hash = "sha256:91e59d9c81dea2edefb512d6592a6a4c782e8b0aa383cf8d70b72b0867e43a35", size = 97157, upload-time = "2026-09-15T18:01:28.089Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/cf/46a05fdae0098207e6ef53645015e4dce242bdd46177d2983bb6d02317b1/marimo_grader_client-0.2.0.tar.gz", hash = "sha256:0050da445646be664a23aef252b3c4a654faafbdbb66762f95ef8c6f3dc0a79c", size = 141387, upload-time = "2026-09-21T14:02:20.596Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8d/e1/7df2704787831761d3284c0350de43f1de9bdbb6eaae6618894f3ba6866b/marimo_grader_client-0.1.1-py3-none-any.whl", hash = "sha256:2ab7916e44c56bd4b78c62191a6181390307b8cf6fc0584d8935bdb42804bd01", size = 17685, upload-time = "2026-09-15T18:01:26.633Z" },
+    { url = "https://files.pythonhosted.org/packages/36/5c/d44becb45d18bf06a3cea3693a3c4b7de1c6554530116acff043ad0153fb/marimo_grader_client-0.2.0-py3-none-any.whl", hash = "sha256:75441ddb8d51699eec1c7a30a98e808c7a089518cdbba64c628156f381e328ac", size = 39095, upload-time = "2026-09-21T14:02:19.309Z" },
 ]
 
 [[package]]
