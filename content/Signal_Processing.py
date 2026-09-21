@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.2.6",
+#     "dartbrains-tools>=0.2.7",
 #     "matplotlib",
 #     "numpy",
 #     "scipy",
