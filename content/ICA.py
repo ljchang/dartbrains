@@ -61,7 +61,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    The data are one participant from the Localizer dataset, downloaded from [Hugging Face](https://huggingface.co/datasets/dartbrains/localizer). Filtering and smoothing a whole run is the slow part of this chapter: about a minute in molab. If you are taking the course, sign in with your Dartmouth account and those results are kept in your course storage, so running the chapter again, even in a new session, reuses them instead of recomputing. The course also keeps a copy your instructor computed ahead of time. If you are not at Dartmouth, skip the button; everything below works the same way.
+    The data are one participant from the Localizer dataset, downloaded from [Hugging Face](https://huggingface.co/datasets/dartbrains/localizer). Filtering and smoothing a whole run is the slow part of this chapter: about a minute in molab. If you are taking the course, sign in with your Dartmouth account before running the rest of the chapter. Those steps then load a copy your instructor computed ahead of time in a few seconds, and anything you compute yourself is kept in your course storage for next time. Signing in later works too: the slow cells rerun and pick up the stored copy. If you are not at Dartmouth, skip the button; everything below works the same way.
     """)
     return
 
@@ -75,10 +75,11 @@ def _(storage):
 
 @app.cell
 def _(signin, storage):
-    # The caches below call storage.cache_store(), which finds this session on
-    # its own, so they need no edge to this cell.
-    _ = storage.connect(signin)
-    return
+    # The two slow cells below depend on this one, so signing in reruns them
+    # against course storage. Their cache keys stay the same for every signed-in
+    # reader: the button's value carries no token (marimo-grader-client >= 0.2.2).
+    storage_ready = storage.connect(signin)
+    return (storage_ready,)
 
 
 @app.cell(hide_code=True)
@@ -113,9 +114,11 @@ def _(mo):
 
 
 @app.cell
-def _(data, localizer, mo, storage):
+def _(data, localizer, mo, storage, storage_ready):
     tr = localizer.get_tr()
-    with mo.persistent_cache("ica_preprocess", store=storage.cache_store()):
+    with mo.persistent_cache(
+        "ica_preprocess", store=storage.cache_store() if storage_ready else None
+    ):
         data_1 = data.filter(sampling_freq=1 / tr, high_pass=1 / 128)
         data_1 = data_1.smooth(6)
     return data_1, tr
@@ -135,8 +138,10 @@ def _(mo):
 
 
 @app.cell
-def _(data_1, mo, storage):
-    with mo.persistent_cache("ica_decompose", store=storage.cache_store()):
+def _(data_1, mo, storage, storage_ready):
+    with mo.persistent_cache(
+        "ica_decompose", store=storage.cache_store() if storage_ready else None
+    ):
         # 10 components keeps the WASM-mode page snappy: the slider
         # range stays small and ICA convergence in Pyodide is faster.
         # Cranking back to 20-30 is one number-edit away if the reader
