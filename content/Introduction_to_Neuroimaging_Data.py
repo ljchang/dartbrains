@@ -31,6 +31,7 @@ def _():
     from nltools.data import BrainData
     from nltools.templates import fetch_resource
     from nilearn.datasets import load_mni152_template
+    from dartbrains_tools import storage
 
     return (
         BrainData,
@@ -43,6 +44,7 @@ def _():
         plot_glass_brain,
         plot_stat_map,
         plt,
+        storage,
     )
 
 
@@ -59,20 +61,10 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    """)
-    return
+def _():
+    from dartbrains_tools.notebook_utils import youtube
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""<iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/OuRdQJMU5ro"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+    youtube("OuRdQJMU5ro")
     return
 
 
@@ -234,14 +226,14 @@ def _(localizer):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We can also retrieve the path to a specific file. For example, let's get the preprocessed BOLD file for the first 10 subjects. The `localizer.get_file` function downloads the file from HuggingFace Hub on first access and returns the local cached path.
+    We can also look up where a specific file lives in the dataset. `localizer.filename` gives a file's path inside the dataset without downloading anything, so here are the preprocessed BOLD runs for the first 10 subjects. (Each run is about 100 MB, so we only download the one we use, below.)
     """)
     return
 
 
 @app.cell
 def _(localizer):
-    bold_files = [localizer.get_file(sub, 'derivatives', 'bold') for sub in localizer.get_subjects()[:10]]
+    bold_files = [localizer.filename(sub, 'derivatives', 'bold') for sub in localizer.get_subjects()[:10]]
     bold_files
     return
 
@@ -262,14 +254,14 @@ def _(mo):
     - `desc-<label>`: Description (e.g., preproc for preprocessed)
     - `suffix`: The type of data (bold, T1w, events, etc.)
 
-    Let's look at the path for a single file to see this structure.
+    Let's look at the full path for subject S01's run to see this structure. (To actually fetch a file, `localizer.get_file` takes the same arguments: it downloads the file from HuggingFace Hub on first access and returns the path to the local copy. We use it below.)
     """)
     return
 
 
 @app.cell
 def _(localizer):
-    f = localizer.get_file('S01', 'derivatives', 'bold')
+    f = localizer.filename('S01', 'derivatives', 'bold')
     f
     return
 
@@ -594,13 +586,34 @@ def _(mo):
     Ok, now let's load a single subject's functional data from the localizer dataset. We will load one that has already been preprocessed with fmriprep and is stored in the derivatives folder.
 
     Loading data can be a little bit slow especially if the data need to be resampled to the template, which is set at $2mm^3$ by default. However, once it's loaded into the workspace it should be relatively fast to work with it.
+
+    If you are taking the course, sign in with your Dartmouth account before running this part. The loaded data is then kept in your course storage (and the course keeps a copy your instructor made ahead of time), so the next time you open this chapter, even in a new session, it loads from there instead of downloading and resampling again. Signing in later works too: the cell below reruns and picks up the stored copy. If you are not at Dartmouth, skip the button; everything works the same way.
     """)
     return
 
 
 @app.cell
-def _(BrainData, localizer):
-    data_1 = BrainData(localizer.get_file('S01', 'derivatives', 'bold'))
+def _(storage):
+    signin = storage.signin_button()
+    signin
+    return (signin,)
+
+
+@app.cell
+def _(signin, storage):
+    # The cached load below depends on this cell, so signing in reruns it
+    # against course storage. Its cache key is the same for every signed-in
+    # reader: the button's value carries no token (marimo-grader-client >= 0.2.2).
+    storage_ready = storage.connect(signin)
+    return (storage_ready,)
+
+
+@app.cell
+def _(BrainData, localizer, mo, storage, storage_ready):
+    with mo.persistent_cache(
+        "intro_bold_s01", store=storage.cache_store() if storage_ready else None
+    ):
+        data_1 = BrainData(localizer.get_file('S01', 'derivatives', 'bold'))
     return (data_1,)
 
 
