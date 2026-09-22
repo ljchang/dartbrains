@@ -131,7 +131,7 @@ def _(localizer, signin, storage):
     def localizer_path(subject, scope, suffix, extension='.nii.gz'):
         '''A Localizer file: the class copy when signed in, otherwise the public one.'''
         if course is None:
-            return localizer_path(subject, scope, suffix, extension)
+            return localizer.get_file(subject, scope, suffix, extension)
         return course.local_path('localizer/' + localizer.filename(subject, scope, suffix, extension))
 
     # marimo's Files panel lists any obstore store defined in the notebook, so
