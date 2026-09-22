@@ -75,9 +75,8 @@ def _(storage):
 
 @app.cell
 def _(signin, storage):
-    # Nothing below depends on this cell, on purpose: marimo folds the values of
-    # every cell upstream of a cache into its key, and the button's value is your
-    # session token. storage.cache_store() finds the session on its own.
+    # The caches below call storage.cache_store(), which finds this session on
+    # its own, so they need no edge to this cell.
     _ = storage.connect(signin)
     return
 
