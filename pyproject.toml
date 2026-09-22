@@ -79,7 +79,7 @@ build = [
     # Assignment pages import marimo_grader_client (the student widget).
     # 0.1.1 announces a successful submission to the host page, which is what
     # records "Submitted" in the assignment drawer's version history.
-    "marimo-grader-client>=0.1.1",
+    "marimo-grader-client>=0.2.2",
     "mograder>=0.3",
     "marimo-book",
 ]
@@ -89,7 +89,7 @@ build = [
     # Assignment pages import marimo_grader_client (the student widget).
     # 0.1.1 announces a successful submission to the host page, which is what
     # records "Submitted" in the assignment drawer's version history.
-    "marimo-grader-client>=0.1.1",
+    "marimo-grader-client>=0.2.2",
     "mograder>=0.3",
     # 0.1.18 stages PEP 723 copies as sibling files so __file__-relative
     # root detection works on WASM pages (marimo-book #46). 0.1.27 adds a

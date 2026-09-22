@@ -566,7 +566,7 @@ requires-dist = [
     { name = "huggingface-hub", extras = ["hf-xet"], specifier = ">=1.8.0" },
     { name = "marimo", specifier = ">=0.24.2" },
     { name = "marimo-book", marker = "extra == 'build'" },
-    { name = "marimo-grader-client", marker = "extra == 'build'", specifier = ">=0.1.1" },
+    { name = "marimo-grader-client", marker = "extra == 'build'", specifier = ">=0.2.2" },
     { name = "matplotlib", specifier = ">=3.10.8" },
     { name = "mograder", marker = "extra == 'build'", specifier = ">=0.3" },
     { name = "nbformat" },
@@ -587,7 +587,7 @@ provides-extras = ["build"]
 [package.metadata.requires-dev]
 build = [
     { name = "marimo-book", specifier = ">=0.1.45" },
-    { name = "marimo-grader-client", specifier = ">=0.1.1" },
+    { name = "marimo-grader-client", specifier = ">=0.2.2" },
     { name = "mograder", specifier = ">=0.3" },
 ]
 
@@ -1517,16 +1517,16 @@ wheels = [
 
 [[package]]
 name = "marimo-grader-client"
-version = "0.2.0"
+version = "0.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anywidget" },
     { name = "obstore", marker = "sys_platform != 'emscripten'" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ec/cf/46a05fdae0098207e6ef53645015e4dce242bdd46177d2983bb6d02317b1/marimo_grader_client-0.2.0.tar.gz", hash = "sha256:0050da445646be664a23aef252b3c4a654faafbdbb66762f95ef8c6f3dc0a79c", size = 141387, upload-time = "2026-09-21T14:02:20.596Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/48/01/5e4120acc77fcbb94c4e70b4eecbe0946fde3534d5d111b71420f9ada916/marimo_grader_client-0.2.2.tar.gz", hash = "sha256:fceec71cb1d290e70bc8b40bc3109b972df3010c2d757cf5f9574a6dcbf0655c", size = 145545, upload-time = "2026-09-22T17:54:48.457Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/36/5c/d44becb45d18bf06a3cea3693a3c4b7de1c6554530116acff043ad0153fb/marimo_grader_client-0.2.0-py3-none-any.whl", hash = "sha256:75441ddb8d51699eec1c7a30a98e808c7a089518cdbba64c628156f381e328ac", size = 39095, upload-time = "2026-09-21T14:02:19.309Z" },
+    { url = "https://files.pythonhosted.org/packages/02/3a/c9eb3c65df296884ca9e534f75128b13d4fb85fc52acedad076bc298c3ea/marimo_grader_client-0.2.2-py3-none-any.whl", hash = "sha256:9c18884cbcf7b78faa26e7edfa4b210bf4ff8adb5fd100fc938a7b3601fbdfb4", size = 42068, upload-time = "2026-09-22T17:54:47.345Z" },
 ]
 
 [[package]]
