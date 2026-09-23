@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.3.0",
+#     "dartbrains-tools>=0.3.1",
 #     "numpy",
 #     "polars",
 # ]
@@ -14,7 +14,7 @@
 
 import marimo
 
-__generated_with = "0.23.3"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium", app_title="Introduction to Polars")
 
 
@@ -58,9 +58,10 @@ def _(mo):
 @app.cell
 def _():
     import polars as pl
+    from dartbrains_tools.data import salary
     import numpy as np
 
-    return np, pl
+    return np, pl, salary
 
 
 @app.cell(hide_code=True)
@@ -150,17 +151,17 @@ def _(mo):
 
     Polars can read data from many formats including CSV, Parquet, JSON, and more. We will load a faculty salary dataset that contains information about salaries, departments, years of experience, and other attributes.
 
-    The `pl.read_csv()` function reads a CSV file eagerly (loading everything into memory immediately). Polars can also read directly from URLs.
+    The `pl.read_csv()` function reads a CSV file eagerly (loading everything into memory immediately). `salary.get_file` downloads the table from the course's dataset on HuggingFace the first time and returns the path of the local copy. (Polars can also read directly from a URL.)
     """)
     return
 
 
 @app.cell
-def _(pl):
-    url = "https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv"
-    df = pl.read_csv(url)
+def _(pl, salary):
+    salary_path = salary.get_file("salary.csv")
+    df = pl.read_csv(salary_path)
     df
-    return df, url
+    return df, salary_path
 
 
 @app.cell(hide_code=True)
@@ -747,9 +748,9 @@ def _(mo):
 
 
 @app.cell
-def _(pl, url):
+def _(pl, salary_path):
     # Create a LazyFrame by scanning the CSV
-    lf = pl.scan_csv(url)
+    lf = pl.scan_csv(salary_path)
     print(type(lf))
     lf
     return (lf,)

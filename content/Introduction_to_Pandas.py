@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.3.0",
+#     "dartbrains-tools>=0.3.1",
 #     "numpy",
 #     "pandas",
 # ]
@@ -74,10 +74,11 @@ def _(mo):
 @app.cell
 def _():
     import pandas as pd
+    from dartbrains_tools.data import salary
 
     data = pd.Series([1, 2, 3, 4, 5])
     data
-    return (pd,)
+    return pd, salary
 
 
 @app.cell(hide_code=True)
@@ -193,14 +194,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Pandas can read many different data formats into a dataframe. Here we use `pd.read_csv`, pointing it straight at a URL — it reads from the web as happily as from a local file.
+    Pandas can read many different data formats into a dataframe. Here we use `pd.read_csv` on the course's salary table. `salary.get_file` downloads it from the course's dataset on HuggingFace the first time and returns the path of the local copy; `pd.read_csv` would read a URL just as happily, but going through the dataset keeps a copy so the next run doesn't download it again.
     """)
     return
 
 
 @app.cell
-def _(pd):
-    df = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv', sep = ',')
+def _(pd, salary):
+    df = pd.read_csv(salary.get_file('salary.csv'), sep = ',')
     return (df,)
 
 
@@ -1071,8 +1072,8 @@ def _(mo):
 
 
 @app.cell
-def _():
-    salary_file_url = 'https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary_exercise.csv'
+def _(salary):
+    salary_file = salary.get_file('salary_exercise.csv')
     return
 
 

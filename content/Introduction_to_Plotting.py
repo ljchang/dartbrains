@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.3.0",
+#     "dartbrains-tools>=0.3.1",
 #     "matplotlib",
 #     "numpy",
 #     "pandas",
@@ -65,6 +65,7 @@ def _():
     # '%matplotlib inline' command supported automatically in marimo
 
     import pandas as pd
+    from dartbrains_tools.data import salary
     import numpy as np
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -74,7 +75,7 @@ def _():
     # clustermap cell work in the browser.
     import scipy  # noqa: F401
 
-    return np, pd, plt, sns
+    return np, pd, plt, salary, sns
 
 
 @app.cell(hide_code=True)
@@ -497,8 +498,8 @@ def _(mo):
 
 
 @app.cell
-def _(pd):
-    df = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary.csv', sep = ',', header='infer')
+def _(pd, salary):
+    df = pd.read_csv(salary.get_file('salary.csv'), sep = ',', header='infer')
     df = df.dropna()
     df = df[df['gender']!=2]
     return (df,)
@@ -660,8 +661,8 @@ def _(image, mo):
 
 
 @app.cell
-def _(pd, plt, sns):
-    data_7 = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary_exercise.csv')
+def _(pd, plt, salary, sns):
+    data_7 = pd.read_csv(salary.get_file('salary_exercise.csv'))
     data_7.columns = ['Sex', 'Rank', 'Year', 'Degree', 'YearsSinceHighestDegree', 'Salary']
     with sns.plotting_context(context='paper', font_scale=2.5):
         _f, _a = plt.subplots(ncols=2, nrows=1, figsize=(25, 10))
@@ -692,8 +693,8 @@ def _(image, mo):
 
 
 @app.cell
-def _(pd, plt, sns):
-    data_8 = pd.read_csv('https://raw.githubusercontent.com/ljchang/dartbrains/master/data/salary/salary_exercise.csv')
+def _(pd, plt, salary, sns):
+    data_8 = pd.read_csv(salary.get_file('salary_exercise.csv'))
     data_8.columns = ['Sex', 'Rank', 'Year', 'Degree', 'YearsSinceHighestDegree', 'Salary']
     _f, _a = plt.subplots(ncols=2, nrows=1, figsize=(12, 5))
     sns.barplot(data=data_8, x='Sex', y='Salary', ax=_a[0])
