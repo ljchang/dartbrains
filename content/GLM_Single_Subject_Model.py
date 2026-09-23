@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.3.0",
+#     "dartbrains-tools>=0.3.1",
 #     "matplotlib",
 #     "nibabel",
 #     "nilearn",

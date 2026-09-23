@@ -66,7 +66,7 @@ dependencies:
   # storage layer the chapters use.
   requires_python: ">=3.11"
   extras:
-    - dartbrains-tools>=0.3.0
+    - dartbrains-tools>=0.3.1
   overrides:
     nltools: nltools==0.6.0.dev2
     # mpl_toolkits (mplot3d) ships inside matplotlib. Without this, the import
