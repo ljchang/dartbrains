@@ -25,14 +25,10 @@ app = marimo.App()
 
 @app.cell(hide_code=True)
 def _():
-    from pathlib import Path
-
     import marimo as mo
 
     from dartbrains_tools.notebook_utils import image, youtube
 
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "glm"
     return image, mo, youtube
 
 

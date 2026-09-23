@@ -24,11 +24,9 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
-    from pathlib import Path
 
     from dartbrains_tools.notebook_utils import image
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "plotting"
+
     return image, mo
 
 
@@ -134,7 +132,8 @@ def _(mo):
 
 @app.cell
 def _(data, plt):
-    plt.hist(data[:,0])
+    _ = plt.hist(data[:,0])
+    plt.gcf()
     return
 
 
@@ -152,7 +151,8 @@ def _(n, np, plt):
     _mu = np.array([0, 3])
     _cov = np.array([[1, _r], [_r, 1]])
     data_1 = np.random.multivariate_normal(_mu, _cov, size=n)
-    plt.hist(data_1, alpha=0.7)
+    _ = plt.hist(data_1, alpha=0.7)
+    plt.gcf()
     return (data_1,)
 
 
@@ -295,8 +295,14 @@ def _(mo):
 
 
 @app.cell
-def _(plt):
-    plt.savefig('MyFirstPlot.png')
+def _(np, plt):
+    # savefig writes the current figure, so draw and save in the same cell.
+    _f, _a = plt.subplots(figsize=(5, 3))
+    _x = np.linspace(0, 2 * np.pi, 100)
+    _a.plot(_x, np.sin(_x), linewidth=3)
+    _a.set_title('My First Plot')
+    _f.savefig('MyFirstPlot.png')
+    _f
     return
 
 
@@ -581,6 +587,7 @@ def _(df, np):
     means = df.groupby('gender')['salary'].mean()
     errors = df.groupby('gender')['salary'].std() / np.sqrt(df.groupby('gender')['salary'].count())
     _ax = means.plot.bar(yerr=errors, figsize=(5, 3))
+    _ax
     return
 
 

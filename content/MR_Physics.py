@@ -62,7 +62,6 @@ def _():
     import numpy as np
     import plotly.graph_objects as go
     import plotly.io as pio
-    from pathlib import Path
     from plotly.subplots import make_subplots
 
     # Render plotly's modebar vertically (top-right, down the side) so its
@@ -88,26 +87,7 @@ def _():
         SpinEnsembleWidget, EncodingWidget, KSpaceWidget, ConvolutionWidget,
     )
 
-    # Repo root = two levels up from this notebook (content/<nb>.py → repo
-    # root), so the sibling images/ dir resolves on every build host.
-    # marimo >=0.23.6 + marimo-book >=0.1.18 make __file__ resolve to the
-    # notebook's real location at build time (including the WASM islands
-    # build). In the browser __file__ is a Pyodide path and _ROOT is
-    # meaningless, but img_src() falls back to a page-relative URL there,
-    # and .parent.parent never raises, so that's harmless.
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "signal_generation"
-
-    def img_src(filename: str):
-        # In marimo edit + at build time on dev, the file exists at
-        # IMG_DIR/filename and `mo.image(Path)` embeds the bytes inline.
-        # In WASM browser, the file isn't reachable so fall back to a
-        # page-relative URL that resolves to the deployed
-        # /images/signal_generation/<filename>. Without the fallback,
-        # browser-side cell re-execution emits a Pyodide-internal absolute
-        # path (e.g. /marimo/images/...) that 404s.
-        p = IMG_DIR / filename
-        return p if p.is_file() else f"../images/signal_generation/{filename}"
+    from dartbrains_tools.notebook_utils import image, youtube
 
     return (
         CompassWidget,
@@ -124,7 +104,7 @@ def _():
         fid_signal,
         go,
         hrf,
-        img_src,
+        image,
         make_subplots,
         mo,
         np,
@@ -132,6 +112,7 @@ def _():
         spin_echo_signal,
         t1_recovery,
         t2_decay,
+        youtube,
     )
 
 
@@ -212,14 +193,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""
-      <iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/XsDXxgjEJVY"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+def _(youtube):
+    youtube("XsDXxgjEJVY")
     return
 
 
@@ -433,8 +408,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
-    mo.image(img_src("b0.png"))
+def _(image):
+    image("signal_generation/b0.png")
     return
 
 
@@ -1193,8 +1168,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
-    mo.image(img_src("spin_echo_pulse_sequence.svg"))
+def _(image):
+    image("signal_generation/spin_echo_pulse_sequence.svg")
     return
 
 
@@ -1233,8 +1208,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
-    mo.image(img_src("gradient_echo_pulse_sequence.svg"))
+def _(image):
+    image("signal_generation/gradient_echo_pulse_sequence.svg")
     return
 
 
@@ -1332,14 +1307,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""
-      <iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/PxqDjhO9FUs"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+def _(youtube):
+    youtube("PxqDjhO9FUs")
     return
 
 
@@ -1634,14 +1603,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""
-      <iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/FI5frNsRTI4"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+def _(youtube):
+    youtube("FI5frNsRTI4")
     return
 
 
@@ -1721,14 +1684,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""
-      <iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/jG2WQpgpnMs"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+def _(youtube):
+    youtube("jG2WQpgpnMs")
     return
 
 

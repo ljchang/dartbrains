@@ -27,11 +27,9 @@ app = marimo.App()
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
-    from pathlib import Path
 
     from dartbrains_tools.notebook_utils import image
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "single_subject"
+
     return image, mo
 
 

@@ -771,7 +771,10 @@ def _(mo):
 
 @app.cell
 def _(data_1):
-    data_1.to_nifti()
+    _nii = data_1.to_nifti()
+    print(f'{type(_nii).__name__} with shape {_nii.shape}')
+    print('affine (voxel indices -> mm):')
+    print(_nii.affine)
     return
 
 
