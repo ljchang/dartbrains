@@ -139,7 +139,7 @@ build = [
     # side of the search box it sits on.
     # 0.1.45 sources assignments from the grader (`grader:` + `assignment: <slug>`)
     # and writes [tool.grader] into chapter blocks via sync-deps.
-    "marimo-book>=0.1.45",
+    "marimo-book>=0.1.46",
 ]
 
 [tool.uv.sources]
