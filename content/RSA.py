@@ -378,10 +378,11 @@ def _(mo):
 
 
 @app.cell
-def _(mask_x, motor_sim_r, np, plot_stat_map, roi_to_brain):
+def _(mask_x, motor_sim_r, np, plot_stat_map, plt, roi_to_brain):
     rsa_motor = roi_to_brain(motor_sim_r, mask_x)
 
     plot_stat_map(rsa_motor.to_nifti(), draw_cross=False, display_mode='z', black_bg=True, cut_coords=np.arange(-30,70, 15))
+    plt.gcf()
     return
 
 
@@ -407,7 +408,7 @@ def _(mo):
 
 
 @app.cell
-def _(beta, mask, mask_x, motor, np, pd, plot_stat_map, roi_to_brain):
+def _(beta, mask, mask_x, motor, np, pd, plot_stat_map, plt, roi_to_brain):
     _rdms = beta.distance(metric='correlation', spatial_scale='roi', roi_mask=mask)
     _scores = [
         r['correlation']
@@ -417,6 +418,7 @@ def _(beta, mask, mask_x, motor, np, pd, plot_stat_map, roi_to_brain):
 
     plot_stat_map(rsa_motor_oneliner.to_nifti(), draw_cross=False, display_mode='z',
                   black_bg=True, cut_coords=np.arange(-30, 70, 15))
+    plt.gcf()
     return
 
 
@@ -504,7 +506,7 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, fdr, mask_x, np, plot_glass_brain, rsa_stats, threshold):
+def _(BrainData, fdr, mask_x, np, plot_glass_brain, plt, rsa_stats, threshold):
     fdr_p = fdr(np.array([x['p'] for x in rsa_stats]), q=0.05)
     print(fdr_p)
 
@@ -514,6 +516,7 @@ def _(BrainData, fdr, mask_x, np, plot_glass_brain, rsa_stats, threshold):
     thresholded = threshold(rsa_motor_r, rsa_motor_p, thr=fdr_p)
 
     plot_glass_brain(thresholded.to_nifti(), cmap='coolwarm')
+    plt.gcf()
     return rsa_motor_p, rsa_motor_r
 
 
@@ -526,9 +529,10 @@ def _(mo):
 
 
 @app.cell
-def _(plot_glass_brain, rsa_motor_p, rsa_motor_r, threshold):
+def _(plot_glass_brain, plt, rsa_motor_p, rsa_motor_r, threshold):
     thresholded_1 = threshold(rsa_motor_r, rsa_motor_p, thr=0.01)
     plot_glass_brain(thresholded_1.to_nifti(), cmap='coolwarm')
+    plt.gcf()
     return (thresholded_1,)
 
 
