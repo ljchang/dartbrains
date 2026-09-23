@@ -25,11 +25,9 @@ def _():
     warnings.filterwarnings("ignore")  # hide library resampling warnings from the atlas plots
 
     import marimo as mo
-    from pathlib import Path
 
     from dartbrains_tools.notebook_utils import image
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "parcellations"
+
     return image, mo
 
 
