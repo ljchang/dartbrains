@@ -227,13 +227,14 @@ def _(mo):
 
 
 @app.cell
-def _(plotting):
+def _(plotting, plt):
     from nltools import BrainData
     from nltools.templates import fetch_resource
 
     desikan_killiany = fetch_resource('masks/desikan_killiany_mni152nlin6_1mm.nii.gz')
 
     plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colorbar=True)
+    plt.gcf()
     return (fetch_resource,)
 
 
@@ -339,13 +340,14 @@ def _(mo):
 
 
 @app.cell
-def _(plotting, yeo_atlas):
+def _(plotting, plt, yeo_atlas):
     from nilearn.regions import connected_label_regions
 
     region_labels = connected_label_regions(yeo_atlas)
 
     plotting.plot_roi(region_labels, title='Yeo',
                       colorbar=True, cmap='Paired')
+    plt.gcf()
     return
 
 
@@ -365,7 +367,7 @@ def _(mo):
 
 
 @app.cell
-def _(datasets, plotting):
+def _(datasets, plotting, plt):
     schaefer = datasets.fetch_atlas_schaefer_2018(verbose=0)
     ' See outputs of the dataset '
     print(schaefer.keys())
@@ -376,6 +378,7 @@ def _(datasets, plotting):
     dataset_s = datasets.fetch_atlas_schaefer_2018(n_rois, yeo_networks, resolution_mm, verbose=0)
     atlas_1 = schaefer['maps']
     plotting.plot_roi(atlas_1, title=f'Schaefer - {n_rois}', colorbar=True, cmap='Paired')
+    plt.gcf()
     return
 
 
@@ -392,10 +395,11 @@ def _(mo):
 
 
 @app.cell
-def _(fetch_resource, plotting):
+def _(fetch_resource, plotting, plt):
     shen = fetch_resource('masks/shen_268_2mm.nii.gz')
 
     plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
+    plt.gcf()
     return
 
 
@@ -432,10 +436,11 @@ def _(mo):
 
 
 @app.cell
-def _(fetch_resource, plotting):
+def _(fetch_resource, plotting, plt):
     atlas_glasser = fetch_resource('masks/glasser_360_mni152nlin6_4mm.nii.gz')
 
     plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)
+    plt.gcf()
     return
 
 

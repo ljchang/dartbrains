@@ -145,11 +145,10 @@ from nltools.templates import fetch_resource
 desikan_killiany = fetch_resource('masks/desikan_killiany_mni152nlin6_1mm.nii.gz')
 
 plotting.plot_roi(desikan_killiany, title='Desikan-Killiany',cmap='Paired', colorbar=True)
+plt.gcf()
 ```
 
-<div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11ce4c550&gt;</pre>
-</div>
+<div class="marimo-book-output"><img src="assets/img/a736b48311eb720eb834e91d6fc07e57a14fb7b042b26524157f04536fbd3728.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
 
 <div class="marimo-book-output">
 <div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><span class="markdown prose dark:prose-invert contents"><ol start="5">
@@ -240,11 +239,10 @@ region_labels = connected_label_regions(yeo_atlas)
 
 plotting.plot_roi(region_labels, title='Yeo',
                   colorbar=True, cmap='Paired')
+plt.gcf()
 ```
 
-<div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11d16bf20&gt;</pre>
-</div>
+<div class="marimo-book-output"><img src="assets/img/ad050fd5d26a95d92cb2078efc8d3d61106e581b1b21b086d7143d7b82233736.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
 
 2. [Schaefer parcellation](https://pubmed.ncbi.nlm.nih.gov/28981612/)
 
@@ -266,14 +264,13 @@ resolution_mm = 1
 dataset_s = datasets.fetch_atlas_schaefer_2018(n_rois, yeo_networks, resolution_mm, verbose=0)
 atlas_1 = schaefer['maps']
 plotting.plot_roi(atlas_1, title=f'Schaefer - {n_rois}', colorbar=True, cmap='Paired')
+plt.gcf()
 ```
 
 <pre class="marimo-book-output-text marimo-stream-stdout">dict_keys([&#x27;maps&#x27;, &#x27;labels&#x27;, &#x27;description&#x27;, &#x27;lut&#x27;, &#x27;atlas_type&#x27;, &#x27;template&#x27;])
 </pre>
 
-<div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11b0902f0&gt;</pre>
-</div>
+<div class="marimo-book-output"><img src="assets/img/6c86c9f374f80f555026f124b371de9044f5c5343f166a2899f50e5430936cff.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
 
 3. [Shen Parcellation](https://pubmed.ncbi.nlm.nih.gov/23747961/)
 - The Shen parcellation is a groupwise **graph-theory-based** parcellation. It is also based on **resting state** functional connectivity
@@ -285,11 +282,10 @@ plotting.plot_roi(atlas_1, title=f'Schaefer - {n_rois}', colorbar=True, cmap='Pa
 shen = fetch_resource('masks/shen_268_2mm.nii.gz')
 
 plotting.plot_roi(shen, title='Shen', cmap='Paired', colorbar=True)
+plt.gcf()
 ```
 
-<div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11ac49390&gt;</pre>
-</div>
+<div class="marimo-book-output"><img src="assets/img/c58649ef61608acce560d7e97d4c4924f253ddc126909f4df6bea6a937c839ef.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
 
 Something of note is that while we usually think of voxels as belonging to one single region (**hard assignment**), but it also possible that a voxel can belong to multiple regions (**soft assignment**). Consider parcellations based on network - (association cortex) regions may be "part of" different networks depending on task. Below, we introduce the idea of multimodal parcellations.
 
@@ -315,11 +311,10 @@ Something of note is that while we usually think of voxels as belonging to one s
 atlas_glasser = fetch_resource('masks/glasser_360_mni152nlin6_4mm.nii.gz')
 
 plotting.plot_roi(atlas_glasser, title='Glasser',cmap='Paired', colorbar=True)
+plt.gcf()
 ```
 
-<div class="marimo-book-output">
-<pre class='text-xs'>&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x11aa47380&gt;</pre>
-</div>
+<div class="marimo-book-output"><img src="assets/img/5543e67be17fdbf19f6f2d899b0e6ee3051285bd6828d9df03ca64ad5094c144.webp" loading="lazy" decoding="async" width="1500" height="740" /></div>
 
 - Rosen & Halgren: https://pubmed.ncbi.nlm.nih.gov/33483325/
 
