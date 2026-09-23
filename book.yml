@@ -69,6 +69,11 @@ dependencies:
     - dartbrains-tools>=0.3.0
   overrides:
     nltools: nltools==0.6.0.dev2
+    # mpl_toolkits (mplot3d) ships inside matplotlib. Without this, the import
+    # became a dependency on "mpl-toolkits", which is not on PyPI: the WASM
+    # page's single micropip.install then failed outright and installed
+    # nothing (Introduction_to_Plotting broke), and molab/uv cannot resolve it.
+    mpl_toolkits: matplotlib
 
 # marimo-book 0.1.27 added a 600s per-notebook execution cap
 # (defaults.execution_timeout). Several chapters legitimately run longer at

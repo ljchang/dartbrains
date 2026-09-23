@@ -3,7 +3,6 @@
 # dependencies = [
 #     "dartbrains-tools>=0.3.0",
 #     "matplotlib",
-#     "mpl-toolkits",
 #     "numpy",
 #     "pandas",
 #     "scipy",
