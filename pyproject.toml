@@ -139,7 +139,9 @@ build = [
     # side of the search box it sits on.
     # 0.1.45 sources assignments from the grader (`grader:` + `assignment: <slug>`)
     # and writes [tool.grader] into chapter blocks via sync-deps.
-    "marimo-book>=0.1.46",
+    # 0.1.46/0.1.47 keep WASM widgets painted while the kernel starts (0.1.47:
+    # re-render the serialized copies marimo re-inserts at kernel start).
+    "marimo-book>=0.1.47",
 ]
 
 [tool.uv.sources]
