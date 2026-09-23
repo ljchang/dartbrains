@@ -22,7 +22,6 @@ with app.setup(hide_code=True):
     import marimo as mo
     import numpy as np
     import matplotlib.pyplot as plt
-    from pathlib import Path
     from numpy import sin, pi, arange, exp, real, imag
     from numpy.fft import fft, ifft, fftfreq
     from scipy.special import gamma as gamma_func
@@ -44,26 +43,9 @@ with app.setup(hide_code=True):
 
 @app.cell(hide_code=True)
 def _():
-    from dartbrains_tools.notebook_utils import youtube
+    from dartbrains_tools.notebook_utils import image, youtube
 
-    return (youtube,)
-
-
-@app.cell(hide_code=True)
-def _():
-    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "signal_processing"
-
-    def img_src(filename: str):
-        # In marimo edit + at build time the file exists at IMG_DIR/filename
-        # and `mo.image(Path)` embeds the bytes inline. In WASM browser the
-        # file isn't reachable; fall back to a page-relative URL that
-        # resolves to the deployed /images/signal_processing/<filename>.
-        # Without the fallback, browser-side cell re-execution would emit
-        # a Pyodide-internal absolute path that 404s.
-        p = IMG_DIR / filename
-        return p if p.is_file() else f"../images/signal_processing/{filename}"
-
-    return (img_src,)
+    return image, youtube
 
 
 @app.cell(hide_code=True)
@@ -886,14 +868,14 @@ def fft_section(combined_signal, dft_freq_axis):
 
 
 @app.cell(hide_code=True)
-def ct_md(img_src):
+def ct_md(image):
     mo.vstack([
         mo.md(r"""
         ### Convolution Theorem
 
         Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [Video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
         """),
-        mo.image(img_src("ConvolutionTheorem.png")),
+        image("signal_processing/ConvolutionTheorem.png"),
         mo.md(r"""
         Let's prove it:
         """),

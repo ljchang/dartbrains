@@ -26,11 +26,9 @@ app = marimo.App()
 @app.cell
 def _():
     import marimo as mo
-    from pathlib import Path
 
     from dartbrains_tools.notebook_utils import image
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "rsa"
+
     return image, mo
 
 
@@ -209,8 +207,12 @@ def _(mo):
 
 
 @app.cell
-def _(BrainData, expand_mask, fetch_resource):
+def _(BrainData, expand_mask, fetch_resource, np):
     mask = BrainData(fetch_resource('masks/k50_2mm.nii.gz'))
+    # The atlas stores its labels as floats, and a few carry resampling noise
+    # (e.g. 6.99999999 for parcel 7). Round them so every tool that reads the
+    # labels as integers sees the same 50 parcels.
+    mask.data = np.rint(mask.data)
     mask_x = expand_mask(mask)
 
     mask.plot()
@@ -248,11 +250,13 @@ def _(mo):
 
 
 @app.cell
-def _(conditions, mask_x, out, plot_glass_brain):
+def _(conditions, mask_x, out, plot_glass_brain, plt):
     roi = 26
-    plot_glass_brain(mask_x[roi].to_nifti())
+    _f, _ax = plt.subplots(1, 2, figsize=(14, 5), gridspec_kw={'wspace': 0.6})
+    plot_glass_brain(mask_x[roi].to_nifti(), axes=_ax[0], colorbar=False)
     out[roi].labels = conditions
-    f2 = out[roi].plot(vmin=0, vmax=2, cmap='RdBu_r')
+    out[roi].plot(vmin=0, vmax=2, cmap='RdBu_r', ax=_ax[1])
+    _f
     return (roi,)
 
 
@@ -302,10 +306,12 @@ def _(mo):
 
 
 @app.cell
-def _(mask_x, out_sim, plot_glass_brain):
+def _(mask_x, out_sim, plot_glass_brain, plt):
     roi_1 = 26
-    plot_glass_brain(mask_x[roi_1].to_nifti())
-    _f = out_sim[roi_1].plot(vmin=-1, vmax=1, cmap='RdBu_r')
+    _f, _ax = plt.subplots(1, 2, figsize=(14, 5), gridspec_kw={'wspace': 0.6})
+    plot_glass_brain(mask_x[roi_1].to_nifti(), axes=_ax[0], colorbar=False)
+    out_sim[roi_1].plot(vmin=-1, vmax=1, cmap='RdBu_r', ax=_ax[1])
+    _f
     return
 
 
@@ -322,7 +328,7 @@ def _(mo):
 
 
 @app.cell
-def _(Adjacency, conditions, np):
+def _(Adjacency, conditions, np, plt):
     motor = np.zeros((len(conditions),len(conditions)))
     motor[np.diag_indices(len(conditions))] = 1 
     motor[1,7] = 1
@@ -331,6 +337,7 @@ def _(Adjacency, conditions, np):
     motor[8,2] = 1
     motor = Adjacency(motor, matrix_type='distance', labels=conditions)
     motor.plot()
+    plt.gcf()
     return (motor,)
 
 

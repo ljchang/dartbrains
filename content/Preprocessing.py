@@ -20,7 +20,7 @@ app = marimo.App(width="medium", app_title="Preprocessing")
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         # Preprocessing
@@ -34,7 +34,7 @@ def _(img_src, mo):
         series of steps to remove noise comprise our *neuroimaging data
         **preprocessing** pipeline*. See slides on our preprocessing lecture [here](../images/lectures/Preprocessing.pdf).
         """),
-        mo.image(img_src("preprocessing.png")),
+        image("preprocessing/preprocessing.png"),
         mo.md(r"""
         In this lab, we will go over the basics of preprocessing fMRI data using the [fmriprep](https://fmriprep.org/) preprocessing pipeline. We will cover:
 
@@ -61,32 +61,18 @@ def _():
     from pathlib import Path
     from dartbrains_tools.mr_widgets import TransformCubeWidget, CostFunctionWidget, SmoothingWidget
 
-    # Repo root = two levels up from this notebook (content/<nb>.py → repo
-    # root), so the sibling images/ dir resolves on every build host.
-    # marimo >=0.23.6 + marimo-book >=0.1.18 make __file__ resolve to the
-    # notebook's real location at build time (including the WASM islands
-    # build). In the browser __file__ is a Pyodide path and _ROOT is
-    # meaningless, but img_src() falls back to a page-relative URL there,
-    # and .parent.parent never raises, so that's harmless.
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "preprocessing"
+    from dartbrains_tools.notebook_utils import image, youtube
 
-    def img_src(filename: str):
-        # In marimo edit + at build time the file exists at IMG_DIR/filename
-        # and `mo.image(Path)` embeds bytes inline. In WASM browser the file
-        # isn't reachable, so fall back to a page-relative URL that resolves
-        # to the deployed /images/preprocessing/<filename> — the cell's
-        # browser-side re-execution would otherwise emit a Pyodide-internal
-        # path (e.g. /marimo/images/...) that 404s.
-        p = IMG_DIR / filename
-        return p if p.is_file() else f"../images/preprocessing/{filename}"
+    # Repo root = two levels up from this notebook (content/<nb>.py -> repo
+    # root). Only read_svg() uses it; figures go through image().
+    IMG_DIR = Path(__file__).resolve().parent.parent / "images" / "preprocessing"
 
     def read_svg(filename: str) -> str:
-        # Same disk-vs-WASM split as img_src, but for inline-SVG cells that
-        # need to embed raw SVG markup into the DOM (mo.image() loads via an
-        # <img> tag, which sandboxes embedded @keyframes / animation CSS).
-        # In marimo edit + at build the file is on disk; in WASM browser
-        # we fetch from the deployed /images/preprocessing/<filename> URL.
+        # For inline-SVG cells that need to embed raw SVG markup into the DOM
+        # (mo.image() loads via an <img> tag, which sandboxes embedded
+        # @keyframes / animation CSS). In marimo edit + at build the file is
+        # on disk; elsewhere (WASM browser, molab) we fetch it from the
+        # deployed /images/preprocessing/<filename> URL.
         p = IMG_DIR / filename
         if p.is_file():
             return p.read_text()
@@ -100,9 +86,10 @@ def _():
         CostFunctionWidget,
         SmoothingWidget,
         TransformCubeWidget,
-        img_src,
+        image,
         mo,
         read_svg,
+        youtube,
     )
 
 
@@ -144,14 +131,8 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""
-      <iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/Qc3rRaJWOc4"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+def _(youtube):
+    youtube("Qc3rRaJWOc4")
     return
 
 
@@ -351,7 +332,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ---
@@ -363,7 +344,7 @@ def _(img_src, mo):
 
         Let's look at an example of the translation and rotation parameters after running realignment on our first subject.
         """),
-        mo.image(img_src("realignment_parameters.png")),
+        image("preprocessing/realignment_parameters.png"),
         mo.md(r"""
         Don't forget that even though we can approximately put each volume into a similar position with realignment, head motion always distorts the magnetic field and can lead to nonlinear changes in signal intensity that will not be addressed by this procedure. In the resting-state literature, where many analyses are based on functional connectivity, head motion can lead to spurious correlations. Some researchers choose to exclude any subject that moved more than a certain amount. Others choose to remove the impact of these time points in their data through removing the volumes via *scrubbing* or modeling out the volume with a dummy code in the first level general linear models.
         """),
@@ -389,30 +370,24 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.Html("""
-      <iframe
-          width="560" height="315"
-          src="https://www.youtube.com/embed/qamRGWSC-6g"
-          frameborder="0" allowfullscreen>
-      </iframe>
-      """)
+def _(youtube):
+    youtube("qamRGWSC-6g")
     return
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         There are many different steps involved in the spatial normalization process and these details vary widely across various imaging software packages. We will briefly discuss some of the steps involved in the anatomical preprocessing pipeline implemented by fMRIprep and will be showing example figures from the output generated by the pipeline.
 
         First, brains are extracted from the skull and surrounding dura mater. You can check and see how well the algorithm performed by examining the red outline.
         """),
-        mo.image(img_src("T1_normalization.png")),
+        image("preprocessing/T1_normalization.png"),
         mo.md(r"""
         Next, the anatomical images are segmented into different tissue types. These tissue maps are used for various types of analyses, including providing a grey matter mask to reduce the computational time in estimating statistics. In addition, they provide masks to aid in extracting average activity in CSF, or white matter, which might be used as covariates in the statistical analyses to account for physiological noise.
         """),
-        mo.image(img_src("T1_segmentation.png")),
+        image("preprocessing/T1_segmentation.png"),
     ])
     return
 
@@ -540,7 +515,7 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ---
@@ -560,7 +535,7 @@ def _(img_src, mo):
         - Automate and parallelize processing steps, which provides a significant speed-up from typical linear, manual processing.
         - More information and documentation can be found at [https://fmriprep.readthedocs.io/](https://fmriprep.readthedocs.io/)
         """),
-        mo.image(img_src("fmriprep.png")),
+        image("preprocessing/fmriprep.png"),
     ])
     return
 
@@ -591,7 +566,7 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(img_src, mo):
+def _(image, mo):
     mo.vstack([
         mo.md(r"""
         ### Quick primer on High Performance Computing
@@ -600,7 +575,7 @@ def _(img_src, mo):
 
         Imagine if you had 50 computers and ran each participant separate at the same time in parallel across all of the computers. This would allow us to run 50 participants in the same amount of time as a single participant. This is the basic idea behind high performance computing, which contains a cluster of many computers that have been installed in racks. Below is a picture of what Dartmouth's [Discovery cluster](https://rc.dartmouth.edu/index.php/discovery-overview/) looks like:
         """),
-        mo.image(img_src("hpc.png")),
+        image("preprocessing/hpc.png"),
         mo.md(r"""
         A cluster is simply a collection of nodes. A node can be thought of as an individual computer. Each node contains processors, which encompass multiple cores. Discovery contains 3000+ cores, which is certainly a lot more than your laptop!
 

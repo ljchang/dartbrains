@@ -32,11 +32,9 @@ app = marimo.App()
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
-    from pathlib import Path
 
     from dartbrains_tools.notebook_utils import image
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "connectivity"
+
     return image, mo
 
 
@@ -380,7 +378,6 @@ def _(localizer, nib):
     print(f'shape: {_img.shape}')
     print(f'voxel size: {_img.header.get_zooms()}')
     print(f'TR: {_img.header.get_zooms()[3]} s')
-    _img
     return
 
 

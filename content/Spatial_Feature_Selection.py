@@ -3,6 +3,7 @@
 # dependencies = [
 #     "dartbrains-tools>=0.3.0",
 #     "matplotlib",
+#     "nilearn",
 #     "nltools==0.6.0.dev2",
 #     "numpy",
 #     "pandas",
@@ -34,10 +35,11 @@ def _():
     from nltools.data import BrainData
     from nltools.mask import expand_mask
     from nltools.templates import fetch_resource
+    from nilearn.image import math_img
     from sklearn.model_selection import LeaveOneGroupOut
 
 
-    return BrainData, fetch_resource, localizer, mo, np, pd, plt, sns
+    return BrainData, fetch_resource, localizer, math_img, mo, np, pd, plt, sns
 
 
 @app.cell(hide_code=True)
@@ -217,10 +219,13 @@ def _(mo):
 
 
 @app.cell
-def _(Y, data, fetch_resource, np, subject_id):
+def _(Y, data, fetch_resource, math_img, np, subject_id):
     # Pass the atlas as a file path (or Nifti). nltools resamples it into the
     # data's mask space itself, so wrapping it in BrainData first is unnecessary.
-    atlas = fetch_resource("masks/k50_2mm.nii.gz")
+    # Round the labels first: the file stores them as floats, and a few carry
+    # resampling noise (parcel 7 is 6.99999999), which an integer cast would
+    # truncate into the neighboring parcel's label.
+    atlas = math_img("np.rint(img)", img=fetch_resource("masks/k50_2mm.nii.gz"))
 
     roi = data.predict(
         y=Y, spatial_scale="roi", roi_mask=atlas,
@@ -257,9 +262,13 @@ def _(mo):
     the top parcel. The information is not distributed evenly; it is concentrated
     in a handful of regions, and the map shows where.
 
-    Note also that we asked for 50 parcels and got 46. Parcels that fall entirely
-    outside this dataset's brain mask have no voxels to model, so they drop out.
-    Anything the atlas does not cover is simply invisible to this analysis — which
+    Note also that we asked for 50 parcels and got 50 — but only because we rounded
+    the atlas labels first. The atlas stores each parcel's label as a floating-point
+    number, and a few carry tiny resampling errors (parcel 7 is stored as
+    6.99999999). Read as integers, 6.99999999 becomes 6, silently folding parcel 7
+    into parcel 6; without the rounding this analysis reports 46 parcels. It is
+    worth checking that the regions you get back match the atlas you think you are
+    using, because the results inherit whatever the atlas actually encodes — which
     is the atlas assumption made concrete.
     """)
     return
@@ -400,12 +409,12 @@ def _(np, pd, plt, roi, searchlight, sns, whole_brain):
     comparison = pd.DataFrame(
         {
             "accuracy": np.concatenate([_roi_acc, _sl_acc]),
-            "scale": ["ROI (46 parcels)"] * _roi_acc.size
+            "scale": ["ROI (50 parcels)"] * _roi_acc.size
             + ["Searchlight (spheres)"] * _sl_acc.size,
         }
     )
 
-    _order = ["ROI (46 parcels)", "Searchlight (spheres)"]
+    _order = ["ROI (50 parcels)", "Searchlight (spheres)"]
     _fig, _ax = plt.subplots(figsize=(9, 3.5))
     sns.boxplot(
         data=comparison, x="accuracy", y="scale", order=_order, ax=_ax,
@@ -458,7 +467,7 @@ def _(mo):
       same thing.
     - Comparing peaks across scales is not a fair contest either. A searchlight
       reports the best of thousands of overlapping spheres, so its maximum is
-      selected from far more opportunities than the best of 46 parcels.
+      selected from far more opportunities than the best of 50 parcels.
 
     This is why Jolly & Chang (2021) explicitly **caution against treating the
     choice as an optimization**:

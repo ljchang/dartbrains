@@ -27,13 +27,10 @@ app = marimo.App()
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
-    from pathlib import Path
 
     from dartbrains_tools.notebook_utils import image
     from dartbrains_tools.notebook_utils import youtube
 
-    _ROOT = Path(__file__).resolve().parent.parent
-    IMG_DIR = _ROOT / "images" / "thresholding"
     return image, mo, youtube
 
 
@@ -988,14 +985,15 @@ def _(mo):
 
 
 @app.cell
-def _(con1_stats, fdr, threshold):
+def _(con1_stats, fdr, mo, threshold):
     _fdr_thr = fdr(con1_stats['p'].data, q=0.05)
     if _fdr_thr > 0:
         print(f"FDR threshold: p < {_fdr_thr:.5f}")
         _thresholded = threshold(con1_stats['t'], con1_stats['p'], thr=_fdr_thr)
-        _thresholded.iplot()
+        _view = _thresholded.iplot()
     else:
-        print('Nothing survives FDR correction for this contrast.')
+        _view = mo.md('Nothing survives FDR correction for this contrast.')
+    _view
     return
 
 
@@ -1022,12 +1020,13 @@ def _(BrainData, con1_dat, localizer, threshold):
 
 
 @app.cell
-def _(con1_v_con2_stats, fdr, threshold):
+def _(con1_v_con2_stats, fdr, mo, threshold):
     _fdr_thr = fdr(con1_v_con2_stats['p'].data, q=0.05)
     if _fdr_thr > 0:
-        threshold(con1_v_con2_stats['t'], con1_v_con2_stats['p'], thr=_fdr_thr).iplot()
+        _view = threshold(con1_v_con2_stats['t'], con1_v_con2_stats['p'], thr=_fdr_thr).iplot()
     else:
-        print('Nothing survives FDR correction for this contrast.')
+        _view = mo.md('Nothing survives FDR correction for this contrast.')
+    _view
     return
 
 
