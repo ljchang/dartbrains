@@ -128,6 +128,7 @@ def _():
     from nltools.templates import fetch_resource
     from nltools.algorithms.inference import one_sample_permutation_test
     from dartbrains_tools.data import localizer
+    from dartbrains_tools import storage
 
     return (
         BrainData,
@@ -147,6 +148,7 @@ def _():
         plot_stat_map,
         plt,
         sns,
+        storage,
         threshold,
         ttest_1samp,
     )
@@ -315,8 +317,32 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    A few steps in this chapter run thousands of simulated or permuted tests and take minutes: the false-positive sweep below and the TFCE permutation test later on. If you are taking the course, sign in with your Dartmouth account before running them: the results are then kept in your course storage, and the course keeps a copy your instructor computed ahead of time, so they load in seconds instead. Signing in later works too: the slow cells rerun and pick up the stored copy. If you are not at Dartmouth, skip the button; everything works the same way.
+    """)
+    return
+
+
 @app.cell
-def _(SimulateGrid, go, mo, np):
+def _(storage):
+    signin = storage.signin_button()
+    signin
+    return (signin,)
+
+
+@app.cell
+def _(signin, storage):
+    # The slow cells below depend on this one, so signing in reruns them against
+    # course storage. Their cache keys are the same for every signed-in reader:
+    # the button's value carries no token (marimo-grader-client >= 0.2.2).
+    storage_ready = storage.connect(signin)
+    return (storage_ready,)
+
+
+@app.cell
+def _(SimulateGrid, go, mo, np, storage, storage_ready):
     # 20 thresholds × 100 simulations × a 100×100 voxel grid is ~20 M
     # t-tests via joblib — many minutes cold. mo.persistent_cache writes
     # the FPR result to __marimo__/cache/ so the first build pays the
@@ -326,7 +352,7 @@ def _(SimulateGrid, go, mo, np):
     alpha = 0.05
     n_simulations = 100
     x = np.arange(3, 7, 0.2)
-    with mo.persistent_cache("threshold_fpr_sweep"):
+    with mo.persistent_cache("threshold_fpr_sweep", store=storage.cache_store() if storage_ready else None):
         sim_all = []
         for p in x:
             sim = SimulateGrid(grid_width=100, n_subjects=20)
@@ -1164,19 +1190,28 @@ def _(BrainData, con1_dat, fetch_resource, pd):
 
 
 @app.cell
-def _(con1_imgs, group_design, non_parametric_inference, occipital_mask):
-    npi_tfce = non_parametric_inference(
-        con1_imgs,
-        design_matrix=group_design,
-        second_level_contrast='intercept',
-        mask=occipital_mask.to_nifti(),
-        n_perm=500,
-        threshold=None,
-        tfce=True,
-        two_sided_test=True,
-        n_jobs=-1,
-        random_state=0,
-    )
+def _(
+    con1_imgs,
+    group_design,
+    mo,
+    non_parametric_inference,
+    occipital_mask,
+    storage,
+    storage_ready,
+):
+    with mo.persistent_cache("threshold_tfce", store=storage.cache_store() if storage_ready else None):
+        npi_tfce = non_parametric_inference(
+            con1_imgs,
+            design_matrix=group_design,
+            second_level_contrast='intercept',
+            mask=occipital_mask.to_nifti(),
+            n_perm=500,
+            threshold=None,
+            tfce=True,
+            two_sided_test=True,
+            n_jobs=-1,
+            random_state=0,
+        )
     print(list(npi_tfce.keys()))
     return (npi_tfce,)
 

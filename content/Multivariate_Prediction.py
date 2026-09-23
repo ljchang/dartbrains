@@ -152,6 +152,7 @@ def _():
     from sklearn.linear_model import RidgeClassifier, RidgeCV, LassoCV
     from sklearn.model_selection import GroupKFold
     from dartbrains_tools.data import localizer
+    from dartbrains_tools import storage
 
     return (
         BrainData,
@@ -164,6 +165,7 @@ def _():
         fetch_resource,
         localizer,
         np,
+        storage,
     )
 
 
@@ -456,12 +458,37 @@ def _(GroupKFold, RidgeCV, Y, data, subject_id):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Fitting `LassoCV` below takes several minutes: it searches for the penalty with an inner cross-validation inside every outer fold. If you are taking the course, sign in with your Dartmouth account before running it: the result is then kept in your course storage, and the course keeps a copy your instructor computed ahead of time, so it loads in seconds instead. Signing in later works too: the slow cells rerun and pick up the stored copy. If you are not at Dartmouth, skip the button; everything works the same way.
+    """)
+    return
+
+
 @app.cell
-def _(GroupKFold, LassoCV, Y, data, subject_id):
-    lasso_cv_stats = data.predict(
-        y=Y, estimator=LassoCV(), scoring='r2',
-        cv=GroupKFold(n_splits=5), groups=subject_id,
-    )
+def _(storage):
+    signin = storage.signin_button()
+    signin
+    return (signin,)
+
+
+@app.cell
+def _(signin, storage):
+    # The slow cells below depend on this one, so signing in reruns them against
+    # course storage. Their cache keys are the same for every signed-in reader:
+    # the button's value carries no token (marimo-grader-client >= 0.2.2).
+    storage_ready = storage.connect(signin)
+    return (storage_ready,)
+
+
+@app.cell
+def _(GroupKFold, LassoCV, Y, data, mo, storage, storage_ready, subject_id):
+    with mo.persistent_cache("mvp_lasso_cv", store=storage.cache_store() if storage_ready else None):
+        lasso_cv_stats = data.predict(
+            y=Y, estimator=LassoCV(), scoring='r2',
+            cv=GroupKFold(n_splits=5), groups=subject_id,
+        )
     print(f"lassoCV r2: {lasso_cv_stats.mean_score:.2f}")
     return
 
