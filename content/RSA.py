@@ -150,6 +150,7 @@ def _():
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
+    from dartbrains_tools import storage
 
     return (
         Adjacency,
@@ -166,6 +167,7 @@ def _():
         plot_stat_map,
         plt,
         roi_to_brain,
+        storage,
         threshold,
     )
 
@@ -463,28 +465,54 @@ def _(mo):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    The next cell runs the analysis for every subject: it downloads each participant's beta maps and computes 50 ROI similarity matrices, which takes several minutes. If you are taking the course, sign in with your Dartmouth account before running it: the result is then kept in your course storage, and the course keeps a copy your instructor computed ahead of time, so it loads in seconds instead. Signing in later works too: the slow cells rerun and pick up the stored copy. If you are not at Dartmouth, skip the button; everything works the same way.
+    """)
+    return
+
+
 @app.cell
-def _(BrainData, localizer, mask_x, motor, pd):
-    sub_list = localizer.get_subjects()
-    all_sub_similarity = {}
-    all_sub_motor_rsa = {}
-    for _sub in sub_list:
-        _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
-        conditions_1 = localizer.CONDITIONS
-        # See note on the single-subject cell above — wrap each path in
-        # BrainData() so the outer constructor stacks instead of flattening.
-        beta_1 = BrainData([f for f in _file_list])
-        sub_pattern = []
-        motor_sim_r_1 = []
-        for _m in mask_x:
-            sub_pattern_similarity = 1 - beta_1.apply_mask(_m).distance(metric='correlation')
-            sub_pattern_similarity.labels = conditions_1
-            _s = sub_pattern_similarity.similarity(motor, metric='spearman', n_permute=0)
-            sub_pattern.append(sub_pattern_similarity)
-            motor_sim_r_1.append(_s['correlation'])
-        all_sub_similarity[_sub] = sub_pattern
-        all_sub_motor_rsa[_sub] = motor_sim_r_1
-    all_sub_motor_rsa = pd.DataFrame(all_sub_motor_rsa).T
+def _(storage):
+    signin = storage.signin_button()
+    signin
+    return (signin,)
+
+
+@app.cell
+def _(signin, storage):
+    # The slow cells below depend on this one, so signing in reruns them against
+    # course storage. Their cache keys are the same for every signed-in reader:
+    # the button's value carries no token (marimo-grader-client >= 0.2.2).
+    storage_ready = storage.connect(signin)
+    return (storage_ready,)
+
+
+@app.cell
+def _(BrainData, localizer, mask_x, mo, motor, pd, storage, storage_ready):
+    # Every subject's betas (10 downloads each) and 50 ROI similarities: minutes.
+    with mo.persistent_cache("rsa_all_subjects", store=storage.cache_store() if storage_ready else None):
+        sub_list = localizer.get_subjects()
+        all_sub_similarity = {}
+        all_sub_motor_rsa = {}
+        for _sub in sub_list:
+            _file_list = [localizer.get_file(_sub, 'betas', cond) for cond in localizer.CONDITIONS]
+            conditions_1 = localizer.CONDITIONS
+            # See note on the single-subject cell above — wrap each path in
+            # BrainData() so the outer constructor stacks instead of flattening.
+            beta_1 = BrainData([f for f in _file_list])
+            sub_pattern = []
+            motor_sim_r_1 = []
+            for _m in mask_x:
+                sub_pattern_similarity = 1 - beta_1.apply_mask(_m).distance(metric='correlation')
+                sub_pattern_similarity.labels = conditions_1
+                _s = sub_pattern_similarity.similarity(motor, metric='spearman', n_permute=0)
+                sub_pattern.append(sub_pattern_similarity)
+                motor_sim_r_1.append(_s['correlation'])
+            all_sub_similarity[_sub] = sub_pattern
+            all_sub_motor_rsa[_sub] = motor_sim_r_1
+        all_sub_motor_rsa = pd.DataFrame(all_sub_motor_rsa).T
     return (all_sub_motor_rsa,)
 
 
