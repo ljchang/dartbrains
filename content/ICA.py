@@ -67,10 +67,12 @@ def _(mo):
 
 
 @app.cell
-def _(storage):
+def _():
+    from dartbrains_tools import storage
+
     signin = storage.signin_button()
     signin
-    return (signin,)
+    return signin, storage
 
 
 @app.cell
@@ -89,10 +91,9 @@ def _():
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
     from nltools.data import BrainData
-    from dartbrains_tools import storage
     from dartbrains_tools.data import localizer
 
-    return BrainData, fft, fftfreq, go, localizer, make_subplots, np, storage
+    return BrainData, fft, fftfreq, go, localizer, make_subplots, np
 
 
 @app.cell

@@ -31,7 +31,6 @@ def _():
     from nltools.data import BrainData
     from nltools.templates import fetch_resource
     from nilearn.datasets import load_mni152_template
-    from dartbrains_tools import storage
 
     return (
         BrainData,
@@ -44,7 +43,6 @@ def _():
         plot_glass_brain,
         plot_stat_map,
         plt,
-        storage,
     )
 
 
@@ -593,10 +591,12 @@ def _(mo):
 
 
 @app.cell
-def _(storage):
+def _():
+    from dartbrains_tools import storage
+
     signin = storage.signin_button()
     signin
-    return (signin,)
+    return signin, storage
 
 
 @app.cell

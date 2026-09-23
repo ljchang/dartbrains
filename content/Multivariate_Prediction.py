@@ -152,7 +152,6 @@ def _():
     from sklearn.linear_model import RidgeClassifier, RidgeCV, LassoCV
     from sklearn.model_selection import GroupKFold
     from dartbrains_tools.data import localizer
-    from dartbrains_tools import storage
 
     return (
         BrainData,
@@ -165,7 +164,6 @@ def _():
         fetch_resource,
         localizer,
         np,
-        storage,
     )
 
 
@@ -467,10 +465,12 @@ def _(mo):
 
 
 @app.cell
-def _(storage):
+def _():
+    from dartbrains_tools import storage
+
     signin = storage.signin_button()
     signin
-    return (signin,)
+    return signin, storage
 
 
 @app.cell
