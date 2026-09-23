@@ -634,7 +634,7 @@ def _(
     # The residuals are the data with every nuisance regressor projected out --
     # this is what we want to decompose in the next section.
     smoothed.fit(model='glm', X=dm_2)
-    smoothed_denoised = smoothed.glm_residual
+    smoothed_denoised = smoothed.model.residual
     return (smoothed_denoised,)
 
 

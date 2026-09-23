@@ -632,11 +632,11 @@ def _(mo):
     mo.md(r"""
     Ok, it's done! Let's take a look at the results.
 
-    `.fit()` attached the main results to the object as `BrainData` instances, one image per quantity: `.glm_betas` (a beta image per regressor), plus `.glm_t`, `.glm_p`, `.glm_se`, `.glm_residual`, `.glm_r2`, and the fitted model itself in `.model_`.
+    `.fit()` stored the results on `smoothed.model`, as `BrainData` instances with one image per quantity: `.betas` (a beta image per regressor), `.residual`, `.predicted`, and `.r2`, along with the `.design` matrix that was fit. There are no per-regressor t or p maps here; we will get those for the comparisons we care about with `compute_contrasts` below.
 
     Remember we have run the same regression model separately on each voxel of the brain.
 
-    Let's take a look at one of the regressors. Each row of `.glm_betas` corresponds to a column of the design matrix, so we can print the design matrix column names to see what we have. Let's plot the first one, which corresponds to `audio_computation_c0`, an arithmetic problem presented in the auditory domain.
+    Let's take a look at one of the regressors. Each row of `smoothed.model.betas` corresponds to a column of the design matrix, so we can print the design matrix column names to see what we have. Let's plot the first one, which corresponds to `audio_computation_c0`, an arithmetic problem presented in the auditory domain.
     """)
     return
 
@@ -659,7 +659,7 @@ def _(mo):
 
 @app.cell
 def _(smoothed):
-    smoothed.glm_betas[0].iplot()
+    smoothed.model.betas[0].iplot()
     return
 
 

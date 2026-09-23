@@ -395,10 +395,10 @@ def _(mo):
         data.fit(model='glm', X=build_design(sub, data))
 
         # Write out all betas
-        data.glm_betas.write(f'{sub}_betas.nii.gz')
+        data.model.betas.write(f'{sub}_betas.nii.gz')
 
         # Write out a separate beta image for each condition
-        for name in data.X.columns[:10]:
+        for name in data.model.design.columns[:10]:
             data.compute_contrasts(name).write(
                 f'{sub}_beta_{name.removesuffix("_c0")}.nii.gz'
             )
