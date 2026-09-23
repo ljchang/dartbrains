@@ -150,7 +150,6 @@ def _():
     from sklearn.metrics import pairwise_distances
     from nilearn.plotting import plot_glass_brain, plot_stat_map
     from dartbrains_tools.data import localizer
-    from dartbrains_tools import storage
 
     return (
         Adjacency,
@@ -167,7 +166,6 @@ def _():
         plot_stat_map,
         plt,
         roi_to_brain,
-        storage,
         threshold,
     )
 
@@ -474,10 +472,12 @@ def _(mo):
 
 
 @app.cell
-def _(storage):
+def _():
+    from dartbrains_tools import storage
+
     signin = storage.signin_button()
     signin
-    return (signin,)
+    return signin, storage
 
 
 @app.cell

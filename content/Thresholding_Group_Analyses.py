@@ -128,7 +128,6 @@ def _():
     from nltools.templates import fetch_resource
     from nltools.algorithms.inference import one_sample_permutation_test
     from dartbrains_tools.data import localizer
-    from dartbrains_tools import storage
 
     return (
         BrainData,
@@ -148,7 +147,6 @@ def _():
         plot_stat_map,
         plt,
         sns,
-        storage,
         threshold,
         ttest_1samp,
     )
@@ -326,10 +324,12 @@ def _(mo):
 
 
 @app.cell
-def _(storage):
+def _():
+    from dartbrains_tools import storage
+
     signin = storage.signin_button()
     signin
-    return (signin,)
+    return signin, storage
 
 
 @app.cell

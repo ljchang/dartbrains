@@ -84,7 +84,6 @@ def _():
     from nltools.algorithms import zscore
     from nltools.data import BrainData, DesignMatrix
     from nilearn.plotting import view_img, glass_brain, plot_stat_map
-    from dartbrains_tools import storage
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
@@ -97,7 +96,6 @@ def _():
         pd,
         pl,
         plt,
-        storage,
         youtube,
         zscore,
     )
@@ -116,10 +114,12 @@ def _(mo):
 
 
 @app.cell
-def _(storage):
+def _():
+    from dartbrains_tools import storage
+
     signin = storage.signin_button()
     signin
-    return (signin,)
+    return signin, storage
 
 
 @app.cell
