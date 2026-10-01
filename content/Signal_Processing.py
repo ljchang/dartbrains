@@ -25,7 +25,7 @@ with app.setup(hide_code=True):
     from numpy import sin, pi, arange, exp, real, imag
     from numpy.fft import fft, ifft, fftfreq
     from scipy.special import gamma as gamma_func
-    from scipy.signal import butter, filtfilt, freqz, sosfreqz
+    from scipy.signal import butter, filtfilt, firwin, freqz
 
     def glover_hrf(tr_val, oversampling=1):
         _dt = tr_val / oversampling
@@ -105,6 +105,52 @@ def dot_product_similar(dot_a):
     _ax.set_xlabel("A", fontsize=18)
     _ax.set_title("Scatterplot", fontsize=18)
     mo.vstack([mo.md(f"**Dot Product:** {np.dot(dot_a, _b2):.2f}"), _fig])
+    return
+
+
+@app.cell(hide_code=True)
+def dot_slider_md():
+    mo.md(r"""
+    Use the slider to move **b** from unrelated to **a** (0) to identical to **a** (1). Each bar below is one term $a_i b_i$, and the dot product is the sum of all the bars. When the vectors agree, the terms are mostly positive and pile up. When they are unrelated, positive and negative terms cancel out.
+
+    These vectors are centered on zero, so "unrelated" gives a dot product near zero. Standardize both vectors and divide the dot product by $n$, and you get the familiar **correlation** coefficient.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _make_dot_slider():
+    dot_sim_slider = mo.ui.slider(0, 1, value=0.0, step=0.05, label="Similarity of b to a", full_width=True)
+    return (dot_sim_slider,)
+
+
+@app.cell(hide_code=True)
+def dot_similarity(dot_sim_slider):
+    _rng = np.random.default_rng(3)
+    _n = 30
+    _a = _rng.standard_normal(_n)
+    _w = dot_sim_slider.value
+    _b = _w * _a + np.sqrt(1 - _w**2) * _rng.standard_normal(_n)
+
+    _fig, _axes = plt.subplots(ncols=2, figsize=(14, 4.5), gridspec_kw={"width_ratios": [1, 1.8]})
+    _axes[0].scatter(_a, _b)
+    _axes[0].set_xlim(-3, 3)
+    _axes[0].set_ylim(-3, 3)
+    _axes[0].set_aspect("equal")
+    _axes[0].set_xlabel("a", fontsize=14)
+    _axes[0].set_ylabel("b", fontsize=14)
+    _axes[1].bar(np.arange(_n), _a * _b, color=np.where(_a * _b >= 0, "C0", "C3"))
+    _axes[1].axhline(0, color="gray", linewidth=0.8)
+    _axes[1].set_ylim(-6, 6)
+    _axes[1].set_xlabel("element i", fontsize=14)
+    _axes[1].set_title(r"$a_i \times b_i$", fontsize=14)
+    plt.tight_layout()
+    plt.close()
+    mo.vstack([
+        dot_sim_slider,
+        mo.md(f"**Dot product: {np.dot(_a, _b):.1f}** &nbsp; (correlation r = {np.corrcoef(_a, _b)[0, 1]:.2f})"),
+        _fig,
+    ])
     return
 
 
@@ -513,6 +559,69 @@ def combined(multi_amps, multi_freqs, multi_phases, noise_slider, sf_slider):
 
 
 @app.cell(hide_code=True)
+def fmri_alias_md():
+    mo.md(r"""
+    #### Aliasing at fMRI sampling rates
+
+    This matters for fMRI. We sample the brain once per **TR** (repetition time), so the sampling frequency is $f_s = 1/\text{TR}$. A typical TR of 2 s gives $f_s$ = 0.5 Hz and a Nyquist frequency of only **0.25 Hz**. Breathing (~0.3 Hz) and the heartbeat (~1 Hz) are faster than that, so they can't be measured directly. They alias, folding down into slower oscillations.
+
+    Use the slider to change the TR. The gray line is the true physiological signal, and the dots are what the scanner records.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _make_fmri_tr_slider():
+    fmri_tr_slider = mo.ui.slider(0.4, 3.0, value=2.0, step=0.1, label="TR (s)", full_width=True)
+    return (fmri_tr_slider,)
+
+
+@app.cell(hide_code=True)
+def fmri_aliasing(fmri_tr_slider):
+    def _apparent(f, sf):
+        folded = f % sf
+        return folded if folded <= sf / 2 else sf - folded
+
+    _tr = fmri_tr_slider.value
+    _fs = 1 / _tr
+    _nyq = _fs / 2
+    _t_true = np.arange(0, 60, 0.02)
+    _t = np.arange(0, 60, _tr)
+
+    _fig, _axes = plt.subplots(nrows=2, figsize=(14, 5), sharex=True)
+    for _ax, (_name, _f) in zip(_axes, [("Respiration", 0.3), ("Cardiac", 1.1)]):
+        _aliased = _f > _nyq
+        _app = _apparent(_f, _fs)
+        _ax.plot(_t_true, np.sin(2 * pi * _f * _t_true), color="gray", alpha=0.35, linewidth=1)
+        _ax.plot(_t, np.sin(2 * pi * _f * _t), "o-", color="tab:red" if _aliased else "tab:blue", linewidth=1.6, markersize=5)
+        _ax.set_ylabel(f"{_name}\n{_f} Hz", rotation=0, ha="right", va="center", fontsize=12)
+        _ax.set_yticks([])
+        if _aliased and _app > 0:
+            _note = f"aliased: appears at {_app:.3f} Hz (one cycle every {1 / _app:.0f} s)"
+        elif _aliased:
+            _note = "aliased: appears as a constant"
+        else:
+            _note = "sampled fast enough"
+        _ax.set_title(_note, fontsize=12, loc="right", color="tab:red" if _aliased else "tab:blue")
+    _axes[-1].set_xlabel("Time (s)", fontsize=14)
+    plt.tight_layout()
+    plt.close()
+
+    mo.vstack([
+        fmri_tr_slider,
+        mo.md(f"TR = {_tr:g} s → $f_s$ = {_fs:.2f} Hz → Nyquist = **{_nyq:.2f} Hz**"),
+        _fig,
+        mo.callout(mo.md(
+            "Task designs typically put their signal around **0.01–0.1 Hz**. At a 2 s TR, an aliased heartbeat "
+            "can land right in that band, where no filter can separate it from the task. This is one reason "
+            "fast multiband sequences (TR < 1 s) and physiological recordings are used to model cardiac and "
+            "respiratory noise."
+        ), kind="info"),
+    ])
+    return
+
+
+@app.cell(hide_code=True)
 def tf_intro():
     mo.md("""
     ## Time & Frequency Domains
@@ -682,17 +791,24 @@ def filter_bank(combined_signal):
 @app.cell(hide_code=True)
 def hm_md():
     mo.md("""
-    We can visualize all of the sine waves simultaneously using a heatmap representation. Each row is a different sine wave, and columns reflect time. The intensity of the value is like if the sine wave was coming towards and away rather than up and down. Notice how it looks like that the second half of the sine waves appear to be a mirror image of the first half. This is because the first half contain the positive frequencies, while the second half contains the negative frequencies. Negative frequencies capture sine waves that travel in reverse order around the complex plane compared to that travel forward. This becomes more relevant with the hilbert transform, but for the purposes of this tutorial we will be ignoring the negative frequencies.
+    We can visualize a whole bank of sine waves at once using a heatmap representation. Our bank has one row per sample, too many to draw clearly, so the heatmap shows a smaller bank of 64 waves built the same way. Each row is a different sine wave, and columns reflect time. The intensity of the value is like if the sine wave was coming towards and away rather than up and down. Notice how it looks like that the second half of the sine waves appear to be a mirror image of the first half. This is because the first half contain the positive frequencies, while the second half contains the negative frequencies. Negative frequencies capture sine waves that travel in reverse order around the complex plane compared to that travel forward. This becomes more relevant with the hilbert transform, but for the purposes of this tutorial we will be ignoring the negative frequencies.
     """)
     return
 
 
 @app.cell
-def fb_heatmap(sine_bank):
+def fb_heatmap():
+    # A 64-point bank: the real one (one row per sample of our signal) is too
+    # dense to draw. Squeezed into a few hundred pixels it aliases into a moire
+    # pattern -- the same undersampling problem we just saw with sine waves.
+    _k = np.arange(64)
+    _small_bank = exp(-1j * 2 * pi * np.outer(_k, _k) / 64)
     _fig, _ax = plt.subplots(figsize=(8, 8))
-    _ax.imshow(np.real(sine_bank))
+    _ax.imshow(np.real(_small_bank), cmap="RdBu_r", interpolation="nearest")
+    _ax.axhline(31.5, color="k", linestyle="--", linewidth=1)
     _ax.set_ylabel("Frequency", fontsize=18)
     _ax.set_xlabel("Time", fontsize=18)
+    _ax.set_title("A bank of 64 complex sine waves (real part)", fontsize=16)
     plt.close()
     _fig
     return
@@ -734,9 +850,16 @@ def dft_compute(
     _axes[1].set_title("Power spectrum (zoomed)", fontsize=18)
     for _f in multi_freqs:
         _axes[1].axvline(x=_f, color="red", alpha=0.3, linestyle="--")
+    _axes[1].scatter(multi_freqs, multi_amps, color="red", s=60, zorder=5, label="true amplitudes")
+    _axes[1].legend(fontsize=12)
     plt.tight_layout()
     plt.close()
-    mo.vstack([mo.md(f"Recall: `freq = {multi_freqs}`, `amplitude = {multi_amps}`"), _fig])
+    _same = np.allclose(fourier_coeffs, 2 * fft(combined_signal) / len(combined_signal))
+    mo.vstack([
+        mo.md(f"Recall: `freq = {multi_freqs}`, `amplitude = {multi_amps}`. The red dots mark the true amplitudes, and the peaks recover them (unless the sampling frequency above is low enough to alias)."),
+        _fig,
+        mo.md(f"`np.fft.fft` computes exactly these coefficients (`np.allclose` → **{_same}**), just much faster: $O(n \\log n)$ operations instead of $O(n^2)$. That's the *fast* Fourier transform."),
+    ])
     return dft_freq_axis, fourier_coeffs
 
 
@@ -800,37 +923,6 @@ def phase_spectra(combined_signal, multi_freqs, sf_slider):
     for _f in multi_freqs:
         _axes[0].axvline(x=_f, color="red", alpha=0.3, linestyle="--")
         _axes[1].axvline(x=_f, color="red", alpha=0.3, linestyle="--")
-    plt.tight_layout()
-    plt.close()
-    _fig
-    return
-
-
-@app.cell(hide_code=True)
-def scramble_md():
-    mo.md("""
-    #### Phase Scrambling
-    Keep the power spectrum but randomize phases. The signal looks completely different — phase carries the structure!
-    """)
-    return
-
-
-@app.cell
-def phase_scramble(combined_signal):
-    _fft = fft(combined_signal)
-    _scrambled = np.abs(_fft) * exp(1j * np.random.uniform(-pi, pi, len(_fft)))
-    _recon = ifft(_scrambled).real
-    _n = len(combined_signal) // 2
-    _fig, _axes = plt.subplots(nrows=3, figsize=(14, 10))
-    _axes[0].plot(combined_signal, linewidth=2)
-    _axes[0].set_title("Original Signal", fontsize=16)
-    _axes[1].plot(_recon, linewidth=2, color="orange")
-    _axes[1].set_title("Phase-Scrambled (same power spectrum!)", fontsize=16)
-    _axes[2].plot(np.abs(_fft[:_n]), linewidth=2, alpha=0.7, label="Original")
-    _axes[2].plot(np.abs(_scrambled[:_n]), linewidth=2, alpha=0.7, linestyle="--", label="Scrambled")
-    _axes[2].set_title("Power Spectra (identical!)", fontsize=16)
-    _axes[2].set_xlabel("Frequency", fontsize=14)
-    _axes[2].legend(fontsize=12)
     plt.tight_layout()
     plt.close()
     _fig
@@ -908,9 +1000,16 @@ def filt_intro():
     mo.md(r"""
     ## Filters
 
+    A filter changes how much of each frequency survives. It can be described in two equivalent ways:
+
+    - In the **frequency domain**, by its **gain**: a number for every frequency, from 1 (keep it) to 0 (remove it).
+    - In the **time domain**, by its **kernel**, also called its *impulse response*: the output you get when you feed the filter a single spike.
+
+    These are two views of the same object. The convolution theorem says the gain is the Fourier transform of the kernel. So there are also two ways to *apply* a filter: convolve the signal with the kernel, or multiply the signal's Fourier transform by the gain. Both give the same answer.
+
     Filters can be classified as finite impulse response (FIR) or infinite impulse response (IIR). These terms describe how a filter responds to a single input impulse. FIR filters have a response that ends at a discrete point in time, while IIR filters have a response that continues indefinitely.
 
-    Filters are constructed in the frequency domain and have several properties that need to be considered.
+    Filters are designed in the frequency domain and have several properties that need to be considered.
 
     - ripple in the pass-band
     - attenuation in the stop-band
@@ -920,8 +1019,178 @@ def filt_intro():
 
     In general, there is a frequency by time tradeoff. The sharper something is in frequency, the broader it is in time, and vice versa.
 
-    Here we will use IIR butterworth filters as an example.
+    ### Two ways to apply the same filter
 
+    Let's apply one low-pass filter both ways. The signal has two components, a slow 5 Hz wave and a fast 35 Hz wave, and the filter should keep everything below 15 Hz. We'll use a simple FIR filter from `scipy.signal.firwin`, whose kernel is just a list of 101 weights.
+    """)
+    return
+
+
+@app.cell
+def two_way_setup():
+    fs_demo = 500
+    t_demo = arange(0, 2, 1 / fs_demo)
+    x_demo = 10 * sin(2 * pi * 5 * t_demo) + 5 * sin(2 * pi * 35 * t_demo)
+    lp_kernel = firwin(101, 15, fs=fs_demo)  # low-pass: keep below 15 Hz
+
+    _fig, _axes = plt.subplots(ncols=2, figsize=(16, 4), gridspec_kw={"width_ratios": [2, 1]})
+    _axes[0].plot(t_demo, x_demo, linewidth=1.5)
+    _axes[0].set_xlim(0, 1)
+    _axes[0].set_xlabel("Time (s)", fontsize=14)
+    _axes[0].set_title("Signal: 5 Hz + 35 Hz", fontsize=16)
+    _axes[1].plot((np.arange(len(lp_kernel)) - 50) / fs_demo * 1000, lp_kernel, "o-", markersize=3, color="tab:red")
+    _axes[1].set_xlabel("Time (ms)", fontsize=14)
+    _axes[1].set_title("Low-pass kernel (101 weights)", fontsize=16)
+    plt.tight_layout()
+    plt.close()
+    _fig
+    return fs_demo, lp_kernel, t_demo, x_demo
+
+
+@app.cell(hide_code=True)
+def two_way_time_md():
+    mo.md(r"""
+    #### Way 1: in the time domain, convolve with the kernel
+
+    This is exactly the convolution from the start of this chapter. Slide the kernel along the signal and take a dot product at every time point. The kernel is a smooth bump, so each output sample is a weighted average of its neighbors. Averaging over ~100 ms smooths away the fast 35 Hz wiggles but barely touches the slow 5 Hz wave.
+    """)
+    return
+
+
+@app.cell
+def two_way_time(lp_kernel, t_demo, x_demo):
+    y_time = np.convolve(x_demo, lp_kernel, mode="same")
+
+    _fig, _ax = plt.subplots(figsize=(16, 4))
+    _ax.plot(t_demo, x_demo, linewidth=1, alpha=0.4, label="original")
+    _ax.plot(t_demo, y_time, linewidth=2.5, label="convolved with the kernel")
+    _ax.set_xlim(0, 1)
+    _ax.set_xlabel("Time (s)", fontsize=14)
+    _ax.legend(fontsize=12, loc="upper right")
+    plt.close()
+    _fig
+    return (y_time,)
+
+
+@app.cell(hide_code=True)
+def two_way_freq_md():
+    mo.md(r"""
+    #### Way 2: in the frequency domain, multiply by the gain
+
+    1. Take the FFT of the signal. Remember that the FFT returns **positive and negative** frequencies, and the second half of the array mirrors the first.
+    2. Build the filter's gain at **every** FFT frequency, negative ones included. Here we take the FFT of the kernel, padded to the length of the signal. Because the kernel is symmetric, its gain is real-valued: about 1 below 15 Hz and about 0 above.
+    3. Multiply the two, frequency by frequency.
+    4. Take the inverse FFT to get back to time. The result should be real; `.real` drops the leftover rounding error.
+    """)
+    return
+
+
+@app.cell
+def two_way_freq(fs_demo, lp_kernel, t_demo, x_demo, y_time):
+    _n = len(x_demo)
+    X = fft(x_demo)
+    freqs_demo = fftfreq(_n, 1 / fs_demo)
+
+    # Pad the kernel to the signal's length and center it on sample 0, so the
+    # filter doesn't shift the signal in time.
+    _padded = np.zeros(_n)
+    _padded[: len(lp_kernel)] = lp_kernel
+    _padded = np.roll(_padded, -(len(lp_kernel) // 2))
+    gain = fft(_padded)
+
+    Y = X * gain
+    y_freq = ifft(Y).real
+
+    # The two versions differ only within half a kernel of the ends: there,
+    # convolution runs off the edge of the signal, while the FFT wraps around.
+    _inner = slice(len(lp_kernel), _n - len(lp_kernel))
+    _max_diff = np.max(np.abs(y_freq[_inner] - y_time[_inner]))
+
+    _order = np.argsort(freqs_demo)
+    _fig, _axes = plt.subplots(nrows=3, figsize=(16, 11))
+    _axes[0].plot(freqs_demo[_order], np.abs(X[_order]) / _n, linewidth=2, label="|FFT of signal|")
+    _ax_gain = _axes[0].twinx()
+    _ax_gain.plot(freqs_demo[_order], np.real(gain[_order]), color="tab:red", linewidth=2, label="gain")
+    _ax_gain.set_ylim(-0.05, 1.1)
+    _ax_gain.set_ylabel("Gain", fontsize=14, color="tab:red")
+    _axes[0].set_xlim(-60, 60)
+    _axes[0].set_title("Steps 1-2: the signal's spectrum (blue) and the filter's gain (red), positive and negative frequencies", fontsize=14)
+    _axes[1].plot(freqs_demo[_order], np.abs(Y[_order]) / _n, linewidth=2, color="tab:green")
+    _axes[1].set_xlim(-60, 60)
+    _axes[1].set_xlabel("Frequency (Hz)", fontsize=14)
+    _axes[1].set_title("Step 3: spectrum × gain — the ±35 Hz peaks are gone", fontsize=14)
+    _axes[2].plot(t_demo, y_time, linewidth=4, alpha=0.4, label="Way 1: convolve in time")
+    _axes[2].plot(t_demo, y_freq, linewidth=1.5, linestyle="--", color="k", label="Way 2: multiply in frequency")
+    _axes[2].set_xlim(0, 1)
+    _axes[2].set_xlabel("Time (s)", fontsize=14)
+    _axes[2].set_title("Step 4: inverse FFT — the same filtered signal both ways", fontsize=14)
+    _axes[2].legend(fontsize=12, loc="upper right")
+    plt.tight_layout()
+    plt.close()
+    mo.vstack([
+        _fig,
+        mo.md(f"Away from the edges, the two results differ by at most **{_max_diff:.1e}**, i.e. only by rounding error."),
+    ])
+    return
+
+
+@app.cell(hide_code=True)
+def two_way_why_md():
+    mo.md(r"""
+    #### Which one is used in practice?
+
+    Both, and you'll meet each:
+
+    - **Frequency domain**: you see exactly what the filter does to every frequency, and for long signals the FFT makes it fast. Watch the **edges**, though: the FFT treats the signal as if it wraps around in a loop, so the end leaks into the beginning.
+    - **Time domain**: works on a stream, one sample at a time. Real-time audio does this. The equalizer later in this chapter filters your music in the time domain, with small IIR filters running sample by sample, while its gray spectrum display is an FFT.
+    - `scipy.signal.filtfilt`, which we use for the Butterworth filters below, is also a time-domain method. Butterworth filters are IIR, so instead of convolving with a fixed kernel, each output sample is computed from recent inputs *and recent outputs*. `filtfilt` runs the filter forward and then backward, which cancels the time shift a one-way filter would add.
+
+    #### Two easy mistakes in the frequency domain
+
+    1. **Forgetting the negative frequencies.** If you set the gain at +35 Hz to 0 but not at −35 Hz, the spectrum is no longer mirror-symmetric, and the inverse FFT comes back complex instead of real.
+    2. **A brick-wall gain.** Jumping straight from 1 to 0 at the cutoff is the sharpest filter possible in frequency, so by the frequency × time trade-off it rings in time. You can see this around sharp edges, like the onsets of a block design.
+    """)
+    return
+
+
+@app.cell
+def two_way_mistakes(fs_demo, x_demo):
+    _n = len(x_demo)
+    _freqs = fftfreq(_n, 1 / fs_demo)
+    _X = fft(x_demo)
+
+    # Mistake 1: zero +35 Hz only.
+    _one_sided = _X.copy()
+    _one_sided[(_freqs > 15)] = 0
+    _imag = np.max(np.abs(ifft(_one_sided).imag))
+
+    # Mistake 2: brick-wall vs smooth low-pass on a block design.
+    _t = arange(0, 2, 1 / fs_demo)
+    _blocks = ((_t * 2) % 1 < 0.5).astype(float)
+    _B = fft(_blocks)
+    _brick = ifft(_B * (np.abs(_freqs) <= 15)).real
+    _smooth = filtfilt(*butter(4, 15, fs=fs_demo), _blocks)
+
+    _fig, _ax = plt.subplots(figsize=(16, 4))
+    _ax.plot(_t, _blocks, color="gray", linewidth=1, label="block design")
+    _ax.plot(_t, _brick, linewidth=2, label="brick-wall gain (rings)")
+    _ax.plot(_t, _smooth, linewidth=2, label="smooth roll-off (Butterworth)")
+    _ax.set_xlim(0, 1)
+    _ax.set_xlabel("Time (s)", fontsize=14)
+    _ax.set_title("Mistake 2: a brick-wall cutoff rings around sharp edges", fontsize=14)
+    _ax.legend(fontsize=12, loc="upper right")
+    plt.close()
+    mo.vstack([
+        mo.md(f"Mistake 1: zeroing only the positive frequencies above 15 Hz leaves an imaginary part as large as **{_imag:.2f}** after the inverse FFT. Zero the negative ones too (`np.abs(freqs) > 15`) and it drops to rounding error."),
+        _fig,
+    ])
+    return
+
+
+@app.cell(hide_code=True)
+def hp_md():
+    mo.md(r"""
+    From here on we'll use IIR Butterworth filters, applied in the time domain with `filtfilt`.
 
     ### High Pass
     High pass filters only allow high frequency signals to remain, effectively removing any low frequency information.
@@ -957,24 +1226,34 @@ def highpass(combined_signal, multi_freqs):
 @app.cell(hide_code=True)
 def temporal_md():
     mo.md("""
-    Notice how the gain scales from [0,1]? Filters can be multiplied by the FFT of a signal to apply the filter in the frequency domain. When the resulting signal is transformed back in the time domain using the inverse FFT, the new signal will be filtered. This can be much faster than applying filters in the time domain.
+    The top plot is the filter's frequency-domain view: its gain, from 0 to 1, at each frequency. The bottom plot is the result of applying it in the time domain with `filtfilt`.
 
-    The filter_order parameter adjusts the sharpness of the cutoff in the frequency domain. Try playing with different values to see how it changes the filter plot.
-
-    What does the filter look like in the temporal domain? Let’s take the inverse FFT and plot it to see what it looks like as a kernel in the temporal domain. Notice how changing the filter order adds more ripples in the time domain.
+    What does this filter look like in the time domain? Feed it a single spike, and the output is its impulse response. The **order** sets how sharp the cutoff is. Compare order 2 and order 8 below: the sharper gain rings for longer in time. That is the frequency × time trade-off again.
     """)
     return
 
 
 @app.cell
 def filt_temporal():
-    _sos = butter(8, 25, btype="high", output="sos", fs=500)
-    _w, _h = sosfreqz(_sos)
-    _fig, _ax = plt.subplots(figsize=(12, 4))
-    _ax.plot(ifft(_h).real[:100], linewidth=3)
-    _ax.set_ylabel("Amplitude", fontsize=18)
-    _ax.set_xlabel("Time", fontsize=18)
-    _ax.set_title("High pass filter kernel (order=8)", fontsize=18)
+    _impulse = np.zeros(400)
+    _impulse[100] = 1
+    _t_ms = (np.arange(400) - 100) / 500 * 1000
+    _fig, _axes = plt.subplots(ncols=2, figsize=(16, 4))
+    for _order in (2, 8):
+        _b, _a = butter(_order, 25, btype="high", fs=500)
+        _w, _h = freqz(_b, _a, worN=1024, fs=500)
+        _axes[0].plot(_w, np.abs(_h), linewidth=2.5, label=f"order {_order}")
+        _axes[1].plot(_t_ms, filtfilt(_b, _a, _impulse), linewidth=2, label=f"order {_order}")
+    _axes[0].set_xlim(0, 100)
+    _axes[0].set_xlabel("Frequency (Hz)", fontsize=14)
+    _axes[0].set_ylabel("Gain", fontsize=14)
+    _axes[0].set_title("Frequency domain: gain", fontsize=16)
+    _axes[0].legend(fontsize=12)
+    _axes[1].set_xlim(-60, 150)
+    _axes[1].set_xlabel("Time (ms)", fontsize=14)
+    _axes[1].set_title("Time domain: response to a single spike", fontsize=16)
+    _axes[1].legend(fontsize=12)
+    plt.tight_layout()
     plt.close()
     _fig
     return
@@ -1121,10 +1400,14 @@ def filter_explorer(
     _axes[0].set_xlabel("Frequency (Hz)", fontsize=14)
     _axes[0].set_title(f"{filter_type.value.title()} Filter (order={order_slider.value}) — red lines: signal components", fontsize=16)
     _axes[0].set_ylim(-0.05, 1.1)
-    _axes[1].plot(ifft(_h).real[:100], linewidth=2)
+    # The filter's footprint in time: what it does to a single spike.
+    _impulse = np.zeros(400)
+    _impulse[50] = 1
+    _axes[1].plot((np.arange(400) - 50) / _fs * 1000, filtfilt(_b, _a, _impulse), linewidth=2, color="green")
+    _axes[1].set_xlim(-60, 300)
     _axes[1].set_ylabel("Amplitude", fontsize=14)
-    _axes[1].set_xlabel("Time", fontsize=14)
-    _axes[1].set_title("Filter kernel (time domain)", fontsize=14)
+    _axes[1].set_xlabel("Time (ms)", fontsize=14)
+    _axes[1].set_title("Response to a single spike (time domain): raise the order and it rings longer", fontsize=14)
     _axes[2].plot(combined_signal, linewidth=1.5, alpha=0.5, label="Original")
     _axes[2].plot(filtfilt(_b, _a, combined_signal), linewidth=2, label="Filtered")
     _axes[2].set_ylabel("Intensity", fontsize=14)
@@ -1138,6 +1421,69 @@ def filter_explorer(
         mo.hstack([cutoff_slider, cutoff2_slider]),
         mo.md("*Upper cutoff only used for bandpass/bandstop*"),
         _fig,
+    ])
+    return
+
+
+@app.cell(hide_code=True)
+def hp_fmri_md():
+    mo.md(r"""
+    ### High-pass filtering fMRI data
+
+    The most common filter in fMRI preprocessing is a **high-pass** filter. It removes slow scanner drift, which otherwise dwarfs the effects we care about. The simulated voxel below has a block design (20 s on, 20 s off, so the task repeats every 40 s, or 0.025 Hz) sampled at TR = 2 s, plus slow drift and noise.
+
+    The cutoff is usually written as a **period**, in seconds per cycle, rather than a frequency. Use the slider to choose it. Everything slower than that period is removed (the red band in the spectrum). What happens when the cutoff period is shorter than the 40 s task cycle?
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _make_hp_cutoff_slider():
+    hp_cutoff_slider = mo.ui.slider(16, 256, value=128, step=8, label="High-pass cutoff (s per cycle)", full_width=True)
+    return (hp_cutoff_slider,)
+
+
+@app.cell(hide_code=True)
+def hp_fmri(hp_cutoff_slider):
+    _tr, _nvol, _block = 2.0, 240, 20.0
+    _t = np.arange(_nvol) * _tr
+    _task = np.convolve(((_t // _block) % 2 == 1).astype(float), glover_hrf(_tr))[:_nvol]
+    _drift = 3.0 * (_t / _t[-1]) ** 2 - 2.0 * (_t / _t[-1]) + 0.8 * sin(2 * pi * _t / 300)
+    _y = _task + _drift + 0.35 * np.random.default_rng(11).standard_normal(_nvol)
+
+    _period = hp_cutoff_slider.value
+    _b, _a = butter(2, 1 / _period, btype="highpass", fs=1 / _tr)
+    _y_filtered = filtfilt(_b, _a, _y)
+    _task_kept = np.std(filtfilt(_b, _a, _task)) / np.std(_task)
+    _r_raw = np.corrcoef(_y, _task)[0, 1]
+    _r_filtered = np.corrcoef(_y_filtered, _task)[0, 1]
+
+    _freqs = np.fft.rfftfreq(_nvol, _tr)
+    _fig, _axes = plt.subplots(ncols=2, figsize=(16, 4.5), gridspec_kw={"width_ratios": [2, 1]})
+    _axes[0].plot(_t, _y - _y.mean(), color="gray", linewidth=1, alpha=0.7, label="raw")
+    _axes[0].plot(_t, _y_filtered, linewidth=1.6, label="high-passed")
+    _axes[0].plot(_t, _task - _task.mean(), color="k", linestyle="--", linewidth=1.2, label="true task signal")
+    _axes[0].set_xlabel("Time (s)", fontsize=14)
+    _axes[0].legend(loc="upper left", fontsize=10, ncol=3)
+    _axes[1].plot(_freqs, np.abs(np.fft.rfft(_y - _y.mean())), color="gray", linewidth=1.4)
+    _axes[1].axvspan(0, 1 / _period, color="tab:red", alpha=0.15, label="removed")
+    _axes[1].axvline(1 / (2 * _block), color="k", linestyle="--", linewidth=1.2, label="task (0.025 Hz)")
+    _axes[1].set_xlim(0, 0.1)
+    _axes[1].set_xlabel("Frequency (Hz)", fontsize=14)
+    _axes[1].set_title("Spectrum of the raw signal", fontsize=14)
+    _axes[1].legend(fontsize=10)
+    plt.tight_layout()
+    plt.close()
+
+    if _period < 2 * _block:
+        _msg = mo.callout(mo.md(f"The cutoff ({_period} s) is shorter than the task cycle ({2 * _block:g} s), so the filter is removing the **task** too. Only {_task_kept:.0%} of it survives."), kind="danger")
+    else:
+        _msg = mo.callout(mo.md(f"Correlation with the true task: **{_r_raw:.2f}** raw → **{_r_filtered:.2f}** filtered ({_task_kept:.0%} of the task signal kept)."), kind="success")
+    mo.vstack([
+        hp_cutoff_slider,
+        _fig,
+        _msg,
+        mo.md("SPM's default cutoff is **128 s** (≈ 0.008 Hz). SPM and nilearn implement it as a set of slow cosine regressors in the GLM rather than a Butterworth filter, but the idea is the same. Low-pass filtering is rarely used for fMRI: it removes little noise and adds temporal autocorrelation that the GLM then has to model."),
     ])
     return
 
