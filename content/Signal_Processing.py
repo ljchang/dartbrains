@@ -37,15 +37,12 @@ with app.setup(hide_code=True):
         )
         return _h / _h.max()
 
-    def rad_to_hz(w, fs):
-        return (w * fs) / (2 * np.pi)
-
 
 @app.cell(hide_code=True)
 def _():
-    from dartbrains_tools.notebook_utils import image, youtube
+    from dartbrains_tools.notebook_utils import youtube
 
-    return image, youtube
+    return (youtube,)
 
 
 @app.cell(hide_code=True)
@@ -76,11 +73,12 @@ def dot_product():
     _b = np.random.randint(1, 10, 20)
     _fig, _ax = plt.subplots()
     _ax.scatter(dot_a, _b)
-    _ax.set_ylabel("B", fontsize=18)
-    _ax.set_xlabel("A", fontsize=18)
-    _ax.set_title("Scatterplot", fontsize=18)
+    _ax.set_ylabel("b", fontsize=18)
+    _ax.set_xlabel("a", fontsize=18)
+    _ax.set_title("Two random vectors", fontsize=18)
+    plt.close()
     mo.vstack([mo.md(f"**Dot Product:** {np.dot(dot_a, _b)}"), _fig])
-    return (dot_a,)
+    return
 
 
 @app.cell
@@ -89,29 +87,9 @@ def _():
 
 
 @app.cell(hide_code=True)
-def dot_md2():
-    mo.md("""
-    What happens when we make the two variables more similar? In the next example we add gaussian noise on top of one of the vectors. What happens to the dot product?
-    """)
-    return
-
-
-@app.cell
-def dot_product_similar(dot_a):
-    _b2 = dot_a + np.random.randn(20)
-    _fig, _ax = plt.subplots()
-    _ax.scatter(dot_a, _b2)
-    _ax.set_ylabel("B", fontsize=18)
-    _ax.set_xlabel("A", fontsize=18)
-    _ax.set_title("Scatterplot", fontsize=18)
-    mo.vstack([mo.md(f"**Dot Product:** {np.dot(dot_a, _b2):.2f}"), _fig])
-    return
-
-
-@app.cell(hide_code=True)
 def dot_slider_md():
     mo.md(r"""
-    Use the slider to move **b** from unrelated to **a** (0) to identical to **a** (1). Each bar below is one term $a_i b_i$, and the dot product is the sum of all the bars. When the vectors agree, the terms are mostly positive and pile up. When they are unrelated, positive and negative terms cancel out.
+    What happens when we make the two vectors more similar? Use the slider to move **b** from unrelated to **a** (0) to identical to **a** (1). Each bar below is one term $a_i b_i$, and the dot product is the sum of all the bars. When the vectors agree, the terms are mostly positive and pile up. When they are unrelated, positive and negative terms cancel out.
 
     These vectors are centered on zero, so "unrelated" gives a dot product near zero. Standardize both vectors and divide the dot product by $n$, and you get the familiar **correlation** coefficient.
     """)
@@ -174,14 +152,15 @@ def conv_setup():
     boxcar_kernel[2:8] = 1
     _fig, _axes = plt.subplots(ncols=2, figsize=(20, 5))
     _axes[0].plot(conv_signal, linewidth=2)
-    _axes[0].set_xlabel("Time", fontsize=18)
+    _axes[0].set_xlabel("Time (samples)", fontsize=18)
     _axes[0].set_ylabel("Signal Intensity", fontsize=18)
     _axes[0].set_title("Signal", fontsize=18)
     _axes[1].plot(boxcar_kernel, linewidth=2, color="red")
-    _axes[1].set_xlabel("Time", fontsize=18)
+    _axes[1].set_xlabel("Time (samples)", fontsize=18)
     _axes[1].set_ylabel("Intensity", fontsize=18)
     _axes[1].set_title("Kernel", fontsize=18)
     plt.tight_layout()
+    plt.close()
     _fig
     return boxcar_kernel, conv_signal, n_samples
 
@@ -189,7 +168,7 @@ def conv_setup():
 @app.cell(hide_code=True)
 def shift_md():
     mo.md("""
-    Notice how the kernel is only 10 samples long and the boxcar width is about 6 seconds, while the signal is 100 samples long with 5 single pulses.
+    Notice how the kernel is only 10 samples long and the boxcar is 6 samples wide, while the signal is 100 samples long with 5 single pulses.
 
     Now let's convolve the signal with the kernel by taking the dot product of the kernel with each time point of the signal. This can be illustrated by creating a matrix of the kernel shifted each time point of the signal.
     """)
@@ -203,9 +182,10 @@ def shifted_kernels(boxcar_kernel, n_samples):
         shifted_kernel[_k, _k : _k + len(boxcar_kernel)] = boxcar_kernel
     _fig, _ax = plt.subplots(figsize=(8, 8))
     _ax.imshow(shifted_kernel, cmap="Reds")
-    _ax.set_xlabel("Time", fontsize=18)
-    _ax.set_ylabel("Time", fontsize=18)
+    _ax.set_xlabel("Time (samples)", fontsize=18)
+    _ax.set_ylabel("Kernel shifted to sample", fontsize=18)
     _ax.set_title("Time Shifted Kernels", fontsize=18)
+    plt.close()
     _fig
     return (shifted_kernel,)
 
@@ -222,11 +202,14 @@ def dotconv_md():
 def conv_result(boxcar_kernel, conv_signal, shifted_kernel):
     _result = np.dot(conv_signal, shifted_kernel)
     _fig, _ax = plt.subplots(figsize=(12, 5))
-    _ax.plot(_result, linewidth=2)
+    _ax.plot(_result, linewidth=4, alpha=0.4, label="signal · shifted kernels")
+    _ax.plot(np.convolve(conv_signal, boxcar_kernel), linewidth=1.5, linestyle="--", color="k", label="np.convolve(signal, kernel)")
     _ax.set_ylabel("Intensity", fontsize=18)
-    _ax.set_xlabel("Time", fontsize=18)
+    _ax.set_xlabel("Time (samples)", fontsize=18)
     _ax.set_title("Signal convolved with boxcar kernel", fontsize=18)
-    mo.vstack([_fig, mo.md(f"You can see that after convolution, each spike has now become the shape of the kernel.\n\nSignal: **{len(conv_signal)}**, Kernel: **{len(boxcar_kernel)}**, Convolved: **{len(_result)}** samples")])
+    _ax.legend(fontsize=12)
+    plt.close()
+    mo.vstack([_fig, mo.md(f"After convolution, each spike has become the shape of the kernel. `np.convolve` (dashed) does exactly this matrix multiplication for us.\n\nSignal: **{len(conv_signal)}**, Kernel: **{len(boxcar_kernel)}**, Convolved: **{len(_result)}** samples (the kernel hangs off the end).")])
     return
 
 
@@ -266,30 +249,11 @@ def stepthrough(boxcar_kernel, conv_signal, conv_step, n_samples):
     _axes[1].plot(range(_s + 1), _full[:_s + 1], linewidth=2, color="C0", label="Computed so far")
     _axes[1].scatter([_s], [_full[_s]], color="red", s=80, zorder=5)
     _axes[1].set_ylabel("Intensity", fontsize=14)
-    _axes[1].set_xlabel("Time", fontsize=14)
+    _axes[1].set_xlabel("Time (samples)", fontsize=14)
     _axes[1].legend(fontsize=12)
     plt.tight_layout()
     plt.close()
     mo.vstack([conv_step, _fig])
-    return
-
-
-@app.cell(hide_code=True)
-def npconv_md():
-    mo.md("""
-    This process can be performed using `np.convolve`:
-    """)
-    return
-
-
-@app.cell
-def np_convolve(boxcar_kernel, conv_signal):
-    _fig, _ax = plt.subplots(figsize=(12, 5))
-    _ax.plot(np.convolve(conv_signal, boxcar_kernel), linewidth=2)
-    _ax.set_ylabel("Intensity", fontsize=18)
-    _ax.set_xlabel("Time", fontsize=18)
-    _ax.set_title("Signal convolved with boxcar kernel", fontsize=18)
-    _fig
     return
 
 
@@ -311,9 +275,10 @@ def varying(boxcar_kernel, n_samples):
     _axes[0].set_title("Spikes with varying intensities", fontsize=18)
     _axes[1].plot(np.convolve(_sig, boxcar_kernel), linewidth=2)
     _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
+    _axes[1].set_xlabel("Time (samples)", fontsize=18)
     _axes[1].set_title("Convolved with boxcar kernel", fontsize=18)
     plt.tight_layout()
+    plt.close()
     _fig
     return
 
@@ -343,9 +308,10 @@ def _make_hrf_sliders():
 def hrf_plot(oversampling_slider, tr_slider):
     hrf_kernel = glover_hrf(tr_slider.value, oversampling=oversampling_slider.value)
     _fig, _ax = plt.subplots(figsize=(10, 4))
-    _ax.plot(hrf_kernel, linewidth=2, color="red")
+    _dt = tr_slider.value / oversampling_slider.value
+    _ax.plot(np.arange(len(hrf_kernel)) * _dt, hrf_kernel, "-o" if oversampling_slider.value <= 2 else "-", linewidth=2, color="red")
     _ax.set_ylabel("Intensity", fontsize=18)
-    _ax.set_xlabel("Time", fontsize=18)
+    _ax.set_xlabel("Time after the event (s)", fontsize=18)
     _ax.set_title(f"HRF (TR={tr_slider.value}s, oversampling={oversampling_slider.value})", fontsize=16)
     _ax.axhline(y=0, color="gray", linestyle="--", alpha=0.5)
     plt.tight_layout()
@@ -365,18 +331,23 @@ def hrfconv_md():
 
 
 @app.cell
-def hrf_conv(hrf_kernel, n_samples):
-    _sig = np.zeros(n_samples)
-    _sig[np.random.randint(0, n_samples, 5)] = np.random.randint(1, 5, 5)
+def hrf_conv(hrf_kernel, oversampling_slider, tr_slider):
+    # Build the events on the same time grid as the HRF (TR / oversampling).
+    _dt = tr_slider.value / oversampling_slider.value
+    _t = np.arange(0, 200, _dt)
+    _sig = np.zeros(len(_t))
+    _onsets = np.random.uniform(0, 160, 5)
+    _sig[(_onsets / _dt).astype(int)] = np.random.randint(1, 5, 5)
     _fig, _axes = plt.subplots(nrows=2, figsize=(18, 6), sharex=True)
-    _axes[0].plot(_sig, linewidth=2)
+    _axes[0].plot(_t, _sig, linewidth=2)
     _axes[0].set_ylabel("Intensity", fontsize=18)
-    _axes[0].set_title("Spikes with varying intensities", fontsize=18)
-    _axes[1].plot(np.convolve(_sig, hrf_kernel), linewidth=2)
+    _axes[0].set_title("Events with varying intensities", fontsize=18)
+    _axes[1].plot(_t, np.convolve(_sig, hrf_kernel)[: len(_t)], linewidth=2)
     _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
-    _axes[1].set_title("Convolved with HRF kernel", fontsize=18)
+    _axes[1].set_xlabel("Time (s)", fontsize=18)
+    _axes[1].set_title("Convolved with the HRF: predicted BOLD response", fontsize=18)
     plt.tight_layout()
+    plt.close()
     _fig
     return
 
@@ -426,18 +397,16 @@ def _make_osc_sliders():
 
 @app.cell(hide_code=True)
 def osc_plot(amp_slider, freq_slider, osc_sf, theta_slider):
-    _time = arange(-1, 1 + 1 / osc_sf, 1 / osc_sf)
+    _time = arange(0, 2, 1 / osc_sf)
     _sim = amp_slider.value * sin(2 * pi * freq_slider.value * _time + theta_slider.value)
-    _fig = plt.figure(figsize=(20, 4))
-    _gs = plt.GridSpec(1, 6, left=0.05, right=0.95, wspace=0.3)
-    _ax1 = _fig.add_subplot(_gs[0, :4])
-    _ax1.plot(_time, _sim, linewidth=2)
-    _ax1.set_ylabel("Amplitude", fontsize=18)
-    _ax1.set_xlabel("Time", fontsize=18)
-    _ax1.set_ylim(-12, 12)
-    _ax2 = _fig.add_subplot(_gs[0, 5:], polar=True)
-    _ax2.plot(real(_sim), imag(_sim))
+    _fig, _ax = plt.subplots(figsize=(16, 4))
+    _ax.plot(_time, _sim, linewidth=2)
+    _ax.axhline(0, color="gray", linewidth=0.8)
+    _ax.set_ylabel("Amplitude", fontsize=18)
+    _ax.set_xlabel("Time (s)", fontsize=18)
+    _ax.set_ylim(-12, 12)
     plt.tight_layout()
+    plt.close()
     mo.vstack([mo.hstack([amp_slider, freq_slider, theta_slider]), _fig])
     return
 
@@ -445,7 +414,7 @@ def osc_plot(amp_slider, freq_slider, osc_sf, theta_slider):
 @app.cell(hide_code=True)
 def multi_md():
     mo.md("""
-    Next we will generate a simulation combining multiple sine waves. Try dropping the sampling frequency below 70 Hz to see aliasing. Add noise to make it more realistic.
+    Next we will build a more interesting signal by adding together sine waves at five different frequencies, each with its own amplitude and phase.
     """)
     return
 
@@ -455,36 +424,23 @@ def multi_sine():
     multi_freqs = [3, 10, 5, 15, 35]
     multi_amps = [5, 15, 10, 5, 7]
     multi_phases = pi * np.array([1 / 7, 1 / 8, 1, 1 / 2, -1 / 4])
-    time = arange(-1, 1 + 1 / 500, 1 / 500)
-    waves = np.array([multi_amps[_j] * sin(2 * pi * _f * time + multi_phases[_j]) for _j, _f in enumerate(multi_freqs)])
-    _fig, _axes = plt.subplots(nrows=5, figsize=(12, 5), sharex=True)
-    for _j in range(5):
-        _axes[_j].plot(waves[_j, :], linewidth=2)
-    _axes[0].set_title("Sine waves at different frequencies", fontsize=18)
-    _axes[4].set_xlabel("Time", fontsize=18)
+    _time = arange(0, 2, 1 / 500)
+    _waves = np.array([multi_amps[_j] * sin(2 * pi * _f * _time + multi_phases[_j]) for _j, _f in enumerate(multi_freqs)])
+
+    _fig, _axes = plt.subplots(nrows=6, figsize=(14, 8), sharex=True, gridspec_kw={"height_ratios": [1, 1, 1, 1, 1, 2]})
+    for _j, _f in enumerate(multi_freqs):
+        _axes[_j].plot(_time, _waves[_j], linewidth=1.5)
+        _axes[_j].set_ylabel(f"{_f} Hz", rotation=0, ha="right", va="center", fontsize=12)
+        _axes[_j].set_yticks([])
+    _axes[5].plot(_time, _waves.sum(axis=0), linewidth=1.8, color="purple")
+    _axes[5].set_ylabel("Sum", rotation=0, ha="right", va="center", fontsize=12)
+    _axes[5].set_xlabel("Time (s)", fontsize=14)
+    _axes[5].set_xlim(0, 1)
+    _axes[0].set_title("Five sine waves (top) and their sum (bottom)", fontsize=16)
     plt.tight_layout()
+    plt.close()
     _fig
-    return multi_amps, multi_freqs, multi_phases, waves
-
-
-@app.cell(hide_code=True)
-def _():
-    mo.md(r"""
-    Let’s add all of those signals together to get a more interesting signal.
-    """)
-    return
-
-
-@app.cell
-def _(waves):
-    _fig = plt.figure(figsize=(12,3))
-    plt.plot(np.sum(waves, axis=0), linewidth=2)
-    plt.xlabel('Time', fontsize=18)
-    plt.title("Sum of all of the sine waves", fontsize=18)
-    plt.xlabel("Time", fontsize=18)
-    plt.tight_layout()
-    _fig
-    return
+    return multi_amps, multi_freqs, multi_phases
 
 
 @app.cell(hide_code=True)
@@ -504,13 +460,13 @@ def _make_sf_sliders():
 
 @app.cell(hide_code=True)
 def combined(multi_amps, multi_freqs, multi_phases, noise_slider, sf_slider):
-    _t_true = arange(-1, 1, 1 / 1000)
-    _t = arange(-1, 1 + 1 / sf_slider.value, 1 / sf_slider.value)
+    _t_true = arange(0, 2, 1 / 2000)
+    _t = arange(0, 2, 1 / sf_slider.value)
 
     _waves_true = np.array([multi_amps[_j] * sin(2 * pi * _f * _t_true + multi_phases[_j]) for _j, _f in enumerate(multi_freqs)])
     _waves = np.array([multi_amps[_j] * sin(2 * pi * _f * _t + multi_phases[_j]) for _j, _f in enumerate(multi_freqs)])
 
-    combined_signal = np.sum(_waves, axis=0) + noise_slider.value * np.random.randn(len(_t))
+    _sampled = np.sum(_waves, axis=0) + noise_slider.value * np.random.randn(len(_t))
     _combined_true = np.sum(_waves_true, axis=0)
 
     _nyquist = sf_slider.value / 2
@@ -537,13 +493,13 @@ def combined(multi_amps, multi_freqs, multi_phases, noise_slider, sf_slider):
     _axes[0].legend(loc="upper right", fontsize=8, ncol=2)
 
     _axes[5].plot(_t_true, _combined_true, color="gray", alpha=0.45, linewidth=1, label="true sum")
-    _axes[5].plot(_t, combined_signal, "o-", color="purple", linewidth=1.3, markersize=4, label=f"sampled + noise ({noise_slider.value})")
+    _axes[5].plot(_t, _sampled, "o-", color="purple", linewidth=1.3, markersize=4, label=f"sampled + noise ({noise_slider.value})")
     _axes[5].set_ylabel("Sum", fontsize=10)
     _axes[5].set_xlabel("Time (s)", fontsize=14)
     _axes[5].legend(loc="upper right", fontsize=8, ncol=2)
     _axes[5].grid(alpha=0.3)
 
-    _axes[0].set_xlim(-0.25, 0.25)
+    _axes[0].set_xlim(0, 0.5)
     plt.tight_layout()
     plt.close()
 
@@ -555,7 +511,7 @@ def combined(multi_amps, multi_freqs, multi_phases, noise_slider, sf_slider):
         _warn = mo.callout(mo.md(f"All frequencies below Nyquist ({_nyquist} Hz) — no aliasing."), kind="success")
 
     mo.vstack([mo.hstack([sf_slider, noise_slider]), _warn, _fig])
-    return (combined_signal,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -636,6 +592,35 @@ def tf_intro():
 def tf_video(youtube):
     youtube("fYtVHhk3xJ0")
     return
+
+
+@app.cell(hide_code=True)
+def signal_md():
+    mo.md(r"""
+    For the rest of this chapter we'll analyze one fixed version of our five-sine-wave signal: sampled at **500 Hz** (well above Nyquist for all five components) for exactly **2 seconds**, plus some noise. Every spectrum and filter below uses this same signal.
+
+    Why exactly 2 s? Each component then completes a whole number of cycles in the recording. If a wave stops partway through a cycle, its energy smears into neighboring frequencies in the spectrum (called *spectral leakage*), and its peak comes out lower than its true amplitude.
+    """)
+    return
+
+
+@app.cell
+def freq_signal(multi_amps, multi_freqs, multi_phases):
+    signal_fs = 500
+    signal_time = arange(0, 2, 1 / signal_fs)
+    combined_signal = sum(
+        _a * sin(2 * pi * _f * signal_time + _p) for _f, _a, _p in zip(multi_freqs, multi_amps, multi_phases)
+    ) + 5 * np.random.default_rng(0).standard_normal(len(signal_time))
+
+    _fig, _ax = plt.subplots(figsize=(16, 3.5))
+    _ax.plot(signal_time, combined_signal, linewidth=1.2)
+    _ax.set_xlabel("Time (s)", fontsize=14)
+    _ax.set_ylabel("Amplitude", fontsize=14)
+    _ax.set_title("Our signal: five sine waves + noise, 500 Hz for 2 s", fontsize=16)
+    plt.tight_layout()
+    plt.close()
+    _fig
+    return combined_signal, signal_fs, signal_time
 
 
 @app.cell(hide_code=True)
@@ -779,9 +764,10 @@ def filter_bank(combined_signal):
     sine_bank = np.array([exp(-1j * 2 * pi * _k * _t) for _k in range(len(combined_signal))])
     _fig, _axes = plt.subplots(nrows=5, figsize=(12, 8), sharex=True)
     for _j in range(5):
-        _axes[_j].plot(sine_bank[_j, :], linewidth=2)
-    _axes[0].set_title("Bank of sine waves", fontsize=18)
-    _axes[4].set_xlabel("Time", fontsize=18)
+        _axes[_j].plot(np.real(sine_bank[_j, :]), linewidth=2)
+        _axes[_j].set_ylabel(f"f = {_j}", rotation=0, ha="right", va="center", fontsize=12)
+    _axes[0].set_title("First 5 waves in the bank (real part): 0, 1, 2, 3 and 4 cycles", fontsize=16)
+    _axes[4].set_xlabel("Time (samples)", fontsize=14)
     plt.tight_layout()
     plt.close()
     _fig
@@ -826,41 +812,27 @@ def fc_md():
 
 
 @app.cell
-def dft_compute(
-    combined_signal,
-    multi_amps,
-    multi_freqs,
-    sf_slider,
-    sine_bank,
-):
+def dft_compute(combined_signal, multi_amps, multi_freqs, signal_fs, sine_bank):
     fourier_coeffs = 2 * np.dot(combined_signal, sine_bank) / len(combined_signal)
-    dft_freq_axis = fftfreq(len(combined_signal), 1 / sf_slider.value)
+    dft_freq_axis = fftfreq(len(combined_signal), 1 / signal_fs)
     _n_pos = len(combined_signal) // 2
-    _pos_freqs = dft_freq_axis[:_n_pos]
-    _pos_amps = np.abs(fourier_coeffs[:_n_pos])
-    _fig, _axes = plt.subplots(nrows=2, figsize=(12, 8))
-    _axes[0].plot(_pos_amps, linewidth=2)
-    _axes[0].set_xlabel("Frequency (index)", fontsize=18)
-    _axes[0].set_ylabel("Amplitude", fontsize=18)
-    _axes[0].set_title("Power spectrum (DFT)", fontsize=18)
-    _zoom = min(80, _n_pos)
-    _axes[1].plot(_pos_freqs[:_zoom], _pos_amps[:_zoom], linewidth=2)
-    _axes[1].set_xlabel("Frequency (Hz)", fontsize=18)
-    _axes[1].set_ylabel("Amplitude", fontsize=18)
-    _axes[1].set_title("Power spectrum (zoomed)", fontsize=18)
-    for _f in multi_freqs:
-        _axes[1].axvline(x=_f, color="red", alpha=0.3, linestyle="--")
-    _axes[1].scatter(multi_freqs, multi_amps, color="red", s=60, zorder=5, label="true amplitudes")
-    _axes[1].legend(fontsize=12)
+    _fig, _ax = plt.subplots(figsize=(14, 5))
+    _ax.plot(dft_freq_axis[:_n_pos], np.abs(fourier_coeffs[:_n_pos]), linewidth=2)
+    _ax.scatter(multi_freqs, multi_amps, color="red", s=60, zorder=5, label="true amplitudes")
+    _ax.set_xlim(0, 50)
+    _ax.set_xlabel("Frequency (Hz)", fontsize=14)
+    _ax.set_ylabel("Amplitude", fontsize=14)
+    _ax.set_title("Amplitude spectrum of our signal (0 to 50 Hz; nothing above)", fontsize=16)
+    _ax.legend(fontsize=12)
     plt.tight_layout()
     plt.close()
     _same = np.allclose(fourier_coeffs, 2 * fft(combined_signal) / len(combined_signal))
     mo.vstack([
-        mo.md(f"Recall: `freq = {multi_freqs}`, `amplitude = {multi_amps}`. The red dots mark the true amplitudes, and the peaks recover them (unless the sampling frequency above is low enough to alias)."),
+        mo.md(f"Recall: `freq = {multi_freqs}`, `amplitude = {multi_amps}`. Each peak lands on (or, because of the noise, very near) its true amplitude, shown as red dots. The small bumps everywhere else are the noise."),
         _fig,
-        mo.md(f"`np.fft.fft` computes exactly these coefficients (`np.allclose` → **{_same}**), just much faster: $O(n \\log n)$ operations instead of $O(n^2)$. That's the *fast* Fourier transform."),
+        mo.md(f"Each coefficient belongs to one frequency: coefficient $k$ is $k$ cycles per recording, so with 2 s of data it sits at $k / 2$ Hz. In practice you'd use `np.fft.fft`, which computes exactly these coefficients (`np.allclose` → **{_same}**) much faster: $O(n \\log n)$ operations instead of $O(n^2)$. That's the *fast* Fourier transform."),
     ])
-    return dft_freq_axis, fourier_coeffs
+    return (fourier_coeffs,)
 
 
 @app.cell(hide_code=True)
@@ -884,45 +856,53 @@ def ifft_md():
 
 
 @app.cell
-def ifft_plot(fourier_coeffs, sine_bank):
-    _fig, _ax = plt.subplots(figsize=(12, 5))
-    _ax.plot(np.dot(fourier_coeffs, sine_bank) / 2)
-    _ax.set_ylabel("Intensity", fontsize=18)
-    _ax.set_xlabel("Time", fontsize=18)
-    _ax.set_title("Reconstructed Time Series Signal", fontsize=18)
+def ifft_plot(combined_signal, fourier_coeffs, signal_time, sine_bank):
+    _recon = np.real(np.dot(fourier_coeffs, np.conj(sine_bank))) / 2
+    _fig, _ax = plt.subplots(figsize=(14, 4))
+    _ax.plot(signal_time, combined_signal, linewidth=4, alpha=0.35, label="original")
+    _ax.plot(signal_time, _recon, linewidth=1.2, linestyle="--", color="k", label="reconstructed from the coefficients")
+    _ax.set_xlim(0, 1)
+    _ax.set_xlabel("Time (s)", fontsize=14)
+    _ax.set_ylabel("Amplitude", fontsize=14)
+    _ax.legend(fontsize=12, loc="upper right")
+    plt.tight_layout()
     plt.close()
-    _fig
+    mo.vstack([_fig, mo.md(f"Largest difference from the original: **{np.max(np.abs(_recon - combined_signal)):.1e}**, i.e. rounding error.")])
     return
 
 
 @app.cell(hide_code=True)
 def phase_md():
-    mo.md("""
+    mo.md(r"""
     ### Phase Spectrum
 
-    The FFT provides frequency, amplitude, AND phase. Below we show both spectra. Phase carries timing/structural info.
+    Each Fourier coefficient is a complex number, so it carries two things: its size (the **amplitude**, plotted above) and its angle (the **phase**). The phase says where in its cycle each wave is at time zero.
+
+    Phase is only meaningful at frequencies where there is a real oscillation; elsewhere it is just the phase of the noise. So below we read off the phase at our five frequencies and compare it to the phases we used to build the signal. The FFT measures phase relative to a cosine, and a sine is a cosine shifted by $\pi/2$, so we add $\pi/2$ before comparing.
     """)
     return
 
 
 @app.cell
-def phase_spectra(combined_signal, multi_freqs, sf_slider):
-    _fft = fft(combined_signal)
-    _freqs = fftfreq(len(combined_signal), 1 / sf_slider.value)
-    _n = len(combined_signal) // 2
-    _fig, _axes = plt.subplots(nrows=2, figsize=(14, 8))
-    _axes[0].plot(_freqs[:_n], 2 * np.abs(_fft[:_n]) / len(combined_signal), linewidth=2)
-    _axes[0].set_ylabel("Amplitude", fontsize=14)
-    _axes[0].set_title("Power Spectrum", fontsize=16)
-    _axes[0].set_xlim(0, 50)
-    _axes[1].plot(_freqs[:_n], np.angle(_fft[:_n]), linewidth=2, color="orange")
-    _axes[1].set_ylabel("Phase (radians)", fontsize=14)
-    _axes[1].set_xlabel("Frequency (Hz)", fontsize=14)
-    _axes[1].set_title("Phase Spectrum", fontsize=16)
-    _axes[1].set_xlim(0, 50)
-    for _f in multi_freqs:
-        _axes[0].axvline(x=_f, color="red", alpha=0.3, linestyle="--")
-        _axes[1].axvline(x=_f, color="red", alpha=0.3, linestyle="--")
+def phase_spectra(combined_signal, multi_freqs, multi_phases, signal_fs):
+    _F = fft(combined_signal)
+    _freqs = fftfreq(len(combined_signal), 1 / signal_fs)
+    _bins = [int(np.argmin(np.abs(_freqs - _f))) for _f in multi_freqs]
+    _true = np.angle(np.exp(1j * np.asarray(multi_phases)))  # wrap to (-pi, pi]
+    _recovered = np.angle(_F[_bins] * np.exp(1j * pi / 2))
+    # pi and -pi are the same angle; draw each recovered phase on the same side
+    # as its true value so the bars are comparable.
+    _recovered = _true + np.angle(np.exp(1j * (_recovered - _true)))
+    _x = np.arange(len(multi_freqs))
+    _fig, _ax = plt.subplots(figsize=(10, 4))
+    _ax.bar(_x - 0.18, _true, width=0.36, label="phase we used", color="gray")
+    _ax.bar(_x + 0.18, _recovered, width=0.36, label="phase from the FFT", color="tab:orange")
+    _ax.axhline(0, color="k", linewidth=0.8)
+    _ax.set_xticks(_x, [f"{_f} Hz" for _f in multi_freqs])
+    _ax.set_yticks([-pi, -pi / 2, 0, pi / 2, pi], [r"$-\pi$", r"$-\pi/2$", "0", r"$\pi/2$", r"$\pi$"])
+    _ax.set_xlabel("Frequency", fontsize=14)
+    _ax.set_ylabel("Phase (radians)", fontsize=14)
+    _ax.legend(fontsize=12)
     plt.tight_layout()
     plt.close()
     _fig
@@ -930,68 +910,66 @@ def phase_spectra(combined_signal, multi_freqs, sf_slider):
 
 
 @app.cell(hide_code=True)
-def fft_intro():
-    mo.md("""
-    ### Fast Fourier Transform
-    In practice, `np.fft.fft` is used. Scale by dividing by N.
+def ct_md():
+    mo.md(r"""
+    ### Convolution Theorem
+    Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true: multiplication in the time domain is the same as convolution in the frequency domain.) Watch this [video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
+
+    Below, the top row convolves our signal with a short smoothing kernel in time. The bottom row shows the same three things in the frequency domain: the signal's spectrum, times the kernel's spectrum, gives the spectrum of the result.
     """)
     return
 
 
 @app.cell
-def fft_section(combined_signal, dft_freq_axis):
-    _result = fft(combined_signal)
-    _n_pos = len(combined_signal) // 2
-    _pos_freqs = dft_freq_axis[:_n_pos]
-    _zoom = min(80, _n_pos)
-    _fig, _axes = plt.subplots(nrows=2, figsize=(12, 8))
-    _axes[0].plot(_pos_freqs[:_zoom], 2 * np.abs(_result[:_zoom]) / len(combined_signal), linewidth=2)
-    _axes[0].set_ylabel("Amplitude", fontsize=18)
-    _axes[0].set_xlabel("Frequency (Hz)", fontsize=18)
-    _axes[0].set_title("FFT Power Spectrum", fontsize=18)
-    _axes[1].plot(ifft(_result).real, linewidth=2)
-    _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
-    _axes[1].set_title("Reconstructed (Inverse FFT)", fontsize=18)
+def conv_theorem(combined_signal, signal_fs, signal_time):
+    # A 20 ms Gaussian smoothing kernel, sampled at the signal's own rate.
+    _kt = arange(-0.05, 0.05 + 1 / signal_fs, 1 / signal_fs)
+    _kernel = exp(-0.5 * (_kt / 0.01) ** 2)
+    _kernel = _kernel / _kernel.sum()
+    _n = len(combined_signal) + len(_kernel) - 1
+    _in_time = np.convolve(combined_signal, _kernel)
+    _in_freq = ifft(fft(combined_signal, n=_n) * fft(_kernel, n=_n)).real
+    _diff = np.max(np.abs(_in_time - _in_freq))
+    _half = len(_kernel) // 2
+    _result = _in_time[_half : _half + len(combined_signal)]  # re-centered on the signal
+
+    # Plot the spectra on the signal's own 2 s grid. Zero-padding to the full
+    # convolution length (as the check above must) would move the components off
+    # their frequency bins and shrink the peaks.
+    _N = len(combined_signal)
+    _f = fftfreq(_N, 1 / signal_fs)[: _N // 2]
+    _S = 2 * np.abs(fft(combined_signal))[: _N // 2] / _N
+    _K = np.abs(fft(_kernel, n=_N))[: _N // 2]
+    _R = 2 * np.abs(fft(_result))[: _N // 2] / _N
+
+    _fig, _axes = plt.subplots(2, 3, figsize=(18, 7))
+    _axes[0, 0].plot(signal_time, combined_signal, linewidth=1)
+    _axes[0, 0].set_title("signal", fontsize=14)
+    _axes[0, 1].plot(_kt * 1000, _kernel, linewidth=2, color="tab:red")
+    _axes[0, 1].set_title("∗  kernel", fontsize=14)
+    _axes[0, 1].set_xlabel("Time from kernel center (ms)", fontsize=12)
+    _axes[0, 2].plot(signal_time, _result, linewidth=1.5, color="tab:green")
+    _axes[0, 2].set_title("=  smoothed signal", fontsize=14)
+    for _ax in (_axes[0, 0], _axes[0, 2]):
+        _ax.set_xlim(0, 1)
+        _ax.set_xlabel("Time (s)", fontsize=12)
+    _axes[1, 0].plot(_f, _S, linewidth=1.5)
+    _axes[1, 0].set_title("spectrum of signal", fontsize=14)
+    _axes[1, 1].plot(_f, _K, linewidth=2, color="tab:red")
+    _axes[1, 1].set_title("×  spectrum of kernel (its gain)", fontsize=14)
+    _axes[1, 2].plot(_f, _R, linewidth=1.5, color="tab:green")
+    _axes[1, 2].set_title("=  spectrum of smoothed signal", fontsize=14)
+    for _ax in _axes[1]:
+        _ax.set_xlim(0, 50)
+        _ax.set_xlabel("Frequency (Hz)", fontsize=12)
+    _axes[0, 0].set_ylabel("Time domain", fontsize=14)
+    _axes[1, 0].set_ylabel("Frequency domain", fontsize=14)
     plt.tight_layout()
     plt.close()
-    _fig
-    return
-
-
-@app.cell(hide_code=True)
-def ct_md(image):
     mo.vstack([
-        mo.md(r"""
-        ### Convolution Theorem
-
-        Convolution in the time domain is the same as multiplication in the frequency domain. This means that time domain convolution computations can be performed much more efficiently in the frequency domain via simple multiplication. (The opposite is also true that multiplication in the time domain is the same as convolution in the frequency domain. Watch this [Video](https://youtu.be/hj7j4Q8T3Ck) for an overview of the convolution theorem and convolution in the frequency domain.
-        """),
-        image("signal_processing/ConvolutionTheorem.png"),
-        mo.md(r"""
-        Let's prove it:
-        """),
+        _fig,
+        mo.callout(mo.md(f"Convolving in time and multiplying in frequency give the same result: the largest difference is **{_diff:.1e}**, i.e. rounding error. Notice the kernel's spectrum is a low-pass gain, so smoothing is low-pass filtering."), kind="success"),
     ])
-    return
-
-
-@app.cell
-def conv_theorem(combined_signal, hrf_kernel):
-    _conv_time = np.convolve(combined_signal, hrf_kernel)
-    _n = len(combined_signal) + len(hrf_kernel) - 1
-    _conv_freq = ifft(fft(combined_signal, n=_n) * fft(hrf_kernel, n=_n)).real
-    _diff = np.max(np.abs(_conv_time - _conv_freq))
-    _fig, _axes = plt.subplots(nrows=2, figsize=(14, 8))
-    _axes[0].plot(_conv_time, linewidth=2, label="Time domain (np.convolve)")
-    _axes[0].plot(_conv_freq, linewidth=2, linestyle="--", label="Freq domain (FFT multiply)")
-    _axes[0].set_title("Both methods produce the same result", fontsize=16)
-    _axes[0].legend(fontsize=12)
-    _axes[1].plot(np.abs(_conv_time - _conv_freq), linewidth=2, color="red")
-    _axes[1].set_title(f"Difference (max = {_diff:.2e})", fontsize=16)
-    _axes[1].set_xlabel("Time", fontsize=14)
-    plt.tight_layout()
-    plt.close()
-    mo.vstack([_fig, mo.callout(mo.md(f"**Convolution theorem confirmed!** Max difference: {_diff:.2e}"), kind="success")])
     return
 
 
@@ -1032,18 +1010,6 @@ def two_way_setup():
     t_demo = arange(0, 2, 1 / fs_demo)
     x_demo = 10 * sin(2 * pi * 5 * t_demo) + 5 * sin(2 * pi * 35 * t_demo)
     lp_kernel = firwin(101, 15, fs=fs_demo)  # low-pass: keep below 15 Hz
-
-    _fig, _axes = plt.subplots(ncols=2, figsize=(16, 4), gridspec_kw={"width_ratios": [2, 1]})
-    _axes[0].plot(t_demo, x_demo, linewidth=1.5)
-    _axes[0].set_xlim(0, 1)
-    _axes[0].set_xlabel("Time (s)", fontsize=14)
-    _axes[0].set_title("Signal: 5 Hz + 35 Hz", fontsize=16)
-    _axes[1].plot((np.arange(len(lp_kernel)) - 50) / fs_demo * 1000, lp_kernel, "o-", markersize=3, color="tab:red")
-    _axes[1].set_xlabel("Time (ms)", fontsize=14)
-    _axes[1].set_title("Low-pass kernel (101 weights)", fontsize=16)
-    plt.tight_layout()
-    plt.close()
-    _fig
     return fs_demo, lp_kernel, t_demo, x_demo
 
 
@@ -1058,15 +1024,22 @@ def two_way_time_md():
 
 
 @app.cell
-def two_way_time(lp_kernel, t_demo, x_demo):
+def two_way_time(fs_demo, lp_kernel, t_demo, x_demo):
     y_time = np.convolve(x_demo, lp_kernel, mode="same")
 
-    _fig, _ax = plt.subplots(figsize=(16, 4))
-    _ax.plot(t_demo, x_demo, linewidth=1, alpha=0.4, label="original")
-    _ax.plot(t_demo, y_time, linewidth=2.5, label="convolved with the kernel")
-    _ax.set_xlim(0, 1)
-    _ax.set_xlabel("Time (s)", fontsize=14)
-    _ax.legend(fontsize=12, loc="upper right")
+    _fig, _axes = plt.subplots(ncols=3, figsize=(18, 4), gridspec_kw={"width_ratios": [2, 1, 2]})
+    _axes[0].plot(t_demo, x_demo, linewidth=1.2)
+    _axes[0].set_title("signal: 5 Hz + 35 Hz", fontsize=14)
+    _axes[1].plot((np.arange(len(lp_kernel)) - len(lp_kernel) // 2) / fs_demo * 1000, lp_kernel, "o-", markersize=3, color="tab:red")
+    _axes[1].set_title("∗  low-pass kernel (101 weights)", fontsize=14)
+    _axes[1].set_xlabel("Time from kernel center (ms)", fontsize=12)
+    _axes[2].plot(t_demo, y_time, linewidth=2, color="tab:green")
+    _axes[2].set_title("=  filtered: only the 5 Hz wave is left", fontsize=14)
+    for _ax in (_axes[0], _axes[2]):
+        _ax.set_xlim(0, 1)
+        _ax.set_ylim(-16, 16)
+        _ax.set_xlabel("Time (s)", fontsize=12)
+    plt.tight_layout()
     plt.close()
     _fig
     return (y_time,)
@@ -1077,8 +1050,8 @@ def two_way_freq_md():
     mo.md(r"""
     #### Way 2: in the frequency domain, multiply by the gain
 
-    1. Take the FFT of the signal. Remember that the FFT returns **positive and negative** frequencies, and the second half of the array mirrors the first.
-    2. Build the filter's gain at **every** FFT frequency, negative ones included. Here we take the FFT of the kernel, padded to the length of the signal. Because the kernel is symmetric, its gain is real-valued: about 1 below 15 Hz and about 0 above.
+    1. Take the FFT of the signal. Remember that the FFT returns **positive and negative** frequencies: the second half of the array is a mirror image of the first. The plots below show only the positive half.
+    2. Build the filter's gain at **every** FFT frequency, the negative ones included, so the mirror image stays intact. Here we take the FFT of the kernel, padded to the length of the signal, which takes care of both halves. Because the kernel is symmetric, its gain is real-valued: about 1 below 15 Hz and about 0 above.
     3. Multiply the two, frequency by frequency.
     4. Take the inverse FFT to get back to time. The result should be real; `.real` drops the leftover rounding error.
     """)
@@ -1106,19 +1079,22 @@ def two_way_freq(fs_demo, lp_kernel, t_demo, x_demo, y_time):
     _inner = slice(len(lp_kernel), _n - len(lp_kernel))
     _max_diff = np.max(np.abs(y_freq[_inner] - y_time[_inner]))
 
-    _order = np.argsort(freqs_demo)
+    _pos = slice(0, _n // 2)
     _fig, _axes = plt.subplots(nrows=3, figsize=(16, 11))
-    _axes[0].plot(freqs_demo[_order], np.abs(X[_order]) / _n, linewidth=2, label="|FFT of signal|")
+    _axes[0].plot(freqs_demo[_pos], 2 * np.abs(X[_pos]) / _n, linewidth=2)
+    _axes[0].set_ylabel("Amplitude", fontsize=14, color="tab:blue")
     _ax_gain = _axes[0].twinx()
-    _ax_gain.plot(freqs_demo[_order], np.real(gain[_order]), color="tab:red", linewidth=2, label="gain")
+    _ax_gain.plot(freqs_demo[_pos], np.real(gain[_pos]), color="tab:red", linewidth=2)
     _ax_gain.set_ylim(-0.05, 1.1)
     _ax_gain.set_ylabel("Gain", fontsize=14, color="tab:red")
-    _axes[0].set_xlim(-60, 60)
-    _axes[0].set_title("Steps 1-2: the signal's spectrum (blue) and the filter's gain (red), positive and negative frequencies", fontsize=14)
-    _axes[1].plot(freqs_demo[_order], np.abs(Y[_order]) / _n, linewidth=2, color="tab:green")
-    _axes[1].set_xlim(-60, 60)
-    _axes[1].set_xlabel("Frequency (Hz)", fontsize=14)
-    _axes[1].set_title("Step 3: spectrum × gain — the ±35 Hz peaks are gone", fontsize=14)
+    _axes[0].set_xlim(0, 60)
+    _axes[0].set_xlabel("Frequency (Hz)", fontsize=12)
+    _axes[0].set_title("Steps 1-2: the signal's spectrum (blue) and the filter's gain (red)", fontsize=14)
+    _axes[1].plot(freqs_demo[_pos], 2 * np.abs(Y[_pos]) / _n, linewidth=2, color="tab:green")
+    _axes[1].set_xlim(0, 60)
+    _axes[1].set_xlabel("Frequency (Hz)", fontsize=12)
+    _axes[1].set_ylabel("Amplitude", fontsize=14)
+    _axes[1].set_title("Step 3: spectrum × gain — the 35 Hz peak is gone", fontsize=14)
     _axes[2].plot(t_demo, y_time, linewidth=4, alpha=0.4, label="Way 1: convolve in time")
     _axes[2].plot(t_demo, y_freq, linewidth=1.5, linestyle="--", color="k", label="Way 2: multiply in frequency")
     _axes[2].set_xlim(0, 1)
@@ -1190,33 +1166,44 @@ def two_way_mistakes(fs_demo, x_demo):
 @app.cell(hide_code=True)
 def hp_md():
     mo.md(r"""
-    From here on we'll use IIR Butterworth filters, applied in the time domain with `filtfilt`.
+    ### Four common filters
 
-    ### High Pass
-    High pass filters only allow high frequency signals to remain, effectively removing any low frequency information.
+    From here on we'll use IIR Butterworth filters, applied in the time domain with `filtfilt`. There are four basic types, named for what they let through:
 
-    Here we will construct a high pass butterworth filter and plot it in frequency space.
+    - **High-pass** keeps frequencies above a cutoff and removes slow ones (like scanner drift).
+    - **Low-pass** keeps frequencies below a cutoff and removes fast ones.
+    - **Band-pass** keeps only a range of frequencies. A Morlet wavelet, for example, is a band-pass filter centered on one frequency.
+    - **Band-stop** removes a range of frequencies and keeps everything else.
+
+    Each row below shows one filter: its gain in the frequency domain (left; the red lines mark our signal's five components) and what it does to our signal in the time domain (right).
     """)
     return
 
 
 @app.cell
-def highpass(combined_signal, multi_freqs):
-    _b, _a = butter(3, 25, btype="high", output="ba", fs=500)
-    _w, _h = freqz(_b, _a, worN=1024, whole=False)
-    _filtered = filtfilt(_b, _a, combined_signal)
-    _fig, _axes = plt.subplots(nrows=2, figsize=(20, 8))
-    _axes[0].plot(rad_to_hz(_w, 500), abs(_h), linewidth=3)
-    for _f in multi_freqs:
-        _axes[0].axvline(_f, color="red", linestyle="--", alpha=0.5)
-    _axes[0].set_ylabel("Gain", fontsize=18)
-    _axes[0].set_xlabel("Frequency (Hz)", fontsize=18)
-    _axes[0].set_title("High Pass (order=3, cutoff=25 Hz) — red lines: signal components", fontsize=18)
-    _axes[1].plot(combined_signal, linewidth=2, label="Original")
-    _axes[1].plot(_filtered, linewidth=2, label="Filtered")
-    _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
-    _axes[1].legend(fontsize=18)
+def four_filters(combined_signal, multi_freqs, signal_fs, signal_time):
+    _filters = [
+        ("High-pass, 25 Hz", butter(3, 25, btype="highpass", fs=signal_fs)),
+        ("Low-pass, 7 Hz", butter(2, 7, btype="lowpass", fs=signal_fs)),
+        ("Band-pass, 12-18 Hz", butter(2, [12, 18], btype="bandpass", fs=signal_fs)),
+        ("Band-stop, 4-6 Hz", butter(2, [4, 6], btype="bandstop", fs=signal_fs)),
+    ]
+    _fig, _axes = plt.subplots(nrows=4, ncols=2, figsize=(18, 13), gridspec_kw={"width_ratios": [1, 2]})
+    for _row, (_name, (_b, _a)) in zip(_axes, _filters):
+        _w, _h = freqz(_b, _a, worN=2048, fs=signal_fs)
+        _row[0].plot(_w, np.abs(_h), linewidth=2.5)
+        for _f in multi_freqs:
+            _row[0].axvline(_f, color="red", linestyle="--", alpha=0.4)
+        _row[0].set_xlim(0, 50)
+        _row[0].set_ylim(-0.05, 1.1)
+        _row[0].set_ylabel("Gain", fontsize=12)
+        _row[0].set_title(_name, fontsize=14, loc="left")
+        _row[1].plot(signal_time, combined_signal, linewidth=1, alpha=0.4, label="original")
+        _row[1].plot(signal_time, filtfilt(_b, _a, combined_signal), linewidth=1.8, label="filtered")
+        _row[1].set_xlim(0, 1)
+        _row[1].legend(fontsize=10, loc="upper right")
+    _axes[-1, 0].set_xlabel("Frequency (Hz)", fontsize=14)
+    _axes[-1, 1].set_xlabel("Time (s)", fontsize=14)
     plt.tight_layout()
     plt.close()
     _fig
@@ -1226,22 +1213,22 @@ def highpass(combined_signal, multi_freqs):
 @app.cell(hide_code=True)
 def temporal_md():
     mo.md("""
-    The top plot is the filter's frequency-domain view: its gain, from 0 to 1, at each frequency. The bottom plot is the result of applying it in the time domain with `filtfilt`.
+    What does a filter look like in the time domain? Feed it a single spike, and the output is its impulse response. The **order** sets how sharp the cutoff is. Compare a high-pass filter of order 2 and order 8 below: the sharper gain rings for longer in time. That is the frequency × time trade-off again.
 
-    What does this filter look like in the time domain? Feed it a single spike, and the output is its impulse response. The **order** sets how sharp the cutoff is. Compare order 2 and order 8 below: the sharper gain rings for longer in time. That is the frequency × time trade-off again.
+    Notice that the response starts *before* the spike. `filtfilt` runs the filter forward and then backward over the whole recording, so its response is symmetric around the spike. That's what keeps it from shifting the signal in time, and it's possible because we filter a recording after the fact, not a live stream.
     """)
     return
 
 
 @app.cell
-def filt_temporal():
+def filt_temporal(signal_fs):
     _impulse = np.zeros(400)
-    _impulse[100] = 1
-    _t_ms = (np.arange(400) - 100) / 500 * 1000
+    _impulse[200] = 1
+    _t_ms = (np.arange(400) - 200) / signal_fs * 1000
     _fig, _axes = plt.subplots(ncols=2, figsize=(16, 4))
     for _order in (2, 8):
-        _b, _a = butter(_order, 25, btype="high", fs=500)
-        _w, _h = freqz(_b, _a, worN=1024, fs=500)
+        _b, _a = butter(_order, 25, btype="highpass", fs=signal_fs)
+        _w, _h = freqz(_b, _a, worN=1024, fs=signal_fs)
         _axes[0].plot(_w, np.abs(_h), linewidth=2.5, label=f"order {_order}")
         _axes[1].plot(_t_ms, filtfilt(_b, _a, _impulse), linewidth=2, label=f"order {_order}")
     _axes[0].set_xlim(0, 100)
@@ -1249,107 +1236,10 @@ def filt_temporal():
     _axes[0].set_ylabel("Gain", fontsize=14)
     _axes[0].set_title("Frequency domain: gain", fontsize=16)
     _axes[0].legend(fontsize=12)
-    _axes[1].set_xlim(-60, 150)
-    _axes[1].set_xlabel("Time (ms)", fontsize=14)
+    _axes[1].set_xlim(-150, 150)
+    _axes[1].set_xlabel("Time relative to the spike (ms)", fontsize=14)
     _axes[1].set_title("Time domain: response to a single spike", fontsize=16)
     _axes[1].legend(fontsize=12)
-    plt.tight_layout()
-    plt.close()
-    _fig
-    return
-
-
-@app.cell(hide_code=True)
-def lp_md():
-    mo.md("""
-    ### Low Pass
-    Low pass filters only retain low frequency signals, which removes any high frequency information. We use `filtfilt` for zero-phase distortion.
-    """)
-    return
-
-
-@app.cell
-def lowpass(combined_signal, multi_freqs):
-    _b, _a = butter(2, 7, btype="low", output="ba", fs=500)
-    _w, _h = freqz(_b, _a, worN=1024, whole=False)
-    _filtered = filtfilt(_b, _a, combined_signal)
-    _fig, _axes = plt.subplots(nrows=2, figsize=(20, 8))
-    _axes[0].plot(rad_to_hz(_w, 500), abs(_h), linewidth=3)
-    for _f in multi_freqs:
-        _axes[0].axvline(_f, color="red", linestyle="--", alpha=0.5)
-    _axes[0].set_ylabel("Gain", fontsize=18)
-    _axes[0].set_xlabel("Frequency (Hz)", fontsize=18)
-    _axes[0].set_title("Low Pass (order=2, cutoff=7 Hz) — red lines: signal components", fontsize=18)
-    _axes[1].plot(combined_signal, linewidth=2, label="Original")
-    _axes[1].plot(_filtered, linewidth=2, label="Filtered")
-    _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
-    _axes[1].legend(fontsize=18)
-    plt.tight_layout()
-    plt.close()
-    _fig
-    return
-
-
-@app.cell(hide_code=True)
-def bp_md():
-    mo.md("""
-    ### Bandpass
-    Bandpass filters permit retaining only a specific frequency. Morlet wavelets are an example of a bandpass filter. or example a Morlet wavelet is a gaussian with the peak frequency at the center of a bandpass filter.
-
-    Let’s try selecting removing specific frequencies
-    """)
-    return
-
-
-@app.cell
-def bandpass(combined_signal, multi_freqs):
-    _b, _a = butter(2, [12, 18], btype="bandpass", output="ba", fs=500)
-    _w, _h = freqz(_b, _a, worN=1024, whole=False)
-    _filtered = filtfilt(_b, _a, combined_signal)
-    _fig, _axes = plt.subplots(nrows=2, figsize=(20, 8))
-    _axes[0].plot(rad_to_hz(_w, 500), abs(_h), linewidth=3)
-    for _f in multi_freqs:
-        _axes[0].axvline(_f, color="red", linestyle="--", alpha=0.5)
-    _axes[0].set_ylabel("Gain", fontsize=18)
-    _axes[0].set_xlabel("Frequency (Hz)", fontsize=18)
-    _axes[0].set_title("Bandpass (order=2, 12-18 Hz) — red lines: signal components", fontsize=18)
-    _axes[1].plot(combined_signal, linewidth=2, label="Original")
-    _axes[1].plot(_filtered, linewidth=2, label="Filtered")
-    _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
-    _axes[1].legend(fontsize=18)
-    plt.tight_layout()
-    plt.close()
-    _fig
-    return
-
-
-@app.cell(hide_code=True)
-def bs_md():
-    mo.md("""
-    ### Band-Stop
-    Bandstop filters remove a specific frequency from the signal
-    """)
-    return
-
-
-@app.cell
-def bandstop(combined_signal, multi_freqs):
-    _b, _a = butter(2, [4, 6], btype="bandstop", output="ba", fs=500)
-    _w, _h = freqz(_b, _a, worN=1024, whole=False)
-    _fig, _axes = plt.subplots(nrows=2, figsize=(20, 8))
-    _axes[0].plot(rad_to_hz(_w, 500), abs(_h), linewidth=3)
-    for _f in multi_freqs:
-        _axes[0].axvline(_f, color="red", linestyle="--", alpha=0.5)
-    _axes[0].set_ylabel("Gain", fontsize=18)
-    _axes[0].set_xlabel("Frequency (Hz)", fontsize=18)
-    _axes[0].set_title("Band-Stop (order=2, 4-6 Hz) — red lines: signal components", fontsize=18)
-    _axes[1].plot(combined_signal, linewidth=2, label="Original")
-    _axes[1].plot(filtfilt(_b, _a, combined_signal), linewidth=2, label="Filtered")
-    _axes[1].set_ylabel("Intensity", fontsize=18)
-    _axes[1].set_xlabel("Time", fontsize=18)
-    _axes[1].legend(fontsize=18)
     plt.tight_layout()
     plt.close()
     _fig
@@ -1382,38 +1272,42 @@ def filter_explorer(
     filter_type,
     multi_freqs,
     order_slider,
+    signal_fs,
+    signal_time,
 ):
-    _fs = 500
     if filter_type.value in ("bandpass", "bandstop"):
         _lo, _hi = min(cutoff_slider.value, cutoff2_slider.value), max(cutoff_slider.value, cutoff2_slider.value)
         if _lo == _hi:
             _hi = _lo + 1
-        _b, _a = butter(order_slider.value, [_lo, _hi], btype=filter_type.value, output="ba", fs=_fs)
+        _b, _a = butter(order_slider.value, [_lo, _hi], btype=filter_type.value, fs=signal_fs)
     else:
-        _b, _a = butter(order_slider.value, cutoff_slider.value, btype=filter_type.value, output="ba", fs=_fs)
-    _w, _h = freqz(_b, _a, worN=1024, whole=False)
-    _fig, _axes = plt.subplots(nrows=3, figsize=(14, 12))
-    _axes[0].plot(rad_to_hz(_w, _fs), abs(_h), linewidth=2)
-    for _f in multi_freqs:
-        _axes[0].axvline(_f, color="red", linestyle="--", alpha=0.5)
-    _axes[0].set_ylabel("Gain", fontsize=14)
-    _axes[0].set_xlabel("Frequency (Hz)", fontsize=14)
-    _axes[0].set_title(f"{filter_type.value.title()} Filter (order={order_slider.value}) — red lines: signal components", fontsize=16)
-    _axes[0].set_ylim(-0.05, 1.1)
-    # The filter's footprint in time: what it does to a single spike.
+        _b, _a = butter(order_slider.value, cutoff_slider.value, btype=filter_type.value, fs=signal_fs)
+    _w, _h = freqz(_b, _a, worN=1024, fs=signal_fs)
     _impulse = np.zeros(400)
-    _impulse[50] = 1
-    _axes[1].plot((np.arange(400) - 50) / _fs * 1000, filtfilt(_b, _a, _impulse), linewidth=2, color="green")
-    _axes[1].set_xlim(-60, 300)
-    _axes[1].set_ylabel("Amplitude", fontsize=14)
-    _axes[1].set_xlabel("Time (ms)", fontsize=14)
-    _axes[1].set_title("Response to a single spike (time domain): raise the order and it rings longer", fontsize=14)
-    _axes[2].plot(combined_signal, linewidth=1.5, alpha=0.5, label="Original")
-    _axes[2].plot(filtfilt(_b, _a, combined_signal), linewidth=2, label="Filtered")
-    _axes[2].set_ylabel("Intensity", fontsize=14)
-    _axes[2].set_xlabel("Time", fontsize=14)
-    _axes[2].set_title("Filtered Signal", fontsize=14)
-    _axes[2].legend(fontsize=12)
+    _impulse[200] = 1
+
+    _fig = plt.figure(figsize=(16, 9))
+    _gs = _fig.add_gridspec(2, 2)
+    _ax0 = _fig.add_subplot(_gs[0, 0])
+    _ax0.plot(_w, np.abs(_h), linewidth=2)
+    for _f in multi_freqs:
+        _ax0.axvline(_f, color="red", linestyle="--", alpha=0.5)
+    _ax0.set_xlim(0, 100)
+    _ax0.set_ylim(-0.05, 1.1)
+    _ax0.set_ylabel("Gain", fontsize=14)
+    _ax0.set_xlabel("Frequency (Hz)", fontsize=14)
+    _ax0.set_title(f"{filter_type.value.title()} (order {order_slider.value}): gain; red lines are our signal's components", fontsize=13)
+    _ax1 = _fig.add_subplot(_gs[0, 1])
+    _ax1.plot((np.arange(400) - 200) / signal_fs * 1000, filtfilt(_b, _a, _impulse), linewidth=2, color="green")
+    _ax1.set_xlim(-150, 150)
+    _ax1.set_xlabel("Time relative to the spike (ms)", fontsize=14)
+    _ax1.set_title("Response to a single spike: raise the order and it rings longer", fontsize=13)
+    _ax2 = _fig.add_subplot(_gs[1, :])
+    _ax2.plot(signal_time, combined_signal, linewidth=1.5, alpha=0.4, label="original")
+    _ax2.plot(signal_time, filtfilt(_b, _a, combined_signal), linewidth=2, label="filtered")
+    _ax2.set_xlim(0, 1)
+    _ax2.set_xlabel("Time (s)", fontsize=14)
+    _ax2.legend(fontsize=12, loc="upper right")
     plt.tight_layout()
     plt.close()
     mo.vstack([
