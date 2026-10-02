@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.3.1",
+#     "dartbrains-tools>=0.3.2",
 #     "matplotlib",
 #     "numpy",
 #     "scipy",
@@ -1139,6 +1139,46 @@ def filter_explorer(
         mo.md("*Upper cutoff only used for bandpass/bandstop*"),
         _fig,
     ])
+    return
+
+
+@app.cell(hide_code=True)
+def hearing_md():
+    mo.md(r"""
+    ### Hearing filters
+
+    Filters are easier to understand when you can *hear* them. Music is a mixture of many frequencies at once: the kick drum and bass live below ~250 Hz, voices and most instruments between ~250 Hz and 4 kHz, and the hiss of cymbals and the "air" of a recording above ~4 kHz.
+
+    Drop any song (mp3, wav, …) onto the player below. It loops, and every sound passes through a bank of filters before it reaches your speakers. Each handle sets the **gain** at one frequency, from 1 (pass it through untouched) to 0 (remove it), with low frequencies on the left — exactly like the filter plots above. The dark curve is the filter's actual frequency response, and the gray shading is the spectrum of what you are hearing right now. Your file never leaves your browser.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    from dartbrains_tools.mr_widgets import EqualizerWidget
+
+    return (EqualizerWidget,)
+
+
+@app.cell(hide_code=True)
+def equalizer(EqualizerWidget):
+    eq_view = mo.ui.anywidget(EqualizerWidget())
+    eq_view
+    return
+
+
+@app.cell(hide_code=True)
+def hearing_prompts_md():
+    mo.md(r"""
+    Try these:
+
+    1. Click **Low-pass**. Which instruments disappear, and which survive? Now drag the 500 Hz and 1k handles back up — how does moving the cutoff change the sound?
+    2. Click **High-pass**. What happens to the bass and drums? Why does the song sound "thin"?
+    3. Click **Band-pass**, which keeps only ~500 Hz–1 kHz. Why does it sound like an old telephone or AM radio?
+    4. Click **Band-stop** and listen to what is missing. Compare the gray spectrum to the one you see with **Flat**.
+    5. Look at the curve between handles. Even a sharp step on the sliders becomes a smooth roll-off — a real filter can't jump from 1 to 0 at a single frequency. How does that relate to the filter order you explored above?
+    """)
     return
 
 
