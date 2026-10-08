@@ -811,7 +811,7 @@ def _(mo):
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 
-    assignment_card("glm")
+    assignment_card("glm", title="GLM")
     return
 
 
