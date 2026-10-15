@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "dartbrains-tools>=0.3.2",
+#     "dartbrains-tools>=0.3.3",
 #     "matplotlib",
 #     "nilearn",
 #     "nltools==0.6.0.dev2",
@@ -51,7 +51,7 @@ def _(mo):
     - False Discovery Rate
     - Permutation tests and the resolution of a p-value
     - Max-statistic correction
-    - Cluster inference, and why it needs spatial smoothness
+    - Cluster inference, spatial dependence, and localization
     - Running corrections on real data, and reporting what survives
 
     Let's get started by watching an overview of multiple comparisons by Martin Lindquist.
@@ -80,13 +80,13 @@ def _(image, mo):
 
     The probability that a hypothesis test will correctly reject a false null hypothesis is described as the *power* of the test.
 
-    Hypothesis testing in fMRI is complicated by the fact that we are running many tests across each voxel in the brain (hundreds of thousands of tests). Selecting an appropriate threshold requires finding a balance between sensitivity (i.e., true positive rate) and specificity (i.e., false negative rate). There are two main approaches to correcting for multiple tests in fMRI data analysis.
+    Hypothesis testing in fMRI is complicated by the fact that we are running many tests across each voxel in the brain (hundreds of thousands of tests). Selecting an appropriate threshold requires finding a balance between sensitivity (i.e., true positive rate) and specificity (i.e., true negative rate). There are two main approaches to correcting for multiple tests in fMRI data analysis.
 
     **Familywise Error Rate** (FWER) attempts to control the probability of finding *any* false positives. Mathematically, FWER can be defined as the probability $P$ of observing any false positive ${FWER} = P({False Positives}\geq 1)$.
 
-    While, **False Discovery Rate** (FDR) attempts to control the proportion of false positives among rejected tests. Formally, this is the expected proportion of false positive to the observed number of significant tests ${FDR} = E(\frac{False Positives}{Significant Tests})$.
+    While, **False Discovery Rate** (FDR) attempts to control the proportion of false positives among rejected tests. Formally, this is the expected proportion of false positive to the observed number of significant tests ${FDR} = E(\frac{False Positives}{\max(Significant Tests, 1)})$; the fraction is defined as zero when there are no discoveries.
 
-    This should probably be no surprise to anyone, but fMRI studies are expensive and inherently underpowered. Here is a simulation by Jeannette Mumford to show approximately how many participants you would need to achieve 80% power assuming a specific effect size in your contrast.
+    This should probably be no surprise to anyone, but fMRI studies can be expensive, and power depends on sample size, effect size, noise, and the correction procedure. Here is a simulation by Jeannette Mumford to show approximately how many participants you would need to achieve 80% power assuming a specific effect size in your contrast.
     """),
         image("thresholding/fmri_power.png"),
     ])
@@ -100,7 +100,7 @@ def _(mo):
 
     Let's explore the concept of false positives to get an intuition about what the overall goals and issues are in controlling for multiple tests.
 
-    Let's load the modules we need for this tutorial. We will be using the SimulateGrid class which contains everything we need to run all of the simulations.
+    Let's load the modules we need for this tutorial. `nltools.SimulateGrid` generates and plots the example grids. Reusable maximum-statistic and cluster helpers live in `dartbrains_tools.simulations`.
     """)
     return
 
@@ -118,8 +118,8 @@ def _():
     import matplotlib.pyplot as plt
     import seaborn as sns
     import plotly.graph_objects as go
-    from scipy.ndimage import label, gaussian_filter
-    from scipy.stats import ttest_1samp
+    from scipy.ndimage import gaussian_filter
+    from scipy.stats import ttest_1samp, t as student_t
     from nilearn.glm.second_level import non_parametric_inference
     from nilearn.plotting import plot_stat_map
     from nltools.data import BrainData
@@ -128,17 +128,18 @@ def _():
     from nltools.templates import fetch_resource
     from nltools.algorithms.inference import one_sample_permutation_test
     from dartbrains_tools.data import localizer
+    from dartbrains_tools.simulations import simulate_max_t, cluster_fwe_p
 
     return (
         BrainData,
         SimulateGrid,
+        cluster_fwe_p,
         contextlib,
         fdr,
         fetch_resource,
         gaussian_filter,
         go,
         io,
-        label,
         localizer,
         non_parametric_inference,
         np,
@@ -147,6 +148,8 @@ def _():
         plot_stat_map,
         plt,
         sns,
+        simulate_max_t,
+        student_t,
         threshold,
         ttest_1samp,
     )
@@ -162,7 +165,7 @@ def _(mo):
 
 @app.cell
 def _(SimulateGrid, plt, sns):
-    simulation = SimulateGrid(grid_width=100, n_subjects=20)
+    simulation = SimulateGrid(grid_width=100, n_subjects=20, random_state=0)
     _f, _a = plt.subplots(nrows=5, ncols=4, figsize=(15, 15), sharex=True, sharey=True)
     counter = 0
     for col in range(4):
@@ -213,7 +216,7 @@ def _(mo):
 @app.cell
 def _(SimulateGrid, plt):
     _threshold = 0.05
-    simulation_1 = SimulateGrid(grid_width=100, n_subjects=20)
+    simulation_1 = SimulateGrid(grid_width=100, n_subjects=20, random_state=0)
     simulation_1.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     plt.gcf()
     return
@@ -234,7 +237,7 @@ def _(mo):
 @app.cell
 def _(SimulateGrid, plt):
     _threshold = 0.05
-    simulation_2 = SimulateGrid(grid_width=5, n_subjects=20)
+    simulation_2 = SimulateGrid(grid_width=5, n_subjects=20, random_state=0)
     simulation_2.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     plt.gcf()
     return
@@ -253,7 +256,7 @@ def _(mo):
 @app.cell
 def _(SimulateGrid, plt):
     _threshold = 0.0001
-    simulation_3 = SimulateGrid(grid_width=100, n_subjects=20)
+    simulation_3 = SimulateGrid(grid_width=100, n_subjects=20, random_state=0)
     simulation_3.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     plt.gcf()
     return
@@ -318,7 +321,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    A few steps in this chapter run thousands of simulated or permuted tests and take minutes: the false-positive sweep below and the TFCE permutation test later on. If you are taking the course, sign in with your Dartmouth account before running them: the results are then kept in your course storage, and the course keeps a copy your instructor computed ahead of time, so they load in seconds instead. Signing in later works too: the slow cells rerun and pick up the stored copy. If you are not at Dartmouth, skip the button; everything works the same way.
+    The sweep below reuses simulated maps across cutoffs and runs quickly on a CPU. Spatial permutation tests later in the chapter, especially TFCE, can take much longer. If you are taking the course, sign in with your Dartmouth account before running them: the results are then kept in your course storage, and the course keeps a copy your instructor computed ahead of time, so they load in seconds instead. Signing in later works too: the slow cells rerun and pick up the stored copy. If you are not at Dartmouth, skip the button; everything works the same way.
     """)
     return
 
@@ -342,48 +345,38 @@ def _(signin, storage):
 
 
 @app.cell
-def _(SimulateGrid, go, mo, np, storage, storage_ready):
-    # 20 thresholds × 100 simulations × a 100×100 voxel grid is ~20 M
-    # t-tests via joblib — many minutes cold. mo.persistent_cache writes
-    # the FPR result to __marimo__/cache/ so the first build pays the
-    # cost once and every subsequent (re)build is instant. The cache
-    # invalidates automatically if any input variable in this cell
-    # changes.
-    alpha = 0.05
-    n_simulations = 100
-    x = np.arange(3, 7, 0.2)
-    with mo.persistent_cache("threshold_fpr_sweep", store=storage.cache_store() if storage_ready else None):
-        sim_all = []
-        for p in x:
-            sim = SimulateGrid(grid_width=100, n_subjects=20)
-            sim.run_multiple_simulations(threshold=p, threshold_type='t', n_simulations=n_simulations)
-            sim_all.append(sim.fpr)
-    _fig = go.Figure()
-    _fig.add_trace(go.Scatter(
-        x=x, y=sim_all, mode='lines+markers',
-        name='False Positive Rate', line=dict(width=2),
-        hovertemplate='t=%{x:.2f}<br>FPR=%{y:.3f}<extra></extra>',
-    ))
-    _fig.add_hline(
-        y=alpha, line=dict(color='red', dash='dash', width=2),
-        annotation_text=f'α = {alpha}', annotation_position='top right',
-    )
-    _fig.update_layout(
-        xaxis_title='Threshold (t)',
-        yaxis_title='False Positive Rate',
-        title=f'Simulations = {n_simulations}',
-        height=400,
-        hovermode='x unified',
-        margin=dict(l=60, r=20, t=50, b=50),
-    )
+def _(go, np, simulate_max_t, student_t):
+    _alpha, _n_sims, _n_voxels, _df = 0.05, 100, 10_000, 19
+    _cutoffs = np.arange(3, 7.01, 0.1)
+    # One set of 100 maps, not a new set for each cutoff. Only the maxima
+    # are retained, so memory does not grow with the number of cutoffs.
+    _maxima = simulate_max_t(n_simulations=_n_sims)
+    _rates = (_maxima[:, None] >= _cutoffs).mean(axis=0)
+    _per_voxel_p = 2 * student_t.sf(_cutoffs, _df)
+    _theory = -np.expm1(_n_voxels * np.log1p(-_per_voxel_p))
+    # Pointwise Wilson intervals remain informative even for 0/100 hits.
+    _z = 1.96
+    _denom = 1 + _z**2 / _n_sims
+    _centre = (_rates + _z**2 / (2 * _n_sims)) / _denom
+    _half = _z * np.sqrt(_rates * (1 - _rates) / _n_sims + _z**2 / (4 * _n_sims**2)) / _denom
+    bonferroni_t = float(student_t.isf(_alpha / (2 * _n_voxels), _df))
+    _fig = go.Figure([
+        go.Scatter(x=_cutoffs, y=_centre + _half, mode='lines', line=dict(width=0), showlegend=False, hoverinfo='skip'),
+        go.Scatter(x=_cutoffs, y=_centre - _half, mode='lines', line=dict(width=0), fill='tonexty', fillcolor='rgba(31,119,180,0.18)', name='95% pointwise Wilson interval', hoverinfo='skip'),
+        go.Scatter(x=_cutoffs, y=_rates, mode='lines+markers', name='100 simulated maps', line=dict(color='#1f77b4'), hovertemplate='|t| cutoff=%{x:.2f}<br>FWER=%{y:.1%}<extra></extra>'),
+        go.Scatter(x=_cutoffs, y=_theory, mode='lines', name='Independent-voxel theory', line=dict(color='#d95f02', dash='dash')),
+    ])
+    _fig.add_hline(y=_alpha, line_dash='dot', annotation_text='Target FWER = 5%')
+    _fig.add_vline(x=bonferroni_t, line_dash='dash', annotation_text=f'Bonferroni |t| = {bonferroni_t:.2f}')
+    _fig.update_layout(xaxis_title='Two-sided threshold |t| (19 degrees of freedom)', yaxis_title='Probability of any false positive (FWER)', yaxis=dict(range=[0, 1], tickformat='.0%'), title='10,000 null voxels: simulation and theory', height=450, legend=dict(orientation='h', y=-.3), margin=dict(l=60, r=20, t=50, b=110))
     _fig
-    return
+    return (bonferroni_t,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    As you can see, the false positive rate is close to our alpha starting at a threshold of about 6.2. This means that when we test a hypothesis over 10,000 independent voxels, we can be confident that we will only observe false positives in approximately 5 out of 100 experiments. This means that we are effectively controlling the family wise error rate (FWER).
+    The simulated curve falls toward 5% near the Bonferroni cutoff. Its shaded interval shows Monte Carlo uncertainty: 100 experiments cannot pinpoint a 5% error rate precisely. Reusing the same maps makes the empirical curve monotone and avoids repeating the expensive t-tests. The dashed curve gives the exact FWER for independent voxels; Bonferroni provides a bound that also remains valid for dependent tests.
 
     Let's use that threshold for our simulation again.
     """)
@@ -391,9 +384,9 @@ def _(mo):
 
 
 @app.cell
-def _(SimulateGrid, plt):
-    simulation_4 = SimulateGrid(grid_width=100, n_subjects=20)
-    simulation_4.plot_grid_simulation(threshold=6.2, threshold_type='t', n_simulations=100)
+def _(SimulateGrid, bonferroni_t, plt):
+    simulation_4 = SimulateGrid(grid_width=100, n_subjects=20, random_state=0)
+    simulation_4.plot_grid_simulation(threshold=bonferroni_t, threshold_type='t', n_simulations=100)
     plt.gcf()
     return
 
@@ -401,9 +394,9 @@ def _(SimulateGrid, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Notice, that we are now observing a false positive rate of approximately .05, though this number will slightly change each time you run the simulation.
+    Notice, that we are now observing a false positive rate of approximately .05, though this estimate varies across random seeds. We fix the seed so the lesson is reproducible.
 
-    Another way to find the threshold that controls FWER is to divide the alpha by the number of independent tests across voxels. This is called the **bonferroni correction**.
+    Another way to find the threshold that controls FWER is to divide alpha by the total number of tests across voxels. This is the **Bonferroni correction**. It controls FWER under arbitrary dependence, provided each null p-value is valid; independence is not required.
 
     ${bonferroni} = \frac{\alpha}{M}$, where $M$ is the number of voxels.
     """)
@@ -414,7 +407,7 @@ def _(mo):
 def _(SimulateGrid, plt):
     _grid_width = 100
     _threshold = 0.05 / _grid_width ** 2
-    simulation_5 = SimulateGrid(grid_width=_grid_width, n_subjects=20)
+    simulation_5 = SimulateGrid(grid_width=_grid_width, n_subjects=20, random_state=0)
     simulation_5.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     plt.gcf()
     return
@@ -440,7 +433,7 @@ def _(SimulateGrid, plt):
     _threshold = 0.05 / _grid_width ** 2
     signal_width = 10
     _signal_amplitude = 1
-    simulation_6 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
+    simulation_6 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20, random_state=0)
     simulation_6.plot_grid_simulation(threshold=_threshold, threshold_type='p', n_simulations=100)
     plt.gcf()
     return
@@ -484,14 +477,16 @@ def _(image, mo):
     The *false discovery rate* (FDR) is a more recent development in multiple testing correction originally described by [Benjamini & Hochberg, 1995](https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.2517-6161.1995.tb02031.x). While FWER is the probability of any false positives occurring in a family of tests, the FDR is the expected proportion of false positives among significant tests.
 
     The FDR is fairly straightforward to calculate.
-     1. We select a desired limit $q$ on FDR, which is the proportion of false positives we are okay with observing (e.g., 5/100 tests or 0.05).
-     2. We rank all of the p-values over all the voxels from the smallest to largest.
-     3. We find the threshold $r$ such that $p \leq i/m * q$
-     4. We reject any $H_0$ that is lower than $r$.
+     1. Choose a target expected false discovery proportion $q$, such as 0.05.
+     2. Sort the $M$ p-values: $p_{(1)} \leq \cdots \leq p_{(M)}$.
+     3. Find the **largest** rank $k$ satisfying $p_{(k)} \leq (k/M)q$.
+     4. Reject every test with $p \leq p_{(k)}$, including ties. If no rank qualifies, reject none.
     """),
         image("thresholding/fdr_calc.png"),
         mo.md(r"""
-    In a brain map, this means that we expect approximately 95% of the voxels reported at q < .05 FDR-corrected to be true activations (note we use q instead of p). The FDR procedure adaptively identifies a threshold based on the overall signal across all voxels. Larger signals results in lower thresholds. Importantly, if all of the null hypotheses are true, then the FDR will be equivalent to the FWER. This means that any FWER procedure will *also* control the FDR. For these reasons, any procedure which controls the FDR is necessarily less stringent than a FWER controlling procedure, which leads to an overall increased power. Another nice feature of FDR, is that it operates on p-values instead of test statistics, which means it can be applied to most statistical tests.
+    FDR control is an **expectation across repeated experiments**. It does not guarantee that 95% of the discoveries in this particular brain map are true, nor assign a 95% probability to an individual voxel. Benjamini–Hochberg controls FDR under independence or appropriate positive dependence; arbitrary dependence requires additional care, for example the more conservative Benjamini–Yekutieli procedure ([SciPy documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.false_discovery_control.html)).
+
+    With more strong signals, the procedure can admit a larger p-value cutoff and gain sensitivity. Under the complete null, every discovery is false, so the false discovery proportion is 1 whenever there is any discovery and 0 otherwise: FDR then equals FWER. Every procedure controlling FWER also controls FDR, but that does not impose a universal ordering on every pair of correction procedures.
 
     This figure is taken from Poldrack, Mumford, & Nichols (2011) and compares different procedures to control for multiple tests.
     """),
@@ -510,7 +505,7 @@ def _(SimulateGrid, plt):
     _grid_width = 100
     _threshold = 0.05
     _signal_amplitude = 1
-    simulation_8 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20)
+    simulation_8 = SimulateGrid(signal_amplitude=_signal_amplitude, signal_width=10, grid_width=_grid_width, n_subjects=20, random_state=0)
     simulation_8.plot_grid_simulation(threshold=_threshold, threshold_type='q', n_simulations=100, correction='fdr')
     print(f'FDR q < 0.05 corresponds to p-value of {simulation_8.corrected_threshold}')
     plt.gcf()
@@ -520,7 +515,7 @@ def _(SimulateGrid, plt):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Okay, using FDR of q < 0.05 for our simulation identifies a p-value threshold of p < 0.00034. This is more liberal than the bonferroni threshold of p < 0.000005 and allows us to recover much more signal as a consequence. You can see that at this threshold there are more false positives, which leads to a much higher overall false positive rate. Remember, this metric is only used for calculating the family wise error rate and indicates the presence of *any* false positive across each of our 100 simulations.
+    The printed FDR cutoff is more liberal than the Bonferroni threshold of p < 0.000005 and allows us to recover much more signal as a consequence. You can see that at this threshold there are more false positives, which leads to a much higher overall false positive rate. Remember, this metric is only used for calculating the family wise error rate and indicates the presence of *any* false positive across each of our 100 simulations.
 
     To calculate the empirical false discovery rate, we need to calculate the percent of any activated voxels that were false positives.
     """)
@@ -531,13 +526,13 @@ def _(mo):
 def _(go, simulation_8):
     _fig = go.Figure()
     _fig.add_trace(go.Histogram(
-        x=simulation_8.multiple_fdr, name='FDR',
+        x=simulation_8.multiple_fdr, name='False discovery proportion',
         hovertemplate='FDR=%{x:.3f}<br>count=%{y}<extra></extra>',
     ))
     _fig.update_layout(
-        xaxis_title='False Discovery Rate',
+        xaxis_title='False discovery proportion in one simulated experiment',
         yaxis_title='Frequency',
-        title='False Discovery Rate of Simulations',
+        title='Variation across experiments; FDR is the mean of this distribution',
         height=400,
         margin=dict(l=60, r=20, t=50, b=50),
     )
@@ -548,11 +543,11 @@ def _(go, simulation_8):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    In our 100 simulations, the majority had a false discovery rate below our q < 0.05.
+    Each histogram entry is a false discovery **proportion** from one experiment. Its average estimates FDR; individual experiments can exceed 5% even when the procedure controls the expectation.
 
     Both Bonferroni and FDR share an assumption that we have quietly been making all along: that the p-value attached to each voxel is correct. Both procedures take a set of p-values as input and decide which ones to keep — neither of them checks where those p-values came from. They came from the $t$ distribution, which is only the right reference distribution if the data are normally distributed and independent across subjects.
 
-    In the rest of this tutorial we will stop assuming and start building the null distribution from the data themselves.
+    Next we build a null distribution from the data. This replaces the normality assumption with assumptions about valid resampling; it does not remove assumptions altogether.
     """)
     return
 
@@ -584,7 +579,7 @@ def _(mo):
 
     As an alternative to assuming a parametric null distribution, nonparametric methods use the data themselves to find the appropriate distribution. These methods can provide substantial improvements in power and validity, particularly with small sample sizes, so we recommend these in general. They can also be used to verify the validity of the less computationally expensive parametric approaches.
 
-    For a one-sample test, the relevant procedure is a **sign-flipping** test. The logic is this: if a condition truly has no effect, then whether a given participant's value came out positive or negative is arbitrary. So we can generate a dataset that the null hypothesis could plausibly have produced by randomly flipping the sign of each participant's map, and recomputing the group statistic. Repeat this many times and you have an empirical null distribution — one that makes no assumption of normality at all.
+    For a one-sample test, the relevant procedure is a **sign-flipping** test. The logic is this: if a condition truly has no effect, then whether a given participant's value came out positive or negative is arbitrary. So we can generate a dataset that the null hypothesis could plausibly have produced by randomly flipping the sign of each participant's map, and recomputing the group statistic. Repeat this many times and you have an empirical null distribution — one that does not require normality. It does require independent subjects and errors symmetric about zero under the null. Flip the **whole participant map** with one sign to preserve its spatial dependence ([FSL design guide](https://fsl.fmrib.ox.ac.uk/fsl/docs/statistics/glm.html)).
 
     `nltools` implements this in `one_sample_permutation_test`. Passing `return_null=True` gives us the full null distribution, with shape `(n_permutations, n_voxels)`, rather than just the p-values. That null is the raw material for everything in the rest of this tutorial, so it is worth looking at directly.
 
@@ -598,9 +593,8 @@ def _(contextlib, io):
     def quiet():
         """Suppress the per-call tqdm progress bar from the permutation test.
 
-        `one_sample_permutation_test` always prints a progress bar, and the
-        calibration loops below call it 100 times. Without this we would get
-        100 progress bars in the output.
+        Retained for compatibility with older nltools releases; the pinned
+        release defaults to progress_bar=False.
         """
         return contextlib.redirect_stderr(io.StringIO())
 
@@ -690,9 +684,9 @@ def _(mo):
 
     Here is the key move. We do not actually care about the null distribution of *a* voxel. We care about the null distribution of the **largest value anywhere in the map**, because a family-wise error is by definition the event that *something*, somewhere, crossed the line when it should not have.
 
-    So for each permutation, instead of keeping all 900 values, we keep only the maximum absolute value across the whole grid. That gives us one number per permutation and hence a null distribution of the maximum. The 95th percentile of *that* distribution is a threshold with a precise and very useful guarantee: under the complete null, the probability that any voxel in the map exceeds it is 5%.
+    So for each permutation, instead of keeping all 900 values, we keep only the maximum absolute value across the whole grid. That gives us one number per permutation and hence a null distribution of the maximum. The population 95th percentile targets a 5% probability that any voxel exceeds it under the complete null. We estimate that percentile from a finite sample of permutations, so the cutoff has Monte Carlo uncertainty.
 
-    This is a **family-wise error rate correction**, and it takes three lines. Note that it neatly sidesteps the resolution problem from the previous section — we are reading a percentile off a distribution rather than counting how many permutations beat a per-voxel value, so a 1,000-permutation budget is perfectly adequate.
+    This is a **family-wise error rate correction**, and it takes three lines. It avoids needing a per-voxel p-value as small as α/M: instead we compare the observed map with a null distribution of map maxima at α. Corrected permutation p-values still have resolution 1/(B+1). The percentile cutoff shown here is an approximation useful for teaching; 1,000 permutations can demonstrate the procedure. The estimated cutoff still has Monte Carlo uncertainty; check stability across seeds and use more permutations for final analyses.
     """)
     return
 
@@ -768,7 +762,7 @@ def _(
     _survivors = (_observed > _critical).astype(float)
 
     _f, _a = plt.subplots(ncols=3, figsize=(16, 5))
-    sns.heatmap(_observed, square=True, cmap='RdBu_r', ax=_a[0])
+    sns.heatmap(_observed, square=True, cmap='viridis', vmin=0, ax=_a[0])
     _a[0].set_title('Observed |group mean|', fontsize=15)
     sns.heatmap(perm_sim.signal_mask, square=True, cmap='gray_r', cbar=False, ax=_a[1])
     _a[1].set_title('True signal', fontsize=15)
@@ -827,7 +821,7 @@ def _(image, mo):
     """),
         image("thresholding/fwer.png"),
         mo.md(r"""
-    This requires specifying an initial threshold to determine the *Euler Characteristic* or the number of blobs minus the number of holes in the thresholded image. The number of voxels in the blob and the overall smoothness can be used to calculate something called *resels* or resolution elements and can be effectively thought of as the spatial units that need to be controlled for using FWER. We won't be going into too much detail with this approach as the mathematical details are somewhat complicated. In practice, if the image is smooth and the number of subjects is high enough (around 20), cluster correction seems to provide control closer to the true false positive rate than Bonferroni correction. Though we won't be spending time simulating this today, I encourage you to check out this Python [simulation](https://matthew-brett.github.io/teaching/random_fields.html) by Matthew Brett and this [chapter](https://www.fil.ion.ucl.ac.uk/spm/doc/books/hbf2/pdfs/Ch14.pdf) for an introduction to random field theory.
+    This requires specifying an initial threshold to determine the *Euler Characteristic* or the number of blobs minus the number of holes in the thresholded image. The number of voxels in the blob and the overall smoothness can be used to calculate something called *resels* or resolution elements and can be effectively thought of as the spatial units that need to be controlled for using FWER. We won't be going into too much detail with this approach as the mathematical details are somewhat complicated. Its validity depends on the random-field assumptions and cluster-forming threshold; neither smoothing nor having 20 participants is a general guarantee. Though we won't be spending time simulating this today, I encourage you to check out this Python [simulation](https://matthew-brett.github.io/teaching/random_fields.html) by Matthew Brett and this [chapter](https://www.fil.ion.ucl.ac.uk/spm/doc/books/hbf2/pdfs/Ch14.pdf) for an introduction to random field theory.
     """),
         image("thresholding/grf.png"),
         mo.md(r"""
@@ -839,43 +833,32 @@ def _(image, mo):
     return
 
 
-@app.cell
-def _(label, np):
-    def largest_cluster(mask2d):
-        """Size in voxels of the largest contiguous blob in a boolean grid."""
-        labelled, n_found = label(mask2d)
-        return np.bincount(labelled.ravel())[1:].max() if n_found else 0
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    `cluster_fwe_p` applies the same threshold to observed and permuted maps,
+    labels four-connected neighbours, and compares their largest clusters.
+    This teaching statistic uses absolute values, so adjacent positive and negative
+    voxels can join; neuroimaging tools generally cluster the signs separately.
 
-
-    def cluster_fwe_p(observed, null, width, forming):
-        """p = P(largest null cluster >= largest observed cluster).
-
-        `forming` is the cluster-forming threshold, applied identically to the
-        observed map and to every permuted map.
-        """
-        null_max = np.array([
-            largest_cluster((np.abs(perm) > forming).reshape(width, width))
-            for perm in null
-        ])
-        observed_size = largest_cluster((np.abs(observed) > forming).reshape(width, width))
-        if observed_size == 0:
-            return 1.0, 0, null_max
-        p_value = (np.sum(null_max >= observed_size) + 1) / (len(null_max) + 1)
-        return p_value, observed_size, null_max
-
-    return (cluster_fwe_p,)
+    The helper automatically uses Numba when available, with the same results as
+    its SciPy fallback. Install `dartbrains-tools[simulation]` to enable it in a
+    native Python environment. The first call compiles the kernel; later calls
+    reuse it. Browser Python can use the SciPy fallback.
+    """)
+    return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Cluster inference requires spatially smooth data
+    ### Spatial smoothness changes the cluster-size distribution
 
-    Before we run it, there is an assumption hiding in this procedure that is easy to miss, and it turns out to be the crux of the whole cluster-inference controversy.
+    Before we run it, distinguish two ideas: parametric random-field methods assume a spatial model; permutation cluster tests preserve the spatial structure already present in the participant maps.
 
     `SimulateGrid` generates each voxel independently — its noise is a plain `randn(width, width, n_subjects)`, with no spatial structure at all. Real brain data is nothing like that: neighbouring voxels are correlated through the underlying physiology, through head motion, through interpolation during registration, and above all through the spatial smoothing we deliberately apply during preprocessing.
 
-    Cluster inference *presupposes* that correlation. If voxels really were independent, blobs would essentially never form by chance, the null distribution of cluster size would collapse onto 1 or 2 voxels, and the test would be degenerate.
+    A permutation cluster test can be valid on independent noise too. At a stringent forming threshold, its clusters are mostly tiny and the discrete null distribution may make the test conservative. Smoothing produces larger clusters and changes that null; it is not a prerequisite for the validity of a permutation test.
 
     Let's demonstrate this directly by running the identical procedure twice — once on independent noise, and once on the same noise after applying a Gaussian filter.
     """)
@@ -891,7 +874,7 @@ def _(
     pd,
     quiet,
 ):
-    def run_cluster_calibration(smoothing_sigma, n_sims=100, width=30, n_subjects=20,
+    def run_cluster_calibration(smoothing_sigma, forming_percentile=99, n_sims=100, width=30, n_subjects=20,
                                 n_permute=500, alpha=0.05):
         """Family-wise error rate of the cluster test under the complete null."""
         rng = np.random.default_rng(2)
@@ -907,7 +890,7 @@ def _(
                     return_null=True, random_state=i, n_jobs=1,
                 )
                 null = np.asarray(res['null_dist'])
-                forming = np.percentile(np.abs(null), 99)
+                forming = np.percentile(np.abs(null), forming_percentile)
                 p_value, size, _ = cluster_fwe_p(res['mean'], null, width, forming)
                 hits += p_value < alpha
                 observed_sizes.append(size)
@@ -924,19 +907,19 @@ def _(
         ]
     )
     cluster_calibration
-    return
+    return cluster_calibration, run_cluster_calibration
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Look at the right-hand column first, because it is the stable result: on independent noise the largest blob you can expect to find is about **1 voxel**, while after smoothing it is around **5 voxels**. The cluster test has essentially nothing to work with in the unsmoothed case — there is no meaningful distribution of cluster sizes, so the test cannot discriminate.
+    Look at the right-hand column first, because it is the stable result: on independent noise the largest blob you can expect to find is about **1 voxel**, while after smoothing it is around **5 voxels**. The unsmoothed null is highly discrete, so there may be no attainable cluster size with a rejection probability close to exactly 5%. This affects resolution and sensitivity, not the basic validity of the permutation procedure.
 
     The error rates in the middle column point the same direction, but treat them with more caution than the tidy story usually told about them: with only 100 simulations the Monte Carlo error on a rate near 5% is roughly ±4%, so the two numbers are not as far apart as they look. Do not over-read a single run — if you re-run this cell with a different seed the rates will move around noticeably, while the median cluster sizes will not.
 
-    The general lesson is robust, and it is the mechanism behind [Eklund, Nichols & Knutsson (2016)](https://www.pnas.org/content/113/28/7900): **the validity of cluster inference depends entirely on how well you have modelled the spatial autocorrelation of your data.** Eklund et al. found that the parametric (RFT) implementations in the major software packages were mis-modelling that autocorrelation and, as a result, producing false-positive rates far above nominal — in some configurations up to 70% instead of 5%.
+    The general lesson is robust, and it is the mechanism behind [Eklund, Nichols & Knutsson (2016)](https://www.pnas.org/content/113/28/7900): **a misspecified parametric spatial model can invalidate cluster-level inference.** Permutation methods instead require a valid resampling scheme, including symmetry for this one-sample sign-flip test. Eklund et al. found that the parametric (RFT) implementations in the major software packages were mis-modelling that autocorrelation and, as a result, producing false-positive rates far above nominal — in some configurations up to 70% instead of 5%.
 
-    This is why cluster extent thresholding has become controversial. A related paper by [Woo et al. 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4214144/) showed that a liberal initial threshold (i.e. higher than p < 0.001) will inflate the number of false positives above the nominal level of 5%. There is no optimal way to select the initial threshold and often slight changes will give very different results. Furthermore, this approach does not appear to work equally well across all types of findings, and it seems potentially problematic to assume that spatial smoothness is constant over the brain. Finally, it is important to note that this approach only allows us to make inferences for the entire cluster. We can say that there is some voxel in the cluster that is significant, but we can't really pinpoint which voxels within the cluster may be driving the effect.
+    This is why cluster extent thresholding has become controversial. A related paper by [Woo et al. 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4214144/) showed that liberal forming thresholds can harm spatial localization and can invalidate parametric cluster approximations. This does not imply that a correctly calibrated permutation cluster test must inflate FWER at every liberal threshold. There is no optimal way to select the initial threshold and often slight changes will give very different results. Furthermore, this approach does not appear to work equally well across all types of findings, and it seems potentially problematic to assume that spatial smoothness is constant over the brain. Finally, it is important to note that this approach only allows us to make inferences for the entire cluster. We can say that there is some voxel in the cluster that is significant, but we can't really pinpoint which voxels within the cluster may be driving the effect.
 
     Nonparametric cluster inference of the kind we just built is considerably more defensible than the parametric version, because it estimates the null distribution of cluster size from the data instead of assuming a functional form for the smoothness. But the interpretational limitation — inference is about the blob, not the voxel — remains.
 
@@ -1003,19 +986,20 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Because thresholding is now its own step, swapping in FDR correction just means computing a different cutoff. `fdr()` returns the p-value threshold that controls the false discovery rate at q, and we feed that to the same `threshold` call.
+    Because thresholding is now its own step, swapping in FDR correction just means computing a different cutoff. `fdr()` returns the p-value threshold that controls the false discovery rate at q, and we apply that cutoff to the p-map to mask the t-map.
 
-    One thing to watch: if nothing survives, `fdr()` returns `-1`. Always branch on that rather than passing it straight through — thresholding at a negative p-value keeps *every* voxel, which would turn a null result into a whole-brain activation map.
+    One thing to watch: if nothing survives, `fdr()` returns `-1`. Branch explicitly on that sentinel and keep **p ≤ cutoff** for a valid cutoff, including zero. The generic `threshold()` helper uses a strict inequality, so applying the FDR mask directly preserves the boundary discovery and ties.
     """)
     return
 
 
 @app.cell
-def _(con1_stats, fdr, mo, threshold):
+def _(con1_stats, fdr, mo):
     _fdr_thr = fdr(con1_stats['p'].data, q=0.05)
-    if _fdr_thr > 0:
-        print(f"FDR threshold: p < {_fdr_thr:.5f}")
-        _thresholded = threshold(con1_stats['t'], con1_stats['p'], thr=_fdr_thr)
+    if _fdr_thr >= 0:
+        print(f"FDR threshold: p <= {_fdr_thr:.5f}")
+        _thresholded = con1_stats['t'].copy()
+        _thresholded.data[con1_stats['p'].data > _fdr_thr] = 0
         _view = _thresholded.iplot()
     else:
         _view = mo.md('Nothing survives FDR correction for this contrast.')
@@ -1046,10 +1030,12 @@ def _(BrainData, con1_dat, localizer, threshold):
 
 
 @app.cell
-def _(con1_v_con2_stats, fdr, mo, threshold):
+def _(con1_v_con2_stats, fdr, mo):
     _fdr_thr = fdr(con1_v_con2_stats['p'].data, q=0.05)
-    if _fdr_thr > 0:
-        _view = threshold(con1_v_con2_stats['t'], con1_v_con2_stats['p'], thr=_fdr_thr).iplot()
+    if _fdr_thr >= 0:
+        _thresholded = con1_v_con2_stats['t'].copy()
+        _thresholded.data[con1_v_con2_stats['p'].data > _fdr_thr] = 0
+        _view = _thresholded.iplot()
     else:
         _view = mo.md('Nothing survives FDR correction for this contrast.')
     _view
@@ -1061,7 +1047,11 @@ def _(mo):
     mo.md(r"""
     ## Permutation-based correction on real data
 
-    Everything we built by hand on the simulated grid also exists in production form. `nltools` gives us the sign-flipping test and the descriptive tools, but the FWE-calibrated corrections — max-statistic, cluster extent, cluster mass, and TFCE — come from `nilearn`. It is worth being explicit about that boundary, because it is a realistic picture of how the Python neuroimaging stack composes: no single package does everything, and you will routinely move data between them.
+    The production inference in this section comes from two libraries. In the course's `nltools` version (`0.6.0.dev2`), `threshold()` applies a p-value cutoff, `fdr()` supplies a Benjamini–Hochberg cutoff, and `holm_bonf()` supplies a Holm–Bonferroni cutoff. Plain Bonferroni uses `alpha / n_tests`. `BrainData.ttest(permutation=True)` supplies voxelwise permutation p-values, but does **not** automatically correct for multiple comparisons.
+
+    Max-statistic FWE, cluster-extent FWE, cluster-mass FWE, and TFCE correction are supplied here by `nilearn`, rather than a built-in `nltools` correction API. `BrainData.cluster_report()` describes an already thresholded map; it does not calibrate cluster significance. The small grid helpers above are teaching examples, not a general neuroimaging correction API.
+
+    Also keep statistic units consistent: the null returned by `nltools`' one-sample permutation test contains **means**, so our grid example compares it with the observed mean. Nilearn's max-t correction uses observed and permuted **t-statistics**.
 
     `nilearn.glm.second_level.non_parametric_inference` returns all of these from a single call. For a one-sample group test, the design matrix is just a column of ones — an intercept — which is the second-level equivalent of "test whether the group mean differs from zero".
 
@@ -1073,22 +1063,23 @@ def _(mo):
 
 
 @app.cell
-def _(con1_dat, non_parametric_inference, np, pd):
+def _(con1_dat, mo, non_parametric_inference, np, pd, storage, storage_ready):
     group_design = pd.DataFrame({'intercept': np.ones(len(con1_dat))})
     con1_imgs = [con1_dat[_i].to_nifti() for _i in range(len(con1_dat))]
 
-    npi_cluster = non_parametric_inference(
-        con1_imgs,
-        design_matrix=group_design,
-        second_level_contrast='intercept',
-        mask=con1_dat.mask,
-        n_perm=500,
-        threshold=0.001,        # p-scale cluster-forming threshold, NOT a t-value
-        tfce=False,
-        two_sided_test=True,
-        n_jobs=-1,
-        random_state=0,
-    )
+    with mo.persistent_cache("threshold_cluster", store=storage.cache_store() if storage_ready else None):
+        npi_cluster = non_parametric_inference(
+            con1_imgs,
+            design_matrix=group_design,
+            second_level_contrast='intercept',
+            mask=con1_dat.mask,
+            n_perm=500,
+            threshold=0.001,        # p-scale cluster-forming threshold, NOT a t-value
+            tfce=False,
+            two_sided_test=True,
+            n_jobs=-1,
+            random_state=0,
+        )
     print(list(npi_cluster.keys()))
     return con1_imgs, group_design, npi_cluster
 
@@ -1148,7 +1139,8 @@ def _(np, npi_cluster, plot_stat_map, plt):
     ]):
         plot_stat_map(
             npi_cluster[_key], threshold=_alpha_logp, display_mode='z',
-            cut_coords=6, axes=_ax, title=f'{_label}  (-log10 p)', colorbar=True,
+            cut_coords=[-24, -12, 0, 12, 24, 36], axes=_ax, title=f'{_label}  (-log10 p)',
+            cmap='viridis', symmetric_cbar=False, vmax=-np.log10(1 / 501), colorbar=True,
         )
     plt.gcf()
     return
@@ -1159,7 +1151,7 @@ def _(mo):
     mo.md(r"""
     ### TFCE, and paying attention to what things cost
 
-    TFCE is the fourth procedure, and it is requested with `tfce=True` instead of a `threshold`. It is also dramatically more expensive than the others: on this dataset a whole-brain TFCE run costs roughly **15 seconds per permutation**, so a respectable 500-permutation analysis would take around two hours. Setting `two_sided_test=True` doubles it again.
+    TFCE is the fourth procedure, and it is requested with `tfce=True` instead of a `threshold`. It is also dramatically more expensive than the others: runtime depends strongly on mask size, software version, CPU and thread count. Earlier measurements on this dataset took seconds per permutation for a whole-brain run. The example keeps the full 500-permutation budget, uses parallel CPU workers, and caches only the numerical result; plotting stays outside the cache so figures render on cache hits. This is a teaching budget, not a convergence guarantee.
 
     That cost scales with the number of voxels, which gives us a practical strategy that also happens to be good statistical practice. If you have an a priori anatomical hypothesis, restrict the analysis to that volume. You test fewer voxels (so the correction is less punishing) *and* the computation becomes tractable. This is the same "small volume correction" idea from the very first simulation in this tutorial, where shrinking the grid from 100 x 100 to 5 x 5 collapsed the false positive rate.
 
@@ -1244,10 +1236,14 @@ def _(mo):
 
 
 @app.cell
-def _(con1_stats):
-    cluster_rep = con1_stats['t'].cluster_report(
-        stat_threshold=3.0,
-        cluster_threshold=25,
+def _(BrainData, con1_dat, np, npi_cluster):
+    # Report the signed t map only where voxel-level max-t correction survives.
+    _corrected = BrainData(npi_cluster['t'], mask=con1_dat.mask)
+    _logp = BrainData(npi_cluster['logp_max_t'], mask=con1_dat.mask)
+    _corrected.data[_logp.data <= -np.log10(0.05)] = 0
+    cluster_rep = _corrected.cluster_report(
+        stat_threshold=None,
+        cluster_threshold=1,
         atlas='harvard_oxford',
     )
     cluster_rep.clusters
@@ -1273,7 +1269,7 @@ def _(mo):
     mo.md(r"""
     This concludes our overview of thresholding and multiple comparisons correction in fMRI data analysis.
 
-    The practical summary: uncorrected thresholds do not control anything at the level of the map. Bonferroni and FDR operate on parametric p-values and are easy to apply, but Bonferroni is badly over-conservative in the presence of spatial correlation. Permutation tests make no distributional assumptions and give you the null distribution itself, from which max-statistic, cluster, and TFCE corrections all follow. And whichever you choose, be clear about what the result licenses you to claim — a cluster-level result is a statement about a blob, not about a voxel.
+    The practical summary: uncorrected thresholds do not control anything at the level of the map. Bonferroni and FDR operate on valid p-values, whether parametric or nonparametric; permutation resolution must be fine enough for the requested cutoff. Bonferroni can be conservative when tests are strongly dependent. Permutation tests require a valid resampling scheme (independent subjects and symmetric null errors for sign-flipping) and give you the null distribution itself, from which max-statistic, cluster, and TFCE corrections all follow. And whichever you choose, be clear about what the result licenses you to claim — a cluster-level result is a statement about a blob, not about a voxel.
 
     We will continue to add more advanced tutorials to the dartbrains.org website. Stay tuned!
     """)
@@ -1294,10 +1290,8 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Exercise 2. Which regions are more involved with visual compared to auditory sensory processing?
-     - run a group level t-test and threshold using an uncorrected voxel-wise threshold of p < 0.05, p < 0.005, and p < 0.001.
-     - plot each of the results
-     - write each file to your output folder.
+    ### Exercise 2. FDR versus Bonferroni
+    Compare signal recovery and the false-positive proportion among null voxels on the same seeded simulation, using the parameters in the assignment. Distinguish that proportion from FDR and FWER.
     """)
     return
 
@@ -1305,10 +1299,8 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Exercise 3. Which regions are more involved in processing numbers compared to words?
-     - run a group level t-test, using a correcte FDR threshold of q < 0.05.
-     - plot the results
-     - write the file to your output folder.
+    ### Exercise 3. How many permutations do you need?
+    Run the 30 × 30 null grid with 100, 500 and 5,000 permutations over five seeds. Report both the p-value floor and the spread of the max-statistic cutoff. More resolution does not automatically imply a stable cutoff.
     """)
     return
 
@@ -1316,12 +1308,8 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Exercise 4. How many permutations do you need?
-    The max-statistic section used 1,000 permutations. Re-run the permutation test on the 30 x 30 grid with `n_permute` set to 100, 500, and 5,000.
-
-     - How does the smallest attainable p-value change?
-     - How much does the max-statistic threshold move between runs?
-     - At what point does adding more permutations stop changing your answer?
+    ### Exercise 4. Cluster-forming thresholds
+    Compare `run_cluster_calibration(2.0, forming_percentile=p)` at 95 and 99. Report the empirical FWER and median largest cluster size. Interpret the rates with Monte Carlo uncertainty and distinguish choosing a threshold in advance from choosing one after inspecting significance.
     """)
     return
 
@@ -1329,12 +1317,10 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Exercise 5. Cluster-forming thresholds are a researcher degree of freedom
-    The cluster simulation used the 99th percentile of the null as the cluster-forming threshold. Re-run `run_cluster_calibration` with a more liberal threshold (say the 95th percentile) by editing the function.
+    ### Exercise 5. Localization of a signal core
+    The assignment adds a Gaussian signal to smoothed noise. Compare the size, precision and recall of the largest supra-threshold cluster against a defined high-signal core. The Gaussian has signal outside that core too: this is a localization demonstration, not a test of cluster significance or a false-discovery estimate.
 
-     - Does the family-wise error rate stay at 5%?
-     - How does the median cluster size change?
-     - Relate what you find to the argument in Woo et al. (2014).
+    These five exercises match the graded assignment below, which specifies the exact seeds, parameters and output names. For optional real-data practice, compare visual with auditory conditions and numbers with words using the contrasts from the Group Analysis chapter, then plot and save uncorrected and FDR-corrected maps.
     """)
     return
 

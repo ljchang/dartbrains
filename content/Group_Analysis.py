@@ -47,7 +47,7 @@ def _(mo):
 
     - Mixed Effects Models
     - How to use the summary statistic approach to make inferences at second level
-    - How to perform many types of inferences at second level with different types of design matrics
+    - How to perform many types of inferences at second level with different types of design matrices
 
     Let's start by watching an overview of group statistics by Tor Wager.
     """)
@@ -344,7 +344,7 @@ def _(mo):
     mo.md(r"""
     ## Running a Group Analysis
 
-    Okay, now let's try and run our own group level analysis with real imaging data using the Pinel Localizer data. I have run a first level model for the first 10 participants using the procedure we used in the single-subject analysis notebook.
+    Okay, now let's try and run our own group level analysis with real imaging data using the Pinel Localizer data. I have run a first level model for the 20 participants using the procedure we used in the single-subject analysis notebook.
 
     Here is the code I used to complete this for all participants. I wrote all of the betas and also a separate file for each individual regressor of interest.
 
@@ -420,7 +420,7 @@ def _(mo):
 
     For our first group analysis, let's try to examine which regions of the brain are consistently activated across participants. We will just load the first regressor in the design matrix - *horizontal_checkerboard*.
 
-    We will use the `glob` function to search for all files that contain the name *horizontal_checkerboard* in each subject's folder. We will then sort the list and load all of the files using the `BrainData` class.  This will take a little bit to load all of the data into ram.
+    We will use `localizer.get_subjects()` to get a consistent participant order and `localizer.get_file()` to find each participant's *horizontal_checkerboard* beta image, then load them with `BrainData`.  This will take a little bit to load all of the data into ram.
     """)
     return
 
@@ -623,6 +623,7 @@ def _(np, pd, plt, regress, sns):
         _ax[0].set_title('Y')
         _ax[1].set_title('X')
         plt.tight_layout()
+        return _f
 
     return (run_regression_simulation,)
 
@@ -714,7 +715,7 @@ def _(mo):
 
     The intercept $\beta_0$ is now the mean of the reference group, and the estimate of the dummy code regressor $\beta_1$ indicates the difference of the mean of the target group from the reference group.
 
-    Thus, the mean of the reference group is $\beta_0$ or the intercept, and the mean of the target group is $\beta_1 + \beta_2$.
+    Thus, the mean of the reference group is $\beta_0$ or the intercept, and the mean of the target group is $\beta_0 + \beta_1$.
     """)
     return
 
@@ -798,7 +799,7 @@ def _(np, pd, run_regression_simulation):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Looks like the beta estimates are identical to the previous simulation. This demonstrates that we *do not* need to adjust the weights of the number of ones and zeros to sum to zero.  This is because the beta is estimating the average distance from the mean, which is invariant to group sizes.
+    With +1/-1 coding, the intercept is the unweighted midpoint of the two group means, and the second coefficient is half their difference, even with unequal group sizes. The midpoint is not generally the pooled sample mean. New random draws change the numerical estimates, and group sizes affect their precision; they do not change what the coefficients represent.
     """)
     return
 

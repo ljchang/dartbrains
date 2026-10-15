@@ -1,0 +1,62 @@
+{
+  "versions": {
+    "python": "3.13.12",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "numba": "0.68.0",
+    "machine": "arm64"
+  },
+  "first_call_seconds_compilation_or_disk_cache": {
+    "max_t": 0.17814850001013838,
+    "signed_means": 0.1082069170079194,
+    "clusters": 0.002604707988211885
+  },
+  "warm_median_seconds": {
+    "sweep_scipy": 0.1975074170040898,
+    "sweep_numpy_formula": 0.08419200000935234,
+    "sweep_jit": 0.07840729199233465,
+    "random_draws_only": 0.06631645900779404,
+    "max_t_kernel_scipy": 0.001301624986808747,
+    "max_t_kernel_jit": 0.00012199999764561653,
+    "permutation_nltools_including_sign_generation": 0.04341654200106859,
+    "sign_generation_only": 0.027965875022346154,
+    "signed_means_numpy_pregenerated_signs": 9.824999142438173e-05,
+    "signed_means_jit_pregenerated_signs": 0.0010687079920899123,
+    "clusters_scipy_500_maps": 0.007006583007751033,
+    "clusters_jit_500_maps": 0.00022204199922271073,
+    "clusters_library_scipy_500_maps": 0.006762917008018121,
+    "clusters_library_numba_500_maps": 0.00026216599508188665,
+    "cluster_p_scipy": 0.0068446670193225145,
+    "cluster_p_numba": 0.0002741249918472022
+  },
+  "validation": "max t matches within 1e-13; all tested threshold decisions and cluster sizes match exactly; signed means match installed nltools within 1e-13",
+  "scope": "Finite float64 synthetic inputs only; matrix-mean timing excludes p-value calculation, sign generation, and smoothing. Not a drop-in general inference implementation.",
+  "full_calibration_single_run_after_warmup": {
+    "scipy": {
+      "seconds": 10.663107290980406,
+      "result": [
+        [
+          0.01,
+          1.0
+        ],
+        [
+          0.03,
+          5.0
+        ]
+      ]
+    },
+    "numba": {
+      "seconds": 9.363488083006814,
+      "result": [
+        [
+          0.01,
+          1.0
+        ],
+        [
+          0.03,
+          5.0
+        ]
+      ]
+    }
+  }
+}
