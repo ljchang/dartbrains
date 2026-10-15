@@ -21,26 +21,22 @@ experimental JIT loop for signed means, so that loop was not adopted. Compilatio
 or disk-cache load is reported separately; warm speedups exclude it. No GPU
 implementation was benchmarked, and the results do not measure Nilearn TFCE.
 
-## Architecture and release boundary
+## Shared simulation helpers
 
-The adjacent `dartbrains-tools` checkout contains a provisional simulation module
-used by this benchmark and the local chapter. Its seeded Gaussian experiments and
+`dartbrains-tools>=0.3.3` provides the `simulations` module used by this benchmark
+and the thresholding chapter. Its seeded Gaussian experiments and
 finite, four-connected 2D examples are teaching simulations. General max-statistic,
 cluster, and TFCE correction belongs in `nltools`, potentially delegating the
 spatial inference to Nilearn. Neither the installed `nltools==0.6.0.dev2` nor the
 inspected source checkout exposes those correction APIs; the chapter uses Nilearn
 for production spatial inference.
 
-The local course environment uses an editable install of `../dartbrains-tools`.
-The currently locked registry release does not contain the provisional module.
-Do not deploy this chapter before settling that API boundary and releasing the
-supporting tools package; then raise its dependency floor, refresh the course
-lockfile, synchronize notebook dependency metadata, and verify a clean install.
-No package, assignments, or book deployment was published by this investigation.
-
-To reproduce from these adjacent checkouts, install the local tools package with
-its `simulation` extra into the course environment, then run:
+The course and chapter dependency metadata require the shared helpers. Numba is
+optional: the chapter uses the SciPy implementation when Numba is unavailable,
+including in browser environments. To reproduce the benchmark with Numba in a
+native Python environment, run:
 
 ```sh
-OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python benchmarks/thresholding_jit.py
+uv sync --extra simulation
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run --extra simulation python benchmarks/thresholding_jit.py
 ```
