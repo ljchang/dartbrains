@@ -809,58 +809,6 @@ def _(df, pl):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Exercises
-
-    Try these exercises to practice what you have learned. Each one uses the salary dataset.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    **Exercise 1**: Filter the salary data to only include rows where the `departm` is `"neuro"` and salary is above 80,000. How many rows match? What is the average salary of this subset?
-    """)
-    return
-
-
-@app.cell
-def _():
-    # Your code here
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    **Exercise 2**: Group the data by `departm` and `gender`. For each group, calculate the mean salary and the number of people. Sort the result by mean salary in descending order.
-    """)
-    return
-
-
-@app.cell
-def _():
-    # Your code here
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    **Exercise 3**: Using `over()`, create a new column called `pct_of_dept_mean` that shows each person's salary as a percentage of their department's mean salary. Sort by this column in descending order. Who has the highest relative salary compared to their department?
-    """)
-    return
-
-
-@app.cell
-def _():
-    # Your code here
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
     ## Summary
 
     In this tutorial, we covered the core concepts of Polars:

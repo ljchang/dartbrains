@@ -1022,54 +1022,6 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Exercises
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 1. Which regions are more involved with visual compared to auditory sensory processing?
-     - Create a contrast to test this hypothesis
-     - run a group level t-test
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 2. Which regions are more involved in processing numbers compared to words?
-     - Create a contrast to test this hypothesis
-     - run a group level t-test
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 3. Are there gender differences?
-    In this exercise, create a two sample design matrix comparing men and women on arithmetic vs reading.
-
-    You will first have to figure out the subjects gender using the using the `participants.tsv` file.
-
-     - Create a contrast to test this hypothesis
-     - run a group level t-test
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 

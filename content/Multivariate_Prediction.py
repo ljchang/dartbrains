@@ -561,27 +561,6 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Exercises
-
-    ### Exercise 1. Vertical vs Horizontal Checkerboard Classification.
-
-    For this exercise, find a multivariate pattern that can discriminate between horizontal and vertical checkerboards in new participants with SVM and leave-one-subject out cross-validation.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 2. Generalizing Patterns.
-    Now, let's see how well this pattern generalizes to other conditions. See which other conditions this pattern appears to generalize too by applying the pattern to all of the participants. Does it only get *confused* for conditions involving visual information?
-    """)
-    return
-
-
-@app.cell(hide_code=True)
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 

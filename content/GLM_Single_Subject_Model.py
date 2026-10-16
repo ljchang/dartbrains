@@ -757,61 +757,6 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Exercises
-
-    For homework, let's get a better handle on how to play with our data and test different hypotheses.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 1. Which regions are more involved with visual compared to auditory sensory processing?
-     - Create a contrast to test this hypothesis
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 2. Which regions are more involved in processing numbers compared to words?
-     - Create a contrast to test this hypothesis
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 3. Which regions are more involved with motor compared to cognitive processes (e.g., language and math)?
-     - Create a contrast to test this hypothesis
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 4. How are your results impacted by different smoothing kernels?
-     - Pick two different sized smoothing kernels and create two new brain images with each smoothing kernel
-     - Pick any contrast of interest to you and evaluate the impact of smoothing on the contrast.
-     - plot the results
-     - write the file to your output folder.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 
