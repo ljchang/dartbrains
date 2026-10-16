@@ -1277,55 +1277,6 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Exercises
-
-    ### Exercise 1. Bonferroni Correction Simulation
-    Using the Grid Simulation code above, try to find how much larger the signal needs to be using a Bonferroni Correction until we can recover 100% of the true signal, while controlling a family wise error false-positive rate of p < 0.05.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 2. FDR versus Bonferroni
-    Compare signal recovery and the false-positive proportion among null voxels on the same seeded simulation, using the parameters in the assignment. Distinguish that proportion from FDR and FWER.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 3. How many permutations do you need?
-    Run the 30 × 30 null grid with 100, 500 and 5,000 permutations over five seeds. Report both the p-value floor and the spread of the max-statistic cutoff. More resolution does not automatically imply a stable cutoff.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 4. Cluster-forming thresholds
-    Compare `run_cluster_calibration(2.0, forming_percentile=p)` at 95 and 99. Report the empirical FWER and median largest cluster size. Interpret the rates with Monte Carlo uncertainty and distinguish choosing a threshold in advance from choosing one after inspecting significance.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 5. Localization of a signal core
-    The assignment adds a Gaussian signal to smoothed noise. Compare the size, precision and recall of the largest supra-threshold cluster against a defined high-signal core. The Gaussian has signal outside that core too: this is a localization demonstration, not a test of cluster significance or a false-discovery estimate.
-
-    These five exercises match the graded assignment below, which specifies the exact seeds, parameters and output names. For optional real-data practice, compare visual with auditory conditions and numbers with words using the contrasts from the Group Analysis chapter, then plot and save uncorrected and FDR-corrected maps.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 

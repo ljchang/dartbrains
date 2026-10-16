@@ -931,56 +931,6 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Exercises
-
-    For homework, let's practice our skills in working with data.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 1
-    A few subjects have already been preprocessed with fMRI prep.
-
-    Use `localizer.get_subjects()` to figure out which subjects are available in the dataset.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 2
-
-    One question we are often interested in is where in the brain do we have an adequate signal to noise ratio (SNR). There are many different metrics, here we will use temporal SNR, which the voxel mean over time divided by it's standard deviation.
-
-    $$\text{tSNR} = \frac{\text{mean}(\text{voxel}_{i})}{\text{std}(\text{voxel}_i)}$$
-
-    In Exercise 2, calculate the SNR for S01 and plot this so we can figure which regions have high and low SNR.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### Exercise 3
-
-    We are often interested in identifying outliers in our data. In this exercise, find any image that is outside 95% of all images based on global intensity (i.e., zscore greater than 2) from 'S01' and plot each one.
-    """)
-    return
-
-
-@app.cell
-def _():
-    return
-
-
-@app.cell(hide_code=True)
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 
