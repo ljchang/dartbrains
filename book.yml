@@ -243,6 +243,7 @@ toc:
       - file: content/Thresholding_Group_Analyses.py
         assignment: thresholding
       - file: content/Connectivity.py
+        assignment: connectivity
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
         assignment: multivariate-prediction

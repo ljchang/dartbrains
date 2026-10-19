@@ -25,7 +25,7 @@
 
 import marimo
 
-__generated_with = "0.24.2"
+__generated_with = "0.25.1"
 app = marimo.App()
 
 
@@ -112,25 +112,19 @@ def _(mo):
 def _():
     # '%matplotlib inline' command supported automatically in marimo
 
-    import glob
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
-    import seaborn as sns
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
     from scipy.fft import fft, fftfreq
     from nltools.data import BrainData, DesignMatrix, Adjacency
     from nltools.templates import fetch_resource
     from nltools.mask import expand_mask, roi_to_brain
-    from nltools.algorithms import zscore, fdr, one_sample_permutation_test
+    from nltools.algorithms import zscore, fdr
     import polars as pl
-    from scipy.stats import binom, ttest_1samp
     from sklearn.metrics import pairwise_distances
-    from copy import deepcopy
     import networkx as nx
-    from nilearn.plotting import plot_stat_map
-    import nibabel as nib
     from dartbrains_tools.data import localizer
     from dartbrains_tools.notebook_utils import youtube
 
@@ -162,7 +156,6 @@ def _():
         go,
         localizer,
         make_subplots,
-        nib,
         np,
         nx,
         pairwise_distances,
@@ -355,7 +348,7 @@ def _(mo):
     mo.md(r"""
     Notice how this analysis identifies the default network? This analysis is very similar to the [original papers](https://www.pnas.org/content/102/27/9673/) that identified the default mode network using resting state data.
 
-    For an actual analysis, we would need to repeat this procedure over all of the participants in our sample and then perform a second level group analysis to identify which voxels are consistently coactive with the vmPFC. We will explore group level analyses in the exercises.
+    For an actual analysis, we would need to repeat this procedure over all of the participants in our sample and then perform a second level group analysis to identify which voxels are consistently coactive with the vmPFC. Before comparing maps across people, z-score each voxel's timeseries (`.standardize(method='zscore')`) before fitting. This map is in this participant's raw scanner units, and scanners do not record everyone at the same overall intensity, so without that step the same connection can have very different betas in different people. You will run a small version of that group analysis in the assignment at the end of this chapter.
     """)
     return
 
@@ -373,15 +366,6 @@ def _(mo):
 
 
 @app.cell
-def _(localizer, nib):
-    _img = nib.load(localizer.get_file('S01', 'derivatives', 'bold'))
-    print(f'shape: {_img.shape}')
-    print(f'voxel size: {_img.header.get_zooms()}')
-    print(f'TR: {_img.header.get_zooms()[3]} s')
-    return
-
-
-@app.cell
 def _(
     DesignMatrix,
     csf,
@@ -394,26 +378,30 @@ def _(
     tr,
     vmpfc_1,
 ):
-    # 1. Load the events as raw boxcars. PPI needs the four motor conditions
-    #    combined into a single regressor BEFORE convolution, so we opt out of
-    #    the constructor's default HRF convolution with hrf_model=None.
+    # 1. Load the events convolved with the HRF. The constructor convolves each
+    #    condition on a fine time grid and only then samples it at the TRs. That
+    #    order matters here: every trial lasts 1 s and the TR is 2.4 s, so a
+    #    boxcar sampled at the TRs first (hrf_model=None, then .convolve()) would
+    #    miss any trial that starts and ends between two scans -- 8 of the 20
+    #    motor trials for this participant.
     _events_file = localizer.get_file('S01', 'raw', 'events', '.tsv')
-    _events = DesignMatrix(
-        _events_file, run_length=len(smoothed), TR=tr, hrf_model=None
-    )
+    _events = DesignMatrix(_events_file, run_length=len(smoothed), TR=tr)
 
     motor_variables = [
         'video_left_hand', 'audio_left_hand', 'video_right_hand', 'audio_right_hand'
     ]
+    _motor_columns = [f'{_name}_c0' for _name in motor_variables]
 
-    # 2. Collapse the four motor variants into one regressor, then convolve
-    #    everything in a single pass.
-    task = (
+    # 2. Collapse the four motor variants into one regressor. Convolution is
+    #    linear, so summing the convolved regressors gives the same answer as
+    #    convolving their sum. The new column is a convolved regressor too, so
+    #    we say so when rebuilding the design matrix.
+    _summed = (
         _events
-        .with_columns(motor=pl.sum_horizontal(motor_variables))
-        .drop(motor_variables)
-        .convolve()
+        .with_columns(motor_c0=pl.sum_horizontal(_motor_columns))
+        .drop(_motor_columns)
     )
+    task = DesignMatrix(_summed, convolved=list(_summed.columns))
 
     # 3. Add the seed timeseries (raw -- it is already a BOLD signal) and the
     #    PPI interaction term. Written as Polars expressions, the interaction
@@ -442,7 +430,7 @@ def _(mo):
     mo.md(r"""
     Okay, now we are ready to run the regression analysis and inspect the interaction term to find regions where the connectivity profile changes as a function of the motor task.
 
-    We will run the regression and smooth all of the images, and then examine the beta image for the PPI interaction term.
+    We will fit the model to the smoothed data and then pull out the beta image for the PPI interaction term by name with `compute_contrasts()`.
     """)
     return
 
@@ -462,7 +450,7 @@ def _(mo):
     mo.md(r"""
     This analysis tells us which regions are more functionally connected with the vmPFC during the motor conditions relative to the rest of experiment.
 
-    We can make a thresholded interactive plot to interrogate these results, but it looks like it identifies the ACC/pre-SMA.
+    Use the interactive plot to interrogate these results. Look past the large values at the very bottom of the brain: the brainstem and cerebellum sit at the edge of the field of view, where single-participant estimates are noisy. The positive clusters in cortex are in the supplementary motor area (SMA/pre-SMA) and left premotor cortex, regions involved in planning movements.
     """)
     return
 
@@ -638,7 +626,7 @@ def _(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now let's run a PCA on this participant's denoised data. To do this, we will use the `.decompose()` method from nltools. All we need to do is specify the algorithm we want to use, the dimension we want to reduce (i.e., time - 'images' or space 'voxels'), and the number of components to estimate. Usually, we will be looking at reducing space based on similarity in time, so we will set `axis='images'`.
+    Now let's run a PCA on this participant's denoised data. To do this, we will use the `.decompose()` method from nltools. All we need to do is specify the method we want to use (`method='pca'`), the dimension we want to reduce (i.e., time - 'images' or space 'voxels'), and the number of components to estimate. Usually, we will be looking at reducing space based on similarity in time, so we will set `axis='images'`.
     """)
     return
 
@@ -814,7 +802,7 @@ def _(mo):
 
     It is trivial to run ICA on our data as it only requires switching `method='pca'` to `method='ica'` when using the `decompose()` method.
 
-    We will experiment with this in our exercises.
+    You can try this yourself in the graduate exercises at the end of this chapter.
 
     We also encourage interested readers to check out our more in depth [ICA tutorial](Introduction_to_ICA.md).
     """)
@@ -1034,7 +1022,7 @@ def _(brain_degree):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    This analysis shows that the insula is one of the regions that appears to have the highest degree in this analysis. This is a fairly classic [finding](https://link.springer.com/article/10.1007/s00429-010-0262-0) with the insula frequently found to be highly connected with other regions. Of course, we are only looking at one subject in a very short task (and selecting a completely arbitrary cutoff). We would need to show this survives correction after performing a group analysis.
+    In this participant, the regions with the highest degree lie along the midline of visual cortex (around the calcarine sulcus and cuneus), which is not surprising for a task where most trials are shown on a screen. In larger samples, regions such as the insula are a classic [finding](https://link.springer.com/article/10.1007/s00429-010-0262-0) as highly connected hubs. Of course, we are only looking at one subject in a very short task (and selecting a completely arbitrary cutoff). We would need to show this survives correction after performing a group analysis.
     """)
     return
 
@@ -1042,55 +1030,33 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Exercises
+    ## Graduate exercises
 
-    Let's practice what we learned through a few different exercises.
+    The assignment below covers seed-based connectivity for a single participant and a small group analysis. These exercises go further and are not submitted through the course site.
 
-    ### 1) Let's calculate seed-based functional connectivity using a different ROI - the right motor cortex
+    The parcel numbers here are positions in `expand_mask(mask_1)`. The k=50 parcellation labels its parcels 1 to 50 and `expand_mask` returns them in order, so position *i* holds the parcel labeled *i* + 1. Position 32 is the vmPFC seed used above; position 47 is right motor cortex and position 26 is left motor cortex.
 
-    - Calculate functional connectivity using roi=48 with the whole brain.
+    ### 1) Calculate an ICA
+    - Run an ICA on `smoothed_denoised` for S01 with 5 components, using `decompose(method='ica', axis='images', n_components=5)`.
+    - Plot each spatial component and its associated timecourse.
+
+    ### 2) Calculate eigenvector centrality for each region
+    - Figure out how to calculate eigenvector centrality with `networkx` and compute it for each region of the graph `G`.
+    - Plot the result on the brain with `roi_to_brain`, as we did for degree.
+
+    ### 3) Calculate a group level analysis for this graph theoretic analysis
+    - Repeat the degree analysis for every participant (`localizer.get_subjects()`).
+    - Run a one-sample t-test on each region's degree across participants.
+    - Correct for multiple tests with `fdr`. It returns **-1** when nothing survives, so check for that before you threshold.
     """)
     return
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 2) Calculate a group level analysis for this connectivity analysis
-    - this will require running this analysis over all subjects
-    - then running a one sample t-test
-    - then correcting for multiple tests with fdr.
-    """)
-    return
+def _():
+    from dartbrains_tools.notebook_utils import assignment_card
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 3) Calculate an ICA
-    - run an ICA analysis for subject01 with 5 components
-    - plot each spatial component and its associated timecourse
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 4) Calculate Eigenvector Centrality for each Region
-    - figure out how to calculate eigenvector centrality and compute it for each region.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ### 5) Calculate a group level analysis for this graph theoretic analysis
-    - this will require running this analysis over all subjects
-    - then running a one sample t-test
-    - then correcting for multiple tests with fdr.
-    """)
+    assignment_card("connectivity")
     return
 
 
