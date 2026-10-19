@@ -4,7 +4,7 @@
 #     "dartbrains-tools>=0.3.2",
 #     "ipython",
 #     "matplotlib",
-#     "nltools==0.6.0.dev2",
+#     "nltools==0.6.0.dev4",
 #     "numpy",
 #     "pandas",
 #     "scikit-learn",

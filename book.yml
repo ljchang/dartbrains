@@ -68,7 +68,7 @@ dependencies:
   extras:
     - dartbrains-tools>=0.3.2
   overrides:
-    nltools: nltools==0.6.0.dev2
+    nltools: nltools==0.6.0.dev4
     # mpl_toolkits (mplot3d) ships inside matplotlib. Without this, the import
     # became a dependency on "mpl-toolkits", which is not on PyPI: the WASM
     # page's single micropip.install then failed outright and installed
@@ -243,6 +243,7 @@ toc:
       - file: content/Thresholding_Group_Analyses.py
         assignment: thresholding
       - file: content/Connectivity.py
+        assignment: connectivity
       - file: content/Introduction_to_ICA.py
       - file: content/Multivariate_Prediction.py
         assignment: multivariate-prediction

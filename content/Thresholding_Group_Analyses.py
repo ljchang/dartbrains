@@ -4,7 +4,7 @@
 #     "dartbrains-tools>=0.3.3",
 #     "matplotlib",
 #     "nilearn",
-#     "nltools==0.6.0.dev2",
+#     "nltools==0.6.0.dev4",
 #     "numpy",
 #     "pandas",
 #     "plotly",
@@ -1047,7 +1047,7 @@ def _(mo):
     mo.md(r"""
     ## Permutation-based correction on real data
 
-    The production inference in this section comes from two libraries. In the course's `nltools` version (`0.6.0.dev2`), `threshold()` applies a p-value cutoff, `fdr()` supplies a Benjamini–Hochberg cutoff, and `holm_bonf()` supplies a Holm–Bonferroni cutoff. Plain Bonferroni uses `alpha / n_tests`. `BrainData.ttest(permutation=True)` supplies voxelwise permutation p-values, but does **not** automatically correct for multiple comparisons.
+    The production inference in this section comes from two libraries. In the course's `nltools` version (`0.6.0.dev4`), `threshold()` applies a p-value cutoff, `fdr()` supplies a Benjamini–Hochberg cutoff, and `holm_bonf()` supplies a Holm–Bonferroni cutoff. Plain Bonferroni uses `alpha / n_tests`. `BrainData.ttest(permutation=True)` supplies voxelwise permutation p-values, but does **not** automatically correct for multiple comparisons.
 
     Max-statistic FWE, cluster-extent FWE, cluster-mass FWE, and TFCE correction are supplied here by `nilearn`, rather than a built-in `nltools` correction API. `BrainData.cluster_report()` describes an already thresholded map; it does not calibrate cluster significance. The small grid helpers above are teaching examples, not a general neuroimaging correction API.
 
