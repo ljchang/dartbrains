@@ -4,7 +4,7 @@
 #     "dartbrains-tools>=0.3.1",
 #     "matplotlib",
 #     "nilearn",
-#     "nltools==0.6.0.dev2",
+#     "nltools==0.6.0.dev4",
 # ]
 # 
 # [tool.grader]

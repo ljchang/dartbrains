@@ -47,7 +47,7 @@ dependencies = [
     "nilearn>=0.12",
     # Pinned to the exact pre-release the browser installs. book.yml's
     # dependencies.overrides sends WASM and workbench pages to
-    # nltools==0.6.0.dev2, because git master needs h5py>=3.15 while Pyodide
+    # nltools==0.6.0.dev4, because git master needs h5py>=3.15 while Pyodide
     # ships 3.13. Building against a *different* 0.6 snapshot than readers run
     # would let an API change break an Edit session while the rendered page
     # still looks correct, with nothing in CI able to see it — so both sides
@@ -64,7 +64,7 @@ dependencies = [
     #   graph — Adjacency.to_graph() in the Connectivity chapter.
     # (interactive_plots / ipywidgets is no longer needed: since nltools
     # b3603484 iplot() is a self-contained anywidget with its own slider.)
-    "nltools[h5,graph]==0.6.0.dev2",
+    "nltools[h5,graph]==0.6.0.dev4",
     "numpy>=2.4.3",
     "pandas",
     "plotly>=6.6.0",

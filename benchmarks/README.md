@@ -27,7 +27,7 @@ implementation was benchmarked, and the results do not measure Nilearn TFCE.
 and the thresholding chapter. Its seeded Gaussian experiments and
 finite, four-connected 2D examples are teaching simulations. General max-statistic,
 cluster, and TFCE correction belongs in `nltools`, potentially delegating the
-spatial inference to Nilearn. Neither the installed `nltools==0.6.0.dev2` nor the
+spatial inference to Nilearn. Neither the installed `nltools==0.6.0.dev4` nor the
 inspected source checkout exposes those correction APIs; the chapter uses Nilearn
 for production spatial inference.
 

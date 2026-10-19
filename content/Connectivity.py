@@ -7,7 +7,7 @@
 #     "networkx",
 #     "nibabel",
 #     "nilearn",
-#     "nltools==0.6.0.dev2",
+#     "nltools==0.6.0.dev4",
 #     "numpy",
 #     "pandas",
 #     "plotly",
