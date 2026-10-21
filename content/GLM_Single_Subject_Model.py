@@ -169,8 +169,14 @@ def _(mo):
     mo.md(r"""
     The `DesignMatrix` class is built on top of [Polars](Introduction_to_Polars.md) DataFrames — the same library we covered earlier — and adds methods specific to building design matrices. If you are used to pandas, the main differences are that there is no row index (so no `.loc` / `.iloc`) and that a column comes back as a Polars Series, so you use `.to_numpy()` rather than `.values`. Be sure to check out the [nltools documentation](https://nltools.org/) for more on this class.
 
-    Printing the object shows its shape along with which columns are HRF-convolved regressors and which are nuisance confounds — metadata the class tracks for you as you build the model up.
+    Printing the object shows its shape (one row per TR, one column per condition) and its sampling frequency, which is `1 / TR`. As we build the model up, the class also keeps track of which columns are HRF-convolved regressors (`.convolved`) and which are nuisance confounds (`.confounds`).
     """)
+    return
+
+
+@app.cell
+def _(dm):
+    print(dm)
     return
 
 
@@ -381,10 +387,9 @@ def _(dm_conv_filt):
 
 
 @app.cell
-def _(dm_conv):
-    dm_conv_filt_1 = dm_conv.add_dct_basis(duration=128, include_constant=False)
-    dm_conv_filt_1.plot()
-    return (dm_conv_filt_1,)
+def _(dm_conv_filt):
+    dm_conv_filt.plot()
+    return
 
 
 @app.cell(hide_code=True)
@@ -399,8 +404,8 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1):
-    dm_conv_filt_poly = dm_conv_filt_1.add_poly()
+def _(dm_conv_filt):
+    dm_conv_filt_poly = dm_conv_filt.add_poly()
     dm_conv_filt_poly.plot()
     return
 
@@ -417,8 +422,8 @@ def _(mo):
 
 
 @app.cell
-def _(dm_conv_filt_1):
-    dm_conv_filt_poly_1 = dm_conv_filt_1.add_poly(order=2, include_lower=True)
+def _(dm_conv_filt):
+    dm_conv_filt_poly_1 = dm_conv_filt.add_poly(order=2, include_lower=True)
     dm_conv_filt_poly_1.plot()
     return (dm_conv_filt_poly_1,)
 
@@ -537,7 +542,7 @@ def _(data, tr):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    For this subject, our spike identification procedure identified 3 spikes. Two of these spikes look like they are temporally contiguous. Let's add all of these covariates to our design matrix.
+    For this subject, our spike identification procedure flagged 7 TRs: four where the global signal crossed the threshold (`global_spike`) and three where the change from the previous TR did (`diff_spike`). Several of them come in temporally contiguous runs, around TRs 94-95 and 99-101. Each one gets its own regressor. Let's add all of these covariates to our design matrix.
 
     In this example, we will append each of these additional matrices to our main design matrix.
 
@@ -621,7 +626,7 @@ def _(mo):
 
 @app.cell
 def _(dm_conv_filt_poly_cov, smoothed):
-    smoothed.fit(model='glm', X=dm_conv_filt_poly_cov)
+    smoothed.fit(model='glm', X=dm_conv_filt_poly_cov);
     return
 
 
@@ -667,6 +672,8 @@ def _(mo):
     ### Save Image
     We will frequently want to save different brain images we are working with to a nifti file. This is useful for saving intermediate work, or sharing our results with others. This is easy with the `.write()` method. Be sure to specify a path and file name for the file.
 
+    Here we save the beta images for the ten task conditions, the first ten rows of `smoothed.model.betas`, as a single 4-D nifti file with one volume per condition. Be careful about what you write: `smoothed` itself is the whole preprocessed run (128 volumes, over 100 MB), not the betas.
+
     **Note**: You can only write to folders where you have permission. Try changing the path to your own directory.
     """)
     return
@@ -674,7 +681,7 @@ def _(mo):
 
 @app.cell
 def _(fwhm, smoothed, sub):
-    smoothed.write(f'{sub}_betas_denoised_smoothed{fwhm}_preprocessed_fMRI_bold.nii.gz')
+    smoothed.model.betas[:10].write(f'{sub}_task_betas_smoothed{fwhm}.nii.gz')
     return
 
 
@@ -760,7 +767,7 @@ def _(mo):
 def _():
     from dartbrains_tools.notebook_utils import assignment_card
 
-    assignment_card("glm-single-subject")
+    assignment_card("glm-single-subject", title="GLM Single Subject Model")
     return
 
 
