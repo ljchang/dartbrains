@@ -35,8 +35,10 @@ dependencies = [
     # propagates the notebook filename — lets notebooks resolve the repo root
     # via Path(__file__).resolve().parent.parent instead of a cwd/book.yml walk.
     # 0.24 moved the exporter to marimo._export and ships the islands micropip
-    # payload marimo-book >= 0.1.31 relies on. Tracks the newest release.
-    "marimo>=0.24.2",
+    # payload marimo-book >= 0.1.31 relies on. 0.25.0 fixes dependency
+    # installation in island payloads (marimo-team/marimo#10832). Tracks the
+    # newest release.
+    "marimo>=0.25.1",
     "matplotlib>=3.10.8",
     "nbformat",
     "nibabel>=5.4.2",
@@ -143,7 +145,9 @@ build = [
     # and writes [tool.grader] into chapter blocks via sync-deps.
     # 0.1.46/0.1.47 keep WASM widgets painted while the kernel starts (0.1.47:
     # re-render the serialized copies marimo re-inserts at kernel start).
-    "marimo-book>=0.1.47",
+    # 0.1.48 widens marimo to <0.26 and keeps pinned WASM deps pinned under
+    # marimo 0.25 (which now ships PEP 723 deps in the islands payload).
+    "marimo-book>=0.1.48",
 ]
 
 [tool.uv.sources]
